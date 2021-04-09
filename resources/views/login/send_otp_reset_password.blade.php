@@ -1,7 +1,7 @@
 @extends('login.template_login')
 
 @section('title-content')
-	<title>{{ __('reset_password.judul') }}</title>
+	<title>{{ __('send_otp_reset_password.judul') }}</title>
 @endsection
 
 @section('css-content')
@@ -10,7 +10,7 @@
 		body{
 			background: url('{{ url('/pictures/bg_image_reset_password.png') }}');
 			background-size: 50% !important;
-			background-position: 90% -5% !important;
+			background-position: 75% -5% !important;
 			background-repeat: no-repeat;
 			padding-top: 6%;
 		}
@@ -29,7 +29,13 @@
 			font-size: 6.5vh;
 		}
 		.judul-text {
-			font-size: 4.7vh;
+			font-size: 4.5vh;
+		}
+		.resend-otp-link img {
+			max-width: 5%;
+		}
+		.resend-otp-text {
+			font-size: 2.5vh;
 		}
 		#pilih_bahasa{
 			max-width: 45%;
@@ -55,11 +61,17 @@
 		.right-content img {
 			max-width: 13%;
 		}
+		.resend-otp-link img {
+			max-width: 5%;
+		}
 		.logo-text {
 			font-size: 6.5vh;
 		}
 		.judul-text {
 			font-size: 4.7vh;
+		}
+		.resend-otp-text {
+			font-size: 2.5vh;
 		}
 		#pilih_bahasa{
 			max-width: 45%;
@@ -84,13 +96,7 @@
 			vertical-align: middle;
 		}
 		.image-logo{
-			padding-left: 25%;
-			align-items: center;
-			text-align: center;
-			vertical-align: middle;
-		}
-		a{
-			padding-left: 10%;
+			padding-left: 30%;
 			align-items: center;
 			text-align: center;
 			vertical-align: middle;
@@ -103,6 +109,12 @@
 		}
 		.judul-text {
 			font-size: 4vh;
+		}
+		.resend-otp-link img{
+			max-width: 5%;
+		}
+		.resend-otp-text {
+			font-size: 2.5vh;
 		}
 		#pilih_bahasa{
 			max-width: 100%;
@@ -130,6 +142,31 @@
 	#btn_submit {
 		margin-top: 5%;
 	}
+	.resend-otp-link img{
+		margin-right: 1%;
+	}
+	.enter-otp::-webkit-input-placeholder { /* WebKit browsers */
+		font-size: 0.8em;
+	}
+
+	.enter-otp:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		font-size: 0.8em;
+	}
+
+	.enter-otp::-moz-placeholder { /* Mozilla Firefox 19+ */
+		font-size: 0.8em;
+	}
+
+	.enter-otp:-ms-input-placeholder { /* Internet Explorer 10+ */
+		font-size: 0.8em;
+	} 
+	.resend-otp-text {
+		display: block;
+		float: left;
+		font-family: Montserrat;
+		color: #106DA7;
+		font-weight: 500;
+	}
 </style>
 @endsection
 
@@ -140,19 +177,23 @@
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<h4 class="logo-text">Stream</h4>
 			</a>
-			<p class="judul-text">{{ __('reset_password.judul') }}</p>
-			<p class="bawah-judul-text">{{ __('reset_password.bawah_judul') }}</p>
-
-			<form id="reset_password_form" method="post">
+			<p class="judul-text">{{ __('send_otp_reset_password.judul') }}</p>
+			<p class="bawah-judul-text">{{ __('send_otp_reset_password.bawah_judul') }}</p>
+			<a class="resend-otp-link" href="{{ url('reset_password/resend_otp') }}">
+				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Resend">
+				<h4 class="resend-otp-text">{{ __('send_otp_reset_password.resend_otp') }}</h4>
+			</a>
+			<form id="send_otp_form" method="post">
 				@csrf
 				<div class="form-group">
-					<label>{{ __('reset_password.label_email') }}</label>
-					<input type="email" class="form-control" name="email_reset_password" id="email_reset_password" value="{{ old('email_reset_password') }}" placeholder="{{ __('reset_password.placeholder_email') }}">
+					<label>{{ __('send_otp_reset_password.label_otp') }}</label>
+					<input type="hidden" class="form-control" name="email_otp" id="email_otp" value="yafie.achmad@intikom.co.id">
+					<input type="text" class="form-control enter-otp" name="enter_otp" id="enter_otp" value="{{ old('enter_otp') }}" placeholder="{{ __('send_otp_reset_password.placeholder_otp') }}">
 				</div>
 				<div class="row">
 					<div class="col-12 form-group">
 						<button type="submit" class="btn btn-primary" name="btn_submit" id="btn_submit" style="width: 100%;">
-							{{ __('reset_password.button_otp') }}
+							{{ __('send_otp_reset_password.button_send') }}
 						</button>
 					</div>
 				</div>
@@ -164,20 +205,17 @@
 			<span class="text-muted">© Copyright PT Intikom Berlian Mustika 2021</span>
 		</div>
 	</footer>
-	<div class="modal fade" tabindex="-1" role="dialog" id="notification">
+	<div class="modal fade" role="dialog" id="notification">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Notification</h5>
+					<h5 class="modal-title">Error!</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<span id="message-notification"></span>
-				</div>
-				<div class="modal-footer float-right">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -187,18 +225,22 @@
 @section('js-content')
 <script type="text/javascript">
 	$(document).ready(function() {
-		if($("#reset_password_form").length > 0) {
-			$("#reset_password_form").validate({
+		if($("#send_otp_form").length > 0) {
+			$("#send_otp_form").validate({
 				rules: {
-					email_reset_password: {
+					email_otp: {
 						required: true,
-						email: true,
+					},
+					enter_otp: {
+						required: true,
 					},
 				},
 				messages: {
-					email_reset_password: {
+					email_otp: {
 						required: "{{ __('reset_password.email_required') }}",
-						email: "{{ __('reset_password.email_email') }}",
+					},
+					enter_otp: {
+						required: "{{ __('send_otp_reset_password.otp_required') }}",
 					},
 				},
 				highlight: function(element) {
@@ -223,9 +265,9 @@
 						}
 					});
 					$.ajax({
-						url: "{{ url('reset_password/proses') }}",
+						url: "{{ url('reset_password/send_otp/proses') }}",
 						type: "POST",
-						data: $('#reset_password_form').serialize(),
+						data: $('#send_otp_form').serialize(),
 						success: function(response) {
 							$('#notification').modal('show');
 							$('#message-notification').html(response);

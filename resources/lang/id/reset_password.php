@@ -4,11 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Login Page Language Lines
+    | Reset Password Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Login Menggunakan Locale Bahasa Inggris. Akses di file
-    | login.blade.php
+    | Pengaturan Halaman Reset Password Menggunakan Locale Bahasa Indonesia. Akses di file
+    | reset_password.blade.php
     |
     */
 
@@ -17,5 +17,7 @@ return [
     'label_email' => 'Alamat Email',
     'placeholder_email' => 'Masukkan email Anda',
     'button_otp' => 'Ajukan kode OTP',
-    
+    'email_required' => 'Email Harus Diisi',
+    'email_email' => 'Masukkan Format Email dengan Benar',
+
 ];

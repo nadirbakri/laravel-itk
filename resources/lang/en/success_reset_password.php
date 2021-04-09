@@ -4,11 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Login Page Language Lines
+    | Success Reset Password Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Login Menggunakan Locale Bahasa Inggris. Akses di file
-    | login.blade.php
+    | Pengaturan Halaman Success Reset Password Menggunakan Locale Bahasa Inggris. Akses di file
+    | success_reset_password.blade.php
     |
     */
 

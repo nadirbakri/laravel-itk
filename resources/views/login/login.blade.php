@@ -129,6 +129,9 @@
 	.judul-text {
 		padding-top: 1%;
 	}
+	.modal-header {
+		padding: 2%;
+	}
 </style>
 @endsection
 
@@ -167,7 +170,7 @@
 						</button>
 					</div>
 					<div class="col-6 form-group">
-						<button type="button" class="btn btn-primary" name="btn_clear" id="btn_clear" style="width: 100%;" disabled>
+						<button type="button" class="btn btn-primary" name="btn_clear" id="btn_clear" style="width: 100%;" disabled="true">
 							{{ __('login.button_clear') }}
 						</button>
 					</div>
@@ -195,19 +198,36 @@
 			<span class="text-muted">© Copyright PT Intikom Berlian Mustika 2021</span>
 		</div>
 	</footer>
+	<div class="modal fade" role="dialog" id="notification">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Error!</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<span id="message-notification">{{ $errors->first() }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 
 @section('js-content')
 <script>
-	var msg = '{{Session::get('alert')}}';
-	var exist = '{{Session::has('alert')}}';
+	var exist = '{{$errors->any()}}';
 	if(exist){
-		alert(msg);
+		$('#notification').modal('show');
 	}
 </script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#notification').on('hidden.bs.modal', function () {
+			$('#notification').modal('hide');
+		})
 		$("#show_password").on('click', function(event) {
 			event.preventDefault();
 			if($('#password_login').attr("type") == "text"){
@@ -228,6 +248,11 @@
 			}
 			return false;
 		});
+
+		$("#btn_clear").click(function(){
+			$('#login_form').trigger("reset");
+			$("#btn_clear").attr('disabled', true);
+		}); 
 
 		if($("#login_form").length > 0) {
 			$("#login_form").validate({
@@ -268,4 +293,5 @@
 		} 
 	});
 </script>
+
 @endsection

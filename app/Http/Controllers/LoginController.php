@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Validator;
-use Session;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Validator;
+use Session;
+use App;
 
 class LoginController extends Controller
 {
@@ -28,7 +28,7 @@ class LoginController extends Controller
 	    			[
 	    				'username' => $request->username_login,
 	    				'password' => $request->password_login,
-	    				'languageCode' => $request->pilih_bahasa
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -39,9 +39,9 @@ class LoginController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($arrResult->status == "true"){
-	    	return redirect()->route('home')->with('alert', $arrResult->message);
+	    	return view('home', ['data' => $arrResult->dataListSet]);
 	    }else{
-	    	return redirect()->back()->with('alert', $arrResult->message);
+	    	return redirect()->back()->withErrors(['message' => $arrResult->message]);
 	    }
     }
 }

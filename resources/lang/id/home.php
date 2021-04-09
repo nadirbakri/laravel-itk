@@ -4,11 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Login Page Language Lines
+    | Home Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Login Menggunakan Locale Bahasa Indonesia. Akses di file
-    | login.blade.php
+    | Pengaturan Halaman Home Menggunakan Locale Bahasa Indonesia. Akses di file
+    | home.blade.php
     |
     */
 

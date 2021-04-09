@@ -25,8 +25,10 @@ Route::post('login/proses', 'LoginController@prosesLogin');
 /* Route Untuk Halaman Reset Password */
 Route::get('reset_password', 'ResetPasswordController@pageResetPassword');
 Route::get('reset_password/success', 'ResetPasswordController@pageSuccessResetPassword');
-Route::get('reset_password/otp', 'ResetPasswordController@pageOTPResetPassword');
+Route::get('reset_password/send_otp', 'ResetPasswordController@pageSendOTPResetPassword');
 Route::get('reset_password/resend', 'ResetPasswordController@pageResendResetPassword');
+Route::post('reset_password/proses', 'ResetPasswordController@prosesResetPassword');
+Route::post('reset_password/send_otp/proses', 'ResetPasswordController@prosesSendOTPResetPassword');
 
 /* Route Untuk View Home dan Logout dengan Middleware Auth */
 Route::get('home', 'HomeController@pageHome')->name('home');
