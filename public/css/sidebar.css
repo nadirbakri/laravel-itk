@@ -1,0 +1,95 @@
+@font-face {
+  font-family: Montserrat;
+  src: url('/fonts/Montserrat-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/Inter-SemiBold.ttf');
+}
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+.navbar {
+  padding: 0.3rem 1rem;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+.logo-text {
+  display: block;
+  float: left;
+  font-family: Montserrat;
+  color: #106DA7;
+  font-weight: 700;
+}
+
+.sidebar-heading img {
+  display: block;
+  float: left;
+  margin-right: 3%;
+  height: auto;
+}
+
+.list-group-item {
+  display: flex;
+  align-items: center;
+  font-family: Montserrat;
+  font-size: 2vh;
+  color: #084D86;
+}
+
+.list-group-item:hover {
+  background-color: transparent;
+}
+
+footer {
+  position: fixed;
+  height: 10%;
+  bottom: 0;
+  width: 100%;
+  max-width: 20%;
+  display: block;
+  font-size: 2vh;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}

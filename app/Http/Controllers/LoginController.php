@@ -13,7 +13,12 @@ class LoginController extends Controller
 {
     public function pageLogin()
     {
-        return view('login.login');
+    	// Session::flush();
+    	if(Session::has('token')){
+    		return redirect('home');
+    	}else{
+    		return view('login.login');
+    	}
     }
 
     public function prosesLogin(Request $request)
@@ -39,9 +44,21 @@ class LoginController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($arrResult->status == "true"){
-	    	return view('home', ['data' => $arrResult->dataListSet]);
+	    	Session::put('userID', $arrResult->dataListSet[0]->userID);
+	    	Session::put('userName', $arrResult->dataListSet[0]->userName);
+	    	Session::put('employeeNo', $arrResult->dataListSet[0]->employeeNo);
+	    	Session::put('email', $arrResult->dataListSet[0]->email);
+	    	Session::put('companyCode', $arrResult->dataListSet[0]->companyCode);
+	    	Session::put('companyName', $arrResult->dataListSet[0]->companyName);
+	    	Session::put('token', $arrResult->dataListSet[0]->token);
+	    	Session::put('defaultCompany', $arrResult->dataListSet[0]->defaultCompany);
+	    	Session::put('photo', $arrResult->dataListSet[0]->photo);
+	    	Session::put('officeLocation', $arrResult->dataListSet[0]->officeLocation);
+	    	Session::put('userType', $arrResult->dataListSet[0]->userType);
+
+	    	return response()->json(["status" => $arrResult->status, "message" => "/home"]);
 	    }else{
-	    	return redirect()->back()->withErrors(['message' => $arrResult->message]);
+	    	return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
 	    }
     }
 }

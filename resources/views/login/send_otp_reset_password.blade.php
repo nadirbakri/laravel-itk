@@ -8,7 +8,7 @@
 <style type="text/css">
 	@media only screen and (max-width: 2600px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_reset_password.png') }}');
+			background: url('/pictures/bg_image_reset_password.png');
 			background-size: 50% !important;
 			background-position: 75% -5% !important;
 			background-repeat: no-repeat;
@@ -47,7 +47,7 @@
 	}
 	@media only screen and (max-width: 1390px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_reset_password.png') }}');
+			background: url('/pictures/bg_image_reset_password.png');
 			background-size: 50% !important;
 			background-position: 90% -5% !important;
 			background-repeat: no-repeat;
@@ -179,16 +179,17 @@
 			</a>
 			<p class="judul-text">{{ __('send_otp_reset_password.judul') }}</p>
 			<p class="bawah-judul-text">{{ __('send_otp_reset_password.bawah_judul') }}</p>
-			<a class="resend-otp-link" href="{{ url('reset_password/resend_otp') }}">
+			<a class="resend-otp-link" href="{{ url('reset_password/resend') }}">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Resend">
 				<h4 class="resend-otp-text">{{ __('send_otp_reset_password.resend_otp') }}</h4>
 			</a>
 			<form id="send_otp_form" method="post">
 				@csrf
-				<div class="form-group">
+				<div class="form-group form-invalid">
 					<label>{{ __('send_otp_reset_password.label_otp') }}</label>
-					<input type="hidden" class="form-control" name="email_otp" id="email_otp" value="yafie.achmad@intikom.co.id">
+					<input type="hidden" class="form-control" name="email_otp" id="email_otp" value="{{ Session::get('email_reset_password') }}">
 					<input type="text" class="form-control enter-otp" name="enter_otp" id="enter_otp" value="{{ old('enter_otp') }}" placeholder="{{ __('send_otp_reset_password.placeholder_otp') }}">
+					<label class="text-danger">&nbsp;</label>
 				</div>
 				<div class="row">
 					<div class="col-12 form-group">
@@ -269,8 +270,12 @@
 						type: "POST",
 						data: $('#send_otp_form').serialize(),
 						success: function(response) {
-							$('#notification').modal('show');
-							$('#message-notification').html(response);
+							if(response.status == "true"){
+								window.location = response.message;
+							}else{
+								$('#notification').modal('show');
+								$('#message-notification').html(response.message);
+							}
 						},
 						error: function(response) {
 							$('#notification').modal('show');

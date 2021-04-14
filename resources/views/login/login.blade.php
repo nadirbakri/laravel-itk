@@ -8,7 +8,7 @@
 <style type="text/css">
 	@media only screen and (max-width: 2600px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_login.png') }}');
+			background: url('/pictures/bg_image_login.png');
 			background-size: 75% !important;
 			background-position: 100% -5% !important;
 			background-repeat: no-repeat;
@@ -41,7 +41,7 @@
 	}
 	@media only screen and (max-width: 1390px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_login.png') }}');
+			background: url('/pictures/bg_image_login.png');
 			background-size: 70% !important;
 			background-position: 100% 100% !important;
 			background-repeat: no-repeat;
@@ -84,7 +84,7 @@
 			vertical-align: middle;
 		}
 		.image-logo{
-			padding-left: 27%;
+			padding-left: 30%;
 			align-items: center;
 			text-align: center;
 			vertical-align: middle;
@@ -145,22 +145,22 @@
 			<p class="judul-text">{{ __('login.judul') }}</p>
 			<p class="bawah-judul-text">{{ __('login.bawah_judul') }}</p>
 
-			<form id="login_form" action="{{ url('login/proses') }}" method="post">
+			<form id="login_form" method="post">
 				@csrf
-				<div class="form-group">
+				<div class="form-group form-invalid">
 					<label>{{ __('login.label_username') }}</label>
 					<input type="text" class="form-control" name="username_login" id="username_login" value="{{ old('username_login') }}" placeholder="{{ __('login.placeholder_username') }}">
-                    <span id="#username_error" class="text-danger"></span>
+					<label class="text-danger">&nbsp</label>
 				</div>
-				<div class="form-group">
+				<div class="form-group form-invalid">
 					<label>{{ __('login.label_password') }}</label>
 					<div class="input-group">
 						<input type="password" class="form-control" name="password_login" id="password_login" placeholder="{{ __('login.placeholder_password') }}">
 						<div class="input-group-append">
 							<button class="btn rounded-right" type="button" id="show_password"><i id="icon_show_password" class="fa fa-eye" aria-hidden="true"></i></button>
 						</div>
-						<span id="#password_error" class="text-danger"></span>
 					</div>
+					<label class="text-danger">&nbsp</label>
 				</div>
 				<p class="forgot-password-text"><a href="{{ url('reset_password') }}">{{ __('login.label_forgot_password') }}</a></p>
 				<div class="row">
@@ -228,6 +228,7 @@
 		$('#notification').on('hidden.bs.modal', function () {
 			$('#notification').modal('hide');
 		})
+		
 		$("#show_password").on('click', function(event) {
 			event.preventDefault();
 			if($('#password_login').attr("type") == "text"){
@@ -288,6 +289,31 @@
 					} else {
 						error.insertAfter(element);
 					}
+				},
+				submitHandler: function(form) {
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					});
+					$.ajax({
+						url: "{{ url('login/proses') }}",
+						type: "POST",
+						data: $('#login_form').serialize(),
+						success: function(response) {
+							if(response.status == "true"){
+								window.location = response.message;
+							}else{
+								$('#notification').modal('show');
+								$('#message-notification').html(response.message);
+							}
+						},
+						error: function(response) {
+							$('#notification').modal('show');
+							$('#message-notification').html(response);
+						}
+
+					});
 				}
 			})
 		} 

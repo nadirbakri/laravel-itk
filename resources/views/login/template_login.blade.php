@@ -3,82 +3,11 @@
 <head>
 	@yield('title-content')
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="{{ URL::asset('/pictures/favicon.png') }}" type="image/x-icon"/>
+	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<style type="text/css">
-		@font-face {
-			font-family: Montserrat;
-			src: url('{{ url('/fonts/Montserrat-SemiBold.ttf') }}');
-		}
-		@font-face {
-			font-family: Inter;
-			src: url('{{ url('/fonts/Inter-SemiBold.ttf') }}');
-		}
-		body{
-			display: block;
-		}
-		a{
-			display: inline-block;
-			align-items: center;
-		}
-		.right-content img {
-			display: block;
-			float: left;
-			margin-right: 3%;
-			height: auto;
-		}
-		.right-content p {
-			clear: both;
-		}
-		.logo-text {
-			display: block;
-			float: left;
-			font-family: Montserrat;
-			color: #106DA7;
-			font-weight: 500;
-		}
-		.judul-text {
-			display: block;
-			font-family: Inter;
-			font-size: 4.7vh;
-		}
-		.forgot-password-text {
-			display: block;
-			font-family: Montserrat;
-			font-size: 2.3vh;
-			font-weight: 500;
-		}
-		form label {
-			display: block;
-			font-family: Montserrat;
-			padding-top: 0.5%;
-			font-size: 2.3vh;
-			font-weight: 500;
-		}
-		footer {
-			height: 7%;
-			bottom: 0;
-			width: 100%;
-			max-width: 50%;
-			display: block;
-			font-size: 2.5vh;
-		}
-		.danger {
-			border-color: #f44336;
-		}
-		.modal-header {
-			border-bottom:1px solid #eee;
-			background-color: #f44336;
-			-webkit-border-top-left-radius: 5px;
-			-webkit-border-top-right-radius: 5px;
-			-moz-border-radius-topleft: 5px;
-			-moz-border-radius-topright: 5px;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-		}
-	</style>
+	<link href="{{ asset('css/login.css') }}" rel="stylesheet">
 	@yield('css-content')
 </head>
 <body>

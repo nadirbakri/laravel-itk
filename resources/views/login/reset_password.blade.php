@@ -8,7 +8,7 @@
 <style type="text/css">
 	@media only screen and (max-width: 2600px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_reset_password.png') }}');
+			background: url('/pictures/bg_image_reset_password.png');
 			background-size: 50% !important;
 			background-position: 90% -5% !important;
 			background-repeat: no-repeat;
@@ -41,7 +41,7 @@
 	}
 	@media only screen and (max-width: 1390px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_reset_password.png') }}');
+			background: url('/pictures/bg_image_reset_password.png');
 			background-size: 50% !important;
 			background-position: 90% -5% !important;
 			background-repeat: no-repeat;
@@ -84,7 +84,7 @@
 			vertical-align: middle;
 		}
 		.image-logo{
-			padding-left: 25%;
+			padding-left: 31%;
 			align-items: center;
 			text-align: center;
 			vertical-align: middle;
@@ -145,9 +145,10 @@
 
 			<form id="reset_password_form" method="post">
 				@csrf
-				<div class="form-group">
+				<div class="form-group form-invalid">
 					<label>{{ __('reset_password.label_email') }}</label>
 					<input type="email" class="form-control" name="email_reset_password" id="email_reset_password" value="{{ old('email_reset_password') }}" placeholder="{{ __('reset_password.placeholder_email') }}">
+					<label class="text-danger">&nbsp;</label>
 				</div>
 				<div class="row">
 					<div class="col-12 form-group">
@@ -164,20 +165,17 @@
 			<span class="text-muted">© Copyright PT Intikom Berlian Mustika 2021</span>
 		</div>
 	</footer>
-	<div class="modal fade" tabindex="-1" role="dialog" id="notification">
+	<div class="modal fade" role="dialog" id="notification">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Notification</h5>
+					<h5 class="modal-title">Error!</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<span id="message-notification"></span>
-				</div>
-				<div class="modal-footer float-right">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<span id="message-notification">{{ $errors->first() }}</span>
 				</div>
 			</div>
 		</div>
@@ -227,8 +225,12 @@
 						type: "POST",
 						data: $('#reset_password_form').serialize(),
 						success: function(response) {
-							$('#notification').modal('show');
-							$('#message-notification').html(response);
+							if(response.status == "true"){
+								window.location = response.message;
+							}else{
+								$('#notification').modal('show');
+								$('#message-notification').html(response.message);
+							}
 						},
 						error: function(response) {
 							$('#notification').modal('show');

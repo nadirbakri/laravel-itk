@@ -18,7 +18,11 @@ class ResetPasswordController extends Controller
 
     public function pageSendOTPResetPassword()
     {
-        return view('login.send_otp_reset_password');
+        if(Session::has('email_reset_password')){
+            return view('login.send_otp_reset_password');
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function pageSuccessResetPassword()
@@ -28,7 +32,13 @@ class ResetPasswordController extends Controller
 
     public function pageResendResetPassword()
     {
-        return view('login.resend_reset_password');
+        if(Session::has('email_reset_password')){
+            return view('login.resend_reset_password');
+        }else{
+            return redirect()->back();
+        }
+
+        // return view('login.resend_reset_password');
     }
 
     public function prosesResetPassword(Request $request)
@@ -50,14 +60,14 @@ class ResetPasswordController extends Controller
             var_dump($e->getResponse());
         }
 
-        Session::put('email_reset_password', $request->email_reset_password);
-
         $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->status == "true"){
-            return redirect('reset_password/enter_otp');
+            Session::put('email_reset_password', $request->email_reset_password);
+
+            return response()->json(["status" => $arrResult->status, "message" => "/reset_password/send_otp"]);
         }else{
-            return response()->json($arrResult->message);
+            return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
         }
     }
 
@@ -83,12 +93,12 @@ class ResetPasswordController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        dd($arrResult);
-
         if($arrResult->status == "true"){
-            return view('reset_password/success');
+            Session::forget('email_reset_password');
+
+            return response()->json(["status" => $arrResult->status, "message" => "/reset_password/success"]);
         }else{
-            return response()->json($arrResult->message);
+            return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
         }
     }
 }

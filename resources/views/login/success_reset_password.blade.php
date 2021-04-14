@@ -8,7 +8,7 @@
 <style type="text/css">
 	@media only screen and (max-width: 2600px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_success_reset_password.png') }}');
+			background: url('/pictures/bg_image_success_reset_password.png');
 			background-size: 50% !important;
 			background-position: 90% 0% !important;
 			background-repeat: no-repeat;
@@ -42,7 +42,7 @@
 	}
 	@media only screen and (max-width: 1390px) {
 		body{
-			background: url('{{ url('/pictures/bg_image_success_reset_password.png') }}');
+			background: url('/pictures/bg_image_success_reset_password.png');
 			background-size: 50% !important;
 			background-position: 90% 0% !important;
 			background-repeat: no-repeat;
@@ -88,7 +88,7 @@
 			vertical-align: middle;
 		}
 		.image-logo{
-			padding-left: 25%;
+			padding-left: 30%;
 			align-items: center;
 			text-align: center;
 			vertical-align: middle;
