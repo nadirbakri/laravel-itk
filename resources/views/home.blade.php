@@ -9,32 +9,30 @@
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 	<style type="text/css">
-		.toogle-icon {
-			max-width: 15%;
-		}
 		.toogle-icon img {
-			max-width: 15%;
+			max-width: 45%;
 		}
 		.sidebar-heading {
-			margin-top: 5%;
+			margin-top: 2%;
 			display:flex;
     		align-items:center;
 		}
 		.sidebar-heading img {
-			max-width: 30%;
+			max-width: 25%;
 		}
 		.list-group-item {
 			border: 0;
 			margin-top: 15%;
 		}
 		.logo-text {
-			font-size: 5vh;
+			font-size: 4.5vh;
 			text-align: center;
 		}
 		.list-group-item img {
-			max-width: 20%;
+			max-width: 17%;
 			position: absolute;
 			right: 70%;
+			margin-right: 2%;
 		}
 		.list-group-item span {
 			position: absolute;
@@ -42,6 +40,9 @@
 		}
 		.navbar {
 			background-color: #004883;
+		}
+		.right-link a {
+			display: inline-block;
 		}
 		.image-hover {
 			position: absolute;
@@ -99,6 +100,14 @@
 					<span>Medical</span>
 				</a>
 			</div>
+			<div>
+				<ul class="pagination">
+					<li><a href="#">1</a></li>
+					<li class="active"><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+				</ul>
+			</div>
 			<footer class="footer">
 				<div class="container">
 					<span class="text-muted">© Copyright <br>PT Intikom Berlian Mustika <br>2021</span>
@@ -109,34 +118,43 @@
 
 			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
 				<a href="#" class="toogle-icon" id="menu-toggle"><img src="{{ url('/pictures/bars-white.png') }}" alt="Toogle"></a>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Link</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Dropdown
-							</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</li>
-					</ul>
+				<div class="navbar-collapse breadcrumb-link">
+					<?php $link = "" ?>
+					@for($i = 1; $i <= count(Request::segments()); $i++)
+						@if($i < count(Request::segments()) & $i > 0)
+							<?php $link .= "/" . Request::segment($i); ?>
+							<a href="<?= $link ?>">{{ ucwords(str_replace('-',' ',Request::segment($i)))}}</a> /
+						@else {{ucwords(str_replace('-',' ',Request::segment($i)))}}
+						@endif
+					@endfor
+				</div>
+				<div class="navbar-collapse company-link" style="display: block !important;">
+					<span>PT {{ Session::get('companyName') }} Berlian Mustika</span> 
+				</div>
+				<div class="navbar-collapse right-link">
+					<span class="navbar-divide-complete">|</span>
+					<div class="img-setting-link"><a href="#"><img src="{{ url('/pictures/setting-white.png') }}" alt="Setting"></a></div>
+					<span class="navbar-divide">|</span>
+					<div class="dropdown-profile">
+						@if(Session::get('photo') == NULL)
+						<img src="{{ url('/pictures/default-profile.png') }}" alt="Profile">
+						@else
+						<img src="{{ url(Session::get('photo')) }}" alt="Profile">
+						@endif
+						<div class="dropdown-profile-content dropdown-menu">
+							<p>Hello, {{ Session::get('userName') }}</p>
+							<p>Welcome Back</p>
+							<hr>
+							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/languages.png') }}" alt="Languages"> <span>Change Language</span></a>
+							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/password.png') }}" alt="Password"> <span>Change Password</span></a>
+							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/sign_out.png') }}" alt="Logout"> <span>Sign Out</span></a>
+						</div>
+					</div>
 				</div>
 			</nav>
 
 			<div class="container-fluid">
-				<h1 class="mt-4">Simple Sidebar</h1>
-				<p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-				<p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+				
 			</div>
 		</div>
 	</div>

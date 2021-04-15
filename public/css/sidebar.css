@@ -13,7 +13,18 @@
 }
 
 .navbar {
-  padding: 0.3rem 1rem;
+  padding: 0 1rem;
+}
+
+.toogle-icon {
+  max-width: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.right-link {
+  display: flex;
+  align-items: center;
 }
 
 #sidebar-wrapper {
@@ -65,8 +76,145 @@
   color: #084D86;
 }
 
+.breadcrumb-link {
+  font-family: Montserrat;
+  font-size: 2vh;
+  color: #fff;
+}
+
+.right-link {
+  max-width: 15%;
+  font-family: Montserrat;
+  font-size: 1.5vh;
+  color: #fff;
+}
+
+.company-link {
+  max-width: 20%;
+  text-align: right;
+  font-family: Montserrat;
+  font-size: 1.5vh;
+  color: #fff;
+}
+
+.nav-link {
+  font-family: Montserrat;
+  font-size: 2vh;
+  color: #fff !important;
+}
+
+/*.img-setting-link img {
+  max-width: 99%;
+}
+
+.dropdown-profile img {
+  max-width: 99%;
+}*/
+
+.navbar-divide-complete {
+  font-size: 3vh;
+  color: #fff;
+  padding-left: 1rem;
+}
+
+.navbar-divide {
+  font-size: 3vh;
+  color: #fff;
+  padding-right: 0.5rem;
+}
+
 .list-group-item:hover {
   background-color: transparent;
+}
+
+.list-group-item span {
+  color: #1B73AB;
+}
+
+hr {
+  margin-left: 8%;
+  margin-right: 8%;
+}
+
+.dropdown-menu {
+  max-width: 10%;
+  top: 95%;
+  left: unset;
+  font-weight: 700;
+  font-family: Inter;
+  font-size: 1.7vh;
+}
+
+.dropdown-item {
+  padding-left: 7%;
+}
+
+.dropdown-item span {
+  padding-left: 10%;
+}
+
+.dropdown-menu p {
+  margin: 4% 8%;
+}
+
+.dropdown-profile, .img-setting-link {
+  display: inline-block;
+  max-width: 50%;
+  padding: 0.7rem;
+}
+
+.dropdown-profile-content {
+  display: none;
+  position: absolute;
+  right: 4%;
+  background-color: #F9F8F8;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  color: #000;
+}
+
+.dropdown-item img {
+  max-width: 15%;
+}
+
+.dropdown-profile-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-profile:hover .dropdown-profile-content {
+  display: block;
+}
+
+.dropdown-profile:hover {
+  background-color: #F9F8F8;
+}
+
+.pagination {
+}
+
+.pagination li {
+  margin: 2%;
+}
+
+li a {
+  border: solid 1px #d7d7d7;
+  border-radius: 0.7rem;
+  background-color: #857979;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  padding: 0.5rem 0.7rem;
+}
+
+li:hover a {
+  color: #fff;
+}
+
+li.active a {
+  color: #fdfdfd;
+  background-color: #1d1f20;
+  border: solid 1px #1d1f20;
 }
 
 footer {
