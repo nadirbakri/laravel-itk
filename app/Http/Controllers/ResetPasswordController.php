@@ -32,13 +32,7 @@ class ResetPasswordController extends Controller
 
     public function pageResendResetPassword()
     {
-        if(Session::has('email_reset_password')){
-            return view('login.resend_reset_password');
-        }else{
-            return redirect()->back();
-        }
-
-        // return view('login.resend_reset_password');
+        return view('login.resend_reset_password');
     }
 
     public function prosesResetPassword(Request $request)

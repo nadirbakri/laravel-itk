@@ -57,6 +57,14 @@
 			left: 10%;
 			background-color: #004883;
 		}
+		.img-setting-link img {
+			max-width: 60%;
+			max-height: 60%;
+		}
+		.dropdown-profile img {
+			max-width: 60%;
+			max-height: 60%;
+		}
 	</style>
 </head>
 
@@ -68,45 +76,14 @@
 				<span class="logo-text">Stream</span>
 			</div>
 			<div class="list-group list-group-flush">
-				<a href="#" class="list-group-item list-group-item-action">
+				@foreach (Session::get('menuList') as $menu)
+				<a href="{{ url($menu['link']) }}" target="iframe_home" class="list-group-item list-group-item-action">
 					<div class="color-active"></div>
-					<img src="{{ url('/icons/sidebar/home.png') }}" alt="Home">
-					<img src="{{ url('/icons/sidebar/home-bg.png') }}" class="image-hover" alt="Home"> 
-					<span>Home</span>
+					<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
+					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.png') }}" class="image-hover" alt="{{ $menu['title'] }}"> 
+					<span>{{ $menu['title'] }}</span>
 				</a>
-				<a href="#" class="list-group-item list-group-item-action">
-					<img src="{{ url('/icons/sidebar/personel.png') }}" alt="Personel"> 
-					<img src="{{ url('/icons/sidebar/personel-bg.png') }}" class="image-hover" alt="Personel">
-					<span>Personel</span>
-				</a>
-				<a href="#" class="list-group-item list-group-item-action">
-					<img src="{{ url('/icons/sidebar/time_management.png') }}" alt="Time Management"> 
-					<img src="{{ url('/icons/sidebar/time_management-bg.png') }}" class="image-hover" alt="Time Management">
-					<span>Time Management</span>
-				</a>
-				<a href="#" class="list-group-item list-group-item-action">
-					<img src="{{ url('/icons/sidebar/payroll.png') }}" alt="Payroll"> 
-					<img src="{{ url('/icons/sidebar/payroll-bg.png') }}" class="image-hover" alt="Payroll">
-					<span>Payroll</span>
-				</a>
-				<a href="#" class="list-group-item list-group-item-action">
-					<img src="{{ url('/icons/sidebar/report.png') }}" alt="Report"> 
-					<img src="{{ url('/icons/sidebar/report-bg.png') }}" class="image-hover" alt="Report">
-					<span>Report</span>
-				</a>
-				<a href="#" class="list-group-item list-group-item-action">
-					<img src="{{ url('/icons/sidebar/medical.png') }}" alt="Medical"> 
-					<img src="{{ url('/icons/sidebar/medical-bg.png') }}" class="image-hover" alt="Home">
-					<span>Medical</span>
-				</a>
-			</div>
-			<div>
-				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li class="active"><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-				</ul>
+				@endforeach
 			</div>
 			<footer class="footer">
 				<div class="container">
@@ -118,6 +95,7 @@
 
 			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
 				<a href="#" class="toogle-icon" id="menu-toggle"><img src="{{ url('/pictures/bars-white.png') }}" alt="Toogle"></a>
+
 				<div class="navbar-collapse breadcrumb-link">
 					<?php $link = "" ?>
 					@for($i = 1; $i <= count(Request::segments()); $i++)
@@ -129,7 +107,7 @@
 					@endfor
 				</div>
 				<div class="navbar-collapse company-link" style="display: block !important;">
-					<span>PT {{ Session::get('companyName') }} Berlian Mustika</span> 
+					<span>{{ Session::get('companyName') }}</span> 
 				</div>
 				<div class="navbar-collapse right-link">
 					<span class="navbar-divide-complete">|</span>
@@ -147,15 +125,16 @@
 							<hr>
 							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/languages.png') }}" alt="Languages"> <span>Change Language</span></a>
 							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/password.png') }}" alt="Password"> <span>Change Password</span></a>
-							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/sign_out.png') }}" alt="Logout"> <span>Sign Out</span></a>
+							<a class="dropdown-item" href="{{ url('logout') }}"><img src="{{ url('/pictures/sign_out.png') }}" alt="Logout"> <span>Sign Out</span></a>
 						</div>
 					</div>
 				</div>
 			</nav>
+			<iframe src="" name="iframe_home" class="container-fluid" frameborder="0"></iframe>
+			<!-- <div class="container-fluid"> -->
+				<!-- <iframe frameborder="0"></iframe> -->
 
-			<div class="container-fluid">
-				
-			</div>
+			<!-- </div> -->
 		</div>
 	</div>
 </body>

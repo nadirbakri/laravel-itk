@@ -21,6 +21,7 @@ Route::get('/', function () {
 /* Route Untuk Halaman Login */
 Route::get('login', 'LoginController@pageLogin');
 Route::post('login/proses', 'LoginController@prosesLogin');
+Route::get('logout', 'LoginController@prosesLogout');
 
 /* Route Untuk Halaman Reset Password */
 Route::get('reset_password', 'ResetPasswordController@pageResetPassword');
@@ -30,9 +31,11 @@ Route::get('reset_password/resend', 'ResetPasswordController@pageResendResetPass
 Route::post('reset_password/proses', 'ResetPasswordController@prosesResetPassword');
 Route::post('reset_password/send_otp/proses', 'ResetPasswordController@prosesSendOTPResetPassword');
 
-/* Route Untuk View Home dan Logout dengan Middleware Auth */
+/* Route Untuk View Home */
 Route::get('home', 'HomeController@pageHome')->name('home');
-Route::get('logout', 'LoginController@logout')->name('logout');
+
+/* Route Untuk Menu Personel */
+Route::get('personel', 'PersonelController@pagePersonel');
 
 /* Route Untuk Set Languange */
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController@switchLang']);

@@ -191,7 +191,7 @@
 				@csrf
 				<div class="form-group form-invalid">
 					<label>{{ __('resend_reset_password.label_otp') }}</label>
-					<input type="hidden" class="form-control" name="email_otp" id="email_otp">
+					<input type="hidden" class="form-control" name="email_otp" id="email_otp" value="{{ Session::get('email_reset_password') }}">
 					<input type="text" class="form-control enter-otp" name="enter_otp" id="enter_otp" value="{{ old('enter_otp') }}" placeholder="{{ __('resend_reset_password.placeholder_otp') }}">
 					<label class="text-danger">&nbsp;</label>
 				</div>
