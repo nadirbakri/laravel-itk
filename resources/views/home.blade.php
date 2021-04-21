@@ -130,11 +130,7 @@
 					</div>
 				</div>
 			</nav>
-			<iframe src="" name="iframe_home" class="container-fluid" frameborder="0"></iframe>
-			<!-- <div class="container-fluid"> -->
-				<!-- <iframe frameborder="0"></iframe> -->
-
-			<!-- </div> -->
+			<iframe src="{{ url('/dashboard') }}" name="iframe_home" class="container-fluid" frameborder="0"></iframe>
 		</div>
 	</div>
 </body>
@@ -149,10 +145,10 @@
 </script>
 
 <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();	
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();	
+		$("#wrapper").toggleClass("toggled");
+	});
+</script>
 
 </html>

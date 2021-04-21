@@ -37,5 +37,8 @@ Route::get('home', 'HomeController@pageHome')->name('home');
 /* Route Untuk Menu Personel */
 Route::get('personel', 'PersonelController@pagePersonel');
 
+/* Route Untuk Menu Personel */
+Route::get('dashboard', 'DashboardController@pageDashboard');
+
 /* Route Untuk Set Languange */
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController@switchLang']);

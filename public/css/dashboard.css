@@ -1,0 +1,132 @@
+@font-face {
+	font-family: Montserrat;
+	src: url('/fonts/Montserrat-Bold.ttf');
+}
+@font-face {
+	font-family: Montserrat-Medium;
+	src: url('/fonts/Montserrat-SemiBold.ttf');
+}
+@font-face {
+	font-family: Inter;
+	src: url('/fonts/Inter-SemiBold.ttf');
+}
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+a:hover {
+	color: inherit;
+	text-decoration: inherit;
+}
+.card {
+	border-radius: 1rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+.col {
+	padding-bottom: 15px;
+}
+.card-body {
+	padding: 1rem;
+}
+.card-top .card-body {
+    /*display: flex;
+    position: relative;*/
+}
+.card-top {
+	font-family: Montserrat-Medium;
+	color: #2E8181;
+}
+.text-card-welcome {
+	flex: 0 0 50%;
+    max-width: 50%;
+}
+.img-card-welcome {
+	flex: 0 0 50%;
+    max-width: 50%;
+    position: absolute;
+    right: -5%;
+    bottom: 3%;
+}
+.hello-text {
+	font-family: Montserrat;
+	font-size: 5vh;
+	color: #084D86;
+}
+.text-company-detail, .detail-middle-card {
+    display: flex;
+}
+.text-company-detail div {
+	padding: 0;
+}
+.number-company-detail {
+	font-family: Montserrat;
+}
+.card-middle .card-body {
+	justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+.card-middle {
+	font-family: Montserrat;
+	font-size: 2.2vh;
+	color: #2E8181;
+	text-align: center;
+}
+.text-middle-card {
+	font-family: Montserrat;
+	font-size: 2.5vh;
+	color: #2E8181;
+	text-align: center;
+	flex: 0 0 20%;
+    max-width: 20%;
+    margin: auto;
+}
+.line-bottom-card {
+	flex: 0 0 4%;
+    max-width: 4%;
+}
+.table-middle-card {
+	flex: 0 0 75%;
+    max-width: 75%;
+    font-size: 1.5vh;
+}
+.table td, .table th {
+	padding: 0.5rem;
+}
+.card-middle p {
+	margin-bottom: 0;
+}
+.count-card-middle {
+	font-family: Montserrat;
+	font-size: 8vh;
+	color: #084D86;
+	text-align: center;
+}
+.vl {
+	border-left: 1px solid #73A9CC;
+	position: absolute;
+	left: 24%;
+	margin-left: -3px;
+	margin-top: 2%;
+	top: 0;
+	bottom: 10%;
+}
+.chart-area-payroll {
+	position: relative;
+}
+
+.chart-area-payroll > canvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	pointer-events:none;
+}
+.chart-payroll {
+	max-width: 100%;
+	overflow-x: scroll;
+}
+
+/* Calendar CSS */
+.calendar h2 {
+	font-size: 3vh;
+}
