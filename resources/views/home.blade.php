@@ -70,7 +70,7 @@
 
 <body>
 	<div class="d-flex" id="wrapper">
-		<div class="border-right" id="sidebar-wrapper">
+		<!-- <div class="border-right active" id="sidebar-wrapper">
 			<div class="sidebar-heading">
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
@@ -91,7 +91,34 @@
 				</div>
 			</footer>
 		</div>
-		<div class="bg-light" id="page-content-wrapper">
+		<div class="bg-light" id="page-content-wrapper"> -->
+
+			<nav id="sidebar" class="active">
+				<h1><a href="index.html" class="logo">M.</a></h1>
+				<ul class="list-unstyled components mb-5">
+					<li class="active">
+						<a href="#"><span class="fa fa-home"></span> Home</a>
+					</li>
+					<li>
+						<a href="#"><span class="fa fa-user"></span> About</a>
+					</li>
+					<li>
+						<a href="#"><span class="fa fa-sticky-note"></span> Blog</a>
+					</li>
+					<li>
+						<a href="#"><span class="fa fa-cogs"></span> Services</a>
+					</li>
+					<li>
+						<a href="#"><span class="fa fa-paper-plane"></span> Contacts</a>
+					</li>
+				</ul>
+
+				<div class="footer">
+					<p>
+						Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+					</p>
+				</div>
+			</nav>
 
 			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
 				<a href="#" class="toogle-icon" id="menu-toggle"><img src="{{ url('/pictures/bars-white.png') }}" alt="Toogle"></a>

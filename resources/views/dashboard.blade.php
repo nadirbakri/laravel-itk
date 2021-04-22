@@ -72,7 +72,31 @@
 			<div class="col col-4">
 				<div class="card h-100">
 					<div class="card-body">
-						
+						<h4 class="title-attendance">Attendance Today</h4>
+						<table class="table table-attendance">
+							<tbody>
+								<tr>
+									<th>Present</td>
+									<td>950</td>
+									<td>95,0%</td>
+								</tr>
+								<tr>
+									<th>Late</td>
+									<td>35</td>
+									<td>3,5%</td>
+								</tr>
+								<tr>
+									<th>Absent</td>
+									<td>15</td>
+									<td>1,5%</td>
+								</tr>
+								<tr>
+									<th>Early Back</td>
+									<td>5</td>
+									<td>0,5%</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -96,9 +120,12 @@
 		<div class="row card-top">
 			<div class="col col-8">
 				<div class="card h-100">
-					<div class="card-body chart-area-payroll">
-						<div class="chart-payroll">
-							<canvas id="graph_payroll" height="300" width="1200"></canvas>
+					<div class="card-body">
+						<h4 class="title-chart">Payroll</h4>
+						<div class="chart-area-payroll">
+							<div class="chart-payroll">
+								<canvas id="graph_payroll" height="300" width="0"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -115,9 +142,12 @@
 		<div class="row card-top">
 			<div class="col col-8">
 				<div class="card h-100">
-					<div class="card-body chart-area-overtimepay">
-						<div class="chart-overtimepay">
-							<canvas id="graph_overtime_pay" height="300" width="1200"></canvas>
+					<div class="card-body">
+						<h4 class="title-chart">Overtime Pay</h4>
+						<div class="chart-area-overtimepay">
+							<div class="chart-overtimepay">
+								<canvas id="graph_overtime_pay" height="300" width="0"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -435,19 +465,66 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" role="dialog" id="data-from-chart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="title-modal-from-chart"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="card-table table">
+						<thead>
+							<tr>
+								<th>Label</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td id="label-value"></td>
+								<td id="value-value"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script src="https://rawgit.com/beaver71/Chart.PieceLabel.js/master/build/Chart.PieceLabel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <script src="{{ asset('js/jquery.simple-calendar.js') }}"></script>
 <script>
 	var $calendar;
 	$(document).ready(function () {
 		let container = $(".calendar-dashboard").simpleCalendar({
-      		fixedStartDay: 0, // begin weeks by sunday
+      		fixedStartDay: 0, // Awal Minggu adalah hari Minggu
       		disableEmptyDetails: true,
+      		displayEvent: true,
+      		events: [
+		        {
+		        	startDate: new Date('2021-04-12'),
+		        	endDate: new Date('2021-04-12'),
+		        	summary: 'Event A'
+		        },
+		        {
+		        	startDate: new Date('2021-04-21'),
+		        	endDate: new Date('2021-04-22'),
+		        	summary: 'Event B'
+		        },
+		        {
+		        	startDate: new Date('2021-04-27'),
+		        	endDate: new Date('2021-04-30'),
+		        	summary: 'Event C'
+		        }
+		    ],
       	});
 
 		$calendar = container.data('plugin_simpleCalendar');
@@ -550,7 +627,8 @@
 				"#004883",
 				"#004883",
 				"#004883"
-				]
+				],
+				maxBarThickness: 20
 			}]
 		};
 
@@ -609,7 +687,8 @@
 				backgroundColor: [
 				"#4472C4",
 				"#004883"
-				]
+				],
+				maxBarThickness: 20
 			}]
 		};
 
@@ -682,7 +761,7 @@
 				fontSize: 13,
 				fontFamily: 'Montserrat',
 				position: 'outside',
-				segment: false,
+				segment: true,
 				showActualPercentages: true,
 			}
 		};
@@ -703,16 +782,18 @@
 			},
 			scales: {
 				xAxes: [{
-					maxBarThickness: 20,
 					gridLines: {
 						display:false
 					} 
 				}],
 				yAxes: [{
 					ticks: {
+						fontFamily: 'Montserrat',
+						fontColor: '#4472C4',
 						callback: function(value, index, values) {
 							return value.toFixed(1) + ' %';
-						}
+						},
+						beginAtZero: true
 					}
 				}]
 			},
@@ -725,12 +806,12 @@
 				display: false
 			},
 			title: {
-				display: true,
+				display: false,
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
 				text: 'Payroll',
-				padding: 20
+				padding: 30
 			},
 			scales: {
 				xAxes: [{
@@ -741,17 +822,24 @@
 				yAxes: [{
 					display: true,
 					ticks: {
-						beginAtZero: true,
-						steps: 10,
-						stepValue: 500000000,
-						max: 5000000000
-					},
-					ticks: {
+						fontFamily: 'Montserrat',
+						fontColor: '#4472C4',
 						callback: function(value, index, values) {
-							return 'Rp ' + value;
-						}
+							return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+						},
+						beginAtZero: true,
+						stepSize: 1000000000,
+						max: 7000000000
 					}
 				}]
+			},
+			elements: {
+				line: {
+					tension: 0
+				},
+				point: {
+					radius: 5
+				}
 			}
 		};
 
@@ -762,33 +850,43 @@
 				display: false
 			},
 			title: {
-				display: true,
+				display: false,
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
 				text: 'Overtime Pay',
-				padding: 20
+				padding: 30
 			},
 			scales: {
 				xAxes: [{
 					gridLines: {
-						display:false
-					} 
+						display: false
+					},
+					ticks: {
+						padding: 20
+					},
 				}],
 				yAxes: [{
 					display: true,
 					ticks: {
-						beginAtZero: true,
-						steps: 10,
-						stepValue: 500000,
-						max: 5000000
-					},
-					ticks: {
+						fontFamily: 'Montserrat',
+						fontColor: '#4472C4',
 						callback: function(value, index, values) {
-							return 'Rp ' + value;
-						}
-					}
+							return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+						},
+						beginAtZero: true,
+						stepSize: 1000000,
+						max: 7000000
+					},
 				}]
+			},
+			elements: {
+				line: {
+					tension: 0
+				},
+				point: {
+					radius: 5
+				}
 			}
 		};
 
@@ -808,7 +906,6 @@
 			},
 			scales: {
 				xAxes: [{
-					maxBarThickness: 20,
 					gridLines: {
 						display:false
 					} 
@@ -816,10 +913,11 @@
 				yAxes: [{
 					display: true,
 					ticks: {
+						fontFamily: 'Montserrat',
+						fontColor: '#4472C4',
 						beginAtZero: true,
-						steps: 10,
-						stepValue: 5,
-						max: 25
+						stepSize: 5,
+						max: 30
 					},
 				}]
 			},
@@ -860,6 +958,37 @@
 			data: overtimeHourData,
 			options: chartOptionsOvertimeHour
 		});
+
+		chartEmployeeActive.onclick = function(evt) {
+			var activePoints = doughnutChartEmployeeActive.getElementsAtEvent(evt);
+			if (activePoints[0]) {
+				var chartData = activePoints[0]['_chart'].config.data;
+				var idx = activePoints[0]['_index'];
+				var chartOption = activePoints[0]['_chart'].options;
+
+				var label = chartData.labels[idx];
+				var value = chartData.datasets[0].data[idx];
+
+				$('#title-modal-from-chart').html(chartOption.title.text);
+				$('#label-value').html(label);
+				$('#value-value').html(value);
+				$('#data-from-chart').modal('show');
+			}
+		};
+
+		chartEmployeeService.onclick = function(evt) {
+			var activePoints = barChartEmployeeService.getElementsAtEvent(evt);
+			if (activePoints[0]) {
+				var chartData = activePoints[0]['_chart'].config.data;
+				var idx = activePoints[0]['_index'];
+				var chartOption = activePoints[0]['_chart'].options;
+
+				var label = chartData.labels[idx];
+				var value = chartData.datasets[0].data[idx];
+
+				$('#graph_employee_service').hide();
+			}
+		};
 	});
 </script>
 

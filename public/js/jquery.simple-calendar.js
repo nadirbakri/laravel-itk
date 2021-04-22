@@ -273,7 +273,9 @@
     },
     formatDateEvent: function (dateStart, dateEnd) {
       var formatted = '';
-      formatted += this.settings.days[dateStart.getDay()] + ' - ' + dateStart.getDate() + ' ' + this.settings.months[dateStart.getMonth()].substring(0, 3);
+      // formatted += this.settings.days[dateStart.getDay()] + ' - ' + dateStart.getDate() + ' ' + this.settings.months[dateStart.getMonth()].substring(0, 3);
+
+      formatted += dateStart.getDate() + ' ' + this.settings.months[dateStart.getMonth()].substring(0, 3);
 
       if (dateEnd.getDate() !== dateStart.getDate()) {
         formatted += ' to ' + dateEnd.getDate() + ' ' + this.settings.months[dateEnd.getMonth()].substring(0, 3)
