@@ -14,7 +14,7 @@ class LoginController extends Controller
     public function pageLogin()
     {
     	if(Session::has('token')){
-    		return redirect('home');
+    		return redirect('main');
     	}else{
     		return view('login.login');
     	}

@@ -32,13 +32,15 @@ Route::post('reset_password/proses', 'ResetPasswordController@prosesResetPasswor
 Route::post('reset_password/send_otp/proses', 'ResetPasswordController@prosesSendOTPResetPassword');
 
 /* Route Untuk View Home */
-Route::get('home', 'HomeController@pageHome')->name('home');
+Route::get('main', 'HomeController@pageMain')->name('main');
+Route::get('home', 'DashboardController@pageHomeDashboard');
+Route::get('home/breadcrumbs', 'HomeController@getURLBreadcrumbs');
 
 /* Route Untuk Menu Personel */
 Route::get('personel', 'PersonelController@pagePersonel');
 
-/* Route Untuk Menu Personel */
-Route::get('dashboard', 'DashboardController@pageDashboard');
+/* Route Untuk Menu Time Management */
+Route::get('time_management', 'TimeManagementController@pageTimeManagement');
 
 /* Route Untuk Set Languange */
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController@switchLang']);

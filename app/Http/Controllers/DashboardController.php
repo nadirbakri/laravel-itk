@@ -8,10 +8,10 @@ use App;
 
 class DashboardController extends Controller
 {
-    public function pageDashboard()
+    public function pageHomeDashboard()
     {
     	if(Session::has('token')){
-    		return view('dashboard');
+    		return view('home_dashboard');
     	}
     }
 }

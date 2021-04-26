@@ -17,9 +17,6 @@
 			display:flex;
     		align-items:center;
 		}
-		.sidebar-heading img {
-			max-width: 25%;
-		}
 		.list-group-item {
 			border: 0;
 			margin-top: 15%;
@@ -52,11 +49,6 @@
 		.list-group-item:hover .image-hover {
 			opacity: 1;
 		}
-		.list-group-item .color-active {
-			position: relative;
-			left: 10%;
-			background-color: #004883;
-		}
 		.img-setting-link img {
 			max-width: 60%;
 			max-height: 60%;
@@ -70,18 +62,19 @@
 
 <body>
 	<div class="d-flex" id="wrapper">
-		<!-- <div class="border-right active" id="sidebar-wrapper">
+		<div class="border-right active" id="sidebar-wrapper">
 			<div class="sidebar-heading">
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
 			</div>
 			<div class="list-group list-group-flush">
 				@foreach (Session::get('menuList') as $menu)
-				<a href="{{ url($menu['link']) }}" target="iframe_home" class="list-group-item list-group-item-action">
+				<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
 					<div class="color-active"></div>
 					<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
-					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.png') }}" class="image-hover" alt="{{ $menu['title'] }}"> 
+					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.png') }}" class="image-hover" alt="{{ $menu['title'] }}">
 					<span>{{ $menu['title'] }}</span>
+					<span class="tooltiptext">{{ $menu['title'] }}</span>
 				</a>
 				@endforeach
 			</div>
@@ -91,47 +84,13 @@
 				</div>
 			</footer>
 		</div>
-		<div class="bg-light" id="page-content-wrapper"> -->
-
-			<nav id="sidebar" class="active">
-				<h1><a href="index.html" class="logo">M.</a></h1>
-				<ul class="list-unstyled components mb-5">
-					<li class="active">
-						<a href="#"><span class="fa fa-home"></span> Home</a>
-					</li>
-					<li>
-						<a href="#"><span class="fa fa-user"></span> About</a>
-					</li>
-					<li>
-						<a href="#"><span class="fa fa-sticky-note"></span> Blog</a>
-					</li>
-					<li>
-						<a href="#"><span class="fa fa-cogs"></span> Services</a>
-					</li>
-					<li>
-						<a href="#"><span class="fa fa-paper-plane"></span> Contacts</a>
-					</li>
-				</ul>
-
-				<div class="footer">
-					<p>
-						Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-					</p>
-				</div>
-			</nav>
+		<div class="bg-light" id="page-content-wrapper">
 
 			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
 				<a href="#" class="toogle-icon" id="menu-toggle"><img src="{{ url('/pictures/bars-white.png') }}" alt="Toogle"></a>
 
-				<div class="navbar-collapse breadcrumb-link">
-					<?php $link = "" ?>
-					@for($i = 1; $i <= count(Request::segments()); $i++)
-						@if($i < count(Request::segments()) & $i > 0)
-							<?php $link .= "/" . Request::segment($i); ?>
-							<a href="<?= $link ?>">{{ ucwords(str_replace('-',' ',Request::segment($i)))}}</a> /
-						@else {{ucwords(str_replace('-',' ',Request::segment($i)))}}
-						@endif
-					@endfor
+				<div class="navbar-collapse breadcrumb-link" id="div-breadcrumbs">
+					
 				</div>
 				<div class="navbar-collapse company-link" style="display: block !important;">
 					<span>{{ Session::get('companyName') }}</span> 
@@ -157,7 +116,7 @@
 					</div>
 				</div>
 			</nav>
-			<iframe src="{{ url('/dashboard') }}" name="iframe_home" class="container-fluid" frameborder="0"></iframe>
+			<iframe src="{{ url('/home') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
 		</div>
 	</div>
 </body>
@@ -172,9 +131,50 @@
 </script>
 
 <script>
-	$("#menu-toggle").click(function(e) {
-		e.preventDefault();	
-		$("#wrapper").toggleClass("toggled");
+	(function($) {
+
+		"use strict";
+
+		var fullHeight = function() {
+
+			$('.js-fullheight').css('height', $(window).height());
+			$(window).resize(function(){
+				$('.js-fullheight').css('height', $(window).height());
+			});
+
+		};
+		fullHeight();
+
+		$('#menu-toggle').on('click', function () {
+			$('#sidebar-wrapper').toggleClass('active');
+		});
+
+	})(jQuery);
+
+	$(document).ready(function() {
+		$('.list-group-item-action').first().find('.color-active').toggleClass('active');
+
+		$('.list-group-item-action').on('click', function () {
+			$('.color-active').removeClass('active');
+			$(this).find('.color-active').toggleClass('active');
+		});
+
+		$('#iframe_dashboard').load(function() {
+			// alert($(this).get(0).contentWindow.location.href);
+
+			$.ajax({
+				url: "{{ url('home/breadcrumbs') }}",
+				type: "GET",
+				data: { "url_data" : $(this).get(0).contentWindow.location.href },
+				success: function(response) {
+					$('#div-breadcrumbs').html(response);
+				},
+				error: function(response) {
+					
+				}
+
+			});
+		}); 
 	});
 </script>
 
