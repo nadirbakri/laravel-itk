@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('home.judul') }}</title>
+	<title>{{ __('main.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 	<style type="text/css">
 		.toogle-icon img {
@@ -106,17 +106,17 @@
 						<img src="{{ url(Session::get('photo')) }}" alt="Profile">
 						@endif
 						<div class="dropdown-profile-content dropdown-menu">
-							<p>Hello, {{ Session::get('userName') }}</p>
-							<p>Welcome Back</p>
+							<p>{{ __('main.hello') }}, {{ Session::get('userName') }}</p>
+							<p>{{ __('main.welcome') }}</p>
 							<hr>
-							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/languages.png') }}" alt="Languages"> <span>Change Language</span></a>
-							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/password.png') }}" alt="Password"> <span>Change Password</span></a>
-							<a class="dropdown-item" href="{{ url('logout') }}"><img src="{{ url('/pictures/sign_out.png') }}" alt="Logout"> <span>Sign Out</span></a>
+							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/languages.png') }}" alt="Languages"> <span>{{ __('main.bahasa') }}</span></a>
+							<a class="dropdown-item" href="#"><img src="{{ url('/pictures/password.png') }}" alt="Password"> <span>{{ __('main.password') }}</span></a>
+							<a class="dropdown-item" href="{{ url('logout') }}"><img src="{{ url('/pictures/sign_out.png') }}" alt="Logout"> <span>{{ __('main.logout') }}</span></a>
 						</div>
 					</div>
 				</div>
 			</nav>
-			<iframe src="{{ url('/home') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
+			<iframe src="{{ url('/personel') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
 		</div>
 	</div>
 </body>
@@ -152,16 +152,17 @@
 	})(jQuery);
 
 	$(document).ready(function() {
+		$('.list-group-item-action').first().toggleClass('active');
 		$('.list-group-item-action').first().find('.color-active').toggleClass('active');
 
 		$('.list-group-item-action').on('click', function () {
+			$('.list-group-item-action').removeClass('active');
 			$('.color-active').removeClass('active');
 			$(this).find('.color-active').toggleClass('active');
+			$(this).toggleClass('active');
 		});
 
 		$('#iframe_dashboard').load(function() {
-			// alert($(this).get(0).contentWindow.location.href);
-
 			$.ajax({
 				url: "{{ url('home/breadcrumbs') }}",
 				type: "GET",

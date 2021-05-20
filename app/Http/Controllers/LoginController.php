@@ -56,7 +56,7 @@ class LoginController extends Controller
 	    	Session::put('userType', $arrResult->dataListSet[0]->userType);
 	    	Session::put('menuList', [[ 'title' => 'Home', 'icon' => 'home.png', 'icon-name' => 'home', 'link' => '/home' ], [ 'title' => 'Personel', 'icon' => 'personel.png', 'icon-name' => 'personel', 'link' => '/personel' ],  [ 'title' => 'Time Management', 'icon' => 'time_management.png', 'icon-name' => 'time_management', 'link' => '/time_management' ], [ 'title' => 'Payroll', 'icon' => 'payroll.png', 'icon-name' => 'payroll', 'link' => '/payroll' ], [ 'title' => 'Report', 'icon' => 'report.png', 'icon-name' => 'report', 'link' => '/report' ], [ 'title' => 'Medical', 'icon' => 'medical.png', 'icon-name' => 'medical', 'link' => '/medical' ]]);
 
-	    	return response()->json(["status" => $arrResult->status, "message" => "/home"]);
+	    	return response()->json(["status" => $arrResult->status, "message" => "/main"]);
 	    }else{
 	    	return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
 	    }

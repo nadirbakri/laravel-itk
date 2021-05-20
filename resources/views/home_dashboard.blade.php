@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('css/simple-calendar.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 	<style type="text/css">
@@ -40,18 +40,18 @@
 				<div class="card h-100">
 					<div class="card-body">
 						<div class="text-card-welcome">
-							<div class="hello-text">Hello {{ Session::get('userName') }}</div>
-							<p>Welcome Back</p>
+							<div class="hello-text">{{ __('dashboard.hello') }} {{ Session::get('userName') }}</div>
+							<p>{{ __('dashboard.welcome') }}</p>
 
 							<p>PT Intikom Berlian Mustika</p>
 							<div class="text-company-detail">
 								<div class="col-6">
 									<div class="number-company-detail">1000</div>
-									<div>Employees</div>
+									<div>{{ __('dashboard.employee') }}</div>
 								</div>
 								<div class="col-6">
 									<div class="number-company-detail">30</div>
-									<div>Open Positions</div>
+									<div>{{ __('dashboard.posisi') }}</div>
 								</div>
 							</div>
 						</div>
@@ -72,26 +72,26 @@
 			<div class="col col-4">
 				<div class="card h-100">
 					<div class="card-body">
-						<h4 class="title-attendance">Attendance Today</h4>
+						<h4 class="title-attendance">{{ __('dashboard.attend') }}</h4>
 						<table class="table table-attendance">
 							<tbody>
 								<tr>
-									<th>Present</td>
+									<th>{{ __('dashboard.present') }}</td>
 									<td>950</td>
 									<td>95,0%</td>
 								</tr>
 								<tr>
-									<th>Late</td>
+									<th>{{ __('dashboard.late') }}</td>
 									<td>35</td>
 									<td>3,5%</td>
 								</tr>
 								<tr>
-									<th>Absent</td>
+									<th>{{ __('dashboard.absent') }}</td>
 									<td>15</td>
 									<td>1,5%</td>
 								</tr>
 								<tr>
-									<th>Early Back</td>
+									<th>{{ __('dashboard.early_back') }}</td>
 									<td>5</td>
 									<td>0,5%</td>
 								</tr>
@@ -121,7 +121,7 @@
 			<div class="col col-8">
 				<div class="card h-100">
 					<div class="card-body">
-						<h4 class="title-chart">Payroll</h4>
+						<h4 class="title-chart">{{ __('dashboard.payroll') }}</h4>
 						<div class="chart-area-payroll">
 							<div class="chart-payroll">
 								<canvas id="graph_payroll" height="300" width="0"></canvas>
@@ -143,7 +143,7 @@
 			<div class="col col-8">
 				<div class="card h-100">
 					<div class="card-body">
-						<h4 class="title-chart">Overtime Pay</h4>
+						<h4 class="title-chart">{{ __('dashboard.overtime_pay') }}</h4>
 						<div class="chart-area-overtimepay">
 							<div class="chart-overtimepay">
 								<canvas id="graph_overtime_pay" height="300" width="0"></canvas>
@@ -243,12 +243,12 @@
 								<table class="card-table table">
 									<thead>
 										<tr>
-											<th>Employee No</th>
-											<th>Name</th>
-											<th>Location</th>
-											<th>Position</th>
-											<th>Start Date</th>
-											<th>End Date</th>
+											<th>{{ __('dashboard.table_employee_no') }}</th>
+											<th>{{ __('dashboard.table_name') }}</th>
+											<th>{{ __('dashboard.table_location') }}</th>
+											<th>{{ __('dashboard.table_position') }}</th>
+											<th>{{ __('dashboard.table_start_date') }}</th>
+											<th>{{ __('dashboard.table_end_date') }}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -277,11 +277,11 @@
 								<table class="card-table table">
 									<thead>
 										<tr>
-											<th>Employee No</th>
-											<th>Name</th>
-											<th>Location</th>
-											<th>Position</th>
-											<th>Birth Date</th>
+											<th>{{ __('dashboard.table_employee_no') }}</th>
+											<th>{{ __('dashboard.table_name') }}</th>
+											<th>{{ __('dashboard.table_location') }}</th>
+											<th>{{ __('dashboard.table_position') }}</th>
+											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -330,16 +330,16 @@
 								<table class="card-table table">
 									<thead>
 										<tr>
-											<th>Employee No</th>
-											<th>Name</th>
-											<th>Location</th>
-											<th>Position</th>
-											<th>Birth Date</th>
+											<th>{{ __('dashboard.table_employee_no') }}</th>
+											<th>{{ __('dashboard.table_name') }}</th>
+											<th>{{ __('dashboard.table_location') }}</th>
+											<th>{{ __('dashboard.table_position') }}</th>
+											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="5" align="center">No Data To Display</td>
+											<td colspan="5" align="center">{{ __('dashboard.table_no_data') }}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -358,12 +358,12 @@
 								<table class="card-table table">
 									<thead>
 										<tr>
-											<th>Employee No</th>
-											<th>Name</th>
-											<th>Location</th>
-											<th>Position</th>
-											<th>Start Date</th>
-											<th>End Date</th>
+											<th>{{ __('dashboard.table_employee_no') }}</th>
+											<th>{{ __('dashboard.table_name') }}</th>
+											<th>{{ __('dashboard.table_location') }}</th>
+											<th>{{ __('dashboard.table_position') }}</th>
+											<th>{{ __('dashboard.table_start_date') }}</th>
+											<th>{{ __('dashboard.table_end_date') }}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -392,11 +392,11 @@
 								<table class="card-table table">
 									<thead>
 										<tr>
-											<th>Employee No</th>
-											<th>Name</th>
-											<th>Location</th>
-											<th>Position</th>
-											<th>Birth Date</th>
+											<th>{{ __('dashboard.table_employee_no') }}</th>
+											<th>{{ __('dashboard.table_name') }}</th>
+											<th>{{ __('dashboard.table_location') }}</th>
+											<th>{{ __('dashboard.table_position') }}</th>
+											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -445,16 +445,16 @@
 								<table class="card-table table">
 									<thead>
 										<tr>
-											<th>Employee No</th>
-											<th>Name</th>
-											<th>Location</th>
-											<th>Position</th>
-											<th>Birth Date</th>
+											<th>{{ __('dashboard.table_employee_no') }}</th>
+											<th>{{ __('dashboard.table_name') }}</th>
+											<th>{{ __('dashboard.table_location') }}</th>
+											<th>{{ __('dashboard.table_position') }}</th>
+											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="5" align="center">No Data To Display</td>
+											<td colspan="5" align="center">{{ __('dashboard.table_no_data') }}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -552,7 +552,7 @@
 
 					var centerConfig = chart.config.options.elements.center;
 					var fontStyle = centerConfig.fontStyle || 'Arial';
-					var txt = total + ' Employees';
+					var txt = total + " {{ __('dashboard.employee') }}";
 					var color = centerConfig.color || '#000';
 					var sidePadding = centerConfig.sidePadding || 20;
 					var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
@@ -704,7 +704,7 @@
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
-				text: 'Active Employee'
+				text: "{{ __('dashboard.chart_active_employee') }}"
 			},
 			elements: {
 				center: {
@@ -741,7 +741,7 @@
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
-				text: 'Employee Headcount By Age'
+				text: "{{ __('dashboard.chart_employee_count') }}"
 			},
 			elements: {
 				center: {
@@ -777,7 +777,7 @@
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
-				text: 'Employee Length of Service',
+				text: "{{ __('dashboard.chart_employee_length') }}",
 				padding: 20
 			},
 			scales: {
@@ -810,7 +810,7 @@
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
-				text: 'Payroll',
+				text: "{{ __('dashboard.chart_payroll') }}",
 				padding: 30
 			},
 			scales: {
@@ -854,7 +854,7 @@
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
-				text: 'Overtime Pay',
+				text: "{{ __('dashboard.chart_overtime_pay') }}",
 				padding: 30
 			},
 			scales: {
@@ -901,7 +901,7 @@
 				fontSize: 16,
 				fontFamily: 'Montserrat',
 				fontColor: '#2E8181',
-				text: 'Overtime Hours',
+				text: "{{ __('dashboard.chart_overtime_hour') }}",
 				padding: 30
 			},
 			scales: {

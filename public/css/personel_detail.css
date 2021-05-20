@@ -1,0 +1,78 @@
+@font-face {
+	font-family: Montserrat;
+	src: url('/fonts/Montserrat-Bold.ttf');
+}
+@font-face {
+	font-family: Montserrat-Medium;
+	src: url('/fonts/Montserrat-SemiBold.ttf');
+}
+@font-face {
+	font-family: Inter;
+	src: url('/fonts/Inter-SemiBold.ttf');
+}
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar {
+	width: 5px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+	background-color: #555;
+}
+.div-title {
+	margin: 1.5%;
+	margin-bottom: 3%;
+	margin-top: 8%;
+}
+.div-title img {
+	max-width: 100%;
+	height: 4.5vh;
+}
+.title-text {
+  font-family: Montserrat;
+  color: #106DA7;
+  font-weight: 700;
+  font-size: 1.5vw;
+  margin-left: 0.5%;
+}
+.div-title a {
+	text-decoration: none;
+	display: flex;
+	align-items:center;
+}
+.div-table {
+	margin: 2%;
+	font-size: 1.3vw;
+}
+.table tr {
+	cursor: pointer;
+}
+.div-navbar {
+  overflow: hidden;
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+.div-navbar a {
+  float: left;
+  display: block;
+  color: #084D86;
+  text-align: center;
+  padding: 1% 1.5%;
+  text-decoration: none;
+  font-size: 1.5vw;
+}
+.div-navbar a:hover {
+  background-color: #89B7D3;
+  color: #FFFFFF;
+}
+.sticky-navbar {
+  position: fixed;
+  top: 0;
+  width: 97%;
+  z-index: 2;
+}

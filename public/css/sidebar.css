@@ -200,7 +200,8 @@ hr {
   left: unset;
   font-weight: 700;
   font-family: Inter;
-  font-size: 1.7vh;
+  font-size: 0.8vw;
+  min-width: 13vw;
 }
 
 .dropdown-item {
@@ -267,6 +268,7 @@ footer {
 #sidebar-wrapper.active footer {
   height: 18%;
   max-width: 7%;
+  text-align: center;
 }
 
 iframe {
@@ -276,12 +278,22 @@ iframe {
   display: block;
 }
 
+.list-group-item.active {
+  background-color: unset; 
+  border-color: #007bff;
+}
+
 .list-group-item .color-active.active {
   position: absolute;
   right: 95%;
   background-color: #004883;
   width: 1vw;
   height: 2.2vw;
+  padding-top: 1%;
+}
+
+.list-group-item.active .image-hover {
+  opacity: 1;
 }
 
 #sidebar-wrapper.active .list-group-item .tooltiptext {
@@ -296,7 +308,7 @@ iframe {
   position: absolute;
   z-index: 1;
   bottom: -0.6rem;
-  left: 55%;
+  left: 60%;
   border-radius: 0.1rem;
   margin-left: -3.5rem;
   opacity: 0;
@@ -310,12 +322,12 @@ iframe {
   height: 0;
   position: absolute;
 
-  border-top: 0.9vw solid transparent;
-  border-bottom: 0.9vw solid transparent;
-  border-right: 0.9vw solid #084D86;;
-  left: -0.8vw;
+  border-top: 0.5vw solid transparent;
+  border-bottom: 0.5vw solid transparent;
+  border-right: 1.7vw solid #084D86;;
+  left: -1.5vw;
 
-  top: -0.05vw;
+  top: 0.35vw;
 }
 
 #sidebar-wrapper.active .list-group-item:hover .tooltiptext {
@@ -328,6 +340,10 @@ iframe {
     min-width: 0;
     width: 100%;
   }
+}
+
+@media screen and (max-height: 1200px) {
+
 }
 
 /* ---------------------------------------------- Batas ------------------------------------------- */
