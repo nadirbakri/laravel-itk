@@ -26,20 +26,92 @@
 <body>
 	<div class="div-personel">
         <div class="div-navbar sticky-navbar">
-            <a href="javascript:void(0)"><i class="fa fa-arrow-left"></i> Back</a>
-            <a href="javascript:void(0)"><i class="fa fa-arrow-right"></i> Next</a>
-            <a href="javascript:void(0)"><i class="fa fa-plus-square"></i> New</a>
-            <a href="javascript:void(0)"><i class="fa fa-edit"></i> Edit</a>
-            <a href="javascript:void(0)"><i class="fa fa-floppy-o"></i> Save</a>
-            <a href="javascript:void(0)"><i class="fa fa-check-circle-o"></i> Activate</a>
-            <a href="javascript:void(0)"><i class="fa fa-stop-circle-o"></i> Deactivate</a>
-            <a href="javascript:void(0)"><i class="fa fa-list-ul"></i> List</a>
+            <a href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
+                <span>Back</span>
+            </a>
+            <a href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
+                <span>Next</span>
+            </a>
+            <a href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
+                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
+                <span>New</span>
+            </a>
+            <a href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
+                <span>Edit</span>
+            </a>
+            <a href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
+                <span>Save</span>
+            </a>
+            <a class="list-functionbar-md" href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
+                <span>Activate</span>
+            </a>
+            <a class="list-functionbar-lg" href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
+                <span>Deactivate</span>
+            </a>
+            <a href="javascript:void(0)">
+                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
+                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
+                <span>List</span>
+            </a>
         </div>
 		<div class="div-title">
 			<a href="{{ url('personel/job_description') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Job Description List</span>
 			</a>
+		</div>
+		<div class="div-form">
+			<form>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="record_status">Record Status</label>
+							<select class="form-control" id="record_status" name="record_status" disabled>
+								<option value="">Choose Status</option>
+								<option value="Active">Active</option>
+								<option value="Inactive">Inactive</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="position">Position</label>
+							<select class="form-control" id="position" name="position">
+								<option value="">Choose</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<label for="position_description">Position Description</label>
+							<input type="text" class="form-control" id="position_description" name="position_description" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<label for="job_description">Job Description</label>
+							<textarea class="form-control" id="job_description" name="job_description" rows="3" placeholder="Job Description"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>

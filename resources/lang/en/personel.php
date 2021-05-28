@@ -7,7 +7,7 @@ return [
     | Personel Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Dashboard Menggunakan Locale Bahasa Inggris. Akses di file
+    | Pengaturan Halaman Personel Menggunakan Locale Bahasa Inggris. Akses di file
     | personel_main.blade.php
     |
     */
@@ -68,7 +68,7 @@ return [
     'transfer_bank' => 'Transfer Bank',
     'rate_type' => 'Rate Type',
     'exchange_rate' => 'Exchange Rate',
-    'education_code_status' => 'Education Code Status',
+    'education_status_code' => 'Education Status Code',
     'institution_code' => 'Institution Code',
     'major_code' => 'Major Code',
     'type_of_course_code' => 'Type of Course Code',
@@ -82,11 +82,11 @@ return [
     'nationality_code' => 'Nationality Code',
     'religion_code' => 'Religion Code',
     'line_of_business' => 'Line of Business',
-    'fringe_benefit_code' => 'Fringe Benefit Code',
+    'fringe_benefits_code' => 'Fringe Benefits Code',
     'final_performance_result_code' => 'Final Performance Result Code',
     'skill_code' => 'Skill Code',
     'attachment_code' => 'Attachment Code',
     'free_format_field' => 'Free Format Field',
     'format_report' => 'Format Report',
-
+    'relation_code' => 'Relation Code'
 ];

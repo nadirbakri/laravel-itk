@@ -34,11 +34,11 @@
 	height: 4.5vh;
 }
 .title-text {
-  font-family: Montserrat;
-  color: #106DA7;
-  font-weight: 700;
-  font-size: 1.5vw;
-  margin-left: 0.5%;
+	font-family: Montserrat;
+	color: #106DA7;
+	font-weight: 700;
+	font-size: 1.5vw;
+	margin-left: 0.5%;
 }
 .div-title a {
 	text-decoration: none;
@@ -53,26 +53,55 @@
 	cursor: pointer;
 }
 .div-navbar {
-  overflow: hidden;
-  background-color: #FFFFFF;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	background-color: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
 .div-navbar a {
-  float: left;
-  display: block;
-  color: #084D86;
-  text-align: center;
-  padding: 1% 1.5%;
-  text-decoration: none;
-  font-size: 1.5vw;
+	float: left;
+	color: #084D86;
+	text-align: center;
+	padding: 0.5% 1.3%;
+	text-decoration: none;
+	font-size: 1.3vw;
 }
 .div-navbar a:hover {
-  background-color: #89B7D3;
-  color: #FFFFFF;
+	background-color: #89B7D3;
+	color: #FFFFFF;
 }
 .sticky-navbar {
-  position: fixed;
-  top: 0;
-  width: 97%;
-  z-index: 2;
+	position: fixed;
+	top: 0;
+	width: 97%;
+	height: 6%;
+	z-index: 2;
+}
+.list-functionbar-md{
+	width: 9% !important;
+}
+.list-functionbar-lg{
+	padding: 0.5% 1% !important;
+	width: 10% !important;
+}
+.div-navbar a{
+	display: flex;
+	align-items: center;
+	border: 0;
+	width: 7%;
+	height: 100%;
+}
+.div-navbar img {
+	max-width: 1.7%;
+	position: absolute;
+}
+.div-navbar span {
+	position: absolute;
+	margin-left: 2%;
+}
+.functionbar-hover {
+	position: absolute;
+	opacity: 0;
+}
+.div-navbar a:hover .functionbar-hover {
+	opacity: 1;
 }

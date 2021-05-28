@@ -56,14 +56,14 @@
 .subdiv-profile-image img {
 	max-width: 60%;
 	display: block;
-    margin: 0 auto;
+	margin: 0 auto;
 }
 .subdiv-profile-image label {
 	padding: 0.1vw;
 	display: block;
-    margin: 0 auto;
-    margin-top: 3%;
-    font-size: 1vw;
+	margin: 0 auto;
+	margin-top: 3%;
+	font-size: 1vw;
 }
 .subdiv-profile {
 	margin: 2%;
@@ -92,15 +92,15 @@
 }
 .div-dropdown-title {
 	display: flex;
-    align-items: center;
+	align-items: center;
 }
 .dropdown-title-text {
-  font-family: Montserrat;
-  color: #707070;
-  font-size: 3.2vh;
-  font-weight: 700;
-  margin-left: 1.5%;
-  flex-basis: 95%;
+	font-family: Montserrat;
+	color: #707070;
+	font-size: 3.2vh;
+	font-weight: 700;
+	margin-left: 1.5%;
+	flex-basis: 95%;
 }
 a.collapsed .div-dropdown-title .dropdown-triangle {
 	height: 3.5vh;
@@ -113,17 +113,17 @@ a .div-dropdown-title .dropdown-triangle {
 	transition: transform .3s ease-in-out;
 }
 .div-title-text {
-  font-family: Montserrat;
-  color: #707070;
-  font-size: 3.2vh;
-  font-weight: 700;
+	font-family: Montserrat;
+	color: #707070;
+	font-size: 3.2vh;
+	font-weight: 700;
 }
 .title-text {
-  font-family: Montserrat;
-  color: #106DA7;
-  font-weight: 700;
-  font-size: 1.5vw;
-  margin-left: 0.5%;
+	font-family: Montserrat;
+	color: #106DA7;
+	font-weight: 700;
+	font-size: 1.5vw;
+	margin-left: 0.5%;
 }
 .div-title a {
 	text-decoration: none;
@@ -135,7 +135,7 @@ a .div-dropdown-title .dropdown-triangle {
 	color: #0F5289;
 }
 .nav-tabs {
-    border-bottom: 1px solid #0F5289;
+	border-bottom: 1px solid #0F5289;
 }
 .nav-tabs .nav-link.active {
 	font-family: Montserrat;
@@ -143,10 +143,10 @@ a .div-dropdown-title .dropdown-triangle {
 	border-color: #0F5289 #0F5289 #fff;
 }
 .nav-tabs .nav-link:hover {
-    border-color: #5F8EB5 #5F8EB5 #0F5289;
+	border-color: #5F8EB5 #5F8EB5 #0F5289;
 }
 .nav-tabs .nav-link.active:hover {
-    border-color: #5F8EB5 #5F8EB5 #fff;
+	border-color: #5F8EB5 #5F8EB5 #fff;
 }
 .nav-item:first-child {
 	margin-left: 2%;
@@ -178,26 +178,62 @@ table {
 	font-size: 1.3vw;
 }
 .div-navbar {
-  overflow: hidden;
-  background-color: #FFFFFF;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	background-color: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
 .div-navbar a {
-  float: left;
-  display: block;
-  color: #084D86;
-  text-align: center;
-  padding: 1% 1.5%;
-  text-decoration: none;
-  font-size: 1.5vw;
+	float: left;
+	color: #084D86;
+	text-align: center;
+	padding: 0.5% 1.3%;
+	text-decoration: none;
+	font-size: 1.3vw;
 }
 .div-navbar a:hover {
-  background-color: #89B7D3;
-  color: #FFFFFF;
+	background-color: #89B7D3;
+	color: #FFFFFF;
 }
 .sticky-navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 2;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 6%;
+	z-index: 2;
+}
+td.details-control {
+	background: url('https://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+	cursor: pointer;
+}
+tr.shown td.details-control {
+	background: url('https://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+.list-functionbar-md{
+	width: 9% !important;
+}
+.list-functionbar-lg{
+	padding: 0.5% 1% !important;
+	width: 10% !important;
+}
+.div-navbar a{
+	display: flex;
+	align-items: center;
+	border: 0;
+	width: 7%;
+	height: 100%;
+}
+.div-navbar img {
+	max-width: 1.7%;
+	position: absolute;
+}
+.div-navbar span {
+	position: absolute;
+	margin-left: 2%;
+}
+.functionbar-hover {
+	position: absolute;
+	opacity: 0;
+}
+.div-navbar a:hover .functionbar-hover {
+	opacity: 1;
 }

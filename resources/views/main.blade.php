@@ -97,7 +97,7 @@
 				</div>
 				<div class="navbar-collapse right-link">
 					<span class="navbar-divide-complete">|</span>
-					<div class="img-setting-link"><a href="#"><img src="{{ url('/pictures/setting-white.png') }}" alt="Setting"></a></div>
+					<div class="img-setting-link"><a href="{{ url('/utilities') }}" target="iframe_dashboard"><img src="{{ url('/pictures/setting-white.png') }}" alt="Setting"></a></div>
 					<span class="navbar-divide">|</span>
 					<div class="dropdown-profile">
 						@if(Session::get('photo') == NULL)
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 			</nav>
-			<iframe src="{{ url('/personel') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
+			<iframe src="{{ url('/home') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
 		</div>
 	</div>
 </body>

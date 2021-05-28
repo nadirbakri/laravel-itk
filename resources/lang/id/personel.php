@@ -68,7 +68,7 @@ return [
     'transfer_bank' => 'Bank Transfer',
     'rate_type' => 'Tipe Tarif',
     'exchange_rate' => 'Nilai Tukar',
-    'education_code_status' => 'Kode Status Edukasi',
+    'education_status_code' => 'Kode Status Edukasi',
     'institution_code' => 'Kode Institusi',
     'major_code' => 'Kode Keahlian',
     'type_of_course_code' => 'Kode Tipe Mata Pelajaran',
@@ -82,11 +82,11 @@ return [
     'nationality_code' => 'Kode Kewarganegaraan',
     'religion_code' => 'Kode Agama',
     'line_of_business' => 'Bidang Usaha',
-    'fringe_benefit_code' => 'Kode Tunjangan',
+    'fringe_benefits_code' => 'Kode Tunjangan',
     'final_performance_result_code' => 'Kode Hasil Performa Final',
     'skill_code' => 'Kode Keahlian',
     'attachment_code' => 'Kode Lampiran',
     'free_format_field' => 'Field Format Bebas',
     'format_report' => 'Format Laporan',
-
+    'relation_code' => 'Kode Relasi'
 ];
