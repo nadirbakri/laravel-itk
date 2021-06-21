@@ -237,3 +237,23 @@ tr.shown td.details-control {
 .div-navbar a:hover .functionbar-hover {
 	opacity: 1;
 }
+.select2-container .select2-selection--single {
+	height: 6.3vh;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+	padding-top: 0.7%;
+	padding-bottom: 1%;
+	padding-left: 3%;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	top: 1vh;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #495057;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #495057 transparent transparent transparent;
+}
+.select2-results__option .row {
+	margin: 0.5%;
+}

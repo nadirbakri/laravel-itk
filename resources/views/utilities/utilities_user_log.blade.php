@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('utilities_authorization_code_group.judul') }}</title>
+	<title>{{ __('utilities_user_log.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -70,7 +70,7 @@
 		<div class="div-title">
 			<a href="{{ url('utilities') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('utilities_authorization_code_group.list') }}</span>
+				<span class="title-text">{{ __('utilities_user_log.list') }}</span>
 			</a>
 		</div>
 		<div class="div-form">
@@ -78,87 +78,70 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="group_authorization_code">Group Authorization Code</label>
-                            <input type="text" class="form-control" id="group_authorization_code" name="group_authorization_code" placeholder="Group Authorization Code">
+                            <label for="user_id">User ID</label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="User ID">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="group_authorization_description">Group Authorization Description</label>
-                            <input type="text" class="form-control" id="group_authorization_description" name="group_authorization_description" placeholder="Group Authorization Code">
+                            <label for="log_date">Log Date</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="log_date" name="log_date" placeholder="Log Date">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="log_type">Log Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="log_type" id="log_type_login" value="Login">
+                                <label class="form-check-label" for="log_type_login">Login</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label for="log_type">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="log_type" id="log_type_logout" value="Logout">
+                                <label class="form-check-label" for="log_type_logout">Logout</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-search-group" id="btn-search-group" style="width: 100%;">
+                        <button type="submit" class="btn btn-primary" name="btn-search-log" id="btn-search-log" style="width: 100%;">
                             <i class="fa fa-search"></i> Search
                         </button>
                     </div>
                 </div>
             </form>
             <div class="row">
-                <div class="col-8">
-                    <table id="group_authorization_data_table" class="table hover">
+                <div class="col-12">
+                    <table id="log_data_table" class="table hover">
                         <thead>
                             <tr>
-                                <th>Group Authorization Code</th>
-                                <th>Group Authorization Description</th>
+                                <th>User ID</th>
+                                <th>Session ID</th>
+                                <th>IP Address</th>
+                                <th>Host Name</th>
+                                <th>Log Date</th>
+                                <th>Log Time</th>
+                                <th>Log Type</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-add-group-authorization" id="btn-add-group-authorization" style="width: 100%;" data-toggle="modal" data-target="#modal_add_group_authorization">
-                        <i class="fa fa-plus"></i> Add
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-danger" name="btn-remove-group-authorization" id="btn-remove-group-authorization" style="width: 100%;">
-                        <i class="fa fa-times"></i> Remove
-                    </button>
-                </div>
-            </div>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_add_group_authorization" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Group Authorization Code</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="group_authorization_code_add">Group Authorization Code</label>
-                                    <select class="form-control" id="group_authorization_code_add" name="group_authorization_code_add">
-                                        <option value="">Choose</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="group_authorization_description_add">Group Authorization Description</label>
-                                    <input type="text" class="form-control" id="group_authorization_description_add" name="group_authorization_description_add">
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> Save</button>
-                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -172,8 +155,8 @@
 <script type="text/javascript">
   $(document).ready(function() {
     var table = null;
-    $('#group_authorization_data_table thead tr').clone(true).appendTo('#group_authorization_data_table thead');
-    $('#group_authorization_data_table thead tr:eq(1) th').each( function (i) {
+    $('#log_data_table thead tr').clone(true).appendTo('#log_data_table thead');
+    $('#log_data_table thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
@@ -187,22 +170,27 @@
         } );
     });
 
-    load_table_group_authorization();
+    load_table_log();
 
-    function load_table_group_authorization() {
-        table = $('#group_authorization_data_table').DataTable({
+    function load_table_log() {
+        table = $('#log_data_table').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('utilities/authorization_code_group/authorization_code_group/table') }}",
+            ajax: "{{ url('utilities/user_log/log/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
             'sPaginationType': 'ellipses',
             columns: [
-                {data: 'group_authorization_code', name: 'group_authorization_code'},
-                {data: 'group_authorization_description', name: 'group_authorization_description'}
+                {data: 'user_id', name: 'user_id'},
+                {data: 'session_id', name: 'session_id'},
+                {data: 'ip_address', name: 'ip_address'},
+                {data: 'host_name', name: 'host_name'},
+                {data: 'log_date', name: 'log_date'},
+                {data: 'log_time', name: 'log_time'},
+                {data: 'log_type', name: 'log_type'}
             ]
         });
     }

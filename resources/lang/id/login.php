@@ -24,5 +24,6 @@ return [
     'label_demo_account' => 'Akun Demo',
     'username_required' => 'Nama Pengguna Harus Diisi',
     'password_required' => 'Kata Sandi Harus Diisi',
-
+    'error' => 'Terjadi Kesalahan',
+    
 ];

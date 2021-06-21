@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Validator;
+use Session;
+use App;
 use DataTables;
 
 class PersonelController extends Controller
@@ -651,22 +656,29 @@ class PersonelController extends Controller
 
     public function tablePositionPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'position_code' => 'ASD',
-                    'position_name' => 'ASSOCIATE DIRECTOR',
-                    'abbreviation' => '',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'position_code' => 'ASDPH',
-                    'position_name' => 'ASSISTANT DEP. HEAD',
-                    'abbreviation' => '',
-                    'status' => 'Active'
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/position/getposition',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -693,20 +705,29 @@ class PersonelController extends Controller
 
     public function tableGradeCodePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'grade_code' => 'A3',
-                    'grade_name' => 'A3',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'grade_code' => 'A4',
-                    'grade_name' => 'A4',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/grade/getgrade',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -731,20 +752,29 @@ class PersonelController extends Controller
 
     public function tableNatureofWorkPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'nature_of_work_code' => 'SEC',
-                    'nature_of_work_name' => 'SECURITY',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'nature_of_work_code' => 'ACC',
-                    'nature_of_work_name' => 'ACCOUNTING',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/worknature/getworknature',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1456,8 +1486,27 @@ class PersonelController extends Controller
 
     public function dataDetailPositionPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_position_detail', ['position_code' => $request->position_code]);
+            $response = $client->post(env('API_URL') . '/position/getposition',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'positionCode' => $request->positionCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_position_detail', ['data' => $arrResult->dataListSet[0], 'func' => $request->func]);
     }
 
     public function dataDetailRankingCodePersonel(Request $request)
@@ -1469,7 +1518,27 @@ class PersonelController extends Controller
     public function dataDetailGradeCodePersonel(Request $request)
     {
 
-        return view('personel.personel_grade_code_detail', ['grade_code' => $request->grade_code]);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/grade/getgrade',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'gradeCode' => $request->gradeCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_grade_code_detail', ['data' => $arrResult->dataListSet[0], 'func' => $request->func]);
     }
 
     public function dataDetailGroupCodePersonel(Request $request)
@@ -1480,8 +1549,27 @@ class PersonelController extends Controller
 
     public function dataDetailNatureofWorkPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_nature_of_work_detail', ['nature_of_work_code' => $request->nature_of_work_code]);
+            $response = $client->post(env('API_URL') . '/worknature/getworknature',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'workNatureCode' => $request->workNatureCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return view('personel.personel_nature_of_work_detail', ['data' => $arrResult->dataListSet[0], 'func' => $request->func]);
     }
 
     public function dataDetailBPJSGroupPersonel(Request $request)
@@ -1903,6 +1991,8 @@ class PersonelController extends Controller
         		'data' => $data_detail
         	);
 
+            dd($data);
+
             return response()->json($data);
         }
     }
@@ -2054,5 +2144,168 @@ class PersonelController extends Controller
             return Datatables::of($data)
                 ->make(true);
         }
+    }
+
+    public function statusNatureofWorkPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/worknature',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'workNatureCode' => $request->workNatureCode,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusGradeCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/grade',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'gradeCode' => $request->gradeCode,
+                        'gradeName' => $request->gradeName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesNatureofWorkPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/worknature',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'workNatureCode' => $request->nature_of_work_code,
+                            'workNatureName' => $request->nature_of_work_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/worknature',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'gradeCode' => $request->nature_of_work_code,
+                            'gradeName' => $request->nature_of_work_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }     
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesGradeCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/grade',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'gradeCode' => $request->grade_code,
+                            'gradeName' => $request->grade_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/grade',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'gradeCode' => $request->grade_code,
+                            'gradeName' => $request->grade_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+
+             
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 }

@@ -18,5 +18,7 @@ return [
     'bahasa' => 'Change Language',
     'password' => 'Change Password',
     'logout' => 'Sign Out',
+    'language_success' => 'Language Changed Successfully',
+    'language_success_title' => 'Success !',
 
 ];

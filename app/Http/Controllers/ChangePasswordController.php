@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Validator;
+use Session;
+use App;
+
+class ChangePasswordController extends Controller
+{
+    public function pageChangePassword()
+    {
+        if(Session::has('token')){
+            return view('change_password');
+        }else{
+            return redirect('login');
+        }
+    }
+
+    public function prosesChangePassword(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/password/update',
+                ['body' => json_encode(
+                    [
+                        'email' => Session::get('email'),
+                        'password' => $request->new_password,
+                        'confirmpassword' => $request->confirm_new_password,
+                        'oldpassword' => $request->old_password
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult);
+
+        if($arrResult->status == "true"){
+            Session::flush();
+
+            return redirect('login')->with('message', $arrResult->message);
+            // return response()->json(["status" => $arrResult->status, "message" => "/login"]);
+        }else{
+            return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
+        }
+    }
+}

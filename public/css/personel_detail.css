@@ -65,9 +65,17 @@
 	text-decoration: none;
 	font-size: 1.3vw;
 }
+.div-navbar a.disabled {
+	color: #898f94;
+	cursor: default;
+}
 .div-navbar a:hover {
 	background-color: #89B7D3;
 	color: #FFFFFF;
+}
+.div-navbar a.disabled:hover {
+	background-color: unset;
+	color: #898f94;
 }
 .sticky-navbar {
 	position: fixed;
@@ -104,4 +112,7 @@
 }
 .div-navbar a:hover .functionbar-hover {
 	opacity: 1;
+}
+.div-navbar a.disabled:hover .functionbar-hover {
+	opacity: 0;
 }

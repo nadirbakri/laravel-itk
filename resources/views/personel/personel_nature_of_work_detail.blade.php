@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('personel.judul') }}</title>
+	<title>{{ __('personel_nature_of_work.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,93 +17,132 @@
 			margin: auto;
 			/*margin-top: 1%;*/
 		}
-        .div-title {
-            margin-top: 8%;
-        }
+		.modal-header-notification-error {
+			border-bottom:1px solid #eee;
+			background-color: #f44336;
+			-webkit-border-top-left-radius: 5px;
+			-webkit-border-top-right-radius: 5px;
+			-moz-border-radius-topleft: 5px;
+			-moz-border-radius-topright: 5px;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+		.modal-header-notification-success {
+			border-bottom:1px solid #eee;
+			background-color: #00a862;
+			-webkit-border-top-left-radius: 5px;
+			-webkit-border-top-right-radius: 5px;
+			-moz-border-radius-topleft: 5px;
+			-moz-border-radius-topright: 5px;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+		.div-title-notification {
+			margin: 1.5%;
+			margin-top: 2%;
+			margin-bottom: 5%;
+			font-family: Monserrat;
+			text-decoration: none;
+			display: flex;
+			align-items:center;
+			justify-content: center;
+		}
+		.div-title-notification img {
+			max-width: 100%;
+			height: 6vh;
+			margin-right: 5%;
+		}
+		.title-text-notification {
+			font-family: Inter;
+			font-weight: 700;
+			font-size: 2.5vw;
+			margin-left: 0.5%;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="div-personel">
-        <div class="div-navbar sticky-navbar">
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
-                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
-                <span>Back</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
-                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
-                <span>Next</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
-                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
-                <span>New</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
-                <span>Edit</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
-                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
-                <span>Save</span>
-            </a>
-            <a class="list-functionbar-md" href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
-                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
-                <span>Activate</span>
-            </a>
-            <a class="list-functionbar-lg" href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
-                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
-                <span>Deactivate</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
-                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
-                <span>List</span>
-            </a>
-        </div>
 		<div class="div-title">
 			<a href="{{ url('personel/nature_of_work') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">Nature of Work List</span>
+				<span class="title-text">{{ __('personel_nature_of_work.list_detail') }}</span>
 			</a>
 		</div>
 		<div class="div-form">
-			<form>
+			<form id="nature_of_work_form" method="post">
+				@csrf
 				<div class="row">
 					<div class="col-6">
 						<div class="form-group">
-							<label for="record_status">Record Status</label>
-							<select class="form-control" id="record_status" name="record_status" disabled>
-								<option value="">Choose Status</option>
-								<option value="Active">Active</option>
-								<option value="Inactive">Inactive</option>
-							</select>
+							<label for="record_status">{{ __('personel_nature_of_work.label_record_status') }}</label>
+							<input type="text" class="form-control" id="record_status" name="record_status" placeholder="{{ __('personel_nature_of_work.label_record_status') }}" readonly>
 						</div>
+						<input type="hidden" class="form-control" id="record_function" name="record_function">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-6">
 						<div class="form-group">
-							<label for="nature_of_work_code">Nature of Work Code</label>
-							<select class="form-control" id="nature_of_work_code" name="nature_of_work_code" disabled>
-								<option value="">Choose</option>
-							</select>
+							<label for="nature_of_work_code">{{ __('personel_nature_of_work.label_nature_of_work_code') }}</label>
+							<input type="text" class="form-control" id="nature_of_work_code" name="nature_of_work_code" placeholder="{{ __('personel_nature_of_work.label_nature_of_work_code') }}">
 						</div>
 					</div>
 					<div class="col-6">
 						<div class="form-group">
-							<label for="nature_of_work_name">Nature of Work Name</label>
-							<input type="text" class="form-control" id="nature_of_work_name" name="nature_of_work_name" disabled>
+							<label for="nature_of_work_name">{{ __('personel_nature_of_work.label_nature_of_work_name') }}</label>
+							<input type="text" class="form-control" id="nature_of_work_name" name="nature_of_work_name" placeholder="{{ __('personel_nature_of_work.label_nature_of_work_name') }}">
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">
+						<button type="submit" class="btn btn-primary" name="btn-save" id="btn-save" style="width: 100%;">
+							<i class="fa fa-floppy-o"></i> {{ __('personel_nature_of_work.btn_save') }}
+						</button>
+					</div>
+					<div class="col-3">
+						<a class="btn btn-primary" href="{{ url('personel/nature_of_work') }}" target="iframe_dashboard" name="btn-cancel" id="btn-cancel" style="width: 100%;">
+							<i class="fa fa-times-circle"></i> {{ __('personel_nature_of_work.btn_cancel') }}
+						</a>
 					</div>
 				</div>
 			</form>
+		</div>
+	</div>
+	<div class="modal fade" role="dialog" id="notification_error">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-header-notification-error">
+					<h5 class="modal-title">Error!</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<span id="message-notification-error">{{ $errors->first() }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" role="dialog" id="notification_success">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-header-notification-success">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="div-title-notification">
+						<img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+						<span class="title-text-notification">{{ __('personel_nature_of_work.alert_success') }}</span>
+					</div>
+					<div class="div-title-notification">
+						<span id="message-notification-success"></span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
@@ -114,6 +153,98 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  	var func = "{{ $func }}";
+
+  	if(func == 'new'){
+  		$('#record_status').val("A");
+  		$('#record_function').val("New");
+  		$('#nature_of_work_code').val("");
+  		$('#nature_of_work_name').val("");
+  		$('#nature_of_work_code').prop('readonly', false);
+  		$('#nature_of_work_name').prop('readonly', false);
+  	}else if(func == 'edit'){
+  		$('#record_status').val("{{ $data->recordStatus }}");
+  		$('#record_function').val("Edit");
+  		$('#nature_of_work_code').val("{{ $data->workNatureCode }}");
+  		$('#nature_of_work_name').val("{{ $data->workNatureName }}");
+  		$('#nature_of_work_code').prop('readonly', true);
+  		$('#nature_of_work_name').prop('readonly', false);
+  	}
+
+  	$('#notification_success').on('hide.bs.modal', function () {
+			window.location = "{{ url('personel/nature_of_work') }}";
+		})
+
+  	if($("#nature_of_work_form").length > 0) {
+			$("#nature_of_work_form").validate({
+				rules: {
+					nature_of_work_code: {
+						required: true,
+					},
+					nature_of_work_name: {
+						required: true,
+					},
+				},
+				messages: {
+					nature_of_work_code: {
+						required: "{{ __('personel_nature_of_work.nature_of_work_code_required') }}",
+					},
+					nature_of_work_name: {
+						required: "{{ __('personel_nature_of_work.nature_of_work_name_required') }}",
+					},
+				},
+				highlight: function(element) {
+					$(element).addClass('is-invalid');
+				},
+				unhighlight: function(element) {
+					$(element).removeClass('is-invalid');
+				},
+				errorElement: 'span',
+				errorPlacement: function(error, element) {
+					error.addClass('invalid-feedback');
+					element.closest('.form-group').append(error);
+				},
+				submitHandler: function(form) {
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					});
+					$.ajax({
+						url: "{{ url('personel/nature_of_work/proses') }}",
+						type: "POST",
+						data: $('#nature_of_work_form').serialize(),
+						success: function(response) {
+							if(response.status == "true"){
+								$('#notification_success').modal('show');
+								$('#message-notification-success').html(response.message);
+								setTimeout(function(){ 
+									window.location = "{{ url('personel/nature_of_work') }}";
+								}, 3000);
+							}else{
+								$('#notification_error').modal('show');
+								if(response.message == null || response.message == ''){
+									$('#message-notification-error').html("{{ __('login.error') }}");
+								}else{
+									$('#message-notification-error').html(response.message);
+								}
+							}
+						},
+						error: function(response) {
+							$('#notification').modal('show');
+							$('#message-notification').html(response);
+						}
+
+					});
+				}
+			})
+		}
+  });
+</script>
 
 </html>

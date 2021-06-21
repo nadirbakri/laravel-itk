@@ -218,8 +218,15 @@
 @section('js-content')
 <script>
 	var exist = '{{$errors->any()}}';
+	var message = '{{Session::get('message')}}';
+
 	if(exist){
 		$('#notification').modal('show');
+	}
+
+	if(message){
+		$('notification').modal('show');
+		$('#message-notification').html(message);
 	}
 </script>
 
@@ -305,7 +312,11 @@
 								window.location = response.message;
 							}else{
 								$('#notification').modal('show');
-								$('#message-notification').html(response.message);
+								if(response.message == null || response.message == ''){
+									$('#message-notification').html("{{ __('login.error') }}");
+								}else{
+									$('#message-notification').html(response.message);
+								}
 							}
 						},
 						error: function(response) {

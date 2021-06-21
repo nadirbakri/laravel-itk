@@ -235,6 +235,12 @@ Route::get('personel/free_format_field/field_list/table', 'PersonelController@ta
 Route::get('personel/format_report/report_format/table', 'PersonelController@tableFormatReportReportFormatPersonel');
 Route::get('personel/format_report/report_format_condition/table', 'PersonelController@tableFormatReportReportFormatConditionPersonel');
 
+Route::get('personel/nature_of_work/status', 'PersonelController@statusNatureofWorkPersonel');
+Route::get('personel/grade_code/status', 'PersonelController@statusGradeCodePersonel');
+
+Route::post('personel/nature_of_work/proses', 'PersonelController@prosesNatureofWorkPersonel');
+Route::post('personel/grade_code/proses', 'PersonelController@prosesGradeCodePersonel');
+
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement');
 
@@ -251,8 +257,7 @@ Route::get('utilities/audit_trail', 'UtilitiesController@pageAuditTrailUtilities
 Route::get('utilities/export_personal_data', 'UtilitiesController@pageExportPersonalDataUtilities');
 Route::get('utilities/dashboard_ess', 'UtilitiesController@pageDashboardESSUtilities');
 
-Route::get('utilities/user_security_maintenance/company/table', 'UtilitiesController@tableUserSecurityMaintenanceCompanyUtilities');
-Route::get('utilities/user_security_maintenance/module/table', 'UtilitiesController@tableUserSecurityMaintenanceModuleUtilities');
+Route::get('utilities/user_security_maintenance/table', 'UtilitiesController@tableUserSecurityMaintenanceUtilities');
 Route::get('utilities/menu_master/module/table', 'UtilitiesController@tableMenuMasterModuleUtilities');
 Route::get('utilities/authorization_code_group/authorization_code_group/table', 'UtilitiesController@tableAuthorizationCodeGroupUtilities');
 Route::get('utilities/user_access_group/table', 'UtilitiesController@tableUserAccessGroupUtilities');
@@ -260,9 +265,23 @@ Route::get('utilities/change_employee_number/employee/table', 'UtilitiesControll
 Route::get('utilities/user_log/log/table', 'UtilitiesController@tableUserLogLogUtilities');
 
 Route::get('utilities/user_access_group/detail_data', 'UtilitiesController@dataDetailUserAccessGroupUtilities');
+Route::get('utilities/user_security_maintenance/detail_data', 'UtilitiesController@dataDetailUserSecurityMaintenanceUtilities');
 
+Route::get('utilities/user_security_maintenance/level/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelUtilities');
+Route::get('utilities/user_security_maintenance/company/table', 'UtilitiesController@tableUserSecurityMaintenanceCompanyUtilities');
+Route::get('utilities/user_security_maintenance/module/table', 'UtilitiesController@tableUserSecurityMaintenanceModuleUtilities');
+Route::get('utilities/user_security_maintenance/level_authorization/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelAuthorizationUtilities');
 Route::get('utilities/user_access_group/user/table', 'UtilitiesController@tableUserAccessGroupUserUtilities');
 
+/* Route Untuk Data Utilities - Organization Structure */
+Route::get('utilities/organization_structure/get/position', 'OrganizationStructureController@getDataPosition');
+
+/* Route Untuk Change Password */
+Route::get('change_password', 'ChangePasswordController@pageChangePassword');
+Route::post('change_password/proses', 'ChangePasswordController@prosesChangePassword');
+
+/* Route Untuk Change Language */
+Route::post('change_language/proses', 'LanguagesController@prosesChangeLanguage');
 
 /* Route Untuk Set Languange */
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController@switchLang']);
@@ -271,3 +290,8 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController
 Route::get('gender/api', 'DataController@dataGenderAPI');
 Route::get('blood/api', 'DataController@dataBloodAPI');
 Route::get('religion/api', 'DataController@dataReligionAPI');
+Route::get('status/api', 'DataController@dataStatusAPI');
+Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
+Route::get('company/api', 'DataController@dataCompanyAPI');
+Route::get('module/api', 'DataController@dataModuleAPI');
+Route::get('group_authorize/api', 'DataController@dataGroupAuthorizeAPI');

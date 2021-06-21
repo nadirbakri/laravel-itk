@@ -24,5 +24,6 @@ return [
     'label_demo_account' => 'Demo Account',
     'username_required' => 'Username is Required',
     'password_required' => 'Password is Required',
-
+    'error' => 'Something Went Wrong',
+    
 ];

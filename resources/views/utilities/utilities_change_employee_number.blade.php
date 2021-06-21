@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('utilities_authorization_code_group.judul') }}</title>
+	<title>{{ __('utilities_change_employee_number.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,6 +19,9 @@
 		}
         .div-title {
             margin-top: 8%;
+        }
+        .table tr {
+            cursor: pointer;
         }
 	</style>
 </head>
@@ -70,7 +73,7 @@
 		<div class="div-title">
 			<a href="{{ url('utilities') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('utilities_authorization_code_group.list') }}</span>
+				<span class="title-text">{{ __('utilities_change_employee_number.list') }}</span>
 			</a>
 		</div>
 		<div class="div-form">
@@ -78,56 +81,55 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="group_authorization_code">Group Authorization Code</label>
-                            <input type="text" class="form-control" id="group_authorization_code" name="group_authorization_code" placeholder="Group Authorization Code">
+                            <label for="employee_no">Employee No</label>
+                            <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder="Employee No">
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="group_authorization_description">Group Authorization Description</label>
-                            <input type="text" class="form-control" id="group_authorization_description" name="group_authorization_description" placeholder="Group Authorization Code">
+                            <label for="employee_name">Employee Name</label>
+                            <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="Employee Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_nickname">Employee Nickname</label>
+                            <input type="text" class="form-control" id="employee_nickname" name="employee_nickname" placeholder="Employee Nickname">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-search-group" id="btn-search-group" style="width: 100%;">
+                        <button type="submit" class="btn btn-primary" name="btn-search-employee" id="btn-search-employee" style="width: 100%;">
                             <i class="fa fa-search"></i> Search
                         </button>
                     </div>
                 </div>
             </form>
             <div class="row">
-                <div class="col-8">
-                    <table id="group_authorization_data_table" class="table hover">
+                <div class="col-12">
+                    <table id="employee_data_table" class="table hover">
                         <thead>
                             <tr>
-                                <th>Group Authorization Code</th>
-                                <th>Group Authorization Description</th>
+                                <th>Employee No</th>
+                                <th>Employee Name</th>
+                                <th>Employee Nickname</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-add-group-authorization" id="btn-add-group-authorization" style="width: 100%;" data-toggle="modal" data-target="#modal_add_group_authorization">
-                        <i class="fa fa-plus"></i> Add
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-danger" name="btn-remove-group-authorization" id="btn-remove-group-authorization" style="width: 100%;">
-                        <i class="fa fa-times"></i> Remove
-                    </button>
-                </div>
-            </div>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_add_group_authorization" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_change_employee_number" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Group Authorization Code</h5>
+                    <h5 class="modal-title">Change Employee Number</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -137,22 +139,28 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="group_authorization_code_add">Group Authorization Code</label>
-                                    <select class="form-control" id="group_authorization_code_add" name="group_authorization_code_add">
-                                        <option value="">Choose</option>
-                                    </select>
+                                    <label for="old_employee_no">Old Employee No</label>
+                                    <input type="text" class="form-control" id="old_employee_no" name="old_employee_no" placeholder="Old Employee No" disabled>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="group_authorization_description_add">Group Authorization Description</label>
-                                    <input type="text" class="form-control" id="group_authorization_description_add" name="group_authorization_description_add">
+                                    <label for="old_employee_name">Old Employee Name</label>
+                                    <input type="text" class="form-control" id="old_employee_name" name="old_employee_name" placeholder="Old Employee Name" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="new_employee_no">New Employee No</label>
+                                    <input type="text" class="form-control" id="new_employee_no" name="new_employee_no" placeholder="New Employee No">
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-check"></i> Confirm</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
                 </div>
                 </form>
@@ -172,8 +180,8 @@
 <script type="text/javascript">
   $(document).ready(function() {
     var table = null;
-    $('#group_authorization_data_table thead tr').clone(true).appendTo('#group_authorization_data_table thead');
-    $('#group_authorization_data_table thead tr:eq(1) th').each( function (i) {
+    $('#employee_data_table thead tr').clone(true).appendTo('#employee_data_table thead');
+    $('#employee_data_table thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
@@ -187,25 +195,34 @@
         } );
     });
 
-    load_table_group_authorization();
+    load_table_employee();
 
-    function load_table_group_authorization() {
-        table = $('#group_authorization_data_table').DataTable({
+    function load_table_employee() {
+        table = $('#employee_data_table').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('utilities/authorization_code_group/authorization_code_group/table') }}",
+            ajax: "{{ url('utilities/change_employee_number/employee/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
             'sPaginationType': 'ellipses',
             columns: [
-                {data: 'group_authorization_code', name: 'group_authorization_code'},
-                {data: 'group_authorization_description', name: 'group_authorization_description'}
+                {data: 'employee_no', name: 'employee_no'},
+                {data: 'employee_name', name: 'employee_name'},
+                {data: 'employee_nickname', name: 'employee_nickname'}
             ]
         });
     }
+
+    $('#employee_data_table tbody').on('click', 'tr', function () {
+        var data = table.row(this).data();
+
+        $('#modal_change_employee_number').modal('show');
+        $('#old_employee_no').val(data.employee_no);
+        $('#old_employee_name').val(data.employee_name);
+    });
   });
 </script>
 

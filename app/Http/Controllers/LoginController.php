@@ -43,6 +43,8 @@ class LoginController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($arrResult->status == "true"){
+	    	Session::flush();
+	    	
 	    	Session::put('userID', $arrResult->dataListSet[0]->userID);
 	    	Session::put('userName', $arrResult->dataListSet[0]->userName);
 	    	Session::put('employeeNo', $arrResult->dataListSet[0]->employeeNo);

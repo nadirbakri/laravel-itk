@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('utilities_authorization_code_group.judul') }}</title>
+	<title>{{ __('utilities.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -68,42 +68,60 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('utilities') }}" target="iframe_dashboard">
-				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('utilities_authorization_code_group.list') }}</span>
-			</a>
-		</div>
+            <a href="{{ url('utilities/user_access_group') }}" target="iframe_dashboard">
+                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                <span class="title-text">User Access Group List</span>
+            </a>
+        </div>
 		<div class="div-form">
             <form>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="group_authorization_code">Group Authorization Code</label>
-                            <input type="text" class="form-control" id="group_authorization_code" name="group_authorization_code" placeholder="Group Authorization Code">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="group_authorization_description">Group Authorization Description</label>
-                            <input type="text" class="form-control" id="group_authorization_description" name="group_authorization_description" placeholder="Group Authorization Code">
+                            <label for="record_status">Record Status</label>
+                            <input type="text" class="form-control" id="record_status" name="record_status" placeholder="Record Status">
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-search-group" id="btn-search-group" style="width: 100%;">
-                            <i class="fa fa-search"></i> Search
-                        </button>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_id">Group ID</label>
+                            <input type="text" class="form-control" id="group_id" name="group_id" placeholder="Group ID">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_name">Group Name</label>
+                            <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Group Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_leader_select">Group Leader</label>
+                            <select class="form-control" id="group_leader_select" name="group_leader_select">
+                                <option value="">Choose</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_leader_text">&nbsp;</label>
+                            <input type="text" class="form-control" id="group_leader_text" name="group_leader_text">
+                        </div>
                     </div>
                 </div>
             </form>
             <div class="row">
                 <div class="col-8">
-                    <table id="group_authorization_data_table" class="table hover">
+                    <table id="user_data_table" class="table hover">
                         <thead>
                             <tr>
-                                <th>Group Authorization Code</th>
-                                <th>Group Authorization Description</th>
+                                <th>Number</th>
+                                <th>User ID</th>
+                                <th>Name</th>
                             </tr>
                         </thead>
                     </table>
@@ -111,48 +129,33 @@
             </div>
             <div class="row">
                 <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-add-group-authorization" id="btn-add-group-authorization" style="width: 100%;" data-toggle="modal" data-target="#modal_add_group_authorization">
+                    <button type="button" class="btn btn-primary" name="btn-add-user" id="btn-add-user" style="width: 100%;" data-toggle="modal" data-target="#modal_add_user">
                         <i class="fa fa-plus"></i> Add
                     </button>
                 </div>
                 <div class="col-3">
-                    <button type="button" class="btn btn-danger" name="btn-remove-group-authorization" id="btn-remove-group-authorization" style="width: 100%;">
+                    <button type="button" class="btn btn-danger" name="btn-remove-user" id="btn-remove-user" style="width: 100%;">
                         <i class="fa fa-times"></i> Remove
                     </button>
                 </div>
             </div>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_add_group_authorization" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_user" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Group Authorization Code</h5>
+                    <h5 class="modal-title">Add New User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="group_authorization_code_add">Group Authorization Code</label>
-                                    <select class="form-control" id="group_authorization_code_add" name="group_authorization_code_add">
-                                        <option value="">Choose</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="group_authorization_description_add">Group Authorization Description</label>
-                                    <input type="text" class="form-control" id="group_authorization_description_add" name="group_authorization_description_add">
-                                </div>
-                            </div>
-                        </div>
+                        
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-check"></i> OK</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
                 </div>
                 </form>
@@ -172,8 +175,8 @@
 <script type="text/javascript">
   $(document).ready(function() {
     var table = null;
-    $('#group_authorization_data_table thead tr').clone(true).appendTo('#group_authorization_data_table thead');
-    $('#group_authorization_data_table thead tr:eq(1) th').each( function (i) {
+    $('#user_data_table thead tr').clone(true).appendTo('#user_data_table thead');
+    $('#user_data_table thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
@@ -187,22 +190,23 @@
         } );
     });
 
-    load_table_group_authorization();
+    load_table_user();
 
-    function load_table_group_authorization() {
-        table = $('#group_authorization_data_table').DataTable({
+    function load_table_user() {
+        table = $('#user_data_table').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('utilities/authorization_code_group/authorization_code_group/table') }}",
+            ajax: "{{ url('utilities/user_access_group/user/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
             'sPaginationType': 'ellipses',
             columns: [
-                {data: 'group_authorization_code', name: 'group_authorization_code'},
-                {data: 'group_authorization_description', name: 'group_authorization_description'}
+                {data: 'number', name: 'number'},
+                {data: 'user_id', name: 'user_id'},
+                {data: 'name', name: 'name'}
             ]
         });
     }

@@ -18,5 +18,7 @@ return [
     'bahasa' => 'Ganti Bahasa',
     'password' => 'Ganti Kata Sandi',
     'logout' => 'Keluar',
+    'language_success' => 'Bahasa Berhasil Diubah',
+    'language_success_title' => 'Berhasil !',
 
 ];

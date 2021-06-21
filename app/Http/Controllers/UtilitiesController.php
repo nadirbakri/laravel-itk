@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Validator;
+use Session;
+use App;
 use DataTables;
 
 class UtilitiesController extends Controller
@@ -62,30 +67,18 @@ class UtilitiesController extends Controller
     	return view('utilities.utilities_dashboard_ess');
     }
 
-    public function tableUserSecurityMaintenanceCompanyUtilities(Request $request)
+    public function tableUserSecurityMaintenanceUtilities(Request $request)
     {
         if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'company_code' => 'Personel',
-        			'company_name' => 'Pelaksana',
-        			'set_default' => 'Pelaksana',
-        			'status' => ''
-        		],
-        	]);
-            return Datatables::of($data)->make(true);
-        }
-    }
-
-    public function tableUserSecurityMaintenanceModuleUtilities(Request $request)
-    {
-        if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'module_name' => 'Personel',
-        			'group_authorization_name' => 'Pelaksana'
-        		],
-        	]);
+            $data = collect([
+                (object) [
+                    'record_status' => 'Active',
+                    'user_id' => 'yafie',
+                    'user_name' => 'yafie',
+                    'employee_name' => 'Yafie',
+                    'user_type' => 'admin'
+                ],
+            ]);
             return Datatables::of($data)->make(true);
         }
     }
@@ -168,10 +161,132 @@ class UtilitiesController extends Controller
         }
     }
 
+    public function dataDetailUserSecurityMaintenanceUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/user/getusermaster',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => 'A',
+                        'userID' => $request->user_id
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return view('utilities.utilities_user_security_maintenance_detail', ['data' => $arrResult->dataListSet[0]]);
+    }
+
     public function dataDetailUserAccessGroupUtilities(Request $request)
     {
 
-        return view('personel.utilities_user_access_group_detail', ['group_id' => $request->group_id]);
+        return view('utilities.utilities_user_access_group_detail', ['group_id' => $request->group_id]);
+    }
+
+    public function tableUserSecurityMaintenanceLevelUtilities(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = collect([
+                (object) [
+                    'level_type' => '1',
+                    'level_name' => 'Departemen',
+                    'level_authorization' => 'All'
+                ],
+                (object) [
+                    'level_type' => '2',
+                    'level_name' => 'Divisi',
+                    'level_authorization' => 'All'
+                ],
+                (object) [
+                    'level_type' => '3',
+                    'level_name' => 'Group',
+                    'level_authorization' => 'All'
+                ],
+                (object) [
+                    'level_type' => '4',
+                    'level_name' => 'Sub-Group',
+                    'level_authorization' => 'All'
+                ],
+            ]);
+            return Datatables::of($data)->make(true);
+        }
+    }
+
+    public function tableUserSecurityMaintenanceCompanyUtilities(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = collect([
+                (object) [
+                    'company_code' => 'Personel',
+                    'company_name' => 'Pelaksana',
+                    'set_default' => 'Pelaksana',
+                    'status' => ''
+                ],
+            ]);
+            return Datatables::of($data)->make(true);
+        }
+    }
+
+    public function tableUserSecurityMaintenanceModuleUtilities(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = collect([
+                (object) [
+                    'module_name' => 'Personel',
+                    'group_authorization_name' => 'Pelaksana'
+                ],
+            ]);
+            return Datatables::of($data)->make(true);
+        }
+    }
+
+    public function tableUserSecurityMaintenanceLevelAuthorizationUtilities(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = collect([
+                (object) [
+                    'levelCode' => 'All',
+                    'levelName' => 'All'
+                ]
+            ]);
+
+            try {
+                $client = new Client([
+                    'headers' => [ 'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . Session::get('token') ]
+                ]);
+
+                $response = $client->post(env('API_URL') . '/level/getlevel',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode')
+                        ]
+                    )]
+                );
+            } catch (RequestException $e) {
+                var_dump($e->getResponse());
+            }
+
+            $arrResult = json_decode($response->getBody()->getContents());
+
+            $data = $data->merge($arrResult->dataListSet);
+
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }
     }
 
     public function tableUserAccessGroupUserUtilities(Request $request)
