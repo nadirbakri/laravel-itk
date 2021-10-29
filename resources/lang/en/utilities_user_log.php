@@ -14,5 +14,10 @@ return [
 
     'judul' => 'User Log Page',
     'list' => 'Utilities Menu List',
+    'label_user_id' => 'User ID',
+    'label_log_date' => 'Log Date',
+    'user_id_required' => 'User ID is Required',
+    'log_date_required' => 'Log Date is Required',
+    'btn_show' => 'Show',
 
 ];

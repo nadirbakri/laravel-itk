@@ -28,7 +28,7 @@
 			/*max-width: 100%;*/
 		}
 		.img-card-welcome img {
-			max-width: 90%;
+			max-width: 75%;
 		}
 	</style>
 </head>
@@ -55,7 +55,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="img-card-welcome"><img src="{{ url('/pictures/welcome-card.png') }}" alt="Toogle"></div>
+						<div class="img-card-welcome"><img src="{{ url('/pictures/welcome-card.svg') }}" alt="Toogle"></div>
 					</div>
 				</div>
 			</div>
@@ -496,6 +496,9 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script src="https://rawgit.com/beaver71/Chart.PieceLabel.js/master/build/Chart.PieceLabel.min.js"></script>
@@ -504,6 +507,88 @@
 <script>
 	var $calendar;
 	$(document).ready(function () {
+		var firebaseConfig = {
+			apiKey: "AIzaSyB0e5Cq6q0c7rFx-YtSIa8Ib4h85xjTd6I",
+			authDomain: "laravel-itk.firebaseapp.com",
+			projectId: "laravel-itk",
+			storageBucket: "laravel-itk.appspot.com",
+			messagingSenderId: "592986504219",
+			appId: "1:592986504219:web:93d88f5e6dc231d88c8cbe",
+			measurementId: "G-3DS7F0TQVC"
+		};
+
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
+
+		const messaging = firebase.messaging();
+		messaging.requestPermission().then(function () {
+			return messaging.getToken({ vapidKey: 'BPs3b45H-tsEOSAUaPD3u26i_7oypoAlQJWrU0YwBEOucilDhyph-lez2xQm_rSBljwc_omZEX_y9pWtFaug0Ac' });
+		}).then(function(token) {
+
+     		$.ajaxSetup({
+     			headers: {
+     				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+     			}
+     		});
+
+     		console.log(token);
+
+     		$.ajax({
+     			url: '{{ url("save-token") }}',
+     			type: 'GET',
+     			data: {
+     				token: token
+     			},
+     			dataType: 'JSON',
+     			success: function (response) {
+     				// console.log(response);
+     			},
+     			error: function (err) {
+     				console.log('User Chat Token Error'+ err);
+     			},
+     		});
+
+     		$.ajax({
+     			url: '{{ url("send-notification") }}',
+     			type: 'GET',
+     			dataType: 'JSON',
+     			success: function (response) {
+     				console.log(response);
+     			},
+     			error: function (err) {
+     				console.log('User Chat Token Error'+ err);
+     			},
+     		});
+ 		}).catch(function (err) {
+			// ErrElem.innerHTML = ErrElem.innerHTML + "; " + err;
+			console.log("Unable to get permission to notify.", err);
+		});
+
+ 		messaging.onMessage(function(payload) {
+ 			const noteTitle = payload.notification.title;
+ 			const noteOptions = {
+ 				body: payload.notification.body,
+ 				icon: payload.notification.icon,
+ 			};
+ 			new Notification(noteTitle, noteOptions);
+ 		});
+
+ 		$.ajax({
+ 			url: '{{ url("calendar/event") }}',
+ 			type: 'GET',
+ 			data: {
+ 				start_date: moment().startOf('month').format('YYYY-MM-DD\Thh:mm:ss'),
+ 				end_date: moment().endOf('month').format('YYYY-MM-DD\Thh:mm:ss'),
+ 			},
+ 			dataType: 'JSON',
+ 			success: function (response) {
+ 				console.log(response.data);
+ 			},
+ 			error: function (err) {
+ 				console.log('Error Get Event Calendar : '+ err);
+ 			},
+ 		});
+
 		let container = $(".calendar-dashboard").simpleCalendar({
       		fixedStartDay: 0, // Awal Minggu adalah hari Minggu
       		disableEmptyDetails: true,

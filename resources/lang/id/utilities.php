@@ -13,15 +13,15 @@ return [
     */
 
     'judul' => 'Utilities',
-    'organization_structure' => 'Struktur Organisasi',
+    'organization_structure' => 'Grafik Organisasi',
     'user_security_maintenance' => 'Pemeliharaan Keamanan Pengguna',
     'menu_master' => 'Menu Master',
-    'authorization_code_group' => 'Grup Kode Otorisasi',
-    'user_access_group' => 'Grup Akses Pengguna',
-    'change_employee_number' => 'Ganti Nomor Pegawai',
+    'group_authorization' => 'Grup Otorisasi',
+    'group_user_access' => 'Grup Akses Pengguna',
+    'change_password' => 'Ganti Kata Sandi',
     'user_log' => 'Log Pengguna',
     'audit_trail' => 'Jejak Audit',
-    'export_personal_data' => 'Unggah Data personal',
-    'dashboard_ess' => 'Dashboard ESS',
+    // 'export_personal_data' => 'Unggah Data personal',
+    'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 
 ];

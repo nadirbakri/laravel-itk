@@ -12,7 +12,16 @@ return [
     |
     */
 
-    'judul' => 'Halaman Kode Tipe Mata Pelajaran',
+    'judul' => 'Halaman Tipe Mata Pelajaran',
     'list' => 'Daftar Menu Personil',
+    'list_detail' => 'Daftar Tipe Mata Pelajaran',
+    'label_record_status' => 'Status Data',
+    'label_type_of_course_code' => 'Kode Tipe Mata Pelajaran',
+    'label_type_of_course_name' => 'Nama Tipe Mata Pelajaran',
+    'type_of_course_code_required' => 'Kode Tipe Mata Pelajaran is Required',
+    'type_of_course_name_required' => 'Nama Tipe Mata Pelajaran is Required',
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal',
+    'alert_success' => 'Sukses !'
 
 ];

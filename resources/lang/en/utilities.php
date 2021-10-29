@@ -13,15 +13,15 @@ return [
     */
 
     'judul' => 'Utilities',
-    'organization_structure' => 'Organization Structure',
+    'organization_chart' => 'Organization Chart',
     'user_security_maintenance' => 'User Security Maintenance',
     'menu_master' => 'Menu Master',
-    'authorization_code_group' => 'Authorization Code Group',
-    'user_access_group' => 'User Access Group',
-    'change_employee_number' => 'Change Employee Number',
+    'group_authorization' => 'Group Authorization',
+    'group_user_access' => 'Group User Access',
+    'change_password' => 'Change Password',
     'user_log' => 'User Log',
     'audit_trail' => 'Audit Trail',
-    'export_personal_data' => 'Export Personal Data',
-    'dashboard_ess' => 'Dashboard ESS',
+    // 'export_personal_data' => 'Export Personal Data',
+    'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 
 ];

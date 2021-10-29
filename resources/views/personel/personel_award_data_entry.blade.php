@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 	<link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
@@ -96,8 +97,8 @@
                         <div class="form-group">
                             <label for="award_date_start">Award Date Start</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="award_date_start" name="award_date_start" placeholder="Award Date Start">
-                                <div class="input-group-prepend">
+                                <input type="text" class="form-control" id="award_date_start" name="award_date_start" placeholder="Award Date Start" data-input>
+                                <div class="input-group-prepend award_date_start">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
@@ -173,7 +174,32 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+    $(function() {
+        initDatePicker();
+    });
+
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function() {
+                var flatPickrInstance = this;
+                console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -180,9 +180,9 @@
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
         $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
+            if (table.column(i + 1).search() !== this.value) {
                 table
-                    .column(i)
+                    .column(i + 1)
                     .search(this.value)
                     .draw();
             }
@@ -193,7 +193,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/grade_code/table') }}",
+        ajax: "{{ url('personel/grade/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -224,7 +224,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/grade_code/table') }}",
+            ajax: "{{ url('personel/grade/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -252,17 +252,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/grade_code') }}";
+        window.location = "{{ url('personel/grade') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/grade_code/detail_data') }}", { 'gradeCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personel/grade/detail_data') }}", { 'gradeCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/grade_code/detail_data') }}", { 'gradeCode' : data[0].gradeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personel/grade/detail_data') }}", { 'gradeCode' : data[0].gradeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -273,7 +273,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/grade_code/status') }}",
+                url: "{{ url('personel/grade/status') }}",
                 type: "GET",
                 data: { 'gradeCode' : data[0].gradeCode, 'gradeName' : data[0].gradeName, 'func' : 'A' },
                 success: function(response) {
@@ -281,7 +281,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/grade_code') }}";
+                            window.location = "{{ url('personel/grade') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -309,7 +309,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/grade_code/status') }}",
+                url: "{{ url('personel/grade/status') }}",
                 type: "GET",
                 data: { 'gradeCode' : data[0].gradeCode, 'gradeName' : data[0].gradeName, 'func' : 'D' },
                 success: function(response) {
@@ -317,7 +317,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/grade_code') }}";
+                            window.location = "{{ url('personel/grade') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -343,7 +343,7 @@
 
     $('#grade_code_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/grade_code/detail_data') }}", { 'gradeCode' : data.gradeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personel/grade/detail_data') }}", { 'gradeCode' : data.gradeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

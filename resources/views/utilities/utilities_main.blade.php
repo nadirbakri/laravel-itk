@@ -27,9 +27,9 @@
 		<div class="div-menu">
 			<div class="row div-child-data">
 				<div class="col col-6">
-					<a href="{{ url('utilities/organization_structure') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/organization_chart') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.organization_structure') }}</span>
+						<span class="child-title-text">{{ __('utilities.organization_chart') }}</span>
 					</a>
 				</div>
 			</div>
@@ -51,28 +51,28 @@
 			</div>
 			<div class="row div-child-data">
 				<div class="col col-6">
-					<a href="{{ url('utilities/authorization_code_group') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/group_authorization') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.authorization_code_group') }}</span>
+						<span class="child-title-text">{{ __('utilities.group_authorization') }}</span>
 					</a>
 				</div>
 			</div>
 			<div class="row div-child-data">
 				<div class="col col-6">
-					<a href="{{ url('utilities/user_access_group') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/group_user_access') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.user_access_group') }}</span>
+						<span class="child-title-text">{{ __('utilities.group_user_access') }}</span>
 					</a>
 				</div>
 			</div>
-			<div class="row div-child-data">
+			<!-- <div class="row div-child-data">
 				<div class="col col-6">
-					<a href="{{ url('utilities/change_employee_number') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/change_password') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.change_employee_number') }}</span>
+						<span class="child-title-text">{{ __('utilities.change_password') }}</span>
 					</a>
 				</div>
-			</div>
+			</div> -->
 			<div class="row div-child-data">
 				<div class="col col-6">
 					<a href="{{ url('utilities/user_log') }}" target="iframe_dashboard">
@@ -89,22 +89,22 @@
 					</a>
 				</div>
 			</div>
-			<div class="row div-child-data">
+			<!-- <div class="row div-child-data">
 				<div class="col col-6">
 					<a href="{{ url('utilities/export_personal_data') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
 						<span class="child-title-text">{{ __('utilities.export_personal_data') }}</span>
 					</a>
 				</div>
-			</div>
-			<div class="row div-child-data">
+			</div> -->
+			<!-- <div class="row div-child-data">
 				<div class="col col-6">
-					<a href="{{ url('utilities/dashboard_ess') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/dashboard_admin_ess') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.dashboard_ess') }}</span>
+						<span class="child-title-text">{{ __('utilities.dashboard_admin_ess') }}</span>
 					</a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </body>

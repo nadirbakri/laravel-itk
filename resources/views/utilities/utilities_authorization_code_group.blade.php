@@ -8,17 +8,55 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/personel_detail.css') }}">
 	<style type="text/css">
 		.div-utilities {
-			max-width: 100%;
+			max-width: 97%;
 			margin: auto;
-			/*margin-top: 1%;*/
+			margin-top: 1%;
 		}
-        .div-title {
-            margin-top: 8%;
+        .modal-header-notification-error {
+            border-bottom:1px solid #eee;
+            background-color: #f44336;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .modal-header-notification-success {
+            border-bottom:1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
         }
 	</style>
 </head>
@@ -26,42 +64,42 @@
 <body>
 	<div class="div-utilities">
         <div class="div-navbar sticky-navbar">
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
                 <span>Back</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
                 <span>Next</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
                 <span>New</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
                 <span>Save</span>
             </a>
-            <a class="list-functionbar-md" href="javascript:void(0)">
+            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
                 <span>Activate</span>
             </a>
-            <a class="list-functionbar-lg" href="javascript:void(0)">
+            <a class="list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
                 <span>Deactivate</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
                 <span>List</span>
@@ -73,139 +111,240 @@
 				<span class="title-text">{{ __('utilities_authorization_code_group.list') }}</span>
 			</a>
 		</div>
-		<div class="div-form">
-            <form>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="group_authorization_code">Group Authorization Code</label>
-                            <input type="text" class="form-control" id="group_authorization_code" name="group_authorization_code" placeholder="Group Authorization Code">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="group_authorization_description">Group Authorization Description</label>
-                            <input type="text" class="form-control" id="group_authorization_description" name="group_authorization_description" placeholder="Group Authorization Code">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-search-group" id="btn-search-group" style="width: 100%;">
-                            <i class="fa fa-search"></i> Search
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <div class="row">
-                <div class="col-8">
-                    <table id="group_authorization_data_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th>Group Authorization Code</th>
-                                <th>Group Authorization Description</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-add-group-authorization" id="btn-add-group-authorization" style="width: 100%;" data-toggle="modal" data-target="#modal_add_group_authorization">
-                        <i class="fa fa-plus"></i> Add
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-danger" name="btn-remove-group-authorization" id="btn-remove-group-authorization" style="width: 100%;">
-                        <i class="fa fa-times"></i> Remove
-                    </button>
-                </div>
-            </div>
+		<div class="div-table">
+            <table id="group_authorization_table" class="table hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Group Authorization Code</th>
+                        <th>Group Authorization Description</th>
+                        <th>Record Status</th>
+                    </tr>
+                </thead>
+            </table>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_add_group_authorization" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Group Authorization Code</h5>
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="group_authorization_code_add">Group Authorization Code</label>
-                                    <select class="form-control" id="group_authorization_code_add" name="group_authorization_code_add">
-                                        <option value="">Choose</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="group_authorization_description_add">Group Authorization Description</label>
-                                    <input type="text" class="form-control" id="group_authorization_description_add" name="group_authorization_description_add">
-                                </div>
-                            </div>
-                        </div>
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> Save</button>
-                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                </form>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('utilities_authorization_code_group.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var table = null;
-    $('#group_authorization_data_table thead tr').clone(true).appendTo('#group_authorization_data_table thead');
-    $('#group_authorization_data_table thead tr:eq(1) th').each( function (i) {
+    //addClass = disabled first;
+    $('.div-navbar a.disabled').attr('onclick', 'return false;');
+
+    $('#group_authorization_table thead tr').clone(true).appendTo('#group_authorization_table thead');
+    $('#group_authorization_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
         var title = $(this).text();
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
         $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
+            if (table.column(i + 1).search() !== this.value) {
                 table
-                    .column(i)
+                    .column(i + 1)
                     .search(this.value)
                     .draw();
             }
         } );
     });
+    
+    var table = $('#group_authorization_table').DataTable({
+        processing: true,
+        serverSide: true,
+        orderCellsTop: true,
+        ajax: "{{ url('utilities/group_authorization/table') }}",
+        error: function(jqXHR, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+        },
+        "sDom": 'lrtip',
+        'sPaginationType': 'ellipses',
+        "order": [[ 1, "asc" ]],
+        columns: [
+            {
+                orderable: false,
+                targets: 0, 
+                "defaultContent": '',
+                render: function(data, type) {
+                    return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                }
+            },
+            {data: 'groupAuthorizeCode', name: 'groupAuthorizeCode'},
+            {data: 'groupAuthorizeDesc', name: 'groupAuthorizeDesc'},
+            {data: 'recordStatus', name: 'recordStatus'}
+        ],
+        select: {
+            style:    'multi',
+            selector: 'td:first-child'
+        }
+    });
 
-    load_table_group_authorization();
-
-    function load_table_group_authorization() {
-        table = $('#group_authorization_data_table').DataTable({
+    function load_data_authorization_code_group() {
+        table = $('#group_authorization_table').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('utilities/authorization_code_group/authorization_code_group/table') }}",
+            ajax: "{{ url('utilities/group_authorization/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
             'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
             columns: [
-                {data: 'group_authorization_code', name: 'group_authorization_code'},
-                {data: 'group_authorization_description', name: 'group_authorization_description'}
-            ]
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
+                {data: 'groupAuthorizeCode', name: 'groupAuthorizeCode'},
+                {data: 'groupAuthorizeDesc', name: 'groupAuthorizeDesc'},
+                {data: 'recordStatus', name: 'recordStatus'}
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
         });
     }
+
+    $('#notification_success').on('hide.bs.modal', function () {
+        window.location = "{{ url('utilities/group_authorization') }}";
+    })
+
+    $("#toolbar-new").on('click', function() {
+        $.redirect("{{ url('utilities/group_authorization/detail_data') }}", { 'groupAuthorizeCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+    });
+
+    $("#toolbar-edit").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            $.redirect("{{ url('utilities/group_authorization/detail_data') }}", { 'groupAuthorizeCode' : data[0].groupAuthorizeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#toolbar-active").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            $.ajax({
+                url: "{{ url('utilities/group_authorization/status') }}",
+                type: "GET",
+                data: { 'groupAuthorizeCode' : data[0].groupAuthorizeCode, 'groupAuthorizeDesc' : data[0].groupAuthorizeDesc, 'func' : 'A' },
+                success: function(response) {
+                    if(response.status == "true"){
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response.message);
+                        setTimeout(function(){ 
+                            window.location = "{{ url('utilities/group_authorization') }}";
+                        }, 3000);
+                    }else{
+                        $('#notification_error').modal('show');
+                        if(response.message == null || response.message == ''){
+                            $('#message-notification-error').html("{{ __('login.error') }}");
+                        }else{
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                    var oTable = $('#group_authorization_table').dataTable();
+                    oTable.fnDraw(false);
+                },
+                error: function(response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#toolbar-deactive").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            $.ajax({
+                url: "{{ url('utilities/group_authorization/status') }}",
+                type: "GET",
+                data: { 'groupAuthorizeCode' : data[0].groupAuthorizeCode, 'groupAuthorizeDesc' : data[0].groupAuthorizeDesc, 'func' : 'D' },
+                success: function(response) {
+                    if(response.status == "true"){
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response.message);
+                        setTimeout(function(){ 
+                            window.location = "{{ url('utilities/group_authorization') }}";
+                        }, 3000);
+                    }else{
+                        $('#notification_error').modal('show');
+                        if(response.message == null || response.message == ''){
+                            $('#message-notification-error').html("{{ __('login.error') }}");
+                        }else{
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                    var oTable = $('#group_authorization_table').dataTable();
+                    oTable.fnDraw(false);
+                },
+                error: function(response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $('#group_authorization_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        var data = table.row(this).data();
+        $.redirect("{{ url('utilities/group_authorization/detail_data') }}", { 'groupAuthorizeCode' : data.groupAuthorizeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    });
+    
   });
 </script>
 

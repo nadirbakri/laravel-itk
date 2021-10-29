@@ -8,17 +8,55 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/personel_detail.css') }}">
 	<style type="text/css">
 		.div-personel {
-			max-width: 100%;
+			max-width: 97%;
 			margin: auto;
-			/*margin-top: 1%;*/
+			margin-top: 1%;
 		}
-        .div-title {
-            margin-top: 8%;
+        .modal-header-notification-error {
+            border-bottom:1px solid #eee;
+            background-color: #f44336;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .modal-header-notification-success {
+            border-bottom:1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
         }
 	</style>
 </head>
@@ -26,42 +64,42 @@
 <body>
 	<div class="div-personel">
         <div class="div-navbar sticky-navbar">
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
                 <span>Back</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
                 <span>Next</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
                 <span>New</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
                 <span>Save</span>
             </a>
-            <a class="list-functionbar-md" href="javascript:void(0)">
+            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
                 <span>Activate</span>
             </a>
-            <a class="list-functionbar-lg" href="javascript:void(0)">
+            <a class="list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
                 <span>Deactivate</span>
             </a>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
                 <span>List</span>
@@ -73,192 +111,253 @@
 				<span class="title-text">{{ __('personel_level.list') }}</span>
 			</a>
 		</div>
-		<div class="div-form">
-            <form>
-                <div class="row">
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label for="level_description_select">Level Description</label>
-                            <select class="form-control" id="level_description_select" name="level_description_select">
-                                <option value="">Choose</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="level_description_text">&nbsp;</label>
-                            <input type="text" class="form-control" id="level_description_text" name="level_description_text" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-search-level" id="btn-search-level" style="width: 100%;">
-                            <i class="fa fa-search"></i> Search
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <div class="row">
-                <div class="col-12">
-                    <table id="level_data_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th>Level Code</th>
-                                <th>Level Name</th>
-                                <th>Direct Staff</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-add-level" id="btn-add-level" style="width: 100%;" data-toggle="modal" data-target="#modal_add_level">
-                        <i class="fa fa-plus"></i> Add
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-danger" name="btn-remove-level" id="btn-remove-level" style="width: 100%;">
-                        <i class="fa fa-times"></i> Remove
-                    </button>
-                </div>
-            </div>
+
+		<div class="div-table">
+			<table id="level_table" class="table hover">
+				<thead>
+					<tr>
+                        <th></th>
+                        <th>Level Type</th>
+                        <th>Level Type Desc</th>
+						<th>Level Code</th>
+						<th>Level Name</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_add_level" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add New Report Format Condition</h5>
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="seq_no">Seq No</label>
-                                    <input type="text" class="form-control" id="seq_no" name="seq_no" placeholder="Seq No">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="table_name">Table Name</label>
-                                    <select class="form-control" id="table_name" name="table_name">
-                                        <option value="">Choose Table Name</option>
-                                        <option value="PeMaster">PeMaster</option>
-                                        <option value="PeMasterInfo">PeMasterInfo</option>
-                                        <option value="PeMasterAddress">PeMasterAddress</option>
-                                        <option value="PeMasterBank">PeMasterBank</option>
-                                        <option value="PeHistoryJob">PeHistoryJob</option>
-                                        <option value="PeFreeFormat">PeFreeFormat</option>
-                                        <option value="PeMasterPayroll">PeMasterPayroll</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="field_name">Field Name</label>
-                                    <select class="form-control" id="field_name" name="field_name" disabled>
-                                        <option value="">Choose Field Name</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="operator">Operator</label>
-                                    <select class="form-control" id="operator" name="operator">
-                                      <option value="">Choose Operator</option>
-                                      <option value="=">=</option>
-                                      <option value="<>"><></option>
-                                      <option value="<="><=</option>
-                                      <option value=">=">>=</option>
-                                      <option value="Between">Between</option>
-                                      <option value="Like">Like</option>
-                                  </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="value_from">Value From</label>
-                                    <input type="text" class="form-control" id="value_from" name="value_from" placeholder="Value From">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="value_to">Value To</label>
-                                    <input type="text" class="form-control" id="value_to" name="value_to" placeholder="Value To">
-                                </div>
-                            </div>
-                        </div>
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-check"></i> OK</button>
-                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                </form>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('personel_level.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var table = null;
-    $('#level_data_table thead tr').clone(true).appendTo('#level_data_table thead');
-    $('#level_data_table thead tr:eq(1) th').each( function (i) {
+    //addClass = disabled first;
+    $('.div-navbar a.disabled').attr('onclick', 'return false;');
+
+  	$('#level_table thead tr').clone(true).appendTo('#level_table thead');
+    $('#level_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
         var title = $(this).text();
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
         $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
+            if (table.column(i + 1).search() !== this.value) {
                 table
-                    .column(i)
+                    .column(i + 1)
                     .search(this.value)
                     .draw();
             }
         } );
     });
+    
+    var table = $('#level_table').DataTable({
+        processing: true,
+        serverSide: true,
+        orderCellsTop: true,
+        ajax: {
+            url: "{{ url('personel/level/table') }}",
+            cache: false
+        },
+        error: function(jqXHR, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+        },
+        "sDom": 'lrtip',
+        'sPaginationType': 'ellipses',
+        "order": [[ 1, "asc" ]],
+        columns: [
+            {
+                orderable: false,
+                targets: 0, 
+                "defaultContent": '',
+                render: function(data, type) {
+                    return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                }
+            },
+            {data: 'levelType', name: 'levelType'},
+            {data: 'levelDescription', name: 'levelDescription'},
+            {data: 'levelCode', name: 'levelCode'},
+            {data: 'levelName', name: 'levelName'},
+            {data: 'recordStatus', name: 'recordStatus'}
+        ],
+        select: {
+            style:    'multi',
+            selector: 'td:first-child'
+        }
+    });
 
-    load_table_level();
-
-    function load_table_level() {
-        table = $('#level_data_table').DataTable({
+    function load_data_level() {
+        table = $('#level_table').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/level/table') }}",
+            ajax: {
+                url: "{{ url('personel/level/table') }}",
+                cache: false
+            },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
             'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
             columns: [
-                {data: 'level_code', name: 'level_code'},
-                {data: 'level_name', name: 'level_name'},
-                {data: 'direct_staff', name: 'direct_staff'},
-                {data: 'status', name: 'status'}
-            ]
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
+                {data: 'levelType', name: 'levelType'},
+                {data: 'levelDescription', name: 'levelDescription'},
+                {data: 'levelCode', name: 'levelCode'},
+                {data: 'levelName', name: 'levelName'},
+                {data: 'recordStatus', name: 'recordStatus'}
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
         });
     }
+
+    $('#notification_success').on('hide.bs.modal', function () {
+        window.location = "{{ url('personel/level') }}";
+    })
+
+    $("#toolbar-new").on('click', function() {
+        $.redirect("{{ url('personel/level/detail_data') }}", { 'levelType' : null, 'levelCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+    });
+
+    $("#toolbar-edit").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            $.redirect("{{ url('personel/level/detail_data') }}", { 'levelType' : data.levelType, 'levelCode' : data[0].levelCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#toolbar-active").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            $.ajax({
+                url: "{{ url('personel/level/status') }}",
+                type: "GET",
+                data: { 'levelType' : data[0].levelType, 'levelCode' : data[0].levelCode, 'levelName' : data[0].levelName, 'func' : 'A' },
+                success: function(response) {
+                    if(response.status == "true"){
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response.message);
+                        setTimeout(function(){ 
+                            window.location = "{{ url('personel/level') }}";
+                        }, 3000);
+                    }else{
+                        $('#notification_error').modal('show');
+                        if(response.message == null || response.message == ''){
+                            $('#message-notification-error').html("{{ __('login.error') }}");
+                        }else{
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                    var oTable = $('#level_table').dataTable();
+                    oTable.fnDraw(false);
+                },
+                error: function(response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#toolbar-deactive").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            $.ajax({
+                url: "{{ url('personel/level/status') }}",
+                type: "GET",
+                data: { 'levelType' : data[0].levelType, 'levelCode' : data[0].levelCode, 'levelName' : data[0].levelName, 'func' : 'D' },
+                success: function(response) {
+                    if(response.status == "true"){
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response.message);
+                        setTimeout(function(){ 
+                            window.location = "{{ url('personel/level') }}";
+                        }, 3000);
+                    }else{
+                        $('#notification_error').modal('show');
+                        if(response.message == null || response.message == ''){
+                            $('#message-notification-error').html("{{ __('login.error') }}");
+                        }else{
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                    var oTable = $('#level_table').dataTable();
+                    oTable.fnDraw(false);
+                },
+                error: function(response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $('#level_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        var data = table.row(this).data();
+        $.redirect("{{ url('personel/level/detail_data') }}", { 'levelType' : data.levelType, 'levelCode' : data.levelCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    });
+    
   });
 </script>
 

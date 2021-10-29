@@ -14,5 +14,14 @@ return [
 
     'judul' => 'Location Code Page',
     'list' => 'Personel Menu List',
+    'list_detail' => 'Location Code List',
+    'label_record_status' => 'Record Status',
+    'label_location_code' => 'Location Code',
+    'label_location_name' => 'Location Name',
+    'location_code_required' => 'Location Code is Required',
+    'location_name_required' => 'Location Name is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
 
 ];

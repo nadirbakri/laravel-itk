@@ -12,7 +12,20 @@ return [
     |
     */
 
-    'judul' => 'Bank Code Page',
+    'judul' => 'Bank Page',
     'list' => 'Personel Menu List',
+    'list_detail' => 'Bank List',
+    'label_record_status' => 'Record Status',
+    'label_bank_code' => 'Bank Code',
+    'label_bank_name' => 'Bank Name',
+    'label_bi_code' => 'BI Code',
+    'label_account_format' => 'Account Format',
+    'bank_code_required' => 'Bank Code is Required',
+    'bank_name_required' => 'Bank Name is Required',
+    'bi_code_required' => 'BI Code is Required',
+    'account_format_required' => 'Account Format is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
 
 ];

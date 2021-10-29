@@ -19,10 +19,9 @@ class OrganizationStructureController extends Controller
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/position/getposition',
+            $response = $client->post(env('API_URL') . '/listorganization',
                 ['body' => json_encode(
                     [
-                        'recordStatus' => 'A',
                         'companyCode' => Session::get('companyCode')
                     ]
                 )]

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeeListExport;
+
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -9,6 +11,7 @@ use Validator;
 use Session;
 use App;
 use DataTables;
+use Excel;
 
 class PersonelController extends Controller
 {
@@ -22,7 +25,7 @@ class PersonelController extends Controller
     	return view('personel.personel_personal_data');
     }
 
-    public function pageEmployeePerformancePersonel()
+    public function pagePerformancePersonel()
     {
     	return view('personel.personel_employee_performance');
     }
@@ -94,7 +97,43 @@ class PersonelController extends Controller
 
     public function pagePersonelReferencePersonel()
     {
-        return view('personel.personel_personel_reference');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response_level = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+        $arrResult_level = json_decode($response_level->getBody()->getContents());  
+
+        // var_dump($arrResult->dataListSet[0]->levelMaster);
+
+        return view('personel.personel_personel_reference', ['data' => $arrResult->dataListSet, 'data_level' => $arrResult_level->dataListSet]);
     }
 
     public function pageDataFormatPersonel()
@@ -137,7 +176,7 @@ class PersonelController extends Controller
         return view('personel.personel_position');
     }
 
-    public function pageRankingCodePersonel()
+    public function pageRankingPersonel()
     {
         return view('personel.personel_ranking_code');
     }
@@ -147,7 +186,7 @@ class PersonelController extends Controller
         return view('personel.personel_grade_code');
     }
 
-    public function pageGroupCodePersonel()
+    public function pageGroupPersonel()
     {
         return view('personel.personel_group_code');
     }
@@ -167,14 +206,14 @@ class PersonelController extends Controller
         return view('personel.personel_npwp_group');
     }
 
-    public function pageBankCodePersonel()
+    public function pageBankPersonel()
     {
         return view('personel.personel_bank_code');
     }
 
-    public function pageBankBranchPersonel()
+    public function pageCompanyBankPersonel()
     {
-        return view('personel.personel_bank_branch');
+        return view('personel.personel_company_bank');
     }
 
     public function pageSourceBankPersonel()
@@ -212,17 +251,17 @@ class PersonelController extends Controller
         return view('personel.personel_education_status_code');
     }
 
-    public function pageInstitutionCodePersonel()
+    public function pageInstitutionPersonel()
     {
         return view('personel.personel_institution_code');
     }
 
-    public function pageMajorCodePersonel()
+    public function pageMajorPersonel()
     {
         return view('personel.personel_major_code');
     }
 
-    public function pageTypeofCourseCodePersonel()
+    public function pageTypeofCoursePersonel()
     {
         return view('personel.personel_type_of_course_code');
     }
@@ -237,7 +276,7 @@ class PersonelController extends Controller
         return view('personel.personel_language_ability_code');
     }
 
-    public function pageCityCodePersonel()
+    public function pageCityPersonel()
     {
         return view('personel.personel_city_code');
     }
@@ -272,12 +311,12 @@ class PersonelController extends Controller
         return view('personel.personel_sanction_code');
     }
 
-    public function pageEvaluationCodePersonel()
+    public function pageEvaluationFormPersonel()
     {
         return view('personel.personel_evaluation_code');
     }
 
-    public function pageTitleCodePersonel()
+    public function pageTitlePersonel()
     {
         return view('personel.personel_title_code');
     }
@@ -302,12 +341,12 @@ class PersonelController extends Controller
         return view('personel.personel_fringe_benefits_code');
     }
 
-    public function pageFinalPerformanceResultCodePersonel()
+    public function pageFinalPerformanceResultPersonel()
     {
         return view('personel.personel_final_performance_result_code');
     }
 
-    public function pageSkillCodePersonel()
+    public function pageSkillPersonel()
     {
         return view('personel.personel_skill_code');
     }
@@ -332,94 +371,172 @@ class PersonelController extends Controller
         return view('personel.personel_relation_code');
     }
 
+    public function pageEmployeeListPersonel()
+    {
+        return view('personel.personel_employee_list');
+    }
+
+    public function pageEmployeeReportByStatusPersonel()
+    {
+        return view('personel.personel_employee_report_by_status');
+    }
+
+    public function pageReportTotalStandardPersonel()
+    {
+        return view('personel.personel_report_total_standard');
+    }
+
+    public function pageEmployeeCardPersonel()
+    {
+        return view('personel.personel_employee_card');
+    }
+
+    public function pageCustomReportEmployeePersonel()
+    {
+        return view('personel.personel_custom_report_employee');
+    }
+
+    public function pageEmployeeNoticeReportPersonel()
+    {
+        return view('personel.personel_employee_notice_report');
+    }
+
+    public function pageEvaluationReportPersonel()
+    {
+        return view('personel.personel_evaluation_report');
+    }
+
+    public function pageEmployeeSkillReportPersonel()
+    {
+        return view('personel.personel_employee_skill_report');
+    }
+
+    public function pageEmployeeTurnOverReportPersonel()
+    {
+        return view('personel.personel_employee_turn_over_report');
+    }
+
     public function tablePersonalDataPersonel(Request $request)
     {
-        if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'employee_no' => 1110002,
-        			'employee_name' => 'Lina Sudrajat',
-        			'level_one_name' => 'FINANCE ACCOUNTING INVESTMENT',
-        			'group_authorization' => 'Staff'
-        		],
-        		(object) [
-        			'employee_no' => 1111111,
-        			'employee_name' => 'Dodo',
-        			'level_one_name' => 'HC/GAF/LEGAL',
-        			'group_authorization' => 'Staff'
-        		]
-        	]);
-            return Datatables::of($data)
-                    // ->addIndexColumn()
-                    // ->addColumn('action', function($row){
-                    // 	$btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                    // 	return $btn;
-                    // })
-                    // ->rawColumns(['action'])
-                    ->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableEmployeePerformancePersonel(Request $request)
+    public function tablePerformancePersonel(Request $request)
     {
-        if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'employee_no' => 1110002,
-        			'employee_name' => 'Lina Sudrajat',
-        			'level_one_name' => 'FINANCE ACCOUNTING INVESTMENT',
-        			'group_authorization' => 'Staff'
-        		],
-        		(object) [
-        			'employee_no' => 1111111,
-        			'employee_name' => 'Dodo',
-        			'level_one_name' => 'HC/GAF/LEGAL',
-        			'group_authorization' => 'Staff'
-        		]
-        	]);
-            return Datatables::of($data)->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableWorkDetailPersonel(Request $request)
     {
-        if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'employee_no' => 1110002,
-        			'employee_name' => 'Lina Sudrajat',
-        			'level_one_name' => 'FINANCE ACCOUNTING INVESTMENT',
-        			'group_authorization' => 'Staff'
-        		],
-        		(object) [
-        			'employee_no' => 1111111,
-        			'employee_name' => 'Dodo',
-        			'level_one_name' => 'HC/GAF/LEGAL',
-        			'group_authorization' => 'Staff'
-        		]
-        	]);
-            return Datatables::of($data)->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableCompetencyPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'employee_no' => 1110002,
-                    'employee_name' => 'Lina Sudrajat',
-                    'level_one_name' => 'FINANCE ACCOUNTING INVESTMENT',
-                    'group_authorization' => 'Staff'
-                ],
-                (object) [
-                    'employee_no' => 1111111,
-                    'employee_name' => 'Dodo',
-                    'level_one_name' => 'HC/GAF/LEGAL',
-                    'group_authorization' => 'Staff'
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -574,25 +691,106 @@ class PersonelController extends Controller
 
     public function tablePrintLetterPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect();
-            return Datatables::of($data)->addIndexColumn()->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/getlettermaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            foreach($arrResult->dataListSet as $value){
+                $filename = Session::get('companyCode') . '_' . $value->letterType . '.docx';
+                file_put_contents(public_path('letter_master/') . $filename, base64_decode($value->letter));
+                $value->letter = $filename;
+            }
+
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableLevelPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect();
-            return Datatables::of($data)->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/level/getlevel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableSourceDocumentPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect();
-            return Datatables::of($data)->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/getlettertemplate',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            foreach($arrResult->dataListSet as $value){
+                $filename = Session::get('companyCode') . '_' . $value->letterType . '.docx';
+                file_put_contents(public_path('letter_template/') . $filename, base64_decode($value->letterFile64));
+                $value->letterFile = $filename;
+            }
+            
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -614,43 +812,63 @@ class PersonelController extends Controller
 
     public function tableCostCenterCodePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'cost_center_code' => 'MK',
-                    'cost_center_description' => 'MARKETING',
-                    'account_no' => '',
-                    'contra_account_no' => '',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'cost_center_code' => 'NN',
-                    'cost_center_description' => 'NONE',
-                    'account_no' => '',
-                    'contra_account_no' => '',
-                    'status' => 'Active'
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableLocationCodePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'location_code' => 'MK',
-                    'location_name' => 'MARKETING',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'location_code' => 'NN',
-                    'location_name' => 'NONE',
-                    'status' => 'Active'
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/location/getlocation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -665,7 +883,10 @@ class PersonelController extends Controller
             $response = $client->post(env('API_URL') . '/position/getposition',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -682,24 +903,34 @@ class PersonelController extends Controller
         }
     }
 
-    public function tableRankingCodePersonel(Request $request)
+    public function tableRankingPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'ranking_code' => '1',
-                    'ranking_name' => '1',
-                    'group_authorize' => '',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'ranking_code' => '2',
-                    'ranking_name' => '2',
-                    'group_authorize' => '',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -714,7 +945,10 @@ class PersonelController extends Controller
             $response = $client->post(env('API_URL') . '/grade/getgrade',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -731,22 +965,34 @@ class PersonelController extends Controller
         }
     }
 
-    public function tableGroupCodePersonel(Request $request)
+    public function tableGroupPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'group_code' => '1',
-                    'group_name' => 'OVERTIME STAFF',
-                    'record_status' => 'Active'
-                ],
-                (object) [
-                    'group_code' => '2',
-                    'group_name' => 'NON OVERTIME STAFF',
-                    'record_status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/group/getgroup',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -761,7 +1007,10 @@ class PersonelController extends Controller
             $response = $client->post(env('API_URL') . '/worknature/getworknature',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -780,84 +1029,125 @@ class PersonelController extends Controller
 
     public function tableBPJSGroupPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'bpjs_code' => 'A',
-                    'bpjs_no' => '123',
-                    'signer_name' => 'Joko Setiawan',
-                    'title' => 'Finance Head',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableNPWPGroupPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'npwp_code' => 'CAF',
-                    'pemotong_kuasa' => 'KUASA',
-                    'print_date' => '12/31/2019',
-                    'signer_name' => 'Lina Susanti',
-                    'signer_npwp' => '08.842.140.9-506.000',
-                    'company_name'=> 'PT Intikom Berlian Mustika',
-                    'company_npwp' => '03.093.891.4-031.000',
-                    'status' => 'Active',
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/npwp/getnpwp',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableBankCodePersonel(Request $request)
+    public function tableBankPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'bank_code' => 'BCA',
-                    'bank_name' => 'Bank Central Asia',
-                    'number_of_digits' => '',
-                    'record_status' => 'Active'
-                ],
-                (object) [
-                    'bank_code' => 'BII',
-                    'bank_name' => 'Bank International Indonesia',
-                    'number_of_digits' => '',
-                    'record_status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmbank/getgmbank',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableBankBranchPersonel(Request $request)
+    public function tableCompanyBankPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'bank_code' => 'BCA',
-                    'bank_name' => 'Bank Central Asia',
-                    'address' => '',
-                    'phone' => '',
-                    'fax_no' => '',
-                    'bi_code' => '',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'bank_code' => 'BII',
-                    'bank_name' => 'Bank International Indonesia',
-                    'address' => '',
-                    'phone' => '',
-                    'fax_no' => '',
-                    'bi_code' => '',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/companybank/getcompanybank',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -969,60 +1259,96 @@ class PersonelController extends Controller
         }
     }
 
-    public function tableInstitutionCodePersonel(Request $request)
+    public function tableInstitutionPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'institution_code' => 'AKADEM',
-                    'institution_name' => 'Akademi',
-                    'record_status' => 'Active'
-                ],
-                (object) [
-                    'institution_code' => 'NONE',
-                    'institution_name' => 'None',
-                    'record_status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableMajorCodePersonel(Request $request)
+    public function tableMajorPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'major_code' => 'BIOLO',
-                    'major_name' => 'Zoology',
-                    'record_status' => 'Active'
-                ],
-                (object) [
-                    'major_code' => 'ECOBFN',
-                    'major_name' => 'Finance & Banking',
-                    'record_status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableTypeofCourseCodePersonel(Request $request)
+    public function tableTypeofCoursePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'course_type_code' => 'ALPRO',
-                    'course_type_name' => 'Algorithm Programming',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'course_type_code' => 'ELECTR',
-                    'course_type_name' => 'Advanced Electrical Safety No. 68',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmcoursetype/getgmcoursetype',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1064,47 +1390,64 @@ class PersonelController extends Controller
         }
     }
 
-    public function tableCityCodePersonel(Request $request)
+    public function tableCityPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'city_code' => 'ACE',
-                    'city_name' => 'Aceh',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'city_code' => 'AMB',
-                    'city_name' => 'Ambon',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/city/getcity',
+                ['body' => json_encode(
+                    [
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableZipCodePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'zip_code' => '10110',
-                    'kelurahan' => 'Gambir',
-                    'kecamatan' => 'Gambir',
-                    'kota' => 'Jakarta Pusat',
-                    'provinsi' => 'DKI Jakarta',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'zip_code' => '12201',
-                    'kelurahan' => 'Kebon Kacang',
-                    'kecamatan' => 'Gambir',
-                    'kota' => 'Jakarta Pusat',
-                    'provinsi' => 'DKI Jakarta',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1198,34 +1541,64 @@ class PersonelController extends Controller
         }
     }
 
-    public function tableEvaluationCodePersonel(Request $request)
+    public function tableEvaluationFormPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'form_code' => '01',
-                    'form_description' => 'Penilaian Tahunan',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableTitleCodePersonel(Request $request)
+    public function tableTitlePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'title_code' => 'A.Ma.',
-                    'description' => 'Ahli Muda',
-                ],
-                (object) [
-                    'title_code' => 'A.Md.',
-                    'description' => 'Ahli Madya',
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
+                ['body' => json_encode(
+                    [
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1296,43 +1669,65 @@ class PersonelController extends Controller
         }
     }
 
-    public function tableFinalPerformanceResultCodePersonel(Request $request)
+    public function tableFinalPerformanceResultPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'no' => '1',
-                    'value' => 'A',
-                    'from' => '27',
-                    'to' => '30'
-                ],
-                (object) [
-                    'no' => '2',
-                    'value' => 'B',
-                    'from' => '21',
-                    'to' => '26'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
-    public function tableSkillCodePersonel(Request $request)
+    public function tableSkillPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'skill_code' => 'PHG',
-                    'skill_description' => 'Photography',
-                    'status' => 'Active'
-                ],
-                (object) [
-                    'skill_code' => 'PS',
-                    'skill_description' => 'Photoshop',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/gmskill/getgmskill',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1355,18 +1750,32 @@ class PersonelController extends Controller
 
     public function tableFreeFormatFieldPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'free_format_code' => 'SH',
-                    'free_format_field_type' => 'String',
-                    'description' => 'No Sepatu',
-                    'length' => '5',
-                    'format' => '',
-                    'status' => 'Active'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            $response = $client->post(env('API_URL') . '/freeformatfield/getgmfreeformatfield',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1408,26 +1817,138 @@ class PersonelController extends Controller
 
     public function dataDetailPersonalDataPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-    	return view('personel.personel_personal_data_detail', ['employee_no' => $request->employee_no, 'employee_name' => $request->employee_name]);
+            $response = $client->post(env('API_URL') . '/getuserdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('personel.personel_personal_data_detail', ['data' => $data, 'photo' => '']);
     }
 
-    public function dataDetailEmployeePerformancePersonel(Request $request)
+    public function dataDetailPerformancePersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-    	return view('personel.personel_employee_performance_detail', ['employee_no' => $request->employee_no, 'employee_name' => $request->employee_name]);
+            $response = $client->post(env('API_URL') . '/getuserdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('personel.personel_employee_performance_detail', ['data' => $data, 'photo' => '']);
     }
 
     public function dataDetailWorkDetailPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-    	return view('personel.personel_work_detail_detail', ['employee_no' => $request->employee_no, 'employee_name' => $request->employee_name]);
+            $response = $client->post(env('API_URL') . '/getuserdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('personel.personel_work_detail_detail', ['data' => $data, 'photo' => '']);
     }
 
     public function dataDetailCompetencyPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_competency_detail', ['employee_no' => $request->employee_no, 'employee_name' => $request->employee_name]);
+            $response = $client->post(env('API_URL') . '/getuserdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('personel.personel_competency_detail', ['data' => $data, 'photo' => '']);
     }
 
     public function dataDetailOtherInformationPersonel(Request $request)
@@ -1454,10 +1975,62 @@ class PersonelController extends Controller
         return view('personel.personel_employee_attachment_detail', ['employee_no' => $request->employee_no, 'employee_name' => $request->employee_name]);
     }
 
+    public function dataDetailLevelPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/level/getlevel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'levelType' => $request->levelType,
+                        'levelCode' => $request->levelCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_level_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function dataDetailSourceDocumentPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_source_document_detail', ['source_document' => $request->source_document]);
+            $response = $client->post(env('API_URL') . '/printletter/getlettertemplate',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letterType,
+                        'languageID' => $request->languageID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_source_document_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailFormatDocumentPersonel(Request $request)
@@ -1474,14 +2047,58 @@ class PersonelController extends Controller
 
     public function dataDetailCostCenterCodePersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_cost_center_code_detail', ['cost_center_code' => $request->cost_center_code]);
+            $response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'costCenterCode' => $request->costCenterCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_cost_center_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailLocationCodePersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_location_code_detail', ['location_code' => $request->location_code]);
+            $response = $client->post(env('API_URL') . '/location/getlocation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'locationCode' => $request->locationCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_location_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailPositionPersonel(Request $request)
@@ -1496,7 +2113,10 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'positionCode' => $request->positionCode
+                        'positionCode' => $request->positionCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -1506,13 +2126,35 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('personel.personel_position_detail', ['data' => $arrResult->dataListSet[0], 'func' => $request->func]);
+        return view('personel.personel_position_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailRankingCodePersonel(Request $request)
+    public function dataDetailRankingPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_ranking_code_detail', ['ranking_code' => $request->ranking_code]);
+            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'rankingCode' => $request->rankingCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_ranking_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailGradeCodePersonel(Request $request)
@@ -1528,7 +2170,10 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'gradeCode' => $request->gradeCode
+                        'gradeCode' => $request->gradeCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -1538,13 +2183,35 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('personel.personel_grade_code_detail', ['data' => $arrResult->dataListSet[0], 'func' => $request->func]);
+        return view('personel.personel_grade_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailGroupCodePersonel(Request $request)
+    public function dataDetailGroupPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_group_code_detail', ['group_code' => $request->group_code]);
+            $response = $client->post(env('API_URL') . '/group/getgroup',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->groupCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_group_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailNatureofWorkPersonel(Request $request)
@@ -1559,7 +2226,10 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'workNatureCode' => $request->workNatureCode
+                        'workNatureCode' => $request->workNatureCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -1568,32 +2238,122 @@ class PersonelController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        return view('personel.personel_nature_of_work_detail', ['data' => $arrResult->dataListSet[0], 'func' => $request->func]);
+        
+        return view('personel.personel_nature_of_work_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);   
     }
 
     public function dataDetailBPJSGroupPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_bpjs_group_detail', ['bpjs_code' => $request->bpjs_code]);
+            $response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'bpjsCode' => $request->bpjsCode,
+                        'bpjsNo' => $request->bpjsNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_bpjs_group_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailNPWPGroupPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_npwp_group_detail', ['npwp_code' => $request->npwp_code]);
+            $response = $client->post(env('API_URL') . '/npwp/getnpwp',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'npwpCode' => $request->npwpCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_npwp_group_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailBankCodePersonel(Request $request)
+    public function dataDetailBankPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_bank_code_detail', ['bank_code' => $request->bank_code]);
+            $response = $client->post(env('API_URL') . '/gmbank/getgmbank',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'bankCode' => $request->bankCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_bank_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailBankBranchPersonel(Request $request)
+    public function dataDetailCompanyBankPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_bank_branch_detail', ['bank_code' => $request->bank_code]);
+            $response = $client->post(env('API_URL') . '/companybank/getcompanybank',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'bankCode' => $request->bankCode,
+                        'accountNo' => $request->accountNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_company_bank_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailSourceBankPersonel(Request $request)
@@ -1638,22 +2398,87 @@ class PersonelController extends Controller
         return view('personel.personel_education_status_code_detail', ['education_status_code' => $request->education_status_code]);
     }
 
-    public function dataDetailInstitutionCodePersonel(Request $request)
+    public function dataDetailInstitutionPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_institution_code_detail', ['institution_code' => $request->institution_code]);
+            $response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'institutionCode' => $request->institutionCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_institution_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);    }
+
+    public function dataDetailMajorPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'majorCode' => $request->majorCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_major_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailMajorCodePersonel(Request $request)
+    public function dataDetailTypeofCoursePersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_major_code_detail', ['major_code' => $request->major_code]);
-    }
+            $response = $client->post(env('API_URL') . '/gmcoursetype/getgmcoursetype',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'courseTypeCode' => $request->courseTypeCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
 
-    public function dataDetailTypeofCourseCodePersonel(Request $request)
-    {
+        $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('personel.personel_type_of_course_code_detail', ['type_of_course_code' => $request->type_of_course_code]);
+        return view('personel.personel_type_of_course_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailLanguageCodePersonel(Request $request)
@@ -1668,16 +2493,59 @@ class PersonelController extends Controller
         return view('personel.personel_language_ability_code_detail', ['language_ability_code' => $request->language_ability_code]);
     }
 
-    public function dataDetailCityCodePersonel(Request $request)
+    public function dataDetailCityPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_city_code_detail', ['city_code' => $request->city_code]);
+            $response = $client->post(env('API_URL') . '/city/getcity',
+                ['body' => json_encode(
+                    [
+                        'cityCode' => $request->cityCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_city_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailZipCodePersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_zip_code_detail', ['zip_code' => $request->zip_code]);
+            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'zipCode' => $request->zipCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_zip_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailInsuranceCodePersonel(Request $request)
@@ -1710,16 +2578,59 @@ class PersonelController extends Controller
         return view('personel.personel_sanction_code_detail', ['sanction_code' => $request->sanction_code]);
     }
 
-    public function dataDetailEvaluationCodePersonel(Request $request)
+    public function dataDetailEvaluationFormPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_evaluation_code_detail', ['form_code' => $request->form_code]);
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->formCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return view('personel.personel_evaluation_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailTitleCodePersonel(Request $request)
+    public function dataDetailTitlePersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_title_code_detail', ['title_code' => $request->title_code]);
+            $response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
+                ['body' => json_encode(
+                    [
+                        'titleCode' => $request->titleCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_title_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailNationalityCodePersonel(Request $request)
@@ -1746,10 +2657,32 @@ class PersonelController extends Controller
         return view('personel.personel_fringe_benefits_code_detail', ['fringe_benefits_code' => $request->fringe_benefits_code]);
     }
 
-    public function dataDetailSkillCodePersonel(Request $request)
+    public function dataDetailSkillPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_skill_code_detail', ['skill_code' => $request->skill_code]);
+            $response = $client->post(env('API_URL') . '/gmskill/getgmskill',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'skillCode' => $request->skillCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_skill_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailAttachmentCodePersonel(Request $request)
@@ -1760,8 +2693,30 @@ class PersonelController extends Controller
 
     public function dataDetailFreeFormatFieldPersonel(Request $request)
     {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        return view('personel.personel_free_format_field_detail', ['free_format_code' => $request->free_format_code]);
+            $response = $client->post(env('API_URL') . '/freeformatfield/getgmfreeformatfield',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'freeFormatCode' => $request->freeFormatCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_free_format_field_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailFormatReportPersonel(Request $request)
@@ -1776,12 +2731,72 @@ class PersonelController extends Controller
         return view('personel.personel_relation_code_detail', ['relation_code' => $request->relation_code]);
     }
 
+    public function dataDetailFinalPerformanceResultPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'sequenceNo' => (int) $request->sequenceNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_final_performance_result_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailEmployeeMutationPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mutation/getmutationview',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return response()->json($data);
+    }
+
     public function tableFringeBenefitPersonalDataPersonel(Request $request)
     {
         if ($request->ajax()) {
         	$data = collect();
             return Datatables::of($data)
-            	->make(true);
+            ->make(true);
         }
     }
 
@@ -1790,130 +2805,463 @@ class PersonelController extends Controller
         if ($request->ajax()) {
         	$data = collect();
             return Datatables::of($data)
-            	->make(true);
+            ->make(true);
         }
     }
 
-    public function tableAwardEmployeePerformancePersonel(Request $request)
+    public function tableAwardPerformancePersonel(Request $request)
     {
-        if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'award_type' => 'EMPLOYEE OF THE YEAR',
-        			'employee_no' => 1110002,
-        			'award_name' => 'EMPLOYEE OF THE YEAR 2015',
-        			'award_date' => '01 FEB 2016',
-        			'event_name' => 'INTIKOM BIRTHDAY'
-        		]
-        	]);
-            return Datatables::of($data)
-            	->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peaward/getpeaward',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
         }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableSanctionPerformancePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pesanction/getpesanction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableEvaluationPerformancePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peevaluation/getpeevaluation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableEvaluationFormPerformancePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->formCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($request->formCode)){
+            return Datatables::of([])->make(true);
+        }else{
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }
+    }
+
+    public function tableJobHistoryWorkDetailPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pemasterhistoryjob/getpemasterhistoryjob',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }   
     }
 
     public function tableWorkExperienceWorkDetailPersonel(Request $request)
     {
-        if ($request->ajax()) {
-        	$data = collect([
-        		(object) [
-        			'seq_no' => '1',
-        			'company_name' => 'PT Intikom Berlian Mustika',
-        			'joining_date' => '01/02/2000',
-        			'termination_date' => '03/06/2004',
-        			'position' => '',
-        			'ranking' => '',
-        			'nature_of_work' => 'NONE',
-        			'line_of_business' => 'INFORMATION TECHNOLOGY',
-        		],
-        		(object) [
-        			'seq_no' => '2',
-        			'company_name' => 'PT ABADI BERSAMA',
-        			'joining_date' => '12/07/2004',
-        			'termination_date' => '31/07/2009',
-        			'position' => '',
-        			'ranking' => '',
-        			'nature_of_work' => 'NONE',
-        			'line_of_business' => 'INFORMATION TECHNOLOGY',
-        		]
-        	]);
-            return Datatables::of($data)
-            	->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peworkexperience/getpeworkexperience',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
         }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }   
+    }
+
+    public function tableFreeFormatFieldWorkDetailPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pefreeformat/getpefreeformat',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }   
     }
 
     public function tableCompetencyFormalEducationPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'education' => 'Bachelor Degree',
-                    'institution_code' => 'Universitas',
-                    'major_code' => 'Accounting',
-                    'education_status_code' => 'Certified',
-                    'graduate_year' => '1980',
-                    'title' => 'SE',
-                    'city' => 'Bandung',
-                    'gpa' => '3.32',
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/peeducation/getcompetencyeducationgridview',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'languageID' => strtoupper(App::getLocale()),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableCompetencyLanguagePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'language' => 'English',
-                    'reading_ability' => 'Fair',
-                    'spoken_ability' => 'Excellent',
-                    'written_ability' => 'Fair',
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/pelanguage/getcompetencylanguagegridview',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'languageID' => strtoupper(App::getLocale()),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableCompetencyOrganizationPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'organization_name' => 'Forum Finance Indonesia',
-                    'position' => 'Member',
-                    'start_date' => '01 Jan 2010',
-                    'end_date' => '12 Mar 2017',
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/peorganization/getpeorganization',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableCompetencyReferencePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect();
-            return Datatables::of($data)
-                ->make(true);
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pereference/getpereference',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
     public function tableCompetencySkillPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'skill_code' => 'Sing',
-                    'skill_description' => 'Singing',
-                    'skill_ability' => 'Intermediate',
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/peskill/getcompetencyskillgridview',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'languageID' => strtoupper(App::getLocale()),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableCompetencyProjectExperiencePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peprojectexperience/getpeprojectexperience',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableCompetencyTrainingListPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/petraining/getpetraining',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1927,7 +3275,7 @@ class PersonelController extends Controller
                 ]
             ]);
             return Datatables::of($data)
-                ->make(true);
+            ->make(true);
         }
     }
 
@@ -2019,7 +3367,7 @@ class PersonelController extends Controller
                 ]
             ]);
             return Datatables::of($data)
-                ->make(true);
+            ->make(true);
         }
     }
 
@@ -2028,7 +3376,7 @@ class PersonelController extends Controller
         if ($request->ajax()) {
             $data = collect();
             return Datatables::of($data)
-                ->make(true);
+            ->make(true);
         }
     }
 
@@ -2037,83 +3385,112 @@ class PersonelController extends Controller
         if ($request->ajax()) {
             $data = collect();
             return Datatables::of($data)
-                ->make(true);
+            ->make(true);
         }
     }
 
-    public function tableEvaluationCodeEvaluationCodePersonel(Request $request)
+    public function tableEvaluationFormEvaluationAspectPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'seq' => '1',
-                    'evaluated_aspect' => 'Absensi',
-                    'calculation' => '1'
-                ],
-                (object) [
-                    'seq' => '2',
-                    'evaluated_aspect' => 'Management Skill',
-                    'calculation' => '1'
-                ],
-                (object) [
-                    'seq' => '3',
-                    'evaluated_aspect' => 'Personality',
-                    'calculation' => '2'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->formCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($request->formCode)){
+            return Datatables::of([])->make(true);
+        }else{
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
         }
     }
 
-    public function tableDetailEvaluationCodeEvaluationCodePersonel(Request $request)
+    public function tableEvaluationFormPredicatePersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'seq' => '1',
-                    'predicate' => '1',
-                    'value' => '9'
-                ],
-                (object) [
-                    'seq' => '1',
-                    'predicate' => '2',
-                    'value' => '7'
-                ],
-                (object) [
-                    'seq' => '1',
-                    'predicate' => '3',
-                    'value' => '5'
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetailpoint',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->formCode,
+                        'sequenceNo' => (int) $request->sequenceNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($request->sequenceNo)){
+            return Datatables::of([])->make(true);
+        }else{
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
         }
     }
 
-    public function tableFreeFormatFieldFieldListPersonel(Request $request)
+    public function tableFreeFormatFieldDetailPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'field_list' => '37',
-                    'status' => 'Active',
-                ],
-                (object) [
-                    'field_list' => '38',
-                    'status' => 'Active',
-                ],
-                (object) [
-                    'field_list' => '39',
-                    'status' => 'Active',
-                ],
-                (object) [
-                    'field_list' => '36',
-                    'status' => 'Active',
-                ],
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)
-                ->make(true);
+
+            $response = $client->post(env('API_URL') . '/freeformatfield/getgmfreeformatdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'freeFormatCode' => $request->freeFormatCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -2133,7 +3510,7 @@ class PersonelController extends Controller
                 ],
             ]);
             return Datatables::of($data)
-                ->make(true);
+            ->make(true);
         }
     }
 
@@ -2142,7 +3519,79 @@ class PersonelController extends Controller
         if ($request->ajax()) {
             $data = collect();
             return Datatables::of($data)
-                ->make(true);
+            ->make(true);
+        }
+    }
+
+    public function tableSourceDocumentDetailPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/getletterdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letterType,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($request->letterType)){
+            return Datatables::of([])->make(true);
+        }else{
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }
+    }
+
+    public function tableSourceDocumentSignerPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/getlettersigner',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letterType,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($request->letterType)){
+            return Datatables::of([])->make(true);
+        }else{
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
         }
     }
 
@@ -2161,8 +3610,12 @@ class PersonelController extends Controller
                         'recordStatus' => $request->func,
                         'companyCode' => Session::get('companyCode'),
                         'workNatureCode' => $request->workNatureCode,
+                        'workNatureName' => $request->workNatureName,
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
                         "languageCode" => App::getLocale()
                     ]
                 )]
@@ -2194,6 +3647,861 @@ class PersonelController extends Controller
                         'gradeName' => $request->gradeName,
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusPositionPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/position',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'positionCode' => $request->positionCode,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusLocationCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/location',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'locationCode' => $request->locationCode,
+                        'locationName' => $request->locationName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusLevelPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/level',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'levelType' => $request->levelType,
+                        'levelCode' => $request->levelCode,
+                        'levelName' => $request->levelName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusCostCenterCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/costcenter',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'costCenterCode' => $request->costCenterCode,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusPerformancePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/pemaster',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'fullName' => $request->fullName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusCompetencyPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/pemaster',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'fullName' => $request->fullName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusBankPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmbank',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'bankCode' => $request->bankCode,
+                        'bankName' => $request->bankName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusCompanyBankPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/companybank',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'bankCode' => $request->bankCode,
+                        'accountNo' => $request->accountNo,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusGroupPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/group',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->groupCode,
+                        'groupName' => $request->groupName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusZipCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/zipcode',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'zipCode' => $request->zipCode,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusBPJSGroupPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/bpjs',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'bpjsCode' => $request->bpjsCode,
+                        'bpjsNo' => $request->bpjsNo,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusNPWPGroupPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/npwp',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'npwpCode' => $request->npwpCode,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusRankingPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmranking',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'rankingCode' => $request->rankingCode,
+                        'rankingName' => $request->rankingName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusInstitutionPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gminstitution',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'institutionCode' => $request->institutionCode,
+                        'institutionName' => $request->institutionName,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusMajorPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmmajor',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'majorCode' => $request->majorCode,
+                        'majorName' => $request->majorName,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusTypeofCoursePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmcoursetype/updategmcoursetype',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'courseTypeCode' => $request->courseTypeCode,
+                        'courseTypeName' => $request->courseTypeName,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusSkillPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmskill/updategmskill',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'skillCode' => $request->skillCode,
+                        'skillName' => $request->skillName,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusSourceDocumentPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letterType,
+                        'languageID' => $request->languageID,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusEvaluationFormPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/evaluationform',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->formCode,
+                        'formName' => $request->formName,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusFreeFormatFieldPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/freeformatfield/updategmfreeformatfield',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'freeFormatCode' => $request->freeFormatCode,
+                        'freeFormatFieldType' => $request->freeFormatFieldType,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusFreeFormatFieldDetailPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/freeformatfield/updategmfreeformatdetail',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'freeFormatCode' => $request->freeFormatCode,
+                        'listCode' => (int) $request->listCode,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusCityPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/city',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'cityCode' => $request->cityCode,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusTitlePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmtitle/updategmtitle',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'titleCode' => $request->titleCode,
+                        'titleName' => $request->titleName,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'sessionID' => 0,
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusFinalPerformanceResultPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/gmperformanceresult',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'sequenceNo' => (int) $request->sequenceNo,
+                        'value' => $request->value,
+                        'from' => (int) $request->from,
+                        'to' => (int) $request->to,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusPersonalDataPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => (int) $request->employeeNo,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
                         "languageCode" => App::getLocale()
                     ]
                 )]
@@ -2229,6 +4537,9 @@ class PersonelController extends Controller
                             "createdBy" => Session::get('userID'),
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
                             "languageCode" => App::getLocale()
                         ]
                     )]
@@ -2239,10 +4550,13 @@ class PersonelController extends Controller
                         [
                             'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
-                            'gradeCode' => $request->nature_of_work_code,
-                            'gradeName' => $request->nature_of_work_name,
+                            'workNatureCode' => $request->nature_of_work_code,
+                            'workNatureName' => $request->nature_of_work_name,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
                             "languageCode" => App::getLocale()
                         ]
                     )]
@@ -2279,6 +4593,10 @@ class PersonelController extends Controller
                             "createdBy" => Session::get('userID'),
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
                             "languageCode" => App::getLocale()
                         ]
                     )]
@@ -2293,13 +4611,17 @@ class PersonelController extends Controller
                             'gradeName' => $request->grade_name,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
                             "languageCode" => App::getLocale()
                         ]
                     )]
                 );
             }
 
-             
+
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
@@ -2307,5 +4629,3028 @@ class PersonelController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesPositionPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/position',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'positionCode' => $request->position_code,
+                            'positionName' => $request->position_name,
+                            'supervisorPositionCode' => $request->supervisor_position_code,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/position',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'positionCode' => $request->position_code,
+                            'positionName' => $request->position_name,
+                            'supervisorPositionCode' => $request->supervisor_position_code,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesLocationCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/location',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'locationCode' => $request->location_code,
+                            'locationName' => $request->location_name,
+                            'latitudeTop' => 0,
+                            'latitudeBot' => 0,
+                            'longitudeTop' => 0,
+                            'longitudeBot' => 0,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/location',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'locationCode' => $request->location_code,
+                            'locationName' => $request->location_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesLevelPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/level',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'levelType' => $request->level_type,
+                            'levelCode' => $request->level_code,
+                            'levelName' => $request->level_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/level',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'levelType' => $request->level_type_text,
+                            'levelCode' => $request->level_code,
+                            'levelName' => $request->level_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCostCenterCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/costcenter',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'costCenterCode' => $request->cost_center_code,
+                            'costCenterDescription' => $request->cost_center_description,
+                            'accountNo' => $request->account_no,
+                            'contraAccountNo' => $request->contra_account_no,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/costcenter',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'costCenterCode' => $request->cost_center_code,
+                            'costCenterDescription' => $request->cost_center_description,
+                            'accountNo' => $request->account_no,
+                            'contraAccountNo' => $request->contra_account_no,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesPerformanceAwardPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peaward',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_award,
+                        'seqNo' => (int) $request->seq_no_award,
+                        'awardType' => $request->award_type,
+                        'awardName' => $request->award_name,
+                        'awardDate' => date('Y-m-d\TH:i:s', strtotime($request->award_date)),
+                        'eventName' => $request->event_name,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesPerformanceSanctionPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pesanction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_sanction,
+                        'seqNo' => (int) $request->seq_no_sanction,
+                        'sanctionCode' => $request->sanction_code,
+                        'startDate' => date('Y-m-d\TH:i:s', strtotime($request->sanction_start_date)),
+                        'endDate' => date('Y-m-d\TH:i:s', strtotime($request->sanction_end_date)),
+                        'decreeNo' => $request->decree_no,
+                        'decreeCode' => $request->decree_code,
+                        'decreeDate' => $request->decree_date,
+                        'sanctionRemarks' => $request->sanction_remarks,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesPerformanceEvaluationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(!empty($request->evaluated_aspect) && !is_null($request->evaluated_aspect[0])){
+                foreach($request->evaluated_aspect as $key => $value){
+                    $dataEvaluationDetail[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_evaluation,
+                        'seqNo' => (int) $request->seq_no_evaluation,
+                        'detailSeqNo' => (int) $request->sequence_no[$key],
+                        'evaluatedAspect' => $value,
+                        'calculation' => $request->calculation[$key],
+                        'predicate' => $request->predicate[$key],
+                        'value' => $request->result_value[$key],
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                    ];
+                }
+            }
+
+            $response = $client->post(env('API_URL') . '/peevaluation/insertpeevaluation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_evaluation,
+                        'seqNo' => (int) $request->seq_no_evaluation,
+                        'evaluationFormCode' => $request->evaluation_form_code,
+                        'evaluationPeriodFrom' => $request->evaluation_period_from,
+                        'evaluationPeriodTo' => $request->evaluation_period_to,
+                        'evaluationDate' => $request->evaluation_date,
+                        'evaluator' => $request->evaluator,
+                        'result' => $request->result,
+                        'evaluationDetail' => $dataEvaluationDetail,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencyFormalEducationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peeducation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_formal_education,
+                        'seqNo' => (int) $request->seq_no_formal_education,
+                        'institutionCode' => $request->institution,
+                        'educationCode' => $request->education,
+                        'majorCode' => $request->major,
+                        'educationStatusCode' => $request->education_status,
+                        'graduateYear' => $request->graduate_year,
+                        'titleCode' => $request->title,
+                        'cityCode' => $request->city,
+                        'educationGpa' => (float) $request->gpa,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencyLanguagePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pelanguage',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_language,
+                        'seqNo' => (int) $request->seq_no_language,
+                        'language' => $request->language,
+                        'read' => $request->read,
+                        'speak' => $request->speak,
+                        'write' => $request->write,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencyOrganizationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peorganization',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_organization,
+                        'seqNo' => (int) $request->seq_no_organization,
+                        'organizationName' => $request->organization_name,
+                        'position' => $request->position_organization,
+                        'startDate' => date('Y-m-d\TH:i:s', strtotime($request->organization_start_date)),
+                        'endDate' => date('Y-m-d\TH:i:s', strtotime($request->organization_end_date)),
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencyReferencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pereference',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_reference,
+                        'seqNo' => (int) $request->seq_no_reference,
+                        'referenceName' => $request->reference_name,
+                        'phoneNo' => $request->phone_number,
+                        'companyName' => $request->company_name,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencySkillPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peskill',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_skill,
+                        'seqNo' => (int) $request->seq_no_skill,
+                        'skill' => $request->skill,
+                        'description' => $request->description_skill,
+                        'proficiency' => $request->proficiency,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencyProjectExperiencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peprojectexperience/insertpeprojectexperience',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_project_experience,
+                        'seqNo' => (int) $request->seq_no_project_experience,
+                        'client' => $request->client,
+                        'position' => $request->position_project_experience,
+                        'location' => $request->location,
+                        'startDate' => date('Y-m-d\TH:i:s', strtotime($request->project_experience_start_date)),
+                        'endDate' => date('Y-m-d\TH:i:s', strtotime($request->project_experience_end_dates)),
+                        'description' => $request->description_project_experience,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompetencyTrainingListPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->hasFile('certificate_attachment')) {
+                $file = $request->file('certificate_attachment');
+                $filename = Session::get('companyCode') . '_' . $request->employee_no_training_list . '_' . $file->getClientOriginalName();
+                $file->move(public_path('certificate'), $filename);
+                $path = public_path('certificate/');
+            }
+
+            $response = $client->post(env('API_URL') . '/petraining',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_training_list,
+                        'seqNo' => (int) $request->seq_no_training_list,
+                        'trainingName' => $request->training_name,
+                        'organizer' => $request->organizer,
+                        'startDate' => date('Y-m-d\TH:i:s', strtotime($request->training_list_start_date)),
+                        'endDate' => date('Y-m-d\TH:i:s', strtotime($request->training_list_end_date)),
+                        'certificateName' => $request->certificate_name,
+                        'certificateNo' => $request->certificate_no,
+                        'certificateDate' => date('Y-m-d\TH:i:s', strtotime($request->certificate_date)),
+                        'expiredDate' => $request->expired_date,
+                        "certificateDescription" => $request->certificate_description,
+                        'certificateAttachment' => ($request->hasFile('certificate_attachment')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesBankPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmbank',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'bankCode' => $request->bank_code,
+                            'bankName' => $request->bank_name,
+                            'biCode' => $request->bi_code,
+                            'accountFormat' => (int) $request->account_format,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmbank',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'bankCode' => $request->bank_code,
+                            'bankName' => $request->bank_name,
+                            'biCode' => $request->bi_code,
+                            'accountFormat' => (int) $request->account_format,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesCompanyBankPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/companybank',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'bankCode' => $request->bank_code,
+                            'accountNo' => $request->account_no,
+                            'description' => $request->description,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/companybank',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'bankCode' => $request->bank_code,
+                            'accountNo' => $request->account_no,
+                            'description' => $request->description,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesGroupPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/group',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'groupCode' => $request->group_code,
+                            'groupName' => $request->group_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/group',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'groupCode' => $request->group_code,
+                            'groupName' => $request->group_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesZipCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/zipcode',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'zipCode' => $request->zip_code,
+                            'kelurahan' => $request->village,
+                            'kecamatan' => $request->subdistrict,
+                            'kabupaten' => $request->district,
+                            'propinsi' => $request->province,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/zipcode',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'zipCode' => $request->zip_code,
+                            'kelurahan' => $request->village,
+                            'kecamatan' => $request->subdistrict,
+                            'kabupaten' => $request->district,
+                            'propinsi' => $request->province,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesBPJSGroupPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/bpjs',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'bpjsCode' => $request->bpjs_code,
+                            'bpjsNo' => $request->no_bpjs,
+                            'signerName' => $request->signer_name,
+                            'title' => $request->title,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/bpjs',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'bpjsCode' => $request->bpjs_code,
+                            'bpjsNo' => $request->no_bpjs,
+                            'signerName' => $request->signer_name,
+                            'title' => $request->title,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesNPWPGroupPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/npwp',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'npwpCode' => $request->npwp_code,
+                            'pemotongKuasa' => $request->pemotong_kuasa,
+                            'printDate' => $request->print_date,
+                            'signerName' => $request->signer_name,
+                            'signerNPWP' => $request->signer_npwp,
+                            'companyName' => $request->company_name,
+                            'companyAddress' => $request->company_address,
+                            'companyNPWP' => $request->company_npwp,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/npwp',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'npwpCode' => $request->npwp_code,
+                            'pemotongKuasa' => $request->pemotong_kuasa,
+                            'printDate' => $request->print_date,
+                            'signerName' => $request->signer_name,
+                            'signerNPWP' => $request->signer_npwp,
+                            'companyName' => $request->company_name,
+                            'companyAddress' => $request->company_address,
+                            'companyNPWP' => $request->company_npwp,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesRankingPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmranking',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'rankingCode' => $request->ranking_code,
+                            'rankingName' => $request->ranking_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmranking',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'rankingCode' => $request->ranking_code,
+                            'rankingName' => $request->ranking_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesInstitutionPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gminstitution',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'institutionCode' => $request->institution_code,
+                            'institutionName' => $request->institution_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gminstitution',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'institutionCode' => $request->institution_code,
+                            'institutionName' => $request->institution_name,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesMajorPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmmajor',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'majorCode' => $request->major_code,
+                            'majorName' => $request->major_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmmajor',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'majorCode' => $request->major_code,
+                            'majorName' => $request->major_name,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesTypeofCoursePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmcoursetype/insertgmcoursetype',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'courseTypeCode' => $request->type_of_course_code,
+                            'courseTypeName' => $request->type_of_course_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmcoursetype/updategmcoursetype',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'courseTypeCode' => $request->type_of_course_code,
+                            'courseTypeName' => $request->type_of_course_name,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSkillPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmskill/insertgmskill',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'skillCode' => $request->skill_code,
+                            'skillName' => $request->skill_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmskill/updategmskill',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'skillCode' => $request->skill_code,
+                            'skillName' => $request->skill_name,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSourceDocumentPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                if($request->hasFile('letter_file')) {
+                    $file = $request->file('letter_file');
+                    $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('letter_template'), $filename);
+                    $path = public_path('letter_template/');
+
+                    $response = $client->post(env('API_URL') . '/printletter/inserttemplate',
+                        ['body' => json_encode(
+                            [
+                                'recordStatus' => $request->record_status,
+                                'companyCode' => Session::get('companyCode'),
+                                'letterType' => $request->letter_type,
+                                'letterFile64' => ($request->hasFile('letter_file')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                                'languageID' => $request->language_id,
+                                "changedNo" => 0,
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "changedBy" => Session::get('userID'),
+                                'sessionUserID' => Session::get('userID'),
+                                'logActionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName'),
+                                "languageCode" => strtoupper(App::getLocale())
+                            ]
+                        )]
+                    );
+                }else{
+                    $response = $client->post(env('API_URL') . '/printletter/inserttemplate',
+                        ['body' => json_encode(
+                            [
+                                'recordStatus' => $request->record_status,
+                                'companyCode' => Session::get('companyCode'),
+                                'letterType' => $request->letter_type,
+                                'languageID' => $request->language_id,
+                                "changedNo" => 0,
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "changedBy" => Session::get('userID'),
+                                'sessionUserID' => Session::get('userID'),
+                                'logActionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName'),
+                                "languageCode" => strtoupper(App::getLocale())
+                            ]
+                        )]
+                    );
+                }
+                
+            }else{
+                if($request->hasFile('letter_file')) {
+                    $file = $request->file('letter_file');
+                    $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('letter_template'), $filename);
+                    $path = public_path('letter_template/');
+
+                    $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
+                        ['body' => json_encode(
+                            [
+                                'recordStatus' => $request->record_status,
+                                'companyCode' => Session::get('companyCode'),
+                                'letterType' => $request->letter_type,
+                                'letterFile64' => base64_encode(file_get_contents($path . $filename)),
+                                'languageID' => $request->language_id,
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "changedBy" => Session::get('userID'),
+                                'sessionUserID' => Session::get('userID'),
+                                'logActionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName'),
+                                "languageCode" => strtoupper(App::getLocale())
+                            ]
+                        )]
+                    );
+                }else{
+                    $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
+                        ['body' => json_encode(
+                            [
+                                'recordStatus' => $request->record_status,
+                                'companyCode' => Session::get('companyCode'),
+                                'letterType' => $request->letter_type,
+                                'languageID' => $request->language_id,
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "changedBy" => Session::get('userID'),
+                                'sessionUserID' => Session::get('userID'),
+                                'logActionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName'),
+                                "languageCode" => strtoupper(App::getLocale())
+                            ]
+                        )]
+                    );
+                }
+                
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // return response()->json($request->record_status);
+    }
+
+    public function prosesSourceDocumentDetailPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/insertdetail',
+                ['body' => json_encode(
+                    [[
+                        'recordStatus' => "A",
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letter_type_detail,
+                        'detailField' => $request->detail_field,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => strtoupper(App::getLocale())
+                    ]]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSourceDocumentSignerPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/insertsigner',
+                ['body' => json_encode(
+                    [[
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letter_type_signer,
+                        'signerSequence' => (int) $request->seq_no,
+                        'signerPositionCode' => $request->position_code,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => strtoupper(App::getLocale())
+                    ]]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function printPrintLetterPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/printletter/createletter',
+                ['body' => json_encode(
+                    [[
+                        'companyCode' => Session::get('companyCode'),
+                        'letterType' => $request->letter_type,
+                        'letterReference' => $request->reference,
+                        'letterDate' => $request->letter_date,
+                        'employeeNo' => $request->employee_no,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => strtoupper(App::getLocale())
+                    ]]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesFinalPerformanceResultPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmperformanceresult',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => "A",
+                            'companyCode' => Session::get('companyCode'),
+                            'sequenceNo' => (int) $request->number,
+                            'value' => $request->value,
+                            'from' => (int) $request->from,
+                            'to' => (int) $request->to,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmperformanceresult',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => "A",
+                            'companyCode' => Session::get('companyCode'),
+                            'sequenceNo' => (int) $request->number,
+                            'value' => $request->value,
+                            'from' => (int) $request->from,
+                            'to' => (int) $request->to,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesEvaluationFormPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/evaluationform',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'formCode' => $request->form_code,
+                            'formName' => $request->form_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/evaluationform',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'formCode' => $request->form_code,
+                            'formName' => $request->form_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesEvaluationFormEvaluatedAspectPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/evaluationform/detail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->form_code_evaluated_aspect,
+                        'sequenceNo' => (int) $request->sequence,
+                        'evaluatedAspect' => $request->evaluated_aspect,
+                        'calculation' => (int) $request->calculation,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+
+            if(!empty($request->predicate) && !is_null($request->predicate[0])){
+                foreach($request->predicate as $key => $value){
+                    $data_point[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->form_code_evaluated_aspect,
+                        'sequenceNo' => (int) $request->sequence,
+                        'predicate' => $value,
+                        'resultValue' => floatval($request->result_value[$key]),
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ];
+                }
+
+                $response_point = $client->post(env('API_URL') . '/evaluationform/detailpoint',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            "languageCode" => App::getLocale(),
+                            "evaluationDetailPoint" => $data_point
+                        ]
+                    )]
+                );
+            }
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesPersonelReferencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/referencepersonnel',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'probationPeriod' => (int) $request->probation_period,
+                            'flagNeedApprovalEmployee' => ($request->need_approval_employee == 'true') ? true : false,
+                            'flagAutoEmployeeNo' => ($request->auto_generate_employee == 'true') ? true : false,
+                            'maxDependentMedical' => (int) $request->max_dependent_medical,
+                            'maxDependentPayroll' => (int) $request->max_dependent_payroll,
+                            'levelFormat' => (int) $request->level_master_format,
+                            'costCenterFormat' => (int) $request->cost_center_format,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+
+                $response_delete_level = $client->delete(env('API_URL') . '/levelmaster',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+
+                if(!empty($request->level_description) && !is_null($request->level_description[0])){
+                    foreach($request->level_description as $key => $value){
+                        $data_level[] = [
+                            'companyCode' => Session::get('companyCode'),
+                            'levelType' => $request->level_type[$key],
+                            'levelDescription' => $value,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ];
+                    }
+
+                    $response_level = $client->post(env('API_URL') . '/levelmaster',
+                        ['body' => json_encode(
+                            [
+                                'companyCode' => Session::get('companyCode'),
+                                'userID' => Session::get('userID'),
+                                "languageCode" => App::getLocale(),
+                                "levelMasterList" => $data_level
+                            ]
+                        )]
+                    );
+                }
+            }else{
+                $response = $client->put(env('API_URL') . '/referencepersonnel',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'probationPeriod' => (int) $request->probation_period,
+                            'flagNeedApprovalEmployee' => ($request->need_approval_employee == 'true') ? true : false,
+                            'flagAutoEmployeeNo' => ($request->auto_generate_employee == 'true') ? true : false,
+                            'maxDependentMedical' => (int) $request->max_dependent_medical,
+                            'maxDependentPayroll' => (int) $request->max_dependent_payroll,
+                            'levelFormat' => (int) $request->level_master_format,
+                            'costCenterFormat' => (int) $request->cost_center_format,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+
+                $response_delete_level = $client->delete(env('API_URL') . '/levelmaster',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+
+                if(!empty($request->level_description) && !is_null($request->level_description[0])){
+                    foreach($request->level_description as $key => $value){
+                        $data_level[] = [
+                            'companyCode' => Session::get('companyCode'),
+                            'levelType' => $request->level_type[$key],
+                            'levelDescription' => $value,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ];
+                    }
+
+                    $response_level = $client->post(env('API_URL') . '/levelmaster',
+                        ['body' => json_encode(
+                            [
+                                'companyCode' => Session::get('companyCode'),
+                                'userID' => Session::get('userID'),
+                                "languageCode" => App::getLocale(),
+                                "levelMasterList" => $data_level
+                            ]
+                        )]
+                    );
+                }
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesFreeFormatFieldPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/freeformatfield/insertgmfreeformatdetail',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'freeFormatCode' => $request->free_format_code,
+                            'freeFormatFieldType' => $request->field_type,
+                            'description' => $request->description,
+                            'length' => (int) $request->length,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/freeformatfield/updategmfreeformatfield',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'freeFormatCode' => $request->free_format_code,
+                            'freeFormatFieldType' => $request->field_type,
+                            'description' => $request->description,
+                            'length' => (int) $request->length,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesFreeFormatFieldDetailPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/freeformatfield/insertgmfreeformatdetail',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => 'A',
+                        'companyCode' => Session::get('companyCode'),
+                        'freeFormatCode' => $request->free_format_code_field_list,
+                        'listCode' => (int) $request->list_code,
+                        'listValue' => $request->list_value,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesCityPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/city',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'cityCode' => $request->city_code,
+                            'cityName' => $request->city_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/city',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'cityCode' => $request->city_code,
+                            'cityName' => $request->city_name,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesTitlePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmtitle/insertgmtitle',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'titleCode' => $request->title_code,
+                            'titleName' => $request->title_name,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmtitle/updategmtitle',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'titleCode' => $request->title_code,
+                            'titleName' => $request->title_name,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesWorkDetailFreeFormatFieldPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pefreeformat/insertpefreeformat',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_free_format_field,
+                        'freeFormatCode' => $request->format_code,
+                        'value' => $request->value_free_format_field,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesWorkDetailWorkExperiencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/peworkexperience/insertpeworkexperience',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_work_experience,
+                        'seqNo' => (int) $request->seq_no_work_experience,
+                        'companyName' => $request->company_name_work_experience,
+                        'lineOfBusiness' => $request->line_of_business,
+                        'natureOfWork' => $request->nature_of_work_work_experience,
+                        'positionName' => $request->position_name_work_experience,
+                        'rankingName' => $request->ranking_name_work_experience,
+                        'joinDate' => $request->join_date,
+                        'terminateDate' => $request->terminate_date,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesWorkDetailJobHistoryPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->level_code as $key => $value){
+                $data_level[] = [
+                    'levelType' => $request->level_code[$key],
+                    'levelCode' => $value
+                ];
+            }
+
+            $response = $client->put(env('API_URL') . '/pemasterhistoryjob',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no_job_history,
+                        'seqNo' => (int) $request->seq_no_job_history,
+                        'historyCompanyCode' => $request->company_job_history,
+                        'startDate' => $request->start_date,
+                        'endDate' => $request->end_date,
+                        'employmentStatus' => $request->employment_status,
+                        'employmentType' => $request->employment_type,
+                        'contractStartDate' => $request->contract_start_date,
+                        'contractEndDate' => $request->contract_end_date,
+                        'decreeCode' => $request->decree_code,
+                        'decreeNo' => $request->decree_no,
+                        'decreeDate' => $request->decree_date,
+                        'positionCode' => $request->position_job_history,
+                        'rankingCode' => $request->ranking_job_history,
+                        'gradeCode' => $request->grade_job_history,
+                        'groupCode' => $request->group_job_history,
+                        'locationCode' => $request->location_job_history,
+                        'workNatureCode' => $request->nature_of_work_job_history,
+                        'remarks' => $request->remarks_job_history,
+                        'jobDesc' => $request->position_job_description,
+                        'approvedBy' => $request->approved_by,
+                        'flagisDirect' => ($request->direct_staff == 'true') ? true : false,
+                        'flagisTemporary' => ($request->temporary == 'true') ? true : false,
+                        "level" => $data_level,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageID" => App::getLocale(),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesEmployeeMutationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->level_new as $key => $value){
+                $data_level[] = [
+                    'levelType' => $request->level_type[$key],
+                    'levelCode' => $value
+                ];
+            }
+
+            $response = $client->post(env('API_URL') . '/mutation/executemutation',
+                ['body' => json_encode(
+                    [
+                        'mutationType' => $request->mutation_type,
+                        'employeeNo' => $request->employee_no,
+                        'remarks' => $request->remarks,
+                        'peMaster' => [
+                            'decreeCode' => $request->decree_code_new,
+                            'decreeNo' => $request->decree_no_new,
+                            'decreeDate' => $request->decree_date_new,
+                            'workLocation' => $request->work_location_new,
+                            'gradeCode' => $request->grade_code_new,
+                            'groupCode' => $request->group_code_new,
+                            'position' => $request->position_new,
+                            'ranking' => $request->ranking_new,
+                            'workNature' => $request->nature_of_work_new,
+                            'costCenterCode' => $request->cost_center_code_new,
+                            'startDate' => $request->start_date_new,
+                            'employmentStatus' => $request->employment_status_new,
+                            'contractDateStart' => $request->contract_start_date_new,
+                            'contractDateEnd' => $request->contract_end_date_new
+                        ],
+                        "masterLevel" => $data_level,
+                        'companyCode' => Session::get('companyCode'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function removeFinalPerformanceResultPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/gmperformanceresult',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => "A",
+                        'companyCode' => Session::get('companyCode'),
+                        'sequenceNo' => (int) $request->sequenceNo,
+                        'value' => $request->value,
+                        'from' => (int) $request->from,
+                        'to' => (int) $request->to,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeEvaluationFormEvaluatedAspectPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/evaluationform/detail',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => "A",
+                        'companyCode' => Session::get('companyCode'),
+                        'formCode' => $request->formCode,
+                        'sequenceNo' => (int) $request->sequenceNo,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removePerformanceAwardPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/peaward',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'seqNo' => (int) $request->seqNo,
+                        'awardType' => $request->awardType,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removePerformanceSanctionPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/pesanction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'seqNo' => (int) $request->seqNo,
+                        'sanctionCode' => $request->sanctionCode,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removePerformanceEvaluationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/peevaluation/deletepeevaluation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'seqNo' => (int) $request->seqNo,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencyFormalEducationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'languageID' => $value['languageID'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/peeducation/bulkdeletepeeducation',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencyLanguagePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/pelanguage/bulkdeletepelanguage',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencyOrganizationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/peorganization/bulkdeletepeorganization',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencyReferencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/pereference/bulkdeletepereference',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencySkillPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/peskill/bulkdeletepeskill',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencyProjectExperiencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/peprojectexperience/bulkdeletepeprojectexperience',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeCompetencyTrainingListPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/petraining/bulkdeletepetraining',
+                ['body' => json_encode($data)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeWorkDetailWorkExperiencePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/peworkexperience/deletepeworkexperience',
+                ['body' => json_encode(
+                    [
+                        "workExperienceList" => $data,
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'companyCode' => Session::get('companyCode'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeWorkDetailFreeFormatFieldPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $data[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'freeFormatCode' => $value['freeFormatCode'],
+                    'value' => $value['value'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/pefreeformat/deletepefreeformat',
+                ['body' => json_encode(
+                    [
+                        "freeFormatList" => $data,
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'companyCode' => Session::get('companyCode'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function checkNumberPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->employeeNo)){
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $number = 1;
+        }else{
+            if(isset($arrResult->dataListSet[0]->sequenceNo)){
+                $number = max(array_column($arrResult->dataListSet, 'sequenceNo')) + 1;
+            }else if(isset($arrResult->dataListSet[0]->seqNo)){
+                $number = max(array_column($arrResult->dataListSet, 'seqNo')) + 1;
+            }
+        }
+
+        return response()->json($number);
+    }
+
+    public function checkReportLevelPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response_level = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult_level = json_decode($response_level->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return response()->json(['data' => [], 'data_level' => '']);
+        }else{
+            return response()->json(['data' => $arrResult->dataListSet, 'data_level' => $arrResult_level->dataListSet]);
+        }
+    }
+
+    public function printEmployeeListPersonel(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+    }
+
+    public function checkResultPerformancePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/gmperformanceresult/getresult',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'result' => (int) $request->valueSum,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return response()->json($arrResult->dataListSet);
+    }
+
+    public function prosesEmployeePhotoPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $file = $request->file('photo_profile');
+            $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+            $file->move(public_path('letter_template'), $filename);
+            $path = public_path('letter_template/');
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/pemaster/putlevelmaster',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employee_no_profile,
+                            'photo' => base64_encode(file_get_contents($path . $filename)),
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => strtoupper(App::getLocale())
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'letterType' => $request->letter_type,
+                            'letterFile64' => base64_encode(file_get_contents($path . $filename)),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => strtoupper(App::getLocale())
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // return response()->json($request->record_status);
     }
 }

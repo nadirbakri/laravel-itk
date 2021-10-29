@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Exports;
+
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Validator;
+use Session;
+use App;
+
+class AuditTrailExport implements FromView
+{
+    public function __construct($userID, $userName, $dateFrom, $dateTo, $url)
+    {
+        $this->userId = $userID;
+        $this->userName = $userName;
+        $this->dateFrom = $dateFrom;
+        $this->dateTo = $dateTo;
+        $this->url = $url;
+    }
+    public function view(): View
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [ 'companyCode' => Session::get('companyCode') ];
+
+            if(!empty($this->dateFrom) || !empty($this->dateTo)){
+                $param['dateFrom'] = $this->dateFrom;
+                $param['dateTo'] = $this->dateTo;
+            }
+            
+            if(!empty($this->userId)){
+                $param['logActionUserID'] = $this->userId;
+                $param['logActionUsername'] = $this->userName;
+            }
+
+            $response = $client->post(env('API_URL') . '/' . $this->url,
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return view('utilities.utilities_export_audit_trail', [
+                'data' => []
+            ]);
+        }else{
+            return view('utilities.utilities_export_audit_trail', [
+                'data' => $arrResult->dataListSet
+            ]);
+        }
+    }
+}

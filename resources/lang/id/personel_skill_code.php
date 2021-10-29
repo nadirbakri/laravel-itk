@@ -12,7 +12,16 @@ return [
     |
     */
 
-    'judul' => 'Halaman Kode Keahlian',
+    'judul' => 'Halaman Keterampilan',
     'list' => 'Daftar Menu Personil',
+    'list_detail' => 'Daftar Keterampilan',
+    'label_record_status' => 'Status Data',
+    'label_skill_code' => 'Kode Keterampilan',
+    'label_skill_name' => 'Nama Keterampilan',
+    'skill_code_required' => 'Kode Keterampilan Harus Diisi',
+    'skill_name_required' => 'Nama Keterampilan Harus Diisi',
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal',
+    'alert_success' => 'Sukses !'
 
 ];

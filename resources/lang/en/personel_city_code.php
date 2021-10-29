@@ -12,7 +12,16 @@ return [
     |
     */
 
-    'judul' => 'City Code Page',
+    'judul' => 'City Page',
     'list' => 'Personel Menu List',
+    'list_detail' => 'City List',
+    'label_record_status' => 'Record Status',
+    'label_city_code' => 'City Code',
+    'label_city_name' => 'City Name',
+    'city_code_required' => 'City Code is Required',
+    'city_name_required' => 'City Name is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
 
 ];

@@ -12,7 +12,16 @@ return [
     |
     */
 
-    'judul' => 'Type of Course Code Page',
+    'judul' => 'Type of Course Page',
     'list' => 'Personel Menu List',
+    'list_detail' => 'Type of Course List',
+    'label_record_status' => 'Record Status',
+    'label_type_of_course_code' => 'Course Type Code',
+    'label_type_of_course_name' => 'Course Type Name',
+    'type_of_course_code_required' => 'Course Type Code is Required',
+    'type_of_course_name_required' => 'Course Type Name is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
 
 ];

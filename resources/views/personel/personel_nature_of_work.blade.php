@@ -89,12 +89,12 @@
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
                 <span>Save</span>
             </a>
-            <a class="disabled list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
+            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
                 <span>Activate</span>
             </a>
-            <a class="disabled list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
+            <a class="list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
                 <span>Deactivate</span>
@@ -180,9 +180,9 @@
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
         $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
+            if (table.column(i + 1).search() !== this.value) {
                 table
-                    .column(i)
+                    .column(i + 1)
                     .search(this.value)
                     .draw();
             }
@@ -283,7 +283,7 @@
             $.ajax({
                 url: "{{ url('personel/nature_of_work/status') }}",
                 type: "GET",
-                data: { 'workNatureCode' : data[0].workNatureCode, 'func' : 'A' },
+                data: { 'workNatureCode' : data[0].workNatureCode, 'workNatureName' : data[0].workNaturename, 'func' : 'A' },
                 success: function(response) {
                     if(response.status == "true"){
                         $('#notification_success').modal('show');
@@ -319,7 +319,7 @@
             $.ajax({
                 url: "{{ url('personel/nature_of_work/status') }}",
                 type: "GET",
-                data: { 'workNatureCode' : data[0].workNatureCode, 'func' : 'D' },
+                data: { 'workNatureCode' : data[0].workNatureCode, 'workNatureName' : data[0].workNaturename, 'func' : 'D' },
                 success: function(response) {
                     if(response.status == "true"){
                         $('#notification_success').modal('show');

@@ -54,7 +54,7 @@
 	align-items: center;
 }
 .subdiv-profile-image img {
-	max-width: 60%;
+	max-width: 50%;
 	display: block;
 	margin: 0 auto;
 }
@@ -62,7 +62,7 @@
 	padding: 0.1vw;
 	display: block;
 	margin: 0 auto;
-	margin-top: 3%;
+	margin-top: 2%;
 	font-size: 1vw;
 }
 .subdiv-profile {
@@ -256,4 +256,14 @@ tr.shown td.details-control {
 }
 .select2-results__option .row {
 	margin: 0.5%;
+}
+td.details-control {
+	background: url('/pictures/details_open.png') no-repeat center center;
+	cursor: pointer;
+	background-size: 25% 36%;
+}
+tr.shown td.details-control {
+	background: url('/pictures/details_close.png') no-repeat center center;
+	cursor: pointer;
+	background-size: 25% 36%;
 }

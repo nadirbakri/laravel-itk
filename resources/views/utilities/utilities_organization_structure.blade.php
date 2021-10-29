@@ -215,9 +215,7 @@
 
 		load_data();
 
-		loadDataEmployeeNo('#employee_number_layer_one');
-		loadDataEmployeeNo('#employee_number_layer_two');
-		loadDataEmployeeNo('#employee_number_layer_three');
+		loadDataEmployeeNo('#employee_number_layer_one', null);
 
 		function set_carousel(paramClass = '') {
 			$('.carousel-item', paramClass).each(function(){
@@ -255,14 +253,15 @@
 			let select_data = data_position.filter(function(o){
 				return o.positionCode == positionCode;
 			});
-			$('#employee-name-layer-one').html(select_data[0].positionCode);
+			$('#employee-name-layer-one').html(select_data[0].fullName);
 			$('#position-name-layer-one').html(select_data[0].positionName);
 			load_data_layer_two(data_position, positionCode);
+			loadDataEmployeeNo('#employee_number_layer_two', positionCode);
 		});
 
 		function load_data() {
 			$.ajax({
-				url: "{{ url('utilities/organization_structure/get/position') }}",
+				url: "{{ url('utilities/organization_chart/get/position') }}",
 				type: "GET",
 				success: function(data) {
 					data_position = data;
@@ -287,22 +286,23 @@
 						'<div class="item__third" data-pos="' + value.positionCode + '">'+
 						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
 						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.positionCode + '</h5>'+
+						'<h5 class="employee-name">' + value.fullName + '</h5>'+
 						'<p>' + value.positionName + '</p>'+
 						'</div></div></div>'
 					);
 
-					$('#employee-name-layer-one').html(value.positionCode);
+					$('#employee-name-layer-one').html(value.fullName);
 					$('#position-name-layer-one').html(value.positionName);
 
 					load_data_layer_two(data, value.positionCode);
+					loadDataEmployeeNo('#employee_number_layer_two', value.positionCode);
 				}else{
 					$('#div-organization-structure-level-one').append(
 						'<div class="carousel-item">'+
 						'<div class="item__third" data-pos="' + value.positionCode + '">'+
 						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
 						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.positionCode + '</h5>'+
+						'<h5 class="employee-name">' + value.fullName + '</h5>'+
 						'<p>' + value.positionName + '</p>'+
 						'</div></div></div>'
 					);
@@ -318,9 +318,10 @@
 			let select_data = data_position.filter(function(o){
 				return o.positionCode == positionCode;
 			});
-			$('#employee-name-layer-two').html(select_data[0].positionCode);
+			$('#employee-name-layer-two').html(select_data[0].fullName);
 			$('#position-name-layer-two').html(select_data[0].positionName);
 			load_data_layer_three(data_position, positionCode);
+			loadDataEmployeeNo('#employee_number_layer_three', positionCode);
 		});
 
 		function load_data_layer_two(data = '', positionCode = '') {
@@ -329,8 +330,6 @@
 			let data_layer_two = data.filter(function(o){
 				return o.supervisorPositionCode == positionCode;
 			});
-
-			console.log(data_layer_two);
 
 			$('#direct-count-layer-one').html(data_layer_two.length);
 
@@ -341,22 +340,23 @@
 						'<div class="item__third" data-pos="' + value.positionCode + '">'+
 						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
 						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.positionCode + '</h5>'+
+						'<h5 class="employee-name">' + value.fullName + '</h5>'+
 						'<p>' + value.positionName + '</p>'+
 						'</div></div></div>'
 					);
 
-					$('#employee-name-layer-two').html(value.positionCode);
+					$('#employee-name-layer-two').html(value.fullName);
 					$('#position-name-layer-two').html(value.positionName);
 
 					load_data_layer_three(data, value.positionCode);
+					loadDataEmployeeNo('#employee_number_layer_three', value.positionCode);
 				}else{
 					$('#div-organization-structure-level-two').append(
 						'<div class="carousel-item">'+
 						'<div class="item__third" data-pos="' + value.positionCode + '">'+
 						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
 						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.positionCode + '</h5>'+
+						'<h5 class="employee-name">' + value.fullName + '</h5>'+
 						'<p>' + value.positionName + '</p>'+
 						'</div></div></div>'
 					);
@@ -372,7 +372,7 @@
 			let select_data = data_position.filter(function(o){
 				return o.positionCode == positionCode;
 			});
-			$('#employee-name-layer-three').html(select_data[0].positionCode);
+			$('#employee-name-layer-three').html(select_data[0].fullName);
 			$('#position-name-layer-three').html(select_data[0].positionName);
 		});
 
@@ -392,12 +392,12 @@
 						'<div class="item__third" data-pos="' + value.positionCode + '">'+
 						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
 						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.positionCode + '</h5>'+
+						'<h5 class="employee-name">' + value.fullName + '</h5>'+
 						'<p>' + value.positionName + '</p>'+
 						'</div></div></div>'
 					);
 
-					$('#employee-name-layer-three').html(value.positionCode);
+					$('#employee-name-layer-three').html(value.fullName);
 					$('#position-name-layer-three').html(value.positionName);
 				}else{
 					$('#div-organization-structure-level-three').append(
@@ -405,7 +405,7 @@
 						'<div class="item__third" data-pos="' + value.positionCode + '">'+
 						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
 						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.positionCode + '</h5>'+
+						'<h5 class="employee-name">' + value.fullName + '</h5>'+
 						'<p>' + value.positionName + '</p>'+
 						'</div></div></div>'
 					);
@@ -431,7 +431,7 @@
             	let select_data = data_position.filter(function(o){
             		return o.positionCode == 'BU-Dev';
             	});
-            	$('#employee-name-layer-one').html(select_data[0].positionCode);
+            	$('#employee-name-layer-one').html(select_data[0].fullName);
             	$('#position-name-layer-one').html(select_data[0].positionName);
             	load_data_layer_two(data_position, 'BU-Dev');
             }
@@ -446,7 +446,7 @@
             	let select_data = data_position.filter(function(o){
             		return o.positionCode == 'BC4';
             	});
-            	$('#employee-name-layer-two').html(select_data[0].positionCode);
+            	$('#employee-name-layer-two').html(select_data[0].fullName);
             	$('#position-name-layer-two').html(select_data[0].positionName);
             	load_data_layer_three(data_position, 'BC4');
             }
@@ -461,15 +461,19 @@
             	let select_data = data_position.filter(function(o){
             		return o.positionCode == 'Dev2';
             	});
-            	$('#employee-name-layer-three').html(select_data[0].positionCode);
+            	$('#employee-name-layer-three').html(select_data[0].fullName);
             	$('#position-name-layer-three').html(select_data[0].positionName);
             }
         });
 
 		var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-		function loadDataEmployeeNo(field = '') {
+		function loadDataEmployeeNo(field = '', positionCode = '') {
 			function formatSelect(data) {
+				if (data.loading) {
+                    return $search
+                }
+
 				if(data.id){
 					var $result2 = $('<div class="row">' +
 						'<div class="col-6">' + data.data.employeeNo + '</div>' +
@@ -492,19 +496,30 @@
 				}
 			});
 
+			var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
 			$(field).select2({
 				width: '100%',
 				placeholder: 'Choose Employee No',
 				allowClear: true,
+				language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
 				ajax: {
-					url: '/employee_no/api',
+					url: '/employee_no/position/api',
 					dataType: 'json',
 					delay: 250,
 					type: "GET",
 					data: function (params) {
 						return {
 							_token: CSRF_TOKEN,
-							search: params.term
+							search: params.term,
+							positionCode: positionCode
 						};
 					},
 					processResults: function (data) {

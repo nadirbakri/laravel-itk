@@ -12,7 +12,16 @@ return [
     |
     */
 
-    'judul' => 'Skill Code Page',
+    'judul' => 'Skill Page',
     'list' => 'Personel Menu List',
+    'list_detail' => 'Skill List',
+    'label_record_status' => 'Record Status',
+    'label_skill_code' => 'Skill Code',
+    'label_skill_name' => 'Skill Name',
+    'skill_code_required' => 'Skill Code is Required',
+    'skill_name_required' => 'Skill Name is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
 
 ];

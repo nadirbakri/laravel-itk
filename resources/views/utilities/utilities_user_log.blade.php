@@ -1,92 +1,66 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>{{ __('utilities_user_log.judul') }}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
-	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <title>{{ __('utilities_user_log.judul') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-	<style type="text/css">
-		.div-utilities {
-			max-width: 100%;
-			margin: auto;
-			/*margin-top: 1%;*/
-		}
-        .div-title {
-            margin-top: 8%;
+    <style type="text/css">
+        .div-utilities {
+            max-width: 100%;
+            margin: auto;
+            /*margin-top: 1%;*/
         }
-	</style>
+
+        .modal-header-notification-error {
+            border-bottom: 1px solid #eee;
+            background-color: #f44336;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+    </style>
 </head>
 
 <body>
-	<div class="div-utilities">
-        <div class="div-navbar sticky-navbar">
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
-                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
-                <span>Back</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
-                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
-                <span>Next</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
-                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
-                <span>New</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
-                <span>Edit</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
-                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
-                <span>Save</span>
-            </a>
-            <a class="list-functionbar-md" href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
-                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
-                <span>Activate</span>
-            </a>
-            <a class="list-functionbar-lg" href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
-                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
-                <span>Deactivate</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
-                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
-                <span>List</span>
+    <div class="div-utilities">
+        <div class="div-title">
+            <a href="{{ url('utilities') }}" target="iframe_dashboard">
+                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                <span class="title-text">{{ __('utilities_user_log.list') }}</span>
             </a>
         </div>
-		<div class="div-title">
-			<a href="{{ url('utilities') }}" target="iframe_dashboard">
-				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('utilities_user_log.list') }}</span>
-			</a>
-		</div>
-		<div class="div-form">
-            <form>
+        <div class="div-form">
+            <form id="user_log_form" method="post">
+                @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="user_id">User ID</label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="User ID">
+                            <label for="user_id">{{ __('utilities_user_log.label_user_id') }}</label>
+                            <select class="form-control select2" id="user_id" name="user_id"></select>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="log_date">Log Date</label>
+                            <label for="log_date">{{ __('utilities_user_log.label_log_date') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="log_date" name="log_date" placeholder="Log Date">
+                                <input type="text" class="form-control" id="log_date" name="log_date"
+                                    placeholder="{{ __('utilities_user_log.label_log_date') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -95,106 +69,232 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="log_type">Log Type</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="log_type" id="log_type_login" value="Login">
-                                <label class="form-check-label" for="log_type_login">Login</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label for="log_type">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="log_type" id="log_type_logout" value="Logout">
-                                <label class="form-check-label" for="log_type_logout">Logout</label>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-search-log" id="btn-search-log" style="width: 100%;">
-                            <i class="fa fa-search"></i> Search
+                        <button type="submit" class="btn btn-primary" name="btn-show-log" id="btn-show-log"
+                            style="width: 100%;">
+                            <i class="fa fa-eye"></i> {{ __('utilities_user_log.btn_show') }}
                         </button>
                     </div>
                 </div>
             </form>
             <div class="row">
                 <div class="col-12">
-                    <table id="log_data_table" class="table hover">
+                    <table id="user_log_table" class="table hover">
                         <thead>
                             <tr>
                                 <th>User ID</th>
-                                <th>Session ID</th>
-                                <th>IP Address</th>
-                                <th>Host Name</th>
-                                <th>Log Date</th>
-                                <th>Log Time</th>
-                                <th>Log Type</th>
+                                <th>Activity Time</th>
+                                <th>Activity</th>
+                                <th>Function</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    var table = null;
-    $('#log_data_table thead tr').clone(true).appendTo('#log_data_table thead');
-    $('#log_data_table thead tr:eq(1) th').each( function (i) {
-        var title = $(this).text();
-        $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
- 
-        $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
-                table
-                    .column(i)
-                    .search(this.value)
-                    .draw();
-            }
-        } );
+    $(function () {
+        initDatePicker();
     });
 
-    load_table_log();
-
-    function load_table_log() {
-        table = $('#log_data_table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: "{{ url('utilities/user_log/log/table') }}",
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
-            columns: [
-                {data: 'user_id', name: 'user_id'},
-                {data: 'session_id', name: 'session_id'},
-                {data: 'ip_address', name: 'ip_address'},
-                {data: 'host_name', name: 'host_name'},
-                {data: 'log_date', name: 'log_date'},
-                {data: 'log_time', name: 'log_time'},
-                {data: 'log_type', name: 'log_type'}
-            ]
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
         });
     }
-  });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = null;
+
+        loadDataUserID();
+
+        function load_table_user_log(user_id = '', log_date = '') {
+            table = $('#user_log_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url: "{{ url('utilities/user_log/table') }}",
+                    data: {
+                        user_id: user_id,
+                        log_date: log_date
+                    }
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
+                        "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [
+                    [1, "desc"]
+                ],
+                columns: [{
+                        data: 'userID',
+                        name: 'userID'
+                    },
+                    {
+                        data: 'actionTime',
+                        name: 'actionTime'
+                    },
+                    {
+                        data: 'userAction',
+                        name: 'userAction'
+                    },
+                    {
+                        data: 'functionMenu',
+                        name: 'functionMenu'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    }
+                ]
+            });
+
+            $("#btn-show-log").prop("disabled", false);
+            $("#btn-show-log").html(
+                '<i class="fa fa-eye"></i> {{ __("utilities_user_log.btn_show") }}'
+            );
+        }
+
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        function loadDataUserID() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.userID + '</div>' +
+                        '<div class="col-6">' + data.data.userName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#user_id').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>User ID</b></div>' +
+                        '<div class="col-6"><b>User Name</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#user_id').select2({
+                width: '100%',
+                placeholder: 'Choose User',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/user/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.userName,
+                                    id: item.userID,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        $("#btn-show-log").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#user_log_form").submit();
+        });
+
+        if ($("#user_log_form").length > 0) {
+            $("#user_log_form").validate({
+                submitHandler: function (form) {
+                    var user_id = $('#user_id').val();
+                    var log_date = $('#log_date').val();
+                    $('#user_log_table').DataTable().destroy();
+                    load_table_user_log(user_id, log_date);
+                }
+            })
+        }
+    });
+
 </script>
 
 </html>

@@ -10,58 +10,19 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/personel_detail.css') }}">
     <style type="text/css">
-        .div-personel {
+        .div-utilities {
             max-width: 97%;
             margin: auto;
-            margin-top: 1%;
+            /*margin-top: 1%;*/
+        }
+        .div-title {
+            margin-top: 2%;
         }
     </style>
 </head>
 
 <body>
     <div class="div-personel">
-        <div class="div-navbar sticky-navbar">
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
-                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
-                <span>Back</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
-                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
-                <span>Next</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
-                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
-                <span>New</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
-                <span>Edit</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
-                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
-                <span>Save</span>
-            </a>
-            <a class="list-functionbar-md" href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
-                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
-                <span>Activate</span>
-            </a>
-            <a class="list-functionbar-lg" href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
-                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
-                <span>Deactivate</span>
-            </a>
-            <a href="javascript:void(0)">
-                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
-                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
-                <span>List</span>
-            </a>
-        </div>
         <div class="div-title">
             <a href="{{ url('utilities') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
@@ -119,17 +80,17 @@
         "sDom": 'lrtip',
         'sPaginationType': 'ellipses',
         columns: [
-            {data: 'record_status', name: 'record_status'},
-            {data: 'user_id', name: 'user_id'},
-            {data: 'user_name', name: 'user_name'},
-            {data: 'employee_name', name: 'employee_name'},
-            {data: 'user_type', name: 'user_type'},
+            {data: 'recordStatus', name: 'recordStatus'},
+            {data: 'userID', name: 'userID'},
+            {data: 'userName', name: 'userName'},
+            {data: 'fullName', name: 'fullName'},
+            {data: 'userType', name: 'userType'},
         ]
     });
 
     $('#user_security_maintenance_table tbody').on('click', 'tr', function () {
         var data = table.row(this).data();
-        $.redirect("{{ url('utilities/user_security_maintenance/detail_data') }}", { 'user_id' : data.user_id }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('utilities/user_security_maintenance/detail_data') }}", { 'userID' : data.userID }, "GET", "iframe_dashboard");
     });
     
   });

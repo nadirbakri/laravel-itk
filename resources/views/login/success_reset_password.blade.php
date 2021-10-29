@@ -8,9 +8,9 @@
 <style type="text/css">
 	@media only screen and (max-width: 2600px) {
 		body{
-			background: url('/pictures/bg_image_success_reset_password.png');
+			background: url('/pictures/bg_image_success_reset_password.svg');
 			background-size: 50% !important;
-			background-position: 90% 0% !important;
+			background-position: 90% 60% !important;
 			background-repeat: no-repeat;
 			padding-top: 6%;
 		}
@@ -42,9 +42,9 @@
 	}
 	@media only screen and (max-width: 1390px) {
 		body{
-			background: url('/pictures/bg_image_success_reset_password.png');
+			background: url('/pictures/bg_image_success_reset_password.svg');
 			background-size: 50% !important;
-			background-position: 90% 0% !important;
+			background-position: 90% 60% !important;
 			background-repeat: no-repeat;
 			padding-top: 4%;
 		}

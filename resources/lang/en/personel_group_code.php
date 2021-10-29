@@ -12,7 +12,16 @@ return [
     |
     */
 
-    'judul' => 'Group Code Page',
+    'judul' => 'Group Page',
     'list' => 'Personel Menu List',
+    'list_detail' => 'Group List',
+    'label_record_status' => 'Record Status',
+    'label_group_code' => 'Group Code',
+    'label_group_name' => 'Group Name',
+    'group_code_required' => 'Group Code is Required',
+    'group_name_required' => 'Group Name is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
 
 ];
