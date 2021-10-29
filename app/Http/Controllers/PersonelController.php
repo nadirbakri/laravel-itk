@@ -4491,18 +4491,20 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
+            $response = $client->put(env('API_URL') . '/pemaster/updaterecordstatus',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
                         'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => (int) $request->employeeNo,
+                        'employeeNo' => $request->employeeNo,
+                        'changeNo' => 0,
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
-                        'userID' => Session::get('userID'),
+                        "sessionID" => 0,
+                        'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
-                        "languageCode" => App::getLocale()
+                        "languageID" => App::getLocale()
                     ]
                 )]
             );
