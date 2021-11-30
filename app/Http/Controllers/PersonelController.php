@@ -7569,10 +7569,10 @@ class PersonelController extends Controller
         return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
     }
 
-    public function printEmployeeReportByStatusPersonel(Request $request)
-    {
-        return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location), 'Employee Report By Status.xlsx');
-    }
+    // public function printEmployeeReportByStatusPersonel(Request $request)
+    // {
+    //     return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location), 'Employee Report By Status.xlsx');
+    // }
 
     public function checkResultPerformancePersonel(Request $request)
     {

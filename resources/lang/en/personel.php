@@ -47,7 +47,12 @@ return [
     'employee_approval' => 'Employee Approval',
     'employee_attachment' => 'Employee Attachment',
     'change_employee_no' => 'Change Employee No',
+<<<<<<< HEAD
     'import_export_personal_data' => 'Import & Export Personal Data',
+=======
+    'export_personal_data' => 'Export Personal Data',
+    'import_personal_data' => 'Import Personal Data',
+>>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
     // 'npwp_mutation' => 'NPWP Mutation',
     // 'termination_data_entry' => 'Termination Data Entry',
     // 'award_data_entry' => 'Award Data Entry',
@@ -93,7 +98,11 @@ return [
     // 'format_report' => 'Format Report',
     // 'relation_code' => 'Relation Code',
     'employee_report_by_status' => 'Employee Report By Status',
+<<<<<<< HEAD
     'employee_dependents' => 'Employee Dependents',
+=======
+    'report_total_standard' => 'Report Total Standard',
+>>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
     'employee_card' => 'Employee Card',
     'custom_report_employee' => 'Custom Report Employee',
     'employee_notice_report' => 'Employee Notice Report',

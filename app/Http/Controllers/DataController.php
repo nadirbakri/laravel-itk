@@ -1560,37 +1560,37 @@ class DataController extends Controller
         return response()->json($position[0]);
 	}
 
-	public function dataEmploymentStatusFunctionAPI(Request $request)
-    {
-    	$employment_status[] = (object) [
-    		'employeeNo' => 'ALL',
-    		'employmentStatus' => 'ALL'
-		];
+	// public function dataEmploymentStatusFunctionAPI(Request $request)
+    // {
+    // 	$employment_status[] = (object) [
+    // 		'employeeNo' => 'ALL',
+    // 		'employmentStatus' => 'ALL'
+	// 	];
 
-    	try {
-	    	$client = new Client([
-	    		'headers' => [ 'Content-Type' => 'application/json',
-	    						'Authorization' => 'Bearer ' . Session::get('token') ]
-	    	]);
+    // 	try {
+	//     	$client = new Client([
+	//     		'headers' => [ 'Content-Type' => 'application/json',
+	//     						'Authorization' => 'Bearer ' . Session::get('token') ]
+	//     	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
-	    		['body' => json_encode(
-	    			[
-	    				'recordStatus' => 'A',
-	    				'companyCode' => Session::get('companyCode')
-	    			]
-	    		)]
-	    	);
-	    } catch (RequestException $e) {
-	    	var_dump($e->getResponse());
-	    }
+	//     	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	//     		['body' => json_encode(
+	//     			[
+	//     				'recordStatus' => 'A',
+	//     				'companyCode' => Session::get('companyCode')
+	//     			]
+	//     		)]
+	//     	);
+	//     } catch (RequestException $e) {
+	//     	var_dump($e->getResponse());
+	//     }
 
-	    $arrResult = json_decode($response->getBody()->getContents());
+	//     $arrResult = json_decode($response->getBody()->getContents());
 
-	    $employment_status = array_merge($employment_status, $arrResult->dataListSet);
+	//     $employment_status = array_merge($employment_status, $arrResult->dataListSet);
 
-        return response()->json($employment_status[0]);
-	}
+    //     return response()->json($employment_status[0]);
+	// }
 
 	public function dataLocationAPI(Request $request)
     {
