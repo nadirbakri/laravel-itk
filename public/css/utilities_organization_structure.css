@@ -1,0 +1,109 @@
+@font-face {
+    font-family: Montserrat;
+    src: url('/fonts/Montserrat-Bold.ttf');
+}
+@font-face {
+    font-family: Montserrat-Medium;
+    src: url('/fonts/Montserrat-SemiBold.ttf');
+}
+@font-face {
+    font-family: Inter-Bold;
+    src: url('/fonts/Inter-Bold.ttf');
+}
+@font-face {
+    font-family: Inter;
+    src: url('/fonts/Inter-Regular.ttf');
+}
+.show-neighbors {
+  overflow: hidden;
+}
+.show-neighbors .item__third:first-child, .show-neighbors .item__third:last-child {
+  display: none;
+  opacity: 0.2;
+}
+h5 {
+    font-family: Inter-Bold;
+    margin-bottom: .2rem;
+    font-size: 1vw;
+}
+.carousel-caption {
+    font-family: Inter;
+    position: unset;
+    color: #084D86;
+    font-size: 1vw;
+    padding-bottom: 0;
+}
+.carousel-caption-card {
+    font-family: Inter;
+    position: unset;
+    color: #084D86;
+    font-size: 1vw;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-align: unset;
+}
+.carousel-caption p, .carousel-caption-card p{
+    margin-bottom: 0;
+}
+hr {
+    margin: 0 auto;
+}
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+.card-body {
+    padding: 0.25rem;
+}
+@media (min-width: 500px) {
+  .show-neighbors .carousel-indicators {
+    margin-right: 25%;
+    margin-left: 25%;
+  }
+  .show-neighbors .carousel-control-prev, .show-neighbors .carousel-control-next {
+    background: rgba(255, 255, 255, 0.3);
+    width: 10%;
+    z-index: 11;
+  }
+  .show-neighbors .carousel-control-prev img, .show-neighbors .carousel-control-next img {
+    max-width: 70%;
+  }
+  .show-neighbors .carousel-inner {
+    width: 100%;
+    left: 0%;
+  }
+  .show-neighbors .carousel-item-next:not(.carousel-item-left), .show-neighbors .carousel-item-right.active {
+    -webkit-transform: translate3d(25%, 0, 0);
+    transform: translate3d(25%, 0, 0);
+    opacity: 0.2;
+  }
+  .show-neighbors .carousel-item-prev:not(.carousel-item-right), .show-neighbors .carousel-item-left.active {
+    -webkit-transform: translate3d(-25%, 0, 0);
+    transform: translate3d(-25%, 0, 0);
+    opacity: 0.2;
+  }
+  .show-neighbors .item__third {
+    display: block !important;
+    float: left;
+    position: relative;
+    /* captions can now be added */
+    width: 25%;
+    left: 12.5%;
+  }
+  .carousel-caption {
+    position: unset;
+    color: #084D86;
+  }
+  .show-neighbors .item__third img{
+    max-width: 35%;
+    margin: 0 auto;
+  }
+  .image-chart-line {
+    max-width: 70%;
+    margin-left: 15%;
+    margin-bottom: 7%;
+  }
+  .row {
+    margin: 1%;
+  }
+}
