@@ -95,30 +95,17 @@
 							</a>
 						</div>
 						<div class="col col-3">
-<<<<<<< HEAD
 							<a href="{{ url('personel/import_export_personal_data') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/personel/submenu-data.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.import_export_personal_data') }}</span>
 							</a>
 						</div>
 						<!--<div class="col col-3">
-=======
-							<a href="{{ url('personel/export_personal_data') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-data.svg') }}" alt="Child Personel">
-								<span class="child-title-text">{{ __('personel.export_personal_data') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
 							<a href="{{ url('personel/import_personal_data') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/personel/submenu-data.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.import_personal_data') }}</span>
 							</a>
-<<<<<<< HEAD
 						</div>-->
-=======
-						</div>
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
 					</div>
 					<div class="div-head-data">
 						<span class="head-title-text">{{ __('personel.employee_detail') }}</span>
@@ -543,15 +530,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-<<<<<<< HEAD
 							<a href="{{ url('personel/employee_dependents') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_dependents') }}</span>
-=======
-							<a href="{{ url('personel/report_total_standard') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
-								<span class="child-title-text">{{ __('personel.report_total_standard') }}</span>
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
 							</a>
 						</div>
 						<div class="col col-3">
