@@ -8,15 +8,18 @@
 <style type="text/css">
     @media only screen and (max-width: 2600px) {
         body {
-            background: url('/pictures/bg_image_login.svg');
-            background-size: 55% !important;
-            background-position: 95% 130% !important;
-            background-repeat: no-repeat;
             padding-top: 6%;
         }
 
         a {
             width: -webkit-fill-available;
+        }
+
+        .img-login {
+            max-width: 40%; 
+            position: absolute; 
+            right: 10%;
+            bottom: 1%;
         }
 
         .right-content {
@@ -49,11 +52,14 @@
 
     @media only screen and (max-width: 1390px) {
         body {
-            background: url('/pictures/bg_image_login.svg');
-            background-size: 53% !important;
-            background-position: 95% 50% !important;
-            background-repeat: no-repeat;
             padding-top: 4%;
+        }
+
+        .img-login {
+            max-width: 40%; 
+            position: absolute; 
+            right: 10%;
+            bottom: 1%;
         }
 
         .right-content {
@@ -86,9 +92,12 @@
 
     @media only screen and (max-width: 990px) {
         body {
-            background: unset;
             margin-left: 25%;
             padding-top: 4%;
+        }
+
+        .img-login {
+            display: none;
         }
 
         .right-content {
@@ -167,6 +176,9 @@
 
 @section('content')
 <main role="main">
+    <div>
+        <lottie-player class="img-login" src="{{ asset('pictures/login.json') }}"  background="transparent"  speed="1" loop autoplay></lottie-player>
+    </div>
     <div class='right-content'>
         <a class="image-logo">
             <img src="{{ url('/pictures/logo.png') }}" alt="Logo">
@@ -174,7 +186,7 @@
         </a>
         <p class="judul-text">{{ __('login.judul') }}</p>
         <p class="bawah-judul-text">{{ __('login.bawah_judul') }}</p>
-
+        
         <form id="login_form" method="post">
             @csrf
             <div class="form-group form-invalid">
