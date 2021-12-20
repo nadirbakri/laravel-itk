@@ -38,8 +38,18 @@
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
                 <td>{{ $value->gender }}</td>
-                <td>{{ $value->contractstartDate }}</td>
-                <td>{{ $value->contractendDate }}</td>
+				@if ($report_type=='terminate')
+					<td>{{ $value->joinDate }}</td>
+					<td>{{ $value->terminateDate }}</td>
+
+				@elseif ($report_type=='probation') 
+					<td>{{ $value->joinDate }}</td>
+					<td>{{ $value->probationEndDate }}</td>
+				
+				@else
+					<td>{{ $value->contractStartDate }}</td>
+					<td>{{ $value->contractEndDate }}</td>
+				@endif
                 <td>{{ $value->ranking }}</td>
                 <td>{{ $value->position }}</td>
                 <td>{{ $value->location }}</td>

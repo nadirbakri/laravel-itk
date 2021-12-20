@@ -45,5 +45,22 @@
                 "action": "openExternally"
             }
         }
+    ],
+    "tasks": [
+        {
+            "label": "Start Server",
+            "type": "Shell",
+            "command": "php -S localhost:8080 -t ${workspaceFolder}",
+            "isBackground": true,
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run In Browser",
+            "type": "Shell",
+            "command": "open http://localhost:8080/${relativeFile}",
+            "group": "build",
+            "problemMatcher": []
+        }
     ]
 }

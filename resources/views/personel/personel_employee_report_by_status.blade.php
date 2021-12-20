@@ -103,7 +103,7 @@
                         <div class="form-group">
                             <label for="period">{{ __('personel_employee_report_by_status.label_period_from') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period" name="period"
+                                <input type="text" class="form-control" id="period_from" name="period_from"
                                     placeholder="{{ __('personel_employee_report_by_status.label_period_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -115,7 +115,7 @@
                         <div class="form-group">
                             <label for="period">{{ __('personel_employee_report_by_status.label_period_to') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period" name="period"
+                                <input type="text" class="form-control" id="period_to" name="period_to"
                                     placeholder="{{ __('personel_employee_report_by_status.label_period_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -190,31 +190,31 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
-            type: "GET",
-            success: function (response) {
-                $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= response.data[0].levelFormat; i++) {
-                    $('#div-level').append(
-                        '<div class="col-6">' +
-                        '<div class="form-group">' +
-                        '<label for="level' + i + '">' + response.data_level[i - 1]
-                        .levelDescription + '</label>' +
-                        '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]" multiple="multiple"></select>' +
-                        '</div></div>'
-                    );
+        // $.ajax({
+        //     url: "{{ url('personel/report/level/check') }}",
+        //     type: "GET",
+        //     success: function (response) {
+        //         $('#level_format').val(response.data[0].levelFormat);
+        //         for (var i = 1; i <= response.data[0].levelFormat; i++) {
+        //             $('#div-level').append(
+        //                 '<div class="col-6">' +
+        //                 '<div class="form-group">' +
+        //                 '<label for="level' + i + '">' + response.data_level[i - 1]
+        //                 .levelDescription + '</label>' +
+        //                 '<select class="form-control select2" id="level' + i + '" name="level' +
+        //                 i + '[]" multiple="multiple"></select>' +
+        //                 '</div></div>'
+        //             );
 
-                    loadDataLevelCode('#level' + i, i);
-                    loadDataFirstLastAllLevel('#level' + i, i);
-                }
-            },
-            error: function (response) {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
-            }
-        });
+        //             loadDataLevelCode('#level' + i, i);
+        //             loadDataFirstLastAllLevel('#level' + i, i);
+        //         }
+        //     },
+        //     error: function (response) {
+        //         $('#notification_error').modal('show');
+        //         $('#message-notification-error').html(response);
+        //     }
+        // });
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -345,6 +345,10 @@
                         type: "POST",
                         data: $('#employee_report_by_status_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_report_by_status.btn_print") }}'
+                            );
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

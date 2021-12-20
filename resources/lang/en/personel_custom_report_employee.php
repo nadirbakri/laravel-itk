@@ -27,6 +27,8 @@ return [
     'btn_remove' => 'Remove',
     'btn_print' => 'Print',
     'btn_save' => 'Save',
-    'btn_cancel' => 'Cancel'
+    'btn_cancel' => 'Cancel',
+    'field_name_required' => 'Field Name Required',
+    'column_header_required' => 'Column Header Required'
 
 ];

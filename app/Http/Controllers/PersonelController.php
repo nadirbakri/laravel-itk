@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EmployeeListExport;
+use App\Exports\EmployeeReportByStatusExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -60,10 +61,10 @@ class PersonelController extends Controller
         return view('personel.personel_employee_attachment');
     }
 
-    // public function pageImportExportPersonel()
-    // {
-    //     return view('personel.personel_import_export_personal_data');
-    // }
+    public function pageImportExportPersonel()
+    {
+         return view('personel.personel_import_export_personal_data');
+    }
 
     public function pageEmployeeMutationPersonel()
     {
@@ -7569,10 +7570,10 @@ class PersonelController extends Controller
         return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
     }
 
-    // public function printEmployeeReportByStatusPersonel(Request $request)
-    // {
-    //     return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location), 'Employee Report By Status.xlsx');
-    // }
+    public function printEmployeeReportByStatusPersonel(Request $request)
+    {
+         return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false), 'Employee Report By Status.xlsx');
+    }
 
     public function checkResultPerformancePersonel(Request $request)
     {
@@ -7664,5 +7665,50 @@ class PersonelController extends Controller
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
         // return response()->json($request->record_status);
+    }
+
+    // public function prosesCustomReportEmployeePersonel(Request $request)
+    // {
+    //     date_default_timezone_set('Asia/Jakarta');
+    //     try {
+    //         $client = new Client([
+    //             'headers' => [ 'Content-Type' => 'application/json',
+    //             'Authorization' => 'Bearer ' . Session::get('token') ]
+    //         ]);
+
+    //         $response = $client->post(env('API_URL') . '/reportformatemployee/getreportformatemployee',
+    //             ['body' => json_encode(
+    //                 [[
+    //                     'companyCode' => Session::get('companyCode'),
+    //                     'employeeNoFrom' => $request->data->employee_no_from,
+    //                     'employeeNoTo' => $request->data->employee_no_to,
+    //                     'absenDateFrom' => date("Y-m-d\TH:i:s"),
+    //                     'absenDateTo' => date("Y-m-d\TH:i:s"),
+    //                     'incResign' => true,
+    //                     "groupAuthorizeFrom" => $request->data->group_authorize_from,
+    //                     "groupAuthorizeTo" => $request->data->group_authorize_to
+    //                 ]]
+    //             )]
+    //         );
+    //     } catch (RequestException $e) {
+    //         var_dump($e->getResponse());
+    //     }
+
+    //     $arrResult = json_decode($response->getBody()->getContents());
+
+    //     return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    // }
+
+    public function printCustomReportEmployee(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        var_dump (json_decode($request->field_name));
+
+        // return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
     }
 }

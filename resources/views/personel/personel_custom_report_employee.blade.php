@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
@@ -78,7 +79,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employment_status">{{ __('personel_custom_report_employee.label_employment_status') }}</label>
-                            <select class="form-control select2" id="employment_status" 
+                            <select class="form-control select2 select2-hidden-accessible" id="employment_status" 
                                 name="employment_status[]" multiple="multiple">
                             </select>
                         </div>
@@ -129,7 +130,7 @@
     </div>
     <div class="row">
         <div class="col-2">
-            <button type="submit" class="btn btn-primary" name="btn-add-data" id="btn-add-data"
+            <button type="submit" class="btn btn-primary" name="btn-add-field" id="btn-add-field"
                 style="width: 100%;" data-toggle="modal" data-target="#modal_add_field_name">
                 <i class="fa fa-plus"></i> {{ __('personel_custom_report_employee.btn_add') }}
             </button>
@@ -162,11 +163,13 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label
-                                        for="field_name">{{ __('personel_custom_report_employee.label_field_name') }}</label>
-                                    <input type="text" class="form-control" id="field_name"
-                                        name="field_name"
-                                        placeholder="{{ __('personel_custom_report_employee.label_field_name') }}">
+                                    <div class="form-group">
+                                        <label
+                                            for="field_name">{{ __('personel_custom_report_employee.label_field_name') }}</label>
+                                        <select class="form-control select2" id="field_name" name="field_name"></select>
+                                    </div>
+                                    <input type="hidden" class="form-control" id="letter_type_detail"
+                                        name="letter_type_detail">
                                 </div>
                             </div>
                         </div>
@@ -175,18 +178,14 @@
                                 <div class="form-group">
                                     <label
                                         for="column_header">{{ __('personel_custom_report_employee.label_column_header') }}</label>
-                                    <select class="form-control" id="column_header"
+                                    <input type="text" class="form-control" id="column_header"
                                         name="column_header">
-                                        <option value="">
-                                            {{ __('personel_custom_report_employee.label_column_header') }}
-                                        </option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_custom_report_employee.btn_save') }}</button>
+                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_custom_report_employee.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('personel_custom_report_employee.btn_cancel') }}</button>
                 </div>
@@ -216,6 +215,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -226,31 +226,44 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
-            type: "GET",
-            success: function (response) {
-                $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= response.data[0].levelFormat; i++) {
-                    $('#div-level').append(
-                        '<div class="col-6">' +
-                        '<div class="form-group">' +
-                        '<label for="level' + i + '">' + response.data_level[i - 1]
-                        .levelDescription + '</label>' +
-                        '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]" multiple="multiple"></select>' +
-                        '</div></div>'
-                    );
+        var table = null;
+        var arrayfieldName = [];
 
-                    loadDataLevelCode('#level' + i, i);
-                    loadDataFirstLastAllLevel('#level' + i, i);
-                }
-            },
-            error: function (response) {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
-            }
-        });
+        load_table_custom_report();
+
+        function load_table_custom_report() {
+            table = $('#custom_report_employee_table').DataTable( {
+                processing: true,
+                data: arrayfieldName,
+
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [
+                    [1, "asc"]
+                ],
+                columns: [{
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'fieldName',
+                        name: 'fieldName'
+                    },
+                    {
+                        data: 'columnHeader',
+                        name: 'columnHeader'
+                    }],
+                    select: {
+                        style: 'multi',
+                        selector: 'td:first-child'
+                    }
+            });
+        }
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -377,20 +390,20 @@
             });
         }
 
-        /**function loadDataFirstLastAllEmploymentStatus () {
+        function loadDataFirstLastAllEmploymentStatus () {
             $('#employment_status').addClass('spinner-border');
 
             $.ajax({
                 type: 'GET',
                 url: '/employment_status/func/api',
             }).then(function (data) {
-                if (!$('#employment_status').find('option:contains(' + data.employmentStatus + ')').length) {
-                    $('#employment_status').append($('<option>').val(data.employeeNo).text(data.employmentStatus));
+                if (!$('#employment_status').find('option:contains(' + data.value + ')').length) {
+                    $('#employment_status').append($('<option>').val(data.comGenCode).text(data.value));
                 }
-                $('#employment_status').val(data.employeeNo);
+                $('#employment_status').val(data.comGenCode);
                 $('#employment_status').removeClass('loading');
             });
-        }**/
+        }
 
         function loadDataGroupAuthorize(field = '') {
             function formatSelect(data) {
@@ -466,7 +479,7 @@
             });
         }
 
-        /**function loadDataEmploymentStatus(){
+        function loadDataEmploymentStatus(){
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -474,12 +487,12 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Employment Status</b></div>' +
+                        '<div class="col-6"><b>Code</b></div>' +
+                        '<div class="col-6"><b>Value</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.employeeNo + '<div>' +
-                        '<div class="col-6">' + data.data.employmentStatus + '<div>' +
+                        '<div class="col-6">' + data.data.comGenCode + '<div>' +
+                        '<div class="col-6">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -493,7 +506,7 @@
                 placeholder: 'Choose Employment Status',
                 allowClear: true,
                 multiple: true,
-                tags: true;
+                tags: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -517,8 +530,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.employmentStatus,
-                                    id: item.employeeNo,
+                                    text: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })
@@ -528,11 +541,74 @@
                 },
                 templateResult: formatSelect
             });
-        }**/
+        }
 
-        /**$("#btn-add-data").click(function() {
-            $.redirect("{{ url('personel/custom_report_employee/detail_data') }}",  { })
-        })**/
+        $("#btn-add-field").on('click', function () {
+            loadDataFieldName();
+        });
+
+        function loadDataFieldName() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-12"><b>Field</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-12">' + data.text + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+                
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#field_name').select2({
+                width: '100%',
+                placeholder: 'Choose Field',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/field_name/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item,
+                                    id: item,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        // var_dump(loadDataFieldName());
 
         $("#btn-print-data").click(function () {
             $(this).prop("disabled", true);
@@ -542,40 +618,119 @@
             $("#custom_report_employee_form").submit();
         });
 
+        $("#btn-remove-data").on('click', function() {
+        var data = table.rows('.selected').data();
+        // console.log(data.length);
+        if(data.length > 0){
+            for (var i = 0; i < data.length; i++) {
+                var index = arrayfieldName.indexOf(data["fieldName"]);
+                arrayfieldName.splice(index, 1);
+            }
+            $('#custom_report_employee_table').DataTable().destroy();
+            load_table_custom_report();
+            //console.log(arrayfieldName);
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+        });
+
+        $("#btn-save-employment-data").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            var arraypush = [];
+            arraypush["fieldName"] = $("#field_name").val();
+            arraypush["columnHeader"] = $("#column_header").val();
+            arrayfieldName.push(arraypush);
+
+            $("#field_name").val("");
+            $("#column_header").val("");
+            // console.log(arrayfieldName);
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
+            );
+            $('#modal_add_field_name').modal('hide');
+            
+            $('#custom_report_employee_table').DataTable().destroy();
+            load_table_custom_report();
+            //$("#field_name_form").submit();
+        });
+
         if ($("#custom_report_employee_form").length > 0) {
             $("#custom_report_employee_form").validate({
+                rules: {
+                    field_name: {
+                        required: true,
+                    }, 
+                    column_header: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    field_name: {
+                        required: "{{ __('personel_custom_report_employee.field_name_required') }}",
+                    },
+                    column_header: {
+                        required: "{{ __('personel_custom_report_employee.column_header_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+                    
+                    var field_name = {
+                        name : arrayfieldName
+                    };
+                    console.log(JSON.stringify(arrayfieldName));
                     $.ajax({
                         xhrFields: {
                             responseType: 'blob',
                         },
                         url: "{{ url('personel/custom_report_employee/print') }}",
                         type: "POST",
-                        data: $('#custom_report_employee_form').serialize(),
+                        data: { field: $('#custom_report_employee_form').serialize(), 'field_name' : JSON.stringify(arrayfieldName) },
                         success: function (result, status, xhr) {
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
+                            // var disposition = xhr.getResponseHeader(
+                            //     'content-disposition');
+                            // var matches = /"([^"]*)"/.exec(disposition);
+                            // var filename = (matches != null && matches[1] ? matches[1] :
+                            //     'audit_trail.xlsx');
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                            // // The actual download
+                            // var blob = new Blob([result], {
+                            //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            // });
+                            // var link = document.createElement('a');
+                            // link.href = window.URL.createObjectURL(blob);
+                            // link.download = filename;
 
-                            document.body.appendChild(link);
+                            // document.body.appendChild(link);
 
-                            link.click();
-                            document.body.removeChild(link);
+                            // link.click();
+                            // document.body.removeChild(link);
                         },
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_employee_card.judul') }}</title>
+    <title>{{ __('tm_update_shift_by_date.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,11 +13,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/jquery.multiselect.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
-        .div-personel {
+        .div-time_management {
             max-width: 100%;
             margin: auto;
             /*margin-top: 1%;*/
@@ -45,111 +44,97 @@
         .select2-results__option[aria-selected=true] {
             display: none;
         }
-
     </style>
 </head>
 
 <body>
-    <div class="div-personel">
+    <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url('personel') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_employee_card.list') }}</span>
-            </a>
+                <span class="title-text">{{ __('tm_update_shift_by_date.list') }}</span>
+            </a> 
         </div>
         <div class="div-form">
-            <form id="employee_card_form" method="post">
+            <form id="tm_update_shift_by_date" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label
-                                for="employee_no_from">{{ __('personel_employee_card.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="employee_no_to">{{ __('personel_employee_card.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="include_resign">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="include_resign"
-                                    name="include_resign" value="true">
-                                <label class="form-check-label"
-                                    for="include_resign">{{ __('personel_employee_card.label_include_resign') }}</label>
+                            <label for="date_from">{{ __('tm_update_shift_by_date.label_date_from') }}</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="date_from" name="date"
+                                    placeholder="{{ __('tm_update_shift_by_date.label_date_from') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="position">{{ __('personel_employee_card.label_position') }}</label>
-                            <select class="form-control select2 select2-hidden-accessible" id="position"
-                                name="position[]" multiple="multiple">
-                            </select>
+                            <label for="date_to">{{ __('tm_update_shift_by_date.label_date_to') }}</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="date_to" name="date"
+                                    placeholder="{{ __('tm_update_shift_by_date.label_date_to') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="ranking">{{ __('personel_employee_card.label_ranking') }}</label>
-                            <select class="form-control select2" id="ranking" name="ranking[]"
+                            <label
+                                for="update_shift_by_date">{{ __('tm_update_shift_by_date.label_shift_from') }}</label>
+                            <select class="form-control select2" id="shift_from" name="shift_from"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="update_shift_by_date">{{ __('tm_update_shift_by_date.label_shift_to') }}</label>
+                            <select class="form-control select2" id="shift_to" name="shift_to"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="location">{{ __('tm_update_shift_by_date.label_location') }}</label>
+                            <select class="form-control select2" id="location" name="location[]"
                                 multiple="multiple"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="location">{{ __('personel_employee_card.label_location') }}</label>
-                            <select class="form-control select2" id="location" name="location[]"
+                            <label for="religion">{{ __('tm_update_shift_by_date.label_religion') }}</label>
+                            <select class="form-control select2" id="religion" name="religion[]"
                                 multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="position">{{ __('tm_update_shift_by_date.label_position') }}</label>
+                            <select class="form-control select2" id="position" name="position"></select>
                         </div>
                         <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="include_list">{{ __('personel_employee_card.label_include_list') }}</label>
-                            <select class="include_list" id="include_list" name="include_list[]"
-                                multiple="multiple">
-                                <option value="family">{{ __('personel_employee_card.label_select_family') }}</option>
-                                <option value="training records">{{ __('personel_employee_card.label_select_training_records') }}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
-                            style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('personel_employee_card.btn_print') }}
+                        <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                            <i class="fa fa-play-circle-o">{{ __('tm_update_shift_by_date.btn_process') }}</i>
                         </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="modal fade" role="dialog" id="notification_error">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-header-notification-error">
-                    <h5 class="modal-title">Error!</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <span id="message-notification-error">{{ $errors->first() }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -163,25 +148,64 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="{{ asset('js/jquery.multiselect.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
+<script type="text/javascript">
+    $(function () {
+        initDatePicker();
+    });
+
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        
-        loadDataEmployeeNo('#employee_no_from');
-        loadDataEmployeeNo('#employee_no_to');
+        $.ajax({
+            url: "{{ url('personel/report/level/check') }}",
+            type: "GET",
+            success: function (response) {
+                $('#level_format').val(response.data[0].levelFormat);
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level').append(
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<label for="level' + i + '">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
+
+                    loadDataLevelCode('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
+                }
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+
         loadDataPositionCode();
         loadDataLocationCode();
-        loadDataRankingCode();
-        loadDataIncludeList();
 
-        loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
-        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
         loadDataFirstLastAllPosition();
         loadDataFirstLastAllLocation();
-        loadDataFirstLastAllRanking();
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -203,20 +227,6 @@
         });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/employee_no/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
-                    data.fullName);
-                $(field).append($newOption).trigger('change');
-            });
-        }
 
         function loadDataFirstLastAllPosition() {
             $('#position').addClass('spinner-border');
@@ -245,79 +255,18 @@
             });
         }
 
-        function loadDataFirstLastAllRanking() {
+        function loadDataFirstLastAllLevel(field = '', levelType = '') {
             $.ajax({
                 type: 'GET',
-                url: '/ranking/func/api',
+                url: '/level/func/api',
+                data: {
+                    'levelType': levelType
+                }
             }).then(function (data) {
-                if (!$('#ranking').find('option:contains(' + data.rankingName + ')').length) {
-                    $('#ranking').append($('<option>').val(data.rankingCode).text(data.rankingName));
+                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
+                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
                 }
-                $('#ranking').val(data.rankingCode);
-            });
-        }
-
-        function loadDataEmployeeNo(field = '') {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
-                        '<div class="col-6">' + data.data.fullName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            var $employeeNo = $(field).select2({
-                width: '100%',
-                placeholder: 'Choose Employee',
-                allowClear: true,
-                // tags: true,
-                closeOnSelect: false,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/employee_no/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.fullName,
-                                    id: item.employeeNo,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
+                $(field).val(data.levelCode);
             });
         }
 
@@ -471,7 +420,7 @@
             });
         }
 
-        function loadDataRankingCode() {
+        function loadDataLevelCode(field = '', levelType = '') {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -479,12 +428,12 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Ranking Code</b></div>' +
-                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
-                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '<div class="col-6">' + data.data.levelCode + '</div>' +
+                        '<div class="col-6">' + data.data.levelName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -492,11 +441,11 @@
             }
 
             // var headerIsAppend = false;
-            // $('#ranking').on('select2:open', function (e) {
+            // $(field).on('select2:open', function (e) {
             //     if (!headerIsAppend) {
             //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Ranking Code</b></div>' +
-            //             '<div class="col-6"><b>Ranking Name</b></div>' +
+            //             '<div class="col-6"><b>Level Code</b></div>' +
+            //             '<div class="col-6"><b>Level Name</b></div>' +
             //             '</div>';
             //         $('.select2-search').append(html);
             //         headerIsAppend = true;
@@ -505,9 +454,9 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#ranking').select2({
+            $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Ranking',
+                placeholder: 'Choose Level',
                 allowClear: true,
                 language: {
                     errorLoading: function () {
@@ -518,22 +467,23 @@
                     }
                 },
                 ajax: {
-                    url: '/ranking/all/api',
+                    url: '/level/all/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            'levelType': levelType
                         };
                     },
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.rankingName,
-                                    id: item.rankingCode,
+                                    text: item.levelName,
+                                    id: item.levelCode,
                                     data: item
                                 }
                             })
@@ -544,129 +494,7 @@
                 templateResult: formatSelect
             });
         }
-
-
-        function loadDataIncludeList() {
-            var headerIsAppend = false;
-            $('#include_list').on('select2:open', function (e) {
-                if (!headerIsAppend) {
-                    html = '<div class="row">' +
-                    '<div class="col-6"><b>Family</b></div>' +
-                    '<div class="col-6"><b>Training Records</b></div>' +
-                    '</div>' +
-                    '<div class="row">' +
-                    '<div class="col-6"><b>Formal Education</b></div>' +
-                    '<div class="col-6"><b>Historical Jobs</b></div>' +
-                    '</div>' +
-                    '<div class="row">' +
-                    '<div class="col-6"><b>Language</b></div>' +
-                    '<div class="col-6"><b>Work Experience</b></div>' +
-                    '</div>' +
-                    '<div class="row">' +
-                    '<div class="col-6"><b>Organization</b></div>' +
-                    '<div class="col-6"><b>Award</b></div>' +
-                    '</div>' +
-                    '<div class="row">' +
-                    '<div class="col-6"><b>Project Experience</b></div>' +
-                    '<div class="col-6"><b>Sanction</b></div>' +
-                    '</div>';
-                    $('.select2-search').append(html);
-                    headerIsAppend = true;
-                }
-            });
-            
-            // $('#include_list').select2({
-            //     closeOnSelect: false,
-            //     placeholder: "Choose Include List",
-            //     allowHtml: true,
-            //     allowClear: true,
-            //     tags: true,
-            //     showCheckbox: true,
-            // });
-        }
-
-        $("#btn-print-data").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#employee_card_form").submit();
-        });
-
-        if ($("#employee_card_form").length > 0) {
-            $("#employee_card_form").validate({
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('personel/employee_card/print') }}",
-                        type: "POST",
-                        data: $('#employee_card_form').serialize(),
-                        success: function (result, status, xhr) {
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
-
-                            document.body.appendChild(link);
-
-                            link.click();
-                            document.body.removeChild(link);
-                        },
-                        error: function (response) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_card.btn_print") }}'
-                            );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-                    });
-                }
-            })
-        }
-        
-        /*var items = [{
-                $('<div class="row">' +
-                '<div class="col-6"><b>Family</b></div>' +
-                '<div class="col-6"><b>Training Records</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Formal Education</b></div>' +
-                '<div class="col-6"><b>Historical Jobs</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Language</b></div>' +
-                '<div class="col-6"><b>Work Experience</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Organization</b></div>' +
-                '<div class="col-6"><b>Award</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Project Experience</b></div>' +
-                '<div class="col-6"><b>Sanction</b></div>' +
-                '</div>'
-        }];*/
-            
-        // $('#include_list').ejDropDownList({
-        //     dataSource: items,
-        //     showCheckbox : true
-        // });
     });
 </script>
+
+</html>

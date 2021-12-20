@@ -205,11 +205,7 @@
                                 <div class="form-group">
                                     <label for="gender_info">{{ __('personel_personal_data.label_gender') }}</label>
                                     <select class="form-control" id="gender_info" name="gender_info">
-<<<<<<< HEAD
                                         <option value="">{{ __('personel_personal_data.label_gender') }}
-=======
-                                        <option value="">{{ __('personel_personal_data.label_select_gender') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -219,11 +215,7 @@
                                     <label
                                         for="blood_type_info">{{ __('personel_personal_data.label_blood_type') }}</label>
                                     <select class="form-control" id="blood_type_info" name="blood_type_info">
-<<<<<<< HEAD
                                         <option value="">{{ __('personel_personal_data.label_blood_type') }}
-=======
-                                        <option value="">{{ __('personel_personal_data.label_select_blood_type') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -235,11 +227,7 @@
                                     <label
                                         for="marital_status_info">{{ __('personel_personal_data.label_marital_status') }}</label>
                                     <select class="form-control" id="marital_status_info" name="marital_status_info">
-<<<<<<< HEAD
                                         <option value="">{{ __('personel_personal_data.label_marital_status') }}
-=======
-                                        <option value="">{{ __('personel_personal_data.label_select_marital_status') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -248,11 +236,7 @@
                                 <div class="form-group">
                                     <label for="religion_info">{{ __('personel_personal_data.label_religion') }}</label>
                                     <select class="form-control" id="religion_info" name="religion_info">
-<<<<<<< HEAD
                                         <option value="">{{ __('personel_personal_data.label_religion') }}
-=======
-                                        <option value="">{{ __('personel_personal_data.label_select_religion') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -264,11 +248,7 @@
                                     <label
                                         for="nationality_info">{{ __('personel_personal_data.label_nationality') }}</label>
                                     <select class="form-control" id="nationality_info" name="nationality_info">
-<<<<<<< HEAD
                                         <option value="">{{ __('personel_personal_data.label_nationality') }}
-=======
-                                        <option value="">{{ __('personel_personal_data.label_select_nationality') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -363,11 +343,7 @@
                                     <select class="form-control" id="driving_license_car_type_info"
                                         name="driving_license_car_type_info">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_driving_license_car_type') }}
-=======
-                                            {{ __('personel_personal_data.label_select_driving_license_car_type') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -878,11 +854,7 @@
                                     <select class="form-control" id="employment_status_employment"
                                         name="employment_status_employment">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_employment_status') }}
-=======
-                                            {{ __('personel_personal_data.label_select_employment_status') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -893,11 +865,7 @@
                                         for="employment_type_employment">{{ __('personel_personal_data.label_employment_type') }}</label>
                                     <select class="form-control" id="employment_type_employment"
                                         name="employment_type_employment">
-<<<<<<< HEAD
                                         <option value="">{{ __('personel_personal_data.label_employment_type') }}
-=======
-                                        <option value="">{{ __('personel_personal_data.label_select_employment_type') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -1017,11 +985,7 @@
                                     <select class="form-control" id="termination_code_employment"
                                         name="termination_code_employment">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_termination_code') }}
-=======
-                                            {{ __('personel_personal_data.label_select_termination_code') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -1173,11 +1137,7 @@
                                                 <select class="form-control" id="absenteeism_type_absenteeism"
                                                     name="absenteeism_type_absenteeism">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_absenteeism_type') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_absenteeism_type') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -1253,11 +1213,7 @@
                                                 <select class="form-control" id="tax_status_payroll"
                                                     name="tax_status_payroll">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_tax_status') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_tax_status') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -1269,11 +1225,7 @@
                                                 <select class="form-control" id="tax_status_next_year_payroll"
                                                     name="tax_status_next_year_payroll">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_tax_status_next_year') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_tax_status_next_year') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -1339,11 +1291,7 @@
                                                 <select class="form-control" id="tax_calculation_method_payroll"
                                                     name="tax_calculation_method_payroll">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_tax_calculation_method') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_tax_calculation_method') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -1685,11 +1633,7 @@
                                                 <select class="form-control" id="currency_primary"
                                                     name="currency_primary">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_currency') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_currency') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -1759,11 +1703,7 @@
                                                 <select class="form-control" id="currency_optional_one"
                                                     name="currency_optional_one">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_currency') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_currency') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -1834,11 +1774,7 @@
                                                 <select class="form-control" id="currency_optional_two"
                                                     name="currency_optional_two">
                                                     <option value="">
-<<<<<<< HEAD
                                                         {{ __('personel_personal_data.label_currency') }}
-=======
-                                                        {{ __('personel_personal_data.label_select_currency') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                                     </option>
                                                 </select>
                                             </div>
@@ -2012,11 +1948,7 @@
                                     <select class="form-control" id="relation_family_dependent_data"
                                         name="relation_family_dependent_data">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_relation') }}
-=======
-                                            {{ __('personel_personal_data.label_select_relation') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -2054,11 +1986,7 @@
                                     <select class="form-control" id="gender_family_dependent_data"
                                         name="gender_family_dependent_data">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_gender') }}
-=======
-                                            {{ __('personel_personal_data.label_select_gender') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -2070,11 +1998,7 @@
                                     <select class="form-control" id="blood_type_family_dependent_data"
                                         name="blood_type_family_dependent_data">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_blood_type') }}
-=======
-                                            {{ __('personel_personal_data.label_select_blood_type') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>
@@ -2167,11 +2091,7 @@
                                     <select class="form-control" id="benefits_employment_data"
                                         name="benefits_employment_data">
                                         <option value="">
-<<<<<<< HEAD
                                             {{ __('personel_personal_data.label_benefits') }}
-=======
-                                            {{ __('personel_personal_data.label_select_benefits') }}
->>>>>>> 6fc01c48aebf6c32e5bf2a2059f43f06c1cdc1b9
                                         </option>
                                     </select>
                                 </div>

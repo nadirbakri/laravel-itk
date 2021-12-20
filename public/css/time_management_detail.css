@@ -267,3 +267,13 @@ tr.shown td.details-control {
 	cursor: pointer;
 	background-size: 25% 36%;
 }
+
+.btn-process{
+	font-family: Inter-Medium;
+	background-color: #004883;
+	border-radius: 6px;
+	text-align: center;
+	display: inline-block;
+	color: #ffffff;
+	width: 100%
+}

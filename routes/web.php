@@ -350,6 +350,7 @@ Route::get('personel/number/check', 'PersonelController@checkNumberPersonel');
 Route::post('personel/print_letter/print', 'PersonelController@printPrintLetterPersonel');
 Route::post('personel/employee_list/print', 'PersonelController@printEmployeeListPersonel');
 Route::post('personel/employee_report_by_status/print', 'PersonelController@printEmployeeReportByStatusPersonel');
+Route::post('personel/custom_report_employee/print', 'PersonelController@printCustomReportEmployee');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');
@@ -379,6 +380,13 @@ Route::get('time_management/detail_absenteeism_report', 'TimeManagementControlle
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 Route::get('time_management/postpone_leave_report', 'TimeManagementController@pagePostponeLeaveReport');
 Route::get('time_management/unpaid_leave_report', 'TimeManagementController@pageUnpaidLeaveReport');
+
+/* Route untuk Tabel Time Management */
+Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
+Route::get('time_management/company_working_calendar/table', 'TimeManagementController@tableCompanyWorkingCalendar');
+
+/* Route untuk proses Time Management */
+Route::post('time_management/company_working_calendar/proses','TimeManagementController@prosesCompanyWorkingCalendar');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -450,6 +458,7 @@ Route::get('blood/api', 'DataController@dataBloodAPI');
 Route::get('religion/api', 'DataController@dataReligionAPI');
 Route::get('status/api', 'DataController@dataStatusAPI');
 Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
+Route::get('employee_no/api2', 'DataController@dataEmployeNoAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
@@ -506,13 +515,16 @@ Route::get('nature_of_work/api', 'DataController@dataNatureofWorkAPI');
 Route::get('nature_of_work/detail/api', 'DataController@dataNatureofWorkDetailAPI');
 Route::get('free_format_field/api', 'DataController@dataFreeFormatFieldAPI');
 Route::get('free_format_field/detail/api', 'DataController@dataFreeFormatFieldDetailAPI');
-// Route::get('employment_status/all/api', 'DataController@dataEmploymentStatusAllAPI');
-// Route::get('employment_status/func/api', 'DataController@dataEmploymentStatusFunctionAPI');
+Route::get('employment_status/all/api', 'DataController@dataEmploymentStatusAllAPI');
+Route::get('employment_status/func/api', 'DataController@dataEmploymentStatusFunctionAPI');
 Route::get('employment/status/api', 'DataController@dataEmploymentStatusAPI');
 Route::get('employment/type/api', 'DataController@dataEmploymentTypeAPI');
 Route::get('mutation/type/api', 'DataController@dataMutationTypeAPI');
 Route::get('npwp/api', 'DataController@dataNPWPAPI');
 Route::get('cost_center/api', 'DataController@dataCostCenterAPI');
+Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
+Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
+Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

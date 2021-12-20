@@ -23,5 +23,8 @@ return [
     'btn_add' => 'Tambah',
     'btn_remove' => 'Hapus',
     'btn_print' => 'Cetak',
-
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal',
+    'field_name_required' => 'Field Name Harus Diisi',
+    'column_header_required' => 'Column Header Harus Diisi'
 ];

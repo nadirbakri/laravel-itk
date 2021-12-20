@@ -15,16 +15,14 @@ class EmployeeReportByStatusExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($employeeNoFrom, $employeeNoTo, $periodFrom, $periodTo, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location)
+    public function __construct($employeeNoFrom, $employeeNoTo, $periodFrom, $periodTo, $reportType, $includeResign)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
         $this->periodFrom = $periodFrom;
         $this->periodTo = $periodTo;
+        $this->reportType = $reportType;
         $this->includeResign = $includeResign;
-        $this->position = $position;
-        $this->ranking = $ranking;
-        $this->location = $location;
     }
 
     public function view(): View
@@ -35,28 +33,54 @@ class EmployeeReportByStatusExport implements FromView
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [ 
-                'companyCode' => Session::get('companyCode'), 
-                'languageCode' => App::getLocale(), 
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'includeResign' => $this->includeResign
-            ];
+            // if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
+            //     $param['employeeNoFrom'] = $this->employeeNoFrom;
+            //     $param['employeeNoTo'] = $this->employeeNoTo;
+            // }
 
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
+            // if(!empty($this->periodFrom) || !empty($this->periodTo)){
+            //     $param['periodFrom'] = $this->periodFrom;
+            //     $param['periodTo'] = $this->periodTo;
+            // }
+
+            if ($this->reportType=='contract') {
+                $URL = '/employeereportbystatus/getemployeereportcontract';
             }
 
-            if(!empty($this->periodFrom) || !empty($this->periodTo)){
-                $param['periodFrom'] = $this->periodFrom;
-                $param['periodTo'] = $this->periodTo;
+            elseif ($this->reportType=='terminate') {
+                $URL = '/EmployeeReportByStatus/getEmployeeReportTerminate';
+            }
+            
+            else {
+                $URL = '/EmployeeReportByStatus/getEmployeeReportProbation';
             }
 
-            var_dump(json_encode ($param));
+            // var_dump([   
+            //     'companyCode' => Session::get('companyCode'),
+            //     'employeeNoFrom' => $this->employeeNoFrom,
+            //     'employeeNoTo' => $this->employeeNoTo, 
+            //     'periodFrom' => $this->periodFrom,
+            //     'periodTo' => $this->periodTo,
+            //     'languageCode' => App::getLocale(), 
+            //     'sessionID' => 0, 
+            //     'sessionUserID' => Session::get('userID'),
+            //     'includeResign' => $this->includeResign
+            //     ]);
 
-            $response = $client->post(env('API_URL') . '/employeereportbystatus/getemployeecontract',
-                ['body' => json_encode($param)]
+            $response = $client->post(env('API_URL') . $URL,
+                ['body' => json_encode(
+                    [   
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNoFrom' => $this->employeeNoFrom,
+                    'employeeNoTo' => $this->employeeNoTo, 
+                    'periodFrom' => $this->periodFrom,
+                    'periodTo' => $this->periodTo,
+                    'languageCode' => App::getLocale(), 
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'includeResign' => $this->includeResign
+                    ]
+                )]
             );
         } 
         catch (RequestException $e) {
@@ -65,13 +89,15 @@ class EmployeeReportByStatusExport implements FromView
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        // var_dump(json_encode ($arrResult->dataListSet));
+
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_employee_report_by_status', [
-                'data' => []
+                'data' => [], 'report_type' => $this->reportType
             ]);
         }else{
             return view('personel.personel_export_employee_report_by_status', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'report_type' => $this->reportType
             ]);
         }
     }
