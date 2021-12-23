@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exports\EmployeeListExport;
 use App\Exports\EmployeeReportByStatusExport;
+use App\Exports\EmployeeTurnOverReportExport;
+use App\Exports\EmployeeSkillReportExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -7568,6 +7570,32 @@ class PersonelController extends Controller
         // var_dump($request->period);
 
         return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+    }
+
+    public function printEmployeeTurnOverReportPersonel(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new EmployeeTurnOverReportExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Turn Over Report.xlsx');
+    }
+
+    public function printEmployeeSkillReportPersonel(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new EmployeeSkillReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Skill Report.xlsx');
     }
 
     public function printEmployeeReportByStatusPersonel(Request $request)

@@ -349,6 +349,8 @@ Route::post('personel/competency/training_list/remove', 'PersonelController@remo
 Route::get('personel/number/check', 'PersonelController@checkNumberPersonel');
 Route::post('personel/print_letter/print', 'PersonelController@printPrintLetterPersonel');
 Route::post('personel/employee_list/print', 'PersonelController@printEmployeeListPersonel');
+Route::post('personel/employee_turn_over_report/print', 'PersonelController@printEmployeeTurnOverReportPersonel');
+Route::post('personel/employee_skill_report/print', 'PersonelController@printEmployeeSkillReportPersonel');
 Route::post('personel/employee_report_by_status/print', 'PersonelController@printEmployeeReportByStatusPersonel');
 Route::post('personel/custom_report_employee/print', 'PersonelController@printCustomReportEmployee');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
@@ -393,6 +395,12 @@ Route::post('time_management/input_balance_leave/proses', 'TimeManagementControl
 Route::post('time_management/update_shift_by_date/proses', 'TimeManagementController@prosesUpdateShiftByDateTM');
 
 Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
+
+/* Route untuk Report Time Management */
+Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');
+Route::post('time_management/postpone_leave_report/print', 'TimeManagementController@printPostponeLeaveReport');
+Route::post('time_management/monthly_leave_report/print', 'TimeManagementController@printMonthlyLeaveReport');
+Route::post('time_management/monthly_absenteeism_analysis/print', 'TimeManagementController@printMonthlyAbsenteeismAnalysis');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');

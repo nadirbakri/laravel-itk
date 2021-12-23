@@ -4,20 +4,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Personel - Employee List Page Language Lines
+    | Time Management - Monthly Absenteeism Analysis Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Personel - Employee List Menggunakan Locale Bahasa Inggris. Akses di file
-    | personel_employee_list.blade.php
+    | Pengaturan Halaman Time Management - Monthly Absenteeism Analysis Menggunakan Locale Bahasa Inggris. Akses di file
+    | tm_report_monthly_absenteeism_analysis.blade.php
     |
     */
 
-    'judul' => 'Evaluation Report Page',
-    'list' => 'Personel Menu List',
+    'judul' => 'Monthly Leave Report',
+    'list' => 'Time Management Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
-    'label_evaluation_period_from' => 'Evaluation Period From',
-    'label_evaluation_period_to' => 'Evaluation Period To',
+    'label_period' => 'As of Period',
+    'label_have_balance_only' => 'Have Balance Only',
     'label_include_resign' => 'Include Resign',
     'label_group_authorize_from' => 'Group Authorize From',
     'label_group_authorize_to' => 'Group Authorize To',

@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Exports\UnpaidLeaveReportExport;
+use App\Exports\PostponeLeaveReportExport;
+
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -43,9 +46,30 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_company_working_calendar');
     }
 
+
     public function pageLeaveTransactionByEmployeeNo()
     {
         return view ('time_management.tm_leave_transaction_by_employee_no');
+    }
+
+    public function pageUnpaidLeaveReport()
+    {
+        return view ('time_management.tm_unpaid_leave_report');
+    }
+
+    public function pagePostponeLeaveReport()
+    {
+        return view ('time_management.tm_postpone_leave_report');
+    }
+
+    public function pageMonthlyLeaveReport()
+    {
+        return view ('time_management.tm_monthly_leave_report');
+    }
+
+    public function pageMonthlyAbsenteeismAnalysis()
+    {
+        return view ('time_management.tm_monthly_absenteeism_analysis');
     }
 
     public function tableCompanyWorkingCalendar()
@@ -196,6 +220,60 @@ class TimeManagementController extends Controller
     }
 
     // public function prosesUpdateShiftByDate(Request $request)
+
+    public function printUnpaidLeaveReport(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new UnpaidLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Unpaid Leave Report.xlsx');
+    }
+
+    public function printPostponeLeaveReport(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new PostponeLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Postpone Leave Report.xlsx');
+    }
+    
+    public function printMonthlyLeaveReport(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new MonthlyLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->have_balance_only) ? (bool) $request->have_balance_only : false, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Leave Report.xlsx');
+    }
+
+    public function printMonthlyAbsenteeismAnalysis(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+    }
+
+    // public function prosesCompanyWorkingCalendar(Request $request)
     // {
     //     date_default_timezone_set('Asia/Jakarta');
     //     try {
