@@ -17,9 +17,9 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-time_management {
-            max-width: 100%;
+            max-width: 97%;
             margin: auto;
-            /*margin-top: 1%;*/
+            margin-top: 1%;
         }
 
         .loading {
@@ -33,6 +33,17 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .modal-header-notification-success {
+            border-bottom:1px solid #eee;
+            background-color: #00a862;
             -webkit-border-top-left-radius: 5px;
             -webkit-border-top-right-radius: 5px;
             -moz-border-radius-topleft: 5px;
@@ -116,6 +127,18 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.ajax({
+            url: "{{ url('/time_management/period/data/detail') }}",
+            type: "GET",
+            success: function (response) {
+                $('#period').val(response[0].periodYear);
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+
         loadDataEmployeeNo();
 
         $('#input_balance_leave_table thead tr').clone(true).appendTo('#input_balance_leave_table thead');
@@ -133,40 +156,46 @@
             } );
         });
 
-        var table = $('#input_balance_leave_table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: "{{ url('time_management/input_balance_leave/table') }}",
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
-                },
-                {data: 'leaveCode', name: 'leaveCode'},
-                {data: 'leaveBalance', name: 'leaveBalance'},
-                {data: 'leaveBalanceBefore', name: 'leaveBalanceBefore'},
-                {data: 'leaveBalanceBeforeExpiredDate', name: 'leaveBalanceBeforeExpiredDate'}
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }
-        });
+        // var table = $('#input_balance_leave_table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     orderCellsTop: true,
+        //     ajax: { 
+        //         url: "{{ url('time_management/input_balance_leave/table') }}"
+        //         // data: {
+        //         //     'employeeNo' : employee_no
+        //         // }  
+        //     },
+        //     error: function(jqXHR, ajaxOptions, thrownError) {
+        //         alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+        //     },
+        //     "sDom": 'lrtip',
+        //     'sPaginationType': 'ellipses',
+        //     "order": [[ 1, "asc" ]],
+        //     columns: [
+        //         {
+        //             orderable: false,
+        //             targets: 0, 
+        //             "defaultContent": '',
+        //             render: function(data, type) {
+        //                 return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+        //             }
+        //         },
+        //         {data: 'leaveCode', name: 'leaveCode'},
+        //         {data: 'leaveBalance', name: 'leaveBalance'},
+        //         {data: 'leaveBalanceBefore', name: 'leaveBalanceBefore'},
+        //         {data: 'leaveBalanceBeforeExpiredDate', name: 'leaveBalanceBeforeExpiredDate'}
+        //     ],
+        //     select: {
+        //         style:    'multi',
+        //         selector: 'td:first-child'
+        //     }
+        // });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         function load_data_input_balance_leave(employee_no = '') {
+            var val = $('#input_balance_leave').val();
             table = $('#input_balance_leave_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -174,7 +203,7 @@
                 ajax: {
                     url : "{{ url('time_management/input_balance_leave/table') }}",
                     data: {
-                        'employeeNo' :employeeNo
+                        'employeeNo' : employee_no
                     }
                 },
                 error: function(jqXHR, ajaxOptions, thrownError) {
@@ -294,10 +323,17 @@
             });
         }
 
+        $("#employee_no").on('change', function() {
+            var employee_no = $(this).val();
+            $('#input_balance_leave_table').DataTable().destroy();
+            load_data_input_balance_leave(employee_no);
+        })
+
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('time_management/input_balance_leave/detail') }}", { 'employeeNo' : data[0].employeeNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+                // console.log(data[0].employeeNo);
+                $.redirect("{{ url('time_management/input_balance_leave/detail') }}", { 'employeeNo' : data[0].employeeNo, 'leaveCode' : data[0].leaveCode }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');

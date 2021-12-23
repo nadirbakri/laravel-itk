@@ -60,106 +60,110 @@
                 @csrf
                 <div class="row">
                     <div class="col-6">
-                        <div class="form-group">
-                            <label for="process_date">{{ __('tm_process_form.label_process_date') }}</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="process_date" name="period"
-                                    placeholder="{{ __('tm_process_form.label_process_date') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="process_date">{{ __('tm_process_form.label_process_date') }}</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="process_date" name="period"
+                                            placeholder="{{ __('tm_process_form.label_process_date') }}">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="process_date">{{ __('tm_process_form.label_file_location') }}</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_location" name="file_location">
+                                        <label class="custom-file-label" for="file_location">{{ __('tm_process_form.label_select_file_location') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="automatic">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="automatic"
+                                            name="automatic" value="true">
+                                        <label class="form-check-label" 
+                                            for="automatic">{{ __('tm_process_form.label_automatic_in_out_code') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-process" name="btn-process-upload" id="btn-process">
+                                    <i class="fa fa-play-circle-o"></i> {{ __('tm_process_form.btn_process_upload') }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="delete_date">{{ __('tm_process_form.label_delete_date_from') }}</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="delete_date_from" name="delete_date_from"
+                                            placeholder="{{ __('tm_process_form.label_delete_date_from') }}">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="delete_date">{{ __('tm_process_form.label_delete_date_to') }}</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="delete_date_to" name="delete_date_to"
+                                            placeholder="{{ __('tm_process_form.label_delete_date_to') }}">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="employee_no_from">{{ __('tm_process_form.label_employee_no_from') }}</label>
+                                    <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="employee_no_to">{{ __('tm_process_form.label_employee_no_to') }}</label>
+                                    <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-process" name="btn-process-delete" id="btn-process">
+                                    <i class="fa fa-play-circle-o"></i> {{ __('tm_process_form.btn_process_delete') }}
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
-                        <p>{{ __('tm_process_form.label_text') }}</p>
+                        <p><u>{{ __('tm_process_form.label_text') }}</u></p>
                         <p>{{ __('tm_process_form.label_text_detail') }}</p>
-                        <p>{{ __('tm_process_form.label_excel') }}</p>
+                        <p><u>{{ __('tm_process_form.label_excel') }}</u></p>
                         <p>{{ __('tm_process_form.note_column_a') }}</p>
                         <p>{{ __('tm_process_form.note_column_b') }}</p>
                         <p>{{ __('tm_process_form.note_column_c') }}</p>
                         <p>{{ __('tm_process_form.note_column_d') }}</p>
                         <p>{{ __('tm_process_form.note_column_e') }}</p>
                         <p>{{ __('tm_process_form.note_column_f') }}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="process_date">{{ __('tm_process_form.label_file_location') }}</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="file_location" name="file_location">
-                                <label class="custom-file-label" for="file_location">{{ __('tm_process_form.label_select_file_location') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="automatic">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="automatic"
-                                    name="automatic" value="true">
-                                <label class="form-check-label" 
-                                    for="automatic">{{ __('tm_process_form.label_automatic_in_out_code') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-process" name="btn-process-upload" id="btn-process">
-                            <i class="fa fa-play-circle-o">{{ __('tm_process_form.btn_process_upload') }}</i>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="delete_date">{{ __('tm_process_form.label_delete_date_from') }}</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="delete_date_from" name="delete_date_from"
-                                    placeholder="{{ __('tm_process_form.label_delete_date_from') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="delete_date">{{ __('tm_process_form.label_delete_date_to') }}</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="delete_date_to" name="delete_date_to"
-                                    placeholder="{{ __('tm_process_form.label_delete_date_to') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="employee_no_from">{{ __('tm_process_form.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="employee_no_to">{{ __('tm_process_form.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-process" name="btn-process-delete" id="btn-process">
-                            <i class="fa fa-play-circle-o">{{ __('tm_process_form.btn_process_delete') }}</i>
-                        </button>
                     </div>
                 </div>
             </form>

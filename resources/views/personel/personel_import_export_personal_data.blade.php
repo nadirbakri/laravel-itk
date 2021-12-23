@@ -77,19 +77,19 @@
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-import" id="btn-import"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_import_document">
-                        <i>{{ __('personel_import_export_personal_data.btn-import') }}</i>
+                        {{ __('personel_import_export_personal_data.btn-import') }}
                     </button>
                 </div>
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-export" id="btn-export"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_export_document">
-                        <i>{{ __('personel_import_export_personal_data.btn-export') }}</i>
+                        {{ __('personel_import_export_personal_data.btn-export') }}
                     </button>
                 </div>
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_download_template_document">
-                        <i>{{ __('personel_import_export_personal_data.btn-download-template') }}</i>
+                        {{ __('personel_import_export_personal_data.btn-download-template') }}
                     </button>
                 </div>
             </div>
