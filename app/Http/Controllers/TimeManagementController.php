@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
-
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -344,6 +344,8 @@ class TimeManagementController extends Controller
     {
         $dataLevel = [];
 
+        // var_dump($request->level_format);
+
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
@@ -371,27 +373,6 @@ class TimeManagementController extends Controller
                 'logActionUsername' => Session::get('userName')
             ];
 
-            // if(!empty($request->location && !is_null($request->location[0]))){
-            //     foreach($request->location as $value){
-            //         $data_location[] = $value;
-            //     }
-            //     $param['location'] = $data_location;
-            // }
-
-            // if(!empty($request->religion && !is_null($request->religion[0]))){
-            //     foreach($request->religion as $value){
-            //         $data_position[] = $value;
-            //     }
-            //     $param['religion'] = $data_position;
-            // }
-
-            // if(!empty($request->position && !is_null($request->position[0]))){
-            //     foreach($request->position as $value){
-            //         $data_position[] = $value;
-            //     }
-            //     $param['position'] = $data_position;
-            // }
-
             if(!empty($dataLevel) && !is_null($dataLevel[0])){
                 foreach($dataLevel as $key => $value){
                     $data_level_detail = [];
@@ -406,7 +387,7 @@ class TimeManagementController extends Controller
                 $param['level'] = $data_level;
             }
 
-            var_dump($param);
+            // var_dump($param);
 
             $response = $client->put(env('API_URL') . '/tempabsentmachine/updateshiftbydate',
                 ['body' => json_encode($param)]
@@ -421,6 +402,7 @@ class TimeManagementController extends Controller
         // var_dump($arrResult->message);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // return response()->json();
     }
 
     public function prosesInputBalanceLeaveTM(Request $request)
