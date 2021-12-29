@@ -643,11 +643,14 @@
             var arraypush = [];
             arraypush["fieldName"] = $("#field_name").val();
             arraypush["columnHeader"] = $("#column_header").val();
-            arrayfieldName.push(arraypush);
+            arrayfieldName.push({
+                "fieldName": $("#field_name").val(),
+                "columnHeader": $("#column_header").val()
+            });
 
             $("#field_name").val("");
             $("#column_header").val("");
-            // console.log(arrayfieldName);
+            console.log(arrayfieldName);
 
             $(this).prop("disabled", false);
             $(this).html(
@@ -663,19 +666,19 @@
         if ($("#custom_report_employee_form").length > 0) {
             $("#custom_report_employee_form").validate({
                 rules: {
-                    field_name: {
+                    employee_no_from: {
                         required: true,
                     }, 
-                    column_header: {
+                    employee_no_to: {
                         required: true,
                     },
                 },
                 messages: {
-                    field_name: {
-                        required: "{{ __('personel_custom_report_employee.field_name_required') }}",
+                    employee_no_from: {
+                        required: "{{ __('personel_custom_report_employee.employee_no_from_required') }}",
                     },
-                    column_header: {
-                        required: "{{ __('personel_custom_report_employee.column_header_required') }}",
+                    employee_no_to: {
+                        required: "{{ __('personel_custom_report_employee.employee_no_to_required') }}",
                     },
                 },
                 highlight: function (element) {
