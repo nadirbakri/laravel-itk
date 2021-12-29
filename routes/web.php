@@ -349,6 +349,8 @@ Route::post('personel/competency/training_list/remove', 'PersonelController@remo
 Route::get('personel/number/check', 'PersonelController@checkNumberPersonel');
 Route::post('personel/print_letter/print', 'PersonelController@printPrintLetterPersonel');
 Route::post('personel/employee_list/print', 'PersonelController@printEmployeeListPersonel');
+Route::post('personel/employee_turn_over_report/print', 'PersonelController@printEmployeeTurnOverReportPersonel');
+Route::post('personel/employee_skill_report/print', 'PersonelController@printEmployeeSkillReportPersonel');
 Route::post('personel/employee_report_by_status/print', 'PersonelController@printEmployeeReportByStatusPersonel');
 Route::post('personel/custom_report_employee/print', 'PersonelController@printCustomReportEmployee');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
@@ -374,19 +376,33 @@ Route::get('time_management/absent_code', 'TimeManagementController@pageAbsentCo
 Route::get('time_management/monthly_absenteeism_analysis', 'TimeManagementController@pageMonthlyAbsenteeismAnalysis');
 Route::get('time_management/monthly_absenteeism_detail', 'TimeManagementController@pageMonthlyAbsenteeismDetail');
 Route::get('time_management/absenteeism_overtime_report', 'TimeManagementController@pageAbsenteeismOvertimeReport');
-Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
 Route::get('time_management/monthly_leave_report', 'TimeManagementController@pageMonthlyLeaveReport');
-Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
-Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 Route::get('time_management/postpone_leave_report', 'TimeManagementController@pagePostponeLeaveReport');
 Route::get('time_management/unpaid_leave_report', 'TimeManagementController@pageUnpaidLeaveReport');
 
 /* Route untuk Tabel Time Management */
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
 Route::get('time_management/company_working_calendar/table', 'TimeManagementController@tableCompanyWorkingCalendar');
+Route::get('time_management/input_balance_leave/detail', 'TimeManagementController@dataDetailInputBalanceLeave');
+
+/* Route untuk data detail Time Management */
+Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
+Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 
 /* Route untuk proses Time Management */
 Route::post('time_management/company_working_calendar/proses','TimeManagementController@prosesCompanyWorkingCalendar');
+Route::post('time_management/input_balance_leave/proses', 'TimeManagementController@prosesInputBalanceLeaveTM');
+Route::post('time_management/update_shift_by_date/proses', 'TimeManagementController@prosesUpdateShiftByDateTM');
+
+Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
+Route::get('time_management/employee_name/detail', 'TimeManagementController@dataDetailEmployeeNameTM');
+Route::get('time_management/balance/detail', 'TimeManagementController@dataDetailBalanceTM');
+
+/* Route untuk Report Time Management */
+Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');
+Route::post('time_management/postpone_leave_report/print', 'TimeManagementController@printPostponeLeaveReport');
+Route::post('time_management/monthly_leave_report/print', 'TimeManagementController@printMonthlyLeaveReport');
+Route::post('time_management/monthly_absenteeism_analysis/print', 'TimeManagementController@printMonthlyAbsenteeismAnalysis');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -455,10 +471,25 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController
 /* Route Untuk Dropdown From API */
 Route::get('gender/api', 'DataController@dataGenderAPI');
 Route::get('blood/api', 'DataController@dataBloodAPI');
+Route::get('marital_status/api', 'DataController@dataMaritalStatusAPI');
+Route::get('nationality/api', 'DataController@dataNationalityAPI');
+Route::get('driving_license_car_type/api', 'DataController@dataDrivingLicenseCarTypeAPI');
+Route::get('relation/api', 'DataController@dataRelationAPI');
+Route::get('termination_code/api', 'DataController@dataTerminationCodeAPI');
+Route::get('benefits/api', 'DataController@dataBenefitsAPI');
+Route::get('tax_status/api', 'DataController@dataTaxStatusAPI');
+Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMethodAPI');
+Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
+Route::get('work_pattern_code/api', 'DataController@dataWorkPatternCodeAPI');
+Route::get('company_bank_code/api', 'DataController@dataCompanyBankCodeAPI');
+Route::get('employee_bank_code/api', 'DataController@dataEmployeeBankCodeAPI');
 Route::get('religion/api', 'DataController@dataReligionAPI');
+Route::get('religion/all/api', 'DataController@dataReligionAllAPI');
+Route::get('religion/func/api', 'DataController@dataReligionFunctionAPI');
 Route::get('status/api', 'DataController@dataStatusAPI');
 Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
-Route::get('employee_no/api2', 'DataController@dataEmployeNoAPI2');
+Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
+Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
@@ -525,6 +556,8 @@ Route::get('cost_center/api', 'DataController@dataCostCenterAPI');
 Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
 Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
+Route::get('shift_code/api', 'DataController@dataShiftAPI');
+Route::get('leave_code/api', 'DataController@dataLeaveCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

@@ -204,9 +204,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="gender_info">{{ __('personel_personal_data.label_gender') }}</label>
-                                    <select class="form-control" id="gender_info" name="gender_info">
-                                        <option value="">{{ __('personel_personal_data.label_gender') }}
-                                        </option>
+                                    <select class="form-control select2" id="gender_info" name="gender_info">
+                                        {{-- <option value="">{{ __('personel_personal_data.label_gender') }}
+                                        </option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -515,20 +515,17 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label
-                                                for="district_home">{{ __('personel_personal_data.label_district') }}</label>
-                                            <input type="text" class="form-control" id="district_home"
-                                                name="district_home"
-                                                placeholder="{{ __('personel_personal_data.label_district') }}"
-                                                readonly>
+                                                for="district_select_home">{{ __('personel_personal_data.label_district') }}</label>
+                                            <select class="form-control select2" id="district_select_home"
+                                                name="district_select_home"></select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label
                                                 for="subdistrict_home">{{ __('personel_personal_data.label_subdistrict') }}</label>
-                                            <input type="text" class="form-control" id="subdistrict_home"
-                                                name="subdistrict_home"
-                                                placeholder="{{ __('personel_personal_data.label_subdistrict') }}">
+                                            <select class="form-control select2" id="subdistrict_select_home"
+                                                name="subdistrict_select_home"></select>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -594,20 +591,17 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label
-                                                for="district_other">{{ __('personel_personal_data.label_district') }}</label>
-                                            <input type="text" class="form-control" id="district_other"
-                                                name="district_other"
-                                                placeholder="{{ __('personel_personal_data.label_district') }}"
-                                                readonly>
+                                                for="district_select_other">{{ __('personel_personal_data.label_district') }}</label>
+                                            <select class="form-control select2" id="district_select_other"
+                                                name="district_select_other"></select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label
                                                 for="subdistrict_other">{{ __('personel_personal_data.label_subdistrict') }}</label>
-                                            <input type="text" class="form-control" id="subdistrict_other"
-                                                name="subdistrict_other"
-                                                placeholder="{{ __('personel_personal_data.label_subdistrict') }}">
+                                            <select class="form-control select2" id="subdistrict_select_other"
+                                                name="subdistrict_select_other"></select>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -2243,7 +2237,33 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
         var table = null;
+
+        loadDataBirthPlace();
+        loadDataGender();
+        loadDataBloodType();
+        loadDataMaritalStatus();
+        loadDataReligion();
+        loadDataNationality();
+        loadDataDrivingLicenseCarType();
+        loadDataDrivingLicenseCarRegistPlace();
+        loadDataDrivingLicenseMotorcycleRegistPlace();
+        loadDataCity();
+        loadDataZipCode();
+        loadDataRelation();
+        loadDataEmploymentStatus();
+        loadDataEmploymentType();
+        loadDataTerminationCode();
+        loadDataBenefits();
+        loadDataWorkPatternCode();
+        loadDataTaxStatus();
+        loadDataTaxCalculationMethod();
+        loadDataGroupNPWP();
+        // loadDataGroupAuthorize();
+        loadDataCompanyBankCode();
+        loadDataEmployeeBankCode();
 
         $('#fringe_benefit_data_table thead tr').clone(true).appendTo('#fringe_benefit_data_table thead');
         $('#fringe_benefit_data_table thead tr:eq(1) th').each(function (i) {
@@ -2333,6 +2353,1431 @@
                 limit: 5,
                 pageCurrent: 1,
             });
+            
+        function loadDataBirthPlace(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $birth_place = $('#birth_place_info, #birth_place_family_dependent_data');
+
+            $birth_place.select2({
+                width: '100%',
+                placeholder: 'Choose Birth Place',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/city/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.cityName,
+                                    id: item.cityCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGender(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $gender = $('#gender_info, #gender_family_dependent_data');
+
+            $gender.select2({
+                width: '100%',
+                placeholder: 'Choose Gender',
+                allowClear: true,
+                minimumResultsForSearch: Infinity,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/gender/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataBloodType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $blood_type = $('#blood_type_info, #blood_type_family_dependent_data');
+
+            $blood_type.select2({
+                width: '100%',
+                placeholder: 'Choose Blood Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/blood/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataMaritalStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#marital_status_info').select2({
+                width: '100%',
+                placeholder: 'Choose Marital Status',
+                minimumResultsForSearch: Infinity,
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/marital_status/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataReligion(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#religion_info').select2({
+                width: '100%',
+                placeholder: 'Choose Religion',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/religion/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataNationality(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#nationality_info').select2({
+                width: '100%',
+                placeholder: 'Choose Nationality',
+                allowClear: true,
+                minimumResultsForSearch: Infinity,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/nationality/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataDrivingLicenseCarType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#driving_license_car_type_info').select2({
+                width: '100%',
+                placeholder: 'Choose Driving License Car Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/driving_license_car_type/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataDrivingLicenseCarRegistPlace(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#driving_license_car_registration_place_info').select2({
+                width: '100%',
+                placeholder: 'Choose Driving License Car Registration Place',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/city/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.cityName,
+                                    id: item.cityCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataDrivingLicenseMotorcycleRegistPlace(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#driving_license_motorcycle_registration_place_info').select2({
+                width: '100%',
+                placeholder: 'Choose Driving License Motorcycle Registration Place',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/city/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.cityName,
+                                    id: item.cityCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataCity(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $place = $('#city_select_home, #city_select_other, #city_select_work, #city_select_correspondence')
+
+            $place.select2({
+                width: '100%',
+                placeholder: 'Choose City',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/city/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.cityName,
+                                    id: item.cityCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataZipCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.zipCode + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $zip_code = $('#zip_code_select_home, #zip_code_select_other, #zip_code_select_work, #zip_code_select_correspondence')
+
+            $zip_code.select2({
+                width: '100%',
+                placeholder: 'Choose Zip Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/zip_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.zipCode,
+                                    id: item.zipCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataRelation(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#relation_family_dependent_data').select2({
+                width: '100%',
+                placeholder: 'Choose Relation',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/relation/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataEmploymentStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#employment_status_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Employment Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employment/status/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataEmploymentType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#employment_type_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Employment Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employment/type/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataTerminationCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            // var headerIsAppend = false;
+            // $('#termination_code_employment').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Termination Code</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
+            $('#termination_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Termination Code',
+                allowClear: true,
+                minimumResultsForSearch: Infinity,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/termination_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataBenefits(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#benefits_employment_data').select2({
+                width: '100%',
+                placeholder: 'Choose Benefits',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/benefits/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataWorkPatternCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.patternCode + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#work_pattern_code_absenteeism').select2({
+                width: '100%',
+                placeholder: 'Choose Work Pattern Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/work_pattern_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.patternCode,
+                                    id: item.patternCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataTaxStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $tax_status = $('#tax_status_payroll, #tax_status_next_year_payroll');
+
+            $tax_status.select2({
+                width: '100%',
+                placeholder: 'Choose Tax Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/tax_status/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataTaxCalculationMethod(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#tax_calculation_method_payroll').select2({
+                width: '100%',
+                placeholder: 'Choose Tax Calculation Method',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/tax_calculation_method/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupNPWP(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6"><b>NPWP Code</b></div>' +
+                        '<div class="col-6"><b>Pemotong Kuasa</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.npwpCode + '<div>' +
+                        '<div class="col-6">' + data.data.pemotongKuasa + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#group_npwp_payroll').select2({
+                width: '100%',
+                placeholder: 'Choose Group NPWP',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/npwp/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.pemotongKuasa,
+                                    id: item.npwpCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        // function loadDataGroupBPJS(){
+        //     function formatSelect(data) {
+        //         if (data.loading) {
+        //             return $search
+        //         }
+
+        //         if (data.id) {
+        //             var $result2 = $('<div class="row">' + 
+        //                 '<div class="col-6"><b>BPJS Code</b></div>' +
+        //                 '<div class="col-6"><b>BPJS No</b></div>' +
+        //                 '</div>' +
+        //                 '<div class="row">' +
+        //                 '<div class="col-6">' + data.data.bpjsCode + '<div>' +
+        //                 '<div class="col-6">' + data.data.bpjsNo + '<div>' +
+        //                 '</div>');
+
+        //             return $result2;
+        //         }
+        //     }
+
+        //     var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+        //     $('#group_bpjs_payroll').select2({
+        //         width: '100%',
+        //         placeholder: 'Choose Group BPJS',
+        //         allowClear: true,
+        //         // multiple: true,
+        //         // tags: true,
+        //         closeOnSelect: false,
+        //         language: {
+        //             errorLoading: function () {
+        //                 return $search;
+        //             },
+        //             searching: function () {
+        //                 return $search;
+        //             }
+        //         },
+        //         ajax: {
+        //             url: '/bpjs/api',
+        //             dataType: 'json',
+        //             delay: 250,
+        //             type: "GET",
+        //             data: function (params) {
+        //                 return {
+        //                     _token: CSRF_TOKEN,
+        //                     search: params.term
+        //                 };
+        //             },
+        //             processResults: function (data) {
+        //                 return {
+        //                     results: $.map(data, function (item) {
+        //                         return {
+        //                             text: item.bpjsNo,
+        //                             id: item.bpjsCode,
+        //                             data: item
+        //                         }
+        //                     })
+        //                 };
+        //             },
+        //             cache: true,
+        //         },
+        //         templateResult: formatSelect
+        //     });
+        // }
+
+        function loadDataCompanyBankCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-4"><b>Bank Code</b></div>' +
+                        '<div class="col-4"><b>Description</b></div>' +
+                        '<div class="col-4"><b>Account No</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-4">' + data.data.bankCode + '</div>' +
+                        '<div class="col-4">' + data.data.description + '</div>' +
+                        '<div class="col-4">' + data.data.accountNo + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#company_bank_code_primary').select2({
+                width: '100%',
+                placeholder: 'Choose Company Bank Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/company_bank_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.bankCode,
+                                    id: item.bankCode,
+                                    data: item
+                                }
+                                console.log(data);
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataEmployeeBankCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-4"><b>Bank Code</b></div>' +
+                        '<div class="col-4"><b>Bank Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-4">' + data.data.bankCode + '</div>' +
+                        '<div class="col-4">' + data.data.bankName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#employee_bank_code_primary').select2({
+                width: '100%',
+                placeholder: 'Choose Employee Bank Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employee_bank_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.bankName,
+                                    id: item.bankCode,
+                                    data: item
+                                }
+                                console.log(data);
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         function load_table_fringe_benefit() {
             table = $('#fringe_benefit_data_table').DataTable({
@@ -2369,6 +3814,104 @@
                 ]
             });
         }
+        
+        // $("#btn-save-employment-data").click(function () {
+        //     $(this).prop("disabled", true);
+        //     $(this).html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+        //     $("#employment_data_form").submit();
+        // });
+
+        // if ($("#employment_data_form").length > 0) {
+        //     $("#employment_data_form").validate({
+        //         rules: {
+        //             seq_no_employment_data: {
+        //                 required: true,
+        //             },
+        //             benefits_employment_data: {
+        //                 required: true,
+        //             },
+        //         },
+        //         messages: {
+        //             seq_no_employment_data: {
+        //                 required: "{{ __('personel_personal_data.seq_no_required') }}",
+        //             },
+        //             benefits_employment_data: {
+        //                 required: "{{ __('personel_personal_data.benefits_required') }}",
+        //             },
+        //         },
+        //         highlight: function (element) {
+        //             $(element).addClass('is-invalid');
+        //         },
+        //         unhighlight: function (element) {
+        //             $(element).removeClass('is-invalid');
+        //         },
+        //         errorElement: 'span',
+        //         errorPlacement: function (error, element) {
+        //             $("#btn-save-employment-data").prop("disabled", false);
+        //             $("#btn-save-employment-data").html(
+        //                 '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //             );
+
+        //             error.addClass('invalid-feedback');
+        //             element.closest('.form-group').append(error);
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+        //             $.ajax({
+        //                 url: "{{ url('personel/position/proses') }}",
+        //                 type: "POST",
+        //                 data: $('#employment_data_form').serialize(),
+        //                 success: function (response) {
+        //                     if (response.status == "true") {
+        //                         $("#btn-save-employment-data").prop("disabled", false);
+        //                         $("#btn-save-employment-data").html(
+        //                             '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //                         );
+                                
+        //                         $('#notification_success').modal('show');
+        //                         $('#message-notification-success').html(response
+        //                             .message);
+        //                         setTimeout(function () {
+        //                             window.location =
+        //                                 "{{ url('personel/position') }}";
+        //                         }, 3000);
+        //                     } else {
+        //                         $("#btn-save-employment-data").prop("disabled", false);
+        //                         $("#btn-save-employment-data").html(
+        //                             '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //                         );
+
+        //                         $('#notification_error').modal('show');
+        //                         if (response.message == null || response.message ==
+        //                             '') {
+        //                             $('#message-notification-error').html(
+        //                                 "{{ __('login.error') }}");
+        //                         } else {
+        //                             $('#message-notification-error').html(response
+        //                                 .message);
+        //                         }
+        //                     }
+        //                 },
+        //                 error: function (response) {
+        //                     $("#btn-save-employment-data").prop("disabled", false);
+        //                     $("#btn-save-employment-data").html(
+        //                         '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //                     );
+
+        //                     $('#notification').modal('show');
+        //                     $('#message-notification').html(response);
+        //                 }
+
+        //             });
+        //         }
+        //     })
+        // }
 
         function load_table_dependent() {
             table = $('#dependent_data_table').DataTable({

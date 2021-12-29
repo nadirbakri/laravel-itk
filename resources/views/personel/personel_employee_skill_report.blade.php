@@ -57,7 +57,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="employee_list_form" method="post">
+            <form id="employee_skill_report_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -80,7 +80,7 @@
                             <label for="period">{{ __('personel_employee_skill_report.label_period') }}</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="period" name="period"
-                                    placeholder="{{ __('personel_employee_list.label_period') }}">
+                                    placeholder="{{ __('personel_employee_skill_report.label_period') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -843,11 +843,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#employee_list_form").submit();
+            $("#employee_skill_report_form").submit();
         });
 
-        if ($("#employee_list_form").length > 0) {
-            $("#employee_list_form").validate({
+        if ($("#employee_skill_report_form").length > 0) {
+            $("#employee_skill_report_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -858,9 +858,9 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_list/print') }}",
+                        url: "{{ url('personel/employee_skill_report/print') }}",
                         type: "POST",
-                        data: $('#employee_list_form').serialize(),
+                        data: $('#employee_skill_report_form').serialize(),
                         success: function (result, status, xhr) {
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
@@ -884,7 +884,7 @@
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_skill_report.btn_print") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

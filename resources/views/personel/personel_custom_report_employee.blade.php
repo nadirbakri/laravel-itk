@@ -125,6 +125,7 @@
                             </thead>
                         </table>
                     </div>
+                </div>
             </form>
         </div>
     </div>
@@ -168,8 +169,6 @@
                                             for="field_name">{{ __('personel_custom_report_employee.label_field_name') }}</label>
                                         <select class="form-control select2" id="field_name" name="field_name"></select>
                                     </div>
-                                    <input type="hidden" class="form-control" id="letter_type_detail"
-                                        name="letter_type_detail">
                                 </div>
                             </div>
                         </div>
@@ -749,3 +748,5 @@
         }
     });
 </script>
+
+</html>

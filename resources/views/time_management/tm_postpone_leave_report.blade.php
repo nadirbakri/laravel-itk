@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_employee_turn_over_report.judul') }}</title>
+    <title>{{ __('tm_postpone_leave_report.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -49,27 +49,27 @@
 </head>
 
 <body>
-    <div class="div-personel">
+    <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url('personel') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_employee_turn_over_report.list') }}</span>
+                <span class="title-text">{{ __('tm_postpone_leave_report.list') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="employee_turn_over_report_form" method="post">
+            <form id="postpone_leave_report_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('personel_employee_turn_over_report.label_employee_no_from') }}</label>
+                                for="employee_no_from">{{ __('tm_postpone_leave_report.label_employee_no_from') }}</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_no_to">{{ __('personel_employee_turn_over_report.label_employee_no_to') }}</label>
+                            <label for="employee_no_to">{{ __('tm_postpone_leave_report.label_employee_no_to') }}</label>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
                     </div>
@@ -77,10 +77,10 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period_from">{{ __('personel_employee_turn_over_report.label_period_from') }}</label>
+                            <label for="period">{{ __('tm_postpone_leave_report.label_period') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period_from" name="period_from"
-                                    placeholder="{{ __('personel_evaluation_report.label_period_from') }}">
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('tm_postpone_leave_report.label_period') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -89,22 +89,21 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period_to">{{ __('personel_employee_turn_over_report.label_period_to') }}</label>
-                            <div class='input-group'>
-                                <input type="text" class="form-control" id="period_to" name="period_to"
-                                    placeholder="{{ __('personel_evaluation_report.label_period_to') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>
+                            <label for="include_resign">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_resign"
+                                    name="include_resign" value="true">
+                                <label class="form-check-label"
+                                    for="include_resign">{{ __('tm_postpone_leave_report.label_include_resign') }}</label>
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_from">{{ __('personel_employee_turn_over_report.label_group_authorize_from') }}</label>
+                                for="group_authorize_from">{{ __('tm_postpone_leave_report.label_group_authorize_from') }}</label>
                             <select class="form-control select2" id="group_authorize_from"
                                 name="group_authorize_from"></select>
                         </div>
@@ -112,7 +111,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_to">{{ __('personel_employee_turn_over_report.label_group_authorize_to') }}</label>
+                                for="group_authorize_to">{{ __('tm_postpone_leave_report.label_group_authorize_to') }}</label>
                             <select class="form-control select2" id="group_authorize_to"
                                 name="group_authorize_to"></select>
                         </div>
@@ -121,7 +120,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="position">{{ __('personel_employee_turn_over_report.label_position') }}</label>
+                            <label for="position">{{ __('tm_postpone_leave_report.label_position') }}</label>
                             <select class="form-control select2 select2-hidden-accessible" id="position"
                                 name="position[]" multiple="multiple">
                             </select>
@@ -129,7 +128,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="ranking">{{ __('personel_employee_turn_over_report.label_ranking') }}</label>
+                            <label for="ranking">{{ __('tm_postpone_leave_report.label_ranking') }}</label>
                             <select class="form-control select2" id="ranking" name="ranking[]"
                                 multiple="multiple"></select>
                         </div>
@@ -138,7 +137,7 @@
                 <div class="row" id="div-level">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="location">{{ __('personel_employee_turn_over_report.label_location') }}</label>
+                            <label for="location">{{ __('tm_postpone_leave_report.label_location') }}</label>
                             <select class="form-control select2" id="location" name="location[]"
                                 multiple="multiple"></select>
                         </div>
@@ -149,7 +148,7 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('personel_employee_turn_over_report.btn_print') }}
+                            <i class="fa fa-print"></i> {{ __('tm_postpone_leave_report.btn_print') }}
                         </button>
                     </div>
                 </div>
@@ -198,13 +197,13 @@
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
-            // plugins: [
-            //     new monthSelectPlugin({
-            //         shorthand: true, //defaults to false
-            //         dateFormat: "Y-m-01", //defaults to "F Y"
-            //         altFormat: "F Y", //defaults to "F Y"
-            //     })
-            // ],
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -844,11 +843,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#employee_turn_over_report_form").submit();
+            $("#postpone_leave_report_form").submit();
         });
 
-        if ($("#employee_turn_over_report_form").length > 0) {
-            $("#employee_turn_over_report_form").validate({
+        if ($("#postpone_leave_report_form").length > 0) {
+            $("#postpone_leave_report_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -859,9 +858,9 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_turn_over_report/print') }}",
+                        url: "{{ url('time_management/postpone_leave_report/print') }}",
                         type: "POST",
-                        data: $('#employee_turn_over_report_form').serialize(),
+                        data: $('#postpone_leave_report_form').serialize(),
                         success: function (result, status, xhr) {
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
@@ -885,7 +884,7 @@
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_turn_over_report.btn_print") }}'
+                                '<i class="fa fa-print"></i> {{ __("tm_postpone_leave_report.btn_print") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

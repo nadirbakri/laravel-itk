@@ -547,12 +547,12 @@
 								<span class="child-title-text">{{ __('personel.custom_report_employee') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						<!-- <div class="col col-3">
 							<a href="{{ url('personel/employee_notice_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_notice_report') }}</span>
 							</a>
-						</div>
+						</div> -->
 						<div class="col col-3">
 							<a href="{{ url('personel/evaluation_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">

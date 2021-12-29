@@ -32,6 +32,15 @@ return [
     'label_select_work_experience' => 'Pengalaman Kerja',
     'label_select_award' => 'Penghargaan',
     'label_select_sanction' => 'Sanksi',
-    'btn_print' => 'Cetak'
-
+    'btn_print' => 'Cetak',
+    'label_family' => 'Keluarga',
+    'label_training_records' => 'Catatan Pelatihan',
+    'label_formal_education' => 'Pendidikan Formal',
+    'label_historical_jobs' => 'Sejarah Pekerjaan',
+    'label_language' => 'Bahasa',
+    'label_work_experience' => 'Pengalaman Kerja',
+    'label_organization' => 'Organisasi',
+    'label_award' => 'Penghargaan',
+    'label_project_experience' => 'Pengalaman Proyek',
+    'label_sanction' => 'Sanksi'
 ];

@@ -46,6 +46,10 @@
             display: none;
         }
 
+        .row-employee-card {
+            line-height: 0.8;
+        }
+
     </style>
 </head>
 
@@ -113,18 +117,138 @@
                         <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
                 </div>
-                <div class="row">
+                <div class="row row-employee-card">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="include_list">{{ __('personel_employee_card.label_include_list') }}</label>
-                            <select class="include_list" id="include_list" name="include_list[]"
-                                multiple="multiple">
-                                <option value="family">{{ __('personel_employee_card.label_select_family') }}</option>
-                                <option value="training records">{{ __('personel_employee_card.label_select_training_records') }}</option>
-                            </select>
+                            <label for="include_list">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_list"
+                                    name="include_list" value="true">
+                                <label class="form-check-label"
+                                    for="include_list">{{ __('personel_employee_card.label_include_list') }}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <div class="row row-employee-card">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="family">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="family"
+                                            name="family" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="family">{{ __('personel_employee_card.label_family') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="training_records">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="training_records"
+                                            name="training_records" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="training_records">{{ __('personel_employee_card.label_training_records') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="formal_education">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="formal_education"
+                                            name="formal_education" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="formal_education">{{ __('personel_employee_card.label_formal_education') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="historical_jobs">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="historical_jobs"
+                                            name="historical_jobs" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="historical_jobs">{{ __('personel_employee_card.label_historical_jobs') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="language">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="language"
+                                            name="language" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="language">{{ __('personel_employee_card.label_language') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="work_experience">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="work_experience"
+                                            name="work_experience" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="work_experience">{{ __('personel_employee_card.label_work_experience') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="organization">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="organization"
+                                            name="organization" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="organization">{{ __('personel_employee_card.label_organization') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="award">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="award"
+                                            name="award" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="award">{{ __('personel_employee_card.label_award') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="project_experience">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="project_experience"
+                                            name="project_experience" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="project_experience">{{ __('personel_employee_card.label_project_experience') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="sanction">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="sanction"
+                                            name="sanction" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="sanction">{{ __('personel_employee_card.label_sanction') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
@@ -585,6 +709,33 @@
             // });
         }
 
+        $("#include_list").on('change', function () {
+            if ($(this).is(':checked')) {
+                $("#family").prop('disabled', false);
+                $("#training_records").prop('disabled', false);
+                $("#formal_education").prop('disabled', false);
+                $("#historical_jobs").prop('disabled', false);
+                $("#language").prop('disabled', false);
+                $("#work_experience").prop('disabled', false);
+                $("#organization").prop('disabled', false);
+                $("#award").prop('disabled', false);
+                $("#project_experience").prop('disabled', false);
+                $("#sanction").prop('disabled', false);
+            }
+            else {
+                $("#family").prop('disabled', true);
+                $("#training_records").prop('disabled', true);
+                $("#formal_education").prop('disabled', true);
+                $("#historical_jobs").prop('disabled', true);
+                $("#language").prop('disabled', true);
+                $("#work_experience").prop('disabled', true);
+                $("#organization").prop('disabled', true);
+                $("#award").prop('disabled', true);
+                $("#project_experience").prop('disabled', true);
+                $("#sanction").prop('disabled', true);
+            }
+        });
+
         $("#btn-print-data").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
@@ -670,3 +821,5 @@
         // });
     });
 </script>
+
+</html>

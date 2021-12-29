@@ -76,13 +76,13 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process-delete" id="btn-process">
-                            <i class="fa fa-play-circle-o">{{ __('tm_update_absenteeism_data.btn_process') }}</i>
+                            <i class="fa fa-play-circle-o"></i> {{ __('tm_update_absenteeism_data.btn_process') }}
                         </button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <p>{{ __('tm_update_absenteeism_data.label_notes') }}</p>
+                        <u><p>{{ __('tm_update_absenteeism_data.label_notes') }}</p></u>
                         <p>{{ __('tm_update_absenteeism_data.label_column_a') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_b') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_c') }}</p>

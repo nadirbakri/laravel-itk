@@ -56,14 +56,17 @@
             </a> 
         </div>
         <div class="div-form">
-            <form id="tm_update_shift_by_date" method="post">
+            <form id="tm_update_shift_by_date_form" method="post">
                 @csrf
+                {{-- @method('PUT') --}}
+                {{-- <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="date_from">{{ __('tm_update_shift_by_date.label_date_from') }}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="date_from" name="date"
+                                <input type="text" class="form-control" id="date_from" name="date_from"
                                     placeholder="{{ __('tm_update_shift_by_date.label_date_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -75,7 +78,7 @@
                         <div class="form-group">
                             <label for="date_to">{{ __('tm_update_shift_by_date.label_date_to') }}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="date_to" name="date"
+                                <input type="text" class="form-control" id="date_to" name="date_to"
                                     placeholder="{{ __('tm_update_shift_by_date.label_date_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -88,13 +91,13 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="update_shift_by_date">{{ __('tm_update_shift_by_date.label_shift_from') }}</label>
+                                for="shift_from">{{ __('tm_update_shift_by_date.label_shift_from') }}</label>
                             <select class="form-control select2" id="shift_from" name="shift_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="update_shift_by_date">{{ __('tm_update_shift_by_date.label_shift_to') }}</label>
+                            <label for="shift_to">{{ __('tm_update_shift_by_date.label_shift_to') }}</label>
                             <select class="form-control select2" id="shift_to" name="shift_to"></select>
                         </div>
                     </div>
@@ -110,24 +113,25 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="religion">{{ __('tm_update_shift_by_date.label_religion') }}</label>
-                            <select class="form-control select2" id="religion" name="religion[]"
-                                multiple="multiple"></select>
+                            <select class="form-control select2" id="religion" 
+                                name="religion[]" multiple="multiple"></select>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="div-level">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="position">{{ __('tm_update_shift_by_date.label_position') }}</label>
-                            <select class="form-control select2" id="position" name="position"></select>
+                            <select class="form-control select2 select2-hidden-accessible" id="position" 
+                                name="position[]" multiple="multiple"></select>
                         </div>
-                        <input type="hidden" class="form-control" id="level_format" name="level_format">
+                        <input type="hidden" class="form-control" id="level_format" name="level_format[]">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                            <i class="fa fa-play-circle-o">{{ __('tm_update_shift_by_date.btn_process') }}</i>
+                            <i class="fa fa-play-circle-o"></i> {{ __('tm_update_shift_by_date.btn_process') }}
                         </button>
                     </div>
                 </div>
@@ -201,10 +205,14 @@
             }
         });
 
+        loadDataShiftCode('#shift_from');
+        loadDataShiftCode('#shift_to');
         loadDataPositionCode();
         loadDataLocationCode();
+        loadDataReligionCode();
 
         loadDataFirstLastAllPosition();
+        loadDataFirstLastAllReligion();
         loadDataFirstLastAllLocation();
 
         $('#select').focus(function (event) {
@@ -255,6 +263,21 @@
             });
         }
 
+        function loadDataFirstLastAllReligion() {
+            $('#religion').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/religion/func/api',
+            }).then(function (data) {
+                if (!$('#religion').find('option:contains(' + data.value + ')').length) {
+                    $('#religion').append($('<option>').val(data.comGenCode).text(data.value));
+                }
+                $('#religion').val(data.comGenCode);
+                $('#religion').removeClass('loading');
+            });
+        }
+
         function loadDataFirstLastAllLevel(field = '', levelType = '') {
             $.ajax({
                 type: 'GET',
@@ -267,6 +290,95 @@
                     $(field).append($('<option>').val(data.levelCode).text(data.levelName));
                 }
                 $(field).val(data.levelCode);
+            });
+        }
+
+        function loadDataShiftCode(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Shift Code</b></div>' +
+                        '<div class="col-6"><b>Shift Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.shiftCode + '</div>' +
+                        '<div class="col-6">' + data.data.shiftName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            // $(field).on('select2:open', function (e) {
+            //     html = '<div class="row header-select">' +
+            //         '<div class="col-6"><b>Employee No</b></div>' +
+            //         '<div class="col-6"><b>Employee Name</b></div>' +
+            //         '</div>';
+            //     $('.select2-search').append(html);
+            // });
+
+            // $(field).on('select2:close', function (event) {
+            //     var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            //     $searchfield.prop('disabled', true);
+            // });
+
+            // var headerIsAppend = false;
+            // $(field).on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Employee No</b></div>' +
+            //             '<div class="col-6"><b>Full Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $shiftCode = $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Shift',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/shift_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.shiftName,
+                                    id: item.shiftCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
             });
         }
 
@@ -420,6 +532,70 @@
             });
         }
 
+        function loadDataReligionCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6"><b>Code</b></div>' +
+                        '<div class="col-6"><b>Value</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.comGenCode + '<div>' +
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#religion').select2({
+                width: '100%',
+                placeholder: 'Choose Religion',
+                allowClear: true,
+                multiple: true,
+                tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/religion/all/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataLevelCode(field = '', levelType = '') {
             function formatSelect(data) {
                 if (data.loading) {
@@ -493,6 +669,116 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        $("#btn-process").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#tm_update_shift_by_date_form").submit();
+        });
+
+        if ($("#tm_update_shift_by_date_form").length > 0) {
+            $("#tm_update_shift_by_date_form").validate({
+                rules: {
+                    date_from: {
+                        required: true,
+                    },
+                    date_to: {
+                        required: true,
+                    },
+                    shift_from: {
+                        required: true,
+                    },
+                    shift_to: {
+                        required: true
+                    },
+                },
+                messages: {
+                    date_from: {
+                        required: "{{ __('tm_update_shift_by_date.field_mandatory') }}",
+                    },
+                    date_to: {
+                        required: "{{ __('tm_update_shift_by_date.field_mandatory') }}",
+                    },
+                    shift_from: {
+                        required: "{{ __('tm_update_shift_by_date.field_mandatory') }}",
+                    },
+                    shift_to: {
+                        required: "{{ __('tm_update_shift_by_date.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-process").prop("disabled", false);
+                    $("#btn-process").html(
+                        '<i class="fa fa-play-circle-o"></i> {{ __("tm_update_shift_by_date.btn_process") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/update_shift_by_date/proses') }}",
+                        type: "POST",
+                        data: $('#tm_update_shift_by_date_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("tm_update_shift_by_date.btn_process") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/update_shift_by_date') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("tm_update_shift_by_date.btn_process") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("tm_update_shift_by_date.btn_process") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
         }
     });
 </script>

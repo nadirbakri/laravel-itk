@@ -32,6 +32,15 @@ return [
     'label_select_work_experience' => 'Work Experience',
     'label_select_award' => 'Award',
     'label_select_sanction' => 'Sanction',
-    'btn_print' => 'Print'
-
+    'btn_print' => 'Print',
+    'label_family' => 'Family',
+    'label_training_records' => 'Training Records',
+    'label_formal_education' => 'Formal Education',
+    'label_historical_jobs' => 'Historical Jobs',
+    'label_language' => 'Language',
+    'label_work_experience' => 'Work Experience',
+    'label_organization' => 'Organization',
+    'label_award' => 'Award',
+    'label_project_experience' => 'Project Experience',
+    'label_sanction' => 'Sanction'
 ];

@@ -9,7 +9,8 @@ return [
     'label_location' => 'Lokasi',
     'label_religion' => 'Agama',
     'label_position' => 'Posisi',
-    'btn_process' => 'Proses'
+    'btn_process' => 'Proses',
+    'field_mandatory' => "Kolom ini tidak boleh kosong",
 ]
 
 ?>
