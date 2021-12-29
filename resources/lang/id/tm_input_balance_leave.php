@@ -1,5 +1,6 @@
 <?php
     return [
+        'judul' => 'Masukkan Saldo Cuti',
         'list' => 'Masukkan Saldo Cuti',
         'label_employee_no' => 'No Karyawan',
         'label_leave_code' => 'Tinggalkan Code',

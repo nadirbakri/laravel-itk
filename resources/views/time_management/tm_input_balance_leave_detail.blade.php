@@ -112,7 +112,7 @@
                         <div class="form-group">
                             <label
                                 for="leave_balance">{{ __('tm_input_balance_leave.label_leave_balance') }}</label>
-                            <input type="text" class="form-control" id="leave_balance" name="leave_balance">
+                            <input type="number" class="form-control" id="leave_balance" name="leave_balance">
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         <div class="form-group">
                             <label
                                 for="leave_balance_before">{{ __('tm_input_balance_leave.label_leave_balance_before') }}</label>
-                            <input type="text" class="form-control" id="leave_balance_before" name="leave_balance_before"> 
+                            <input type="number" class="form-control" id="leave_balance_before" name="leave_balance_before"> 
                         </div>
                     </div>
                     <div class="col-6">

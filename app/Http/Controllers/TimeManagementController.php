@@ -46,10 +46,14 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_company_working_calendar');
     }
 
-
     public function pageLeaveTransactionByEmployeeNo()
     {
         return view ('time_management.tm_leave_transaction_by_employee_no');
+    }
+
+    public function pageOvertimeSPL()
+    {
+        return view ('time_management.tm_overtime_spl');
     }
 
     public function pageUnpaidLeaveReport()
@@ -219,7 +223,70 @@ class TimeManagementController extends Controller
         return view('time_management.tm_input_balance_leave_detail', ['data' => $arrResult->dataListSet]);
     }
 
-    // public function prosesUpdateShiftByDate(Request $request)
+    public function dataDetailEmployeeNameTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/leavetransaction/getleavetransaction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return response()->json($data);
+    }
+
+    public function dataDetailBalanceTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/balanceleave/getbalanceleave',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'leaveCode' => $request->leaveCode,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return response()->json($data);
+    }
 
     public function printUnpaidLeaveReport(Request $request)
     {
@@ -273,46 +340,88 @@ class TimeManagementController extends Controller
         return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
-    // public function prosesCompanyWorkingCalendar(Request $request)
-    // {
-    //     date_default_timezone_set('Asia/Jakarta');
-    //     try {
-    //         $client = new Client([
-    //             'headers' => [ 'Content-Type' => 'application/json',
-    //             'Authorization' => 'Bearer ' . Session::get('token') ]
-    //         ]);
+    public function prosesUpdateShiftByDateTM(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
             
-    //         $response = $client->put(env('API_URL') . '/tempabsentmachine/updateshiftbydate',
-    //             ['body' => json_encode(
-    //                 [
-    //                     "companyCode" => Session::get('companyCode'),
-    //                     "dateFrom" => $request->date_from,
-    //                     "dateTo" => $request->date_to,
-    //                     "shiftFrom" => $request->shift_from,
-    //                     "shiftTo" => $request->shift_to,
-    //                     "locationCode" => $request->location,
-    //                     "religionCode" => $request->religion,
-    //                     "positionCode" => $request->position,
-    //                     "level" = [
-    //                         "levelType" => ,
-    //                         "levelCode" => 
-    //                     ],
-    //                     "languageCode" => App::getLocale(),
-    //                     "sessionID" => 0,
-    //                     "sessionUserID" => Session::get('userID'),
-    //                     "logActionUserID" => Session::get('userID'),
-    //                     "logActionUsername" => Session::get('userName')
-    //                 ]
-    //             )]
-    //         );
-    //     } catch (RequestException $e) {
-    //         var_dump($e->getResponse());
-    //     }
+            $param = [ 
+                'companyCode' => Session::get('companyCode'), 
+                'dateFrom' => $request->date_from,
+                'dateTo' => $request->date_to,
+                'shiftFrom' => $request->shift_from,
+                'shiftTo' => $request->shift_to,
+                'locationCode' => $request->location,
+                'religionCode' => $request->religion,
+                'positionCode' => $request->position,
+                'languageCode' => App::getLocale(), 
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
+            ];
 
-    //     $arrResult = json_decode($response->getBody()->getContents());
+            // if(!empty($request->location && !is_null($request->location[0]))){
+            //     foreach($request->location as $value){
+            //         $data_location[] = $value;
+            //     }
+            //     $param['location'] = $data_location;
+            // }
 
-    //     return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
-    // }
+            // if(!empty($request->religion && !is_null($request->religion[0]))){
+            //     foreach($request->religion as $value){
+            //         $data_position[] = $value;
+            //     }
+            //     $param['religion'] = $data_position;
+            // }
+
+            // if(!empty($request->position && !is_null($request->position[0]))){
+            //     foreach($request->position as $value){
+            //         $data_position[] = $value;
+            //     }
+            //     $param['position'] = $data_position;
+            // }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = $value2;
+                    }
+                    $data_level[] = [
+                        "levelType" => (string) ($key + 1),
+                        "levelCode" => $data_level_detail
+                    ];
+                }
+                $param['level'] = $data_level;
+            }
+
+            var_dump($param);
+
+            $response = $client->put(env('API_URL') . '/tempabsentmachine/updateshiftbydate',
+                ['body' => json_encode($param)]
+            );
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->message);
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
 
     public function prosesInputBalanceLeaveTM(Request $request)
     {
@@ -376,7 +485,6 @@ class TimeManagementController extends Controller
                             "flagType" => $request->calendar_type,
                             "locationCode" => $request->location,
                             "changedNo" => 0,
-                  
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "createdBy" => Session::get('userID'),
                             "changedDate" => date("Y-m-d\TH:i:s"),

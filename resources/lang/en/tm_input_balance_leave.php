@@ -1,5 +1,6 @@
 <?php
     return [
+        'judul' => 'Input Balance Leave',
         'list' => 'Input Balance Leave',
         'label_employee_no' => 'Employee No',
         'label_leave_code' => 'Leave Code',

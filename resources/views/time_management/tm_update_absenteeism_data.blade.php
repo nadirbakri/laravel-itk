@@ -82,7 +82,7 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <p>{{ __('tm_update_absenteeism_data.label_notes') }}</p>
+                        <u><p>{{ __('tm_update_absenteeism_data.label_notes') }}</p></u>
                         <p>{{ __('tm_update_absenteeism_data.label_column_a') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_b') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_c') }}</p>

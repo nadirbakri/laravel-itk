@@ -395,6 +395,8 @@ Route::post('time_management/input_balance_leave/proses', 'TimeManagementControl
 Route::post('time_management/update_shift_by_date/proses', 'TimeManagementController@prosesUpdateShiftByDateTM');
 
 Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
+Route::get('time_management/employee_name/detail', 'TimeManagementController@dataDetailEmployeeNameTM');
+Route::get('time_management/balance/detail', 'TimeManagementController@dataDetailBalanceTM');
 
 /* Route untuk Report Time Management */
 Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');
@@ -469,6 +471,18 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController
 /* Route Untuk Dropdown From API */
 Route::get('gender/api', 'DataController@dataGenderAPI');
 Route::get('blood/api', 'DataController@dataBloodAPI');
+Route::get('marital_status/api', 'DataController@dataMaritalStatusAPI');
+Route::get('nationality/api', 'DataController@dataNationalityAPI');
+Route::get('driving_license_car_type/api', 'DataController@dataDrivingLicenseCarTypeAPI');
+Route::get('relation/api', 'DataController@dataRelationAPI');
+Route::get('termination_code/api', 'DataController@dataTerminationCodeAPI');
+Route::get('benefits/api', 'DataController@dataBenefitsAPI');
+Route::get('tax_status/api', 'DataController@dataTaxStatusAPI');
+Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMethodAPI');
+Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
+Route::get('work_pattern_code/api', 'DataController@dataWorkPatternCodeAPI');
+Route::get('company_bank_code/api', 'DataController@dataCompanyBankCodeAPI');
+Route::get('employee_bank_code/api', 'DataController@dataEmployeeBankCodeAPI');
 Route::get('religion/api', 'DataController@dataReligionAPI');
 Route::get('religion/all/api', 'DataController@dataReligionAllAPI');
 Route::get('religion/func/api', 'DataController@dataReligionFunctionAPI');
@@ -543,6 +557,7 @@ Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
 Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
 Route::get('shift_code/api', 'DataController@dataShiftAPI');
+Route::get('leave_code/api', 'DataController@dataLeaveCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

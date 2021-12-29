@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ __('tm_process_form.judul') }}</title>
+    <title>{{ __('tm_input_balance_leave.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -195,7 +195,6 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         function load_data_input_balance_leave(employee_no = '') {
-            var val = $('#input_balance_leave').val();
             table = $('#input_balance_leave_table').DataTable({
                 processing: true,
                 serverSide: true,

@@ -58,12 +58,15 @@
         <div class="div-form">
             <form id="tm_update_shift_by_date_form" method="post">
                 @csrf
+                {{-- @method('PUT') --}}
+                {{-- <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="date_from">{{ __('tm_update_shift_by_date.label_date_from') }}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="date_from" name="date"
+                                <input type="text" class="form-control" id="date_from" name="date_from"
                                     placeholder="{{ __('tm_update_shift_by_date.label_date_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -75,7 +78,7 @@
                         <div class="form-group">
                             <label for="date_to">{{ __('tm_update_shift_by_date.label_date_to') }}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="date_to" name="date"
+                                <input type="text" class="form-control" id="date_to" name="date_to"
                                     placeholder="{{ __('tm_update_shift_by_date.label_date_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -122,7 +125,7 @@
                             <select class="form-control select2 select2-hidden-accessible" id="position" 
                                 name="position[]" multiple="multiple"></select>
                         </div>
-                        <input type="hidden" class="form-control" id="level_format" name="level_format">
+                        <input type="hidden" class="form-control" id="level_format" name="level_format[]">
                     </div>
                 </div>
                 <div class="row">
@@ -669,7 +672,15 @@
         }
 
         $("#btn-process").click(function () {
-            $("#btn-process").validate({
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#tm_update_shift_by_date_form").submit();
+        });
+
+        if ($("#tm_update_shift_by_date_form").length > 0) {
+            $("#tm_update_shift_by_date_form").validate({
                 rules: {
                     date_from: {
                         required: true,
@@ -768,7 +779,7 @@
                     });
                 }
             })
-        })
+        }
     });
 </script>
 
