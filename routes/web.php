@@ -388,6 +388,7 @@ Route::get('time_management/input_balance_leave/detail', 'TimeManagementControll
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
+Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
 
 /* Route untuk proses Time Management */
 Route::post('time_management/company_working_calendar/proses','TimeManagementController@prosesCompanyWorkingCalendar');
@@ -403,6 +404,9 @@ Route::post('time_management/unpaid_leave_report/print', 'TimeManagementControll
 Route::post('time_management/postpone_leave_report/print', 'TimeManagementController@printPostponeLeaveReport');
 Route::post('time_management/monthly_leave_report/print', 'TimeManagementController@printMonthlyLeaveReport');
 Route::post('time_management/monthly_absenteeism_analysis/print', 'TimeManagementController@printMonthlyAbsenteeismAnalysis');
+Route::post('time_management/detail_absenteeism_report/print', 'TimeManagementController@printDetailAbsenteeismReport');
+Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementController@printMonthlyAbsenteeismDetail');
+Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');

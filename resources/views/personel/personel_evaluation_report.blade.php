@@ -57,7 +57,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="employee_list_form" method="post">
+            <form id="evaluation_report_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -853,11 +853,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#employee_list_form").submit();
+            $("#evaluation_report_form").submit();
         });
 
-        if ($("#employee_list_form").length > 0) {
-            $("#employee_list_form").validate({
+        if ($("#evaluation_report_form").length > 0) {
+            $("#evaluation_report_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -868,10 +868,15 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_list/print') }}",
+                        url: "{{ url('personel/evaluation_report/print') }}",
                         type: "POST",
-                        data: $('#employee_list_form').serialize(),
+                        data: $('#evaluation_report_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_evaluation_report.btn_print") }}'
+                            );
+                            
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
@@ -894,7 +899,7 @@
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-print"></i> {{ __("personel_evaluation_report.btn_print") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

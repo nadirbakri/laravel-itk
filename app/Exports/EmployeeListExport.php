@@ -84,6 +84,7 @@ class EmployeeListExport implements FromView
 
             if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
                 foreach($this->dataLevel as $key => $value){
+                    $data_level_detail = [];
                     foreach($this->dataLevel[$key] as $value2){
                         $data_level_detail[] = [
                             'levelCode' => $value2
@@ -98,7 +99,7 @@ class EmployeeListExport implements FromView
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump($param);
+            // var_dump($param['levelMaster']);
 
             $response = $client->post(env('API_URL') . '/employeelistreport/getemployeelist',
                 ['body' => json_encode($param)]

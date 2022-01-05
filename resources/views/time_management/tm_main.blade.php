@@ -198,15 +198,15 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('time_management/detail_absenteeism_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
-								<span class="child-title-text">{{ __('time_management.detail_absenteeism_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
 							<a href="{{ url('time_management/detail_rate_overtime_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.detail_rate_overtime_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('time_management/detail_absenteeism_reason_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<span class="child-title-text">{{ __('time_management.detail_absenteeism_reason_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">

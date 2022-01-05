@@ -862,6 +862,11 @@
                         type: "POST",
                         data: $('#postpone_leave_report_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_postpone_leave_report.btn_print") }}'
+                            );
+                            
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

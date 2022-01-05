@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_employee_turn_over_report.judul') }}</title>
+    <title>{{ __('tm_monthly_absenteeism_detail.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -49,27 +49,27 @@
 </head>
 
 <body>
-    <div class="div-personel">
+    <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url('personel') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_employee_turn_over_report.list') }}</span>
+                <span class="title-text">{{ __('tm_monthly_absenteeism_detail.list') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="employee_turn_over_report_form" method="post">
+            <form id="monthly_absenteeism_detail_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('personel_employee_turn_over_report.label_employee_no_from') }}</label>
+                                for="employee_no_from">{{ __('tm_monthly_absenteeism_detail.label_employee_no_from') }}</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_no_to">{{ __('personel_employee_turn_over_report.label_employee_no_to') }}</label>
+                            <label for="employee_no_to">{{ __('tm_monthly_absenteeism_detail.label_employee_no_to') }}</label>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
                     </div>
@@ -77,10 +77,10 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period_from">{{ __('personel_employee_turn_over_report.label_period_from') }}</label>
+                            <label for="absent_month_from">{{ __('tm_monthly_absenteeism_detail.label_absent_month_from') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period_from" name="period_from"
-                                    placeholder="{{ __('personel_evaluation_report.label_period_from') }}">
+                                <input type="text" class="form-control" id="absent_month_from" name="absent_month_from"
+                                    placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_month_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -89,10 +89,10 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period_to">{{ __('personel_employee_turn_over_report.label_period_to') }}</label>
+                            <label for="absent_month_to">{{ __('tm_monthly_absenteeism_detail.label_absent_month_to') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period_to" name="period_to"
-                                    placeholder="{{ __('personel_evaluation_report.label_period_to') }}">
+                                <input type="text" class="form-control" id="absent_month_to" name="absent_month_to"
+                                    placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_month_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -103,8 +103,76 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
+                            <label for="include_resign">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_resign"
+                                    name="include_resign" value="true">
+                                <label class="form-check-label"
+                                    for="include_resign">{{ __('tm_monthly_absenteeism_detail.label_include_resign') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="change_header">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="change_header"
+                                    name="change_header" value="true">
+                                <label class="form-check-label"
+                                    for="change_header">{{ __('tm_monthly_absenteeism_detail.label_change_header') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="div-table">
+                            <table id="monthly_absenteeism_detial_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>No</th>
+                                        <th>Absent Code</th>
+                                        <th>Description</th>
+                                        <th>Header Name</th>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary" name="btn-add-field" id="btn-add-field"
+                            style="width: 100%;" data-toggle="modal" data-target="#modal_add_absent_code">
+                            <i class="fa fa-plus"></i> {{ __('tm_monthly_absenteeism_detail.btn_add') }}
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-danger" name="btn-remove-data" id="btn-remove-data"
+                            style="width: 100%;">
+                            <i class="fa fa-times"></i> {{ __('tm_monthly_absenteeism_detail.btn_remove') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="hour_out">{{ __('tm_monthly_absenteeism_detail.label_hour_out') }}</label>
+                            <input type="time" class="form-control" id="hour_out" name="hour_out">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="hour_to">{{ __('tm_monthly_absenteeism_detail.label_hour_to') }}</label>
+                            <input type="time" class="form-control" id="hour_to" name="hour_to">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
                             <label
-                                for="group_authorize_from">{{ __('personel_employee_turn_over_report.label_group_authorize_from') }}</label>
+                                for="group_authorize_from">{{ __('tm_monthly_absenteeism_detail.label_group_authorize_from') }}</label>
                             <select class="form-control select2" id="group_authorize_from"
                                 name="group_authorize_from"></select>
                         </div>
@@ -112,7 +180,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_to">{{ __('personel_employee_turn_over_report.label_group_authorize_to') }}</label>
+                                for="group_authorize_to">{{ __('tm_monthly_absenteeism_detail.label_group_authorize_to') }}</label>
                             <select class="form-control select2" id="group_authorize_to"
                                 name="group_authorize_to"></select>
                         </div>
@@ -121,7 +189,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="position">{{ __('personel_employee_turn_over_report.label_position') }}</label>
+                            <label for="position">{{ __('tm_monthly_absenteeism_detail.label_position') }}</label>
                             <select class="form-control select2 select2-hidden-accessible" id="position"
                                 name="position[]" multiple="multiple">
                             </select>
@@ -129,7 +197,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="ranking">{{ __('personel_employee_turn_over_report.label_ranking') }}</label>
+                            <label for="ranking">{{ __('tm_monthly_absenteeism_detail.label_ranking') }}</label>
                             <select class="form-control select2" id="ranking" name="ranking[]"
                                 multiple="multiple"></select>
                         </div>
@@ -138,7 +206,7 @@
                 <div class="row" id="div-level">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="location">{{ __('personel_employee_turn_over_report.label_location') }}</label>
+                            <label for="location">{{ __('tm_monthly_absenteeism_detail.label_location') }}</label>
                             <select class="form-control select2" id="location" name="location[]"
                                 multiple="multiple"></select>
                         </div>
@@ -149,11 +217,66 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('personel_employee_turn_over_report.btn_print') }}
+                            <i class="fa fa-print"></i> {{ __('tm_monthly_absenteeism_detail.btn_print') }}
                         </button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_add_absent_code" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('tm_monthly_absenteeism_detail.label_absent_code') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="absent_code_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label
+                                            for="absent_code">{{ __('tm_monthly_absenteeism_detail.label_absent_code') }}</label>
+                                        <select class="form-control select2" id="absent_code" name="absent_code"></select>
+                                    </div>
+                                    <input type="hidden" class="form-control" id="letter_type_detail"
+                                        name="letter_type_detail">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="description">{{ __('tm_monthly_absenteeism_detail.label_description') }}</label>
+                                    <input type="text" class="form-control" id="description"
+                                        name="description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="header_name">{{ __('tm_monthly_absenteeism_detail.label_header_name') }}</label>
+                                    <input type="text" class="form-control" id="header_name"
+                                        name="header_name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_monthly_absenteeism_detail.btn_save') }}</button>
+                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                            class="fa fa-times-circle"></i> {{ __('tm_monthly_absenteeism_detail.btn_cancel') }}</button>
+                </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
@@ -198,13 +321,13 @@
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
-            // plugins: [
-            //     new monthSelectPlugin({
-            //         shorthand: true, //defaults to false
-            //         dateFormat: "Y-m-01", //defaults to "F Y"
-            //         altFormat: "F Y", //defaults to "F Y"
-            //     })
-            // ],
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -212,6 +335,11 @@
                     flatPickrInstance.toggle();
                 });
             }
+        });
+        $('#before_in').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i K"
         });
     }
 
@@ -844,11 +972,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#employee_turn_over_report_form").submit();
+            $("#monthly_absenteeism_detail_form").submit();
         });
 
-        if ($("#employee_turn_over_report_form").length > 0) {
-            $("#employee_turn_over_report_form").validate({
+        if ($("#monthly_absenteeism_detail_form").length > 0) {
+            $("#monthly_absenteeism_detail_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -859,15 +987,10 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_turn_over_report/print') }}",
+                        url: "{{ url('time_management/monthly_absenteeism_detail/print') }}",
                         type: "POST",
-                        data: $('#employee_turn_over_report_form').serialize(),
+                        data: $('#monthly_absenteeism_detail_form').serialize(),
                         success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_turn_over_report.btn_print") }}'
-                            );
-                            
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
@@ -890,7 +1013,7 @@
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_turn_over_report.btn_print") }}'
+                                '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_print") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

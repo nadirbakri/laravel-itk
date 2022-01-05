@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'judul' => 'Absenteeism Reason Report Detail',
+    'judul' => 'Detail Absenteeism Reason Report',
     'list' => 'Time Management Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',

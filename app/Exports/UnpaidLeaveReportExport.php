@@ -51,27 +51,33 @@ class UnpaidLeaveReportExport implements FromView
             }
 
             if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
+                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
+                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
                 foreach($this->position as $value){
-                    $data_position[] = $value;
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
                 }
                 $param['position'] = $data_position;
             }
 
             if(!empty($this->location) && !is_null($this->location[0])){
                 foreach($this->location as $value){
-                    $data_location[] = $value;
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
                 }
                 $param['location'] = $data_location;
             }
 
             if(!empty($this->ranking) && !is_null($this->ranking[0])){
                 foreach($this->ranking as $value){
-                    $data_ranking[] = $value;
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
                 }
                 $param['ranking'] = $data_ranking;
             }
@@ -80,9 +86,12 @@ class UnpaidLeaveReportExport implements FromView
                 foreach($this->dataLevel as $key => $value){
                     $data_level_detail = [];
                     foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = $value2;
+                        $data_level_detail[] = [
+                            'levelCode' => $value2
+                        ];
                     }
                     $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
                         "levelType" => (string) ($key + 1),
                         "levelCode" => $data_level_detail
                     ];
@@ -98,11 +107,9 @@ class UnpaidLeaveReportExport implements FromView
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
-
         $arrResult = json_decode($response->getBody()->getContents());
 
         // var_dump($arrResult->dataListSet);
-
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_unpaid_leave_report', [
                 'data' => []

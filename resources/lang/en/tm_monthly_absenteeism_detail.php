@@ -12,21 +12,29 @@ return [
     |
     */
 
-    'judul' => 'Absenteeism Reason Report Detail',
+    'judul' => 'Monthly Absenteeism Detail Report',
     'list' => 'Time Management Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
-    'label_absent_date_from' => 'Absent Date From',
-    'label_absent_date_to' => 'Absent Date To',
+    'label_absent_month_from' => 'Absent Month From',
+    'label_absent_month_to' => 'Absent Month To',
+    'label_include_resign' => 'Include Resign',
+    'label_change_header' => 'Change Header',
+    'btn_add' => 'Add',
+    'btn_remove' => 'Remove',
+    'label_hour_out' => 'Hour Out',
+    'label_hour_to' => 'To',
     'label_group_authorize_from' => 'Group Authorize From',
     'label_group_authorize_to' => 'Group Authorize To',
-    'label_absent_code' => 'Absent Code',
-    'label_absent_code_all' => 'All',
-    'label_absent_code_selection' => 'Selection',
-    'label_include_resign' => 'Include Resign',
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
-    'btn_print' => 'Print'
+    'btn_print' => 'Print',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'label_absent_code' => 'Absent Code',
+    'label_description' => 'Description',
+    'label_header_name' => 'Header Name',
+    'absent_code_required' => 'Absent Code Required'
 
 ];
