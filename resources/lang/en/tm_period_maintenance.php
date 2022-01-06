@@ -1,0 +1,41 @@
+<?php
+
+return [
+    'judul' => 'Period Maintenance',
+    'list' => 'Period Maintenance',
+    'label_year' => 'Year',
+    'label_month' => 'Month',
+    'label_period' => 'Period',
+    'label_absenteeism_start' => 'Absenteeism Start',
+    'label_absenteeism_end' => 'Absenteeism End',
+    'label_absenteeism_from' => 'Absenteeism From',
+    'label_absenteeism_to' => 'Absenteeism To',
+    'label_overtime_start' => 'Overtime Start',
+    'label_overtime_end' => 'Overtime End',
+    'label_overtime_from' => 'Overtime From',
+    'label_overtime_to' => 'Overtime To',
+    'label_salary_start' => 'Salary Start',
+    'label_salary_end' => 'Salary End',
+    'label_salary_from' => 'Salary From',
+    'label_salary_to' => 'Salary To',
+    'btn_add' => 'Add',
+    'btn_remove' => 'Remove',
+    'select_month' => 'Select Month',
+    'select_january' => 'January',
+    'select_february' => 'February',
+    'select_march' => 'March',
+    'select_april' => 'April',
+    'select_may' => 'May',
+    'select_june' => 'June',
+    'select_july' => 'July',
+    'select_august' => 'August',
+    'select_september' => 'September',
+    'select_october' => 'October',
+    'select_november' => 'November',
+    'select_december' => 'December',
+    'select_period' => 'Select Period',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel'
+]
+
+?>

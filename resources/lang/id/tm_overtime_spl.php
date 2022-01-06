@@ -39,6 +39,7 @@ return [
     'btn_app_leader' => 'Aplikasi Pemimpin',
     'btn_app_hrd' => 'Aplikasi HRD',
     'label_check_all' => 'Centang Semua',
-    'label_uncheck_all' => 'Hapus Centang Semua'
+    'label_uncheck_all' => 'Hapus Centang Semua',
+    'field_mandatory' => "Kolom ini tidak boleh kosong"
 ]
 ?>

@@ -1828,6 +1828,7 @@
                                     id="btn-add-family-dependent-data" style="width: 100%;" data-toggle="modal"
                                     data-target="#modal_add_family_dependent_data">
                                     <i class="fa fa-plus"></i> {{ __('personel_personal_data.btn_add') }}
+                                    <input type="hidden" id="get_employee_no" name="get_employee_no" value="">
                                 </button>
                             </div>
                             <div class="col-3">
@@ -2241,6 +2242,15 @@
 
         var table = null;
 
+        // var func = "{{ $func }}";
+
+        // if (func == 'new') {
+        //     $('#employee_no_info').val("");
+        //     $('#fullname_info').val("");
+        //     $('#title_info').val("");
+        //     $('#birth_place_info').val(null).trigger('change');
+        // }
+
         loadDataBirthPlace();
         loadDataGender();
         loadDataBloodType();
@@ -2257,13 +2267,15 @@
         loadDataEmploymentType();
         loadDataTerminationCode();
         loadDataBenefits();
+        loadDataAbsenteeismType();
         loadDataWorkPatternCode();
         loadDataTaxStatus();
         loadDataTaxCalculationMethod();
         loadDataGroupNPWP();
-        // loadDataGroupAuthorize();
+        loadDataGroupAuthorize();
         loadDataCompanyBankCode();
         loadDataEmployeeBankCode();
+        loadDataCurrency();
 
         $('#fringe_benefit_data_table thead tr').clone(true).appendTo('#fringe_benefit_data_table thead');
         $('#fringe_benefit_data_table thead tr:eq(1) th').each(function (i) {
@@ -3334,6 +3346,66 @@
             });
         }
 
+        function loadDataAbsenteeismType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#absenteeism_type_absenteeism').select2({
+                width: '100%',
+                placeholder: 'Choose Absenteeism Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/absenteeism_type/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataWorkPatternCode(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -3645,6 +3717,68 @@
         //     });
         // }
 
+        function loadDataGroupAuthorize() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#group_authorize_payroll').select2({
+                width: '100%',
+                placeholder: 'Choose Group Authorize',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/group_authorize/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupAuthorizeDesc,
+                                    id: item.groupAuthorizeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataCompanyBankCode(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -3669,7 +3803,9 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#company_bank_code_primary').select2({
+            var $company_bank = $('#company_bank_code_primary, #company_bank_code_optional_one, #company_bank_code_optional_two');
+
+            $company_bank.select2({
                 width: '100%',
                 placeholder: 'Choose Company Bank Code',
                 allowClear: true,
@@ -3734,8 +3870,9 @@
             }
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $employee_bank_code = $('#employee_bank_code_primary, #employee_bank_code_optional_one, #employee_bank_code_optional_two');
 
-            $('#employee_bank_code_primary').select2({
+            $employee_bank_code.select2({
                 width: '100%',
                 placeholder: 'Choose Employee Bank Code',
                 allowClear: true,
@@ -3770,6 +3907,67 @@
                                     data: item
                                 }
                                 console.log(data);
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataCurrency(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $currency = $('#currency_primary, #currency_optional_one, #currency_optional_two');
+
+            $currency.select2({
+                width: '100%',
+                placeholder: 'Choose Currency',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/currency/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
                             })
                         };
                     },
@@ -3912,6 +4110,133 @@
         //         }
         //     })
         // }
+
+        function load_table_family_dependent_data() {
+            table = $('#family_dependent_data_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('personel/family_dependent_data/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'positionCode', name: 'positionCode'},
+                    {data: 'positionName', name: 'positionName'},
+                    {data: 'supervisorPositionCode', name: 'supervisorPositionCode'},
+                    {data: 'recordStatus', name: 'recordStatus'}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
+        $("#btn-save-family-dependent-data").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#family_dependent_data_form").submit();
+        });
+
+        if ($("#family_dependent_data_form").length > 0) {
+            $("#family_dependent_data_form").validate({
+                rules: {
+                    seq_no_family_dependent_data: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    seq_no_family_dependent_data: {
+                        required: "{{ __('personel_personal_data.seq_no_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save-family-dependent-data").prop("disabled", false);
+                    $("#btn-save-family-dependent-data").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('personel/data/family_dependent/proses') }}",
+                        type: "POST",
+                        data: $('#family_dependent_data_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-family-dependent-data").prop("disabled", false);
+                                $("#btn-save-family-dependent-data").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                                );
+                                $('#modal_add_family_dependent_data').modal('hide');
+                                $('#family_dependent_data_table').DataTable().destroy();
+                                load_table_family_dependent_data();
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                    $('#notification_success').modal('hide');
+                                }, 3000);
+                            } else {
+                                $("#btn-save-family-dependent-data").prop("disabled", false);
+                                $("#btn-save-family-dependent-data").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-family-dependent-data").prop("disabled", false);
+                            $("#btn-save-family-dependent-data").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
 
         function load_table_dependent() {
             table = $('#dependent_data_table').DataTable({

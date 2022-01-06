@@ -11,6 +11,7 @@ return [
     'label_position' => 'Position',
     'btn_process' => 'Process',
     'field_mandatory' => "This field can't be blank",
+    'alert_success' => 'Success !'
 ]
 
 ?>
