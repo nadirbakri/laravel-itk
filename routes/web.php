@@ -353,6 +353,7 @@ Route::post('personel/employee_turn_over_report/print', 'PersonelController@prin
 Route::post('personel/employee_skill_report/print', 'PersonelController@printEmployeeSkillReportPersonel');
 Route::post('personel/employee_report_by_status/print', 'PersonelController@printEmployeeReportByStatusPersonel');
 Route::post('personel/custom_report_employee/print', 'PersonelController@printCustomReportEmployee');
+Route::post('personel/evaluation_report/print', 'PersonelController@printEvaluationReportPersonel');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');
@@ -562,6 +563,7 @@ Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
 Route::get('shift_code/api', 'DataController@dataShiftAPI');
 Route::get('leave_code/api', 'DataController@dataLeaveCodeAPI');
+Route::get('absent_code/api', 'DataController@dataAbsentCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
+use App\Exports\MonthlyLeaveReportExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;

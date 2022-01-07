@@ -77,9 +77,9 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period">{{ __('personel_evaluation_report.label_evaluation_period_from') }}</label>
+                            <label for="period_from">{{ __('personel_evaluation_report.label_evaluation_period_from') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period" name="period"
+                                <input type="text" class="form-control" id="period_from" name="period_from"
                                     placeholder="{{ __('personel_evaluation_report.label_evaluation_period_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -89,9 +89,9 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period">{{ __('personel_evaluation_report.label_evaluation_period_to') }}</label>
+                            <label for="period_to">{{ __('personel_evaluation_report.label_evaluation_period_to') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period" name="period"
+                                <input type="text" class="form-control" id="period_to" name="period_to"
                                     placeholder="{{ __('personel_evaluation_report.label_evaluation_period_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>

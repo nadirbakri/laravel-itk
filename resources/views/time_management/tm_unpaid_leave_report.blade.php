@@ -848,6 +848,22 @@
 
         if ($("#unpaid_leave_report_form").length > 0) {
             $("#unpaid_leave_report_form").validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    }, 
+                    employee_no_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('tm_unpaid_leave_report.employee_no_from_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('tm_unpaid_leave_report.employee_no_to_required') }}",
+                    },
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {

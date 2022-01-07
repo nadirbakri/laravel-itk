@@ -380,6 +380,7 @@
         loadDataPositionCode();
         loadDataLocationCode();
         loadDataRankingCode();
+        loadDataAbsentCode();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
@@ -956,6 +957,82 @@
                                 return {
                                     text: item.levelName,
                                     id: item.levelCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataAbsentCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Absent Type</b></div>' +
+                        '<div class="col-6"><b>Absent Code</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.absentType + '</div>' +
+                        '<div class="col-6">' + data.data.absentCode + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            // var headerIsAppend = false;
+            // $('#absent_code').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Absent Type</b></div>' +
+            //             '<div class="col-6"><b>Absent Code</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#absent_code').select2({
+                width: '100%',
+                placeholder: 'Choose Absent Code',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/absent_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.absentCode,
+                                    id: item.absentType,
                                     data: item
                                 }
                             })

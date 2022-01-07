@@ -16,6 +16,7 @@ class MonthlyLeaveReportExport implements FromView
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
+        $this->period = $period;
         $this->haveBalanceOnly = $haveBalanceOnly;
         $this->includeResign = $includeResign;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -52,8 +53,8 @@ class MonthlyLeaveReportExport implements FromView
             }
 
             if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
+                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
+                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
@@ -88,10 +89,10 @@ class MonthlyLeaveReportExport implements FromView
                         "levelCode" => $data_level_detail
                     ];
                 }
-                $param['level'] = $data_level;
+                $param['levelMaster'] = $data_level;
             }
 
-            // var_dump($param);
+            var_dump($param);
 
             $response = $client->post(env('API_URL') . '/monthlyleavereport/getmonthlyleavereport',
                 ['body' => json_encode($param)]

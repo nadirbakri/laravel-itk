@@ -7598,6 +7598,19 @@ class PersonelController extends Controller
         return Excel::download(new EmployeeSkillReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Skill Report.xlsx');
     }
 
+    public function printEvaluationReportPersonel(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return pdf::download(new EvaluationReportExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to , isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Evaluation Report.pdf');
+    }
+
     public function printEmployeeReportByStatusPersonel(Request $request)
     {
          return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false), 'Employee Report By Status.xlsx');

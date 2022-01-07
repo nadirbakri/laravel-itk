@@ -3387,4 +3387,45 @@ class DataController extends Controller
 
         return response()->json($absent);
 	}
+
+	public function dataAbsentCodeAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// var_dump($arrResult->message);
+
+	    if($search == ''){
+	    	$absent = $arrResult->dataListSet;
+	    }else{
+	    	$absent    = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->absentCode)){
+	    				return preg_match('/' . $search . '/i', $value->absentCode);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($absent);
+	}
 }
