@@ -235,6 +235,83 @@
                 $('#message-notification-error').html('No Data Selected');
             }
         });
+
+        $("#toolbar-active").on('click', function() {
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                $.ajax({
+                    url: "{{ url('time_management/work_pattern/status') }}",
+                    type: "GET",
+                    data: { 'patternCode' : data[0].patternCode, 'func' : 'A' },
+                    success: function(response) {
+                        if(response.status == "true"){
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response.message);
+                            setTimeout(function(){ 
+                                window.location = "{{ url('time_management/work_pattern') }}";
+                            }, 3000);
+                        }else{
+                            $('#notification_error').modal('show');
+                            if(response.message == null || response.message == ''){
+                                $('#message-notification-error').html("{{ __('login.error') }}");
+                            }else{
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                        var oTable = $('#work_pattern_table').dataTable();
+                        oTable.fnDraw(false);
+                    },
+                    error: function(response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#toolbar-deactive").on('click', function() {
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                $.ajax({
+                    url: "{{ url('time_management/work_pattern/status') }}",
+                    type: "GET",
+                    data: { 'patternCode' : data[0].patternCode, 'func' : 'D' },
+                    success: function(response) {
+                        if(response.status == "true"){
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response.message);
+                            setTimeout(function(){ 
+                                window.location = "{{ url('time_management/work_pattern') }}";
+                            }, 3000);
+                        }else{
+                            $('#notification_error').modal('show');
+                            if(response.message == null || response.message == ''){
+                                $('#message-notification-error').html("{{ __('login.error') }}");
+                            }else{
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                        var oTable = $('#work_pattern_table').dataTable();
+                        oTable.fnDraw(false);
+                    },
+                    error: function(response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $('#work_pattern_table tbody').on('click', 'tr td:not(:first-child)', function () {
+            var data = table.row(this).data();
+            $.redirect("{{ url('time_management/work_pattern/detail_data') }}", { 'patternCode' : data.patternCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        });
     })
 </script>
 

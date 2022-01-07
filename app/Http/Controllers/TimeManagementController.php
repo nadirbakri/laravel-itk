@@ -361,6 +361,34 @@ class TimeManagementController extends Controller
         return response()->json($arrResult->dataListSet);
     }
 
+    public function dataDetailWorkPatternTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'patternCode' => $request->patternCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('time_management.tm_work_pattern_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function printUnpaidLeaveReport(Request $request)
     {
         $dataLevel = [];
@@ -530,7 +558,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump($request->start_overtime_spl);
+            var_dump($request->date_overtime_spl . "T" . $request->start_overtime_spl);
 
             $response = $client->post(env('API_URL') . '/tmovtspl/inserttmovtspl',
                 ['body' => json_encode(
@@ -539,8 +567,8 @@ class TimeManagementController extends Controller
                         'employeeNo' => $request->employee_no,
                         "ovtDate" => $request->date_overtime_spl,
                         "shiftCode" => $request->shift_overtime_spl,
-                        "ovtIn" => $request->start_overtime_spl,
-                        "ovtOut" => $request->finish_overtime_spl,
+                        "ovtIn" => $request->date_overtime_spl . " " . $request->start_overtime_spl,
+                        "ovtOut" => $request->finish_overtime_spl ,
                         "ovtHour" => $request->hour_overtime_spl,
                         "ovtConvert" => $request->convert_overtime_spl,
                         "ovtBeforeIn" => $request->before_in,
@@ -598,6 +626,64 @@ class TimeManagementController extends Controller
                             'sessionUserID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/position',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'positionCode' => $request->position_code,
+                            'positionName' => $request->position_name,
+                            'supervisorPositionCode' => $request->supervisor_position_code,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesWorkPatternTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/position',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'positionCode' => $request->position_code,
+                            'positionName' => $request->position_name,
+                            'supervisorPositionCode' => $request->supervisor_position_code,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
                         ]
                     )]
                 );

@@ -401,6 +401,7 @@ Route::get('time_management/period/data/detail', 'TimeManagementController@dataD
 Route::get('time_management/employee_name/detail', 'TimeManagementController@dataDetailEmployeeNameTM');
 Route::get('time_management/balance/detail', 'TimeManagementController@dataDetailBalanceTM');
 Route::get('time_management/period_maintenance/data/detail', 'TimeManagementController@dataDetailPeriodMaintenanceTM');
+Route::get('time_management/work_pattern/detail_data', 'TimeManagementController@dataDetailWorkPatternTM');
 
 /* Route untuk Report Time Management */
 Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');

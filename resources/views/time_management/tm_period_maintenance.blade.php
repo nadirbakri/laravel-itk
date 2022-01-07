@@ -311,8 +311,20 @@
         }
         // console.log(rangeYear);
 
-        var periodYear = moment(prevYear).format('YY');
-        console.log(periodYear);
+        $('#year').on('change', function () {
+            var periodYear = moment(prevYear).format('YY');
+            console.log(periodYear);
+            
+            var $periodMaintenance = $('#absenteeism_from, #absenteeism_to, #overtime_from, #overtime_to, #salary_from, #salary_to')
+            
+            $periodMaintenance.flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                defaultDate: "today",
+            })
+        })
         // var selectMonth = $('#month').attr('value');
         // var periodMonth = moment(selectMonth).format('')
 

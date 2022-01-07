@@ -375,20 +375,41 @@
     }
 
     $(document).ready(function () {
-        // function getDate (date_overtime_spl = '') {
-        //     $('#before_in').flatpickr({
-        //         enableTime: true,
-        //         noCalendar: true,
-        //         altInput: true,
-        //         allowInput: true,
-        //         altFormat: "H:i K" + date_overtime_spl,
-        //         dateFormat: "H:i K"
-        //     });
-        // }
-        
-        // console.log($('#before_in'));
+        var hour_min = $('#before_in, #start_overtime_spl, #finish_overtime_spl');
 
-        // pickerDate.setDate("{{ isset($data[0]->date_overtime_spl) ? $data[0]-> date_overtime_spl : ''}}");
+        hour_min.flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                altInput: true,
+                static: true,
+                allowInput: true,
+                defaultDate: "today",
+                altFormat: "H:i K",
+                dateFormat: "H:i:ss"
+        });
+
+        var start_finish = $('#start_overtime_spl, #finish_overtime_spl');
+
+        start_finish.on('change', function () {
+            var start = $('#start_overtime_spl').val();
+            var finish = $('#finish_overtime_spl').val();
+
+            var diff = (finish - start) / 60000;
+            var minutes = diff % 60;
+            var hours = (diff - minutes) / 60;
+
+            console.log(diff);
+
+            // $('#hour_overtime_spl').flatpickr({
+            //     enableTime: true,
+            //     noCalendar: true,
+            //     altInput: true,
+            //     allowInput: true,
+            //     defaultDate: "today",
+            //     altFormat: "H:i K",
+            //     dateFormat: "H:i:ss"
+            // });
+        })
 
         $("#date_overtime_spl").on('change', function() {
             var date_overtime_spl = $("#date_overtime_spl").attr('value');
@@ -403,25 +424,10 @@
             //     return before_date;
             //     console.log(before_date);
             // })
-            
-            var $hour_min = $('#before_in, #start_overtime_spl , #finish_overtime_spl , #hour_overtime,spl');
-            $hour_min.flatpickr({
-                enableTime: true,
-                noCalendar: true,
-                altInput: true,
-                allowInput: true,
-                defaultDate: "today",
-                altFormat: "H:i K" + " " + date,
-                dateFormat: date2 + " " + "H:i:s",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element); 
-                }
-            });
 
             // console.log($hour_min.attr('value'));
         });
+
 
         // var shift = $('#shift_overtime_spl').attr('value');
         // console.log(shift);
