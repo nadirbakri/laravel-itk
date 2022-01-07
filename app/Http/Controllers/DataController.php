@@ -260,6 +260,32 @@ class DataController extends Controller
 	    return response()->json($arrResult->dataListSet);
 	}
 
+	public function dataAbsenteeismTypeAPI()
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'AbsenteeismType_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    return response()->json($arrResult->dataListSet);
+	}
+
 	public function dataTaxCalculationMethodAPI()
     {
     	try {
@@ -273,6 +299,32 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TaxMethod_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    return response()->json($arrResult->dataListSet);
+	}
+
+	public function dataCurrencyAPI()
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'Currency',
 	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
@@ -3371,6 +3423,48 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$absent = $arrResult->dataListSet;
+	    }else{
+	    	$absent    = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->absentCode)){
+	    				return preg_match('/' . $search . '/i', $value->absentCode);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($absent);
+	}
+
+	public function dataCodeAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    		['body' => json_encode(
+	    			[
+	    				'absentType' => 'O',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// var_dump($arrResult->message);
 
 	    if($search == ''){
 	    	$absent = $arrResult->dataListSet;

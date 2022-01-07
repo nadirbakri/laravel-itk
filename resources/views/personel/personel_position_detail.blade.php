@@ -338,7 +338,7 @@
 
         if ($("#position_form").length > 0) {
             $("#position_form").validate({
-                rules: {
+            rules: {
                     position_code: {
                         required: true,
                     },

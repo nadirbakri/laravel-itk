@@ -32,6 +32,11 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_update_absenteeism_data');
     }
 
+    public function pageTemplatePreparation()
+    {
+        return view ('time_management.tm_template_preparation');
+    }
+
     public function pageUpdateShiftByDate()
     {
         return view ('time_management.tm_update_shift_by_date');
@@ -55,6 +60,16 @@ class TimeManagementController extends Controller
     public function pageOvertimeSPL()
     {
         return view ('time_management.tm_overtime_spl');
+    }
+
+    public function pagePeriodMaintenance()
+    {
+        return view ('time_management.tm_period_maintenance');
+    }
+
+    public function pageWorkPattern()
+    {
+        return view ('time_management.tm_work_pattern');
     }
 
     public function pageUnpaidLeaveReport()
@@ -153,6 +168,37 @@ class TimeManagementController extends Controller
         }
 
         // var_dump($arrResult);
+    }
+
+    public function tableWorkPatternTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
     }
 
     public function dataDetailRankingPersonel(Request $request)
@@ -302,6 +348,61 @@ class TimeManagementController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function dataDetailPeriodMaintenanceTM () 
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return response()->json($arrResult->dataListSet);
+    }
+
+    public function dataDetailWorkPatternTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'patternCode' => $request->patternCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('time_management.tm_work_pattern_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function printUnpaidLeaveReport(Request $request)
@@ -491,6 +592,55 @@ class TimeManagementController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesOvertimeSPLTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump($request->date_overtime_spl . "T" . $request->start_overtime_spl);
+
+            $response = $client->post(env('API_URL') . '/tmovtspl/inserttmovtspl',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no,
+                        "ovtDate" => $request->date_overtime_spl,
+                        "shiftCode" => $request->shift_overtime_spl,
+                        "ovtIn" => $request->date_overtime_spl . " " . $request->start_overtime_spl,
+                        "ovtOut" => $request->finish_overtime_spl ,
+                        "ovtHour" => $request->hour_overtime_spl,
+                        "ovtConvert" => $request->convert_overtime_spl,
+                        "ovtBeforeIn" => $request->before_in,
+                        "ovtCode" => $request->code_overtime_spl,
+                        "ovtDescription" => $request->description,
+                        "seqNo" => 0,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        var_dump($arrResult);
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function prosesCompanyWorkingCalendar(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -519,6 +669,64 @@ class TimeManagementController extends Controller
                             'sessionUserID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/position',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'positionCode' => $request->position_code,
+                            'positionName' => $request->position_name,
+                            'supervisorPositionCode' => $request->supervisor_position_code,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesWorkPatternTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/position',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'positionCode' => $request->position_code,
+                            'positionName' => $request->position_name,
+                            'supervisorPositionCode' => $request->supervisor_position_code,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
                         ]
                     )]
                 );

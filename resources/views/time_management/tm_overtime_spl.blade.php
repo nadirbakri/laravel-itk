@@ -12,8 +12,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/i18n/jquery-ui-timepicker-addon-i18n.min.js"> --}}
+    {{-- <link rel="stylesheet" href="https://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.css"> --}}
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-time_management {
@@ -193,7 +197,7 @@
             </button>
         </div>
         <div class="col-2">
-            <a class="btn btn-danger" href="{{ url('time_management/input_balance_leave') }}" target="iframe_dashboard"
+            <a class="btn btn-danger" href="{{ url('time_management/overtime_spl') }}" target="iframe_dashboard"
                 name="btn-delete" id="btn-delete" style="width: 100%;">
                 <i class="fa fa-times-circle"></i> {{ __('tm_overtime_spl.btn_delete') }}
             </a>
@@ -240,11 +244,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="shift">{{ __('tm_overtime_spl.label_shift') }}</label>
-                                    <select class="form-control select2" id="shift" name="shift"></select>
+                                        for="shift_overtime_spl">{{ __('tm_overtime_spl.label_shift') }}</label>
+                                    <select class="form-control select2" id="shift_overtime_spl" name="shift_overtime_spl"></select>
                                 </div>
                             </div>
                         </div>
@@ -252,15 +256,15 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="code">{{ __('tm_overtime_spl.label_code') }}</label>
-                                    <select class="form-control select2" id="code" name="code"></select>
+                                        for="code_overtime_spl">{{ __('tm_overtime_spl.label_code') }}</label>
+                                    <select class="form-control select2" id="code_overtime_spl" name="code_overtime_spl"></select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="description">{{ __('tm_overtime_spl.label_description') }}</label>
                                     <input type="text" class="form-control" id="description" name="description"
-                                        placeholder={{ __('tm_overtime_spl.label_description') }} disabled>
+                                        placeholder={{ __('tm_overtime_spl.label_description') }}>
                                 </div>
                             </div>
                         </div>
@@ -274,15 +278,15 @@
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="start">{{ __('tm_overtime_spl.label_start') }}</label>
-                                    <input type="text" class="form-control" id="start" name="start"
+                                    <label for="start_overtime_spl">{{ __('tm_overtime_spl.label_start') }}</label>
+                                    <input type="text" class="form-control" id="start_overtime_spl" name="start_overtime_spl"
                                         placeholder={{ __('tm_overtime_spl.label_start') }}>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="finish">{{ __('tm_overtime_spl.label_finish') }}</label>
-                                    <input type="text" class="form-control" id="finish" name="finish"
+                                    <label for="finish_overtime_spl">{{ __('tm_overtime_spl.label_finish') }}</label>
+                                    <input type="text" class="form-control" id="finish_overtime_spl" name="finish_overtime_spl"
                                         placeholder={{ __('tm_overtime_spl.label_finish') }}>
                                 </div>
                             </div>
@@ -290,22 +294,22 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="hour">{{ __('tm_overtime_spl.label_hour') }}</label>
-                                    <input type="text" class="form-control" id="hour" name="hour"
+                                    <label for="hour_overtime_spl">{{ __('tm_overtime_spl.label_hour') }}</label>
+                                    <input type="text" class="form-control" id="hour_overtime_spl" name="hour_overtime_spl"
                                         placeholder={{ __('tm_overtime_spl.label_hour') }}>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="convert">{{ __('tm_overtime_spl.label_convert') }}</label>
-                                    <input type="text" class="form-control" id="convert" name="convert"
+                                    <input type="number" class="form-control" id="convert" name="convert"
                                         placeholder={{ __('tm_overtime_spl.label_convert') }}>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_overtime_spl.btn_save') }}</button>
+                    <button type="button" id="btn-save-overtime-spl" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_overtime_spl.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('tm_overtime_spl.btn_cancel') }}</button>
                 </div>
@@ -342,6 +346,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js" type="text/javascript"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> --}}
+<script src="differenceHours.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -358,6 +365,7 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -367,10 +375,148 @@
     }
 
     $(document).ready(function () {
+        var hour_min = $('#before_in, #start_overtime_spl, #finish_overtime_spl');
+
+        hour_min.flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                altInput: true,
+                static: true,
+                allowInput: true,
+                defaultDate: "today",
+                altFormat: "H:i K",
+                dateFormat: "H:i:ss"
+        });
+
+        var start_finish = $('#start_overtime_spl, #finish_overtime_spl');
+
+        start_finish.on('change', function () {
+            var start = $('#start_overtime_spl').val();
+            var finish = $('#finish_overtime_spl').val();
+
+            var diff = (finish - start) / 60000;
+            var minutes = diff % 60;
+            var hours = (diff - minutes) / 60;
+
+            console.log(diff);
+
+            // $('#hour_overtime_spl').flatpickr({
+            //     enableTime: true,
+            //     noCalendar: true,
+            //     altInput: true,
+            //     allowInput: true,
+            //     defaultDate: "today",
+            //     altFormat: "H:i K",
+            //     dateFormat: "H:i:ss"
+            // });
+        })
+
+        $("#date_overtime_spl").on('change', function() {
+            var date_overtime_spl = $("#date_overtime_spl").attr('value');
+            // console.log(date_overtime_spl);
+            var date = moment(date_overtime_spl).format('DD-MM-YYYY');
+            var date2 = moment(date_overtime_spl).format('YYYY-MM-DD');
+            // console.log(date);
+
+            // $('#before_in').on('click', function () {
+            //     var before_in = $('#before_in').attr('value');
+            //     var before_date = before_in + date
+            //     return before_date;
+            //     console.log(before_date);
+            // })
+
+            // console.log($hour_min.attr('value'));
+        });
+
+
+        // var shift = $('#shift_overtime_spl').attr('value');
+        // console.log(shift);
+
+        // var before_in = $('#before_in').attr('value');
+        // console.log(before_in);
+
+        // console.log($("#before_in").attr('value'));
+
+        // $('#hour_overtime_spl').on('keyup change', function () {
+        //     differenceHours.diff_hours('#start_overtime_spl', '#finish_overtime_spl');
+        // })
+
+        // var valueStart = $('#start_overtime_spl').attr('value');
+        // var valueFinish = $('#finish_overtime_spl').attr('value');
+
+        // console.log(valueStart);
+
+        // var timeStart = new Date (valueStart).getHours();
+        // var timeEnd = new Date (valueFinish).getHours();
+
+        // console.log(timeStart);
+
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no');
+        loadDataShiftCode();
+        loadDataCode();
+
+        function htmlDecode(value) {
+    	    return $("<textarea/>").html(value).text();
+	    }
+
+        $('#employee_no').on("select2:select", function (e) {
+            var data = $('#employee_no').select2('data');
+            $('#employee_name').val(htmlDecode(data[0].title));
+            // console.log(data[0].title);
+            $.ajax({
+                url: "{{ url('time_management/employee_name/detail') }}",
+                type: "GET",
+                data: {
+                    'employeeNo': data[0].id
+                },
+            })
+        });
+
+        $('#employee_no').on("select2:unselecting", function (e) {
+            $('#employee_name').val('');
+        });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        function load_data_overtime_spl(employee_no = '') {
+            table = $('#overtime_spl_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('time_management/overtime_spl/table') }}",
+                    data: {
+                        'employeeNo' : employee_no
+                    }
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'leaveCode', name: 'leaveCode'},
+                    {data: 'leaveBalance', name: 'leaveBalance'},
+                    {data: 'leaveBalanceBefore', name: 'leaveBalanceBefore'},
+                    {data: 'leaveBalanceBeforeExpiredDate', name: 'leaveBalanceBeforeExpiredDate'}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
@@ -423,8 +569,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.fullName,
+                                    text: item.employeeNo,
                                     id: item.employeeNo,
+                                    title: item.fullName,
                                     data: item
                                 }
                             })
@@ -436,42 +583,250 @@
             });
         }
 
-        function load_data_overtime_spl(employee_no = '') {
-            table = $('#overtime_spl_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('time_management/overtime_spl/table') }}",
-                    data: {
-                        'employeeNo' : employee_no
+        function loadDataShiftCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Shift Code</b></div>' +
+                        '<div class="col-6"><b>Shift Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.shiftCode + '</div>' +
+                        '<div class="col-6">' + data.data.shiftName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#shift_overtime_spl').select2({
+                width: '100%',
+                placeholder: 'Choose Shift',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                        }
+                ajax: {
+                    url: '/shift_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
                     },
-                    {data: 'leaveCode', name: 'leaveCode'},
-                    {data: 'leaveBalance', name: 'leaveBalance'},
-                    {data: 'leaveBalanceBefore', name: 'leaveBalanceBefore'},
-                    {data: 'leaveBalanceBeforeExpiredDate', name: 'leaveBalanceBeforeExpiredDate'}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.shiftName,
+                                    id: item.shiftCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.absentType + '</div>' +
+                        '<div class="col-6">' + data.data.absentCode + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#code_overtime_spl').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Absent Type</b></div>' +
+                        '<div class="col-6"><b>Absent Code</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
                 }
             });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#code_overtime_spl').select2({
+                width: '100%',
+                placeholder: 'Choose Code',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.absentCode,
+                                    id: item.absentType,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        $("#btn-save-overtime-spl").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#overtime_spl_form").submit();
+        });
+
+        if ($("#overtime_spl_form").length > 0) {
+            $("#overtime_spl_form").validate({
+                rules: {
+                    employee_no: {
+                        required: true,
+                    },
+                    date_overtime_spl: {
+                        required: true,
+                    },
+                    shift_overtime_spl: {
+                        required: true,
+                    },
+                    code_overtime_spl: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no: {
+                        required: "{{ __('tm_overtime_spl.field_mandatory') }}",
+                    },
+                    date_overtime_spl: {
+                        required: "{{ __('tm_overtime_spl.field_mandatory') }}",
+                    },
+                    shift_overtime_spl: {
+                        required: "{{ __('tm_overtime_spl.field_mandatory') }}",
+                    },
+                    code_overtime_spl: {
+                        required: "{{ __('tm_overtime_spl.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save-overtime-spl").prop("disabled", false);
+                    $("#btn-save-overtime-spl").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_overtime_spl.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/overtime_spl/proses') }}",
+                        type: "POST",
+                        data: $('#overtime_spl_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-overtime-spl").prop("disabled", false);
+                                $("#btn-save-overtime-spl").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_overtime_spl.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/overtime_spl') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save-overtime-spl").prop("disabled", false);
+                                $("#btn-save-overtime-spl").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_overtime_spl.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-overtime-spl").prop("disabled", false);
+                            $("#btn-save-overtime-spl").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_overtime_spl.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
         }
     });
 </script>

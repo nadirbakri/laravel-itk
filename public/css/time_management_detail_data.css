@@ -87,9 +87,8 @@
 }
 .div-title {
 	margin: 1.5%;
-	margin-bottom: 3%;
-	margin-top: 8%;
-
+	margin-top: 2%;
+	margin-bottom: 2%;
 }
 .div-title img {
 	max-width: 100%;
@@ -276,7 +275,6 @@ tr.shown td.details-control {
 	cursor: pointer;
 	background-size: 25% 36%;
 }
-
 .btn-process{
 	font-family: Inter-Regular;
 	font-size: 1.2vw;
