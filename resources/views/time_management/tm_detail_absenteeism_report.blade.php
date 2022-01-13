@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
@@ -145,6 +146,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="div-table col-6">
+                    <table id="detail_absenteeism_report_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ __('tm_detail_absenteeism_report.label_table_absent_code') }}</th>
+                                <th>{{ __('tm_detail_absenteeism_report.label_table_description') }}</th>
+                                <th>{{ __('tm_detail_absenteeism_report.label_table_leave') }}</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
                 <div class="row">
                     <div class="form-group ml-4">

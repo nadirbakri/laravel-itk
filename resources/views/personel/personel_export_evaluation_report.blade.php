@@ -18,6 +18,16 @@
 			margin-bottom: 25px;
 			margin-top: 25px;
 		}
+		.table_detail td{
+			border:1px solid #000;
+			text-align:center;
+		}
+		.table_detail th{
+			border:1px solid #000;
+		}
+		.table_detail{
+			border-collapse:collapse;
+		}
 	</style>
 </head>
 <body>
@@ -87,7 +97,7 @@
 			</tr>
 	</table>
 	<br><br>
-	<table style="width: 100%; font-size: 14px; border: 1px;" class="table table-bordered table-hover responsive">
+	<table style="width: 50%; font-size: 14px; border: 1px;" class="table table-bordered table-hover responsive table_detail">
 		<thead>
 			<tr>
 				<th>Evaluated Aspect</th>
@@ -109,14 +119,13 @@
 		<thead>
 			<tr>
 				<th>Total :</th>
+				<th>{{ $data->result }}</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($data->detail as $detail)
 			<tr>
-				<th>{{ $detail->total }}</th>
+				
 			</tr>
-			@endforeach
 		</tbody>
 	</table>
 	<script type="text/php">
