@@ -14,7 +14,8 @@
         'label_column_h' => 'Column H : Kode Pusat Biaya',
         'label_column_i' => 'Column I : Kode Lembur',
         'label_column_j' => 'Column J : Jam Lembur',
-        'btn_process' => 'Proses'
+        'btn_process' => 'Proses',
+        'alert_success' => 'Sukses !'
 ]
 
 ?>

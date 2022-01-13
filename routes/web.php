@@ -233,6 +233,7 @@ Route::get('personel/employee_mutation/detail_data', 'PersonelController@dataDet
 
 Route::get('personel/personal_data/fringe_benefit/table', 'PersonelController@tableFringeBenefitPersonalDataPersonel');
 Route::get('personel/personal_data/dependent/table', 'PersonelController@tableDependentPersonalDataPersonel');
+Route::get('personel/family_dependent_data/table', 'PersonelController@tableFamilyDependentDataPersonel');
 Route::get('personel/personal_data/prefix_title', 'PersonelController@dataPrefixTitlePersonalDataPersonel');
 Route::get('personel/performance/award/table', 'PersonelController@tableAwardPerformancePersonel');
 Route::get('personel/performance/sanction/table', 'PersonelController@tableSanctionPerformancePersonel');
@@ -353,6 +354,7 @@ Route::post('personel/employee_turn_over_report/print', 'PersonelController@prin
 Route::post('personel/employee_skill_report/print', 'PersonelController@printEmployeeSkillReportPersonel');
 Route::post('personel/employee_report_by_status/print', 'PersonelController@printEmployeeReportByStatusPersonel');
 Route::post('personel/custom_report_employee/print', 'PersonelController@printCustomReportEmployee');
+Route::post('personel/evaluation_report/print', 'PersonelController@printEvaluationReportPersonel');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');
@@ -361,7 +363,7 @@ Route::get('personel/performance/result/check', 'PersonelController@checkResultP
 Route::get('time_management', 'TimeManagementController@pageTimeManagement');
 Route::get('time_management/time_recording_process_form', 'TimeManagementController@pageTimeRecordingProcessForm');
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
-Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreperation');
+Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreparation');
 Route::get('time_management/update_shift_by_date', 'TimeManagementController@pageUpdateShiftByDate');
 Route::get('time_management/overtime_spl', 'TimeManagementController@pageOvertimeSPL');
 Route::get('time_management/company_working_calendar', 'TimeManagementController@pageCompanyWorkingCalendar');
@@ -383,26 +385,47 @@ Route::get('time_management/unpaid_leave_report', 'TimeManagementController@page
 /* Route untuk Tabel Time Management */
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
 Route::get('time_management/company_working_calendar/table', 'TimeManagementController@tableCompanyWorkingCalendar');
-Route::get('time_management/input_balance_leave/detail', 'TimeManagementController@dataDetailInputBalanceLeave');
+Route::get('time_management/work_pattern/table', 'TimeManagementController@tableWorkPatternTM');
+Route::get('time_management/overtime_spl/table', 'TimeManagementController@tableOvertimeSPL');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
+Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
+
+/*Route untuk check bool Time Management */
+Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
+
+/*Route untuk check bool Time Management */
+Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
 
 /* Route untuk proses Time Management */
 Route::post('time_management/company_working_calendar/proses','TimeManagementController@prosesCompanyWorkingCalendar');
 Route::post('time_management/input_balance_leave/proses', 'TimeManagementController@prosesInputBalanceLeaveTM');
 Route::post('time_management/update_shift_by_date/proses', 'TimeManagementController@prosesUpdateShiftByDateTM');
+Route::post('time_management/overtime_spl/proses', 'TimeManagementController@prosesOvertimeSPLTM');
+Route::post('time_management/work_pattern/proses', 'TimeManagementController@prosesWorkPatternTM');
 
+/* Route untuk cek status Time Management */
+Route::post('time_management/overtime_spl/status', 'TimeManagementController@statusOvertimeSPLTM');
+Route::get('time_management/work_pattern/status', 'TimeManagementController@statusWorkPatternTM');
+
+Route::get('time_management/input_balance_leave/detail', 'TimeManagementController@dataDetailInputBalanceLeave');
 Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
 Route::get('time_management/employee_name/detail', 'TimeManagementController@dataDetailEmployeeNameTM');
 Route::get('time_management/balance/detail', 'TimeManagementController@dataDetailBalanceTM');
+Route::get('time_management/period_maintenance/data/detail', 'TimeManagementController@dataDetailPeriodMaintenanceTM');
+Route::get('time_management/work_pattern/detail_data', 'TimeManagementController@dataDetailWorkPatternTM');
 
 /* Route untuk Report Time Management */
 Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');
 Route::post('time_management/postpone_leave_report/print', 'TimeManagementController@printPostponeLeaveReport');
 Route::post('time_management/monthly_leave_report/print', 'TimeManagementController@printMonthlyLeaveReport');
 Route::post('time_management/monthly_absenteeism_analysis/print', 'TimeManagementController@printMonthlyAbsenteeismAnalysis');
+Route::post('time_management/detail_absenteeism_report/print', 'TimeManagementController@printDetailAbsenteeismReport');
+Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementController@printMonthlyAbsenteeismDetail');
+Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
+Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -479,6 +502,8 @@ Route::get('termination_code/api', 'DataController@dataTerminationCodeAPI');
 Route::get('benefits/api', 'DataController@dataBenefitsAPI');
 Route::get('tax_status/api', 'DataController@dataTaxStatusAPI');
 Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMethodAPI');
+Route::get('absenteeism_type/api', 'DataController@dataAbsenteeismTypeAPI');
+Route::get('currency/api', 'DataController@dataCurrencyAPI');
 Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
 Route::get('work_pattern_code/api', 'DataController@dataWorkPatternCodeAPI');
 Route::get('company_bank_code/api', 'DataController@dataCompanyBankCodeAPI');
@@ -558,6 +583,8 @@ Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
 Route::get('shift_code/api', 'DataController@dataShiftAPI');
 Route::get('leave_code/api', 'DataController@dataLeaveCodeAPI');
+Route::get('absent_code/api', 'DataController@dataAbsentCodeAPI');
+Route::get('code/api', 'DataController@dataCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

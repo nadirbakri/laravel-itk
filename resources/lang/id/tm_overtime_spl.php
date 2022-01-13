@@ -19,8 +19,8 @@ return [
     'table_convert' => 'Konversi',
     'table_code' => 'Kode',
     'table_description' => 'Deskripsi',
-    'table_app_leader' => 'Aplikasi Pemimpin',
-    'table_app_hrd' => 'Aplikasi HRD',
+    'table_app_leader' => 'Persetujuan Pemimpin',
+    'table_app_hrd' => 'Persetujuan HRD',
     'btn_add' => 'Tambah',
     'btn_save' => 'Simpan',
     'btn_delete' => 'Hapus',
@@ -36,9 +36,10 @@ return [
     'label_finish' => 'Selesai',
     'label_hour' => 'Jam',
     'label_convert' => 'Konversi',
-    'btn_app_leader' => 'Aplikasi Pemimpin',
-    'btn_app_hrd' => 'Aplikasi HRD',
+    'btn_app_leader' => 'Persetujuan Pemimpin',
+    'btn_app_hrd' => 'Persetujuan HRD',
     'label_check_all' => 'Centang Semua',
-    'label_uncheck_all' => 'Hapus Centang Semua'
+    'label_uncheck_all' => 'Hapus Centang Semua',
+    'field_mandatory' => "Kolom ini tidak boleh kosong"
 ]
 ?>

@@ -119,16 +119,31 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group">
-                        <label for="absent_code">&nbsp;</label>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="absent_code">{{ __('tm_detail_absenteeism_reason_report.label_absent_code') }}</label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="absent_code_all">&nbsp;</label>
-                        <div class="form-radio">
-                            <input class="form-radio-input" type="radio" id="absent_code_all"
-                                name="absent_code_all" value="true">
-                            <label class="form-radio-label"
-                                for="absent_code_all">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_all') }}</label>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="absent_code_all"
+                                    name="absent_code_all" value="true">
+                                <label class="form-radio-label"
+                                    for="absent_code_all">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_all') }}</label>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="absent_code_selection">&nbsp;</label>
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="absent_code_selection"
+                                    name="absent_code_selection" value="true">
+                                <label class="form-radio-label"
+                                    for="absent_code_selection">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_selection') }}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -884,7 +899,7 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_evaluation_report/print') }}",
+                        url: "{{ url('time_management/detail_absenteeism_reason_report/print') }}",
                         type: "POST",
                         data: $('#tm_detail_absenteeism_reason_report_form').serialize(),
                         success: function (result, status, xhr) {
@@ -910,7 +925,7 @@
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_print") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

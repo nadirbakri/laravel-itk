@@ -35,7 +35,7 @@ return [
     'monthly_absenteeism_analysis' => 'Monthly Absenteeism Analysis',
     'monthly_absenteeism_detail' => 'Monthly Absenteeism Detail',
     'absenteeism_overtime_report' => 'Overtime Absenteeism Report',
-    'detail_absenteeism_report' => 'Detail Absenteeism Report',
+    'detail_absenteeism_reason_report' => 'Absenteeism Reason Report Detail',
     'monthly_leave_report' => 'Monthly Leave Report',
     'detail_absenteeism_report' => 'Absenteeism Report Detail',
     'detail_rate_overtime_report' => 'Overtime Rate Report Detail',

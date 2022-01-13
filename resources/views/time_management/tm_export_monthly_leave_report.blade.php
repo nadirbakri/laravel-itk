@@ -23,19 +23,17 @@
 				<th rowspan="2">Employee No</th>
 				<th rowspan="2">Employee Name</th>
 				<th colspan="4">Annual Leave</th>
-				<td>
-					<tr>Prev. Year</tr>
-                    <tr>This Year</tr>
-					<tr>Request</tr>
-                    <tr>Balance</tr>
-				</td>
                 <th colspan="4">Long Leave</th>
-				<td>
-					<tr>Prev. Year</tr>
-                    <tr>This Year</tr>
-					<tr>Request</tr>
-                    <tr>Balance</tr>
-				</td>
+			</tr>
+			<tr>
+				<th>Prev. Year</th>
+				<th>This Year</th>
+				<th>Request</th>
+				<th>Balance</th>
+				<th>Prev. Year</th>
+				<th>This Year</th>
+				<th>Request</th>
+				<th>Balance</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -45,10 +43,11 @@
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
-				<td>{{ $value->leaveDateFrom }}</td>
-				<td>{{ $value->leaveDateTo }}</td>
-                <td>{{ $value->leaveRemarks }}</td>
-				
+				<td>{{ $value->prevYear }}</td>
+				<td>{{ $value->thisYear }}</td>
+				<td>{{ $value->request }}</td>
+                <td>{{ $value->balance }}</td>
+		
 			</tr>
 			@endforeach
 		</tbody>

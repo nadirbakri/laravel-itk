@@ -23,6 +23,8 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
-    'btn_print' => 'Print'
+    'btn_print' => 'Print',
+    'employee_no_from_required' => 'Employee No From Required',
+    'employee_no_to_required' => 'Employee No To Required'
 
 ];

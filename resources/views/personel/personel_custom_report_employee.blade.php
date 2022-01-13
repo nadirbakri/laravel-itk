@@ -664,22 +664,22 @@
 
         if ($("#custom_report_employee_form").length > 0) {
             $("#custom_report_employee_form").validate({
-                rules: {
-                    employee_no_from: {
-                        required: true,
-                    }, 
-                    employee_no_to: {
-                        required: true,
-                    },
-                },
-                messages: {
-                    employee_no_from: {
-                        required: "{{ __('personel_custom_report_employee.employee_no_from_required') }}",
-                    },
-                    employee_no_to: {
-                        required: "{{ __('personel_custom_report_employee.employee_no_to_required') }}",
-                    },
-                },
+                // rules: {
+                //     field_name: {
+                //         required: true,
+                //     }, 
+                //     column_header: {
+                //         required: true,
+                //     },
+                // },
+                // messages: {
+                //     field_name: {
+                //         required: "{{ __('personel_custom_report_employee.field_name_required') }}",
+                //     },
+                //     column_header: {
+                //         required: "{{ __('personel_custom_report_employee.column_header_required') }}",
+                //     },
+                // },
                 highlight: function (element) {
                     $(element).addClass('is-invalid');
                 },

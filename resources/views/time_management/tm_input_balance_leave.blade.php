@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-time_management {
@@ -50,6 +50,27 @@
             -moz-border-radius-topright: 5px;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
+        }
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
         }
 
         .select2-results__option[aria-selected=true] {
@@ -107,6 +128,41 @@
                 style="width: 100%;">
                 <i class="fa fa-pencil"></i> {{ __('tm_input_balance_leave.btn_edit') }}
             </button>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('personel_position.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -330,7 +386,7 @@
 
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
-            if(data.count() > 0){
+            if(data.count() > 0 && $('#employee_no') != null){
                 // console.log(data[0].employeeNo);
                 $.redirect("{{ url('time_management/input_balance_leave/detail') }}", { 'employeeNo' : data[0].employeeNo, 'leaveCode' : data[0].leaveCode }, "GET", "iframe_dashboard");
             }else{

@@ -23,11 +23,11 @@
 				<th rowspan="2">Employee No</th>
 				<th rowspan="2">Employee Name</th>
 				<th colspan="2">Unpaid Leave Date</th>
-				<td>
-					<tr>From</tr>
-					<tr>To</tr>
-				</td>
                 <th rowspan="2">Description</th>
+			</tr>
+			<tr>
+				<th>From</th>
+				<th>To</th>
 			</tr>
 		</thead>
 		<tbody>

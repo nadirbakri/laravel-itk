@@ -848,6 +848,22 @@
 
         if ($("#postpone_leave_report_form").length > 0) {
             $("#postpone_leave_report_form").validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    }, 
+                    employee_no_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('tm_postpone_leave_report.employee_no_from_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('tm_postpone_leave_report.employee_no_to_required') }}",
+                    },
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -862,6 +878,11 @@
                         type: "POST",
                         data: $('#postpone_leave_report_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_postpone_leave_report.btn_print") }}'
+                            );
+                            
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

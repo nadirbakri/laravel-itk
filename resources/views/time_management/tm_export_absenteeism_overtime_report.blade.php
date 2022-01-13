@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('personel_employee_report_by_status.judul') }}</title>
+	<title>{{ __('tm_absenteeism_overtime_report.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<style type="text/css">
@@ -19,30 +19,35 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th>No</th>
-				<th>Employee No</th>
-				<th>Employee Name</th>
-				<th>Gender</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Ranking</th>
-                <th>Position</th>
-                <th>Location</th>
+				<th rowspan="2">No</th>
+				<th rowspan="2">Employee No</th>
+				<th rowspan="2">Employee Name</th>
+				<th colspan="4">Date</th>
+                <th colspan="4">Total  Actual Total Convert</th>
+			</tr>
+			<tr>
+				<th>Prev. Year</th>
+				<th>This Year</th>
+				<th>Request</th>
+				<th>Balance</th>
+				<th>Prev. Year</th>
+				<th>This Year</th>
+				<th>Request</th>
+				<th>Balance</th>
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 0; ?>
+            <?php $no = 1; 
+			?>
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
-                <td>{{ $value->gender }}</td>
-                <td>{{ $value->contractstartDate }}</td>
-                <td>{{ $value->contractendDate }}</td>
-                <td>{{ $value->ranking }}</td>
-                <td>{{ $value->position }}</td>
-                <td>{{ $value->location }}</td>
+				<td>{{ $value->prevYear }}</td>
+				<td>{{ $value->thisYear }}</td>
+				<td>{{ $value->request }}</td>
+                <td>{{ $value->balance }}</td>
 			</tr>
 			@endforeach
 		</tbody>
