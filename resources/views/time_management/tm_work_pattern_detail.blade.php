@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <label
                                 for="no_of_day">{{ __('tm_work_pattern.label_no_of_day') }}</label>
-                            <input type="number" class="form-control" id="no_of_day"
+                            <input type="number" min="0" class="form-control" id="no_of_day"
                                 name="no_of_day"
                                 placeholder="{{ __('tm_work_pattern.label_no_of_day') }}">
                         </div>
@@ -146,7 +146,7 @@
                                       <tr>
                                         <th>Seq No</th>
                                         <th>Day Code</th>
-                                         <th>Shift Code</th>
+                                        <th>Shift Code</th>
                                 </thead>
                             </table>
                         </div>
@@ -219,9 +219,14 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var func = "{{ $func }}";
+        var table = null;
+
+        $('#work_pattern_detail_table').DataTable().destroy();
+        load_table_detail_work_pattern();
+        // table.clear().draw();
 
         if (func == 'new') {
-            $('#record_status').val("Active");
+            $('#record_status').val("A");
             $('#record_function').val("New");
             $('#work_pattern_code').val("");
             $('#description').val("");
@@ -236,107 +241,136 @@
             $('#no_of_day').val("{{ isset($data[0]->noOfDay) ? $data[0]->noOfDay : '' }}");
         }
 
+        function htmlDecode(value) {
+            return $("<textarea/>").html(value).text();
+        }
+
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('time_management/work_pattern') }}";
         });
 
-        // $("#btn-save").click(function () {
-        //     $(this).prop("disabled", true);
-        //     $(this).html(
-        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-        //     );
-        //     $("#work_pattern_form").submit();
-        // });
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        // if ($("#work_pattern_form").length > 0) {
-        //     $("#work_pattern_form").validate({
-        //     rules: {
-        //             work_pattern_code: {
-        //                 required: true,
-        //             },
-        //             no_of_day: {
-        //                 required: true,
-        //             },
-        //         },
-        //         messages: {
-        //             work_pattern_code: {
-        //                 required: "{{ __('tm_work_pattern.work_pattern_code_required') }}",
-        //             },
-        //             no_of_day: {
-        //                 required: "{{ __('tm_work_pattern.no_of_day_required') }}",
-        //             },
-        //         },
-        //         highlight: function (element) {
-        //             $(element).addClass('is-invalid');
-        //         },
-        //         unhighlight: function (element) {
-        //             $(element).removeClass('is-invalid');
-        //         },
-        //         errorElement: 'span',
-        //         errorPlacement: function (error, element) {
-        //             $("#btn-save").prop("disabled", false);
-        //             $("#btn-save").html(
-        //                 '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
-        //             );
+        function load_table_detail_work_pattern() {
+            table = $('#work_pattern_detail_table').DataTable({
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses'
+            });
+        }
 
-        //             error.addClass('invalid-feedback');
-        //             element.closest('.form-group').append(error);
-        //         },
-        //         submitHandler: function (form) {
-        //             $.ajaxSetup({
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-        //             $.ajax({
-        //                 url: "{{ url('time_management/work_pattern/proses') }}",
-        //                 type: "POST",
-        //                 data: $('#work_pattern_form').serialize(),
-        //                 success: function (response) {
-        //                     if (response.status == "true") {
-        //                         $("#btn-save").prop("disabled", false);
-        //                         $("#btn-save").html(
-        //                             '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
-        //                         );
+        $('#no_of_day').on('input', function () {
+            var no_of_day = $('#no_of_day').val();
+
+            table.clear().draw();
+            
+            for (var i = 1; i <= no_of_day; i++) {
+                // console.log($('#no_of_day').val());
+
+                table.row.add([
+                    '<input type="hidden" class="form-control" name="seq_no[]" value="'+ i +'">' + i,
+                    '<input type="text" class="form-control" name="day_code[]">',
+                    '<input type="text" class="form-control" name="shift_code[]">',
+                ]).draw();
+            }
+        });
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#work_pattern_form").submit();
+        });
+
+        if ($("#work_pattern_form").length > 0) {
+            $("#work_pattern_form").validate({
+            rules: {
+                    work_pattern_code: {
+                        required: true,
+                    },
+                    no_of_day: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    work_pattern_code: {
+                        required: "{{ __('tm_work_pattern.work_pattern_code_required') }}",
+                    },
+                    no_of_day: {
+                        required: "{{ __('tm_work_pattern.no_of_day_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/work_pattern/proses') }}",
+                        type: "POST",
+                        data: $('#work_pattern_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
+                                );
                                 
-        //                         $('#notification_success').modal('show');
-        //                         $('#message-notification-success').html(response
-        //                             .message);
-        //                         setTimeout(function () {
-        //                             window.location =
-        //                                 "{{ url('personel/position') }}";
-        //                         }, 3000);
-        //                     } else {
-        //                         $("#btn-save").prop("disabled", false);
-        //                         $("#btn-save").html(
-        //                             '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
-        //                         );
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('personel/position') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
+                                );
 
-        //                         $('#notification_error').modal('show');
-        //                         if (response.message == null || response.message ==
-        //                             '') {
-        //                             $('#message-notification-error').html(
-        //                                 "{{ __('login.error') }}");
-        //                         } else {
-        //                             $('#message-notification-error').html(response
-        //                                 .message);
-        //                         }
-        //                     }
-        //                 },
-        //                 error: function (response) {
-        //                     $("#btn-save").prop("disabled", false);
-        //                     $("#btn-save").html(
-        //                         '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
-        //                     );
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
+                            );
 
-        //                     $('#notification').modal('show');
-        //                     $('#message-notification').html(response);
-        //                 }
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
 
-        //             });
-        //         }
-        //     })
-        // }
+                    });
+                }
+            })
+        }
     })
 
 </script>

@@ -386,17 +386,29 @@ Route::get('time_management/unpaid_leave_report', 'TimeManagementController@page
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
 Route::get('time_management/company_working_calendar/table', 'TimeManagementController@tableCompanyWorkingCalendar');
 Route::get('time_management/work_pattern/table', 'TimeManagementController@tableWorkPatternTM');
+Route::get('time_management/overtime_spl/table', 'TimeManagementController@tableOvertimeSPL');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
 
+/*Route untuk check bool Time Management */
+Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
+
+/*Route untuk check bool Time Management */
+Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
+
 /* Route untuk proses Time Management */
 Route::post('time_management/company_working_calendar/proses','TimeManagementController@prosesCompanyWorkingCalendar');
 Route::post('time_management/input_balance_leave/proses', 'TimeManagementController@prosesInputBalanceLeaveTM');
 Route::post('time_management/update_shift_by_date/proses', 'TimeManagementController@prosesUpdateShiftByDateTM');
 Route::post('time_management/overtime_spl/proses', 'TimeManagementController@prosesOvertimeSPLTM');
+Route::post('time_management/work_pattern/proses', 'TimeManagementController@prosesWorkPatternTM');
+
+/* Route untuk cek status Time Management */
+Route::post('time_management/overtime_spl/status', 'TimeManagementController@statusOvertimeSPLTM');
+Route::get('time_management/work_pattern/status', 'TimeManagementController@statusWorkPatternTM');
 
 Route::get('time_management/input_balance_leave/detail', 'TimeManagementController@dataDetailInputBalanceLeave');
 Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
