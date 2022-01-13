@@ -15,6 +15,7 @@ use Session;
 use App;
 use DataTables;
 use Excel;
+use PDF;
 
 class PersonelController extends Controller
 {
@@ -7627,10 +7628,110 @@ class PersonelController extends Controller
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [ 
+                'companyCode' => Session::get('companyCode'), 
+                'languageID' => App::getLocale(), 
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'includeResign' => isset($request->include_resign) ? (bool) $request->include_resign : false
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->period_from) || !empty($request->period_to)){
+                $param['evaluationPeriodFrom'] = $request->period_from;
+                $param['evaluationPeriodTo'] = $request->period_to;
+            }
+
+            if(!empty($request->group_authorize_from) || !empty($request->group_authorize_to)){
+                $param['groupAuthorizeCodeFrom'] = $request->group_authorize_from;
+                $param['groupAuthorizeCodeTo'] = $request->group_authorize_to;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = $value;
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = $value2;
+                    }
+                    $data_level[] = [
+                        "levelType" => (string) ($key + 1),
+                        "levelCode" => $data_level_detail
+                    ];
+                }
+
+                $param['levelMaster'] = $data_level;
+            }
+            // if(!empty($request->dataLevel) && !is_null($request->dataLevel[0])){
+            //     foreach($request->dataLevel as $key => $value){
+            //         $data_level_detail = [];
+            //         foreach($request->dataLevel[$key] as $value2){
+            //             $data_level_detail[] = [
+            //                 'levelCode' => $value2
+            //             ];
+            //         }
+            //         $data_level[] = [
+            //             "companyCode" => Session::get('companyCode'),
+            //             "levelType" => (string) ($key + 1),
+            //             "level" => $data_level_detail
+            //         ];
+            //     }
+            //     $param['levelMaster'] = $data_level;
+            // }
+
+            // var_dump($param);
+
+            $response = $client->post(env('API_URL') . '/evaluationreport/getevaluationreport',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet[0]);
+
+        if($arrResult->dataListSet[0] == null){
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Evaluation Report.pdf');
+        }else{
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet[0]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Evaluation Report.pdf');
+        }
 
         // var_dump($request->period);
 
-        return pdf::download(new EvaluationReportExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to , isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Evaluation Report.pdf');
     }
 
     public function printEmployeeReportByStatusPersonel(Request $request)

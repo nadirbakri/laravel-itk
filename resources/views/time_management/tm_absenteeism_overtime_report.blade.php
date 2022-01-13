@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_evaluation_report.judul') }}</title>
+    <title>{{ __('tm_absenteeism_overtime_report.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -51,25 +51,25 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_evaluation_report.list') }}</span>
+                <span class="title-text">{{ __('tm_absenteeism_overtime_report.list') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="evaluation_report_form" method="post">
+            <form id="tm_absenteeism_overtime_report_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('personel_evaluation_report.label_employee_no_from') }}</label>
+                                for="employee_no_from">{{ __('tm_absenteeism_overtime_report.label_employee_no_from') }}</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_no_to">{{ __('personel_evaluation_report.label_employee_no_to') }}</label>
+                            <label for="employee_no_to">{{ __('tm_absenteeism_overtime_report.label_employee_no_to') }}</label>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
                     </div>
@@ -77,10 +77,10 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period_from">{{ __('personel_evaluation_report.label_evaluation_period_from') }}</label>
+                            <label for="absent_date_from">{{ __('tm_absenteeism_overtime_report.label_absent_date_from') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period_from" name="period_from"
-                                    placeholder="{{ __('personel_evaluation_report.label_evaluation_period_from') }}">
+                                <input type="text" class="form-control" id="absent_date_from" name="absent_date_from"
+                                    placeholder="{{ __('tm_absenteeism_overtime_report.label_absent_date_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -89,31 +89,22 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period_to">{{ __('personel_evaluation_report.label_evaluation_period_to') }}</label>
+                            <label for="absent_date_to">{{ __('tm_absenteeism_overtime_report.label_absent_date_to') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period_to" name="period_to"
-                                    placeholder="{{ __('personel_evaluation_report.label_evaluation_period_to') }}">
+                                <input type="text" class="form-control" id="absent_date_to" name="absent_date_to"
+                                    placeholder="{{ __('tm_absenteeism_overtime_report.label_absent_date_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group ml-3">
-                        <label for="include_resign">&nbsp;</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="include_resign"
-                                name="include_resign" value="true">
-                            <label class="form-check-label"
-                                for="include_resign">{{ __('personel_evaluation_report.label_include_resign') }}</label>
-                        </div>
-                    </div>
-                </div>    
+                </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_from">{{ __('personel_evaluation_report.label_group_authorize_from') }}</label>
+                                for="group_authorize_from">{{ __('tm_absenteeism_overtime_report.label_group_authorize_from') }}</label>
                             <select class="form-control select2" id="group_authorize_from"
                                 name="group_authorize_from"></select>
                         </div>
@@ -121,16 +112,56 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_to">{{ __('personel_evaluation_report.label_group_authorize_to') }}</label>
+                                for="group_authorize_to">{{ __('tm_absenteeism_overtime_report.label_group_authorize_to') }}</label>
                             <select class="form-control select2" id="group_authorize_to"
                                 name="group_authorize_to"></select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label
+                                for="report_type">{{ __('tm_absenteeism_overtime_report.label_report_type') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="absent"
+                                    name="report_type" value="absent">
+                                <label class="form-radio-label"
+                                    for="absent">{{ __('tm_absenteeism_overtime_report.label_absent') }}</label>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-4">
+                        <div class="form-group">
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="overtime"
+                                    name="report_type" value="overtime">
+                                <label class="form-radio-label"
+                                    for="overtime">{{ __('tm_absenteeism_overtime_report.label_overtime') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group ml-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_resign"
+                                    name="include_resign" value="true">
+                                <label class="form-check-label"
+                                    for="include_resign">{{ __('tm_absenteeism_overtime_report.label_include_resign') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="position">{{ __('personel_evaluation_report.label_position') }}</label>
+                            <label for="position">{{ __('tm_absenteeism_overtime_report.label_position') }}</label>
                             <select class="form-control select2 select2-hidden-accessible" id="position"
                                 name="position[]" multiple="multiple">
                             </select>
@@ -138,7 +169,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="ranking">{{ __('personel_evaluation_report.label_ranking') }}</label>
+                            <label for="ranking">{{ __('tm_absenteeism_overtime_report.label_ranking') }}</label>
                             <select class="form-control select2" id="ranking" name="ranking[]"
                                 multiple="multiple"></select>
                         </div>
@@ -147,7 +178,7 @@
                 <div class="row" id="div-level">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="location">{{ __('personel_evaluation_report.label_location') }}</label>
+                            <label for="location">{{ __('tm_absenteeism_overtime_report.label_location') }}</label>
                             <select class="form-control select2" id="location" name="location[]"
                                 multiple="multiple"></select>
                         </div>
@@ -158,7 +189,7 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('personel_evaluation_report.btn_print') }}
+                            <i class="fa fa-print"></i> {{ __('tm_absenteeism_overtime_report.btn_print') }}
                         </button>
                     </div>
                 </div>
@@ -853,11 +884,38 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#evaluation_report_form").submit();
+            $("#tm_absenteeism_overtime_report_form").submit();
         });
 
-        if ($("#evaluation_report_form").length > 0) {
-            $("#evaluation_report_form").validate({
+        if ($("#tm_absenteeism_overtime_report_form").length > 0) {
+            $("#tm_absenteeism_overtime_report_form").validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    }, 
+                    employee_no_to: {
+                        required: true,
+                    },
+                    absent_date_from: {
+                        required: true,
+                    },
+                    absent_date_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('tm_monthly_leave_report.employee_no_from_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('tm_monthly_leave_report.employee_no_to_required') }}",
+                    },absent_data_from: {
+                        required: "{{ __('tm_monthly_leave_report.absent_date_from_required') }}",
+                    },
+                    absent_data_to: {
+                        required: "{{ __('tm_monthly_leave_report.absent_date_to_required') }}",
+                    },
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -868,15 +926,10 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/evaluation_report/print') }}",
+                        url: "{{ url('time_management/absenteeism_overtime_report/print') }}",
                         type: "POST",
-                        data: $('#evaluation_report_form').serialize(),
+                        data: $('#tm_absenteeism_overtime_report_form').serialize(),
                         success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_evaluation_report.btn_print") }}'
-                            );
-                            
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
@@ -899,7 +952,7 @@
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_evaluation_report.btn_print") }}'
+                                '<i class="fa fa-print"></i> {{ __("tm_absenteeism_overtime_report.btn_print") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

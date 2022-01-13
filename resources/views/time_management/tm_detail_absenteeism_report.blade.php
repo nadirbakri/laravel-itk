@@ -125,7 +125,7 @@
                                 for="absent_code">{{ __('tm_detail_absenteeism_report.label_absent_code') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="absent_code_all"
@@ -135,9 +135,8 @@
                             </div>
                         </div>
                     </div> 
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="absent_code_selection">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="absent_code_selection"
                                     name="absent_code_selection" value="true">

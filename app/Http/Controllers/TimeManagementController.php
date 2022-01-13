@@ -107,6 +107,11 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_detail_absenteeism_report');
     }
 
+    public function pageAbsenteeismOvertimeReport()
+    {
+        return view ('time_management.tm_absenteeism_overtime_report');
+    }
+
     public function tableCompanyWorkingCalendar()
     {
         try {
@@ -457,7 +462,7 @@ class TimeManagementController extends Controller
         return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
-    public function printDetailbsenteeismReport(Request $request)
+    public function printDetailAbsenteeismReport(Request $request)
     {
         $dataLevel = [];
 
@@ -467,7 +472,7 @@ class TimeManagementController extends Controller
 
         // var_dump($request->period);
 
-        return Excel::download(new DetailbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+        return Excel::download(new DetailAbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
     public function printMonthlyAbsenteeismDetail(Request $request)
@@ -481,6 +486,19 @@ class TimeManagementController extends Controller
         // var_dump($request->period);
 
         return Excel::download(new MonthlyAbsenteeismDetailExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+    }
+
+    public function printAbsenteeismOvertimeReport(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        // var_dump($request->period);
+
+        return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), 'Absenteeism & Overtime Report.xlsx');
     }
 
 

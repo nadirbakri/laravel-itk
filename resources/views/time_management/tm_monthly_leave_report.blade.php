@@ -89,9 +89,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
-                            <label for="include_resign">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="include_resign"
                                     name="include_resign" value="true">
@@ -100,9 +99,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
-                            <label for="have_balance_only">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="have_balance_only"
                                     name="have_balance_only" value="true">
