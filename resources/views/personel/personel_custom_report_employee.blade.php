@@ -58,7 +58,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="custom_report_employee_form" method="post">
+            <form id="custom_report_employee_form" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -702,19 +702,19 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    
-                    var field_name = {
-                        name : arrayfieldName
-                    };
-                    console.log(JSON.stringify(arrayfieldName));
+
                     $.ajax({
                         xhrFields: {
                             responseType: 'blob',
                         },
                         url: "{{ url('personel/custom_report_employee/print') }}",
                         type: "POST",
-                        data: { field: $('#custom_report_employee_form').serialize(), 'field_name' : JSON.stringify(arrayfieldName) },
+                        data: { 'field' : $('#custom_report_employee_form').serialize(), 'field_name' : JSON.stringify(arrayfieldName) },
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_custom_report_employee.btn_print") }}'
+                            );
                             // var disposition = xhr.getResponseHeader(
                             //     'content-disposition');
                             // var matches = /"([^"]*)"/.exec(disposition);
