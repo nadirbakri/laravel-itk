@@ -56,6 +56,30 @@
             border-top-right-radius: 5px;
         }
 
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -90,11 +114,13 @@
                         </div>
                     </div>
                     <div class="col-2">
+                        <label for=""></label>
                         <button type="button" class="btn btn-primary" name="btn-app-leader" id="btn-app-leader"
                             style="width: 100%;" >{{ __('tm_overtime_spl.btn_app_leader') }}
                         </button>
                     </div>
                     <div class="col-4">
+                        <label for=""></label>
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" id="check_all_app_leader"
@@ -137,11 +163,13 @@
                         </div>
                     </div>
                     <div class="col-2">
+                        <label for=""></label>
                         <button type="button" class="btn btn-primary" name="btn-app-hrd" id="btn-app-hrd"
                             style="width: 100%;" >{{ __('tm_overtime_spl.btn_app_hrd') }}
                         </button>
                     </div>
                     <div class="col-4">
+                        <label for=""></label>
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" id="check_all_app_hrd"
@@ -320,6 +348,7 @@
             </div>
         </div>
     </div>
+    
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -331,6 +360,26 @@
                 </div>
                 <div class="modal-body">
                     <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('tm_overtime_spl.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -350,6 +399,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.11.3/dataRender/datetime.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -386,27 +436,27 @@
                 // console.log(response[0].detailList[0].flagAppLead);
                 var app_leader = response[0].detailList[0].flagAppLead;
                 var app_hrd = response[0].detailList[0].flagAppHRD;
-                // if (app_leader == 'true') {
-                //     $('#btn-app-leader').prop('disabled', false);
-                //     $('#check_all_app_leader').prop('disabled', false);
-                //     $('#uncheck_all_app_leader').prop('disabled', false);
-                // }
-                // else {
-                //     $('#btn-app-leader').prop('disabled', true);
-                //     $('#check_all_app_leader').prop('disabled', true);
-                //     $('#uncheck_all_app_leader').prop('disabled', true);
-                // }
+                if (app_leader == 'true') {
+                    $('#btn-app-leader').prop('disabled', false);
+                    $('#check_all_app_leader').prop('disabled', false);
+                    $('#uncheck_all_app_leader').prop('disabled', false);
+                }
+                else {
+                    $('#btn-app-leader').prop('disabled', true);
+                    $('#check_all_app_leader').prop('disabled', true);
+                    $('#uncheck_all_app_leader').prop('disabled', true);
+                }
                 
-                // if (app_hrd == 'true') {
-                //     $('#btn-app-hrd').prop('disabled', false);
-                //     $('#check_all_app_hrd').prop('disabled', false);
-                //     $('#uncheck_all_app_hrd').prop('disabled', false);
-                // }
-                // else {
-                //     $('#btn-app-hrd').prop('disabled', true);
-                //     $('#check_all_app_hrd').prop('disabled', true);
-                //     $('#uncheck_all_app_hrd').prop('disabled', true);
-                // }
+                if (app_hrd == 'true') {
+                    $('#btn-app-hrd').prop('disabled', false);
+                    $('#check_all_app_hrd').prop('disabled', false);
+                    $('#uncheck_all_app_hrd').prop('disabled', false);
+                }
+                else {
+                    $('#btn-app-hrd').prop('disabled', true);
+                    $('#check_all_app_hrd').prop('disabled', true);
+                    $('#uncheck_all_app_hrd').prop('disabled', true);
+                }
             }
         })
 
@@ -417,10 +467,10 @@
         $('input[name="check_all_app_leader"]').on('change', function () {
             var rows = table.rows({ 'search': 'applied' }).nodes();
             if ($('#check_all_app_leader').is(':checked')) {
-                $('input[name="check_app_leader[]"]', rows).prop('checked', true);
+                $('.check_app_leader', rows).prop('checked', true);
             }
             else {
-                $('input[name="check_app_leader[]"]', rows).prop('checked', false);
+                $('.check_app_leader', rows).prop('checked', false);
             }
         })
 
@@ -441,10 +491,10 @@
         $('input[name="check_all_app_hrd"]').on('change', function () {
             var rows = table.rows({ 'search': 'applied' }).nodes();
             if ($('#check_all_app_hrd').is(':checked')) {
-                $('input[name="check_app_hrd[]"]', rows).prop('checked', true);
+                $('.check_app_hrd', rows).prop('checked', true);
             }
             else {
-                $('input[name="check_app_hrd[]"]', rows).prop('checked', false);
+                $('.check_app_hrd', rows).prop('checked', false);
             }
         })
 
@@ -503,6 +553,10 @@
                 dateFormat: "H:i:ss"
             });
         })
+
+        // var date = moment(date_overtime_spl).format('DD/MM/YYYY');
+        // $('#date_overtime_spl').val(date);
+        // console.log($('#date_overtime_spl').val(date));
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -576,7 +630,7 @@
                         "defaultContent": '',
                         render: function(data, type, row) {
                             var id = $('<div />').text(row.employeeNo).html() + $('<div />').text(row.ovtDate).html() + $('<div />').text(row.seqNo).html();
-                            return type === 'display'? '<input class="chk-select selected_overtime_spl_table" type="checkbox" name="selected_overtime_spl_table[' + id +']" value="1">' : '';
+                            return type === 'display'? '<input class="chk-select selected_overtime_spl_table" type="checkbox" name="selected_overtime_spl_table[' + id +']" value="1">' : ''
                         }
                     },
                     {
@@ -596,7 +650,8 @@
                         name: 'ovtDate',
                         render: function (data, type, row) {
                             var id = $('<div />').text(row.employeeNo).html() + $('<div />').text(row.ovtDate).html() + $('<div />').text(row.seqNo).html();
-                            return '<input type="hidden" class="form-control" name="ovt_date_overtime_spl[' + id + ']" value="' +
+                            return moment(data).format('DD-MM-YYYY')
+                                '<input type="hidden" class="form-control" name="ovt_date_overtime_spl[' + id + ']" value="' +
                                 $('<div />').text(row.ovtDate).html() + '">' + 
                                 $('<div />').text(row.ovtDate).html();
                         }
@@ -612,10 +667,34 @@
                         }
                     },
                     {data: 'shiftCode', name: 'shiftCode'},
-                    {data: 'ovtBeforeIn', name: 'ovtBeforeIn'},
-                    {data: 'ovtIn', name:'ovtIn'},
-                    {data: 'ovtOut', name: 'ovtOut'},
-                    {data: 'ovtHour', name: 'ovtHour'},
+                    {
+                        data: 'ovtBeforeIn', 
+                        name: 'ovtBeforeIn',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm');
+                        }
+                    },
+                    {
+                        data: 'ovtIn', 
+                        name:'ovtIn',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm');
+                        }
+                    },
+                    {
+                        data: 'ovtOut', 
+                        name: 'ovtOut',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm');
+                        }
+                    },
+                    {
+                        data: 'ovtHour', 
+                        name: 'ovtHour',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm');
+                        }
+                    },
                     {data: 'ovtConvert', name: 'ovtConvert'},
                     {data: 'ovtCode', name: 'ovtCode'},
                     {data: 'ovtDescription', name: 'ovtDescription'},
@@ -625,9 +704,9 @@
                         render: function(data, type, row) {
                             var id = $('<div />').text(row.employeeNo).html() + $('<div />').text(row.ovtDate).html() + $('<div />').text(row.seqNo).html();
                             if (data) {
-                                return '<input class="chk-select" type="checkbox" name="check_app_leader[' + id + ']" value="true" checked>';
+                                return '<input class="chk-select check_app_leader" type="checkbox" name="check_app_leader[' + id + ']" value="true" checked>';
                             } else {
-                                return '<input class="chk-select" type="checkbox" name="check_app_leader[' + id + ']" value="true">';
+                                return '<input class="chk-select check_app_leader" type="checkbox" name="check_app_leader[' + id + ']" value="true">';
                             }
                         }
                     },
@@ -637,9 +716,9 @@
                         render: function(data, type, row) {
                             var id = $('<div />').text(row.employeeNo).html() + $('<div />').text(row.ovtDate).html() + $('<div />').text(row.seqNo).html();
                             if (data) {
-                                return '<input class="chk-select" type="checkbox" name="check_app_hrd[' + id + ']" value="true" checked>';
+                                return '<input class="chk-select check_app_hrd" type="checkbox" name="check_app_hrd[' + id + ']" value="true" checked>';
                             } else {
-                                return '<input class="chk-select" type="checkbox" name="check_app_hrd[' + id + ']" value="true">';
+                                return '<input class="chk-select check_app_hrd" type="checkbox" name="check_app_hrd[' + id + ']" value="true">';
                             }
                         }
                     }
@@ -890,6 +969,52 @@
             }
         });
 
+        $("#btn-delete").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+
+            var filter_employee_no_from_table = $('#employee_no_from').val();
+            var filter_employee_no_to_table = $('#employee_no_to').val();
+            var filter_date_from_table = $('#date_from').val();
+            var filter_date_to_table = $('#date_to').val();
+
+            if (data.length > 0) {
+                $.ajax({
+                    url: "{{ url('time_management/overtime_spl/remove') }}",
+                    type: "GET",
+                    data: {
+                        'data' : data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            $('#overtime_spl_table').DataTable().destroy();
+                            load_data_table_overtime_spl(filter_employee_no_from_table, filter_employee_no_to_table, filter_date_from_table, filter_date_to_table);
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
         $("#btn-save-overtime-spl").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
@@ -901,7 +1026,10 @@
         $('#overtime_spl_table_form').on('submit', function () {
             var data = decodeURI(table.rows('.selected').nodes().$('input').serialize());
 
-            // var group_id = $('#group_id').val();
+            var filter_employee_no_from_table = $('#employee_no_from').val();
+            var filter_employee_no_to_table = $('#employee_no_to').val();
+            var filter_date_from_table = $('#date_from').val();
+            var filter_date_to_table = $('#date_to').val();
 
             $.ajax({
                 type: "POST",
@@ -918,12 +1046,12 @@
                             '<i class="fa fa-floppy-o"></i> {{ __("tm_overtime_spl.btn_save") }}'
                         );
 
-                        $('#notification_success_detail').modal('show');
-                        $('#message-notification-success-detail').html(response.message);
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response.message);
                         $('#overtime_spl_table').DataTable().destroy();
                         load_data_table_overtime_spl(filter_employee_no_from_table, filter_employee_no_to_table, filter_date_from_table, filter_date_to_table);
                         setTimeout(function () {
-                            $('#notification_success_detail').modal('hide');
+                            $('#notification_success').modal('hide');
                         }, 3000);
                     } else {
                         $("#btn-save").prop("disabled", false);

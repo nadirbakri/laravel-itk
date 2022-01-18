@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-time_management {
@@ -52,6 +52,34 @@
             border-top-right-radius: 5px;
         }
 
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
+        .required {
+            color: red;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -67,19 +95,19 @@
             </a> 
         </div>
         <div class="div-table">
-            <table id="overtime_spl_table" class="table hover">
+            <table id="period_maintenance_table" class="table hover">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>{{ __('tm_period_maintenance.label_year') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_month') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_period') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_absenteeism_start') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_absenteeism_end') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_overtime_start') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_overtime_end') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_salary_start') }}</th>
-                        <th>{{ __('tm_period_maintenance.label_salary_end') }}</th>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Period</th>
+                        <th>Absenteeism Start</th>
+                        <th>Absenteeism End</th>
+                        <th>Overtime Start</th>
+                        <th>Overtime End</th>
+                        <th>Salary Start</th>
+                        <th>Salary End</th>
                     </tr>
                 </thead>
             </table>
@@ -109,39 +137,34 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="overtime_spl_form" method="post">
+                    <form id="period_maintenance_form" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
                                     <label
                                         for="year">{{ __('tm_period_maintenance.label_year') }}</label>
+                                        <span class="required">*</span>
                                     <select class="form-control select2" id="year" name="year"></select>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="month">{{ __('tm_period_maintenance.label_month') }}</label>
-                                    <select class="form-control" id="month" name="month">
-                                        <option disabled selected value>{{ __('tm_period_maintenance.select_month') }}</option>
-                                        <option value="january">{{ __('tm_period_maintenance.select_january') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_february') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_march') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_april') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_may') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_june') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_july') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_august') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_september') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_october') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_november') }}</option>
-                                        <option value="february">{{ __('tm_period_maintenance.select_december') }}</option>
-                                    </select>
+                                    <span class="required">*</span>
+                                    <div class="input-group month">
+                                        <input type="text" class="form-control" id="month" name="month"
+                                            placeholder="{{ __('tm_period_maintenance.label_month') }}">
+                                        <div class="input-group-prepend" id="month-calendar">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="period">{{ __('tm_period_maintenance.label_period') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="period" name="period">
                                         <option disabled selected value>{{ __('tm_period_maintenance.select_period') }}</option>
                                         <option value="1">1</option>
@@ -156,10 +179,11 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="absenteeism_from">{{ __('tm_period_maintenance.label_absenteeism_from') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="absenteeism_from" name="absenteeism_from"
                                             placeholder="{{ __('tm_period_maintenance.label_absenteeism_from') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="absenteeism_from_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -168,6 +192,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="absenteeism_to">{{ __('tm_period_maintenance.label_absenteeism_to') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="absenteeism_to" name="absenteeism_to"
                                             placeholder="{{ __('tm_period_maintenance.label_absenteeism_to') }}">
@@ -182,6 +207,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="overtime_from">{{ __('tm_period_maintenance.label_overtime_from') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="overtime_from" name="overtime_from"
                                             placeholder="{{ __('tm_period_maintenance.label_overtime_from') }}">
@@ -194,6 +220,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="overtime_to">{{ __('tm_period_maintenance.label_overtime_to') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="overtime_to" name="overtime_to"
                                             placeholder="{{ __('tm_period_maintenance.label_overtime_to') }}">
@@ -208,6 +235,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="salary_from">{{ __('tm_period_maintenance.label_salary_from') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="salary_from" name="salary_from"
                                             placeholder="{{ __('tm_period_maintenance.label_salary_from') }}">
@@ -220,6 +248,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="salary_to">{{ __('tm_period_maintenance.label_salary_to') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="salary_to" name="salary_to"
                                             placeholder="{{ __('tm_period_maintenance.label_salary_to') }}">
@@ -232,7 +261,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" id="btn-save-overtime-spl" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_period_maintenance.btn_save') }}</button>
+                        <button type="button" id="btn-save-period-maintenance" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_period_maintenance.btn_save') }}</button>
                         <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                                 class="fa fa-times-circle"></i> {{ __('tm_period_maintenance.btn_cancel') }}</button>
                     </div>
@@ -255,6 +284,46 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('tm_period_maintenance.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success_detail">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('tm_period_maintenance.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success-detail"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -265,15 +334,20 @@
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.11.3/dataRender/datetime.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script text="text/javascript">
     $(function () {
         initDatePicker();
+        selectMonth();
     });
 
     function initDatePicker() {
@@ -293,7 +367,127 @@
         });
     }
 
+    function selectMonth() {
+        $('.month input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "F",
+            dateFormat: "m",
+            // defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "m", //defaults to "F Y"
+                    altFormat: "F", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#month-calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var table = null;
+
+        $('#period_maintenance_table thead tr').clone(true).appendTo('#period_maintenance_table thead');
+        $('#period_maintenance_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+    
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        load_data_table_period_maintenance();
+
+        function load_data_table_period_maintenance() {
+            table = $('#period_maintenance_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/period_maintenance/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type, row) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'periodYear', name: 'periodYear'},
+                    {data: 'periodMonth', name: 'periodMonth'},
+                    {data: 'period', name: 'period'},
+                    {
+                        data: 'absenteeismStart', 
+                        name: 'absenteeismStart',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        data: 'absenteeismEnd', 
+                        name: 'absenteeismEnd',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        data: 'overtimeStart', 
+                        name: 'overtimeStart',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        data: 'overtimeEnd', 
+                        name:'overtimeEnd',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        data: 'salaryStart', 
+                        name: 'salaryStart',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        data: 'salaryEnd', 
+                        name: 'salaryEnd',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    }
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+            // console.log(data);
+        }
+
         var rangeYear = [];
 
         var prevYear = moment().subtract(5, 'years');
@@ -311,34 +505,355 @@
         }
         // console.log(rangeYear);
 
-        $('#year').on('change', function () {
-            var periodYear = moment(prevYear).format('YY');
-            console.log(periodYear);
-            
-            var $periodMaintenance = $('#absenteeism_from, #absenteeism_to, #overtime_from, #overtime_to, #salary_from, #salary_to')
-            
-            $periodMaintenance.flatpickr({
+        var year_month = $('#year, #month');
+
+        year_month.on('change', function () {
+            var year = $('#year').val();
+            var periodYear = moment(year).format('YY');
+            // console.log(periodYear);
+            var month = $('#month').val();
+            var periodMonth = moment(month).format('MM');
+            // console.log(month);
+            // console.log($('#month').val());
+
+            // console.log($('#absenteeism_from').val());
+
+            $.ajax({
+                url: "{{ url('/time_management/period_maintenance/data/detail') }}",
+                type: "GET",
+                success: function (response) {
+                    //absenteeism
+                    var absenteeism_from = moment(response[0].absenteeismEnd).format('MM/DD/YYYY');
+                    // console.log(response[0].absenteeismEnd);
+                    var add_absenteeism_date_from = moment(absenteeism_from).add(1, 'days');
+                    var absenteeism_date_from = year + '-' + periodMonth + '-' + moment(add_absenteeism_date_from).format('DD');
+                    // console.log(absenteeism_date_from);
+                    pickerAbsenteeismDateFrom.setDate(absenteeism_date_from);
+
+                    var add_absenteeism_date_to = moment(absenteeism_date_from).add(1, 'months').subtract(1, 'days');
+                    var absenteeism_date_to = moment(add_absenteeism_date_to).format('YYYY-MM-DD');
+                    // console.log(absenteeism_date_to);
+                    pickerAbsenteeismDateTo.setDate(absenteeism_date_to);
+
+                    //overtime
+                    var overtime_from = moment(response[0].overtimeEnd).format('MM/DD/YYYY');
+                    var add_overtime_date_from = moment(overtime_from).add(1, 'days');
+                    var overtime_date_from = year + '-' + periodMonth + '-' + moment(add_overtime_date_from).format('DD');
+                    pickerOvertimeDateFrom.setDate(overtime_date_from);
+
+                    var add_overtime_date_to = moment(overtime_date_from).add(1, 'months').subtract(1, 'days');
+                    var overtime_date_to = moment(add_overtime_date_to).format('YYYY-MM-DD');
+                    pickerOvertimeDateTo.setDate(overtime_date_to);
+
+                    //salary                    
+                    var salary_from = moment(response[0].salaryEnd).format('MM/DD/YYYY');
+                    var add_salary_date_from = moment(salary_from).add(1, 'days');
+                    var salary_date_from = year + '-' + periodMonth + '-' + moment(add_salary_date_from).format('DD');
+                    pickerSalaryDateFrom.setDate(salary_date_from);
+
+                    var add_salary_date_to = moment(salary_date_from).add(1, 'months').subtract(1, 'days');
+                    var salary_date_to = moment(add_salary_date_to).format('YYYY-MM-DD');
+                    pickerSalaryDateTo.setDate(salary_date_to);
+                    // console.log($('#absenteeism_from'));
+                    // console.log($('#absenteeism_to'));
+
+                },
+                error: function (response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+
+            let pickerAbsenteeismDateFrom = $('#absenteeism_from').flatpickr({
                 altInput: true,
                 allowInput: true,
                 altFormat: "j-M-y",
                 dateFormat: "Y-m-d",
-                defaultDate: "today",
-            })
-        })
-        // var selectMonth = $('#month').attr('value');
-        // var periodMonth = moment(selectMonth).format('')
+                // defaultDate: "today",
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
 
-        $.ajax({
-            url: "{{ url('/time_management/period_maintenance/data/detail') }}",
-            type: "GET",
-            success: function (response) {
-                $('#absenteeism_from').val(response[0].absenteeismEnd);
-            },
-            error: function (response) {
+            let pickerAbsenteeismDateTo = $('#absenteeism_to').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                // defaultDate: "today",
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+
+            let pickerOvertimeDateFrom = $('#overtime_from').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                // defaultDate: "today",
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+
+            let pickerOvertimeDateTo = $('#overtime_to').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                // defaultDate: "today",
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+
+            let pickerSalaryDateFrom = $('#salary_from').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                // defaultDate: "today",
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+
+            let pickerSalaryDateTo = $('#salary_to').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                // defaultDate: "today",
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+        });
+
+        $("#btn-save-period-maintenance").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#period_maintenance_form").submit();
+        });
+
+        $("#btn-remove").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+
+            if (data.length > 0) {
+                $.ajax({
+                    url: "{{ url('time_management/period_maintenance/remove') }}",
+                    type: "GET",
+                    data: {
+                        'data' : data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            $('#period_maintenance_table').DataTable().destroy();
+                            load_data_table_period_maintenance();
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            } else {
                 $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
+                $('#message-notification-error').html('No Data Selected');
             }
         });
+
+        jQuery.validator.addMethod("greaterThan", 
+        function(value, element, params) {
+
+            if (!/Invalid|NaN/.test(new Date(value))) {
+                return new Date(value) > new Date($(params).val());
+            }
+
+            return isNaN(value) && isNaN($(params).val()) 
+                || (Number(value) > Number($(params).val())); 
+        },'Must be greater than {0}.');
+
+        if ($("#period_maintenance_form").length > 0) {
+            $("#period_maintenance_form").validate({  
+            rules: {
+                    year: {
+                        required: true,
+                    },
+                    month: {
+                        required: true,
+                    },
+                    period: {
+                        required: true,
+                    },
+                    absenteeism_from: {
+                        required: true,
+                    },
+                    absenteeism_to: {
+                        required: true,
+                        greaterThan: '#absenteeism_from'
+                    },
+                    overtime_from: {
+                        required: true,
+                    },
+                    overtime_to: {
+                        required: true,
+                    },
+                    salary_from: {
+                        required: true,
+                    },
+                    salary_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    year: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    month: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    period: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    absenteeism_from: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    absenteeism_to: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    overtime_from: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    overtime_to: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    salary_from: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    salary_to: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save-period-maintenance").prop("disabled", false);
+                    $("#btn-save-period-maintenance").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/period_maintenance/proses') }}",
+                        type: "POST",
+                        data: $('#period_maintenance_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-period-maintenance").prop("disabled", false);
+                                $("#btn-save-period-maintenance").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/period_maintenance') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save-period-maintenance").prop("disabled", false);
+                                $("#btn-save-period-maintenance").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-period-maintenance").prop("disabled", false);
+                            $("#btn-save-period-maintenance").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
+        
     })
 </script>
 

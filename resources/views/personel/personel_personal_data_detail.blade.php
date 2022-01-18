@@ -2242,15 +2242,6 @@
 
         var table = null;
 
-        // var func = "{{ $func }}";
-
-        // if (func == 'new') {
-        //     $('#employee_no_info').val("");
-        //     $('#fullname_info').val("");
-        //     $('#title_info').val("");
-        //     $('#birth_place_info').val(null).trigger('change');
-        // }
-
         loadDataBirthPlace();
         loadDataGender();
         loadDataBloodType();

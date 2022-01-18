@@ -40,6 +40,7 @@ return [
     'btn_app_hrd' => 'Persetujuan HRD',
     'label_check_all' => 'Centang Semua',
     'label_uncheck_all' => 'Hapus Centang Semua',
-    'field_mandatory' => "Kolom ini tidak boleh kosong"
+    'field_mandatory' => "Kolom ini tidak boleh kosong",
+    'alert_success' => 'Sukses !'
 ]
 ?>

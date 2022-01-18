@@ -173,6 +173,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
         $('#work_pattern_table thead tr').clone(true).appendTo('#work_pattern_table thead');
@@ -190,37 +191,43 @@
             } );
         });
 
-        var table = $('#work_pattern_table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: "{{ url('time_management/work_pattern/table') }}",
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
+        load_data_table_work_pattern();
+
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        function load_data_table_work_pattern() {
+            table = $('#work_pattern_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/work_pattern/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
-                {data: 'patternCode', name: 'patternCode'},
-                {data: 'description', name: 'description'},
-                {data: 'holidayFlag', name: 'holidayFlag'},
-                {data: 'noOfDay', name: 'noOfDay'},
-                {data: 'recordStatus', name: 'recordStatus'}
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }
-        });
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'patternCode', name: 'patternCode'},
+                    {data: 'description', name: 'description'},
+                    {data: 'holidayFlag', name: 'holidayFlag'},
+                    {data: 'noOfDay', name: 'noOfDay'},
+                    {data: 'recordStatus', name: 'recordStatus'}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
 
         $("#toolbar-new").on('click', function() {
             $.redirect("{{ url('time_management/work_pattern/detail_data') }}", { 'patternCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
