@@ -3492,6 +3492,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
 	    		['body' => json_encode(
 	    			[
+						'absentType' => 'L',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]

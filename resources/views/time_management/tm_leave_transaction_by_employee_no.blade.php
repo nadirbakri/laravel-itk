@@ -241,6 +241,30 @@
         loadDataEmployeeNo();
         loadDataLeaveCode();
 
+        $('#select').focus(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
+        
+        // $('select').on('select2:opening select2:closing', function( event ) {
+        //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
+        //     $searchfield.prop('disabled', true);
+        // });
+
         // $('#employee_no').on("select2:select", function (e) {
         //     var data = $('#employee_no').select2('data');
             // console.log(data[0].title);
@@ -417,6 +441,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
+                        // '<div class="col-6"><b>Description</b></div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
 
