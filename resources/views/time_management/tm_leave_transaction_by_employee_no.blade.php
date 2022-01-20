@@ -59,7 +59,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="leave_transaction_by_employee_no" method="post">
+            <form id="leave_transaction_by_employee_no_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -200,6 +200,8 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
@@ -230,16 +232,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        // $('.form-check-input').on("click", function () {
-        //     if (thisRadio.hasClass("imChecked")) {
-        //             thisRadio.removeClass("imChecked");
-        //             thisRadio.prop('checked', false);
-        //         } else { 
-        //             thisRadio.prop('checked', true);
-        //             thisRadio.addClass("imChecked");
-        //         };
-        // });
+        var val_balance = 0;
 
         function htmlDecode(value) {
     	    return $("<textarea/>").html(value).text();
@@ -248,49 +241,102 @@
         loadDataEmployeeNo();
         loadDataLeaveCode();
 
-        $('#employee_no').on("select2:select", function (e) {
-            var data = $('#employee_no').select2('data');
-            $('#employee_name').val(htmlDecode(data[0].title));
+        // $('#employee_no').on("select2:select", function (e) {
+        //     var data = $('#employee_no').select2('data');
             // console.log(data[0].title);
-            $.ajax({
-                url: "{{ url('time_management/employee_name/detail') }}",
-                type: "GET",
-                data: {
-                    'employeeNo': data[0].id
-                },
-            })
-        });
+            // $.ajax({
+            //     url: "{{ url('time_management/employee_name/detail') }}",
+            //     type: "GET",
+            //     data: {
+            //         'employeeNo': data[0].id
+            //     },
+            // })
+        // });
 
         $('#employee_no').on("select2:unselecting", function (e) {
             $('#employee_name').val('');
         });
 
-        var $balance = $('#employee_no, #leave_code');
+        var balance = $('#employee_no, #leave_code');
 
-        $balance.on("select2:select", function (e) {
-            var data = $balance.select2('data');
+        balance.on("select2:select", function (e) {
+            var data = $('#employee_no').select2('data');
+            var data2 = $('#leave_code').select2('data');
+            $('#employee_name').val(htmlDecode(data[0].title));
+            // console.log(data);
             // $('#balance').val(htmlDecode(data[0].text));
             // console.log(data[0].text);
-            loadDataDetailBalance(data);
-        });
-
-        function loadDataDetailBalance() {
-            $.ajax({
+            // console.log(data);
+            // console.log(data2);
+            if (data.length > 0 && data2.length > 0) {
+                $.ajax({
                 url: "{{ url('time_management/balance/detail') }}",
                 type: "GET",
-                // data: {
-                //     'employeeNo': data[0].id,
-                //     'leaveCode' : data[0].id
-                // },
+                data: {
+                    'employeeNo': data[0].id,
+                    'leaveCode' : data2[0].id
+                },
                 success: function (response) {
-                    $('#balance').val(response[0].leaveBalance)
+                    // console.log(response.length);
+                    if (response.length > 0){
+                        val_balance = response[0].balance;
+
+                        var leave_date_from = $('#leave_date_from').val();
+                        var format_leave_date_from = moment(leave_date_from, 'YYYY-MM-DD');
+                        var leave_date_to = $('#leave_date_to').val();
+                        var format_leave_date_to = moment(leave_date_to, 'YYYY-MM-DD');
+
+                        var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
+                        var difference_day = diff + 1;
+                        console.log(difference_day);
+
+                        if ($('#full_day').is(':checked')) {
+                            var total_balance = val_balance - (difference_day * 1);
+                        }
+                        else {
+                            var total_balance = val_balance - (difference_day * 0.5);
+                        }
+                        $('#balance').val(total_balance);
+                    }
+                    else {
+                        val_balance = 0,
+                        $('#balance').val(val_balance);
+                    }
                 },
                 error: function (response) {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
                 }
             })
-        }
+            }
+        });
+
+        $('#leave_code').on("select2:unselecting", function (e) {
+            $('#balance').val('');
+        });
+
+        var calculate = $('#leave_date_from, #leave_date_to, #full_day, #half_day');
+
+        calculate.on('change', function () {
+            var leave_date_from = $('#leave_date_from').val();
+            var format_leave_date_from = moment(leave_date_from, 'YYYY-MM-DD');
+            var leave_date_to = $('#leave_date_to').val();
+            var format_leave_date_to = moment(leave_date_to, 'YYYY-MM-DD');
+
+            var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
+            var difference_day = diff + 1;
+            console.log(difference_day);
+
+            if ($('#full_day').is(':checked')) {
+                var total_balance = val_balance - (difference_day * 1);
+            }
+            else {
+                var total_balance = val_balance - (difference_day * 0.5);
+            }
+
+            $('#balance').val(total_balance);
+
+        })
 
         function loadDataEmployeeNo() {
             function formatSelect(data) {
@@ -371,8 +417,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.absentType + '</div>' +
-                        '<div class="col-6">' + data.data.absentCode + '</div>' +
+                        '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -383,8 +428,7 @@
             $('#leave_code').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
-                        '<div class="col-6"><b>Absent Type</b></div>' +
-                        '<div class="col-6"><b>Absent Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
                         '</div>';
                     $('.select2-search').append(html);
                     headerIsAppend = true;
@@ -422,8 +466,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.absentCode,
-                                    id: item.absentType,
+                                    text: item.description,
+                                    id: item.absentCode,
                                     data: item
                                 }
                             })
@@ -433,6 +477,128 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#leave_transaction_by_employee_no_form").submit();
+        });
+
+        jQuery.validator.addMethod("greaterThan", 
+        function(value, element, params) {
+
+            if (!/Invalid|NaN/.test(new Date(value))) {
+                return new Date(value) > new Date($(params).val());
+            }
+
+            return isNaN(value) && isNaN($(params).val()) 
+                || (Number(value) > Number($(params).val())); 
+        },'Must be greater than {0}.');
+
+        if ($("#leave_transaction_by_employee_no_form").length > 0) {
+            $("#leave_transaction_by_employee_no_form").validate({
+            rules: {
+                    employee_no: {
+                        required: true,
+                    },
+                    leave_code: {
+                        required: true,
+                    },
+                    leave_date_from: {
+                        required: true,
+                    },
+                    leave_date_to: {
+                        required: true,
+                        greaterThan: '#leave_date_from'
+                    }
+                },
+                messages: {
+                    employee_no: {
+                        required: "{{ __('tm_leave_transaction_by_employee_no.field_mandatory') }}",
+                    },
+                    leave_code: {
+                        required: "{{ __('tm_leave_transaction_by_employee_no.field_mandatory') }}",
+                    },
+                    leave_date_from: {
+                        required: "{{ __('tm_leave_transaction_by_employee_no.field_mandatory') }}",
+                    },
+                    leave_date_to: {
+                        required: "{{ __('tm_leave_transaction_by_employee_no.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_leave_transaction_by_employee_no.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/leave_transaction/proses') }}",
+                        type: "POST",
+                        data: $('#leave_transaction_by_employee_no_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_leave_transaction_by_employee_no.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/leave_transaction_by_employee_no') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_leave_transaction_by_employee_no.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_leave_transaction_by_employee_no.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
         }
     })
 </script>

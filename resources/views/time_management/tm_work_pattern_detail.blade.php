@@ -257,7 +257,7 @@
             }
             $('#no_of_day').val(((typeof arrData[0].noOfDay !== 'undefined') ? arrData[0].noOfDay : ''));
             load_table_detail_work_pattern();
-            console.log(arrData[0].workPatternDetailList.length);
+            // console.log(arrData[0].workPatternDetailList.length);
             if (typeof arrData[0].noOfDay !== 'undefined') {
                 for (var i = 0; i < arrData[0].workPatternDetailList.length; i++) {
                     console.log(arrData[0].workPatternDetailList[0].seqNo);
@@ -324,7 +324,7 @@
                     shiftCode : shiftCode
                 }
             }).then(function (data) {
-                console.log(data);
+                // console.log(data);
                 if (!$(field).find('option:contains(' + data[0].shiftName + ')').length) {
                     $(field).append($('<option>').val(data[0].shiftCode).text(data[0].shiftName));
                 }

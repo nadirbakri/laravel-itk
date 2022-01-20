@@ -249,7 +249,12 @@
                 $.ajax({
                     url: "{{ url('time_management/work_pattern/status') }}",
                     type: "GET",
-                    data: { 'patternCode' : data[0].patternCode, 'func' : 'A' },
+                    data: { 
+                        'patternCode' : data[0].patternCode, 
+                        'description' : data[0].description,
+                        'holidayFlag' : data[0].holidayFlag,
+                        'noOfDay' : data[0].noOfDay,
+                        'func' : 'A' },
                     success: function(response) {
                         if(response.status == "true"){
                             $('#notification_success').modal('show');
@@ -285,7 +290,12 @@
                 $.ajax({
                     url: "{{ url('time_management/work_pattern/status') }}",
                     type: "GET",
-                    data: { 'patternCode' : data[0].patternCode, 'func' : 'D' },
+                    data: { 
+                        'patternCode' : data[0].patternCode, 
+                        'description' : data[0].description,
+                        'holidayFlag' : data[0].holidayFlag,
+                        'noOfDay' : data[0].noOfDay,
+                        'func' : 'D' },
                     success: function(response) {
                         if(response.status == "true"){
                             $('#notification_success').modal('show');

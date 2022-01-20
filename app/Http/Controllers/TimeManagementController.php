@@ -451,7 +451,10 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/balanceleave/getbalanceleave',
+            // var_dump($request->employeeNo);
+            // var_dump($request->leaveCode);
+            
+            $response = $client->post(env('API_URL') . '/leavetransaction/getleavetransaction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -466,6 +469,7 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             $data = [];
@@ -968,6 +972,48 @@ class TimeManagementController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesLeaveTransactionTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/leavetransaction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' =>  $request->employee_no,
+                        'leaveCode' => $request->leave_code,
+                        'leaveHour' => $request->radiobtn,
+                        'leaveDateFrom' => $request->leave_date_from,
+                        'leaveDateTo' => $request->leave_date_to,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
+                        'userID' => Session::get('userID'),
+                        // 'companyCodeLogin' => 
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->message);
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkAppTM(Request $request)
     {
         try {
@@ -1058,14 +1104,27 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // var_dump($request->func);
+            // var_dump($request->patternCode);
+            // var_dump($request->description);
+            // var_dump($request->holidayFlag);
+            // var_dump((int)$request->noOfDay);
+
             $response = $client->put(env('API_URL') . '/tmworkpattern',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
                         'companyCode' => Session::get('companyCode'),
                         'patternCode' => $request->patternCode,
+                        'description' => $request->description,
+                        'holidayFlag' => (bool) $request->holidayFlag,
+                        'noOfDay' => (int) $request->noOfDay,
+                        'changedNo' => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
