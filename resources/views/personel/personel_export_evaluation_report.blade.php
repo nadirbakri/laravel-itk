@@ -31,8 +31,7 @@
 	</style>
 </head>
 <body>
-	<?php 
-	
+	<?php
 	?>
 	<h2 style="text-align:center">Evaluation Report</h2>
 	<p style="text-align:center">Period : {{ \Carbon\Carbon::parse($data->evaluationPeriodFrom)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($data->evaluationPeriodTo)->format('d/m/Y') }} <p><br>

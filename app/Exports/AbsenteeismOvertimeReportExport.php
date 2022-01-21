@@ -9,8 +9,11 @@ use GuzzleHttp\Exception\RequestException;
 use Validator;
 use Session;
 use App;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class PostponeLeaveReportExport implements FromView
+class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithEvents
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
     {
@@ -83,22 +86,18 @@ class PostponeLeaveReportExport implements FromView
                 foreach($this->dataLevel as $key => $value){
                     $data_level_detail = [];
                     foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = [
-                            'level' => $value2
-                        ];
+                        $data_level_detail[] = $value2;
                     }
                     $data_level[] = [
-                        "companyCode" => Session::get('companyCode'),
                         "levelType" => (string) ($key + 1),
-                        "level" => $data_level_detail
+                        "levelCode" => $data_level_detail
                     ];
                 }
-                $param['level'] = $data_level;
+                $param['levelMaster'] = $data_level;
             }
-
             // var_dump($param['levelMaster']);
 
-            if($reportType == "absent"){
+            if($this->reportType == "absent"){
                 $response = $client->post(env('API_URL') . '/absentovertimereport/getabsenteeismreport',
                 ['body' => json_encode($param)]
             );
@@ -116,27 +115,26 @@ class PostponeLeaveReportExport implements FromView
 
         // var_dump($arrResult->dataListSet);
 
-        if($reportType == "absent"){
-            if($arrResult->dataListSet == null){
-                return view('time_management.tm_export_absenteeism_absent_report', [
-                    'data' => []
-                ]); 
-            }else{
-                return view('time_management.tm_export_absenteeism_absent_report', [
-                    'data' => $arrResult->dataListSet
-                ]);
-            }
+        if($arrResult->dataListSet == null){
+            return view('time_management.tm_export_absenteeism_absent_report', [
+                'data' => []
+            ]); 
+        }else{
+            return view('time_management.tm_export_absenteeism_absent_report', [
+                'data' => $arrResult->dataListSet
+            ]);
         }
-        else{
-            if($arrResult->dataListSet == null){
-                return view('time_management.tm_export_absenteeism_overtime_report', [
-                    'data' => []
-                ]); 
-            }else{
-                return view('time_management.tm_export_absenteeism_overtime_report', [
-                    'data' => $arrResult->dataListSet
-                ]);
-            }
-        }
+    }
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+   
+                $event->sheet->getDelegate()->getStyle('A1:BN500')
+                                ->getAlignment()
+                                ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+   
+            },
+        ];
     }
 }

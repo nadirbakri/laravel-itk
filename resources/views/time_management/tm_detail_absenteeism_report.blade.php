@@ -230,6 +230,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -304,6 +305,7 @@
         loadDataPositionCode();
         loadDataLocationCode();
         loadDataRankingCode();
+        loadDataAbsentTable();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
@@ -325,6 +327,87 @@
         //     '</div>';
         //     $('.select2-search').append(html);
         // });
+
+        // loadDataFirstLastAllLocation();
+
+        $('#company_working_calendar_table thead tr').clone(true).appendTo('#company_working_calendar_table thead');
+        $('#company_working_calendar_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+    
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        var table = $('#company_working_calendar_table').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: "{{ url('time_management/company_working_calendar/table') }}",
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
+                {data: 'calendar', name: 'calendar'},
+                {data: 'description', name: 'description'},
+                {data: 'flagType', name: 'flagType'},
+                {data: 'locationCode', name: 'locationCode'}
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
+        });
+
+        function load_data_company_working_calendar() {
+            table = $('#company_working_calendar_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/company_working_calendar/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'calendar', name: 'calendar'},
+                    {data: 'description', name: 'description'},
+                    {data: 'flagType', name: 'flagType'},
+                    {data: 'locationCode', name: 'locationCode'}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -915,6 +998,11 @@
                         type: "POST",
                         data: $('#tm_detail_absenteeism_report_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_report.btn_print") }}'
+                            );
+
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

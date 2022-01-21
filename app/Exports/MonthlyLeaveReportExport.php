@@ -29,10 +29,20 @@ class MonthlyLeaveReportExport implements FromView
     public function view(): View
     {
         try {
+            
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+            
+            $dataabsent = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'recordStatus' => 'A'
+                    ]
+                )]
+            );
 
             $param = [ 
                 'companyCode' => Session::get('companyCode'), 
@@ -92,7 +102,7 @@ class MonthlyLeaveReportExport implements FromView
                 $param['levelMaster'] = $data_level;
             }
 
-            var_dump($param);
+            // var_dump($param);
 
             $response = $client->post(env('API_URL') . '/monthlyleavereport/getmonthlyleavereport',
                 ['body' => json_encode($param)]
@@ -102,16 +112,18 @@ class MonthlyLeaveReportExport implements FromView
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult1 = json_decode($dataabsent->getBody()->getContents());
 
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_leave_report', [
-                'data' => []
+                'data' => [],
+                'dataListAbsent' => []
             ]);
         }else{
             return view('time_management.tm_export_monthly_leave_report', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'dataListAbsent'  => $arrResult1->dataListSet
             ]); 
         }
     }

@@ -35,6 +35,10 @@ return [
     'label_absent_code' => 'Absent Code',
     'label_description' => 'Description',
     'label_header_name' => 'Header Name',
-    'absent_code_required' => 'Absent Code Required'
+    'absent_code_required' => 'Absent Code Required',
+    'employee_no_from_required' => 'Employee No From Required',
+    'employee_no_to_required' => 'Employee No To Required',
+    'absent_month_from_required' => 'Absent Month From Required',
+    'absent_month_to_required' => 'Absent Month To Required'
 
 ];

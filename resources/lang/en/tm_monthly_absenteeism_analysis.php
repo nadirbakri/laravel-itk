@@ -23,6 +23,7 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
-    'btn_print' => 'Print'
+    'btn_print' => 'Print',
+    'judul_export' => 'Monthly Absenteeism Analysis',
 
 ];

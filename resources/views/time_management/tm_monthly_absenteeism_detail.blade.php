@@ -310,6 +310,89 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    $(document).ready(function() {
+        loadDataAbsentCode();
+        load_data_absent_code();
+
+        // loadDataFirstLastAllLocation();
+
+        $('#absent_code_table thead tr').clone(true).appendTo('#absent_code_table thead');
+        $('#absent_code_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+    
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        var table = $('#absent_code_table').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: "{{ url('time_management/monthly_absenteeism_detail/table') }}",
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
+                {data: 'absentCode', name: 'absentCode'},
+                {data: 'description', name: 'description'},
+                {data: 'leave', name: 'leave'}
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
+        });
+
+        function load_data_absent_code() {
+            table = $('#absent_code_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/monthly_absenteeism_detail/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'absentCode', name: 'absentCode'},
+                    {data: 'description', name: 'description'},
+                    {data: 'leave', name: 'leave'}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
     $(function () {
         initDatePicker();
     });
@@ -1054,6 +1137,34 @@
 
         if ($("#monthly_absenteeism_detail_form").length > 0) {
             $("#monthly_absenteeism_detail_form").validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    }, 
+                    employee_no_to: {
+                        required: true,
+                    },
+                    absent_month_from: {
+                        required: true,
+                    }, 
+                    absent_month_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('tm_monthly_leave_report.employee_no_from_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('tm_monthly_leave_report.employee_no_to_required') }}",
+                    },
+                    absent_month_from: {
+                        required: "{{ __('tm_monthly_leave_report.absent_month_from_required') }}",
+                    },
+                    absent_month_to: {
+                        required: "{{ __('tm_monthly_leave_report.absent_month_to_required') }}",
+                    },
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {

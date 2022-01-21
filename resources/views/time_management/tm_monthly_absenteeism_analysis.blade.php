@@ -862,6 +862,11 @@
                         type: "POST",
                         data: $('#monthly_absenteeism_analysis_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_analysis.btn_print") }}'
+                            );
+
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

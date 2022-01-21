@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
+use App\Exports\AbsenteeismOvertimeReportExport;
+use App\Exports\MonthlyAbsenteeismAnalysisExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -121,6 +123,36 @@ class TimeManagementController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+    
+    public function tableMonthlyAbsenteeismDetail()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -602,7 +634,7 @@ class TimeManagementController extends Controller
 
         // var_dump($request->period);
 
-        return Excel::download(new DetailAbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+        return Excel::download(new DetailAbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Detail Absenteeism Report.xlsx');
     }
 
     public function printMonthlyAbsenteeismDetail(Request $request)

@@ -11,6 +11,7 @@
 			margin-right: 30px;
 			margin-bottom: 25px;
 			margin-top: 25px;
+			text-align:"center";
 		}
 	</style>
 </head>
@@ -22,14 +23,14 @@
 				<th rowspan="2">No</th>
 				<th rowspan="2">Employee No</th>
 				<th rowspan="2">Employee Name</th>
-				<th colspan="{{ count($data->dynamicColumn) }}">Date</th>
-                <th colspan="{{ count($data->aggregateColumn) }}">Total</th>
+				<th colspan="{{ count($data[0]->dynamicColumn) }}">Date</th>
+                <th colspan="{{ count($data[0]->aggregateColumn) }}">Total</th>
 			</tr>
 			<tr>
-				@foreach($data->dynamicColumn as $value)
+				@foreach($data[0]->dynamicColumn as $value)
 				<td>{{ $value->key }}</td>
 				@endforeach
-				@foreach($data->aggregateColumn as $value)
+				@foreach($data[0]->aggregateColumn as $value)
 				<td>{{ $value->key }}</td>
 				@endforeach
 			</tr>

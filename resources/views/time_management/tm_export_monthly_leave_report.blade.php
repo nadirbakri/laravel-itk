@@ -22,32 +22,42 @@
 				<th rowspan="2">No</th>
 				<th rowspan="2">Employee No</th>
 				<th rowspan="2">Employee Name</th>
-				<th colspan="4">Annual Leave</th>
-                <th colspan="4">Long Leave</th>
+				@foreach($dataListAbsent as $value)
+					<th colspan="4">{{ $value->description }}</th>
+				@endforeach
 			</tr>
 			<tr>
+			@foreach($dataListAbsent as $value)
 				<th>Prev. Year</th>
 				<th>This Year</th>
 				<th>Request</th>
 				<th>Balance</th>
-				<th>Prev. Year</th>
-				<th>This Year</th>
-				<th>Request</th>
-				<th>Balance</th>
+			@endforeach
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 1; ?>
+            <?php $no = 1; 
+			?>
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
-				<td>{{ $value->prevYear }}</td>
-				<td>{{ $value->thisYear }}</td>
-				<td>{{ $value->request }}</td>
-                <td>{{ $value->balance }}</td>
-		
+				@foreach($value->leaveList as $value2)
+					@foreach($dataListAbsent as $value3)	
+						@if($value2->leaveCode == $value3->absentCode)
+						<td>{{ $value2->prevYear }}</td>
+						<td>{{ $value2->thisYear }}</td>
+						<td>{{ $value2->request }}</td>
+						<td>{{ $value2->balance }}</td>
+						@else
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						@endif
+					@endforeach
+				@endforeach
 			</tr>
 			@endforeach
 		</tbody>

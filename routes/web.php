@@ -389,6 +389,7 @@ Route::get('time_management/work_pattern/table', 'TimeManagementController@table
 Route::get('time_management/work_pattern/detail/table', 'TimeManagementController@tableWorkPatternDetailTM');
 Route::get('time_management/overtime_spl/table', 'TimeManagementController@tableOvertimeSPL');
 Route::get('time_management/period_maintenance/table', 'TimeManagementController@tablePeriodMaintenanceTM');
+Route::get('time_management/monthly_absenteeism_detail/table', 'TimeManagementController@tableMonthlyAbsenteeismDetail');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');

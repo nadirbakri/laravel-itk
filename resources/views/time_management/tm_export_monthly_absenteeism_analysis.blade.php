@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('tm_monthly_absenteeism_analysis.judul') }}</title>
+	<title>{{ __('tm_monthly_absenteeism_analysis.judul_export') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<style type="text/css">
@@ -16,26 +16,23 @@
 </head>
 
 <body>
-	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
+	<table style="width: 100%; font-size: 14px;" >
 		<thead>
 			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
+				<th rowspan="2">No</th>
+				<th rowspan="2">Employee No</th>
+				<th rowspan="2">Employee Name</th>
 				<th colspan="2">Normal</th>
 				<th colspan="2">Actual</th>
 				<th colspan="4">Variance Actual With Normal</th>
-				<th colspan="4">Overtime</th>
+				<th colspan="5">Overtime</th>
 				<th colspan="2">Absent</th>
 				<th colspan="2">Others</th>
 				<th colspan="2">Leave Permit</th>
 				<th colspan="2">Total Absent</th>
-				<th colspan="2">Effective Working</th>
+				<th colspan="4">Effective Working</th>
 			</tr>
 			<tr>
-				<th>No</th>
-				<th>Employee No</th>
-				<th>Employee Name</th>
 				<th>Days</th>
 				<th>Hours</th>
 				<th>Days</th>
@@ -64,63 +61,35 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($this->datanormal as $value){
-				$data_normal[] = [
-					'totalHours' => $value
-					];
-				$param['normalhours'] = $data_normal;
-			}
-
-			@foreach($this->dataactual as $value){
-				$data_actual[] = [
-					'totalHours' => $value
-					];
-				$param['actualhours'] = $data_actual;
-			}
-
-			@foreach($this->datavan as $value){
-				$data_van[] = [
-					'totalHours' => $value
-					];
-				$param['vanHours'] = $data_van;
-			}
-
-			@foreach($this->dataovertime as $value){
-				$data_overtime[] = [
-					'totalHours' => $value
-					];
-				$param['actualhours'] = $data_actual;
-			}
-
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $value->no }}</td>
 				<td>{{ $value->employeeno }}</td>
 				<td>{{ $value->employeename }}</td>
 				<td>{{ $value->normaldays }}</td>
-				<td>{{ $value->normalhours }}</td>
-                <td>{{ $value->actualdays }}</td>
-				<td>{{ $value->actualhours }}</td>
+				<td>{{ $value->normalhours->totalHours }}</td>
+              	<td>{{ $value->actualdays }}</td>
+				<td>{{ $value->actualhours->totalHours }}</td>
 				<td>{{ $value->vanDays }}</td>
 				<td>{{ $value->vanDaysP }}</td>
-				<td>{{ $value->vanHours }}</td>
+				<td>{{ $value->vanHours->totalHours }}</td>
 				<td>{{ $value->vanHoursP }}</td>
 				<td>{{ $value->overtimeDays }}</td>
 				<td>{{ $value->overtimeDaysP }}</td>
-				<td>{{ $value->overtimeHours }}</td>
+				<td>{{ $value->overtimeHours->totalHours }}</td>
 				<td>{{ $value->overtimeHoursP }}</td>
 				<td>{{ $value->overtimeConvert }}</td>
 				<td>{{ $value->absentDays }}</td>
-				<td>{{ $value->absentHours }}</td>
+				<td>{{ $value->absentHours->totalHours }}</td>
 				<td>{{ $value->othersDays }}</td>
-				<td>{{ $value->othersHours }}</td>
+				<td>{{ $value->othersHours->totalHours }}</td>
 				<td>{{ $value->leavePermitDays }}</td>
-				<td>{{ $value->leavePermitHours }}</td>
+				<td>{{ $value->leavePermitHours->totalHours }}</td>
 				<td>{{ $value->totalAbsentDays }}</td>
-				<td>{{ $value->totalAbsentHours }}</td>
+				<td>{{ $value->totalAbsentHours->totalHours }}</td>
 				<td>{{ $value->ewDays }}</td>
 				<td>{{ $value->ewDaysP }}</td>
-				<td>{{ $value->ewHours }}</td>
+				<td>{{ $value->ewHours->totalHours }}</td>			
 				<td>{{ $value->ewHoursP }}</td>
 			</tr>
 			@endforeach
@@ -128,11 +97,3 @@
 	</table>
 </body>
 </html>
-if(!empty($this->position) && !is_null($this->position[0])){
-                foreach($this->position as $value){
-                    $data_position[] = [
-                        'positionCode' => $value
-                    ];
-                }
-                $param['position'] = $data_position;
-            }
