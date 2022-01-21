@@ -11,7 +11,8 @@ return [
     'label_half_day' => 'Setengah Hari',
     'label_leave_date_from' => 'Tanggal Cuti Dari',
     'label_leave_date_to' => 'Tanggal Cuti Sampai',
-    'btn_save' => 'Simpan'
+    'btn_save' => 'Simpan',
+    'field_mandatory' => "Kolom ini tidak boleh kosong"
 ]
 
 ?>

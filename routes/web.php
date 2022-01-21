@@ -386,7 +386,9 @@ Route::get('time_management/unpaid_leave_report', 'TimeManagementController@page
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
 Route::get('time_management/company_working_calendar/table', 'TimeManagementController@tableCompanyWorkingCalendar');
 Route::get('time_management/work_pattern/table', 'TimeManagementController@tableWorkPatternTM');
+Route::get('time_management/work_pattern/detail/table', 'TimeManagementController@tableWorkPatternDetailTM');
 Route::get('time_management/overtime_spl/table', 'TimeManagementController@tableOvertimeSPL');
+Route::get('time_management/period_maintenance/table', 'TimeManagementController@tablePeriodMaintenanceTM');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
@@ -405,6 +407,12 @@ Route::post('time_management/input_balance_leave/proses', 'TimeManagementControl
 Route::post('time_management/update_shift_by_date/proses', 'TimeManagementController@prosesUpdateShiftByDateTM');
 Route::post('time_management/overtime_spl/proses', 'TimeManagementController@prosesOvertimeSPLTM');
 Route::post('time_management/work_pattern/proses', 'TimeManagementController@prosesWorkPatternTM');
+Route::post('time_management/period_maintenance/proses', 'TimeManagementController@prosesPeriodMaintenanceTM');
+Route::post('time_management/leave_transaction/proses', 'TimeManagementController@prosesLeaveTransactionTM');
+
+/* Route untuk remove Time Managemnet */
+Route::get('time_management/overtime_spl/remove', 'TimeManagementController@removeOvertimeSPLTM');
+Route::get('time_management/period_maintenance/remove', 'TimeManagementController@removePeriodMaintenanceTM');
 
 /* Route untuk cek status Time Management */
 Route::post('time_management/overtime_spl/status', 'TimeManagementController@statusOvertimeSPLTM');
@@ -582,9 +590,12 @@ Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
 Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
 Route::get('shift_code/api', 'DataController@dataShiftAPI');
+Route::get('shift_code/func/api', 'DataController@dataShiftCodeFunctionAPI');
 Route::get('leave_code/api', 'DataController@dataLeaveCodeAPI');
 Route::get('absent_code/api', 'DataController@dataAbsentCodeAPI');
 Route::get('code/api', 'DataController@dataCodeAPI');
+Route::get('day_code/api', 'DataController@dataDayCodeAPI');
+Route::get('day_code/func/api', 'DataController@dataDayCodeFunctionAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

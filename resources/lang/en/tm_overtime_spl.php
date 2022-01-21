@@ -40,7 +40,8 @@ return [
     'btn_app_hrd' => 'App HRD',
     'label_check_all' => 'Check All',
     'label_uncheck_all' => 'Uncheck All',
-    'field_mandatory' => "This field can't be blank"
+    'field_mandatory' => "This field can't be blank",
+    'alert_success' => 'Success !'
 ]
 
 ?>

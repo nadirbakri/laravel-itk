@@ -3248,6 +3248,59 @@ class DataController extends Controller
 	    return response()->json($arrResult->dataListSet);
 	}
 
+	public function dataDayCodeAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'DayCode_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    return response()->json($arrResult->dataListSet);
+	}
+
+	public function dataDayCodeFunctionAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'DayCode_',
+						'comGenCode' => $request->dayCode,
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    return response()->json($arrResult->dataListSet);
+	}
+
 	public function dataNPWPAPI(Request $request)
     {
 		$search = $request->search;
@@ -3400,6 +3453,32 @@ class DataController extends Controller
         return response()->json($shift);
 	}
 
+	public function dataShiftCodeFunctionAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+						'shiftCode' => $request->shiftCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    return response()->json($arrResult->dataListSet);
+	}
+
 	public function dataLeaveCodeAPI(Request $request)
     {
     	$search = $request->search;
@@ -3413,7 +3492,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
 	    		['body' => json_encode(
 	    			[
-	    				'absentType' => 'L',
+						'absentType' => 'L',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]

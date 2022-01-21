@@ -11,7 +11,8 @@ return [
     'label_half_day' => 'Half Day',
     'label_leave_date_from' => 'Leave Date From',
     'label_leave_date_to' => 'Leave Date To',
-    'btn_save' => 'Save'
+    'btn_save' => 'Save',
+    'field_mandatory' => "This field can't be blank"
 ]
 
 ?>

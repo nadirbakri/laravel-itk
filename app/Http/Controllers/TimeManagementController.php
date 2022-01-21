@@ -244,6 +244,89 @@ class TimeManagementController extends Controller
         }
     }
 
+    public function tableWorkPatternDetailTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'patternCode' => $request->patternCode,
+                "sessionID" => 0,
+                'userID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            var_dump($request->seqNo);
+            foreach($request->seqNo as $value){
+                $data_work_pattern_detail_list[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'patternCode' => $request->patternCode,
+                    'seqNo' => $value,
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => App::getLocale()
+                ];
+            }
+            $param['workPatternDetailList'] = $data_work_pattern_detail_list;
+
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+                    ['body' => json_encode($param)]
+            );
+
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($request->patternCode)){
+            return Datatables::of([])->make(true);
+        }else{
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }
+    }
+
+    public function tablePeriodMaintenanceTM()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function dataDetailRankingPersonel(Request $request)
     {
         try {
@@ -368,7 +451,10 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/balanceleave/getbalanceleave',
+            // var_dump($request->employeeNo);
+            // var_dump($request->leaveCode);
+            
+            $response = $client->post(env('API_URL') . '/leavetransaction/getleavetransaction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -383,6 +469,7 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             $data = [];
@@ -393,7 +480,7 @@ class TimeManagementController extends Controller
         return response()->json($data);
     }
 
-    public function dataDetailPeriodMaintenanceTM () 
+    public function dataDetailPeriodMaintenanceTM (Request $request) 
     {
         try {
             $client = new Client([
@@ -401,10 +488,15 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // var_dump((int) $request->month);
+
             $response = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'periodMonth' => (int) $request->month,
+                        'periodYear' => (int) $request->year,
+                        'period' => (int) $request->period,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -767,13 +859,15 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // var_dump($request->check_work_on_holiday);
+
             $param = [
                 'recordStatus' => $request->record_status,
                 'companyCode' => Session::get('companyCode'),
                 'patternCode' => $request->work_pattern_code,
                 'description' => $request->description,
-                'holidayFlag' => isset($request->work_on_holiday) ? (bool) $request->work_on_holiday : false,
-                'no_of_day' => (int) $request->no_of_day,
+                'holidayFlag' => isset($request->check_work_on_holiday) ? (bool) $request->check_work_on_holiday : false,
+                'noOfDay' => (int) $request->no_of_day,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),
@@ -792,7 +886,7 @@ class TimeManagementController extends Controller
                     'recordStatus' => $request->record_status,
                     'companyCode' => Session::get('companyCode'),
                     'patternCode' => $request->work_pattern_code,
-                    'seqNo' => $value,
+                    'seqNo' => (int) $value,
                     'dayCode' => $request->day_code[$value - 1],
                     'shiftCode' => $request->shift_code[$value - 1],
                     "changedNo" => 0,
@@ -805,7 +899,8 @@ class TimeManagementController extends Controller
                     "languageCode" => App::getLocale()
                 ];
             }
-            $param['workWPatternDetailList'] = $data_work_pattern_detail_list;
+            $param['workPatternDetailList'] = $data_work_pattern_detail_list;
+            // var_dump($data_work_pattern_detail_list);
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/tmworkpattern',
@@ -821,6 +916,100 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesPeriodMaintenanceTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->year);
+            // var_dump((int) $request->month);
+            // var_dump($request->period);
+            // var_dump($request->absenteeism_from);
+            // var_dump($request->absenteeism_to);
+
+            $response = $client->post(env('API_URL') . '/tmperiod',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'periodMonth' => (int) $request->month,
+                        'periodYear' => (int) $request->year,
+                        'period' => (int) $request->period,
+                        'salaryStart' => $request->salary_from,
+                        'salaryEnd' => $request->salary_to,
+                        'overtimeStart' => $request->overtime_from,
+                        'overtimeEnd' => $request->overtime_to,
+                        'absenteeismStart' => $request->absenteeism_from,
+                        'absenteeismEnd' => $request->absenteeism_to,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->message);
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesLeaveTransactionTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/leavetransaction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' =>  $request->employee_no,
+                        'leaveCode' => $request->leave_code,
+                        'leaveHour' => $request->radiobtn,
+                        'leaveDateFrom' => $request->leave_date_from,
+                        'leaveDateTo' => $request->leave_date_to,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
+                        'userID' => Session::get('userID'),
+                        // 'companyCodeLogin' => 
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->message);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
@@ -869,16 +1058,20 @@ class TimeManagementController extends Controller
 
             // var_dump($request->id_overtime_spl);
 
-            foreach($request->id_overtime_spl as $key => $value){
+            foreach($request->id_overtime_spl as $value){
                 // var_dump()
                 if(!empty($request->selected_overtime_spl_table) && isset($request->selected_overtime_spl_table[$value])){
                     $param = [ 
                         'companyCode' => Session::get('companyCode'), 
                         'employeeNo' => $request->employee_no_overtime_spl[$value],
                         'ovtDate' => $request->ovt_date_overtime_spl[$value],
-                        'seqNo' => $request->seq_no_overtime_spl[$value],
+                        'seqNo' => (int) $request->seq_no_overtime_spl[$value],
                         'hrdApprove' => isset($request->check_app_leader[$value]) ? (bool) $request->check_app_leader[$value] : false,
                         'leadApprove' => isset($request->check_app_hrd[$value]) ? (bool) $request->check_app_hrd[$value] : false,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
@@ -887,6 +1080,8 @@ class TimeManagementController extends Controller
                     ]; 
                 }
             }
+
+            // var_dump($param);
 
             $response = $client->put(env('API_URL') . '/tmovtspl/updatetmovtspl',
                 ['body' => json_encode($param)]
@@ -909,14 +1104,27 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // var_dump($request->func);
+            // var_dump($request->patternCode);
+            // var_dump($request->description);
+            // var_dump($request->holidayFlag);
+            // var_dump((int)$request->noOfDay);
+
             $response = $client->put(env('API_URL') . '/tmworkpattern',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
                         'companyCode' => Session::get('companyCode'),
                         'patternCode' => $request->patternCode,
+                        'description' => $request->description,
+                        'holidayFlag' => (bool) $request->holidayFlag,
+                        'noOfDay' => (int) $request->noOfDay,
+                        'changedNo' => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
@@ -931,5 +1139,94 @@ class TimeManagementController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function removeOvertimeSPLTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            $param = [];
+
+            // var_dump($request->id_overtime_spl);
+
+            foreach($request->data as $key => $value){
+                $param[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'ovtDate' => $value['ovtDate'],
+                    'seqNo' => (int) $value['seqNo'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            // var_dump($param);
+
+            $response = $client->delete(env('API_URL') . '/tmovtspl/deletetmovtspl',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removePeriodMaintenanceTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            $param = [];
+
+            // var_dump($request->id_overtime_spl);
+
+            foreach($request->data as $key => $value){
+                // var_dump($value['absenteeismStart']);
+                $param[] = [
+                    'companyCode' => $value['companyCode'],
+                    'periodYear' => (int) $value['periodYear'],
+                    'periodMonth' => (int) $value['periodMonth'],
+                    'period' => (int) $value['period'],
+                    'absenteeismStart' => $value['absenteeismStart'],
+                    'absenteeismEnd' => $value['absenteeismEnd'],
+                    'overtimeStart' => $value['overtimeStart'],
+                    'overtimeEnd' => $value['overtimeEnd'],
+                    'salaryStart' => $value['salaryStart'],
+                    'salaryEnd' => $value['salaryEnd'],
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            // var_dump($param);
+
+            $response = $client->delete(env('API_URL') . '/tmperiod',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 }

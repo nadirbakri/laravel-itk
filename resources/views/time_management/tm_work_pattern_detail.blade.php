@@ -76,6 +76,10 @@
             margin-left: 0.5%;
         }
 
+        .required {
+            color: red;
+        }
+
     </style>
 </head>
 
@@ -104,6 +108,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="work_pattern_code">{{ __('tm_work_pattern.label_work_pattern_code') }}</label>
+                            <span class="required">*</span>
                             <input type="text" class="form-control" id="work_pattern_code" name="work_pattern_code"
                                 placeholder="{{ __('tm_work_pattern.label_work_pattern_code') }}">
                         </div>
@@ -122,7 +127,7 @@
                             <label for="work_on_holiday">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_work_on_holiday"
-                                    name="check" value="check_work_on_holiday">
+                                    name="check_work_on_holiday" value="check_work_on_holiday">
                                 <label
                                     for="work_on_holiday">{{ __('tm_work_pattern.label_work_on_holiday') }}</label>
                             </div>
@@ -132,6 +137,7 @@
                         <div class="form-group">
                             <label
                                 for="no_of_day">{{ __('tm_work_pattern.label_no_of_day') }}</label>
+                            <span class="required">*</span>
                             <input type="number" min="0" class="form-control" id="no_of_day"
                                 name="no_of_day"
                                 placeholder="{{ __('tm_work_pattern.label_no_of_day') }}">
@@ -219,10 +225,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var func = "{{ $func }}";
+        var arrData = @json($data);
         var table = null;
 
-        $('#work_pattern_detail_table').DataTable().destroy();
-        load_table_detail_work_pattern();
+        // $('#work_pattern_detail_table').DataTable().destroy();
+        // load_table_detail_work_pattern();
         // table.clear().draw();
 
         if (func == 'new') {
@@ -230,15 +237,45 @@
             $('#record_function').val("New");
             $('#work_pattern_code').val("");
             $('#description').val("");
-            $('#work_on_holiday').val("");
+            $('#check_work_on_holiday').prop('checked', false);
             $('#no_of_day').val("");
+            $('#work_pattern_detail_table').DataTable().destroy();
+            load_table_detail_work_pattern();
         } else if (func == 'edit') {
-            $('#record_status').val("{{ isset($data[0]->recordStatus) ? $data[0]->recordStatus : '' }}");
+            $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
             $('#record_function').val("Edit");
-            $('#work_pattern_code').val("{{ isset($data[0]->patternCode) ? $data[0]->patternCode : '' }}");
-            $('#description').val(htmlDecode("{{ isset($data[0]->description) ? $data[0]->description : '' }}"));
-            $('#work_on_holiday').val("");
-            $('#no_of_day').val("{{ isset($data[0]->noOfDay) ? $data[0]->noOfDay : '' }}");
+            $('#work_pattern_code').val(((typeof arrData[0].patternCode !== 'undefined') ? arrData[0].patternCode : ''));
+            $('#description').val(htmlDecode(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '')));
+            // console.log('{{ $data[0]->holidayFlag }}');
+            var work_on_holiday = ((typeof arrData[0].holidayFlag !== 'undefined') ? arrData[0].holidayFlag : '');
+            // console.log(work_on_holiday);
+            if ( work_on_holiday == 1 ) {
+                $('#check_work_on_holiday').prop('checked', true)
+            }
+            else {
+                $('#check_work_on_holiday').prop('checked', false)
+            }
+            $('#no_of_day').val(((typeof arrData[0].noOfDay !== 'undefined') ? arrData[0].noOfDay : ''));
+            load_table_detail_work_pattern();
+            // console.log(arrData[0].workPatternDetailList.length);
+            if (typeof arrData[0].noOfDay !== 'undefined') {
+                for (var i = 0; i < arrData[0].workPatternDetailList.length; i++) {
+                    console.log(arrData[0].workPatternDetailList[0].seqNo);
+                    table.row.add([
+                        '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : i) +'">' + ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : i),
+                        '<select class="form-control select2 day_code" id="day_code'+ (i+1) +'" name="day_code[]">',
+                        '<select class="form-control select2 shift_code" id="shift_code'+ (i+1) +'" name="shift_code[]">',
+                    ]).draw();
+
+                    loadDataDayCode("#day_code" + (i+1));
+                    loadDataShiftCode("#shift_code" + (i+1));
+                    loadDataDetailDayCode('#day_code' + (i+1), ((typeof arrData[0].workPatternDetailList[i].dayCode !== 'undefined') ? arrData[0].workPatternDetailList[i].dayCode : ''));
+                    loadDataDetailShiftCode('#shift_code' + (i+1), ((typeof arrData[0].workPatternDetailList[i].shiftCode !== 'undefined') ? arrData[0].workPatternDetailList[i].shiftCode : ''));
+                }
+                // load_table_detail_work_pattern(((typeof arrData[0].patternCode !== 'undefined') ? arrData[0].patternCode : ''), 
+                //     ((typeof arrData[0].workPatternDetailList[0].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[0].seqNo : ''));
+            }
+            // load_table_detail_work_pattern("{{ isset($data[0]->patternCode) ? $data[0]->patternCode : '' , isset($data[0]->seqNo) ? $data[0]->seqNo : ''}}");
         }
 
         function htmlDecode(value) {
@@ -254,25 +291,207 @@
         function load_table_detail_work_pattern() {
             table = $('#work_pattern_detail_table').DataTable({
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                'sPaginationType': 'ellipses',
+            });
+        }
+
+        function loadDataDetailDayCode(field = '', dayCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/day_code/func/api',
+                data: {
+                    dayCode : dayCode
+                }
+            }).then(function (data) {
+                console.log(data);
+                if (!$(field).find('option:contains(' + data[0].value + ')').length) {
+                    $(field).append($('<option>').val(data[0].comGenCode).text(data[0].value));
+                }
+                $(field).val(data[0].comGenCode);
+                $(field).removeClass('loading');
+            });
+        }
+
+        function loadDataDetailShiftCode(field = '', shiftCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/shift_code/func/api',
+                data: {
+                    shiftCode : shiftCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].shiftName + ')').length) {
+                    $(field).append($('<option>').val(data[0].shiftCode).text(data[0].shiftName));
+                }
+                $(field).val(data[0].shiftCode);
+                $(field).removeClass('loading');
             });
         }
 
         $('#no_of_day').on('input', function () {
-            var no_of_day = $('#no_of_day').val();
+        var no_of_day = $('#no_of_day').val();
+        
+        table.clear().draw();
 
-            table.clear().draw();
-            
             for (var i = 1; i <= no_of_day; i++) {
-                // console.log($('#no_of_day').val());
+                console.log(no_of_day);
 
-                table.row.add([
+                if (func == 'new') {
+                    table.row.add([
                     '<input type="hidden" class="form-control" name="seq_no[]" value="'+ i +'">' + i,
-                    '<input type="text" class="form-control" name="day_code[]">',
-                    '<input type="text" class="form-control" name="shift_code[]">',
-                ]).draw();
+                    '<select class="form-control select2 day_code" id="day_code'+ i +'" name="day_code[]">',
+                    '<select class="form-control select2 shift_code" id="shift_code'+ i +'" name="shift_code[]">',
+                    ]).draw();
+
+                    loadDataDayCode("#day_code" + i);
+                    loadDataShiftCode("#shift_code" + i);
+                }
+
+                else {
+                    table.row.add([
+                    '<input type="hidden" class="form-control" name="seq_no[]" value="'+ i +'">' + i,
+                    '<select class="form-control select2" id="day_code'+ i +'" name="day_code[]">',
+                    '<select class="form-control select2" id="shift_code'+ i +'" name="shift_code[]">',
+                    ]).draw();
+                    // console.log(arrData[0].workPatternDetailList[i-1].dayCode);
+
+                    loadDataDayCode("#day_code" + i);
+                    loadDataShiftCode("#shift_code" + i);
+                    if (typeof arrData[0].workPatternDetailList[i-1] !== 'undefined') {
+                        loadDataDetailDayCode('#day_code' + i, ((typeof arrData[0].workPatternDetailList[i-1].dayCode !== 'undefined') ? arrData[0].workPatternDetailList[i-1].dayCode : ''));
+                        loadDataDetailShiftCode('#shift_code' + i, ((typeof arrData[0].workPatternDetailList[i-1].shiftCode !== 'undefined') ? arrData[0].workPatternDetailList[i-1].shiftCode : ''));
+                    }
+                }
             }
         });
+
+        function loadDataDayCode(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Day Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/day_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataShiftCode(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Shift Code</b></div>' +
+                        '<div class="col-6"><b>Shift Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.shiftCode + '</div>' +
+                        '<div class="col-6">' + data.data.shiftName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Shift Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/shift_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.shiftName,
+                                    id: item.shiftCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
@@ -338,7 +557,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/position') }}";
+                                        "{{ url('time_management/work_pattern') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
