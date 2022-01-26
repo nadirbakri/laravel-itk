@@ -6,6 +6,7 @@ use App\Exports\EmployeeListExport;
 use App\Exports\EmployeeReportByStatusExport;
 use App\Exports\EmployeeTurnOverReportExport;
 use App\Exports\EmployeeSkillReportExport;
+use App\Exports\CustomReportEmployeeExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -7736,7 +7737,7 @@ class PersonelController extends Controller
 
     public function printEmployeeReportByStatusPersonel(Request $request)
     {
-         return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false), 'Employee Report By Status.xlsx');
+        return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false), 'Employee Report By Status.xlsx');
     }
 
     public function checkResultPerformancePersonel(Request $request)
@@ -7865,14 +7866,10 @@ class PersonelController extends Controller
 
     public function printCustomReportEmployee(Request $request)
     {
-        // $dataLevel = [];
+        parse_str($request->field, $arrData);
 
-        // for($i = 0; $i < $request->level_format; $i++){
-        //     $dataLevel[] = $request->{'level' . ($i+1)};
-        // }
+        $arrData2 = json_decode($request->field_name);
 
-        var_dump($request->field);
-
-        // return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+        return Excel::download(new CustomReportEmployeeExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['employment_status'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData2), 'Custom Report Employee.xlsx');
     }
 }

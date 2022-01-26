@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>{{ __('personel_custom_report_employee.judul') }}</title>
+    <title>Employee Card Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="http://localhost:8000/pictures/favicon.png" type="image/x-icon" />
+    <meta name="csrf-token" content="F5xrBqsMgtL2PkJv0FNFdOTqoPg3aZECSkw8hSKd">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+    <link rel="stylesheet" href="http://localhost:8000/css/personel_detail_data.css">
+    <link rel="stylesheet" href="http://localhost:8000/css/jquery.inputpicker.css">
     <style type="text/css">
         .div-personel {
             max-width: 100%;
@@ -52,25 +52,24 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel') }}" target="iframe_dashboard" id="toolbar-prev-page">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_custom_report_employee.list') }}</span>
+            <a href="http://localhost:8000/personel" target="iframe_dashboard" id="toolbar-prev-page">
+                <img src="http://localhost:8000/pictures/arrow-square-left.png" alt="Back">
+                <span class="title-text">Personel Menu List</span>
             </a>
         </div>
         <div class="div-form">
             <form id="custom_report_employee_form" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
+                <input type="hidden" name="_token" value="F5xrBqsMgtL2PkJv0FNFdOTqoPg3aZECSkw8hSKd">                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('personel_custom_report_employee.label_employee_no_from') }}</label>
+                                for="employee_no_from">Employee No From</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_no_to">{{ __('personel_custom_report_employee.label_employee_no_to') }}</label>
+                            <label for="employee_no_to">Employee No To</label>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
                     </div>
@@ -78,7 +77,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employment_status">{{ __('personel_custom_report_employee.label_employment_status') }}</label>
+                            <label for="employment_status">Employment Status</label>
                             <select class="form-control select2 select2-hidden-accessible" id="employment_status" 
                                 name="employment_status[]" multiple="multiple">
                             </select>
@@ -91,7 +90,7 @@
                                 <input class="form-check-input" type="checkbox" id="include_resign"
                                     name="include_resign" value="true">
                                 <label class="form-check-label"
-                                    for="include_resign">{{ __('personel_custom_report_employee.label_include_resign') }}</label>
+                                    for="include_resign">Include Resign</label>
                             </div>
                         </div>
                     </div>
@@ -100,7 +99,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_from">{{ __('personel_custom_report_employee.label_group_authorize_from') }}</label>
+                                for="group_authorize_from">Group Authorize From</label>
                             <select class="form-control select2" id="group_authorize_from"
                                 name="group_authorize_from"></select>
                         </div>
@@ -108,7 +107,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="group_authorize_to">{{ __('personel_custom_report_employee.label_group_authorize_to') }}</label>
+                                for="group_authorize_to">Group Authorize To</label>
                             <select class="form-control select2" id="group_authorize_to"
                                 name="group_authorize_to"></select>
                         </div>
@@ -133,19 +132,19 @@
         <div class="col-2">
             <button type="submit" class="btn btn-primary" name="btn-add-field" id="btn-add-field"
                 style="width: 100%;" data-toggle="modal" data-target="#modal_add_field_name">
-                <i class="fa fa-plus"></i> {{ __('personel_custom_report_employee.btn_add') }}
+                <i class="fa fa-plus"></i> Add
             </button>
         </div>
         <div class="col-2">
             <button type="submit" class="btn btn-danger" name="btn-remove-data" id="btn-remove-data"
                 style="width: 100%;">
-                <i class="fa fa-times"></i> {{ __('personel_custom_report_employee.btn_remove') }}
+                <i class="fa fa-times"></i> Remove
             </button>
         </div>
         <div class="col-2">
             <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                 style="width: 100%;">
-                    <i class="fa fa-print"></i> {{ __('personel_custom_report_employee.btn_print') }}
+                    <i class="fa fa-print"></i> Print
             </button>
         </div>
     </div>
@@ -153,20 +152,19 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('personel_custom_report_employee.title_modal_field_name') }}</h5>
+                    <h5 class="modal-title">Custom Report</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form id="field_name_form" method="post">
-                        @csrf
-                        <div class="row">
+                        <input type="hidden" name="_token" value="F5xrBqsMgtL2PkJv0FNFdOTqoPg3aZECSkw8hSKd">                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label
-                                            for="field_name">{{ __('personel_custom_report_employee.label_field_name') }}</label>
+                                            for="field_name">Field Name</label>
                                         <select class="form-control select2" id="field_name" name="field_name"></select>
                                     </div>
                                 </div>
@@ -176,7 +174,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="column_header">{{ __('personel_custom_report_employee.label_column_header') }}</label>
+                                        for="column_header">Column Header</label>
                                     <input type="text" class="form-control" id="column_header"
                                         name="column_header">
                                 </div>
@@ -184,9 +182,9 @@
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_custom_report_employee.btn_save') }}</button>
+                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> Save</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                            class="fa fa-times-circle"></i> {{ __('personel_custom_report_employee.btn_cancel') }}</button>
+                            class="fa fa-times-circle"></i> Cancel</button>
                 </div>
                 </form>
             </div>
@@ -202,7 +200,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                    <span id="message-notification-error"></span>
                 </div>
             </div>
         </div>
@@ -221,7 +219,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script src="http://localhost:8000/js/jquery.inputpicker.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -653,7 +651,7 @@
 
             $(this).prop("disabled", false);
             $(this).html(
-                '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
+                '<i class="fa fa-floppy-o"></i> Save'
             );
             $('#modal_add_field_name').modal('hide');
             
@@ -674,10 +672,10 @@
                 // },
                 // messages: {
                 //     field_name: {
-                //         required: "{{ __('personel_custom_report_employee.field_name_required') }}",
+                //         required: "Field Name Required",
                 //     },
                 //     column_header: {
-                //         required: "{{ __('personel_custom_report_employee.column_header_required') }}",
+                //         required: "Column Header Required",
                 //     },
                 // },
                 highlight: function (element) {
@@ -690,7 +688,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> Save'
                     );
 
                     error.addClass('invalid-feedback');
@@ -707,37 +705,37 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/custom_report_employee/print') }}",
+                        url: "http://localhost:8000/personel/custom_report_employee/print",
                         type: "POST",
                         data: { 'field' : $('#custom_report_employee_form').serialize(), 'field_name' : JSON.stringify(arrayfieldName) },
                         success: function (result, status, xhr) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_custom_report_employee.btn_print") }}'
+                                '<i class="fa fa-print"></i> Print'
                             );
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
+                            // var disposition = xhr.getResponseHeader(
+                            //     'content-disposition');
+                            // var matches = /"([^"]*)"/.exec(disposition);
+                            // var filename = (matches != null && matches[1] ? matches[1] :
+                            //     'audit_trail.xlsx');
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                            // // The actual download
+                            // var blob = new Blob([result], {
+                            //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            // });
+                            // var link = document.createElement('a');
+                            // link.href = window.URL.createObjectURL(blob);
+                            // link.download = filename;
 
-                            document.body.appendChild(link);
+                            // document.body.appendChild(link);
 
-                            link.click();
-                            document.body.removeChild(link);
+                            // link.click();
+                            // document.body.removeChild(link);
                         },
                         error: function (response) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_custom_report_employee.btn_print") }}'
+                                '<i class="fa fa-print"></i> Print'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);
