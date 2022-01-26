@@ -618,11 +618,11 @@
         });
 
         $("#btn-remove-data").on('click', function() {
-        var data = table.rows('.selected').data();
-        // console.log(data.length);
+        var data = table.rows('.selected').data().toArray();
         if(data.length > 0){
             for (var i = 0; i < data.length; i++) {
-                var index = arrayfieldName.indexOf(data["fieldName"]);
+                var index = arrayfieldName.findIndex(x => x.fieldName === data[i].fieldName);
+                // console.log(index);
                 arrayfieldName.splice(index, 1);
             }
             $('#custom_report_employee_table').DataTable().destroy();
@@ -649,7 +649,7 @@
 
             $("#field_name").val("");
             $("#column_header").val("");
-            console.log(arrayfieldName);
+            // console.log(arrayfieldName);
 
             $(this).prop("disabled", false);
             $(this).html(
