@@ -1844,19 +1844,49 @@ class PersonelController extends Controller
                     ]
                 )]
             );
+
+            $response2 = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response2->getBody()->getContents());  
 
         if($arrResult->dataListSet == null){
             $data = [];
-        }else{
+        }
+        else {
             $data = $arrResult->dataListSet;
+            if ($request->func == 'new' || $data[0]->photo == null){
+                $filename = 'profile-picture.png';
+            }
+            else {
+                $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
+                // var_dump($arrResult->dataListSet[0]->photo);
+                file_put_contents(public_path("photo_profile/") . $filename, base64_decode($data[0]->photo));
+            }
         }
 
-        return view('personel.personel_personal_data_detail', ['data' => $data, 'photo' => '']);
+        if($arrResult2->dataListSet == null){
+            $data2 = [];
+        }else{
+            $data2 = $arrResult2->dataListSet;
+        }
+
+        // var_dump($arrResult->dataListSet);
+
+        return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
     }
 
     public function dataDetailPerformancePersonel(Request $request)
@@ -2782,6 +2812,70 @@ class PersonelController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return response()->json($data);
+    }
+
+    public function dataDetailCityNamePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/city/getcity',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'cityCode' => $request->cityCode,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return response()->json($data);
+    }
+
+    public function dataDetailZipCodeDetailPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'zipCode' => $request->zipCode,
                         'languageCode' => App::getLocale()
                     ]
                 )]
@@ -4540,6 +4634,262 @@ class PersonelController extends Controller
                     ]
                 )]
             );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesPersonalDataPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $file = $request->file('photo_profile');
+            $filename = Session::get('companyCode') . '_' . $request->employee_no_profile . '.jpg';
+            $file->move(public_path('photo_profile'), $filename);
+            $path = public_path('photo_profile/');
+
+            // var_dump(base64_encode(file_get_contents($path . $filename)));
+
+            $param = [
+                'recordStatus' => $request->record_status,
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employee_no_info,
+                'title' => $request->title_info,
+                'fullName' => $request->fullname_info,
+                'birthPlace' => $request->birth_place_info,
+                'birthDate' => $request->birth_date_info,
+                "gender" => $request->gender_info,
+                "bloodType" => $request->blood_type_info,
+                "maritalStatus" => $request->marital_status_info,
+                "taxRegisteredNo" => $request->tax_registered_no_info,
+                "taxRegisteredDate" => $request->tax_registered_date_info,
+                "taxRegisteredPlaceRegistration" => $request->tax_office_info,
+                "taxRegisteredExpiryDate" => $request->tax_expiry_date_info,
+                "religionCode" => $request->religion_info,
+                "nationalityCode" => $request->nationality_info,
+                "employmentStatus" => $request->employment_status_employment,
+                "flagIsExpat" => $request->expatriat_employment,
+                "expatLicenseNo" => $request->license_no_employment,
+                "expatLicenseStartDate" => $request->start_date_employment,
+                "expatLicenseEndDate" => $request->end_date_employment,
+                "joinDate" => $request->joining_date_employment,
+                "probationEndDate" => $request->probation_end_date_employment,
+                "contractStartDate" => $request->contract_start_date_employment,
+                "contractEndDate" => $request->contract_end_date_employment,
+                "terminationDate" => $request->termination_date_employment,
+                "terminationCode" => $request->termination_code_employment,
+                "terminationRemarks" => $request->termination_remarks_employment,
+                "effectiveTerminationDate" => $request->effective_terminated_employment,
+                "employmentType" => $request->employment_type_employment,
+                "groupAuthorizeCode" => $request->group_authorize_payroll,
+                "specialResign" => $request->special_reason_resign_employment,
+                "photo" => base64_encode(file_get_contents($path . $filename)),
+                "flagIsCommissioner" => $request->commisioner_employment,
+                "motherName" => $request->mother_name_info,
+                "absenteeismType" => $request->absenteeism_type_absenteeism,
+                "workPatternCode" => $request->work_pattern_code_absenteeism,
+                "startAtDay" => $request->starting_day_absenteeism,
+                "flagNotAbsent" => $request->absent_not_required_absenteeism,
+                "taxCalculationMethod" => $request->tax_calculation_method_payroll,
+                "flagAstekDeathNonAccident" => $request->non_accidental_death_insurance_tenaga_kerja,
+                "flagAstekWorkAccident" => $request->work_related_accident_insurance_tenaga_kerja,
+                "flagAstekWorkAccident2" => $request->work_related_accident_insurance_two_tenaga_kerja,
+                "flagAstekWorkAccident3" => $request->work_related_accident_insurance_three_tenaga_kerja,
+                "flagAstekPensionEmployee" => $request->pension_by_employee_tenaga_kerja,
+                "flagAstekPensionEmployer" => $request->pension_by_employer_tenaga_kerja,
+                "groupNpwp" => $request->group_npwp_payroll,
+                "groupBpjs" => $request->group_bpjs_payroll,
+                "flagPensionInsurance" => $request->pension_insurance_tenaga_kerja,
+                "flagBPJSKesehatan" => $request->join_kesehatan,
+                "bpjsKesehatanNo" => $request->bpjs_number_kesehatan,
+                "bpjsKesehatanJoinDate" => $request->joining_date_kesehatan,
+                "bpjsKesehatanPeriodStartDate" => $request->payment_period_start_date_kesehatan,
+                "flagBPJSTenagaKerja" => $request->join_tenaga_kerja,
+                "bpjsTenagaKerjaNo" => $request->bpjs_number_tenaga_kerja,
+                "bpjsTenagaKerjaJoinDate" => $request->joining_date_tenaga_kerja,
+                "bpjsTenagaKerjaPeriodStartDate" => $request->payment_period_start_date_tenaga_kerja,
+                "employeeBankCode1" => $request->employee_bank_code_primary,
+                "employeeBankCode2" => $request->employee_bank_code_optional_one,
+                "employeeBankCode3" => $request->employee_bank_code_optional_two,
+                "companyBankCode1" => $request->company_bank_code_primary,
+                "companyBankCode2" => $request->company_bank_code_optional_one,
+                "companyBankCode3" => $request->company_bank_code_optional_two,
+                "bankAccountNo1" => $request->account_number_primary,
+                "beneficiaryName1" => $request->beneficiary_name_primary,
+                "bankPercentageSalary1" => $request->percentage_primary,
+                "currencyCode1" => $request->currency_primary,
+                "bankAccountNo2" => $request->account_number_optional_one,
+                "beneficiaryName2" => $request->beneficiary_name_optional_one,
+                "bankPercentageSalary2" => $request->percentage_optional_one,
+                "currencyCode2" => $request->currency_optional_one,
+                "bankAccountNo3" => $request->account_number_optional_two,
+                "beneficiaryName3" => $request->beneficiary_name_optional_two,
+                "bankPercentageSalary3" => $request->percentage_optional_two,
+                "currencyCode3" => $request->currency_optional_two,
+                "originJoinDate" => $request->origin_join_date_employment,
+                "flagNotFinger" => $request->finger_not_required_absenteeism,
+                "taxStatus" => $request->tax_status_payroll,
+                "taxStatusNextYear" => $request->tax_status_next_year_payroll,
+                "flagExcludePayroll" => $request->exclude_payroll_process_payroll,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                'userID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            if(!empty($request->id_no_info) && !is_null($request->id_no_info[0])){
+                $datapeMasterInfo = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no_info,
+                    "nickName" => $request->fullname_info,
+                    "bloodType" => $request->blood_type_info,
+                    "passportNo" => $request->passport_no_info,
+                    "passportDate" => $request->passport_date_info,
+                    "drivingLicenseMobilNo" => $request->driving_license_car_no_info,
+                    "drivingLicenseMobilType" => $request->driving_license_car_type_info,
+                    "drivingLicenseMobilNoDate" => $request->driving_license_car_date_info,
+                    "drivingLicenseMobilNoPlaceRegistration" => $request->driving_license_car_registration_place_info,
+                    "drivingLicenseMobilNoExpiryDate" => $request->driving_license_car_expiry_date_info,
+                    "drivingLicenseMotorNo" => $request->driving_license_motorcycle_no_info,
+                    "drivingLicenseMotorNoDate" => $request->driving_license_motorcycle_date_info,
+                    "drivingLicenseMotorNoPlaceRegistration" => $request->driving_license_motorcycle_registration_place_info,
+                    "drivingLicenseMotorNoExpiryDate" => $request->driving_license_motorcycle_expiry_date_info,
+                    "employeeCardId" => $request->company_card_id_other,
+                    "idNo" => $request->id_no_info,
+                    "homeAddress" => $request->address_home,
+                    "homeCityCode" => $request->city_text_home,
+                    "homeZipCode" => $request->zip_code_text_home,
+                    "homePhone" => $request->phone_number_home,
+                    "otherAddress" => $request->address_other,
+                    "otherCityCode" => $request->city_text_other,
+                    "otherZipCode" => $request->zip_code_select_other,
+                    "otherPhone" => $request->phone_number_other,
+                    "workAddress" => $request->address_work,
+                    "workCityCode" => $request->city_text_work,
+                    "workZipCode" => $request->zip_code_text_work,
+                    "workPhone" => $request->phone_number_work,
+                    "correspondenceAddress" => $request->address_correspondence,
+                    "correspondenceCityCode" => $request->city_text_correspondence,
+                    "correspondenceZipCode" => $request->zip_code_text_correspondence,
+                    "correspondencePhone" => $request->phone_number_correspondence,
+                    "personalHandphone" => $request->handphone_no_other,
+                    "personalEmailAddress" => $request->personal_email_other,
+                    "companyEmailAddress" => $request->company_email_other,
+                    "emergencyName" => $request->name_emergency,
+                    "emergencyAddress" => $request->address_emergency,
+                    "emergencyPhone" => $request->phone_number_emergency,
+                    "emergencyRelation" => $request->relation_emergency,
+                    "emergencyEmailAddress" => $request->email_emergency,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "sessionID" => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')
+                ];
+            }
+            $param['peMasterInfo'] = $datapeMasterInfo;
+
+            // var_dump($request->insurance_code_insurance);
+
+            if(!empty($request->insurance_code_insurance) && !is_null($request->id_insurance_code_insuranceno_info[0])){
+                $datapeMasterInsurance = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no_info,
+                    "insuranceCode" => $request->insurance_code_insurance,
+                    "insuranceClassCode" => $request->insurance_class_insurance,
+                    "insuranceStartDate" => $request->insurance_date_insurance,
+                    "insurancePolicyNo" => $request->insurance_policy_no_insurance,
+                    "insuranceRemark" => $request->remarks_insurance,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')
+                ];
+            }
+            $param['peMasterInsurance'] = $datapeMasterInsurance;
+
+            // var_dump($param['peMasterInsurance']);
+
+            if(!empty($request->fringe_benefits) && !is_null($request->fringe_benefits[0])){
+                foreach($request->seq_no_fringe_benefit as $value){
+                    $datapeMasterFringeBenefit[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNo" => $request->employee_no_info,
+                        "seqNo" => (int) $value,
+                        "benefits" => $request->fringe_benefits,
+                        "description" => $request->description,
+                        "startDate" => $request->start_date,
+                        "endDate" => $request->end_date,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ];
+                }
+            }
+            $param['peMasterFringeBenefit'] = $datapeMasterFringeBenefit;
+
+            if(!empty($request->family_name) && !is_null($request->family_name[0])){
+                foreach($request->seq_no_family_dependent as $value){
+                    $datapeMasterFamily[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNo" => $request->employee_no_info,                        
+                        "seqNo" => (int) $value,
+                        "familyName" => $request->family_name,
+                        "relationCode" => $request->relation_code,
+                        "birthDate" => $request->birth_date,
+                        "birthPlace" => $request->birth_place,
+                        "gender" => $request->gender,
+                        "occupation" => $request->occupation,
+                        "flagMedical" => $request->flag_medical,
+                        "flagPayroll" => $request->flag_payroll,
+                        "bloodType" => $request->blood_type,
+                        "familyCardNumber" => $request->family_card_number,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ];
+                }
+            }
+            $param['peMasterFamily'] = $datapeMasterFamily;
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
+                    ['body' => json_encode($param)]
+                );
+            }     
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
@@ -7540,6 +7890,64 @@ class PersonelController extends Controller
         return response()->json($number);
     }
 
+    public function checkNumberPersonelDataDetail(Request $request)
+    {
+        // $pemasterType = 
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->employeeNo);
+
+            if(isset($request->employeeNo)){
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet[0]->{$request->pemasterType});
+
+        if($arrResult->dataListSet[0]->{$request->pemasterType} == null){
+            $number = 1;
+        }else{
+            // $dataLevel[] = $request->{'level' . ($i+1)};
+            if(isset($arrResult->dataListSet[0]->{$request->pemasterType}[0]->sequenceNo)){
+                $number = max(array_column($arrResult->dataListSet[0]->{$request->pemasterType}, 'sequenceNo')) + 1;
+            }else if(isset($arrResult->dataListSet[0]->{$request->pemasterType}[0]->seqNo)){
+                $number = max(array_column($arrResult->dataListSet[0]->{$request->pemasterType}, 'seqNo')) + 1;
+            }
+        }
+
+        return response()->json($number);
+
+    }
+
     public function checkReportLevelPersonel(Request $request)
     {
         try {
@@ -7581,6 +7989,33 @@ class PersonelController extends Controller
         }else{
             return response()->json(['data' => $arrResult->dataListSet, 'data_level' => $arrResult_level->dataListSet]);
         }
+    }
+
+    public function checkAutoEmployeeNoPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
     }
 
     public function printEmployeeListPersonel(Request $request)

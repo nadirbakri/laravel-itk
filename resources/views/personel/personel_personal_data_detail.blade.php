@@ -76,6 +76,14 @@
             margin-left: 0.5%;
         }
 
+        .photo {
+            border-radius: 50%;
+        }
+
+        .required {
+            color: red;
+        }
+
     </style>
 </head>
 
@@ -88,20 +96,58 @@
                     <div class="col-2 subdiv-profile-image">
                         <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
                             alt="Profile"> -->
-                        <img src="{{ url('/pictures/profile-picture.png') }}" alt="Profile">
+                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo">
                         <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                             {{ __('personel_personal_data.btn_change_picture') }}
                             <input type="file" class="form-control" id="photo_profile" name="photo_profile" hidden>
                         </label>
                     </div>
                     <div class="col-9 subdiv-profile">
-                        <p>{{ isset($data[0]->fullName) ? $data[0]->fullName : '-' }} &emsp; | &emsp;
-                            {{ isset($data[0]->employeeNo) ? $data[0]->employeeNo : '-' }}</p>
-                        <p class="small">{{ isset($data[0]->companyName) ? $data[0]->companyName : '-' }} &emsp; |
-                            &emsp; {{ isset($data[0]->positionName) ? $data[0]->positionName : '-' }}</p>
-                        <p class="small">
-                            {{ isset($data[0]->companyEmailAddress) ? $data[0]->companyEmailAddress : '-' }} &emsp; |
-                            &emsp; {{ isset($data[0]->personalHandphone) ? $data[0]->personalHandphone : '-' }}</p>
+                        <div class="row">
+                            <div class="col-auto mr-auto">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p id="employee_name_profile" name="employee_name_profile"></p>
+                                    </div>
+                                    <div class="col-1">
+                                        <p>&emsp; | &emsp;</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p id="employee_no_profile" name="employee_no_profile"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
+                                        style="width: 100%;">
+                                        <i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p class="small" id="company_name_profile" name="company_name_profile"></p>
+                            </div>
+                            <div class="col-1">
+                                <p class="small">&emsp; | &emsp;</p>
+                            </div>
+                            <div class="col-3">
+                                <p  class="small" id="position_name_profile" name="position_name_profile"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p class="small" id="company_email_profile" name="company_email_profile"></p>
+                            </div>
+                            <div class="col-1">
+                                <p class="small">&emsp; | &emsp;</p>
+                            </div>
+                            <div class="col-3">
+                                <p  class="small" id="phone_number_profile" name="phone_number_profile"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,16 +200,20 @@
                                 <div class="form-group">
                                     <label
                                         for="employee_no_info">{{ __('personel_personal_data.label_employee_no') }}</label>
+                                    <span class="required">*</span>
                                     <input type="text" class="form-control" id="employee_no_info"
                                         name="employee_no_info"
                                         placeholder="{{ __('personel_personal_data.label_employee_no') }}">
                                 </div>
+                                <input type="hidden" class="form-control" id="record_status" name="record_status">
+                                <input type="hidden" class="form-control" id="record_function" name="record_function">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="fullname_info">{{ __('personel_personal_data.label_fullname') }}</label>
+                                    <span class="required">*</span>
                                     <input type="text" class="form-control" id="fullname_info" name="fullname_info"
                                         placeholder="{{ __('personel_personal_data.label_fullname') }}">
                                 </div>
@@ -886,6 +936,7 @@
                                 <div class="form-group">
                                     <label
                                         for="joining_date_employment">{{ __('personel_personal_data.label_joining_date') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="joining_date_employment"
                                             name="joining_date_employment"
@@ -916,6 +967,7 @@
                                 <div class="form-group">
                                     <label
                                         for="contract_start_date_employment">{{ __('personel_personal_data.label_contract_start_date') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="contract_start_date_employment"
                                             name="contract_start_date_employment"
@@ -930,6 +982,7 @@
                                 <div class="form-group">
                                     <label
                                         for="contract_end_date_employment">{{ __('personel_personal_data.label_contract_end_date') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="contract_end_date_employment"
                                             name="contract_end_date_employment"
@@ -990,7 +1043,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
                                             id="special_reason_resign_employment"
-                                            name="special_reason_resign_employment" value="true">
+                                            name="special_reason_resign_employment">
                                         <label class="form-check-label"
                                             for="special_reason_resign_employment">{{ __('personel_personal_data.label_special_reason_resign') }}</label>
                                     </div>
@@ -1014,7 +1067,7 @@
                                     <label for="expatriat_employment">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="expatriat_employment"
-                                            name="expatriat_employment" value="true">
+                                            name="expatriat_employment">
                                         <label class="form-check-label"
                                             for="expatriat_employment">{{ __('personel_personal_data.label_expatriat') }}</label>
                                     </div>
@@ -1026,6 +1079,7 @@
                                 <div class="form-group">
                                     <label
                                         for="license_no_employment">{{ __('personel_personal_data.label_license_no') }}</label>
+                                    <span class="required">*</span>
                                     <input type="text" class="form-control" id="license_no_employment"
                                         name="license_no_employment"
                                         placeholder="{{ __('personel_personal_data.label_license_no') }}">
@@ -1037,6 +1091,7 @@
                                 <div class="form-group">
                                     <label
                                         for="start_date_employment">{{ __('personel_personal_data.label_start_date') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="start_date_employment"
                                             name="start_date_employment"
@@ -1051,6 +1106,7 @@
                                 <div class="form-group">
                                     <label
                                         for="end_date_employment">{{ __('personel_personal_data.label_end_date') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="end_date_employment"
                                             name="end_date_employment"
@@ -1068,7 +1124,7 @@
                                     <label for="commisioner_employment">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="commisioner_employment"
-                                            name="commisioner_employment" value="true">
+                                            name="commisioner_employment">
                                         <label class="form-check-label"
                                             for="commisioner_employment">{{ __('personel_personal_data.label_commisioner') }}</label>
                                     </div>
@@ -1077,7 +1133,7 @@
                         </div>
                         <div class="row">
                             <div class="col-9">
-                                <table id="employment_data_table" class="table hover">
+                                <table id="fringe_benefit_data_table" class="table hover">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -1128,6 +1184,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="absenteeism_type_absenteeism">{{ __('personel_personal_data.label_absenteeism_type') }}</label>
+                                                <span class="required">*</span>
                                                 <select class="form-control" id="absenteeism_type_absenteeism"
                                                     name="absenteeism_type_absenteeism">
                                                     <option value="">
@@ -1140,6 +1197,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="work_pattern_code_absenteeism">{{ __('personel_personal_data.label_work_pattern_code') }}</label>
+                                                <span class="required">*</span>
                                                 <select class="form-control select2" id="work_pattern_code_absenteeism"
                                                     name="work_pattern_code_absenteeism"></select>
                                             </div>
@@ -1150,6 +1208,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="starting_day_absenteeism">{{ __('personel_personal_data.label_starting_day') }}</label>
+                                                <span class="required">*</span>
                                                 <input type="number" class="form-control" id="starting_day_absenteeism"
                                                     name="starting_day_absenteeism"
                                                     placeholder="{{ __('personel_personal_data.label_starting_day') }}">
@@ -1163,7 +1222,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="absent_not_required_absenteeism"
-                                                        name="absent_not_required_absenteeism" value="true">
+                                                        name="absent_not_required_absenteeism">
                                                     <label class="form-check-label"
                                                         for="absent_not_required_absenteeism">{{ __('personel_personal_data.label_absent_not_required') }}</label>
                                                 </div>
@@ -1204,6 +1263,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="tax_status_payroll">{{ __('personel_personal_data.label_tax_status') }}</label>
+                                                <span class="required">*</span>
                                                 <select class="form-control" id="tax_status_payroll"
                                                     name="tax_status_payroll">
                                                     <option value="">
@@ -1216,6 +1276,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="tax_status_next_year_payroll">{{ __('personel_personal_data.label_tax_status_next_year') }}</label>
+                                                <span class="required">*</span>
                                                 <select class="form-control" id="tax_status_next_year_payroll"
                                                     name="tax_status_next_year_payroll">
                                                     <option value="">
@@ -1257,6 +1318,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="tax_office_payroll">{{ __('personel_personal_data.label_tax_office') }}</label>
+                                                <span class="required">*</span>
                                                 <select class="form-control select2" id="tax_office_payroll"
                                                     name="tax_office_payroll"></select>
                                             </div>
@@ -1282,6 +1344,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="tax_calculation_method_payroll">{{ __('personel_personal_data.label_tax_calculation_method') }}</label>
+                                                <span class="required">*</span>
                                                 <select class="form-control" id="tax_calculation_method_payroll"
                                                     name="tax_calculation_method_payroll">
                                                     <option value="">
@@ -1316,7 +1379,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="exclude_payroll_process_payroll"
-                                                        name="exclude_payroll_process_payroll" value="true">
+                                                        name="exclude_payroll_process_payroll">
                                                     <label class="form-check-label"
                                                         for="exclude_payroll_process_payroll">{{ __('personel_personal_data.label_exclude_payroll_process') }}</label>
                                                 </div>
@@ -1369,7 +1432,7 @@
                                                 <label for="join_tenaga_kerja">&nbsp;</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
-                                                        id="join_tenaga_kerja" name="join_tenaga_kerja" value="true">
+                                                        id="join_tenaga_kerja" name="join_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="join_tenaga_kerja">{{ __('personel_personal_data.label_join') }}</label>
                                                 </div>
@@ -1416,7 +1479,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="non_accidental_death_insurance_tenaga_kerja"
-                                                        name="non_accidental_death_insurance_tenaga_kerja" value="true">
+                                                        name="non_accidental_death_insurance_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="non_accidental_death_insurance_tenaga_kerja">{{ __('personel_personal_data.label_non_accidental_death_insurance') }}</label>
                                                 </div>
@@ -1428,7 +1491,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="pension_by_employer_tenaga_kerja"
-                                                        name="pension_by_employer_tenaga_kerja" value="true">
+                                                        name="pension_by_employer_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="pension_by_employer_tenaga_kerja">{{ __('personel_personal_data.label_pension_by_employer') }}</label>
                                                 </div>
@@ -1442,8 +1505,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="work_related_accident_insurance_tenaga_kerja"
-                                                        name="work_related_accident_insurance_tenaga_kerja"
-                                                        value="true">
+                                                        name="work_related_accident_insurance_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="work_related_accident_insurance_tenaga_kerja">{{ __('personel_personal_data.label_work_related_accident_insurance') }}</label>
                                                 </div>
@@ -1455,7 +1517,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="pension_by_employee_tenaga_kerja"
-                                                        name="pension_by_employee_tenaga_kerja" value="true">
+                                                        name="pension_by_employee_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="pension_by_employee_tenaga_kerja">{{ __('personel_personal_data.label_pension_by_employee') }}</label>
                                                 </div>
@@ -1470,8 +1532,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="work_related_accident_insurance_two_tenaga_kerja"
-                                                        name="work_related_accident_insurance_two_tenaga_kerja"
-                                                        value="true">
+                                                        name="work_related_accident_insurance_two_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="work_related_accident_insurance_two_tenaga_kerja">{{ __('personel_personal_data.label_work_related_accident_insurance_two') }}</label>
                                                 </div>
@@ -1483,7 +1544,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="pension_insurance_tenaga_kerja"
-                                                        name="pension_insurance_tenaga_kerja" value="true">
+                                                        name="pension_insurance_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="pension_insurance_tenaga_kerja">{{ __('personel_personal_data.label_pension_insurance') }}</label>
                                                 </div>
@@ -1498,8 +1559,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="work_related_accident_insurance_three_tenaga_kerja"
-                                                        name="work_related_accident_insurance_three_tenaga_kerja"
-                                                        value="true">
+                                                        name="work_related_accident_insurance_three_tenaga_kerja">
                                                     <label class="form-check-label"
                                                         for="work_related_accident_insurance_three_tenaga_kerja">{{ __('personel_personal_data.label_work_related_accident_insurance_three') }}</label>
                                                 </div>
@@ -1527,7 +1587,7 @@
                                                 <label for="join_kesehatan">&nbsp;</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="join_kesehatan"
-                                                        name="join_kesehatan" value="true">
+                                                        name="join_kesehatan">
                                                     <label class="form-check-label"
                                                         for="join_kesehatan">{{ __('personel_personal_data.label_join') }}</label>
                                                 </div>
@@ -1803,23 +1863,26 @@
                         aria-labelledby="family-dependent-tab">
                         <div class="row">
                             <div class="col-12">
-                                <table id="family_dependent_data_table" class="table hover">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Seq No</th>
-                                            <th>Name</th>
-                                            <th>Relation</th>
-                                            <th>Birth Date</th>
-                                            <th>Gender</th>
-                                            <th>Blood Type</th>
-                                            <th>Family Card No</th>
-                                            <th>Occupation</th>
-                                            <th>Medical</th>
-                                            <th>Tax</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="div-table">
+                                    <table id="family_dependent_data_table" class="table hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Seq No</th>
+                                                <th>Name</th>
+                                                <th>Relation</th>
+                                                <th>Birth Date</th>
+                                                <th>Birth Place</th>
+                                                <th>Gender</th>
+                                                <th>Blood Type</th>
+                                                <th>Family Card No</th>
+                                                <th>Occupation</th>
+                                                <th>Medical</th>
+                                                <th>Tax</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -1920,9 +1983,10 @@
                                 <div class="form-group">
                                     <label
                                         for="seq_no_family_dependent_data">{{ __('personel_personal_data.label_seq_no') }}</label>
+                                    <span class="required">*</span>
                                     <input type="text" class="form-control" id="seq_no_family_dependent_data"
                                         name="seq_no_family_dependent_data"
-                                        placeholder="{{ __('personel_personal_data.label_seq_no') }}">
+                                        placeholder="{{ __('personel_personal_data.label_seq_no') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -2025,8 +2089,7 @@
                                     <label for="include_medical_family_dependent_data">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
-                                            id="include_medical_family_dependent_data" name="include_medical_family_dependent_data"
-                                            value="true">
+                                            id="include_medical_family_dependent_data" name="include_medical_family_dependent_data" value="true">
                                         <label class="form-check-label"
                                             for="include_medical_family_dependent_data">{{ __('personel_personal_data.label_include_medical') }}</label>
                                     </div>
@@ -2037,8 +2100,7 @@
                                     <label for="include_tax_family_dependent_data">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
-                                            id="include_tax_family_dependent_data" name="include_tax_family_dependent_data"
-                                            value="true">
+                                            id="include_tax_family_dependent_data" name="include_tax_family_dependent_data">
                                         <label class="form-check-label"
                                             for="include_tax_family_dependent_data">{{ __('personel_personal_data.label_include_tax') }}</label>
                                     </div>
@@ -2047,7 +2109,7 @@
                         </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" id="btn-save-family-dependent-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}</button>
+                    <button type="button" id="btn-save-family-dependent-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('personel_personal_data.btn_cancel') }}</button>
                 </div>
@@ -2072,9 +2134,10 @@
                                 <div class="form-group">
                                     <label
                                         for="seq_no_employment_data">{{ __('personel_personal_data.label_seq_no') }}</label>
+                                    <span class="required">*</span>
                                     <input type="text" class="form-control" id="seq_no_employment_data"
                                         name="seq_no_employment_data"
-                                        placeholder="{{ __('personel_personal_data.label_seq_no') }}">
+                                        placeholder="{{ __('personel_personal_data.label_seq_no') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -2083,6 +2146,7 @@
                                 <div class="form-group">
                                     <label
                                         for="benefits_employment_data">{{ __('personel_personal_data.label_benefits') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="benefits_employment_data"
                                         name="benefits_employment_data">
                                         <option value="">
@@ -2133,7 +2197,7 @@
                         </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}</button>
+                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('personel_personal_data.btn_cancel') }}</button>
                 </div>
@@ -2208,6 +2272,7 @@
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
@@ -2225,7 +2290,7 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
+                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -2238,9 +2303,1007 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        let pickerBirthDate = $('#birth_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerPassportDate = $('#passport_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerTaxRegisteredDateInfo = $('#tax_registered_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerTaxRegisteredDatePayroll = $('#tax_registered_date_payroll').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerTaxExpiryDateInfo = $('#tax_expiry_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerTaxExpiryDatePayroll = $('#tax_expiry_date_payroll').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerDrivingLicenseCarDate = $('#driving_license_car_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerDrivingLicenseCarExpiryDate = $('#driving_license_car_expiry_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerDrivingLicenseMotorcycleDate = $('#driving_license_motorcycle_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerDrivingLicenseMotorcycleExpiryDate = $('#driving_license_motorcycle_expiry_date_info').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerOriginJoinDate = $('#origin_join_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerJoinDate = $('#joining_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerJoiningDateBPJSTenagaKerja = $('#joining_date_tenaga_kerja').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerJoiningDateBPJSKesehatan = $('#joining_date_kesehatan').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerProbationEndDate = $('#probation_end_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerContractStartDate = $('#contract_start_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerContractEndDate = $('#contract_end_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerTerminationDate = $('#termination_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerEffectiveTerminated = $('#effective_terminated_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerExpatriatStartDate = $('#start_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerExpatriatEndDate = $('#end_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerPaymentPeriodStartDateBPJSTenagaKerja = $('#payment_period_start_date_tenaga_kerja').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerPaymentPeriodStartDateBPJSKesehatan = $('#payment_period_start_date_kesehatan').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerInsuranceDate = $('#insurance_date_insurance').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        var table = null;
+        var table1 = null;
+        var table2 = null;
+        var func = '{{ $func }}';
+        var arrayFringeBenefit = [];
+        var arrayFamilyDependent = [];
+        var arrData = @json($data);
+        var arrData2 = @json($data2);
+
+        if (func == 'new') {
+            //Profile
+            $('#employee_name_profile').text('Employee Name');
+            $('#record_status').val('A');
+            $('#record_function').val('New');
+            $('#employee_no_profile').text('Employee No');
+            $('#company_name_profile').text('Company Name');
+            $('#position_name_profile').text('Position Name');
+            $('#company_email_profile').text('Company Email');
+            $('#phone_number_profile').text('Phone Number');
+
+            //Tab Info
+            $.ajax({
+                url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
+                type: "GET",
+                success: function (response) {
+                    // console.log(response[0].flagAutoEmployeeNo);
+
+                    if (response[0].flagAutoEmployeeNo == true) {
+                        $('#employee_no_info').val(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
+                    }
+                    else {
+                        $('#employee_no_info').val("");
+                    }
+                },
+                error: function (response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+            $('#fullname_info').val("");
+            $('#title_info').val("");
+            $('#birth_place_info').val(null).trigger('change');
+            $('#birth_date_info').val("");
+            $('#gender_info').val(null).trigger('change');
+            $('#blood_type_info').val(null).trigger('change');
+            $('#marital_status_info').val(null).trigger('change');
+            $('#religion_info').val(null).trigger('change');
+            $('#nationality_info').val(null).trigger('change');
+            $('#id_no_info').val("");
+            $('#passport_no_info').val("");
+            $('#passport_date_info').val("");
+            $('#tax_registered_no_info').val("");
+            $('#tax_registered_date_info').val("");
+            $('#tax_office_info').val("");
+            $('#tax_expiry_date_info').val("");
+            $('#driving_license_car_type_info').val(null).trigger('change');
+            $('#driving_license_car_no_info').val("");
+            $('#driving_license_car_date_info').val("");
+            $('#driving_license_car_registration_place_info').val(null).trigger('change');
+            $('#driving_license_car_expiry_date_info').val("");
+            $('#driving_license_motorcycle_no_info').val("");
+            $('#driving_license_motorcycle_date_info').val("");
+            $('#driving_license_motorcycle_registration_place_info').val("");
+            $('#driving_license_motorcycle_expiry_date_info').val("");
+            $('#mother_name_info').val("");
+
+            //Tab Address
+            $('#address_home').val("");
+            $('#city_select_home').val(null).trigger('change');
+            $('#city_text_home').val("");
+            $('#zip_code_select_home').val(null).trigger('change');
+            $('#zip_code_text_home').val("");
+            $('#district_select_home').val(null).trigger('change');
+            $('#subdistrict_select_home').val(null).trigger('change');
+            $('#phone_number_home').val("");
+
+            $('#address_other').val("");
+            $('#city_select_other').val(null).trigger('change');
+            $('#city_text_other').val("");
+            $('#zip_code_select_other').val(null).trigger('change');
+            $('#zip_code_text_other').val("");
+            $('#district_select_other').val(null).trigger('change');
+            $('#subdistrict_select_other').val(null).trigger('change');
+            $('#phone_number_other').val("");
+
+            $('#address_work').val("");
+            $('#city_select_work').val(null).trigger('change');
+            $('#city_text_work').val("");
+            $('#zip_code_select_work').val(null).trigger('change');
+            $('#zip_code_text_work').val("");
+            $('#phone_number_work').val("");
+
+            $('#address_correspondence').val("");
+            $('#city_select_correspondence').val(null).trigger('change');
+            $('#city_text_correspondence').val("");
+            $('#zip_code_select_correspondence').val(null).trigger('change');
+            $('#zip_code_text_correspondence').val("");
+            $('#phone_number_correspondence').val("");
+
+            $('#name_emergency').val("");
+            $('#address_emergency').val("");
+            $('#phone_number_emergency').val("");
+            $('#relation_emergency').val("");
+            $('#email_emergency').val("");
+
+            $('#handphone_no_other').val("");
+            $('#personal_email_other').val("");
+            $('#company_email_other').val("");
+            $('#company_card_id_other').val("");
+
+            //Tab Employment
+            $('#employment_status_employment').val(null).trigger('change');
+            $('#employment_type_employment').val(null).trigger('change');
+            $('#origin_join_date_employment').val("");
+            $('#joining_date_employment').val("");
+            $('#probation_end_date_employment').val("");
+            $('#contract_start_date_employment').val("");
+            $('#contract_end_date_employment').val("");
+            $('#termination_date_employment').val("");
+            $('#effective_terminated_employment').val("");
+            $('#termination_code_employment').val(null).trigger('change');
+            $('#special_reason_resign_employment').val("");
+            $('#termination_remarks_employment').val("");
+            $('#expatriat_employment').val("");
+            $('#license_no_employment').val("");
+            $('#start_date_employment').val("");
+            $('#end_date_employment').val("");
+            $('#commisioner_employment').val("");
+            $('#fringe_benefit_data_table').DataTable().destroy();
+            load_table_fringe_benefit();
+
+            //Tab Absenteeism & Payroll
+            $('#absenteeism_type_absenteeism').val(null).trigger('change');
+            $('#work_pattern_code_absenteeism').val(null).trigger('change');
+            $('#starting_day_absenteeism').val("");
+            $('#absent_not_required_absenteeism').val("");
+            $('#finger_not_required_absenteeism').val("");
+
+            $('#tax_status_payroll').val(null).trigger('change');
+            $('#tax_status_next_year_payroll').val(null).trigger('change');
+            $('#tax_registered_no_payroll').val("");
+            $('#tax_registered_date_payroll').val("");
+            $('#tax_office_payroll').val(null).trigger('change');
+            $('#tax_expiry_date_payroll').val("");
+            $('#tax_calculation_method_payroll').val(null).trigger('change');
+            $('#group_npwp_payroll').val(null).trigger('change');
+            $('#group_bpjs_payroll').val(null).trigger('change');
+            $('#exclude_payroll_process_payroll').val("");
+            $('#group_authorize_payroll').val(null).trigger('change');
+
+            $('#bpjs_number_tenaga_kerja').val("");
+            $('#join_tenaga_kerja').val("");
+            $('#joining_date_tenaga_kerja').val("");
+            $('#payment_period_start_date_tenaga_kerja').val("");
+            $('#non_accidental_death_insurance_tenaga_kerja').val("");
+            $('#pension_by_employer_tenaga_kerja').val("");
+            $('#work_related_accident_insurance_tenaga_kerja').val("");
+            $('#pension_by_employee_tenaga_kerja').val("");
+            $('#work_related_accident_insurance_two_tenaga_kerja').val("");
+            $('#pension_insurance_tenaga_kerja').val("");
+            $('#work_related_accident_insurance_three_tenaga_kerja').val("");
+
+            $('#bpjs_number_kesehatan').val("");
+            $('#join_kesehatan').val("");
+            $('#joining_date_kesehatan').val("");
+            $('#payment_period_start_date_kesehatan').val("");
+
+            $('#company_bank_code_primary').val(null).trigger('change');
+            $('#employee_bank_code_primary').val(null).trigger('change');
+            $('#account_number_primary').val("");
+            $('#currency_primary').val(null).trigger('change');
+            $('#beneficiary_name_primary').val("");
+            $('#percentage_primary').val("");
+
+            $('#company_bank_code_optional_one').val(null).trigger('change');
+            $('#employee_bank_code_optional_one').val(null).trigger('change');
+            $('#account_number_optional_one').val("");
+            $('#currency_optional_one').val(null).trigger('change');
+            $('#beneficiary_name_optional_one').val("");
+            $('#percentage_optional_one').val("");
+
+            $('#company_bank_code_optional_two').val(null).trigger('change');
+            $('#employee_bank_code_optional_two').val(null).trigger('change');
+            $('#account_number_optional_two').val("");
+            $('#currency_optional_two').val(null).trigger('change');
+            $('#beneficiary_name_optional_two').val("");
+            $('#percentage_optional_two').val("");
+
+            //Tab Family & Dependent
+            $('#family_dependent_data_table').DataTable().destroy();
+            load_table_family_dependent_data();
+
+            //Tab Insurance
+            $('#insurance_code_insurance').val(null).trigger('change');
+            $('#insurance_class_insurance').val(null).trigger('change');
+            $('#insurance_date_insurance').val("");
+            $('#insurance_policy_no_insurance').val("");
+            $('#remarks_insurance').val("");
+            
+        }
+        else if (func == 'edit') {
+            // console.log(typeof arrData[0].peMasterFamily);
+
+            //Profile
+            // console.log(arrData[0].photo);
+            $('#employee_name_profile').text(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
+            $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
+            $('#record_function').val("Edit");
+            $('#employee_no_profile').text(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
+            $('#company_name_profile').text(((typeof arrData[0].companyName !== 'undefined') ? arrData[0].companyName : ''));
+            $('#position_name_profile').text(((typeof arrData[0].positionName !== 'undefined') ? arrData[0].positionName : ''));
+            $('#company_email_profile').text(((typeof arrData[0].companyEmailAddress !== 'undefined') ? arrData[0].companyEmailAddress : ''));
+            $('#phone_number_profile').text(((typeof arrData[0].personalHandphone !== 'undefined') ? arrData[0].personalHandphone : ''));
+
+            //Tab Info
+            $('#employee_no_info').val(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
+            $('#employee_no_info').prop('disabled', true);
+            $('#fullname_info').val(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
+            $('#title_info').val(((typeof arrData2[0].title !== 'undefined') ? arrData2[0].title : ''));
+            // console.log(arrData2[0].birthPlace);
+            $.ajax({
+                type: 'GET',
+                url: '/birth_place/personal_data/api',
+                data: {
+                    // 'employeeNo' : ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''),
+                    'cityCode': ((typeof arrData2[0].birthPlace !== 'undefined') ? arrData2[0].birthPlace : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.cityCode,
+                    title: data.cityName,
+                    text: data.cityName
+                });
+                // console.log(data);
+                $("#birth_place_info").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#birth_place_info").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.cityCode,
+                        text: data.cityName,
+                        data: data
+                    }
+                });
+            });
+
+            pickerBirthDate.setDate(((typeof arrData2[0].birthDate !== 'undefined') ? arrData2[0].birthDate : ''));
+
+            $.ajax({
+                type: 'GET',
+                url: '/comgen/api',
+                data: {
+                    // 'employeeNo' : ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''),
+                    'comGenCode': ((typeof arrData2[0].gender !== 'undefined') ? arrData2[0].gender : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.comGenCode,
+                    title: data.value,
+                    text: data.value
+                });
+                $("#gender_info").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#gender_info").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.comGenCode,
+                        text: data.value,
+                        data: data
+                    }
+                });
+            });
+
+            // $.ajax({
+            //     type: 'GET',
+            //     url: '/marital_status/personal_data/api',
+            //     data: {
+            //         'maritalStatus': ((typeof arrData2[0].maritalStatus !== 'undefined') ? arrData2[0].maritalStatus : '')
+            //     }
+            // }).then(function (data) {
+            //     var option = $('<option/>', {
+            //         id: data.value,
+            //         title: data.value,
+            //         text: data.value
+            //     });
+            //     $("#marital_status_info").append(option).attr('data-alias', 'yourvalue').trigger(
+            //         'change');
+            //     $("#marital_status_info").trigger({
+            //         type: 'select2:select',
+            //         params: {
+            //             id: data.value,
+            //             text: data.value,
+            //             data: data
+            //         }
+            //     });
+            // });
+
+            $('#marital_status_info').val(null).trigger('change');
+            $('#religion_info').val(null).trigger('change');
+            $('#nationality_info').val(null).trigger('change');
+            $('#tax_registered_no_info').val(((typeof arrData2[0].taxRegisteredNo !== 'undefined') ? arrData2[0].taxRegisteredNo : ''));
+            $('#tax_office_info').val(((typeof arrData2[0].taxRegisteredPlaceRegistration !== 'undefined') ? arrData2[0].taxRegisteredPlaceRegistration : ''));
+            $('#driving_license_car_type_info').val(null).trigger('change');
+            $('#driving_license_car_registration_place_info').val(null).trigger('change');
+            $('#driving_license_motorcycle_registration_place_info').val(null).trigger('change');
+            $('#mother_name_info').val(((typeof arrData2[0].motherName !== 'undefined') ? arrData2[0].motherName : ''));
+            pickerTaxRegisteredDateInfo.setDate(((typeof arrData2[0].taxRegisteredDate !== 'undefined') ? arrData2[0].taxRegisteredDate : ''));
+            pickerTaxExpiryDateInfo.setDate(((typeof arrData2[0].taxRegisteredExpiryDate !== 'undefined') ? arrData2[0].taxRegisteredExpiryDate : ''));
+            
+            if (arrData2[0].peMasterInfo !== null) {
+                //Tab Info
+                $.ajax({
+                    type: 'GET',
+                    url: '/comgen/api',
+                    data: {
+                        'comGenCode': ((typeof arrData2[0].peMasterInfo.bloodType !== 'undefined') ? arrData2[0].peMasterInfo.bloodType : '')
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data.comGenCode,
+                        title: data.value,
+                        text: data.value
+                    });
+                    // console.log(data);
+                    $("#blood_type_info").append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#blood_type_info").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.comGenCode,
+                            text: data.value,
+                            data: data
+                        }
+                    });
+                });
+                $('#id_no_info').val(((typeof arrData2[0].peMasterInfo.idNo !== 'undefined') ? arrData2[0].peMasterInfo.idNo : ''));
+                $('#passport_no_info').val(((typeof arrData2[0].peMasterInfo.passportNo !== 'undefined') ? arrData2[0].peMasterInfo.passportNo : ''));
+                pickerPassportDate.setDate(((typeof arrData2[0].peMasterInfo.passportDate !== 'undefined') ? arrData2[0].peMasterInfo.passportDate : ''));
+                $('#driving_license_car_no_info').val(((typeof arrData2[0].peMasterInfo.drivingLicenseMobilNo !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilNo : ''));
+                pickerDrivingLicenseCarDate.setDate(((typeof arrData2[0].peMasterInfo.drivingLicenseMobilNoDate !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilNoDate : ''));
+                pickerDrivingLicenseCarExpiryDate.setDate(((typeof arrData2[0].peMasterInfo.drivingLicenseMobilNoExpiryDate !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilNoExpiryDate : ''));
+                $('#driving_license_motorcycle_no_info').val(((typeof arrData2[0].peMasterInfo.drivingLicenseMotorNo !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMotorNo : ''));
+                pickerDrivingLicenseMotorcycleDate.setDate(((typeof arrData2[0].peMasterInfo.drivingLicenseMotorNoDate !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMotorNoDate : ''));
+                pickerDrivingLicenseMotorcycleExpiryDate.setDate(((typeof arrData2[0].peMasterInfo.drivingLicenseMotorNoExpiryDate !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMotorNoExpiryDate : ''));
+
+                //Tab Address
+                $('#address_home').val(((typeof arrData2[0].peMasterInfo.homeAddress !== 'undefined') ? arrData2[0].peMasterInfo.homeAddress : ''));
+                $('#phone_number_home').val(((typeof arrData2[0].peMasterInfo.homePhone !== 'undefined') ? arrData2[0].peMasterInfo.homePhone : ''));
+                $('#address_other').val(((typeof arrData2[0].peMasterInfo.otherAddress !== 'undefined') ? arrData2[0].peMasterInfo.otherAddress : ''));
+                $('#phone_number_other').val(((typeof arrData2[0].peMasterInfo.otherPhone !== 'undefined') ? arrData2[0].peMasterInfo.otherPhone : ''));
+                $('#address_work').val(((typeof arrData2[0].peMasterInfo.workAddress !== 'undefined') ? arrData2[0].peMasterInfo.workAddress : ''));
+                $('#phone_number_work').val(((typeof arrData2[0].peMasterInfo.workPhone !== 'undefined') ? arrData2[0].peMasterInfo.workPhone : ''));
+                $('#address_correspondence').val(((typeof arrData2[0].peMasterInfo.correspondenceAddress !== 'undefined') ? arrData2[0].peMasterInfo.correspondenceAddress : ''));
+                $('#phone_number_correspondence').val(((typeof arrData2[0].peMasterInfo.correspondencePhone !== 'undefined') ? arrData2[0].peMasterInfo.correspondencePhone : ''));
+                $('#name_emergency').val(((typeof arrData2[0].peMasterInfo.emergencyName !== 'undefined') ? arrData2[0].peMasterInfo.emergencyName : ''));
+                $('#address_emergency').val(((typeof arrData2[0].peMasterInfo.emergencyAddress !== 'undefined') ? arrData2[0].peMasterInfo.emergencyAddress : ''));
+                $('#phone_number_emergency').val(((typeof arrData2[0].peMasterInfo.emergencyPhone !== 'undefined') ? arrData2[0].peMasterInfo.emergencyPhone : ''));
+                $('#relation_emergency').val(((typeof arrData2[0].peMasterInfo.emergencyRelation !== 'undefined') ? arrData2[0].peMasterInfo.emergencyRelation : ''));
+                $('#email_emergency').val(((typeof arrData2[0].peMasterInfo.emergencyEmailAddress !== 'undefined') ? arrData2[0].peMasterInfo.emergencyEmailAddress : ''));
+                $('#handphone_no_other').val(((typeof arrData2[0].peMasterInfo.personalHandphone !== 'undefined') ? arrData2[0].peMasterInfo.personalHandphone : ''));
+                $('#personal_email_other').val(((typeof arrData2[0].peMasterInfo.personalEmailAddress !== 'undefined') ? arrData2[0].peMasterInfo.personalEmailAddress : ''));
+                $('#company_email_other').val(((typeof arrData2[0].peMasterInfo.companyEmailAddress !== 'undefined') ? arrData2[0].peMasterInfo.companyEmailAddress : ''));
+                $('#company_card_id_other').val(((typeof arrData2[0].peMasterInfo.employeeCardId !== 'undefined') ? arrData2[0].peMasterInfo.employeeCardId : ''));
+            }
+            
+            //Tab Address
+            $('#city_select_home').val(null).trigger('change');
+            $('#city_text_home').val("");
+            $('#zip_code_select_home').val(null).trigger('change');
+            $('#zip_code_text_home').val("");
+            $('#district_select_home').val(null).trigger('change');
+            $('#subdistrict_select_home').val(null).trigger('change');
+
+            $('#city_select_other').val(null).trigger('change');
+            $('#city_text_other').val("");
+            $('#zip_code_select_other').val(null).trigger('change');
+            $('#zip_code_text_other').val("");
+            $('#district_select_other').val(null).trigger('change');
+            $('#subdistrict_select_other').val(null).trigger('change');
+
+            $('#city_select_work').val(null).trigger('change');
+            $('#city_text_work').val("");
+            $('#zip_code_select_work').val(null).trigger('change');
+            $('#zip_code_text_work').val("");
+
+            $('#city_select_correspondence').val(null).trigger('change');
+            $('#city_text_correspondence').val("");
+            $('#zip_code_select_correspondence').val(null).trigger('change');
+            $('#zip_code_text_correspondence').val("");
+
+            //Tab Employment
+            $('#employment_status_employment').val(null).trigger('change');
+            $('#employment_type_employment').val(null).trigger('change');
+            pickerOriginJoinDate.setDate(((typeof arrData2[0].originjoinDate !== 'undefined') ? arrData2[0].originjoinDate : ''));
+            // $('#origin_join_date_employment').prop('disabled', true);
+            pickerJoinDate.setDate(((typeof arrData2[0].joinDate !== 'undefined') ? arrData2[0].joinDate : ''));
+            pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined') ? arrData2[0].probationEndDate : ''));
+            pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined') ? arrData2[0].contractStartDate : ''));
+            pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined') ? arrData2[0].contractEndDate : ''));
+            pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
+            pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
+            $('#termination_code_employment').val(null).trigger('change');
+            if (arrData2[0].specialResign == true) {
+                $('#special_reason_resign_employment').prop('checked', true);
+            }
+            else {
+                $('#special_reason_resign_employment').prop('checked', false);
+            }
+            $('#termination_remarks_employment').val(((typeof arrData2[0].terminationRemarks !== 'undefined') ? arrData2[0].terminationRemarks : ''));
+            if (arrData2[0].flagIsExpat == true) {
+                $('#expatriat_employment').prop('checked', true);
+            }
+            else {
+                $('#expatriat_employment').prop('checked', false);
+            }
+            $('#license_no_employment').val(((typeof arrData2[0].expatLicenseNo !== 'undefined') ? arrData2[0].expatLicenseNo : ''));
+            pickerExpatriatStartDate.setDate(((typeof arrData2[0].expatLicenseStartDate !== 'undefined') ? arrData2[0].expatLicenseStartDate : ''));
+            pickerExpatriatEndDate.setDate(((typeof arrData2[0].expatLicenseEndDate !== 'undefined') ? arrData2[0].expatLicenseEndDate : ''));
+            if (arrData2[0].flagIsCommissioner == true) {
+                $('#commisioner_employment').prop('checked', true);
+            }
+            else {
+                $('#commisioner_employment').prop('checked', false);
+            }
+
+            load_table_fringe_benefit();
+            for (var i = 0; i < arrData2[0].peMasterFringeBenefit.length; i++) {
+                // console.log(arrData2[0].peMasterFamily[0].seqNo);
+                // table1.row.add([
+                //     '<input class="chk-select" type="checkbox">',
+                //     '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i) + '">' + ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i),
+                //     ((typeof arrData2[0].peMasterFringeBenefit[i].benefits !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].benefits : ''),
+                //     ((typeof arrData2[0].peMasterFringeBenefit[i].description !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].description : ''),
+                //     ((typeof arrData2[0].peMasterFringeBenefit[i].startDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].startDate : ''),
+                //     ((typeof arrData2[0].peMasterFringeBenefit[i].endDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].endDate : '')
+                // ]).draw();
+
+                arrayFringeBenefit.push({
+                    "seqNoFringeBenefit": ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i),
+                    "benefits": ((typeof arrData2[0].peMasterFringeBenefit[i].benefits !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].benefits : ''),
+                    "description": ((typeof arrData2[0].peMasterFringeBenefit[i].description !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].description : ''),
+                    "startDate": ((typeof arrData2[0].peMasterFringeBenefit[i].startDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].startDate : ''),
+                    "endDate": ((typeof arrData2[0].peMasterFringeBenefit[i].endDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].endDate : '')
+                });
+                
+            }
+            // console.log(arrayFringeBenefit);
+            $('#fringe_benefit_data_table').DataTable().destroy();
+            load_table_fringe_benefit();
+
+            //Tab Absenteeism & Payroll
+            $('#absenteeism_type_absenteeism').val(null).trigger('change');
+            $('#work_pattern_code_absenteeism').val(null).trigger('change');
+            $('#starting_day_absenteeism').val(((typeof arrData2[0].startAtDay !== 'undefined') ? arrData2[0].startAtDay : ''));
+            if (arrData2[0].flagNotAbsent == true) {
+                $('#absent_not_required_absenteeism').prop('checked', true);
+            }
+            else {
+                $('#absent_not_required_absenteeism').prop('checked', false);
+            }
+            if (arrData2[0].flagNotFinger == true) {
+                $('#finger_not_required_absenteeism').prop('checked', true);
+            }
+            else {
+                $('#finger_not_required_absenteeism').prop('checked', false);
+            }
+
+            $('#tax_status_payroll').val(null).trigger('change');
+            $('#tax_status_next_year_payroll').val(null).trigger('change');
+            $('#tax_registered_no_payroll').val(((typeof arrData2[0].taxRegisteredNo !== 'undefined') ? arrData2[0].taxRegisteredNo : ''));
+            pickerTaxRegisteredDatePayroll.setDate(((typeof arrData2[0].taxRegisteredDate !== 'undefined') ? arrData2[0].taxRegisteredDate : ''));
+            $('#tax_office_payroll').val(null).trigger('change');
+            pickerTaxExpiryDatePayroll.setDate(((typeof arrData2[0].taxRegisteredExpiryDate !== 'undefined') ? arrData2[0].taxRegisteredExpiryDate : ''));
+            $('#tax_calculation_method_payroll').val(null).trigger('change');
+            $('#group_npwp_payroll').val(null).trigger('change');
+            $('#group_bpjs_payroll').val(null).trigger('change');
+            if (arrData2[0].flagExcludePayroll == true) {
+                $('#exclude_payroll_process_payroll').prop('checked', true);
+            }
+            else {
+                $('#exclude_payroll_process_payroll').prop('checked', false);
+            }
+            $('#group_authorize_payroll').val(null).trigger('change');
+
+            $('#bpjs_number_tenaga_kerja').val(((typeof arrData2[0].bpjsTenagaKerjaNo !== 'undefined') ? arrData2[0].bpjsTenagaKerjaNo : ''));
+            if (arrData2[0].flagBPJSTenagaKerja == true) {
+                $('#join_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#join_tenaga_kerja').prop('checked', false);
+            }
+            pickerJoiningDateBPJSTenagaKerja.setDate(((typeof arrData2[0].bpjsTenagaKerjaJoinDate !== 'undefined') ? arrData2[0].bpjsTenagaKerjaJoinDate : ''));
+            pickerPaymentPeriodStartDateBPJSTenagaKerja.setDate(((typeof arrData2[0].bpjsTenagaKerjaPeriodStartDate !== 'undefined') ? arrData2[0].bpjsTenagaKerjaPeriodStartDate : ''));
+            if (arrData2[0].flagAstekDeathNonAccident == true) {
+                $('#non_accidental_death_insurance_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#non_accidental_death_insurance_tenaga_kerja').prop('checked', false);
+            }
+            if (arrData2[0].flagAstekPensionEmployer == true) {
+                $('#pension_by_employer_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#pension_by_employer_tenaga_kerja').prop('checked', false);
+            }
+            if (arrData2[0].flagAstekWorkAccident == true) {
+                $('#work_related_accident_insurance_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#work_related_accident_insurance_tenaga_kerja').prop('checked', false);
+            }
+            if (arrData2[0].flagAstekPensionEmployee == true) {
+                $('#pension_by_employee_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#pension_by_employee_tenaga_kerja').prop('checked', false);
+            }
+            if (arrData2[0].flagAstekWorkAccident2 == true) {
+                $('#work_related_accident_insurance_two_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#work_related_accident_insurance_two_tenaga_kerja').prop('checked', false);
+            }
+            if (arrData2[0].flagPensionInsurance == true) {
+                $('#pension_insurance_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#pension_insurance_tenaga_kerja').prop('checked', false);
+            }
+            if (arrData2[0].flagAstekWorkAccident3 == true) {
+                $('#work_related_accident_insurance_three_tenaga_kerja').prop('checked', true);
+            }
+            else {
+                $('#work_related_accident_insurance_three_tenaga_kerja').prop('checked', false);
+            }
+
+            $('#bpjs_number_kesehatan').val(((typeof arrData2[0].bpjsKesehatanNo !== 'undefined') ? arrData2[0].bpjsKesehatanNo : ''));
+            if (arrData2[0].flagBPJSKesehatan == true) {
+                $('#join_kesehatan').prop('checked', true);
+            }
+            else {
+                $('#join_kesehatan').prop('checked', false);
+            }
+            pickerJoiningDateBPJSKesehatan.setDate(((typeof arrData2[0].bpjsKesehatanJoinDate !== 'undefined') ? arrData2[0].bpjsKesehatanJoinDate : ''));
+            pickerPaymentPeriodStartDateBPJSKesehatan.setDate(((typeof arrData2[0].bpjsKesehatanPeriodStartDate !== 'undefined') ? arrData2[0].bpjsKesehatanPeriodStartDate : ''));
+
+            $('#company_bank_code_primary').val(null).trigger('change');
+            $('#employee_bank_code_primary').val(null).trigger('change');
+            $('#account_number_primary').val(((typeof arrData2[0].bankAccountNo1 !== 'undefined') ? arrData2[0].bankAccountNo1 : ''));
+            $('#currency_primary').val(null).trigger('change');
+            $('#beneficiary_name_primary').val(((typeof arrData2[0].beneficiaryName1 !== 'undefined') ? arrData2[0].beneficiaryName1 : ''));
+            $('#percentage_primary').val(((typeof arrData2[0].bankPercentageSalary1 !== 'undefined') ? arrData2[0].bankPercentageSalary1 : ''));
+
+            $('#company_bank_code_optional_one').val(null).trigger('change');
+            $('#employee_bank_code_optional_one').val(null).trigger('change');
+            $('#account_number_optional_one').val(((typeof arrData2[0].bankAccountNo2 !== 'undefined') ? arrData2[0].bankAccountNo2 : ''));
+            $('#currency_optional_one').val(null).trigger('change');
+            $('#beneficiary_name_optional_one').val(((typeof arrData2[0].beneficiaryName2 !== 'undefined') ? arrData2[0].beneficiaryName2 : ''));
+            $('#percentage_optional_one').val(((typeof arrData2[0].bankPercentageSalary2 !== 'undefined') ? arrData2[0].bankPercentageSalary2 : ''));
+
+            $('#company_bank_code_optional_two').val(null).trigger('change');
+            $('#employee_bank_code_optional_two').val(null).trigger('change');
+            $('#account_number_optional_two').val(((typeof arrData2[0].bankAccountNo3 !== 'undefined') ? arrData2[0].bankAccountNo3 : ''));
+            $('#currency_optional_two').val(null).trigger('change');
+            $('#beneficiary_name_optional_two').val(((typeof arrData2[0].beneficiaryName3 !== 'undefined') ? arrData2[0].beneficiaryName3 : ''));
+            $('#percentage_optional_two').val(((typeof arrData2[0].bankPercentageSalary3 !== 'undefined') ? arrData2[0].bankPercentageSalary3 : ''));
+
+            //Tab Family & Dependent
+            load_table_family_dependent_data();
+            for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
+                // console.log(arrData2[0].peMasterFamily[i].birthPlace);
+                // table2.row.add([
+                //     '<input class="chk-select" type="checkbox">',
+                //     '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i) +'">' + ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
+                //     ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].birthDate !== 'undefined') ? arrData2[0].peMasterFamily[i].birthDate : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
+                //     ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : ''),
+                // ]).draw();
+
+                arrayFamilyDependent.push({
+                    "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
+                    "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
+                    "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
+                    "birthDate": ((typeof arrData2[0].peMasterFamily[i].birthDate !== 'undefined') ? arrData2[0].peMasterFamily[i].birthDate : ''),
+                    "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined') ? arrData2[0].peMasterFamily[i].birthPlace : ''),
+                    "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
+                    "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
+                    "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
+                    "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
+                    "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
+                    "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : '')
+                });
+            }
+
+            $('#family_dependent_data_table').DataTable().destroy();
+            load_table_family_dependent_data();
+
+            //Tab Insurance
+            if (arrData2[0].peMasterInsurance !== null) {
+                $('#insurance_code_insurance').val(null).trigger('change');
+                $('#insurance_class_insurance').val(null).trigger('change');
+                pickerInsuranceDate.setDate(((typeof arrData2[0].peMasterInsurance.insuranceStartDate !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceStartDate : ''));
+                $('#insurance_policy_no_insurance').val(((typeof arrData2[0].peMasterInsurance.insurancePolicyNo !== 'undefined') ? arrData2[0].peMasterInsurance.insurancePolicyNo : ''));
+                $('#remarks_insurance').val(((typeof arrData2[0].peMasterInsurance.insuranceRemark !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceRemark : ''));
+            }
+        }
+
+        function htmlDecode(value) {
+            return $("<textarea/>").html(value).text();
+        }
 
         loadDataBirthPlace();
         loadDataGender();
@@ -2253,6 +3316,8 @@
         loadDataDrivingLicenseMotorcycleRegistPlace();
         loadDataCity();
         loadDataZipCode();
+        loadDataDistrict();
+        loadDataSubdistrict();
         loadDataRelation();
         loadDataEmploymentStatus();
         loadDataEmploymentType();
@@ -2261,15 +3326,19 @@
         loadDataAbsenteeismType();
         loadDataWorkPatternCode();
         loadDataTaxStatus();
+        loadDataTaxOffice();
         loadDataTaxCalculationMethod();
         loadDataGroupNPWP();
+        loadDataGroupBPJS();
         loadDataGroupAuthorize();
         loadDataCompanyBankCode();
         loadDataEmployeeBankCode();
         loadDataCurrency();
+        loadDataInsuranceCode();
+        loadDataInsuranceClass();
 
         $('#fringe_benefit_data_table thead tr').clone(true).appendTo('#fringe_benefit_data_table thead');
-        $('#fringe_benefit_data_table thead tr:eq(1) th').each(function (i) {
+        $('#fringe_benefit_data_table thead tr:eq(1) th:not(:first-child)').each(function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="' + title + '" />');
 
@@ -2283,8 +3352,8 @@
             });
         });
 
-        $('#dependent_data_table thead tr').clone(true).appendTo('#dependent_data_table thead');
-        $('#dependent_data_table thead tr:eq(1) th').each(function (i) {
+        $('#family_dependent_data_table thead tr').clone(true).appendTo('#family_dependent_data_table thead');
+        $('#family_dependent_data_table thead tr:eq(1) th:not(:first-child)').each(function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="' + title + '" />');
 
@@ -2305,9 +3374,125 @@
                 $('#fringe_benefit_data_table').DataTable().destroy();
                 load_table_fringe_benefit();
             } else if (target.id == "dependent-tab") {
-                $('#dependent_data_table').DataTable().destroy();
-                load_table_dependent();
+                $('#family_dependent_data_table').DataTable().destroy();
+                load_table_family_dependent_data();
             }
+        });
+
+        $('#photo_profile').change(function (e) {
+            var fileExtension = ['jpeg', 'jpg', 'png'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Only formats are allowed : " + fileExtension.join(', '));
+            } else {
+                for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+                    var file = e.originalEvent.srcElement.files[i];
+                    console.log(file);
+                    var img = $('#photo');
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
+                        img.attr('src', reader.result);
+                        console.log(reader.result);
+                    }
+                    reader.readAsDataURL(file);
+                    // $("#photo_profile").after(img);
+                }
+            }
+        });
+
+        $('#city_select_home').on('select2:select', function (e) {
+            var data = $('#city_select_home').select2('data');
+            $('#city_text_home').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/city_name/detail') }}",
+                type: "GET",
+                data: {
+                    'cityCode': data[0].id
+                },
+            })
+        });
+
+        $('#city_select_other').on('select2:select', function (e) {
+            var data = $('#city_select_other').select2('data');
+            $('#city_text_other').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/city_name/detail') }}",
+                type: "GET",
+                data: {
+                    'cityCode': data[0].id
+                },
+            })
+        });
+
+        $('#city_select_work').on('select2:select', function (e) {
+            var data = $('#city_select_work').select2('data');
+            $('#city_text_work').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/city_name/detail') }}",
+                type: "GET",
+                data: {
+                    'cityCode': data[0].id
+                },
+            })
+        });
+
+        $('#city_select_correspondence').on('select2:select', function (e) {
+            var data = $('#city_select_correspondence').select2('data');
+            $('#city_text_correspondence').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/city_name/detail') }}",
+                type: "GET",
+                data: {
+                    'cityCode': data[0].id
+                },
+            })
+        });
+
+        $('#zip_code_select_home').on('select2:select', function (e) {
+            var data = $('#zip_code_select_home').select2('data');
+            $('#zip_code_text_home').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/zip_code/detail') }}",
+                type: "GET",
+                data: {
+                    'zipCode': data[0].id
+                },
+            })
+        });
+
+        $('#zip_code_select_other').on('select2:select', function (e) {
+            var data = $('#zip_code_select_other').select2('data');
+            $('#zip_code_text_other').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/zip_code/detail') }}",
+                type: "GET",
+                data: {
+                    'zipCode': data[0].id
+                },
+            })
+        });
+
+        $('#zip_code_select_work').on('select2:select', function (e) {
+            var data = $('#zip_code_select_work').select2('data');
+            $('#zip_code_text_work').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/zip_code/detail') }}",
+                type: "GET",
+                data: {
+                    'zipCode': data[0].id
+                },
+            })
+        });
+        
+        $('#zip_code_select_correspondence').on('select2:select', function (e) {
+            var data = $('#zip_code_select_correspondence').select2('data');
+            $('#zip_code_text_correspondence').val(htmlDecode(data[0].text));
+            $.ajax({
+                url: "{{ url('personel/zip_code/detail') }}",
+                type: "GET",
+                data: {
+                    'zipCode': data[0].id
+                },
+            })
         });
 
         $.get("{{ url('gender/api') }}", function (data) {
@@ -2329,6 +3514,25 @@
                 $('#religion').append("<option value=" + v.variable + ">" + v.value +
                     "</option>");
             });
+        });
+
+        $('#select').focus(function (event) {
+                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+                $searchfield.prop('disabled', true);
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
         });
 
         $('#prefix_title_one, #prefix_title_two, #prefix_title_three, #suffix_title_one, #suffix_title_two, #suffix_title_three')
@@ -2406,7 +3610,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.cityName,
-                                    id: item.cityCode,
+                                    id: item.cityName,
                                     data: item
                                 }
                             })
@@ -2831,7 +4035,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.cityName,
-                                    id: item.cityCode,
+                                    id: item.cityName,
                                     data: item
                                 }
                             })
@@ -2891,7 +4095,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.cityName,
-                                    id: item.cityCode,
+                                    id: item.cityName,
                                     data: item
                                 }
                             })
@@ -3014,6 +4218,128 @@
                                 return {
                                     text: item.zipCode,
                                     id: item.zipCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataDistrict(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.name + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $district = $('#district_select_home, #district_select_other');
+
+            $district.select2({
+                width: '100%',
+                placeholder: 'Choose District',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/district/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataSubdistrict(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.name + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $district = $('#subdistrict_select_home, #subdistrict_select_other');
+
+            $district.select2({
+                width: '100%',
+                placeholder: 'Choose Subdistrict',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/subdistrict/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id,
                                     data: item
                                 }
                             })
@@ -3518,6 +4844,66 @@
             });
         }
 
+        function loadDataTaxOffice(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#tax_office_payroll').select2({
+                width: '100%',
+                placeholder: 'Choose Tax Office',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/tax_office/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataTaxCalculationMethod(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -3643,70 +5029,70 @@
             });
         }
 
-        // function loadDataGroupBPJS(){
-        //     function formatSelect(data) {
-        //         if (data.loading) {
-        //             return $search
-        //         }
+        function loadDataGroupBPJS(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
 
-        //         if (data.id) {
-        //             var $result2 = $('<div class="row">' + 
-        //                 '<div class="col-6"><b>BPJS Code</b></div>' +
-        //                 '<div class="col-6"><b>BPJS No</b></div>' +
-        //                 '</div>' +
-        //                 '<div class="row">' +
-        //                 '<div class="col-6">' + data.data.bpjsCode + '<div>' +
-        //                 '<div class="col-6">' + data.data.bpjsNo + '<div>' +
-        //                 '</div>');
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6"><b>BPJS Code</b></div>' +
+                        '<div class="col-6"><b>BPJS No</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.bpjsCode + '<div>' +
+                        '<div class="col-6">' + data.data.bpjsNo + '<div>' +
+                        '</div>');
 
-        //             return $result2;
-        //         }
-        //     }
+                    return $result2;
+                }
+            }
 
-        //     var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-        //     $('#group_bpjs_payroll').select2({
-        //         width: '100%',
-        //         placeholder: 'Choose Group BPJS',
-        //         allowClear: true,
-        //         // multiple: true,
-        //         // tags: true,
-        //         closeOnSelect: false,
-        //         language: {
-        //             errorLoading: function () {
-        //                 return $search;
-        //             },
-        //             searching: function () {
-        //                 return $search;
-        //             }
-        //         },
-        //         ajax: {
-        //             url: '/bpjs/api',
-        //             dataType: 'json',
-        //             delay: 250,
-        //             type: "GET",
-        //             data: function (params) {
-        //                 return {
-        //                     _token: CSRF_TOKEN,
-        //                     search: params.term
-        //                 };
-        //             },
-        //             processResults: function (data) {
-        //                 return {
-        //                     results: $.map(data, function (item) {
-        //                         return {
-        //                             text: item.bpjsNo,
-        //                             id: item.bpjsCode,
-        //                             data: item
-        //                         }
-        //                     })
-        //                 };
-        //             },
-        //             cache: true,
-        //         },
-        //         templateResult: formatSelect
-        //     });
-        // }
+            $('#group_bpjs_payroll').select2({
+                width: '100%',
+                placeholder: 'Choose Group BPJS',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/bpjs/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.bpjsNo,
+                                    id: item.bpjsCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         function loadDataGroupAuthorize() {
             function formatSelect(data) {
@@ -3830,7 +5216,7 @@
                                     id: item.bankCode,
                                     data: item
                                 }
-                                console.log(data);
+                                // console.log(data);
                             })
                         };
                     },
@@ -3893,11 +5279,11 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.bankName,
+                                    text: item.bankCode,
                                     id: item.bankCode,
                                     data: item
                                 }
-                                console.log(data);
+                                // console.log(data);
                             })
                         };
                     },
@@ -3968,49 +5354,707 @@
             });
         }
 
-        function load_table_fringe_benefit() {
-            table = $('#fringe_benefit_data_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: "{{ url('personel/personal_data/fringe_benefit/table') }}",
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
-                        "\r\n" + ajaxOptions.responseText);
+        function loadDataInsuranceCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#insurance_code_insurance').select2({
+                width: '100%',
+                placeholder: 'Choose Insurance Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
                 },
+                ajax: {
+                    url: '/insurance_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataInsuranceClass(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#insurance_class_insurance').select2({
+                width: '100%',
+                placeholder: 'Choose Insurance Class',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/insurance_class/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function load_table_fringe_benefit() {
+            table1 = $('#fringe_benefit_data_table').DataTable({
+                processing: true,
+                data: arrayFringeBenefit,
+
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
-                columns: [{
-                        data: 'seq_no',
-                        name: 'seq_no'
+                // "order": [
+                //     [1, "asc"]
+                // ],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'seqNoFringeBenefit',
+                        name: 'seqNoFringeBenefit',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="seq_no_fringe_benefit[]" value="' +
+                                data + '">' + data;
+                        }
                     },
                     {
                         data: 'benefits',
-                        name: 'benefits'
+                        name: 'benefits',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="fringe_benefits[]" value="' +
+                                data + '">' + data;
+                        }
                     },
                     {
                         data: 'description',
-                        name: 'description'
+                        name: 'description',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="description[]" value="' +
+                                data + '">' + data;
+                        }
                     },
                     {
-                        data: 'start_date',
-                        name: 'start_date'
+                        data: 'startDate',
+                        name: 'startDate',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="start_date[]" value="' +
+                                data + '">' + data,
+                                moment(data).format('YYYY-MM-DD');
+                        }
                     },
                     {
-                        data: 'end_date',
-                        name: 'end_date'
+                        data: 'endDate',
+                        name: 'endDate',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="end_date[]" value="' +
+                                data + '">' + data,
+                                moment(data).format('YYYY-MM-DD');
+                        }
                     },
-                ]
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                }
             });
         }
-        
-        // $("#btn-save-employment-data").click(function () {
-        //     $(this).prop("disabled", true);
-        //     $(this).html(
-        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-        //     );
-        //     $("#employment_data_form").submit();
-        // });
+
+        function load_table_family_dependent_data() {
+            table2 = $('#family_dependent_data_table').DataTable({
+                processing: true,
+                data: arrayFamilyDependent,
+
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'seqNoFamilyDependent',
+                        name: 'seqNoFamilyDependent',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="seq_no_family_dependent[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'familyName',
+                        name: 'familyName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="family_name[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'relationCode',
+                        name: 'relationCode',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="relation_code[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'birthDate',
+                        name: 'birthDate',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="birth_date[]" value="' +
+                                data + '">' + data,
+                                moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {
+                        data: 'birthPlace',
+                        name: 'birthPlace',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="birth_place[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'gender',
+                        name: 'gender',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="gender[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'bloodType',
+                        name: 'bloodType',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="blood_type[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'familyCardNumber',
+                        name: 'familyCardNumber',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="family_card_number[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'occupation',
+                        name: 'occupation',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="occupation[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'flagMedical',
+                        name: 'flagMedical',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="flag_medical[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'flagPayroll',
+                        name: 'flagPayroll',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="flag_payroll[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
+        $('#modal_add_employment_data').on('show.bs.modal', function () {
+            if (func == 'new') {
+                var count = table1.rows().count();
+                $('#seq_no_employment_data').val(count);
+            }
+
+            else {
+                $.ajax({
+                    url: "{{ url('personel_data_detail/number/check') }}",
+                    type: "GET",
+                    data: {
+                        'url': '/pemaster/getpemasterdetail',
+                        'pemasterType' : 'peMasterFringeBenefit',
+                        'employeeNo': arrData2[0].peMasterFringeBenefit.employeeNo
+                    },
+                    success: function (response) {
+                        var count = table1.rows().count();
+                        // console.log(response);
+
+                        if (response > 0 && count !== response) {
+                            var total = parseInt(response) + parseInt(count);
+                            $('#seq_no_employment_data').val(total - 1);
+                        }
+                        else if (response > 0 && count == response) {
+                            // var total = parseInt(response) + parseInt(count);
+                            $('#seq_no_employment_data').val(response);
+                        }
+                        else {
+                            for (var i = 0; i <= count; i++){
+                                $('#seq_no_employment_data').val(i);
+                                // console.log(i);
+                            }
+                        }
+                        // console.log(count);
+                        // console.log(total);
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        });
+
+        $('#modal_add_family_dependent_data').on('show.bs.modal', function () {
+            if (func == 'new') {
+                var count = table2.rows().count();
+                $('#seq_no_family_dependent_data').val(count);
+            }
+
+            else {
+                $.ajax({
+                    url: "{{ url('personel_data_detail/number/check') }}",
+                    type: "GET",
+                    data: {
+                        'url': '/pemaster/getpemasterdetail',
+                        'pemasterType' : 'peMasterFamily',
+                        'employeeNo': arrData2[0].employeeNo
+                    },
+                    success: function (response) {
+                        var count = table2.rows().count();
+                        // console.log(response);
+                        // console.log(count);
+
+                        if (response > 0 && count !== response) {
+                            var total = parseInt(response) + parseInt(count);
+                            $('#seq_no_family_dependent_data').val(total - 1);
+                        }
+                        else if (response > 0 && count == response) {
+                            // var total = parseInt(response) + parseInt(count);
+                            $('#seq_no_family_dependent_data').val(response);
+                        }
+                        else {
+                            for (var i = 0; i <= count; i++){
+                                $('#seq_no_family_dependent_data').val(i);
+                                // console.log(i);
+                            }
+                        }
+                        // console.log(count);
+                        // console.log(total);
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        });
+
+        $("#btn-save-employment-data").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            arrayFringeBenefit.push({
+                "seqNoFringeBenefit": $("#seq_no_employment_data").val(),
+                "benefits": $("#benefits_employment_data").val(),
+                "description": $("#description_employment_data").val(),
+                "startDate": $("#start_date_employment_data").val(),
+                "endDate": $("#end_date_employment_data").val()
+            });
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+            );
+            $('#modal_add_employment_data').modal('hide');
+            
+            $('#fringe_benefit_data_table').DataTable().destroy();
+            load_table_fringe_benefit();
+        });
+
+        $("#btn-save-family-dependent-data").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            if ($('#include_medical_family_dependent_data').is(':checked')) {
+                $('#include_medical_family_dependent_data').val('true');
+            }
+            else {
+                $('#include_medical_family_dependent_data').val('false');
+            }
+
+            if ($('#include_tax_family_dependent_data').is(':checked')) {
+                $('#include_tax_family_dependent_data').val('true');
+            }
+            else {
+                $('#include_tax_family_dependent_data').val('false');
+            }
+            
+            arrayFamilyDependent.push({
+                "seqNoFamilyDependent": $("#seq_no_family_dependent_data").val(),
+                "familyName": $("#name_family_dependent_data").val(),
+                "relationCode": $("#relation_family_dependent_data").val(),
+                "birthDate": $("#birth_date_family_dependent_data").val(),
+                "birthPlace": $("#birth_place_family_dependent_data").val(),
+                "gender": $("#gender_family_dependent_data").val(),
+                "bloodType": $("#blood_type_family_dependent_data").val(),
+                "familyCardNumber": $("#family_card_no_family_dependent_data").val(),
+                "occupation": $("#occupation_family_dependent_data").val(),
+                "flagMedical": $("#include_medical_family_dependent_data").val(),
+                "flagPayroll": $("#include_tax_family_dependent_data").val()
+            });
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+            );
+            $('#modal_add_family_dependent_data').modal('hide');
+            
+            $('#family_dependent_data_table').DataTable().destroy();
+            load_table_family_dependent_data();
+        });
+
+        $("#btn-save-profile").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#personal_data_form").submit();
+        });
+
+        // if ($("#employee_profile_form").length > 0) {
+        //     $("#employee_profile_form").validate({
+        //         rules: {
+        //             photo_profile: {
+        //                 extension: "jpg|jpeg|png",
+        //             },
+        //         },
+        //         messages: {
+        //             photo_profile: {
+        //                 extension: "{{ __('personel_personal_data.photo_profile_extension') }}",
+        //             },
+        //         },
+        //         errorPlacement: function (error, element) {
+        //             error.insertAfter(element);
+        //             alert(error.html());
+        //         },
+        //         showErrors: function (errorMap, errorList) {
+        //             this.defaultShowErrors();
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+
+        //             var myform = document.getElementById("employee_profile_form");
+        //             var formdata = new FormData(myform);
+
+        //             $.ajax({
+        //                 url: "{{ url('personel/employee/photo/proses') }}",
+        //                 type: "POST",
+        //                 processData: false,
+        //                 contentType: false,
+        //                 data: formdata,
+        //                 success: function (response) {
+        //                     if (response.status == "true") {
+        //                         $('#notification_success').modal('show');
+        //                         $('#message-notification-success').html(response
+        //                             .message);
+        //                         setTimeout(function () {
+        //                             window.location =
+        //                                 "{{ url('personel/personal_data') }}";
+        //                         }, 3000);
+        //                     } else {
+        //                         $('#notification_error').modal('show');
+        //                         if (response.message == null || response.message ==
+        //                             '') {
+        //                             $('#message-notification-error').html(
+        //                                 "{{ __('login.error') }}");
+        //                         } else {
+        //                             $('#message-notification-error').html(response
+        //                                 .message);
+        //                         }
+        //                     }
+        //                 },
+        //                 error: function (response) {
+        //                     $('#notification').modal('show');
+        //                     $('#message-notification').html(response);
+        //                 }
+        //             });
+        //         }
+        //     })
+        // }
+
+        if ($("#personal_data_form").length > 0) {
+            $("#personal_data_form").validate({  
+            rules: {
+                    employee_no_info: {
+                        required: true,
+                    },
+                    fullname_info: {
+                        required: true,
+                    },
+                    joining_date_employment: {
+                        required: true,
+                    },
+                    contract_start_date_employment: {
+                        required: true,
+                    },
+                    contract_end_date_employment: {
+                        required: true,
+                    },
+                    license_no_employment: {
+                        required: true,
+                    },
+                    start_date_employment: {
+                        required: true,
+                    },
+                    end_date_employment: {
+                        required: true,
+                    },
+                    absenteeism_type_absenteeism: {
+                        required: true,
+                    },
+                    work_pattern_code_absenteeism: {
+                        required: true,
+                    },
+                    starting_day_absenteeism: {
+                        required: true,
+                    },
+                    tax_status_payroll: {
+                        required: true,
+                    },
+                    tax_status_next_year_payroll: {
+                        required: true,
+                    },
+                    tax_office_payroll: {
+                        required: true,
+                    },
+                    tax_calculation_method_payroll: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    employee_no_info: {
+                        required: "{{ __('personel_personal_data_detail.employee_no_required') }}",
+                    },
+                    fullname_info: {
+                        required: "{{ __('personel_personal_data_detail.fullname_required') }}",
+                    },
+                    joining_date_employment: {
+                        required: "{{ __('personel_personal_data_detail.joining_date_required') }}",
+                    },
+                    contract_start_date_employment: {
+                        required: "{{ __('personel_personal_data_detail.contract_start_date_required') }}",
+                    },
+                    contract_end_date_employment: {
+                        required: "{{ __('personel_personal_data_detail.contract_end_date_required') }}",
+                    },
+                    license_no_employment: {
+                        required: "{{ __('personel_personal_data_detail.license_no_required') }}",
+                    },
+                    start_date_employment: {
+                        required: "{{ __('personel_personal_data_detail.start_date_required') }}",
+                    },
+                    end_date_employment: {
+                        required: "{{ __('personel_personal_data_detail.end_date_required') }}",
+                    },
+                    absenteeism_type_absenteeism: {
+                        required: "{{ __('personel_personal_data_detail.absenteeism_type_required') }}",
+                    },
+                    work_pattern_code_absenteeism: {
+                        required: "{{ __('personel_personal_data_detail.work_pattern_code_required') }}",
+                    },
+                    starting_day_absenteeism: {
+                        required: "{{ __('personel_personal_data_detail.starting_day_required') }}",
+                    },
+                    tax_status_payroll: {
+                        required: "{{ __('personel_personal_data_detail.tax_status_required') }}",
+                    },
+                    tax_status_next_year_payroll: {
+                        required: "{{ __('personel_personal_data_detail.tax_status_next_year_required') }}",
+                    },
+                    tax_office_payroll: {
+                        required: "{{ __('personel_personal_data_detail.tax_office_required') }}",
+                    },
+                    tax_calculation_method_payroll: {
+                        required: "{{ __('personel_personal_data_detail.tax_calculation_method_required') }}",
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save-profile").prop("disabled", false);
+                    $("#btn-save-profile").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('personel/personal_data/proses') }}",
+                        type: "POST",
+                        data: $('#personal_data_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-profile").prop("disabled", false);
+                                $("#btn-save-profile").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('personel/personal_data') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save-profile").prop("disabled", false);
+                                $("#btn-save-profile").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-profile").prop("disabled", false);
+                            $("#btn-save-profile").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
 
         // if ($("#employment_data_form").length > 0) {
         //     $("#employment_data_form").validate({
@@ -4102,184 +6146,143 @@
         //     })
         // }
 
-        function load_table_family_dependent_data() {
-            table = $('#family_dependent_data_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: "{{ url('personel/family_dependent_data/table') }}",
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                        }
-                    },
-                    {data: 'positionCode', name: 'positionCode'},
-                    {data: 'positionName', name: 'positionName'},
-                    {data: 'supervisorPositionCode', name: 'supervisorPositionCode'},
-                    {data: 'recordStatus', name: 'recordStatus'}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
-        }
+        // if ($("#family_dependent_data_form").length > 0) {
+        //     $("#family_dependent_data_form").validate({
+        //         rules: {
+        //             seq_no_family_dependent_data: {
+        //                 required: true,
+        //             },
+        //         },
+        //         messages: {
+        //             seq_no_family_dependent_data: {
+        //                 required: "{{ __('personel_personal_data.seq_no_required') }}",
+        //             },
+        //         },
+        //         highlight: function (element) {
+        //             $(element).addClass('is-invalid');
+        //         },
+        //         unhighlight: function (element) {
+        //             $(element).removeClass('is-invalid');
+        //         },
+        //         errorElement: 'span',
+        //         errorPlacement: function (error, element) {
+        //             $("#btn-save-family-dependent-data").prop("disabled", false);
+        //             $("#btn-save-family-dependent-data").html(
+        //                 '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //             );
 
-        $("#btn-save-family-dependent-data").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#family_dependent_data_form").submit();
-        });
+        //             error.addClass('invalid-feedback');
+        //             element.closest('.form-group').append(error);
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+        //             $.ajax({
+        //                 url: "{{ url('personel/data/family_dependent/proses') }}",
+        //                 type: "POST",
+        //                 data: $('#family_dependent_data_form').serialize(),
+        //                 success: function (response) {
+        //                     if (response.status == "true") {
+        //                         $("#btn-save-family-dependent-data").prop("disabled", false);
+        //                         $("#btn-save-family-dependent-data").html(
+        //                             '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //                         );
+        //                         $('#modal_add_family_dependent_data').modal('hide');
+        //                         $('#family_dependent_data_table').DataTable().destroy();
+        //                         load_table_family_dependent_data();
+        //                         $('#notification_success').modal('show');
+        //                         $('#message-notification-success').html(response
+        //                             .message);
+        //                         setTimeout(function () {
+        //                             window.location =
+        //                             $('#notification_success').modal('hide');
+        //                         }, 3000);
+        //                     } else {
+        //                         $("#btn-save-family-dependent-data").prop("disabled", false);
+        //                         $("#btn-save-family-dependent-data").html(
+        //                             '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //                         );
 
-        if ($("#family_dependent_data_form").length > 0) {
-            $("#family_dependent_data_form").validate({
-                rules: {
-                    seq_no_family_dependent_data: {
-                        required: true,
-                    },
-                },
-                messages: {
-                    seq_no_family_dependent_data: {
-                        required: "{{ __('personel_personal_data.seq_no_required') }}",
-                    },
-                },
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-save-family-dependent-data").prop("disabled", false);
-                    $("#btn-save-family-dependent-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
-                    );
+        //                         $('#notification_error').modal('show');
+        //                         if (response.message == null || response.message ==
+        //                             '') {
+        //                             $('#message-notification-error').html(
+        //                                 "{{ __('login.error') }}");
+        //                         } else {
+        //                             $('#message-notification-error').html(response
+        //                                 .message);
+        //                         }
+        //                     }
+        //                 },
+        //                 error: function (response) {
+        //                     $("#btn-save-family-dependent-data").prop("disabled", false);
+        //                     $("#btn-save-family-dependent-data").html(
+        //                         '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
+        //                     );
 
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "{{ url('personel/data/family_dependent/proses') }}",
-                        type: "POST",
-                        data: $('#family_dependent_data_form').serialize(),
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $("#btn-save-family-dependent-data").prop("disabled", false);
-                                $("#btn-save-family-dependent-data").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
-                                );
-                                $('#modal_add_family_dependent_data').modal('hide');
-                                $('#family_dependent_data_table').DataTable().destroy();
-                                load_table_family_dependent_data();
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    window.location =
-                                    $('#notification_success').modal('hide');
-                                }, 3000);
-                            } else {
-                                $("#btn-save-family-dependent-data").prop("disabled", false);
-                                $("#btn-save-family-dependent-data").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
-                                );
+        //                     $('#notification').modal('show');
+        //                     $('#message-notification').html(response);
+        //                 }
 
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
-                            $("#btn-save-family-dependent-data").prop("disabled", false);
-                            $("#btn-save-family-dependent-data").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("personel_personal_data.btn_save") }}'
-                            );
+        //             });
+        //         }
+        //     })
+        // }
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-
-                    });
-                }
-            })
-        }
-
-        function load_table_dependent() {
-            table = $('#dependent_data_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: "{{ url('personel/personal_data/dependent/table') }}",
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
-                        "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                columns: [{
-                        data: 'dependent_name',
-                        name: 'dependent_name'
-                    },
-                    {
-                        data: 'relation',
-                        name: 'relation'
-                    },
-                    {
-                        data: 'birth_date',
-                        name: 'birth_date'
-                    },
-                    {
-                        data: 'gender',
-                        name: 'gender'
-                    },
-                    {
-                        data: 'blood_type',
-                        name: 'blood_type'
-                    },
-                    {
-                        data: 'family_card_number',
-                        name: 'family_card_number'
-                    },
-                    {
-                        data: 'occupation',
-                        name: 'occupation'
-                    },
-                    {
-                        data: 'medical_claim',
-                        name: 'medical_claim'
-                    },
-                    {
-                        data: 'tax',
-                        name: 'tax'
-                    },
-                ]
-            });
-        }
+        // function load_table_dependent() {
+        //     table = $('#family_dependent_data_table').DataTable({
+        //         processing: true,
+        //         serverSide: true,
+        //         orderCellsTop: true,
+        //         ajax: "{{ url('personel/personal_data/dependent/table') }}",
+        //         error: function (jqXHR, ajaxOptions, thrownError) {
+        //             alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
+        //                 "\r\n" + ajaxOptions.responseText);
+        //         },
+        //         "sDom": 'lrtip',
+        //         'sPaginationType': 'ellipses',
+        //         columns: [{
+        //                 data: 'dependent_name',
+        //                 name: 'dependent_name'
+        //             },
+        //             {
+        //                 data: 'relation',
+        //                 name: 'relation'
+        //             },
+        //             {
+        //                 data: 'birth_date',
+        //                 name: 'birth_date'
+        //             },
+        //             {
+        //                 data: 'gender',
+        //                 name: 'gender'
+        //             },
+        //             {
+        //                 data: 'blood_type',
+        //                 name: 'blood_type'
+        //             },
+        //             {
+        //                 data: 'family_card_number',
+        //                 name: 'family_card_number'
+        //             },
+        //             {
+        //                 data: 'occupation',
+        //                 name: 'occupation'
+        //             },
+        //             {
+        //                 data: 'medical_claim',
+        //                 name: 'medical_claim'
+        //             },
+        //             {
+        //                 data: 'tax',
+        //                 name: 'tax'
+        //             },
+        //         ]
+        //     });
+        // }
     });
 
 </script>

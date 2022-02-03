@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
-use App\Exports\AbsenteeismOvertimeReportExport;
-use App\Exports\MonthlyAbsenteeismAnalysisExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -62,6 +60,11 @@ class TimeManagementController extends Controller
     public function pageOvertimeSPL()
     {
         return view ('time_management.tm_overtime_spl');
+    }
+
+    public function pageTimeRecordingReference()
+    {
+        return view ('time_management.tm_time_recording_reference');
     }
 
     public function pagePeriodMaintenance()
@@ -361,6 +364,33 @@ class TimeManagementController extends Controller
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
+    }
+
+    public function tableTimeRecordingReferenceTM()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetimerecord/getreferencetimerecord',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
     }
 
     public function dataDetailRankingPersonel(Request $request)
@@ -697,7 +727,7 @@ class TimeManagementController extends Controller
 
         // var_dump($request->period);
 
-        return Excel::download(new DetailAbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Detail Absenteeism Report.xlsx');
+        return Excel::download(new DetailAbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
     public function printMonthlyAbsenteeismDetail(Request $request)
@@ -1143,32 +1173,7 @@ class TimeManagementController extends Controller
                 "createdBy" => Session::get('userID'),
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
-                "languageCode" => App::getLocale(),               
-//   "payroll1": true,
-//   "payroll2": true,
-//   "payroll3": true,
-//   "payroll4": true,
-//   "payroll5": true,
-//   "payroll6": true,
-//   "payroll7": true,
-//   "payroll8": true,
-//   "payroll9": true,
-//   "payroll10": true,
-//   "payroll11": true,
-//   "payroll12": true,
-//   "payroll13": true,
-//   "payroll14": true,
-//   "payroll15": true,
-//   "payroll16": true,
-//   "payroll17": true,
-//   "payroll18": true,
-//   "payroll19": true,
-//   "payroll20": true,
-//   "payroll21": true,
-//   "payroll22": true,
-//   "payroll23": true,
-//   "payroll24": true,
-//   "payroll25": true,
+                "languageCode" => App::getLocale(),            
             ];
 
             for($i=0; $i<25; $i++){
@@ -1189,6 +1194,66 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesTimeRecordingReferenceTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+        
+            $response = $client->post(env('API_URL') . '/referencetimerecord',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "inCode" => $request->in_code,
+                        "outCode" => $request->out_code,
+                        "employeeNoStart" => $request->employee_no_start,
+                        "employeeNoLong" => $request->employee_no_long,
+                        "yearStart" => $request->year_start,
+                        "yearLong" => $request->year_long,
+                        "monthStart" => $request->month_start,
+                        "monthLong" => $request->month_long,
+                        "dateStart" => $request->day_start,
+                        "dateLong" => $request->day_long,
+                        "hourStart" => $request->hour_start,
+                        "hourLong" => $request->hour_long,
+                        "minuteStart" => $request->minute_start,
+                        "minuteLong" => $request->minute_long,
+                        "flagStart" =>$request->flag_start,
+                        "flagLong" => $request->flag_long,
+                        "machineCodeStart" => $request->machine_code_start,
+                        "machineCodeLong" => $request->machine_code_long,
+                        "shiftStart" => $request->shift_start,
+                        "shiftLong" => $request->shift_long,
+                        "codeInOutStart" => $request->in_out_code_start,
+                        "codeInOutLong" => $request->in_out_code_long,
+                        "timeInRecord" => $request->radiobtn1,
+                        "timeOutRecord" => $request->radiobtn2,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
+                        'userID' => Session::get('userID'), 
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->message);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }

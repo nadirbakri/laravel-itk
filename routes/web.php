@@ -230,6 +230,8 @@ Route::get('personel/format_report/detail_data', 'PersonelController@dataDetailF
 Route::get('personel/relation_code/detail_data', 'PersonelController@dataDetailRelationCodePersonel');
 Route::get('personel/final_performance_result/detail_data', 'PersonelController@dataDetailFinalPerformanceResultPersonel');
 Route::get('personel/employee_mutation/detail_data', 'PersonelController@dataDetailEmployeeMutationPersonel');
+Route::get('personel/city_name/detail', 'PersonelController@dataDetailCityNamePersonel');
+Route::get('personel/zip_code/detail', 'PersonelController@dataDetailZipCodeDetailPersonel');
 
 Route::get('personel/personal_data/fringe_benefit/table', 'PersonelController@tableFringeBenefitPersonalDataPersonel');
 Route::get('personel/personal_data/dependent/table', 'PersonelController@tableDependentPersonalDataPersonel');
@@ -289,6 +291,7 @@ Route::get('personel/city/status', 'PersonelController@statusCityPersonel');
 Route::get('personel/title/status', 'PersonelController@statusTitlePersonel');
 Route::get('personel/personal_data/status', 'PersonelController@statusPersonalDataPersonel');
 
+Route::post('personel/personal_data/proses', 'PersonelController@prosesPersonalDataPersonel');
 Route::post('personel/nature_of_work/proses', 'PersonelController@prosesNatureofWorkPersonel');
 Route::post('personel/grade/proses', 'PersonelController@prosesGradeCodePersonel');
 Route::post('personel/position/proses', 'PersonelController@prosesPositionPersonel');
@@ -348,6 +351,8 @@ Route::get('personel/competency/project_experience/remove', 'PersonelController@
 Route::post('personel/competency/training_list/remove', 'PersonelController@removeCompetencyTrainingListPersonel');
 
 Route::get('personel/number/check', 'PersonelController@checkNumberPersonel');
+Route::get('personel_data_detail/number/check', 'PersonelController@checkNumberPersonelDataDetail');
+Route::get('personel_data_detail/auto_employee_no/check', 'PersonelController@checkAutoEmployeeNoPersonel');
 Route::post('personel/print_letter/print', 'PersonelController@printPrintLetterPersonel');
 Route::post('personel/employee_list/print', 'PersonelController@printEmployeeListPersonel');
 Route::post('personel/employee_turn_over_report/print', 'PersonelController@printEmployeeTurnOverReportPersonel');
@@ -390,6 +395,8 @@ Route::get('time_management/work_pattern/detail/table', 'TimeManagementControlle
 Route::get('time_management/overtime_spl/table', 'TimeManagementController@tableOvertimeSPL');
 Route::get('time_management/period_maintenance/table', 'TimeManagementController@tablePeriodMaintenanceTM');
 Route::get('time_management/absent_code/table', 'TimeManagementController@tableAbsentCodeTM');
+Route::get('time_management/monthly_absenteeism_detail/table', 'TimeManagementController@tableMonthlyAbsenteeismDetail');
+Route::get('time_management/time_recording_reference/table', 'TimeManagementController@tableTimeRecordingReferenceTM');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
@@ -514,10 +521,13 @@ Route::get('relation/api', 'DataController@dataRelationAPI');
 Route::get('termination_code/api', 'DataController@dataTerminationCodeAPI');
 Route::get('benefits/api', 'DataController@dataBenefitsAPI');
 Route::get('tax_status/api', 'DataController@dataTaxStatusAPI');
+Route::get('tax_office/api', 'DataController@dataTaxOfficeAPI');
 Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMethodAPI');
 Route::get('absenteeism_type/api', 'DataController@dataAbsenteeismTypeAPI');
 Route::get('currency/api', 'DataController@dataCurrencyAPI');
 Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
+Route::get('district/api', 'DataController@dataDistrictAPI');
+Route::get('subdistrict/api', 'DataController@dataSubdistrictAPI');
 Route::get('work_pattern_code/api', 'DataController@dataWorkPatternCodeAPI');
 Route::get('company_bank_code/api', 'DataController@dataCompanyBankCodeAPI');
 Route::get('employee_bank_code/api', 'DataController@dataEmployeeBankCodeAPI');
@@ -555,6 +565,7 @@ Route::get('major/api', 'DataController@dataMajorAPI');
 Route::get('education_status/api', 'DataController@dataEducationStatusAPI');
 Route::get('title/api', 'DataController@dataTitleAPI');
 Route::get('city/api', 'DataController@dataCityAPI');
+Route::get('birth_place/personal_data/api', 'DataController@dataBirthPlacePersonalDataAPI');
 Route::get('language/api', 'DataController@dataLanguageAPI');
 Route::get('proficiency/api', 'DataController@dataProficiencyAPI');
 Route::get('skill/api', 'DataController@dataSkillAPI');
@@ -590,6 +601,7 @@ Route::get('employment/status/api', 'DataController@dataEmploymentStatusAPI');
 Route::get('employment/type/api', 'DataController@dataEmploymentTypeAPI');
 Route::get('mutation/type/api', 'DataController@dataMutationTypeAPI');
 Route::get('npwp/api', 'DataController@dataNPWPAPI');
+Route::get('bpjs/api', 'DataController@dataBPJSAPI');
 Route::get('cost_center/api', 'DataController@dataCostCenterAPI');
 Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
 Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
@@ -601,6 +613,9 @@ Route::get('absent_code/api', 'DataController@dataAbsentCodeAPI');
 Route::get('code/api', 'DataController@dataCodeAPI');
 Route::get('day_code/api', 'DataController@dataDayCodeAPI');
 Route::get('day_code/func/api', 'DataController@dataDayCodeFunctionAPI');
+Route::get('insurance_class/api', 'DataController@dataInsuranceClassAPI');
+Route::get('insurance_code/api', 'DataController@dataInsuranceCodeAPI');
+Route::get('comgen/api', 'DataController@dataComGenAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
