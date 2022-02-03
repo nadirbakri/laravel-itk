@@ -181,7 +181,8 @@
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" id="btn-save" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_company_working_calendar.btn_save') }}</button>
+                    <button type="button" id="btn-save" class="btn btn-primary w-25"><i 
+                            class="fa fa-floppy-o"></i> {{ __('tm_company_working_calendar.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('tm_company_working_calendar.btn_cancel') }}</button>
                 </div>

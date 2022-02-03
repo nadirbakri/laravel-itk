@@ -126,29 +126,29 @@
                                 for="absent_code">{{ __('tm_detail_absenteeism_report.label_absent_code') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                         <div class="form-group">
                             <div class="form-radio">
-                                <input class="form-radio-input" type="radio" id="absent_code_all"
-                                    name="absent_code_all" value="true">
+                                <input class="form-radio-input" type="radio" id="all_absent_code"
+                                    name="absent_code" value="all">
                                 <label class="form-radio-label"
-                                    for="absent_code_all">{{ __('tm_detail_absenteeism_report.label_absent_code_all') }}</label>
+                                    for="absent_code">{{ __('tm_detail_absenteeism_report.label_absent_code_all') }}</label>
                             </div>
                         </div>
                     </div> 
                     <div class="col-2">
                         <div class="form-group">
                             <div class="form-radio">
-                                <input class="form-radio-input" type="radio" id="absent_code_selection"
-                                    name="absent_code_selection" value="true">
+                                <input class="form-radio-input" type="radio" id="selection_absent_code"
+                                    name="absent_code" value="selection">
                                 <label class="form-radio-label"
-                                    for="absent_code_selection">{{ __('tm_detail_absenteeism_report.label_absent_code_selection') }}</label>
+                                    for="absent_code">{{ __('tm_detail_absenteeism_report.label_absent_code_selection') }}</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="div-table col-6">
-                    <table id="detail_absenteeism_report_table" class="table hover">
+                    <table id="detail_absenteeism_report_table" class="table hover  width: 100%">
                         <thead>
                             <tr>
                                 <th></th>
@@ -159,6 +159,7 @@
                         </thead>
                     </table>
                 </div>
+                
                 <div class="row">
                     <div class="form-group ml-4">
                         <label for="include_resign">&nbsp;</label>
@@ -240,38 +241,42 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
-
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            // plugins: [
-            //     new monthSelectPlugin({
-            //         shorthand: true, //defaults to false
-            //         dateFormat: "Y-m-01", //defaults to "F Y"
-            //         altFormat: "F Y", //defaults to "F Y"
-            //     })
-            // ],
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
+    $(document).ready(function() {
+        $(function () {
+            initDatePicker();
         });
-    }
+
+        function initDatePicker() {
+            $('.input-group input').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                defaultDate: "today",
+                // plugins: [
+                //     new monthSelectPlugin({
+                //         shorthand: true, //defaults to false
+                //         dateFormat: "Y-m-01", //defaults to "F Y"
+                //         altFormat: "F Y", //defaults to "F Y"
+                //     })
+                // ],
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+        }
+    });
 
 </script>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var table = null;
+
         $.ajax({
             url: "{{ url('personel/report/level/check') }}",
             type: "GET",
@@ -305,7 +310,6 @@
         loadDataPositionCode();
         loadDataLocationCode();
         loadDataRankingCode();
-        loadDataAbsentTable();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
@@ -314,6 +318,8 @@
         loadDataFirstLastAllPosition();
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
+
+        load_data_absent_code();
 
         // $('select').on('select2:opening select2:closing', function( event ) {
         //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
@@ -330,8 +336,10 @@
 
         // loadDataFirstLastAllLocation();
 
-        $('#company_working_calendar_table thead tr').clone(true).appendTo('#company_working_calendar_table thead');
-        $('#company_working_calendar_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        // loadDataFirstLastAllLocation();
+
+        $('#detail_absenteeism_report_table thead tr').clone(true).appendTo('#detail_absenteeism_report_table thead');
+        $('#detail_absenteeism_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
     
@@ -345,43 +353,12 @@
             } );
         });
 
-        var table = $('#company_working_calendar_table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: "{{ url('time_management/company_working_calendar/table') }}",
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
-                },
-                {data: 'calendar', name: 'calendar'},
-                {data: 'description', name: 'description'},
-                {data: 'flagType', name: 'flagType'},
-                {data: 'locationCode', name: 'locationCode'}
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }
-        });
-
-        function load_data_company_working_calendar() {
-            table = $('#company_working_calendar_table').DataTable({
+        function load_data_absent_code() {
+            table = $('#detail_absenteeism_report_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('time_management/company_working_calendar/table') }}",
+                ajax: "{{ url('time_management/absent_code/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -393,14 +370,28 @@
                         orderable: false,
                         targets: 0, 
                         "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        render: function(data, type, row) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox" name="check_absent_code[' + $("<div />").text(row.absentCode).html() + ']" value="1">' : ''
                         }
                     },
-                    {data: 'calendar', name: 'calendar'},
-                    {data: 'description', name: 'description'},
-                    {data: 'flagType', name: 'flagType'},
-                    {data: 'locationCode', name: 'locationCode'}
+                    {data: 'absentCode', name: 'absentCode',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="absentCode[' + $("<div />").text(row.absentCode).html() + ']" value="' +
+                                $('<div />').text(row.absentCode).html() + '">' + 
+                                $('<div />').text(row.absentCode).html();
+                        }},
+                    {data: 'description', name: 'description',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="description[' + $("<div />").text(row.description).html() + ']" value="' +
+                                $('<div />').text(row.description).html() + '">' + 
+                                $('<div />').text(row.description).html();
+                        }},
+                    {data: 'deductLeave', name: 'deductLeave',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="deductLeave[' + $("<div />").text(row.deductLeave).html() + ']" value="' +
+                                $('<div />').text(row.deductLeave).html() + '">' + 
+                                $('<div />').text(row.deductLeave).html();
+                        }},
                 ],
                 select: {
                     style:    'multi',
@@ -409,6 +400,45 @@
             });
         }
 
+        $('input[name="absent_code"]').on('change', function () {
+            $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            if ($('#all_absent_code').is(':checked')) {
+                table.rows().select();
+                $('#check_absent_code', rows).prop('checked', true);
+            }
+            else {
+                table.rows().deselect();
+                $('#check_absent_code', rows).prop('checked', false);
+            }
+        });
+
+        // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){
+        //     if(this.checked){
+        //         console.log("okay");
+        //     //    $('input=[type="checkbox"]:checked.not(:first)').each(function (){
+        //     //        selectvalue += table.row($(this).closest("tr")).data()[1]+" ";
+        //     //    });
+        //     }
+        // });
+
+        $('#detail_absenteeism_report_table tbody').on('change', 'input[name="check_absent_code[]"]', function(){
+            if(!this.checked){
+                var all = $('#all_absent_code').get(0);
+                var selection = $('#selection_absent_code').get(0);
+                if(all && all.checked && ('checked' in all)){
+                    all.checked = false;
+                    selection.checked = true;
+                }
+            } else  {
+                var selection = $('#selection_absent_code').get(0);
+                if(selection && selection.checked && ('checked' in selection)){
+                    selection.checked = false;
+                }
+            }
+        });
+
+      
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
             $searchfield.prop('disabled', true);

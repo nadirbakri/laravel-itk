@@ -3584,7 +3584,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		// var_dump($arrResult->message);
+		// var_dump($arrResult->dataListSet);
 
 	    if($search == ''){
 	    	$absent = $arrResult->dataListSet;

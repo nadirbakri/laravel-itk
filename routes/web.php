@@ -389,7 +389,7 @@ Route::get('time_management/work_pattern/table', 'TimeManagementController@table
 Route::get('time_management/work_pattern/detail/table', 'TimeManagementController@tableWorkPatternDetailTM');
 Route::get('time_management/overtime_spl/table', 'TimeManagementController@tableOvertimeSPL');
 Route::get('time_management/period_maintenance/table', 'TimeManagementController@tablePeriodMaintenanceTM');
-Route::get('time_management/monthly_absenteeism_detail/table', 'TimeManagementController@tableMonthlyAbsenteeismDetail');
+Route::get('time_management/absent_code/table', 'TimeManagementController@tableAbsentCodeTM');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
@@ -410,6 +410,7 @@ Route::post('time_management/overtime_spl/proses', 'TimeManagementController@pro
 Route::post('time_management/work_pattern/proses', 'TimeManagementController@prosesWorkPatternTM');
 Route::post('time_management/period_maintenance/proses', 'TimeManagementController@prosesPeriodMaintenanceTM');
 Route::post('time_management/leave_transaction/proses', 'TimeManagementController@prosesLeaveTransactionTM');
+Route::post('time_management/absent_code/proses', 'TimeManagementController@prosesAbsentCodeTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/overtime_spl/remove', 'TimeManagementController@removeOvertimeSPLTM');
@@ -418,6 +419,7 @@ Route::get('time_management/period_maintenance/remove', 'TimeManagementControlle
 /* Route untuk cek status Time Management */
 Route::post('time_management/overtime_spl/status', 'TimeManagementController@statusOvertimeSPLTM');
 Route::get('time_management/work_pattern/status', 'TimeManagementController@statusWorkPatternTM');
+Route::get('time_management/absent_code/status, TimeManagementController@statusAbsentCodeTM');
 
 Route::get('time_management/input_balance_leave/detail', 'TimeManagementController@dataDetailInputBalanceLeave');
 Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
@@ -425,6 +427,8 @@ Route::get('time_management/employee_name/detail', 'TimeManagementController@dat
 Route::get('time_management/balance/detail', 'TimeManagementController@dataDetailBalanceTM');
 Route::get('time_management/period_maintenance/data/detail', 'TimeManagementController@dataDetailPeriodMaintenanceTM');
 Route::get('time_management/work_pattern/detail_data', 'TimeManagementController@dataDetailWorkPatternTM');
+Route::get('time_management/absent_code/detail', 'TimeManagementController@dataDetailAbsentCodeTM');
+Route::get('time_management/absent_code/detail_data', 'TimeManagementController@dataDetailDataAbsentCodeTM');
 
 /* Route untuk Report Time Management */
 Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');

@@ -121,7 +121,7 @@
                                   <tr>
                                     <th></th>
                                     <th>Field Name</th>
-                                     <th>Column Header</th>
+                                    <th>Column Header</th>
                             </thead>
                         </table>
                     </div>

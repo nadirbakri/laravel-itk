@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
@@ -117,7 +118,7 @@
                             <label for="change_header">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="change_header"
-                                    name="change_header" value="true">
+                                    name="change_header">
                                 <label class="form-check-label"
                                     for="change_header">{{ __('tm_monthly_absenteeism_detail.label_change_header') }}</label>
                             </div>
@@ -127,7 +128,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="div-table">
-                            <table id="monthly_absenteeism_detial_table" class="table hover">
+                            <table id="monthly_absenteeism_detail_table" class="table hover" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -141,14 +142,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2">
-                        <button type="submit" class="btn btn-primary" name="btn-add-field" id="btn-add-field"
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-add-absent-code" id="btn-add-absent-code"
                             style="width: 100%;" data-toggle="modal" data-target="#modal_add_absent_code">
                             <i class="fa fa-plus"></i> {{ __('tm_monthly_absenteeism_detail.btn_add') }}
                         </button>
                     </div>
-                    <div class="col-2">
-                        <button type="submit" class="btn btn-danger" name="btn-remove-data" id="btn-remove-data"
+                    <div class="col-3">
+                        <button type="button" class="btn btn-danger" name="btn-remove-data" id="btn-remove-data"
                             style="width: 100%;">
                             <i class="fa fa-times"></i> {{ __('tm_monthly_absenteeism_detail.btn_remove') }}
                         </button>
@@ -244,18 +245,15 @@
                                             for="absent_code">{{ __('tm_monthly_absenteeism_detail.label_absent_code') }}</label>
                                         <select class="form-control select2" id="absent_code" name="absent_code"></select>
                                     </div>
-                                    <input type="hidden" class="form-control" id="letter_type_detail"
-                                        name="letter_type_detail">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label
-                                        for="description">{{ __('tm_monthly_absenteeism_detail.label_description') }}</label>
-                                    <input type="text" class="form-control" id="description"
-                                        name="description">
+                                    <label for="description">{{ __('tm_monthly_absenteeism_detail.label_description') }}</label>
+                                    <input type="text" class="form-control" id="description" name="description"
+                                        placeholder={{ __('tm_monthly_absenteeism_detail.label_description') }} disabled>
                                 </div>
                             </div>
                         </div>
@@ -264,14 +262,15 @@
                                 <div class="form-group">
                                     <label
                                         for="header_name">{{ __('tm_monthly_absenteeism_detail.label_header_name') }}</label>
-                                    <input type="text" class="form-control" id="header_name"
-                                        name="header_name">
+                                    <input type="text" class="form-control" id="header_name" name="header_name" 
+                                        placeholder={{ __('tm_monthly_absenteeism_detail.label_header_name') }} readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('tm_monthly_absenteeism_detail.btn_save') }}</button>
+                    <button type="button" id="btn-save-employment-data" class="btn btn-primary w-25"><i 
+                            class="fa fa-floppy-o"></i> {{ __('tm_monthly_absenteeism_detail.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('tm_monthly_absenteeism_detail.btn_cancel') }}</button>
                 </div>
@@ -301,6 +300,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -310,89 +310,6 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        loadDataAbsentCode();
-        load_data_absent_code();
-
-        // loadDataFirstLastAllLocation();
-
-        $('#absent_code_table thead tr').clone(true).appendTo('#absent_code_table thead');
-        $('#absent_code_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
-            var title = $(this).text();
-            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
-    
-            $('input', this).on('keyup change', function () {
-                if (table.column(i + 1).search() !== this.value) {
-                    table
-                        .column(i + 1)
-                        .search(this.value)
-                        .draw();
-                }
-            } );
-        });
-
-        var table = $('#absent_code_table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: "{{ url('time_management/monthly_absenteeism_detail/table') }}",
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
-                },
-                {data: 'absentCode', name: 'absentCode'},
-                {data: 'description', name: 'description'},
-                {data: 'leave', name: 'leave'}
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }
-        });
-
-        function load_data_absent_code() {
-            table = $('#absent_code_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: "{{ url('time_management/monthly_absenteeism_detail/table') }}",
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                        }
-                    },
-                    {data: 'absentCode', name: 'absentCode'},
-                    {data: 'description', name: 'description'},
-                    {data: 'leave', name: 'leave'}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
-        }
-
     $(function () {
         initDatePicker();
     });
@@ -430,6 +347,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var table = null;
+        var arrayabsentCode = [];
+
         $.ajax({
             url: "{{ url('personel/report/level/check') }}",
             type: "GET",
@@ -455,6 +375,53 @@
                 $('#message-notification-error').html(response);
             }
         });
+
+        load_table_monthly_absenteeism_detail();
+
+        function load_table_monthly_absenteeism_detail() {
+            table = $('#monthly_absenteeism_detail_table').DataTable( {
+                processing: true,
+                data: arrayabsentCode,
+
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [
+                    [1, "asc"]
+                ],
+                columns: [{
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'no',
+                        name: 'no',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {   
+                        data: 'absentCode',
+                        name: 'absentCode'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {   
+                        data: 'headerName',
+                        name: 'headerName'
+                    }],
+                    select: {
+                        style: 'multi',
+                        selector: 'td:first-child'
+                    }
+            });
+        }
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -485,6 +452,39 @@
         //     '</div>';
         //     $('.select2-search').append(html);
         // });
+
+        $('#modal_add_absent_code').on('show.bs.modal', function () {
+            if ($('#change_header').is(':checked')) {
+                // console.log($('#change_header').val());
+                $('#header_name').prop('readonly', false);
+            }
+
+            else {
+                $('#header_name').prop('readonly', true);
+            }
+        })
+
+
+        function htmlDecode(value) {
+    	    return $("<textarea/>").html(value).text();
+	    }
+
+        $('#absent_code').on("select2:select", function (e) {
+            var data = $('#absent_code').select2('data');
+            $('#description').val(htmlDecode(data[0].title));
+            // console.log(data[0].title);
+            $.ajax({
+                url: "{{ url('/time_management/absent_code/detail') }}",
+                type: "GET",
+                data: {
+                    'absentCode': data[0].id
+                },
+            })
+        });
+
+        $('#absent_code').on("select2:unselecting", function (e) {
+            $('#description').val('');
+        });
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -1115,8 +1115,9 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.absentCode,
-                                    id: item.absentType,
-                                    data: item
+                                    id: item.absentCode,
+                                    data: item,
+                                    title : item.description
                                 }
                             })
                         };
@@ -1135,37 +1136,69 @@
             $("#monthly_absenteeism_detail_form").submit();
         });
 
+        $("#btn-remove-data").on('click', function() {
+            var data = table.rows('.selected').data().toArray();
+        // console.log(data.length);
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayabsentCode.findIndex(x => x.absentCode == data[i].absentCode);
+                    arrayabsentCode.splice(index, 1);
+                }
+                $('#monthly_absenteeism_detail_table').DataTable().destroy();
+                load_table_monthly_absenteeism_detail();
+                //console.log(arrayfieldName);
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        // var no = arrayabsentCode.length+1;
+
+        $("#btn-save-employment-data").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            var arraypush = [];
+            arrayabsentCode.push({
+                "no": "",
+                "absentCode": $("#absent_code").val(),
+                "description": $("#description").val(),
+                "headerName": $("#header_name").val()
+            });
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("tm_monthly_absenteeism_detail.btn_save") }}'
+            );
+            $('#modal_add_absent_code').modal('hide');
+            
+            $('#monthly_absenteeism_detail_table').DataTable().destroy();
+            load_table_monthly_absenteeism_detail();
+            //$("#field_name_form").submit();
+        });
+
         if ($("#monthly_absenteeism_detail_form").length > 0) {
             $("#monthly_absenteeism_detail_form").validate({
-                rules: {
-                    employee_no_from: {
-                        required: true,
-                    }, 
-                    employee_no_to: {
-                        required: true,
-                    },
-                    absent_month_from: {
-                        required: true,
-                    }, 
-                    absent_month_to: {
-                        required: true,
-                    },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
                 },
-                messages: {
-                    employee_no_from: {
-                        required: "{{ __('tm_monthly_leave_report.employee_no_from_required') }}",
-                    },
-                    employee_no_to: {
-                        required: "{{ __('tm_monthly_leave_report.employee_no_to_required') }}",
-                    },
-                    absent_month_from: {
-                        required: "{{ __('tm_monthly_leave_report.absent_month_from_required') }}",
-                    },
-                    absent_month_to: {
-                        required: "{{ __('tm_monthly_leave_report.absent_month_to_required') }}",
-                    },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
                 },
-                submitHandler: function (form) {
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+
+                Handler: function (form) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1179,6 +1212,11 @@
                         type: "POST",
                         data: $('#monthly_absenteeism_detail_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_print") }}'
+                            );
+
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

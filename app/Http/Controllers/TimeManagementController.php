@@ -74,6 +74,11 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_work_pattern');
     }
 
+    public function pageAbsentCode()
+    {
+        return view ('time_management.tm_absent_code');
+    }
+
     public function pageUnpaidLeaveReport()
     {
         return view ('time_management.tm_unpaid_leave_report');
@@ -144,7 +149,7 @@ class TimeManagementController extends Controller
         }
     }
     
-    public function tableMonthlyAbsenteeismDetail()
+    public function tableAbsentCodeTM()
     {
         try {
             $client = new Client([
@@ -152,12 +157,11 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployee',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
+                        'recordStatus' => 'A'
                     ]
                 )]
             );
@@ -571,6 +575,65 @@ class TimeManagementController extends Controller
 
         return view('time_management.tm_work_pattern_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
+
+    public function dataDetailAbsentCodeTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'absentCode' => $request->absentCode,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return response()->json($data);
+    }
+
+    public function dataDetailDataAbsentCodeTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'absentCode' => $request->absentCode,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('time_management.tm_absent_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
 
     public function printUnpaidLeaveReport(Request $request)
     {
@@ -1046,6 +1109,90 @@ class TimeManagementController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesAbsentCodeTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->check_work_on_holiday);
+
+            $param = [
+                'recordStatus' => $request->record_status,
+                'companyCode' => Session::get('companyCode'),
+                'absentCode' => $request->absent_code,
+                'absentType' => $request->category,
+                'description' => $request->description,
+                'deductLeave' => $request->deduct_leave,
+                'mustWoman' => isset($request->check_must_woman) ? (bool) $request->check_must_woman : false,
+                'deductSalary' => isset($request->check_deduct_salary) ? (bool) $request->check_deduct_salary : false,
+                'deductAllowance' => isset($request->check_deduct_allowance) ? (bool) $request->check_deduct_allowance : false,
+                'getCompensationLeave' => isset($request->check_get_compensation_leave) ? (bool) $request->check_get_compensation_leave : false,
+                'flagDisplayESS' => isset($request->check_display_absent_code) ? (bool) $request->check_display_absent_code : false,
+                'flagAttachment' => isset($request->check_need_attachment) ? (bool) $request->check_need_attachment : false,
+                'flagReqDay' => isset($request->check_tolerance_request) ? (bool) $request->check_tolerance_request : false,
+                'reqBackDay' => (int) $request->back_date,
+                'reqAdvanceDay' => (int) $request->max_per_request,
+                'timesAllowed' => (int) $request->times_allowed,
+                'flagWarning' => isset($request->check_warning) ? (bool) $request->check_warning : false,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),               
+//   "payroll1": true,
+//   "payroll2": true,
+//   "payroll3": true,
+//   "payroll4": true,
+//   "payroll5": true,
+//   "payroll6": true,
+//   "payroll7": true,
+//   "payroll8": true,
+//   "payroll9": true,
+//   "payroll10": true,
+//   "payroll11": true,
+//   "payroll12": true,
+//   "payroll13": true,
+//   "payroll14": true,
+//   "payroll15": true,
+//   "payroll16": true,
+//   "payroll17": true,
+//   "payroll18": true,
+//   "payroll19": true,
+//   "payroll20": true,
+//   "payroll21": true,
+//   "payroll22": true,
+//   "payroll23": true,
+//   "payroll24": true,
+//   "payroll25": true,
+            ];
+
+            for($i=0; $i<25; $i++){
+                $param['payroll'. ($i+1)] = isset($request->{'check_payroll' . ($i+1)}) ? (bool) $request->{'check_payroll' . ($i+1)} : false;
+            }
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/tmabsentcode',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/tmabsentcode',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkAppTM(Request $request)
     {
         try {
@@ -1161,6 +1308,41 @@ class TimeManagementController extends Controller
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
                         "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+    
+    public function statusAbsentCodeTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->func);
+            // var_dump($request->patternCode);
+            // var_dump($request->description);
+            // var_dump($request->holidayFlag);
+            // var_dump((int)$request->noOfDay);
+
+            $response = $client->put(env('API_URL') . '/tmabsentcode',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'absentCode' => $request->absentCode,
+                        'description' => $request->description,
+                        'absentType' => $request->absentType
                     ]
                 )]
             );
