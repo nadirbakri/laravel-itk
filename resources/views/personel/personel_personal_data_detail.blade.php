@@ -96,7 +96,7 @@
                     <div class="col-2 subdiv-profile-image">
                         <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
                             alt="Profile"> -->
-                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo">
+                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
                         <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                             {{ __('personel_personal_data.btn_change_picture') }}
                             <input type="file" class="form-control" id="photo_profile" name="photo_profile" hidden>
@@ -243,7 +243,7 @@
                                         <input type="text" class="form-control" id="birth_date_info"
                                             name="birth_date_info"
                                             placeholder="{{ __('personel_personal_data.label_birth_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="birth_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -265,8 +265,6 @@
                                     <label
                                         for="blood_type_info">{{ __('personel_personal_data.label_blood_type') }}</label>
                                     <select class="form-control" id="blood_type_info" name="blood_type_info">
-                                        <option value="">{{ __('personel_personal_data.label_blood_type') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -277,8 +275,6 @@
                                     <label
                                         for="marital_status_info">{{ __('personel_personal_data.label_marital_status') }}</label>
                                     <select class="form-control" id="marital_status_info" name="marital_status_info">
-                                        <option value="">{{ __('personel_personal_data.label_marital_status') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -286,8 +282,6 @@
                                 <div class="form-group">
                                     <label for="religion_info">{{ __('personel_personal_data.label_religion') }}</label>
                                     <select class="form-control" id="religion_info" name="religion_info">
-                                        <option value="">{{ __('personel_personal_data.label_religion') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -298,8 +292,6 @@
                                     <label
                                         for="nationality_info">{{ __('personel_personal_data.label_nationality') }}</label>
                                     <select class="form-control" id="nationality_info" name="nationality_info">
-                                        <option value="">{{ __('personel_personal_data.label_nationality') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -329,7 +321,7 @@
                                         <input type="text" class="form-control" id="passport_date_info"
                                             name="passport_date_info"
                                             placeholder="{{ __('personel_personal_data.label_passport_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="passport_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -354,7 +346,7 @@
                                         <input type="text" class="form-control" id="tax_registered_date_info"
                                             name="tax_registered_date_info"
                                             placeholder="{{ __('personel_personal_data.label_tax_registered_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="tax_registered_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -378,7 +370,7 @@
                                         <input type="text" class="form-control" id="tax_expiry_date_info"
                                             name="tax_expiry_date_info"
                                             placeholder="{{ __('personel_personal_data.label_tax_expiry_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="tax_expiry_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -392,9 +384,6 @@
                                         for="driving_license_car_type_info">{{ __('personel_personal_data.label_driving_license_car_type') }}</label>
                                     <select class="form-control" id="driving_license_car_type_info"
                                         name="driving_license_car_type_info">
-                                        <option value="">
-                                            {{ __('personel_personal_data.label_driving_license_car_type') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -417,7 +406,7 @@
                                         <input type="text" class="form-control" id="driving_license_car_date_info"
                                             name="driving_license_car_date_info"
                                             placeholder="{{ __('personel_personal_data.label_driving_license_car_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="driving_license_car_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -443,7 +432,7 @@
                                             id="driving_license_car_expiry_date_info"
                                             name="driving_license_car_expiry_date_info"
                                             placeholder="{{ __('personel_personal_data.label_driving_license_car_expiry_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="driving_license_car_expiry_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -469,7 +458,7 @@
                                             id="driving_license_motorcycle_date_info"
                                             name="driving_license_motorcycle_date_info"
                                             placeholder="{{ __('personel_personal_data.label_driving_license_motorcycle_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="driving_license_motorcycle_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -495,7 +484,7 @@
                                             id="driving_license_motorcycle_expiry_date_info"
                                             name="driving_license_motorcycle_expiry_date_info"
                                             placeholder="{{ __('personel_personal_data.label_driving_license_motorcycle_expiry_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="driving_license_motorcycle_expiry_date_info_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -897,9 +886,6 @@
                                         for="employment_status_employment">{{ __('personel_personal_data.label_employment_status') }}</label>
                                     <select class="form-control" id="employment_status_employment"
                                         name="employment_status_employment">
-                                        <option value="">
-                                            {{ __('personel_personal_data.label_employment_status') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -909,8 +895,6 @@
                                         for="employment_type_employment">{{ __('personel_personal_data.label_employment_type') }}</label>
                                     <select class="form-control" id="employment_type_employment"
                                         name="employment_type_employment">
-                                        <option value="">{{ __('personel_personal_data.label_employment_type') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -924,7 +908,7 @@
                                         <input type="text" class="form-control" id="origin_join_date_employment"
                                             name="origin_join_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_origin_join_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="origin_join_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -941,7 +925,7 @@
                                         <input type="text" class="form-control" id="joining_date_employment"
                                             name="joining_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_joining_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="joining_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -955,7 +939,7 @@
                                         <input type="text" class="form-control" id="probation_end_date_employment"
                                             name="probation_end_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_probation_end_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="probation_end_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -972,7 +956,7 @@
                                         <input type="text" class="form-control" id="contract_start_date_employment"
                                             name="contract_start_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_contract_start_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="contract_start_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -987,7 +971,7 @@
                                         <input type="text" class="form-control" id="contract_end_date_employment"
                                             name="contract_end_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_contract_end_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="contract_end_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1003,7 +987,7 @@
                                         <input type="text" class="form-control" id="termination_date_employment"
                                             name="termination_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_termination_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="termination_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1017,7 +1001,7 @@
                                         <input type="text" class="form-control" id="effective_terminated_employment"
                                             name="effective_terminated_employment"
                                             placeholder="{{ __('personel_personal_data.label_effective_terminated') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="effective_terminated_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1031,9 +1015,6 @@
                                         for="termination_code_employment">{{ __('personel_personal_data.label_termination_code') }}</label>
                                     <select class="form-control" id="termination_code_employment"
                                         name="termination_code_employment">
-                                        <option value="">
-                                            {{ __('personel_personal_data.label_termination_code') }}
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1043,7 +1024,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
                                             id="special_reason_resign_employment"
-                                            name="special_reason_resign_employment">
+                                            name="special_reason_resign_employment" value="true">
                                         <label class="form-check-label"
                                             for="special_reason_resign_employment">{{ __('personel_personal_data.label_special_reason_resign') }}</label>
                                     </div>
@@ -1067,7 +1048,7 @@
                                     <label for="expatriat_employment">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="expatriat_employment"
-                                            name="expatriat_employment">
+                                            name="expatriat_employment" value="true">
                                         <label class="form-check-label"
                                             for="expatriat_employment">{{ __('personel_personal_data.label_expatriat') }}</label>
                                     </div>
@@ -1096,7 +1077,7 @@
                                         <input type="text" class="form-control" id="start_date_employment"
                                             name="start_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_start_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="start_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1111,7 +1092,7 @@
                                         <input type="text" class="form-control" id="end_date_employment"
                                             name="end_date_employment"
                                             placeholder="{{ __('personel_personal_data.label_end_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="end_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1124,7 +1105,7 @@
                                     <label for="commisioner_employment">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="commisioner_employment"
-                                            name="commisioner_employment">
+                                            name="commisioner_employment" value="true">
                                         <label class="form-check-label"
                                             for="commisioner_employment">{{ __('personel_personal_data.label_commisioner') }}</label>
                                     </div>
@@ -1187,9 +1168,6 @@
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="absenteeism_type_absenteeism"
                                                     name="absenteeism_type_absenteeism">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_absenteeism_type') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1209,7 +1187,7 @@
                                                 <label
                                                     for="starting_day_absenteeism">{{ __('personel_personal_data.label_starting_day') }}</label>
                                                 <span class="required">*</span>
-                                                <input type="number" class="form-control" id="starting_day_absenteeism"
+                                                <input type="number" min=1 class="form-control" id="starting_day_absenteeism"
                                                     name="starting_day_absenteeism"
                                                     placeholder="{{ __('personel_personal_data.label_starting_day') }}">
                                             </div>
@@ -1222,7 +1200,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="absent_not_required_absenteeism"
-                                                        name="absent_not_required_absenteeism">
+                                                        name="absent_not_required_absenteeism" value="true">
                                                     <label class="form-check-label"
                                                         for="absent_not_required_absenteeism">{{ __('personel_personal_data.label_absent_not_required') }}</label>
                                                 </div>
@@ -1266,9 +1244,6 @@
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="tax_status_payroll"
                                                     name="tax_status_payroll">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_tax_status') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1279,9 +1254,6 @@
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="tax_status_next_year_payroll"
                                                     name="tax_status_next_year_payroll">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_tax_status_next_year') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1305,7 +1277,7 @@
                                                         id="tax_registered_date_payroll"
                                                         name="tax_registered_date_payroll"
                                                         placeholder="{{ __('personel_personal_data.label_tax_registered_date') }}">
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group-prepend" id="tax_registered_date_payroll_calendar">
                                                         <span class="input-group-text"><span
                                                                 class="fa fa-calendar"></span></span>
                                                     </div>
@@ -1331,7 +1303,7 @@
                                                     <input type="text" class="form-control" id="tax_expiry_date_payroll"
                                                         name="tax_expiry_date_payroll"
                                                         placeholder="{{ __('personel_personal_data.label_tax_expiry_date') }}">
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group-prepend" id="tax_expiry_date_payroll_calendar">
                                                         <span class="input-group-text"><span
                                                                 class="fa fa-calendar"></span></span>
                                                     </div>
@@ -1347,9 +1319,6 @@
                                                 <span class="required">*</span>
                                                 <select class="form-control" id="tax_calculation_method_payroll"
                                                     name="tax_calculation_method_payroll">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_tax_calculation_method') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1379,7 +1348,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="exclude_payroll_process_payroll"
-                                                        name="exclude_payroll_process_payroll">
+                                                        name="exclude_payroll_process_payroll" value="true">
                                                     <label class="form-check-label"
                                                         for="exclude_payroll_process_payroll">{{ __('personel_personal_data.label_exclude_payroll_process') }}</label>
                                                 </div>
@@ -1432,7 +1401,7 @@
                                                 <label for="join_tenaga_kerja">&nbsp;</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
-                                                        id="join_tenaga_kerja" name="join_tenaga_kerja">
+                                                        id="join_tenaga_kerja" name="join_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="join_tenaga_kerja">{{ __('personel_personal_data.label_join') }}</label>
                                                 </div>
@@ -1448,7 +1417,7 @@
                                                     <input type="text" class="form-control"
                                                         id="joining_date_tenaga_kerja" name="joining_date_tenaga_kerja"
                                                         placeholder="{{ __('personel_personal_data.label_joining_date') }}">
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group-prepend" id="joining_date_tenaga_kerja_calendar">
                                                         <span class="input-group-text"><span
                                                                 class="fa fa-calendar"></span></span>
                                                     </div>
@@ -1464,7 +1433,7 @@
                                                         id="payment_period_start_date_tenaga_kerja"
                                                         name="payment_period_start_date_tenaga_kerja"
                                                         placeholder="{{ __('personel_personal_data.label_payment_period_start_date') }}">
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group-prepend" id="payment_period_start_date_tenaga_kerja_calendar">
                                                         <span class="input-group-text"><span
                                                                 class="fa fa-calendar"></span></span>
                                                     </div>
@@ -1479,7 +1448,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="non_accidental_death_insurance_tenaga_kerja"
-                                                        name="non_accidental_death_insurance_tenaga_kerja">
+                                                        name="non_accidental_death_insurance_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="non_accidental_death_insurance_tenaga_kerja">{{ __('personel_personal_data.label_non_accidental_death_insurance') }}</label>
                                                 </div>
@@ -1491,7 +1460,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="pension_by_employer_tenaga_kerja"
-                                                        name="pension_by_employer_tenaga_kerja">
+                                                        name="pension_by_employer_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="pension_by_employer_tenaga_kerja">{{ __('personel_personal_data.label_pension_by_employer') }}</label>
                                                 </div>
@@ -1505,7 +1474,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="work_related_accident_insurance_tenaga_kerja"
-                                                        name="work_related_accident_insurance_tenaga_kerja">
+                                                        name="work_related_accident_insurance_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="work_related_accident_insurance_tenaga_kerja">{{ __('personel_personal_data.label_work_related_accident_insurance') }}</label>
                                                 </div>
@@ -1517,7 +1486,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="pension_by_employee_tenaga_kerja"
-                                                        name="pension_by_employee_tenaga_kerja">
+                                                        name="pension_by_employee_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="pension_by_employee_tenaga_kerja">{{ __('personel_personal_data.label_pension_by_employee') }}</label>
                                                 </div>
@@ -1532,7 +1501,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="work_related_accident_insurance_two_tenaga_kerja"
-                                                        name="work_related_accident_insurance_two_tenaga_kerja">
+                                                        name="work_related_accident_insurance_two_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="work_related_accident_insurance_two_tenaga_kerja">{{ __('personel_personal_data.label_work_related_accident_insurance_two') }}</label>
                                                 </div>
@@ -1544,7 +1513,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="pension_insurance_tenaga_kerja"
-                                                        name="pension_insurance_tenaga_kerja">
+                                                        name="pension_insurance_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="pension_insurance_tenaga_kerja">{{ __('personel_personal_data.label_pension_insurance') }}</label>
                                                 </div>
@@ -1559,7 +1528,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="work_related_accident_insurance_three_tenaga_kerja"
-                                                        name="work_related_accident_insurance_three_tenaga_kerja">
+                                                        name="work_related_accident_insurance_three_tenaga_kerja" value="true">
                                                     <label class="form-check-label"
                                                         for="work_related_accident_insurance_three_tenaga_kerja">{{ __('personel_personal_data.label_work_related_accident_insurance_three') }}</label>
                                                 </div>
@@ -1587,7 +1556,7 @@
                                                 <label for="join_kesehatan">&nbsp;</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="join_kesehatan"
-                                                        name="join_kesehatan">
+                                                        name="join_kesehatan" value="true">
                                                     <label class="form-check-label"
                                                         for="join_kesehatan">{{ __('personel_personal_data.label_join') }}</label>
                                                 </div>
@@ -1603,7 +1572,7 @@
                                                     <input type="text" class="form-control" id="joining_date_kesehatan"
                                                         name="joining_date_kesehatan"
                                                         placeholder="{{ __('personel_personal_data.label_joining_date') }}">
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group-prepend" id="joining_date_kesehatan_calendar">
                                                         <span class="input-group-text"><span
                                                                 class="fa fa-calendar"></span></span>
                                                     </div>
@@ -1619,7 +1588,7 @@
                                                         id="payment_period_start_date_kesehatan"
                                                         name="payment_period_start_date_kesehatan"
                                                         placeholder="{{ __('personel_personal_data.label_payment_period_start_date') }}">
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group-prepend" id="payment_period_start_date_kesehatan_calendar">
                                                         <span class="input-group-text"><span
                                                                 class="fa fa-calendar"></span></span>
                                                     </div>
@@ -1686,9 +1655,6 @@
                                                     for="currency_primary">{{ __('personel_personal_data.label_currency') }}</label>
                                                 <select class="form-control" id="currency_primary"
                                                     name="currency_primary">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_currency') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1756,9 +1722,6 @@
                                                     for="currency_optional_one">{{ __('personel_personal_data.label_currency') }}</label>
                                                 <select class="form-control" id="currency_optional_one"
                                                     name="currency_optional_one">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_currency') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1827,9 +1790,6 @@
                                                     for="currency_optional_two">{{ __('personel_personal_data.label_currency') }}</label>
                                                 <select class="form-control" id="currency_optional_two"
                                                     name="currency_optional_two">
-                                                    <option value="">
-                                                        {{ __('personel_personal_data.label_currency') }}
-                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1932,7 +1892,7 @@
                                         <input type="text" class="form-control" id="insurance_date_insurance"
                                             name="insurance_date_insurance"
                                             placeholder="{{ __('personel_personal_data.label_insurance_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="insurance_date_insurance_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -2022,7 +1982,7 @@
                                         <input type="text" class="form-control" id="birth_date_family_dependent_data"
                                             name="birth_date_family_dependent_data"
                                             placeholder="{{ __('personel_personal_data.label_birth_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="birth_date_family_dependent_data_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -2100,7 +2060,7 @@
                                     <label for="include_tax_family_dependent_data">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
-                                            id="include_tax_family_dependent_data" name="include_tax_family_dependent_data">
+                                            id="include_tax_family_dependent_data" name="include_tax_family_dependent_data" value="true">
                                         <label class="form-check-label"
                                             for="include_tax_family_dependent_data">{{ __('personel_personal_data.label_include_tax') }}</label>
                                     </div>
@@ -2174,7 +2134,7 @@
                                         <input type="text" class="form-control" id="start_date_employment_data"
                                             name="start_date_employment_data"
                                             placeholder="{{ __('personel_personal_data.label_start_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="start_date_employment_data_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -2188,7 +2148,7 @@
                                         <input type="text" class="form-control" id="end_date_employment_data"
                                             name="end_date_employment_data"
                                             placeholder="{{ __('personel_personal_data.label_end_date') }}">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" id="end_date_employment_data_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -2278,11 +2238,13 @@
 
 <script type="text/javascript">
     $(function () {
-        initDatePicker();
+        pickerStartDateEmploymentData();
+        pickerEndDateEmploymentData();
+        pickerBirthDateFamilyDependentData();
     });
 
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
+    function pickerStartDateEmploymentData() {
+        $('#start_date_employment_data').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -2292,7 +2254,43 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#start_date_employment_data_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+    function pickerEndDateEmploymentData() {
+        $('#end_date_employment_data').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#end_date_employment_data_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+    function pickerBirthDateFamilyDependentData() {
+        $('#birth_date_family_dependent_data').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#birth_date_family_dependent_data_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2313,7 +2311,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#birth_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2329,7 +2327,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#passport_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2345,7 +2343,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#tax_registered_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2361,7 +2359,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#tax_registered_date_payroll_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2377,7 +2375,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#tax_expiry_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2393,7 +2391,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#tax_expiry_date_payroll_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2409,7 +2407,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#driving_license_car_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2425,7 +2423,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#driving_license_car_expiry_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2441,7 +2439,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#driving_license_motorcycle_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2457,7 +2455,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#driving_license_motorcycle_expiry_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2473,7 +2471,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#origin_join_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2489,7 +2487,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#joining_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2505,7 +2503,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#joining_date_tenaga_kerja_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2521,7 +2519,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#joining_date_kesehatan_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2537,7 +2535,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#probation_end_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2553,7 +2551,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#contract_start_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2569,7 +2567,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#contract_end_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2585,7 +2583,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#termination_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2601,7 +2599,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#effective_terminated_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2617,7 +2615,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#start_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2633,7 +2631,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#end_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2649,7 +2647,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#payment_period_start_date_tenaga_kerja_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2665,7 +2663,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#payment_period_start_date_kesehatan_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2681,7 +2679,7 @@
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#insurance_date_insurance_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -2730,7 +2728,6 @@
             $('#fullname_info').val("");
             $('#title_info').val("");
             $('#birth_place_info').val(null).trigger('change');
-            $('#birth_date_info').val("");
             $('#gender_info').val(null).trigger('change');
             $('#blood_type_info').val(null).trigger('change');
             $('#marital_status_info').val(null).trigger('change');
@@ -2738,20 +2735,13 @@
             $('#nationality_info').val(null).trigger('change');
             $('#id_no_info').val("");
             $('#passport_no_info').val("");
-            $('#passport_date_info').val("");
             $('#tax_registered_no_info').val("");
-            $('#tax_registered_date_info').val("");
             $('#tax_office_info').val("");
-            $('#tax_expiry_date_info').val("");
             $('#driving_license_car_type_info').val(null).trigger('change');
             $('#driving_license_car_no_info').val("");
-            $('#driving_license_car_date_info').val("");
             $('#driving_license_car_registration_place_info').val(null).trigger('change');
-            $('#driving_license_car_expiry_date_info').val("");
             $('#driving_license_motorcycle_no_info').val("");
-            $('#driving_license_motorcycle_date_info').val("");
             $('#driving_license_motorcycle_registration_place_info').val("");
-            $('#driving_license_motorcycle_expiry_date_info').val("");
             $('#mother_name_info').val("");
 
             //Tab Address
@@ -2801,21 +2791,12 @@
             //Tab Employment
             $('#employment_status_employment').val(null).trigger('change');
             $('#employment_type_employment').val(null).trigger('change');
-            $('#origin_join_date_employment').val("");
-            $('#joining_date_employment').val("");
-            $('#probation_end_date_employment').val("");
-            $('#contract_start_date_employment').val("");
-            $('#contract_end_date_employment').val("");
-            $('#termination_date_employment').val("");
-            $('#effective_terminated_employment').val("");
             $('#termination_code_employment').val(null).trigger('change');
-            $('#special_reason_resign_employment').val("");
+            $('#special_reason_resign_employment').prop('checked', false);
             $('#termination_remarks_employment').val("");
-            $('#expatriat_employment').val("");
+            $('#expatriat_employment').prop('checked', false);
             $('#license_no_employment').val("");
-            $('#start_date_employment').val("");
-            $('#end_date_employment').val("");
-            $('#commisioner_employment').val("");
+            $('#commisioner_employment').prop('checked', false);
             $('#fringe_benefit_data_table').DataTable().destroy();
             load_table_fringe_benefit();
 
@@ -2823,37 +2804,31 @@
             $('#absenteeism_type_absenteeism').val(null).trigger('change');
             $('#work_pattern_code_absenteeism').val(null).trigger('change');
             $('#starting_day_absenteeism').val("");
-            $('#absent_not_required_absenteeism').val("");
-            $('#finger_not_required_absenteeism').val("");
+            $('#absent_not_required_absenteeism').prop('checked', false);
+            $('#finger_not_required_absenteeism').prop('checked', false);
 
             $('#tax_status_payroll').val(null).trigger('change');
             $('#tax_status_next_year_payroll').val(null).trigger('change');
             $('#tax_registered_no_payroll').val("");
-            $('#tax_registered_date_payroll').val("");
             $('#tax_office_payroll').val(null).trigger('change');
-            $('#tax_expiry_date_payroll').val("");
             $('#tax_calculation_method_payroll').val(null).trigger('change');
             $('#group_npwp_payroll').val(null).trigger('change');
             $('#group_bpjs_payroll').val(null).trigger('change');
-            $('#exclude_payroll_process_payroll').val("");
+            $('#exclude_payroll_process_payroll').prop('checked', false);
             $('#group_authorize_payroll').val(null).trigger('change');
 
             $('#bpjs_number_tenaga_kerja').val("");
-            $('#join_tenaga_kerja').val("");
-            $('#joining_date_tenaga_kerja').val("");
-            $('#payment_period_start_date_tenaga_kerja').val("");
-            $('#non_accidental_death_insurance_tenaga_kerja').val("");
-            $('#pension_by_employer_tenaga_kerja').val("");
-            $('#work_related_accident_insurance_tenaga_kerja').val("");
-            $('#pension_by_employee_tenaga_kerja').val("");
-            $('#work_related_accident_insurance_two_tenaga_kerja').val("");
-            $('#pension_insurance_tenaga_kerja').val("");
-            $('#work_related_accident_insurance_three_tenaga_kerja').val("");
+            $('#join_tenaga_kerja').prop('checked', false);
+            $('#non_accidental_death_insurance_tenaga_kerja').prop('checked', false);
+            $('#pension_by_employer_tenaga_kerja').prop('checked', false);
+            $('#work_related_accident_insurance_tenaga_kerja').prop('checked', false);
+            $('#pension_by_employee_tenaga_kerja').prop('checked', false);
+            $('#work_related_accident_insurance_two_tenaga_kerja').prop('checked', false);
+            $('#pension_insurance_tenaga_kerja').prop('checked', false);
+            $('#work_related_accident_insurance_three_tenaga_kerja').prop('checked', false);
 
             $('#bpjs_number_kesehatan').val("");
-            $('#join_kesehatan').val("");
-            $('#joining_date_kesehatan').val("");
-            $('#payment_period_start_date_kesehatan').val("");
+            $('#join_kesehatan').prop('checked', false);
 
             $('#company_bank_code_primary').val(null).trigger('change');
             $('#employee_bank_code_primary').val(null).trigger('change');
@@ -2883,13 +2858,13 @@
             //Tab Insurance
             $('#insurance_code_insurance').val(null).trigger('change');
             $('#insurance_class_insurance').val(null).trigger('change');
-            $('#insurance_date_insurance').val("");
             $('#insurance_policy_no_insurance').val("");
             $('#remarks_insurance').val("");
             
         }
         else if (func == 'edit') {
-            // console.log(typeof arrData[0].peMasterFamily);
+            // console.log(arrData2[0].maritalStatus);
+            // console.log(arrData2[0].peMasterInfo.bloodType);
 
             //Profile
             // console.log(arrData[0].photo);
@@ -2907,19 +2882,19 @@
             $('#employee_no_info').prop('disabled', true);
             $('#fullname_info').val(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#title_info').val(((typeof arrData2[0].title !== 'undefined') ? arrData2[0].title : ''));
-            // console.log(arrData2[0].birthPlace);
+            
             $.ajax({
                 type: 'GET',
-                url: '/birth_place/personal_data/api',
+                url: '/city/personal_data/api',
                 data: {
                     // 'employeeNo' : ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''),
-                    'cityCode': ((typeof arrData2[0].birthPlace !== 'undefined') ? arrData2[0].birthPlace : '')
+                    'birthPlace': ((typeof arrData2[0].birthPlace !== 'undefined') ? arrData2[0].birthPlace : '')
                 }
             }).then(function (data) {
                 var option = $('<option/>', {
-                    id: data.cityCode,
-                    title: data.cityName,
-                    text: data.cityName
+                    id: data.data_birth_place.cityCode,
+                    title: data.data_birth_place.cityName,
+                    text: data.data_birth_place.cityName
                 });
                 // console.log(data);
                 $("#birth_place_info").append(option).attr('data-alias', 'yourvalue').trigger(
@@ -2927,9 +2902,9 @@
                 $("#birth_place_info").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.cityCode,
-                        text: data.cityName,
-                        data: data
+                        id: data.data_birth_place.cityCode,
+                        text: data.data_birth_place.cityName,
+                        data: data.data_birth_place
                     }
                 });
             });
@@ -2940,58 +2915,253 @@
                 type: 'GET',
                 url: '/comgen/api',
                 data: {
-                    // 'employeeNo' : ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''),
-                    'comGenCode': ((typeof arrData2[0].gender !== 'undefined') ? arrData2[0].gender : '')
+                    'gender': ((typeof arrData2[0].gender !== 'undefined') ? arrData2[0].gender : ''),
+                    'maritalStatus': ((typeof arrData2[0].maritalStatus !== 'undefined') ? arrData2[0].maritalStatus : ''),
+                    'religionCode': ((typeof arrData2[0].religionCode !== 'undefined') ? arrData2[0].religionCode : ''),
+                    'nationality': ((typeof arrData2[0].nationalityCode !== 'undefined') ? arrData2[0].nationalityCode : ''),
+                    'employmentStatus': ((typeof arrData2[0].employmentStatus !== 'undefined') ? arrData2[0].employmentStatus : ''),
+                    'employmentType': ((typeof arrData2[0].employmentType !== 'undefined') ? arrData2[0].employmentType : ''),
+                    'terminationCode': ((typeof arrData2[0].terminationCode !== 'undefined') ? arrData2[0].terminationCode : ''),
+                    'absenteeismType': ((typeof arrData2[0].absenteeismType !== 'undefined') ? arrData2[0].absenteeismType : ''),
+                    'taxStatus': ((typeof arrData2[0].taxStatus !== 'undefined') ? arrData2[0].taxStatus : ''),
+                    'taxStatusNextYear': ((typeof arrData2[0].taxStatusNextYear !== 'undefined') ? arrData2[0].taxStatusNextYear : ''),
+                    'taxOffice': ((typeof arrData2[0].taxRegisteredPlaceRegistration !== 'undefined') ? arrData2[0].taxRegisteredPlaceRegistration : ''),
+                    'taxCalculationMethod': ((typeof arrData2[0].taxCalculationMethod !== 'undefined') ? arrData2[0].taxCalculationMethod : ''),
+                    'currencyCode1': ((typeof arrData2[0].currencyCode1 !== 'undefined') ? arrData2[0].currencyCode1 : ''),
+                    'currencyCode2': ((typeof arrData2[0].currencyCode2 !== 'undefined') ? arrData2[0].currencyCode2 : ''),
+                    'currencyCode3': ((typeof arrData2[0].currencyCode3 !== 'undefined') ? arrData2[0].currencyCode3 : ''),
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.comGenCode,
-                    title: data.value,
-                    text: data.value
+                var option_gender = $('<option/>', {
+                    id: data.data_gender.value,
+                    title: data.data_gender.value,
+                    text: data.data_gender.value
                 });
-                $("#gender_info").append(option).attr('data-alias', 'yourvalue').trigger(
+                var option_marital_status = $('<option/>', {
+                    id: data.data_marital_status.value,
+                    title: data.data_marital_status.value,
+                    text: data.data_marital_status.value
+                });
+                var option_religion = $('<option/>', {
+                    id: data.data_religion.value,
+                    title: data.data_religion.value,
+                    text: data.data_religion.value
+                });
+                var option_nationality = $('<option/>', {
+                    id: data.data_nationality.value,
+                    title: data.data_nationality.value,
+                    text: data.data_nationality.value
+                });
+                var option_employment_status = $('<option/>', {
+                    id: data.data_employment_status.value,
+                    title: data.data_employment_status.value,
+                    text: data.data_employment_status.value
+                });
+                var option_employment_type = $('<option/>', {
+                    id: data.data_employment_type.value,
+                    title: data.data_employment_type.value,
+                    text: data.data_employment_type.value
+                });
+                var option_termination_code = $('<option/>', {
+                    id: data.data_termination_code.value,
+                    title: data.data_termination_code.value,
+                    text: data.data_termination_code.value
+                });
+                var option_absenteeism_type = $('<option/>', {
+                    id: data.data_absenteeism_type.value,
+                    title: data.data_absenteeism_type.value,
+                    text: data.data_absenteeism_type.value
+                });
+                var option_tax_status = $('<option/>', {
+                    id: data.data_tax_status.value,
+                    title: data.data_tax_status.value,
+                    text: data.data_tax_status.value
+                });
+                var option_tax_status_next_year = $('<option/>', {
+                    id: data.data_tax_status_next_year.value,
+                    title: data.data_tax_status_next_year.value,
+                    text: data.data_tax_status_next_year.value
+                });
+                var option_tax_office = $('<option/>', {
+                    id: data.data_tax_office.value,
+                    title: data.data_tax_office.value,
+                    text: data.data_tax_office.value
+                });
+                var option_tax_calculation_method = $('<option/>', {
+                    id: data.data_tax_calculation_method.value,
+                    title: data.data_tax_calculation_method.value,
+                    text: data.data_tax_calculation_method.value
+                });
+                var option_currency_code_1 = $('<option/>', {
+                    id: data.data_currency_code_1.value,
+                    title: data.data_currency_code_1.value,
+                    text: data.data_currency_code_1.value
+                });
+                var option_currency_code_2 = $('<option/>', {
+                    id: data.data_currency_code_2.value,
+                    title: data.data_currency_code_2.value,
+                    text: data.data_currency_code_2.value
+                });
+                var option_currency_code_3 = $('<option/>', {
+                    id: data.data_currency_code_3.value,
+                    title: data.data_currency_code_3.value,
+                    text: data.data_currency_code_3.value
+                });
+
+                $("#gender_info").append(option_gender).attr('data-alias', 'yourvalue').trigger(
                     'change');
                 $("#gender_info").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.comGenCode,
-                        text: data.value,
-                        data: data
+                        id: data.data_gender.comGenCode,
+                        text: data.data_gender.value,
+                        data: data.data_gender
+                    }
+                });
+                $("#marital_status_info").append(option_marital_status).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#marital_status_info").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_marital_status.comGenCode,
+                        text: data.data_marital_status.value,
+                        data: data.data_marital_status
+                    }
+                });
+                $("#religion_info").append(option_religion).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#religion_info").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_religion.comGenCode,
+                        text: data.data_religion.value,
+                        data: data.data_religion
+                    }
+                });
+                $("#nationality_info").append(option_nationality).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#nationality_info").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_nationality.comGenCode,
+                        text: data.data_nationality.value,
+                        data: data.data_nationality
+                    }
+                });
+                $("#employment_status_employment").append(option_employment_status).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employment_status_employment").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_employment_status.comGenCode,
+                        text: data.data_employment_status.value,
+                        data: data.data_employment_status
+                    }
+                });
+                $("#employment_type_employment").append(option_employment_type).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employment_type_employment").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_employment_type.comGenCode,
+                        text: data.data_employment_type.value,
+                        data: data.data_employment_type
+                    }
+                });
+                $("#termination_code_employment").append(option_termination_code).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#termination_code_employment").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_termination_code.comGenCode,
+                        text: data.data_termination_code.value,
+                        data: data.data_termination_code
+                    }
+                });
+                $("#absenteeism_type_absenteeism").append(option_absenteeism_type).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#absenteeism_type_absenteeism").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_absenteeism_type.comGenCode,
+                        text: data.data_absenteeism_type.value,
+                        data: data.data_absenteeism_type
+                    }
+                });
+                $("#tax_status_payroll").append(option_tax_status).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#tax_status_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_tax_status.comGenCode,
+                        text: data.data_tax_status.value,
+                        data: data.data_tax_status
+                    }
+                });
+                $("#tax_status_next_year_payroll").append(option_tax_status_next_year).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#tax_status_next_year_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_tax_status_next_year.comGenCode,
+                        text: data.data_tax_status_next_year.value,
+                        data: data.data_tax_status_next_year
+                    }
+                });
+                $("#tax_office_payroll").append(option_tax_office).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#tax_office_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_tax_office.comGenCode,
+                        text: data.data_tax_office.value,
+                        data: data.data_tax_office
+                    }
+                });
+                $("#tax_calculation_method_payroll").append(option_tax_calculation_method).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#tax_calculation_method_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_tax_calculation_method.comGenCode,
+                        text: data.data_tax_calculation_method.value,
+                        data: data.data_tax_calculation_method
+                    }
+                });
+                $("#currency_primary").append(option_currency_code_1).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#currency_primary").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_currency_code_1.comGenCode,
+                        text: data.data_currency_code_1.value,
+                        data: data.data_currency_code_1
+                    }
+                });
+                $("#currency_optional_one").append(option_currency_code_2).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#currency_optional_one").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_currency_code_2.comGenCode,
+                        text: data.data_currency_code_2.value,
+                        data: data.data_currency_code_2
+                    }
+                });
+                $("#currency_optional_two").append(option_currency_code_3).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#currency_optional_two").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_currency_code_3.comGenCode,
+                        text: data.data_currency_code_3.value,
+                        data: data.data_currency_code_3
                     }
                 });
             });
 
-            // $.ajax({
-            //     type: 'GET',
-            //     url: '/marital_status/personal_data/api',
-            //     data: {
-            //         'maritalStatus': ((typeof arrData2[0].maritalStatus !== 'undefined') ? arrData2[0].maritalStatus : '')
-            //     }
-            // }).then(function (data) {
-            //     var option = $('<option/>', {
-            //         id: data.value,
-            //         title: data.value,
-            //         text: data.value
-            //     });
-            //     $("#marital_status_info").append(option).attr('data-alias', 'yourvalue').trigger(
-            //         'change');
-            //     $("#marital_status_info").trigger({
-            //         type: 'select2:select',
-            //         params: {
-            //             id: data.value,
-            //             text: data.value,
-            //             data: data
-            //         }
-            //     });
-            // });
-
-            $('#marital_status_info').val(null).trigger('change');
-            $('#religion_info').val(null).trigger('change');
-            $('#nationality_info').val(null).trigger('change');
             $('#tax_registered_no_info').val(((typeof arrData2[0].taxRegisteredNo !== 'undefined') ? arrData2[0].taxRegisteredNo : ''));
             $('#tax_office_info').val(((typeof arrData2[0].taxRegisteredPlaceRegistration !== 'undefined') ? arrData2[0].taxRegisteredPlaceRegistration : ''));
-            $('#driving_license_car_type_info').val(null).trigger('change');
-            $('#driving_license_car_registration_place_info').val(null).trigger('change');
             $('#driving_license_motorcycle_registration_place_info').val(null).trigger('change');
             $('#mother_name_info').val(((typeof arrData2[0].motherName !== 'undefined') ? arrData2[0].motherName : ''));
             pickerTaxRegisteredDateInfo.setDate(((typeof arrData2[0].taxRegisteredDate !== 'undefined') ? arrData2[0].taxRegisteredDate : ''));
@@ -3003,26 +3173,302 @@
                     type: 'GET',
                     url: '/comgen/api',
                     data: {
-                        'comGenCode': ((typeof arrData2[0].peMasterInfo.bloodType !== 'undefined') ? arrData2[0].peMasterInfo.bloodType : '')
+                        'bloodType': ((typeof arrData2[0].peMasterInfo.bloodType !== 'undefined') ? arrData2[0].peMasterInfo.bloodType : ''),
+                        'drivingLicenseMobilType': ((typeof arrData2[0].peMasterInfo.drivingLicenseMobilType !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilType : ''),
                     }
                 }).then(function (data) {
-                    var option = $('<option/>', {
-                        id: data.comGenCode,
-                        title: data.value,
-                        text: data.value
+                    var option_blood_type = $('<option/>', {
+                        id: data.data_blood_type.value,
+                        title: data.data_blood_type.value,
+                        text: data.data_blood_type.value
                     });
-                    // console.log(data);
-                    $("#blood_type_info").append(option).attr('data-alias', 'yourvalue').trigger(
+                    var option_driving_license_car_type = $('<option/>', {
+                        id: data.data_driving_license_car_type.value,
+                        title: data.data_driving_license_car_type.value,
+                        text: data.data_driving_license_car_type.value
+                    });
+
+                    $("#blood_type_info").append(option_blood_type).attr('data-alias', 'yourvalue').trigger(
                         'change');
                     $("#blood_type_info").trigger({
                         type: 'select2:select',
                         params: {
-                            id: data.comGenCode,
-                            text: data.value,
-                            data: data
+                            id: data.data_blood_type.comGenCode,
+                            text: data.data_blood_type.value,
+                            data: data.data_blood_type
+                        }
+                    });
+                    $("#driving_license_car_type_info").append(option_driving_license_car_type).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#driving_license_car_type_info").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_driving_license_car_type.comGenCode,
+                            text: data.data_driving_license_car_type.value,
+                            data: data.data_driving_license_car_type
                         }
                     });
                 });
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/city/personal_data/api',
+                    data: {
+                        'drivingLicenseMobilNoPlaceRegistration': ((typeof arrData2[0].peMasterInfo.drivingLicenseMobilNoPlaceRegistration !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilNoPlaceRegistration : ''),
+                        'drivingLicenseMotorNoPlaceRegistration': ((typeof arrData2[0].peMasterInfo.drivingLicenseMotorNoPlaceRegistration !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMotorNoPlaceRegistration : ''),
+                        'homeCityCode': ((typeof arrData2[0].peMasterInfo.homeCityCode !== 'undefined') ? arrData2[0].peMasterInfo.homeCityCode : ''),
+                        'otherCityCode': ((typeof arrData2[0].peMasterInfo.otherCityCode !== 'undefined') ? arrData2[0].peMasterInfo.otherCityCode : ''),
+                        'workCityCode': ((typeof arrData2[0].peMasterInfo.workCityCode !== 'undefined') ? arrData2[0].peMasterInfo.workCityCode : ''),
+                        'correspondenceCityCode': ((typeof arrData2[0].peMasterInfo.correspondenceCityCode !== 'undefined') ? arrData2[0].peMasterInfo.correspondenceCityCode : ''),
+                    }
+                }).then(function (data) {
+                    var option1 = $('<option/>', {
+                        id: data.data_driving_license_car_no_place_registration.cityCode,
+                        title: data.data_driving_license_car_no_place_registration.cityName,
+                        text: data.data_driving_license_car_no_place_registration.cityName
+                    });
+                    var option2 = $('<option/>', {
+                        id: data.data_driving_license_motorcycle_no_place_registration.cityCode,
+                        title: data.data_driving_license_motorcycle_no_place_registration.cityName,
+                        text: data.data_driving_license_motorcycle_no_place_registration.cityName
+                    });
+                    var option3 = $('<option/>', {
+                        id: data.data_home_city_code.cityCode,
+                        title: data.data_home_city_code.cityName,
+                        text: data.data_home_city_code.cityName
+                    });
+                    var option4 = $('<option/>', {
+                        id: data.data_other_city_code.cityCode,
+                        title: data.data_other_city_code.cityName,
+                        text: data.data_other_city_code.cityName
+                    });
+                    var option5 = $('<option/>', {
+                        id: data.data_work_city_code.cityCode,
+                        title: data.data_work_city_code.cityName,
+                        text: data.data_work_city_code.cityName
+                    });
+                    var option6 = $('<option/>', {
+                        id: data.data_correspondence_city_code.cityCode,
+                        title: data.data_correspondence_city_code.cityName,
+                        text: data.data_correspondence_city_code.cityName
+                    });
+
+                    // console.log(data);
+                    $("#driving_license_car_registration_place_info").append(option1).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#driving_license_car_registration_place_info").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_driving_license_car_no_place_registration.cityCode,
+                            text: data.data_driving_license_car_no_place_registration.cityName,
+                            data: data.data_driving_license_car_no_place_registration
+                        }
+                    });
+                    $("#driving_license_motorcycle_registration_place_info").append(option2).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#driving_license_motorcycle_registration_place_info").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_driving_license_motorcycle_no_place_registration.cityCode,
+                            text: data.data_driving_license_motorcycle_no_place_registration.cityName,
+                            data: data.data_driving_license_motorcycle_no_place_registration
+                        }
+                    });
+                    $("#city_select_home").append(option3).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#city_select_home").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_home_city_code.cityCode,
+                            text: data.data_home_city_code.cityName,
+                            data: data.data_home_city_code
+                        }
+                    });
+                    $("#city_select_other").append(option4).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#city_select_other").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_other_city_code.cityCode,
+                            text: data.data_other_city_code.cityName,
+                            data: data.data_other_city_code
+                        }
+                    });
+                    $("#city_select_work").append(option5).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#city_select_work").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_work_city_code.cityCode,
+                            text: data.data_work_city_code.cityName,
+                            data: data.data_work_city_code
+                        }
+                    });
+                    $("#city_select_correspondence").append(option6).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#city_select_correspondence").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_correspondence_city_code.cityCode,
+                            text: data.data_correspondence_city_code.cityName,
+                            data: data.data_correspondence_city_code
+                        }
+                    });
+                });
+
+                // console.log(arrData2[0].peMasterInfo.homeDistrictCode);
+                $.ajax({
+                    type: 'GET',
+                    url: '/zip_code/personal_data/api',
+                    data: {
+                        'homeZipCode': ((typeof arrData2[0].peMasterInfo.homeZipCode !== 'undefined') ? arrData2[0].peMasterInfo.homeZipCode : ''),
+                        'otherZipCode': ((typeof arrData2[0].peMasterInfo.otherZipCode !== 'undefined') ? arrData2[0].peMasterInfo.otherZipCode : ''),
+                        'workZipCode': ((typeof arrData2[0].peMasterInfo.workZipCode !== 'undefined') ? arrData2[0].peMasterInfo.workZipCode : ''),
+                        'correspondenceZipCode': ((typeof arrData2[0].peMasterInfo.correspondenceZipCode !== 'undefined') ? arrData2[0].peMasterInfo.correspondenceZipCode : ''),
+                        'homeDistrictCode': ((typeof arrData2[0].peMasterInfo.homeDistrictCode !== 'undefined') ? arrData2[0].peMasterInfo.homeDistrictCode : ''),
+                        'otherDistrictCode': ((typeof arrData2[0].peMasterInfo.otherDistrictCode !== 'undefined') ? arrData2[0].peMasterInfo.otherDistrictCode : ''),
+                        'homeSubDistrictCode': ((typeof arrData2[0].peMasterInfo.homeSubDistrictCode !== 'undefined') ? arrData2[0].peMasterInfo.homeSubDistrictCode : ''),
+                        'otherSubDistrictCode': ((typeof arrData2[0].peMasterInfo.otherSubDistrictCode !== 'undefined') ? arrData2[0].peMasterInfo.otherSubDistrictCode : ''),
+                    }
+                }).then(function (data) {
+                    var option1 = $('<option/>', {
+                        id: data.data_home_zip_code.zipCode,
+                        title: data.data_home_zip_code.zipCode,
+                        text: data.data_home_zip_code.zipCode
+                    });
+
+                    var option2 = $('<option/>', {
+                        id: data.data_other_zip_code.zipCode,
+                        title: data.data_other_zip_code.zipCode,
+                        text: data.data_other_zip_code.zipCode
+                    });
+
+                    var option3 = $('<option/>', {
+                        id: data.data_work_zip_code.zipCode,
+                        title: data.data_work_zip_code.zipCode,
+                        text: data.data_work_zip_code.zipCode
+                    });
+
+                    var option4 = $('<option/>', {
+                        id: data.data_correspondence_zip_code.zipCode,
+                        title: data.data_correspondence_zip_code.zipCode,
+                        text: data.data_correspondence_zip_code.zipCode
+                    });
+
+                    var option5 = $('<option/>', {
+                        id: data.data_home_district_code.propinsi,
+                        title: data.data_home_district_code.propinsi,
+                        text: data.data_home_district_code.propinsi
+                    });
+
+                    var option6 = $('<option/>', {
+                        id: data.data_other_district_code.propinsi,
+                        title: data.data_other_district_code.propinsi,
+                        text: data.data_other_district_code.propinsi
+                    });
+
+                    var option7 = $('<option/>', {
+                        id: data.data_home_subdistrict_code.kabupaten,
+                        title: data.data_home_subdistrict_code.kabupaten,
+                        text: data.data_home_subdistrict_code.kabupaten
+                    });
+
+                    var option8 = $('<option/>', {
+                        id: data.data_other_district_code.kabupaten,
+                        title: data.data_other_district_code.kabupaten,
+                        text: data.data_other_district_code.kabupaten
+                    });
+
+                    // console.log(data);
+                    $("#zip_code_select_home").append(option1).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#zip_code_select_home").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_home_zip_code.zipCode,
+                            text: data.data_home_zip_code.zipCode,
+                            data: data.data_home_zip_code
+                        }
+                    });
+
+                    $("#zip_code_select_other").append(option2).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#zip_code_select_other").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_other_zip_code.zipCode,
+                            text: data.data_other_zip_code.zipCode,
+                            data: data.data_other_zip_code
+                        }
+                    });
+
+                    $("#zip_code_select_work").append(option3).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#zip_code_select_work").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_work_zip_code.zipCode,
+                            text: data.data_work_zip_code.zipCode,
+                            data: data.data_work_zip_code
+                        }
+                    });
+
+                    $("#zip_code_select_correspondence").append(option4).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#zip_code_select_correspondence").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_correspondence_zip_code.zipCode,
+                            text: data.data_correspondence_zip_code.zipCode,
+                            data: data.data_correspondence_zip_code
+                        }
+                    });
+
+                    $("#district_select_home").append(option5).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#district_select_home").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_home_district_code.zipCode,
+                            text: data.data_home_district_code.propinsi,
+                            data: data.data_home_district_code
+                        }
+                    });
+
+                    $("#district_select_other").append(option6).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#district_select_other").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_other_district_code.zipCode,
+                            text: data.data_other_district_code.propinsi,
+                            data: data.data_other_district_code
+                        }
+                    });
+
+                    $("#subdistrict_select_home").append(option7).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#subdistrict_select_home").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_home_subdistrict_code.zipCode,
+                            text: data.data_home_subdistrict_code.kabupaten,
+                            data: data.data_home_subdistrict_code
+                        }
+                    });
+
+                    $("#subdistrict_select_other").append(option8).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#subdistrict_select_other").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_other_district_code.zipCode,
+                            text: data.data_other_district_code.kabupaten,
+                            data: data.data_other_district_code
+                        }
+                    });
+                });
+                
                 $('#id_no_info').val(((typeof arrData2[0].peMasterInfo.idNo !== 'undefined') ? arrData2[0].peMasterInfo.idNo : ''));
                 $('#passport_no_info').val(((typeof arrData2[0].peMasterInfo.passportNo !== 'undefined') ? arrData2[0].peMasterInfo.passportNo : ''));
                 pickerPassportDate.setDate(((typeof arrData2[0].peMasterInfo.passportDate !== 'undefined') ? arrData2[0].peMasterInfo.passportDate : ''));
@@ -3054,34 +3500,25 @@
             }
             
             //Tab Address
-            $('#city_select_home').val(null).trigger('change');
             $('#city_text_home').val("");
-            $('#zip_code_select_home').val(null).trigger('change');
             $('#zip_code_text_home').val("");
             $('#district_select_home').val(null).trigger('change');
             $('#subdistrict_select_home').val(null).trigger('change');
 
-            $('#city_select_other').val(null).trigger('change');
             $('#city_text_other').val("");
-            $('#zip_code_select_other').val(null).trigger('change');
             $('#zip_code_text_other').val("");
             $('#district_select_other').val(null).trigger('change');
             $('#subdistrict_select_other').val(null).trigger('change');
 
-            $('#city_select_work').val(null).trigger('change');
             $('#city_text_work').val("");
-            $('#zip_code_select_work').val(null).trigger('change');
             $('#zip_code_text_work').val("");
 
-            $('#city_select_correspondence').val(null).trigger('change');
             $('#city_text_correspondence').val("");
-            $('#zip_code_select_correspondence').val(null).trigger('change');
             $('#zip_code_text_correspondence').val("");
 
             //Tab Employment
-            $('#employment_status_employment').val(null).trigger('change');
-            $('#employment_type_employment').val(null).trigger('change');
-            pickerOriginJoinDate.setDate(((typeof arrData2[0].originjoinDate !== 'undefined') ? arrData2[0].originjoinDate : ''));
+            // console.log(arrData2[0].originjoinDate);
+            pickerOriginJoinDate.setDate(((typeof arrData2[0].originJoinDate !== 'undefined') ? arrData2[0].originJoinDate : ''));
             // $('#origin_join_date_employment').prop('disabled', true);
             pickerJoinDate.setDate(((typeof arrData2[0].joinDate !== 'undefined') ? arrData2[0].joinDate : ''));
             pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined') ? arrData2[0].probationEndDate : ''));
@@ -3089,7 +3526,6 @@
             pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined') ? arrData2[0].contractEndDate : ''));
             pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
             pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
-            $('#termination_code_employment').val(null).trigger('change');
             if (arrData2[0].specialResign == true) {
                 $('#special_reason_resign_employment').prop('checked', true);
             }
@@ -3115,15 +3551,6 @@
 
             load_table_fringe_benefit();
             for (var i = 0; i < arrData2[0].peMasterFringeBenefit.length; i++) {
-                // console.log(arrData2[0].peMasterFamily[0].seqNo);
-                // table1.row.add([
-                //     '<input class="chk-select" type="checkbox">',
-                //     '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i) + '">' + ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i),
-                //     ((typeof arrData2[0].peMasterFringeBenefit[i].benefits !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].benefits : ''),
-                //     ((typeof arrData2[0].peMasterFringeBenefit[i].description !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].description : ''),
-                //     ((typeof arrData2[0].peMasterFringeBenefit[i].startDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].startDate : ''),
-                //     ((typeof arrData2[0].peMasterFringeBenefit[i].endDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].endDate : '')
-                // ]).draw();
 
                 arrayFringeBenefit.push({
                     "seqNoFringeBenefit": ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i),
@@ -3134,13 +3561,35 @@
                 });
                 
             }
-            // console.log(arrayFringeBenefit);
             $('#fringe_benefit_data_table').DataTable().destroy();
             load_table_fringe_benefit();
 
             //Tab Absenteeism & Payroll
-            $('#absenteeism_type_absenteeism').val(null).trigger('change');
-            $('#work_pattern_code_absenteeism').val(null).trigger('change');
+            $.ajax({
+                type: 'GET',
+                url: '/work_pattern/personal_data/api',
+                data: {
+                    'workPatternCode': ((typeof arrData2[0].workPatternCode !== 'undefined') ? arrData2[0].workPatternCode : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.patternCode,
+                    title: data.patternCode,
+                    text: data.patternCode
+                });
+                // console.log(data);
+                $("#work_pattern_code_absenteeism").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#work_pattern_code_absenteeism").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.patternCode,
+                        text: data.patternCode,
+                        data: data
+                    }
+                });
+            });
+
             $('#starting_day_absenteeism').val(((typeof arrData2[0].startAtDay !== 'undefined') ? arrData2[0].startAtDay : ''));
             if (arrData2[0].flagNotAbsent == true) {
                 $('#absent_not_required_absenteeism').prop('checked', true);
@@ -3155,22 +3604,91 @@
                 $('#finger_not_required_absenteeism').prop('checked', false);
             }
 
-            $('#tax_status_payroll').val(null).trigger('change');
-            $('#tax_status_next_year_payroll').val(null).trigger('change');
             $('#tax_registered_no_payroll').val(((typeof arrData2[0].taxRegisteredNo !== 'undefined') ? arrData2[0].taxRegisteredNo : ''));
             pickerTaxRegisteredDatePayroll.setDate(((typeof arrData2[0].taxRegisteredDate !== 'undefined') ? arrData2[0].taxRegisteredDate : ''));
-            $('#tax_office_payroll').val(null).trigger('change');
             pickerTaxExpiryDatePayroll.setDate(((typeof arrData2[0].taxRegisteredExpiryDate !== 'undefined') ? arrData2[0].taxRegisteredExpiryDate : ''));
-            $('#tax_calculation_method_payroll').val(null).trigger('change');
-            $('#group_npwp_payroll').val(null).trigger('change');
-            $('#group_bpjs_payroll').val(null).trigger('change');
+
+            $.ajax({
+                type: 'GET',
+                url: '/npwp/personal_data/api',
+                data: {
+                    'npwpCode': ((typeof arrData2[0].groupNpwp !== 'undefined') ? arrData2[0].groupNpwp : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.npwpCode,
+                    title: data.pemotongKuasa,
+                    text: data.pemotongKuasa
+                });
+                // console.log(option);
+                $("#group_npwp_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#group_npwp_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.npwpCode,
+                        text: data.pemotongKuasa,
+                        data: data
+                    }
+                });
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: '/bpjs/personal_data/api',
+                data: {
+                    'bpjsCode': ((typeof arrData2[0].groupBpjs !== 'undefined') ? arrData2[0].groupBpjs : ''),
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.bpjsCode,
+                    title: data.bpjsNo,
+                    text: data.bpjsNo
+                });
+                // console.log(data);
+                $("#group_bpjs_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#group_bpjs_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.bpjsCode,
+                        text: data.bpjsNo,
+                        data: data
+                    }
+                });
+            });
+
             if (arrData2[0].flagExcludePayroll == true) {
                 $('#exclude_payroll_process_payroll').prop('checked', true);
             }
             else {
                 $('#exclude_payroll_process_payroll').prop('checked', false);
             }
-            $('#group_authorize_payroll').val(null).trigger('change');
+            
+            $.ajax({
+                type: 'GET',
+                url: '/group_authorize/personal_data/api',
+                data: {
+                    'groupAuthorizeCode': ((typeof arrData2[0].groupAuthorizeCode !== 'undefined') ? arrData2[0].groupAuthorizeCode : ''),
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.groupAuthorizeDesc,
+                    title: data.groupAuthorizeDesc,
+                    text: data.groupAuthorizeDesc
+                });
+                // console.log(data);
+                $("#group_authorize_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#group_authorize_payroll").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.groupAuthorizeCode,
+                        text: data.groupAuthorizeDesc,
+                        data: data
+                    }
+                });
+            });
 
             $('#bpjs_number_tenaga_kerja').val(((typeof arrData2[0].bpjsTenagaKerjaNo !== 'undefined') ? arrData2[0].bpjsTenagaKerjaNo : ''));
             if (arrData2[0].flagBPJSTenagaKerja == true) {
@@ -3234,44 +3752,144 @@
             pickerJoiningDateBPJSKesehatan.setDate(((typeof arrData2[0].bpjsKesehatanJoinDate !== 'undefined') ? arrData2[0].bpjsKesehatanJoinDate : ''));
             pickerPaymentPeriodStartDateBPJSKesehatan.setDate(((typeof arrData2[0].bpjsKesehatanPeriodStartDate !== 'undefined') ? arrData2[0].bpjsKesehatanPeriodStartDate : ''));
 
-            $('#company_bank_code_primary').val(null).trigger('change');
-            $('#employee_bank_code_primary').val(null).trigger('change');
+            // console.log(arrData2[0].companyBankCode1);
+            $.ajax({
+                type: 'GET',
+                url: '/company_bank_code/personal_data/api',
+                data: {
+                    'companyBankCode1': ((typeof arrData2[0].companyBankCode1 !== 'undefined') ? arrData2[0].companyBankCode1 : ''),
+                    'companyBankCode2': ((typeof arrData2[0].companyBankCode2 !== 'undefined') ? arrData2[0].companyBankCode2 : ''),
+                    'companyBankCode3': ((typeof arrData2[0].companyBankCode3 !== 'undefined') ? arrData2[0].companyBankCode3 : ''),
+                }
+            }).then(function (data) {
+                var option1 = $('<option/>', {
+                    id: data.data_company_bank_code_one.bankCode,
+                    title: data.data_company_bank_code_one.bankCode,
+                    text: data.data_company_bank_code_one.bankCode
+                });
+
+                var option2 = $('<option/>', {
+                    id: data.data_company_bank_code_two.bankCode,
+                    title: data.data_company_bank_code_two.bankCode,
+                    text: data.data_company_bank_code_two.bankCode
+                });
+
+                var option3 = $('<option/>', {
+                    id: data.data_company_bank_code_three.bankCode,
+                    title: data.data_company_bank_code_three.bankCode,
+                    text: data.data_company_bank_code_three.bankCode
+                });
+                // console.log(data);
+                $("#company_bank_code_primary").append(option1).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#company_bank_code_primary").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_company_bank_code_one.bankCode,
+                        text: data.data_company_bank_code_one.bankCode,
+                        data: data.data_company_bank_code_one
+                    }
+                });
+
+                $("#company_bank_code_optional_one").append(option2).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#company_bank_code_optional_one").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_company_bank_code_two.bankCode,
+                        text: data.data_company_bank_code_two.bankCode,
+                        data: data.data_company_bank_code_two
+                    }
+                });
+
+                $("#company_bank_code_optional_two").append(option3).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#company_bank_code_optional_two").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_company_bank_code_three.bankCode,
+                        text: data.data_company_bank_code_three.bankCode,
+                        data: data.data_company_bank_code_three
+                    }
+                });
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: '/employee_bank_code/personal_data/api',
+                data: {
+                    'employeeBankCode1': ((typeof arrData2[0].employeeBankCode1 !== 'undefined') ? arrData2[0].employeeBankCode1 : ''),
+                    'employeeBankCode2': ((typeof arrData2[0].employeeBankCode2 !== 'undefined') ? arrData2[0].employeeBankCode2 : ''),
+                    'employeeBankCode3': ((typeof arrData2[0].employeeBankCode3 !== 'undefined') ? arrData2[0].employeeBankCode3 : ''),
+                }
+            }).then(function (data) {
+                var option1 = $('<option/>', {
+                    id: data.data_employee_bank_code_one.bankCode,
+                    title: data.data_employee_bank_code_one.bankCode,
+                    text: data.data_employee_bank_code_one.bankCode
+                });
+
+                var option2 = $('<option/>', {
+                    id: data.data_employee_bank_code_two.bankCode,
+                    title: data.data_employee_bank_code_two.bankCode,
+                    text: data.data_employee_bank_code_two.bankCode
+                });
+
+                var option3 = $('<option/>', {
+                    id: data.data_employee_bank_code_three.bankCode,
+                    title: data.data_employee_bank_code_three.bankCode,
+                    text: data.data_employee_bank_code_three.bankCode
+                });
+                // console.log(data);
+                $("#employee_bank_code_primary").append(option1).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employee_bank_code_primary").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_employee_bank_code_one.bankCode,
+                        text: data.data_employee_bank_code_one.bankCode,
+                        data: data.data_employee_bank_code_one
+                    }
+                });
+
+                $("#employee_bank_code_optional_one").append(option2).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employee_bank_code_optional_one").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_employee_bank_code_two.bankCode,
+                        text: data.data_employee_bank_code_two.bankCode,
+                        data: data.data_employee_bank_code_two
+                    }
+                });
+
+                $("#employee_bank_code_optional_two").append(option3).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employee_bank_code_optional_two").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.data_employee_bank_code_three.bankCode,
+                        text: data.data_employee_bank_code_three.bankCode,
+                        data: data.data_employee_bank_code_three
+                    }
+                });
+            });
+
             $('#account_number_primary').val(((typeof arrData2[0].bankAccountNo1 !== 'undefined') ? arrData2[0].bankAccountNo1 : ''));
-            $('#currency_primary').val(null).trigger('change');
             $('#beneficiary_name_primary').val(((typeof arrData2[0].beneficiaryName1 !== 'undefined') ? arrData2[0].beneficiaryName1 : ''));
             $('#percentage_primary').val(((typeof arrData2[0].bankPercentageSalary1 !== 'undefined') ? arrData2[0].bankPercentageSalary1 : ''));
 
-            $('#company_bank_code_optional_one').val(null).trigger('change');
-            $('#employee_bank_code_optional_one').val(null).trigger('change');
             $('#account_number_optional_one').val(((typeof arrData2[0].bankAccountNo2 !== 'undefined') ? arrData2[0].bankAccountNo2 : ''));
-            $('#currency_optional_one').val(null).trigger('change');
             $('#beneficiary_name_optional_one').val(((typeof arrData2[0].beneficiaryName2 !== 'undefined') ? arrData2[0].beneficiaryName2 : ''));
             $('#percentage_optional_one').val(((typeof arrData2[0].bankPercentageSalary2 !== 'undefined') ? arrData2[0].bankPercentageSalary2 : ''));
 
-            $('#company_bank_code_optional_two').val(null).trigger('change');
-            $('#employee_bank_code_optional_two').val(null).trigger('change');
             $('#account_number_optional_two').val(((typeof arrData2[0].bankAccountNo3 !== 'undefined') ? arrData2[0].bankAccountNo3 : ''));
-            $('#currency_optional_two').val(null).trigger('change');
             $('#beneficiary_name_optional_two').val(((typeof arrData2[0].beneficiaryName3 !== 'undefined') ? arrData2[0].beneficiaryName3 : ''));
             $('#percentage_optional_two').val(((typeof arrData2[0].bankPercentageSalary3 !== 'undefined') ? arrData2[0].bankPercentageSalary3 : ''));
 
             //Tab Family & Dependent
             load_table_family_dependent_data();
             for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
-                // console.log(arrData2[0].peMasterFamily[i].birthPlace);
-                // table2.row.add([
-                //     '<input class="chk-select" type="checkbox">',
-                //     '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i) +'">' + ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
-                //     ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].birthDate !== 'undefined') ? arrData2[0].peMasterFamily[i].birthDate : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
-                //     ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : ''),
-                // ]).draw();
 
                 arrayFamilyDependent.push({
                     "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
@@ -3293,8 +3911,49 @@
 
             //Tab Insurance
             if (arrData2[0].peMasterInsurance !== null) {
-                $('#insurance_code_insurance').val(null).trigger('change');
-                $('#insurance_class_insurance').val(null).trigger('change');
+                $.ajax({
+                    type: 'GET',
+                    url: '/comgen/api',
+                    data: {
+                        'insuranceCode': ((typeof arrData2[0].peMasterInsurance.insuranceCode !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceCode : ''),
+                        'insuranceClassCode': ((typeof arrData2[0].peMasterInsurance.insuranceClassCode !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceClassCode : ''),
+                    }
+                }).then(function (data) {
+                    var option1 = $('<option/>', {
+                        id: data.data_insurance_code.value,
+                        title: data.data_insurance_code.value,
+                        text: data.data_insurance_code.value
+                    });
+                    var option2 = $('<option/>', {
+                        id: data.data_insurance_class.value,
+                        title: data.data_insurance_class.value,
+                        text: data.data_insurance_class.value
+                    });
+
+                    // console.log(data);
+
+                    $("#insurance_code_insurance").append(option1).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#insurance_code_insurance").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_insurance_code.comGenCode,
+                            text: data.data_insurance_code.value,
+                            data: data.data_insurance_code
+                        }
+                    });
+                    $("#insurance_class_insurance").append(option2).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#insurance_class_insurance").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.data_insurance_class.comGenCode,
+                            text: data.data_insurance_class.value,
+                            data: data.data_insurance_class
+                        }
+                    });
+                });
+
                 pickerInsuranceDate.setDate(((typeof arrData2[0].peMasterInsurance.insuranceStartDate !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceStartDate : ''));
                 $('#insurance_policy_no_insurance').val(((typeof arrData2[0].peMasterInsurance.insurancePolicyNo !== 'undefined') ? arrData2[0].peMasterInsurance.insurancePolicyNo : ''));
                 $('#remarks_insurance').val(((typeof arrData2[0].peMasterInsurance.insuranceRemark !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceRemark : ''));
@@ -3386,12 +4045,12 @@
             } else {
                 for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
                     var file = e.originalEvent.srcElement.files[i];
-                    console.log(file);
+                    // console.log(file);
                     var img = $('#photo');
                     var reader = new FileReader();
                     reader.onloadend = function() {
                         img.attr('src', reader.result);
-                        console.log(reader.result);
+                        // console.log(reader.result);
                     }
                     reader.readAsDataURL(file);
                     // $("#photo_profile").after(img);
@@ -3610,7 +4269,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.cityName,
-                                    id: item.cityName,
+                                    id: item.cityCode,
                                     data: item
                                 }
                             })
@@ -4035,7 +4694,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.cityName,
-                                    id: item.cityName,
+                                    id: item.cityCode,
                                     data: item
                                 }
                             })
@@ -4095,7 +4754,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.cityName,
-                                    id: item.cityName,
+                                    id: item.cityCode,
                                     data: item
                                 }
                             })
@@ -4237,7 +4896,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.name + '<div>' +
+                        '<div class="col-6">' + data.data.propinsi + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4277,8 +4936,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.name,
-                                    id: item.id,
+                                    text: item.propinsi,
+                                    id: item.zipCode,
                                     data: item
                                 }
                             })
@@ -4298,7 +4957,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.name + '<div>' +
+                        '<div class="col-6">' + data.data.kabupaten + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4338,8 +4997,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.name,
-                                    id: item.id,
+                                    text: item.kabupaten,
+                                    id: item.zipCode,
                                     data: item
                                 }
                             })
@@ -4399,7 +5058,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.comGenCode,
+                                    id: item.value,
                                     data: item
                                 }
                             })
@@ -4651,7 +5310,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.comGenCode,
+                                    id: item.value,
                                     data: item
                                 }
                             })
@@ -5523,8 +6182,7 @@
                         name: 'startDate',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="start_date[]" value="' +
-                                data + '">' + data,
-                                moment(data).format('YYYY-MM-DD');
+                                data + '">' + data;
                         }
                     },
                     {
@@ -5532,8 +6190,7 @@
                         name: 'endDate',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="end_date[]" value="' +
-                                data + '">' + data,
-                                moment(data).format('YYYY-MM-DD');
+                                data + '">' + data;
                         }
                     },
                 ],
@@ -5591,8 +6248,7 @@
                         name: 'birthDate',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="birth_date[]" value="' +
-                                data + '">' + data,
-                                moment(data).format('YYYY-MM-DD');
+                                data + '">' + data;
                         }
                     },
                     {

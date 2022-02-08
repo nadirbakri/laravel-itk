@@ -17,6 +17,7 @@ use App;
 use DataTables;
 use Excel;
 use PDF;
+use PhpParser\Node\NullableType;
 
 class PersonelController extends Controller
 {
@@ -4652,12 +4653,14 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $file = $request->file('photo_profile');
-            $filename = Session::get('companyCode') . '_' . $request->employee_no_profile . '.jpg';
-            $file->move(public_path('photo_profile'), $filename);
-            $path = public_path('photo_profile/');
-
             // var_dump(base64_encode(file_get_contents($path . $filename)));
+
+            if($request->hasFile('photo_profile')) {
+                $file = $request->file('photo_profile');
+                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('photo_profile'), $filename);
+                $path = public_path('photo_profile/');
+            }
 
             $param = [
                 'recordStatus' => $request->record_status,
@@ -4667,8 +4670,9 @@ class PersonelController extends Controller
                 'fullName' => $request->fullname_info,
                 'birthPlace' => $request->birth_place_info,
                 'birthDate' => $request->birth_date_info,
+                "age" => 0,
                 "gender" => $request->gender_info,
-                "bloodType" => $request->blood_type_info,
+                "educationCode" => null,
                 "maritalStatus" => $request->marital_status_info,
                 "taxRegisteredNo" => $request->tax_registered_no_info,
                 "taxRegisteredDate" => $request->tax_registered_date_info,
@@ -4676,8 +4680,9 @@ class PersonelController extends Controller
                 "taxRegisteredExpiryDate" => $request->tax_expiry_date_info,
                 "religionCode" => $request->religion_info,
                 "nationalityCode" => $request->nationality_info,
+                "costCenterCode" => null,
                 "employmentStatus" => $request->employment_status_employment,
-                "flagIsExpat" => $request->expatriat_employment,
+                "flagIsExpat" => isset($request->expatriat_employment) ? (bool) $request->expatriat_employment : false,
                 "expatLicenseNo" => $request->license_no_employment,
                 "expatLicenseStartDate" => $request->start_date_employment,
                 "expatLicenseEndDate" => $request->end_date_employment,
@@ -4689,31 +4694,50 @@ class PersonelController extends Controller
                 "terminationCode" => $request->termination_code_employment,
                 "terminationRemarks" => $request->termination_remarks_employment,
                 "effectiveTerminationDate" => $request->effective_terminated_employment,
+                "pensionDate" => null,
+                "serviceYear" => 0,
                 "employmentType" => $request->employment_type_employment,
-                "groupAuthorizeCode" => $request->group_authorize_payroll,
-                "specialResign" => $request->special_reason_resign_employment,
-                "photo" => base64_encode(file_get_contents($path . $filename)),
-                "flagIsCommissioner" => $request->commisioner_employment,
+                "locationCode" => null,
+                "gradeCode" => null,
+                "positionCode" => null,
+                "rankingCode" => null,
+                "workNatureCode" => null,
+                "groupCode" => null,
+                "groupAuthorizeCode" => (int) $request->group_authorize_payroll,
+                "specialResign" => isset($request->special_reason_resign_employment) ? (bool) $request->special_reason_resign_employment : false,
+                "photo" => ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                "npwpMutationCode" => null,
+                "npwpMutationDate" => null,
+                "flagMutationNPWPFrom" => false,
+                "flagMutationNPWPTo" => false,
+                "flagMutationToSameGroup" => false,
+                "flagMutationToOtherDirectory" => false,
+                "auditLastSequenceNo" => 0,
+                "flagIsDirect" => false,
+                "flagIsTemporary" => false,
+                "flagIsCommissioner" => isset($request->commisioner_employment) ? (bool) $request->commisioner_employment : false,
                 "motherName" => $request->mother_name_info,
                 "absenteeismType" => $request->absenteeism_type_absenteeism,
                 "workPatternCode" => $request->work_pattern_code_absenteeism,
-                "startAtDay" => $request->starting_day_absenteeism,
-                "flagNotAbsent" => $request->absent_not_required_absenteeism,
+                "startAtDay" => (int) $request->starting_day_absenteeism,
+                "flagNotAbsent" => isset($request->absent_not_required_absenteeism) ? (bool) $request->absent_not_required_absenteeism : false,
                 "taxCalculationMethod" => $request->tax_calculation_method_payroll,
-                "flagAstekDeathNonAccident" => $request->non_accidental_death_insurance_tenaga_kerja,
-                "flagAstekWorkAccident" => $request->work_related_accident_insurance_tenaga_kerja,
-                "flagAstekWorkAccident2" => $request->work_related_accident_insurance_two_tenaga_kerja,
-                "flagAstekWorkAccident3" => $request->work_related_accident_insurance_three_tenaga_kerja,
-                "flagAstekPensionEmployee" => $request->pension_by_employee_tenaga_kerja,
-                "flagAstekPensionEmployer" => $request->pension_by_employer_tenaga_kerja,
+                "flagAstekDeathNonAccident" => isset($request->non_accidental_death_insurance_tenaga_kerja) ? (bool) $request->non_accidental_death_insurance_tenaga_kerja : false,
+                "flagAstekWorkAccident" => isset($request->work_related_accident_insurance_tenaga_kerja) ? (bool) $request->work_related_accident_insurance_tenaga_kerja : false,
+                "flagAstekWorkAccident2" => isset($request->work_related_accident_insurance_two_tenaga_kerja) ? (bool) $request->work_related_accident_insurance_two_tenaga_kerja : false,
+                "flagAstekWorkAccident3" => isset($request->work_related_accident_insurance_three_tenaga_kerja) ? (bool) $request->work_related_accident_insurance_three_tenaga_kerja : false,
+                "flagAstekPensionEmployee" => isset($request->pension_by_employee_tenaga_kerja) ? (bool) $request->pension_by_employee_tenaga_kerja : false,
+                "flagAstekPensionEmployer" => isset($request->pension_by_employer_tenaga_kerja) ? (bool) $request->pension_by_employer_tenaga_kerja : false,
+                "flagAstekHealthInsurance" => false,
+                "flagTaxByGovernment" => false,
                 "groupNpwp" => $request->group_npwp_payroll,
                 "groupBpjs" => $request->group_bpjs_payroll,
-                "flagPensionInsurance" => $request->pension_insurance_tenaga_kerja,
-                "flagBPJSKesehatan" => $request->join_kesehatan,
+                "flagPensionInsurance" => isset($request->pension_insurance_tenaga_kerja) ? (bool) $request->pension_insurance_tenaga_kerja : false,
+                "flagBPJSKesehatan" => isset($request->join_kesehatan) ? (bool) $request->join_kesehatan : false,
                 "bpjsKesehatanNo" => $request->bpjs_number_kesehatan,
                 "bpjsKesehatanJoinDate" => $request->joining_date_kesehatan,
                 "bpjsKesehatanPeriodStartDate" => $request->payment_period_start_date_kesehatan,
-                "flagBPJSTenagaKerja" => $request->join_tenaga_kerja,
+                "flagBPJSTenagaKerja" => isset($request->join_tenaga_kerja) ? (bool) $request->join_tenaga_kerja : false,
                 "bpjsTenagaKerjaNo" => $request->bpjs_number_tenaga_kerja,
                 "bpjsTenagaKerjaJoinDate" => $request->joining_date_tenaga_kerja,
                 "bpjsTenagaKerjaPeriodStartDate" => $request->payment_period_start_date_tenaga_kerja,
@@ -4725,31 +4749,35 @@ class PersonelController extends Controller
                 "companyBankCode3" => $request->company_bank_code_optional_two,
                 "bankAccountNo1" => $request->account_number_primary,
                 "beneficiaryName1" => $request->beneficiary_name_primary,
-                "bankPercentageSalary1" => $request->percentage_primary,
+                "bankPercentageSalary1" => (int) $request->percentage_primary,
                 "currencyCode1" => $request->currency_primary,
                 "bankAccountNo2" => $request->account_number_optional_one,
                 "beneficiaryName2" => $request->beneficiary_name_optional_one,
-                "bankPercentageSalary2" => $request->percentage_optional_one,
+                "bankPercentageSalary2" => (int) $request->percentage_optional_one,
                 "currencyCode2" => $request->currency_optional_one,
                 "bankAccountNo3" => $request->account_number_optional_two,
                 "beneficiaryName3" => $request->beneficiary_name_optional_two,
-                "bankPercentageSalary3" => $request->percentage_optional_two,
+                "bankPercentageSalary3" => (int) $request->percentage_optional_two,
                 "currencyCode3" => $request->currency_optional_two,
                 "originJoinDate" => $request->origin_join_date_employment,
-                "flagNotFinger" => $request->finger_not_required_absenteeism,
+                "flagNotFinger" => isset($request->finger_not_required_absenteeism) ? (bool) $request->finger_not_required_absenteeism : false,
                 "taxStatus" => $request->tax_status_payroll,
                 "taxStatusNextYear" => $request->tax_status_next_year_payroll,
-                "flagExcludePayroll" => $request->exclude_payroll_process_payroll,
+                "flagExcludePayroll" => isset($request->exclude_payroll_process_payroll) ? (bool) $request->exclude_payroll_process_payroll : false,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 'userID' => Session::get('userID'),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
                 'logActionUsername' => Session::get('userName'),
                 "languageCode" => App::getLocale()
             ];
+
+            // var_dump($param);
 
             if(!empty($request->id_no_info) && !is_null($request->id_no_info[0])){
                 $datapeMasterInfo = [
@@ -4759,6 +4787,8 @@ class PersonelController extends Controller
                     "bloodType" => $request->blood_type_info,
                     "passportNo" => $request->passport_no_info,
                     "passportDate" => $request->passport_date_info,
+                    "passportPlaceRegistration" => null,
+                    "passportExpiryDate" => null,
                     "drivingLicenseMobilNo" => $request->driving_license_car_no_info,
                     "drivingLicenseMobilType" => $request->driving_license_car_type_info,
                     "drivingLicenseMobilNoDate" => $request->driving_license_car_date_info,
@@ -4770,6 +4800,9 @@ class PersonelController extends Controller
                     "drivingLicenseMotorNoExpiryDate" => $request->driving_license_motorcycle_expiry_date_info,
                     "employeeCardId" => $request->company_card_id_other,
                     "idNo" => $request->id_no_info,
+                    "idNoDate" => null,
+                    "idNoPlaceRegistration" => null,
+                    "idNoExpiryDate" => null,                
                     "homeAddress" => $request->address_home,
                     "homeCityCode" => $request->city_text_home,
                     "homeZipCode" => $request->zip_code_text_home,
@@ -4794,6 +4827,7 @@ class PersonelController extends Controller
                     "emergencyPhone" => $request->phone_number_emergency,
                     "emergencyRelation" => $request->relation_emergency,
                     "emergencyEmailAddress" => $request->email_emergency,
+                    "jobDesc" => null,
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),
@@ -4804,18 +4838,19 @@ class PersonelController extends Controller
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName')
                 ];
+                $param['peMasterInfo'] = $datapeMasterInfo;
             }
-            $param['peMasterInfo'] = $datapeMasterInfo;
+            
+            // var_dump($datapeMasterInfo);
 
-            // var_dump($request->insurance_code_insurance);
-
-            if(!empty($request->insurance_code_insurance) && !is_null($request->id_insurance_code_insuranceno_info[0])){
+            if(!empty($request->insurance_code_insurance) && !is_null($request->insurance_code_insurance[0])){
                 $datapeMasterInsurance = [
                     'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $request->employee_no_info,
                     "insuranceCode" => $request->insurance_code_insurance,
                     "insuranceClassCode" => $request->insurance_class_insurance,
                     "insuranceStartDate" => $request->insurance_date_insurance,
+                    "insuranceEndDate" => null,
                     "insurancePolicyNo" => $request->insurance_policy_no_insurance,
                     "insuranceRemark" => $request->remarks_insurance,
                     "changedNo" => 0,
@@ -4826,10 +4861,10 @@ class PersonelController extends Controller
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName')
                 ];
+                $param['peMasterInsurance'] = $datapeMasterInsurance;
             }
-            $param['peMasterInsurance'] = $datapeMasterInsurance;
 
-            // var_dump($param['peMasterInsurance']);
+            // var_dump($datapeMasterInsurance);
 
             if(!empty($request->fringe_benefits) && !is_null($request->fringe_benefits[0])){
                 foreach($request->seq_no_fringe_benefit as $value){
@@ -4850,8 +4885,10 @@ class PersonelController extends Controller
                         'logActionUsername' => Session::get('userName')
                     ];
                 }
+                $param['peMasterFringeBenefit'] = $datapeMasterFringeBenefit;
             }
-            $param['peMasterFringeBenefit'] = $datapeMasterFringeBenefit;
+
+            // var_dump($datapeMasterFringeBenefit);
 
             if(!empty($request->family_name) && !is_null($request->family_name[0])){
                 foreach($request->seq_no_family_dependent as $value){
@@ -4865,8 +4902,8 @@ class PersonelController extends Controller
                         "birthPlace" => $request->birth_place,
                         "gender" => $request->gender,
                         "occupation" => $request->occupation,
-                        "flagMedical" => $request->flag_medical,
-                        "flagPayroll" => $request->flag_payroll,
+                        "flagMedical" => (bool) $request->flag_medical,
+                        "flagPayroll" => (bool) $request->flag_payroll,
                         "bloodType" => $request->blood_type,
                         "familyCardNumber" => $request->family_card_number,
                         "changedNo" => 0,
@@ -4878,25 +4915,36 @@ class PersonelController extends Controller
                         'logActionUsername' => Session::get('userName')
                     ];
                 }
+                $param['peMasterFamily'] = $datapeMasterFamily;
             }
-            $param['peMasterFamily'] = $datapeMasterFamily;
+            // var_dump($datapeMasterFamily);
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
                     ['body' => json_encode($param)]
                 );
-            }else{
+                
+                $arrResult = json_decode($response->getBody()->getContents());
+                // var_dump($arrResult->dataListSet);
+
+                return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+
+            }
+            
+            else{
                 $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
                     ['body' => json_encode($param)]
                 );
-            }     
+            }  
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());
+        // $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        // var_dump($arrResult->dataListSet);
+
+        // return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function prosesNatureofWorkPersonel(Request $request)

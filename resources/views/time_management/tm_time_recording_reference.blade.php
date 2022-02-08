@@ -176,13 +176,13 @@
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="time_in_record_earliest"
-                                    name="radiobtn1" value="earliest" checked>
+                                    name="radiobtn1" value="E" checked>
                                 <label class="form-check-label"
                                     for="time_in_record_earliest">{{ __('tm_time_recording_reference.label_earliest') }}</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="time_in_record_latest"
-                                    name="radiobtn1" value="latest">
+                                    name="radiobtn1" value="L">
                                 <label class="form-check-label"
                                     for="time_in_record_latest">{{ __('tm_time_recording_reference.label_latest') }}</label>
                             </div>
@@ -199,13 +199,13 @@
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="time_out_record_earliest"
-                                    name="radiobtn2" value="earliest">
+                                    name="radiobtn2" value="E">
                                 <label class="form-check-label"
                                     for="time_out_record_earliest">{{ __('tm_time_recording_reference.label_earliest') }}</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="time_out_record_latest"
-                                    name="radiobtn2" value="latest" checked>
+                                    name="radiobtn2" value="L" checked>
                                 <label class="form-check-label"
                                     for="time_out_record_latest">{{ __('tm_time_recording_reference.label_latest') }}</label>
                             </div>
@@ -287,28 +287,33 @@
             url: "{{ url('/time_management/time_recording_reference/table') }}",
             type: "GET",
             success: function (response) {
-                // console.log(response[0]);
-                $('#employee_no_start').val(response[0].employeeNoStart);
-                $('#year_start').val(response[0].yearStart);
-                $('#month_start').val(response[0].monthStart);
-                $('#day_start').val(response[0].dateStart);
-                $('#hour_start').val(response[0].hourStart);
-                $('#minute_start').val(response[0].minuteStart);
-                $('#flag_start').val(response[0].flagStart);
-                $('#machine_code_start').val(response[0].machineCodeStart);
-                $('#shift_start').val(response[0].shiftStart);
-                $('#in_out_code_start').val(response[0].codeInOutStart);
+                // console.log(response[0].inCode);
+                if (response.length > 0) {
+                    $('#in_code').val(response[0].inCode);
+                    $('#out_code').val(response[0].outCode);
 
-                $('#employee_no_long').val(response[0].employeeNoLong);
-                $('#year_long').val(response[0].yearLong);
-                $('#month_long').val(response[0].monthLong);
-                $('#day_long').val(response[0].dateLong);
-                $('#hour_long').val(response[0].hourLong);
-                $('#minute_long').val(response[0].minuteLong);
-                $('#flag_long').val(response[0].flagLong);
-                $('#machine_code_long').val(response[0].machineCodeLong);
-                $('#shift_long').val(response[0].shiftLong);
-                $('#in_out_code_long').val(response[0].codeInOutLong);
+                    $('#employee_no_start').val(response[0].employeeNoStart);
+                    $('#year_start').val(response[0].yearStart);
+                    $('#month_start').val(response[0].monthStart);
+                    $('#day_start').val(response[0].dateStart);
+                    $('#hour_start').val(response[0].hourStart);
+                    $('#minute_start').val(response[0].minuteStart);
+                    $('#flag_start').val(response[0].flagStart);
+                    $('#machine_code_start').val(response[0].machineCodeStart);
+                    $('#shift_start').val(response[0].shiftStart);
+                    $('#in_out_code_start').val(response[0].codeInOutStart);
+
+                    $('#employee_no_long').val(response[0].employeeNoLong);
+                    $('#year_long').val(response[0].yearLong);
+                    $('#month_long').val(response[0].monthLong);
+                    $('#day_long').val(response[0].dateLong);
+                    $('#hour_long').val(response[0].hourLong);
+                    $('#minute_long').val(response[0].minuteLong);
+                    $('#flag_long').val(response[0].flagLong);
+                    $('#machine_code_long').val(response[0].machineCodeLong);
+                    $('#shift_long').val(response[0].shiftLong);
+                    $('#in_out_code_long').val(response[0].codeInOutLong);
+                }
             },
             error: function (response) {
                 $('#notification_error').modal('show');
@@ -325,12 +330,10 @@
             });
         }
 
-        // var time_record = $('#time_in_record_earliest, #time_out_record_earliest');
-
         $('input[name="radiobtn1"]').on('change', function () {
-            if ($('#time_in_record_earliest').is(':checked')) {
+            if ($('#time_in_record_earliest').prop('checked', true)) {
                 $('input[name="radiobtn1"]').val('E');
-                console.log($('input[name="radiobtn1"]').val());
+                // console.log($('input[name="radiobtn1"]').val());
             }
             else {
                 $('input[name="radiobtn1"]').val('L');
@@ -338,7 +341,7 @@
         });
 
         $('input[name="radiobtn2"]').on('change', function () {
-            if ($('#time_out_record_earliest').is(':checked')) {
+            if ($('#time_out_record_earliest').prop('checked', true)) {
                 $('input[name="radiobtn2"]').val('E');
             }
             else {
@@ -355,7 +358,6 @@
         });
 
         $('#time_recording_reference_form').on('submit', function () {
-
             $.ajax({
                 type: "POST",
                 url: "{{ url('time_management/time_recording_reference/proses') }}",
@@ -392,6 +394,15 @@
                             $('#message-notification-error').html(response.message);
                         }
                     }
+                },
+                error: function (response) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_reference.btn_save") }}'
+                    );
+
+                    $('#notification').modal('show');
+                    $('#message-notification').html(response);
                 }
             });
 

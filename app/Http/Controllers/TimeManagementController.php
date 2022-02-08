@@ -1042,6 +1042,8 @@ class TimeManagementController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        var_dump($arrResult->dataListSet);
+
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
@@ -1211,28 +1213,28 @@ class TimeManagementController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        "inCode" => $request->in_code,
-                        "outCode" => $request->out_code,
-                        "employeeNoStart" => $request->employee_no_start,
-                        "employeeNoLong" => $request->employee_no_long,
-                        "yearStart" => $request->year_start,
-                        "yearLong" => $request->year_long,
-                        "monthStart" => $request->month_start,
-                        "monthLong" => $request->month_long,
-                        "dateStart" => $request->day_start,
-                        "dateLong" => $request->day_long,
-                        "hourStart" => $request->hour_start,
-                        "hourLong" => $request->hour_long,
-                        "minuteStart" => $request->minute_start,
-                        "minuteLong" => $request->minute_long,
-                        "flagStart" =>$request->flag_start,
-                        "flagLong" => $request->flag_long,
-                        "machineCodeStart" => $request->machine_code_start,
-                        "machineCodeLong" => $request->machine_code_long,
-                        "shiftStart" => $request->shift_start,
-                        "shiftLong" => $request->shift_long,
-                        "codeInOutStart" => $request->in_out_code_start,
-                        "codeInOutLong" => $request->in_out_code_long,
+                        "inCode" => (int) $request->in_code,
+                        "outCode" => (int) $request->out_code,
+                        "employeeNoStart" => (int) $request->employee_no_start,
+                        "employeeNoLong" => (int) $request->employee_no_long,
+                        "yearStart" => (int) $request->year_start,
+                        "yearLong" => (int) $request->year_long,
+                        "monthStart" => (int) $request->month_start,
+                        "monthLong" => (int) $request->month_long,
+                        "dateStart" => (int) $request->day_start,
+                        "dateLong" => (int) $request->day_long,
+                        "hourStart" => (int) $request->hour_start,
+                        "hourLong" => (int) $request->hour_long,
+                        "minuteStart" => (int) $request->minute_start,
+                        "minuteLong" => (int) $request->minute_long,
+                        "flagStart" => (int) $request->flag_start,
+                        "flagLong" => (int) $request->flag_long,
+                        "machineCodeStart" => (int) $request->machine_code_start,
+                        "machineCodeLong" => (int) $request->machine_code_long,
+                        "shiftStart" => (int) $request->shift_start,
+                        "shiftLong" => (int) $request->shift_long,
+                        "codeInOutStart" => (int) $request->in_out_code_start,
+                        "codeInOutLong" => (int) $request->in_out_code_long,
                         "timeInRecord" => $request->radiobtn1,
                         "timeOutRecord" => $request->radiobtn2,
                         "createdDate" => date("Y-m-d\TH:i:s"),
