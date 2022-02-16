@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('timemanagement.judul') }}</title>
+    <title>{{ __('time_management.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -133,7 +133,7 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('time_management/time_management_reference') }}" target="iframe_dashboard">
+							<a href="{{ url('time_management/reference_time_management') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/time_management/submenu-maintenance.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.time_management_reference') }}</span>
 							</a>

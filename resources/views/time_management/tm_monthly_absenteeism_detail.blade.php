@@ -336,10 +336,11 @@
                 });
             }
         });
-        $('#before_in').flatpickr({
+        $('#hour').flatpickr({
             enableTime: true,
             noCalendar: true,
-            dateFormat: "H:i K"
+            dateFormat: "H:i K",
+            defaultDate: "00:00"
         });
     }
 

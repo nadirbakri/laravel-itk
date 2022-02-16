@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'judul' => 'Detail Absenteeism Reason Report',
+    'judul' => 'Detail Rate Overtime Report',
     'list' => 'Time Management Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
@@ -20,9 +20,11 @@ return [
     'label_absent_date_to' => 'Absent Date To',
     'label_group_authorize_from' => 'Group Authorize From',
     'label_group_authorize_to' => 'Group Authorize To',
-    'label_absent_code' => 'Absent Code',
-    'label_absent_code_all' => 'All',
-    'label_absent_code_selection' => 'Selection',
+    'label_overtime_code' => 'Overtime Code',
+    'label_overtime_code_all' => 'All',
+    'label_overtime_code_selection' => 'Selection',
+    'label_table_overtime_code' => 'Overtime Code',
+    'label_table_description' => 'Description',
     'label_include_resign' => 'Include Resign',
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
