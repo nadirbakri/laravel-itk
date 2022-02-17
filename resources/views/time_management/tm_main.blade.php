@@ -57,6 +57,12 @@
 					</div>
 					<div class="row div-child-data">
 						<div class="col col-3">
+							<a href="{{ url('time_management/absenteeism_data_entry_by_employee_no') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/time_management/submenu-data.svg') }}" alt="Child Time Management">
+								<span class="child-title-text">{{ __('time_management.absenteeism_data_entry_by_employee_no') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
 							<a href="{{ url('time_management/template_preparation') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/time_management/submenu-data.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.template_preparation') }}</span>

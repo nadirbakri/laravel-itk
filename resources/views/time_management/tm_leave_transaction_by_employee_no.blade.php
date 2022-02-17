@@ -43,6 +43,34 @@
             border-top-right-radius: 5px;
         }
 
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
+        .required {
+            color: red;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -66,12 +94,14 @@
                         <div class="form-group">
                             <label
                                 for="employee_no">{{ __('tm_leave_transaction_by_employee_no.label_employee_no') }}</label>
+                            <span class="required">*</span>
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_name">{{ __('tm_leave_transaction_by_employee_no.label_employee_name') }}</label>
+                            <span class="required">*</span>
                             <input type="text" class="form-control" id="employee_name" name="employee_name"
                                 placeholder={{ __('tm_leave_transaction_by_employee_no.label_employee_name') }} disabled>
                         </div>
@@ -82,6 +112,7 @@
                         <div class="form-group">
                             <label
                                 for="leave_code">{{ __('tm_leave_transaction_by_employee_no.label_leave_code') }}</label>
+                            <span class="required">*</span>
                             <select class="form-control select2" id="leave_code" name="leave_code"></select>
                         </div>
                     </div>
@@ -103,13 +134,13 @@
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="full_day"
-                                    name="radiobtn" value="full_day" checked>
+                                    name="radiobtn" value="F0" checked>
                                 <label class="form-check-label"
                                     for="full_day">{{ __('tm_leave_transaction_by_employee_no.label_full_day') }}</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="half_day"
-                                    name="radiobtn" value="half_day">
+                                    name="radiobtn" value="H0">
                                 <label class="form-check-label"
                                     for="half_day">{{ __('tm_leave_transaction_by_employee_no.label_half_day') }}</label>
                             </div>
@@ -121,6 +152,7 @@
                         <div class="form-group">
                             <label
                                 for="leave_date_from">{{ __('tm_leave_transaction_by_employee_no.label_leave_date_from') }}</label>
+                            <span class="required">*</span>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="leave_date_from" name="leave_date_from"
                                     placeholder="{{ __('tm_leave_transaction_by_employee_no.label_leave_date_from') }}">
@@ -134,6 +166,7 @@
                         <div class="form-group">
                             <label
                                 for="leave_date_to">{{ __('tm_leave_transaction_by_employee_no.label_leave_date_to') }}</label>
+                            <span class="required">*</span>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="leave_date_to" name="leave_date_to"
                                     placeholder="{{ __('tm_leave_transaction_by_employee_no.label_leave_date_to') }}">
@@ -265,33 +298,12 @@
         //     $searchfield.prop('disabled', true);
         // });
 
-        // $('#employee_no').on("select2:select", function (e) {
-        //     var data = $('#employee_no').select2('data');
-            // console.log(data[0].title);
-            // $.ajax({
-            //     url: "{{ url('time_management/employee_name/detail') }}",
-            //     type: "GET",
-            //     data: {
-            //         'employeeNo': data[0].id
-            //     },
-            // })
-        // });
-
-        $('#employee_no').on("select2:unselecting", function (e) {
-            $('#employee_name').val('');
-        });
-
         var balance = $('#employee_no, #leave_code');
 
         balance.on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
             var data2 = $('#leave_code').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
-            // console.log(data);
-            // $('#balance').val(htmlDecode(data[0].text));
-            // console.log(data[0].text);
-            // console.log(data);
-            // console.log(data2);
             if (data.length > 0 && data2.length > 0) {
                 $.ajax({
                 url: "{{ url('time_management/balance/detail') }}",
@@ -301,7 +313,6 @@
                     'leaveCode' : data2[0].id
                 },
                 success: function (response) {
-                    // console.log(response.length);
                     if (response.length > 0){
                         val_balance = response[0].balance;
 
@@ -312,7 +323,6 @@
 
                         var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
                         var difference_day = diff + 1;
-                        console.log(difference_day);
 
                         if ($('#full_day').is(':checked')) {
                             var total_balance = val_balance - (difference_day * 1);
@@ -334,8 +344,9 @@
             })
             }
         });
-
-        $('#leave_code').on("select2:unselecting", function (e) {
+        
+        balance.on("select2:unselecting", function (e) {
+            $('#employee_name').val('');
             $('#balance').val('');
         });
 
@@ -349,7 +360,6 @@
 
             var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
             var difference_day = diff + 1;
-            console.log(difference_day);
 
             if ($('#full_day').is(':checked')) {
                 var total_balance = val_balance - (difference_day * 1);
@@ -359,7 +369,6 @@
             }
 
             $('#balance').val(total_balance);
-
         })
 
         function loadDataEmployeeNo() {
@@ -466,7 +475,6 @@
                 width: '100%',
                 placeholder: 'Choose Leave Code',
                 allowClear: true,
-                // tags: true,
                 closeOnSelect: false,
                 language: {
                     errorLoading: function () {
@@ -511,17 +519,6 @@
             );
             $("#leave_transaction_by_employee_no_form").submit();
         });
-
-        jQuery.validator.addMethod("greaterThan", 
-        function(value, element, params) {
-
-            if (!/Invalid|NaN/.test(new Date(value))) {
-                return new Date(value) > new Date($(params).val());
-            }
-
-            return isNaN(value) && isNaN($(params).val()) 
-                || (Number(value) > Number($(params).val())); 
-        },'Must be greater than {0}.');
 
         if ($("#leave_transaction_by_employee_no_form").length > 0) {
             $("#leave_transaction_by_employee_no_form").validate({
@@ -605,6 +602,9 @@
                                     '') {
                                     $('#message-notification-error').html(
                                         "{{ __('login.error') }}");
+                                } else if (response.message == 'Is Bigger than Leave Date To'){
+                                    $('#message-notification-error').html('Leave Date From' + " " + response
+                                        .message);
                                 } else {
                                     $('#message-notification-error').html(response
                                         .message);

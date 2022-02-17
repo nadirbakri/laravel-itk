@@ -369,6 +369,7 @@ Route::get('time_management', 'TimeManagementController@pageTimeManagement');
 Route::get('time_management/time_recording_process_form', 'TimeManagementController@pageTimeRecordingProcessForm');
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
 Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreparation');
+Route::get('time_management/absenteeism_data_entry_by_employee_no', 'TimeManagementController@pageAbsenteeismDataEntryByEmployeeNo');
 Route::get('time_management/update_shift_by_date', 'TimeManagementController@pageUpdateShiftByDate');
 Route::get('time_management/overtime_spl', 'TimeManagementController@pageOvertimeSPL');
 Route::get('time_management/company_working_calendar', 'TimeManagementController@pageCompanyWorkingCalendar');
@@ -402,6 +403,7 @@ Route::get('time_management/monthly_absenteeism_detail/table', 'TimeManagementCo
 Route::get('time_management/time_recording_reference/table', 'TimeManagementController@tableTimeRecordingReferenceTM');
 Route::get('time_management/overtime_code/table', 'TimeManagementController@tableOvertimeCodeTM');
 Route::get('time_management/shift_master_code/table', 'TimeManagementController@tableShiftMasterCodeTM');
+Route::get('time_management/absenteeism_data_entry_by_employee_no/table', 'TimeManagementController@tableAbsenteeismDataEntryByEmployeeNoTM');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
@@ -444,6 +446,7 @@ Route::get('time_management/work_pattern/detail_data', 'TimeManagementController
 Route::get('time_management/absent_code/detail', 'TimeManagementController@dataDetailAbsentCodeTM');
 Route::get('time_management/absent_code/detail_data', 'TimeManagementController@dataDetailDataAbsentCodeTM');
 Route::get('time_management/shift_master_code/detail_data', 'TimeManagementController@dataDetailShiftMasterCodeTM');
+Route::get('time_management/absenteeism_data_entry/detail', 'TimeManagementController@dataDetailAbsenteeismDataEntryTM');
 
 /* Route untuk Report Time Management */
 Route::post('time_management/unpaid_leave_report/print', 'TimeManagementController@printUnpaidLeaveReport');
@@ -454,6 +457,8 @@ Route::post('time_management/detail_absenteeism_report/print', 'TimeManagementCo
 Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementController@printMonthlyAbsenteeismDetail');
 Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
+
+Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll');
@@ -505,8 +510,6 @@ Route::get('payroll/overtime_calculation_process', 'PayrollController@pageOverti
 Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
 Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCalculationProcess');
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
-
-
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -672,6 +675,7 @@ Route::get('npwp/personal_data/api', 'DataController@dataNPWPPersonalDataAPI');
 Route::get('bpjs/api', 'DataController@dataBPJSAPI');
 Route::get('bpjs/personal_data/api', 'DataController@dataBPJSPersonalDataAPI');
 Route::get('cost_center/api', 'DataController@dataCostCenterAPI');
+Route::get('cost_center/func/api', 'DataController@dataCostCenterFunctionAPI');
 Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
 Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
@@ -679,6 +683,7 @@ Route::get('shift_code/api', 'DataController@dataShiftAPI');
 Route::get('shift_code/func/api', 'DataController@dataShiftCodeFunctionAPI');
 Route::get('leave_code/api', 'DataController@dataLeaveCodeAPI');
 Route::get('absent_code/api', 'DataController@dataAbsentCodeAPI');
+Route::get('absent_code/func/api', 'DataController@dataAbsentCodeFunctionAPI');
 Route::get('code/api', 'DataController@dataCodeAPI');
 Route::get('day_code/api', 'DataController@dataDayCodeAPI');
 Route::get('day_code/func/api', 'DataController@dataDayCodeFunctionAPI');

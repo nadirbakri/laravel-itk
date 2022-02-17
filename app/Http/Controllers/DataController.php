@@ -4120,6 +4120,37 @@ class DataController extends Controller
         return response()->json($cost_center);
 	}
 
+	public function dataCostCenterFunctionAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+						'costCenterCode' => $request->costCenterCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if ($request->costCenterCode = '') {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
+	}
+
 	public function dataCalendarTypeAPI(Request $request)
 	{
 		try {
@@ -4346,6 +4377,37 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    return response()->json($arrResult->dataListSet);
+	}
+
+	public function dataAbsentCodeFunctionAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+						'absentCode' => $request->absentCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if ($request->absentCode = '') {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
 	}
 
 	public function dataInsuranceCodeAPI(Request $request)

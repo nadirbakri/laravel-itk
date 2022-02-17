@@ -12,7 +12,8 @@ return [
     'label_leave_date_from' => 'Tanggal Cuti Dari',
     'label_leave_date_to' => 'Tanggal Cuti Sampai',
     'btn_save' => 'Simpan',
-    'field_mandatory' => "Kolom ini tidak boleh kosong"
+    'field_mandatory' => "Kolom ini tidak boleh kosong",
+    'alert_success' => 'Sukses !'
 ]
 
 ?>

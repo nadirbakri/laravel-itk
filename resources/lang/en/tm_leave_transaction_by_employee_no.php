@@ -12,7 +12,8 @@ return [
     'label_leave_date_from' => 'Leave Date From',
     'label_leave_date_to' => 'Leave Date To',
     'btn_save' => 'Save',
-    'field_mandatory' => "This field can't be blank"
+    'field_mandatory' => "This field can't be blank",
+    'alert_success' => 'Success !'
 ]
 
 ?>

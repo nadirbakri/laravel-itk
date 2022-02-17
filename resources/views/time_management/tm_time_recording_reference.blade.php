@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
 
     <style type="text/css">
@@ -93,7 +93,57 @@
 </head>
 
 <body>
-    <div class="time_management">
+    <div class="div-time_management">
+        <div class="div-navbar sticky-navbar">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover"
+                    alt="Back">
+                <span>Back</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover"
+                    alt="Next">
+                <span>Next</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
+                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
+                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover"
+                    alt="New">
+                <span>New</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover"
+                    alt="Edit">
+                <span>Edit</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover"
+                    alt="Save">
+                <span>Save</span>
+            </a>
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-active">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover"
+                    alt="Activate">
+                <span>Activate</span>
+            </a>
+            <a class="list-functionbar-lg" style="display: none;" href="javascript:void(0)" id="toolbar-deactive">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover"
+                    alt="Deactivate">
+                <span>Deactivate</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
+                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
+                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover"
+                    alt="List">
+                <span>List</span>
+            </a>
+        </div>
         <div class="div-title">
             <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
@@ -107,13 +157,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="in_code">{{ __('tm_time_recording_reference.label_in_code') }}</label>
-                            <input type="number" min="0" class="form-control" id="in_code" name="in_code">
+                            <input type="number" min="0" class="form-control" id="in_code" name="in_code" readonly>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="out_code">{{ __('tm_time_recording_reference.label_out_code') }}</label>
-                            <input type="number" min="0" class="form-control" id="out_code" name="out_code">
+                            <input type="number" min="0" class="form-control" id="out_code" name="out_code" readonly>
                         </div>
                     </div>
                 </div>
@@ -137,30 +187,30 @@
                         <tbody>
                             <tr>
                                 <td>Start Index</td>
-                                <td><input type="number" class="form-control" id="employee_no_start" name="employee_no_start"></td>
-                                <td><input type="number" class="form-control" id="year_start" name="year_start"></td>
-                                <td><input type="number" class="form-control" id="month_start" name="month_start"></td>
-                                <td><input type="number" class="form-control" id="day_start" name="day_start"></td>
-                                <td><input type="number" class="form-control" id="hour_start" name="hour_start"></td>
-                                <td><input type="number" class="form-control" id="minute_start" name="minute_start"></td>
-                                <td><input type="number" class="form-control" id="flag_start" name="flag_start"></td>
-                                <td><input type="number" class="form-control" id="machine_code_start" name="machine_code_start"></td>
-                                <td><input type="number" class="form-control" id="shift_start" name="shift_start"></td>
-                                <td><input type="number" class="form-control" id="in_out_code_start" name="in_out_code_start"></td>
+                                <td><input type="number" class="form-control" id="employee_no_start" name="employee_no_start" readonly></td>
+                                <td><input type="number" class="form-control" id="year_start" name="year_start" readonly></td>
+                                <td><input type="number" class="form-control" id="month_start" name="month_start" readonly></td>
+                                <td><input type="number" class="form-control" id="day_start" name="day_start" readonly></td>
+                                <td><input type="number" class="form-control" id="hour_start" name="hour_start" readonly></td>
+                                <td><input type="number" class="form-control" id="minute_start" name="minute_start" readonly></td>
+                                <td><input type="number" class="form-control" id="flag_start" name="flag_start" readonly></td>
+                                <td><input type="number" class="form-control" id="machine_code_start" name="machine_code_start" readonly></td>
+                                <td><input type="number" class="form-control" id="shift_start" name="shift_start" readonly></td>
+                                <td><input type="number" class="form-control" id="in_out_code_start" name="in_out_code_start" readonly></td>
                             </tr>
                             <tr><br></tr>
                             <tr>
                                 <td>Length digit</td>
-                                <td><input type="number" class="form-control" id="employee_no_long" name="employee_no_long"></td>
-                                <td><input type="number" class="form-control" id="year_long" name="year_long"></td>
-                                <td><input type="number" class="form-control" id="month_long" name="month_long"></td>
-                                <td><input type="number" class="form-control" id="day_long" name="day_long"></td>
-                                <td><input type="number" class="form-control" id="hour_long" name="hour_long"></td>
-                                <td><input type="number" class="form-control" id="minute_long" name="minute_long"></td>
-                                <td><input type="number" class="form-control" id="flag_long" name="flag_long"></td>
-                                <td><input type="number" class="form-control" id="machine_code_long" name="machine_code_long"></td>
-                                <td><input type="number" class="form-control" id="shift_long" name="shift_long"></td>
-                                <td><input type="number" class="form-control" id="in_out_code_long" name="in_out_code_long"></td>
+                                <td><input type="number" class="form-control" id="employee_no_long" name="employee_no_long" readonly></td>
+                                <td><input type="number" class="form-control" id="year_long" name="year_long" readonly></td>
+                                <td><input type="number" class="form-control" id="month_long" name="month_long" readonly></td>
+                                <td><input type="number" class="form-control" id="day_long" name="day_long" readonly></td>
+                                <td><input type="number" class="form-control" id="hour_long" name="hour_long" readonly></td>
+                                <td><input type="number" class="form-control" id="minute_long" name="minute_long" readonly></td>
+                                <td><input type="number" class="form-control" id="flag_long" name="flag_long" readonly></td>
+                                <td><input type="number" class="form-control" id="machine_code_long" name="machine_code_long" readonly></td>
+                                <td><input type="number" class="form-control" id="shift_long" name="shift_long" readonly></td>
+                                <td><input type="number" class="form-control" id="in_out_code_long" name="in_out_code_long" readonly></td>
                             </tr>
                         </tbody>
                     </table>
@@ -213,14 +263,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="row">
-            <div class="col-2">
-                <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
-                    style="width: 100%;">
-                    <i class="fa fa-floppy-o"></i> {{ __('tm_time_recording_reference.btn_save') }}
-                </button>
-            </div>
         </div>
     </div>
 
@@ -281,38 +323,69 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        var table = null;
-
         $.ajax({
             url: "{{ url('/time_management/time_recording_reference/table') }}",
             type: "GET",
             success: function (response) {
-                // console.log(response[0].inCode);
-                if (response.length > 0) {
-                    $('#in_code').val(response[0].inCode);
-                    $('#out_code').val(response[0].outCode);
+                // console.log(response.length);
+                if (response) {
+                    $('#in_code').val((typeof response[0].inCode !== 'undefined') ? response[0].inCode : '');
+                    $('#out_code').val((typeof response[0].outCode !== 'undefined') ? response[0].outCode : '');
 
-                    $('#employee_no_start').val(response[0].employeeNoStart);
-                    $('#year_start').val(response[0].yearStart);
-                    $('#month_start').val(response[0].monthStart);
-                    $('#day_start').val(response[0].dateStart);
-                    $('#hour_start').val(response[0].hourStart);
-                    $('#minute_start').val(response[0].minuteStart);
-                    $('#flag_start').val(response[0].flagStart);
-                    $('#machine_code_start').val(response[0].machineCodeStart);
-                    $('#shift_start').val(response[0].shiftStart);
-                    $('#in_out_code_start').val(response[0].codeInOutStart);
+                    $('#employee_no_start').val((typeof response[0].employeeNoStart !== 'undefined') ? response[0].employeeNoStart : '');
+                    $('#year_start').val((typeof response[0].yearStart !== 'undefined') ? response[0].yearStart : '');
+                    $('#month_start').val((typeof response[0].monthStart !== 'undefined') ? response[0].monthStart : '');
+                    $('#day_start').val((typeof response[0].dateStart) !== 'undefined' ? response[0].dateStart : '');
+                    $('#hour_start').val((typeof response[0].hourStart !== 'undefined') ? response[0].hourStart : '');
+                    $('#minute_start').val((typeof response[0].minuteStart !== 'undefined') ? response[0].minuteStart : '');
+                    $('#flag_start').val((typeof response[0].flagStart !== 'undefined') ? response[0].flagStart : '');
+                    $('#machine_code_start').val((typeof response[0].machineCodeStart !== 'undefined') ? response[0].machineCodeStart : '');
+                    $('#shift_start').val((typeof response[0].shiftStart !== 'undefined') ? response[0].shiftStart : '');
+                    $('#in_out_code_start').val((typeof response[0].codeInOutStart !== 'undefined') ? response[0].codeInOutStart : '');
 
-                    $('#employee_no_long').val(response[0].employeeNoLong);
-                    $('#year_long').val(response[0].yearLong);
-                    $('#month_long').val(response[0].monthLong);
-                    $('#day_long').val(response[0].dateLong);
-                    $('#hour_long').val(response[0].hourLong);
-                    $('#minute_long').val(response[0].minuteLong);
-                    $('#flag_long').val(response[0].flagLong);
-                    $('#machine_code_long').val(response[0].machineCodeLong);
-                    $('#shift_long').val(response[0].shiftLong);
-                    $('#in_out_code_long').val(response[0].codeInOutLong);
+                    $('#employee_no_long').val((typeof response[0].employeeNoLong !== 'undefined') ? response[0].employeeNoLong : '');
+                    $('#year_long').val((typeof response[0].yearLong !== 'undefined') ? response[0].yearLong : '');
+                    $('#month_long').val((typeof response[0].monthLong !== 'undefined') ? response[0].monthLong : '');
+                    $('#day_long').val((typeof response[0].dateLong !== 'undefined') ? response[0].dateLong : '');
+                    $('#hour_long').val((typeof response[0].hourLong !== 'undefined') ? response[0].hourLong : '');
+                    $('#minute_long').val((typeof response[0].minuteLong !== 'undefined') ? response[0].minuteLong : '');
+                    $('#flag_long').val((typeof response[0].flagLong !== 'undefined') ? response[0].flagLong : '');
+                    $('#machine_code_long').val((typeof response[0].machineCodeLong !== 'undefined') ? response[0].machineCodeLong : '');
+                    $('#shift_long').val((typeof response[0].shiftLong !== 'undefined') ? response[0].shiftLong : '');
+                    $('#in_out_code_long').val((typeof response[0].codeInOutLong !== 'undefined') ? response[0].codeInOutLong : '');
+
+                    $('#toolbar-new').hide();
+                    $('#toolbar-edit').show();
+                }
+
+                else {
+                    $('#in_code').val("");
+                    $('#out_code').val("");
+
+                    $('#employee_no_start').val("");
+                    $('#year_start').val("");
+                    $('#month_start').val("");
+                    $('#day_start').val("");
+                    $('#hour_start').val("");
+                    $('#minute_start').val("");
+                    $('#flag_start').val("");
+                    $('#machine_code_start').val("");
+                    $('#shift_start').val("");
+                    $('#in_out_code_start').val("");
+
+                    $('#employee_no_long').val("");
+                    $('#year_long').val("");
+                    $('#month_long').val("");
+                    $('#day_long').val("");
+                    $('#hour_long').val("");
+                    $('#minute_long').val("");
+                    $('#flag_long').val("");
+                    $('#machine_code_long').val("");
+                    $('#shift_long').val("");
+                    $('#in_out_code_long').val("");
+
+                    $('#toolbar-new').show();
+                    $('#toolbar-edit').hide();
                 }
             },
             error: function (response) {
@@ -321,14 +394,59 @@
             }
         });
 
-        load_data_table_time_recording_reference();
+        $("#toolbar-new").on('click', function () {
+            $('#record_function').val("New");
+            $('#in_code').prop('readonly', false);
+            $('#out_code').prop('readonly', false);
+            $('#employee_no_start').prop('readonly', false);
+            $('#year_start').prop('readonly', false);
+            $('#month_start').prop('readonly', false);
+            $('#day_start').prop('readonly', false);
+            $('#hour_start').prop('readonly', false);
+            $('#minute_start').prop('readonly', false);
+            $('#flag_start').prop('readonly', false);
+            $('#machine_code_start').prop('readonly', false);
+            $('#shift_start').prop('readonly', false);
+            $('#in_out_code_start').prop('readonly', false);
+            $('#employee_no_long').prop('readonly', false);
+            $('#year_long').prop('readonly', false);
+            $('#month_long').prop('readonly', false);
+            $('#day_long').prop('readonly', false);
+            $('#hour_long').prop('readonly', false);
+            $('#minute_long').prop('readonly', false);
+            $('#flag_long').prop('readonly', false);
+            $('#machine_code_long').prop('readonly', false);
+            $('#shift_long').prop('readonly', false);
+            $('#in_out_code_long').prop('readonly', false);
+            $("#toolbar-save").show();
+        });
 
-        function load_data_table_time_recording_reference() {
-            table = $('#time_recording_reference_table').DataTable({
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
-            });
-        }
+        $("#toolbar-edit").on('click', function () {
+            $('#record_function').val("Edit");
+            $('#in_code').prop('readonly', false);
+            $('#out_code').prop('readonly', false);
+            $('#employee_no_start').prop('readonly', false);
+            $('#year_start').prop('readonly', false);
+            $('#month_start').prop('readonly', false);
+            $('#day_start').prop('readonly', false);
+            $('#hour_start').prop('readonly', false);
+            $('#minute_start').prop('readonly', false);
+            $('#flag_start').prop('readonly', false);
+            $('#machine_code_start').prop('readonly', false);
+            $('#shift_start').prop('readonly', false);
+            $('#in_out_code_start').prop('readonly', false);
+            $('#employee_no_long').prop('readonly', false);
+            $('#year_long').prop('readonly', false);
+            $('#month_long').prop('readonly', false);
+            $('#day_long').prop('readonly', false);
+            $('#hour_long').prop('readonly', false);
+            $('#minute_long').prop('readonly', false);
+            $('#flag_long').prop('readonly', false);
+            $('#machine_code_long').prop('readonly', false);
+            $('#shift_long').prop('readonly', false);
+            $('#in_out_code_long').prop('readonly', false);
+            $("#toolbar-save").show();
+        });
 
         $('input[name="radiobtn1"]').on('change', function () {
             if ($('#time_in_record_earliest').prop('checked', true)) {
@@ -349,7 +467,7 @@
             }
         });
 
-        $("#btn-save").click(function () {
+        $("#toolbar-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -357,15 +475,14 @@
             $("#time_recording_reference_form").submit();
         });
 
-        $('#time_recording_reference_form').on('submit', function () {
+        $("#time_recording_reference_form").on('submit', function () {
             $.ajax({
                 type: "POST",
                 url: "{{ url('time_management/time_recording_reference/proses') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                dataType: 'json',
-                data: data,
+                data: $('#time_recording_reference_form').serialize(),
                 success: function (response) {
                     if (response.status == "true") {
                         $("#btn-save").prop("disabled", false);

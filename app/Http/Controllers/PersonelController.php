@@ -1834,60 +1834,67 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/getuserdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
+            if ($request->employeeNo !== null) {
+                $response = $client->post(env('API_URL') . '/getuserdetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
 
-            $response2 = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
+                $response2 = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+                $arrResult2 = json_decode($response2->getBody()->getContents());  
+
+                // var_dump($arrResult->dataListSet);
+
+                if($arrResult->dataListSet == null){
+                    $data = [];
+                }
+                else {
+                    $data = $arrResult->dataListSet;
+                    $data2 = $arrResult2->dataListSet;
+                    if ($data[0]->photo == null){
+                        $filename = 'profile-picture.png';
+                    }
+                    else {
+                        $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
+                        file_put_contents(public_path("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                    }
+                }
+
+                if($arrResult2->dataListSet == null){
+                    $data2 = [];
+                }else{
+                    $data2 = $arrResult2->dataListSet;
+                }
+
+                return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
+            }
+
+            else {
+                $filename = 'profile-picture.png';
+                return view('personel.personel_personal_data_detail', ['data' => '', 'data2' => '', 'photo' => $filename, 'func' => $request->func]);
+            }
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-        $arrResult2 = json_decode($response2->getBody()->getContents());  
-
-        if($arrResult->dataListSet == null){
-            $data = [];
-        }
-        else {
-            $data = $arrResult->dataListSet;
-            if ($request->func == 'new' || $data[0]->photo == null){
-                $filename = 'profile-picture.png';
-            }
-            else {
-                $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                // var_dump($arrResult->dataListSet[0]->photo);
-                file_put_contents(public_path("photo_profile/") . $filename, base64_decode($data[0]->photo));
-            }
-        }
-
-        if($arrResult2->dataListSet == null){
-            $data2 = [];
-        }else{
-            $data2 = $arrResult2->dataListSet;
-        }
-
-        // var_dump($arrResult->dataListSet);
-
-        return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
     }
 
     public function dataDetailPerformancePersonel(Request $request)
@@ -4764,7 +4771,9 @@ class PersonelController extends Controller
                 "taxStatus" => $request->tax_status_payroll,
                 "taxStatusNextYear" => $request->tax_status_next_year_payroll,
                 "flagExcludePayroll" => isset($request->exclude_payroll_process_payroll) ? (bool) $request->exclude_payroll_process_payroll : false,
+                "flagTemp" => "string",
                 "changedNo" => 0,
+                "token" => Session::get('token'),
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),
                 "changedDate" => date("Y-m-d\TH:i:s"),
@@ -4778,6 +4787,79 @@ class PersonelController extends Controller
             ];
 
             // var_dump($param);
+
+            $datauser = [
+                "recordStatus" => $request->record_status,
+                "userID" => "string",
+                "email" => "string",
+                "userName" => "string",
+                "token" => "string",
+                "languageCode" => App::getLocale(),
+                "photo" => ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                "keyPass" => "string",
+                "hashPass" => "string",
+                "changedNo" => 0,
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "companyCode" => Session::get('companyCode'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName')
+            ];
+
+            $param['user'] = $datauser;
+
+            $datauserDetail = [
+                "recordStatus" => $request->record_status,
+                "userID" => "string",
+                "userName" => "string",
+                "employeeNo" => $request->employee_no_info,
+                "email" => "string",
+                "companyCode" => Session::get('companyCode'),
+                "companyName" => $request->company_name_profile,
+                "keyPass" => "string",
+                "hashPass" => "string",
+                "token" => null,
+                "defaultCompany" => false,
+                "flagAppLead" => false,
+                "flagAppHRD" => false,
+                "userType" => "string",
+                "changedNo" => 0,
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "moduleID" => "string",
+                "groupAuthorizeCode" => $request->group_authorize_payroll,
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $datauserAkses = [
+                "companyCode" => Session::get('companyCode'),
+                "userID" => "string",
+                "moduleID" => "string",
+                "modulename" => "string",
+                "groupAuthorizeCode" => $request->group_authorize_payroll,
+                "groupAuthorizeDesc" => "string",
+                "changedNo" => 0,
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $param['userAkses'] = $datauserAkses;
 
             if(!empty($request->id_no_info) && !is_null($request->id_no_info[0])){
                 $datapeMasterInfo = [
@@ -4804,20 +4886,20 @@ class PersonelController extends Controller
                     "idNoPlaceRegistration" => null,
                     "idNoExpiryDate" => null,                
                     "homeAddress" => $request->address_home,
-                    "homeCityCode" => $request->city_text_home,
-                    "homeZipCode" => $request->zip_code_text_home,
+                    "homeCityCode" => $request->city_select_home,
+                    "homeZipCode" => $request->zip_code_select_home,
                     "homePhone" => $request->phone_number_home,
                     "otherAddress" => $request->address_other,
-                    "otherCityCode" => $request->city_text_other,
+                    "otherCityCode" => $request->city_select_other,
                     "otherZipCode" => $request->zip_code_select_other,
                     "otherPhone" => $request->phone_number_other,
                     "workAddress" => $request->address_work,
-                    "workCityCode" => $request->city_text_work,
-                    "workZipCode" => $request->zip_code_text_work,
+                    "workCityCode" => $request->city_select_work,
+                    "workZipCode" => $request->zip_code_select_work,
                     "workPhone" => $request->phone_number_work,
                     "correspondenceAddress" => $request->address_correspondence,
-                    "correspondenceCityCode" => $request->city_text_correspondence,
-                    "correspondenceZipCode" => $request->zip_code_text_correspondence,
+                    "correspondenceCityCode" => $request->city_select_correspondence,
+                    "correspondenceZipCode" => $request->zip_code_select_correspondence,
                     "correspondencePhone" => $request->phone_number_correspondence,
                     "personalHandphone" => $request->handphone_no_other,
                     "personalEmailAddress" => $request->personal_email_other,
@@ -4923,12 +5005,6 @@ class PersonelController extends Controller
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
                     ['body' => json_encode($param)]
                 );
-                
-                $arrResult = json_decode($response->getBody()->getContents());
-                // var_dump($arrResult->dataListSet);
-
-                return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
-
             }
             
             else{
@@ -4940,11 +5016,11 @@ class PersonelController extends Controller
             var_dump($e->getResponse());
         }
 
-        // $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
 
         // var_dump($arrResult->dataListSet);
 
-        // return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function prosesNatureofWorkPersonel(Request $request)
