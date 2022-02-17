@@ -458,6 +458,7 @@ Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementC
 Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 
+Route::post('time_management/time_recording_process_form/import', 'TimeManagementController@importTimeRecordingProcessForm');
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 
 /* Route Untuk Menu Payroll */
