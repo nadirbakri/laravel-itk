@@ -27,7 +27,7 @@ class TimeManagementController extends Controller
 
     public function pageTimeRecordingProcessForm() 
     {
-        return view ('time_management.tm_process_form');
+        return view ('time_management.tm_time_recording_process_form');
     }
 
     public function pageUpdateAbsenteeismData()

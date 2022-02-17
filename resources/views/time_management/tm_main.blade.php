@@ -27,7 +27,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-master-data" aria-expanded="true" aria-controls="time_management-master-data">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/time_management/timemanagement-masterdata.png') }}" alt="Time Management">
+						<img class="dropdown-logo" src="{{ url('/icons/time_management/timemanagement-masterdata.svg') }}" alt="Time Management">
 						<span class="dropdown-title-text">{{ __('time_management.data_entry') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -111,7 +111,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-maintenance" aria-expanded="true" aria-controls="time_management-maintenance">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-settings.png') }}" alt="Time Management">
+						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-settings.svg') }}" alt="Time Management">
 						<span class="dropdown-title-text">{{ __('time_management.maintenance') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -164,7 +164,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-report" aria-expanded="true" aria-controls="time_management-report">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-process.png') }}" alt="Time Management">
+						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-process.svg') }}" alt="Time Management">
 						<span class="dropdown-title-text">{{ __('time_management.report') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>

@@ -2679,17 +2679,16 @@
             $('#company_email_profile').text('Company Email');
             $('#phone_number_profile').text('Phone Number');
 
+            // console.log(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
             //Tab Info
             $.ajax({
                 url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
                 type: "GET",
+                data: {
+                    'url': '/pemaster/getpemastergrid'
+                },
                 success: function (response) {
-                    if (response[0].flagAutoEmployeeNo == true) {
-                        $('#employee_no_info').val(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
-                    }
-                    else {
-                        $('#employee_no_info').val("");
-                    }
+                    $('#employee_no_info').val(response);
                 },
                 error: function (response) {
                     $('#notification_error').modal('show');
