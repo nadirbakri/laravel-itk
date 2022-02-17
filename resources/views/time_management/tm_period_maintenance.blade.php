@@ -441,42 +441,42 @@
                         data: 'absenteeismStart', 
                         name: 'absenteeismStart',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MMM-YYYY');
                         }
                     },
                     {
                         data: 'absenteeismEnd', 
                         name: 'absenteeismEnd',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MMM-YYYY');
                         }
                     },
                     {
                         data: 'overtimeStart', 
                         name: 'overtimeStart',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MMM-YYYY');
                         }
                     },
                     {
                         data: 'overtimeEnd', 
                         name:'overtimeEnd',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MMM-YYYY');
                         }
                     },
                     {
                         data: 'salaryStart', 
                         name: 'salaryStart',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MMM-YYYY');
                         }
                     },
                     {
                         data: 'salaryEnd', 
                         name: 'salaryEnd',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MMM-YYYY');
                         }
                     }
                 ],

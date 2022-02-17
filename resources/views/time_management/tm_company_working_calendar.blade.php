@@ -326,7 +326,11 @@
                         return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                     }
                 },
-                {data: 'calendar', name: 'calendar'},
+                {data: 'calendar', name: 'calendar',
+                    render: function (data, type, row) {
+                        return moment(data).format('DD-MMM-YYYY');
+                    }
+                },
                 {data: 'description', name: 'description'},
                 {data: 'flagType', name: 'flagType'},
                 {data: 'locationCode', name: 'locationCode'}

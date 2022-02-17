@@ -147,17 +147,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="div-table col-6">
-                    <table id="detail_absenteeism_report_table" class="table hover  width: 100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>{{ __('tm_detail_absenteeism_report.label_table_absent_code') }}</th>
-                                <th>{{ __('tm_detail_absenteeism_report.label_table_description') }}</th>
-                                <th>{{ __('tm_detail_absenteeism_report.label_table_leave') }}</th>
-                            </tr>
-                        </thead>
-                    </table>
+                <div class="row">
+                    <div class="div-table col-6">
+                        <table id="detail_absenteeism_report_table" class="table hover  width: 100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{{ __('tm_detail_absenteeism_report.label_table_absent_code') }}</th>
+                                    <th>{{ __('tm_detail_absenteeism_report.label_table_description') }}</th>
+                                    <th>{{ __('tm_detail_absenteeism_report.label_table_leave') }}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="selected_absent_code">&nbsp;</label>
+                            <textarea class="form-control" id="selected_absent_code" rows="15"></textarea>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="row">
