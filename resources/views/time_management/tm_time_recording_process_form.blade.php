@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('tm_process_form.judul') }}</title>
+    <title>{{ __('tm_time_recording_process_form.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -41,6 +41,41 @@
             border-top-right-radius: 5px;
         }
 
+        .modal-header-notification-success {
+            border-bottom: 1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -52,21 +87,21 @@
         <div class="div-title">
             <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('tm_process_form.list') }}</span>
+                <span class="title-text">{{ __('tm_time_recording_process_form.list') }}</span>
             </a> 
         </div>
         <div class="div-form">
-            <form id="tm_process_form" method="post">
+            <form id="tm_time_recording_process_upload_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="process_date">{{ __('tm_process_form.label_process_date') }}</label>
+                                    <label for="process_date">{{ __('tm_time_recording_process_form.label_process_date') }}</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="process_date" name="period"
-                                            placeholder="{{ __('tm_process_form.label_process_date') }}">
+                                            placeholder="{{ __('tm_time_recording_process_form.label_process_date') }}">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -77,10 +112,10 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="process_date">{{ __('tm_process_form.label_file_location') }}</label>
+                                    <label for="process_date">{{ __('tm_time_recording_process_form.label_file_location') }}</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="file_location" name="file_location">
-                                        <label class="custom-file-label" for="file_location">{{ __('tm_process_form.label_select_file_location') }}</label>
+                                        <label class="custom-file-label" for="file_location">{{ __('tm_time_recording_process_form.label_select_file_location') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -93,25 +128,45 @@
                                         <input class="form-check-input" type="checkbox" id="automatic"
                                             name="automatic" value="true">
                                         <label class="form-check-label" 
-                                            for="automatic">{{ __('tm_process_form.label_automatic_in_out_code') }}</label>
+                                            for="automatic">{{ __('tm_time_recording_process_form.label_automatic_in_out_code') }}</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-process" name="btn-process-upload" id="btn-process">
-                                    <i class="fa fa-play-circle-o"></i> {{ __('tm_process_form.btn_process_upload') }}
+                                <button type="submit" class="btn btn-process" name="btn-process-upload" id="btn-process-upload">
+                                    <i class="fa fa-play-circle-o"></i> {{ __('tm_time_recording_process_form.btn_process_upload') }}
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-6">
+                        <p><u>{{ __('tm_time_recording_process_form.label_text') }}</u></p>
+                        <p>{{ __('tm_time_recording_process_form.label_text_detail') }}</p>
+                        <p><u>{{ __('tm_time_recording_process_form.label_excel') }}</u></p>
+                        <p>{{ __('tm_time_recording_process_form.note_column_a') }}</p>
+                        <p>{{ __('tm_time_recording_process_form.note_column_b') }}</p>
+                        <p>{{ __('tm_time_recording_process_form.note_column_c') }}</p>
+                        <p>{{ __('tm_time_recording_process_form.note_column_d') }}</p>
+                        <p>{{ __('tm_time_recording_process_form.note_column_e') }}</p>
+                        <p>{{ __('tm_time_recording_process_form.note_column_f') }}</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="div-form">
+            <form id="tm_time_recording_process_delete_form">
+                @csrf
+                <div class="row">
+                    <div class="col-6">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="delete_date">{{ __('tm_process_form.label_delete_date_from') }}</label>
+                                    <label for="delete_date">{{ __('tm_time_recording_process_form.label_delete_date_from') }}</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="delete_date_from" name="delete_date_from"
-                                            placeholder="{{ __('tm_process_form.label_delete_date_from') }}">
+                                            placeholder="{{ __('tm_time_recording_process_form.label_delete_date_from') }}">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -120,10 +175,10 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="delete_date">{{ __('tm_process_form.label_delete_date_to') }}</label>
+                                    <label for="delete_date">{{ __('tm_time_recording_process_form.label_delete_date_to') }}</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="delete_date_to" name="delete_date_to"
-                                            placeholder="{{ __('tm_process_form.label_delete_date_to') }}">
+                                            placeholder="{{ __('tm_time_recording_process_form.label_delete_date_to') }}">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -135,41 +190,65 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="employee_no_from">{{ __('tm_process_form.label_employee_no_from') }}</label>
+                                        for="employee_no_from">{{ __('tm_time_recording_process_form.label_employee_no_from') }}</label>
                                     <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="employee_no_to">{{ __('tm_process_form.label_employee_no_to') }}</label>
+                                    <label for="employee_no_to">{{ __('tm_time_recording_process_form.label_employee_no_to') }}</label>
                                     <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-process" name="btn-process-delete" id="btn-process">
-                                    <i class="fa fa-play-circle-o"></i> {{ __('tm_process_form.btn_process_delete') }}
+                                <button type="submit" class="btn btn-process" name="btn-process-delete" id="btn-process-delete">
+                                    <i class="fa fa-play-circle-o"></i> {{ __('tm_time_recording_process_form.btn_process_delete') }}
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <p><u>{{ __('tm_process_form.label_text') }}</u></p>
-                        <p>{{ __('tm_process_form.label_text_detail') }}</p>
-                        <p><u>{{ __('tm_process_form.label_excel') }}</u></p>
-                        <p>{{ __('tm_process_form.note_column_a') }}</p>
-                        <p>{{ __('tm_process_form.note_column_b') }}</p>
-                        <p>{{ __('tm_process_form.note_column_c') }}</p>
-                        <p>{{ __('tm_process_form.note_column_d') }}</p>
-                        <p>{{ __('tm_process_form.note_column_e') }}</p>
-                        <p>{{ __('tm_process_form.note_column_f') }}</p>
-                    </div>
+                    <div class="col-6"></div>
                 </div>
             </form>
         </div>
     </div>
-    
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('tm_time_recording_process_form.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -271,31 +350,6 @@
                 }
             }
 
-            // $(field).on('select2:open', function (e) {
-            //     html = '<div class="row header-select">' +
-            //         '<div class="col-6"><b>Employee No</b></div>' +
-            //         '<div class="col-6"><b>Employee Name</b></div>' +
-            //         '</div>';
-            //     $('.select2-search').append(html);
-            // });
-
-            // $(field).on('select2:close', function (event) {
-            //     var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            //     $searchfield.prop('disabled', true);
-            // });
-
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Employee No</b></div>' +
-            //             '<div class="col-6"><b>Full Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             var $employeeNo = $(field).select2({
@@ -338,6 +392,81 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        $("#btn-process-upload").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#tm_time_recording_process_upload_form").submit();
+        });
+
+        $('#notification_success').on('hide.bs.modal', function () {
+            window.location = "{{ url('time_management/time_recording_process_form') }}";
+        });
+
+        if ($("#tm_time_recording_process_upload_form").length > 0) {
+            $("#tm_time_recording_process_upload_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    var myForm = document.getElementById('tm_time_recording_process_upload_form');
+                    var formdata = new FormData(myForm);
+                    
+                    $.ajax({
+                        url: "{{ url('time_management/time_recording_process_form/import') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            console.log(response);
+                            if (response[0].status == "true") {
+                                $("#btn-process-upload").prop("disabled", false);
+                                $("#btn-process-upload").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/time_recording_process_form') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process-upload").prop("disabled", false);
+                                $("#btn-process-upload").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_upload") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process-upload").prop("disabled", false);
+                            $("#btn-process-upload").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_upload") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
         }
     })
 </script>

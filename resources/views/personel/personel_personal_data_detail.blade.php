@@ -2252,7 +2252,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#start_date_employment_data_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2270,7 +2269,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#end_date_employment_data_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2288,7 +2286,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#birth_date_family_dependent_data_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2309,7 +2306,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#birth_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2325,7 +2321,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#passport_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2341,7 +2336,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#tax_registered_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2357,7 +2351,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#tax_registered_date_payroll_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2373,7 +2366,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#tax_expiry_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2389,7 +2381,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#tax_expiry_date_payroll_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2405,7 +2396,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#driving_license_car_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2421,7 +2411,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#driving_license_car_expiry_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2437,7 +2426,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#driving_license_motorcycle_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2453,7 +2441,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#driving_license_motorcycle_expiry_date_info_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2469,7 +2456,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#origin_join_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2485,7 +2471,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#joining_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2501,7 +2486,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#joining_date_tenaga_kerja_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2517,7 +2501,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#joining_date_kesehatan_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2533,7 +2516,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#probation_end_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2549,7 +2531,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#contract_start_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2565,7 +2546,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#contract_end_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2581,7 +2561,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#termination_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2597,7 +2576,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#effective_terminated_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2613,7 +2591,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#start_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2629,7 +2606,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#end_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2645,7 +2621,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#payment_period_start_date_tenaga_kerja_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2661,7 +2636,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#payment_period_start_date_kesehatan_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2677,7 +2651,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#insurance_date_insurance_calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -2706,19 +2679,16 @@
             $('#company_email_profile').text('Company Email');
             $('#phone_number_profile').text('Phone Number');
 
+            // console.log(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
             //Tab Info
             $.ajax({
                 url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
                 type: "GET",
+                data: {
+                    'url': '/pemaster/getpemastergrid'
+                },
                 success: function (response) {
-                    // console.log(response[0].flagAutoEmployeeNo);
-
-                    if (response[0].flagAutoEmployeeNo == true) {
-                        $('#employee_no_info').val(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
-                    }
-                    else {
-                        $('#employee_no_info').val("");
-                    }
+                    $('#employee_no_info').val(response);
                 },
                 error: function (response) {
                     $('#notification_error').modal('show');
@@ -2867,7 +2837,7 @@
             // console.log(arrData2[0].peMasterInfo.bloodType);
 
             //Profile
-            // console.log(arrData[0].photo);
+            console.log(arrData[0].photo);
             $('#employee_name_profile').text(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
             $('#record_function').val("Edit");
@@ -2887,7 +2857,6 @@
                 type: 'GET',
                 url: '/city/personal_data/api',
                 data: {
-                    // 'employeeNo' : ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''),
                     'birthPlace': ((typeof arrData2[0].birthPlace !== 'undefined') ? arrData2[0].birthPlace : '')
                 }
             }).then(function (data) {
@@ -5310,7 +5279,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })

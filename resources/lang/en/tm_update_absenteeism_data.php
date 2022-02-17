@@ -14,7 +14,8 @@
         'label_column_h' => 'Column H : Cost Center Code',
         'label_column_i' => 'Column I : Overtime Code',
         'label_column_j' => 'Column J : Overtime Hour',
-        'btn_process' => 'Process'
+        'btn_process' => 'Process',
+        'alert_success' => 'Success !'
 ]
 
 ?>

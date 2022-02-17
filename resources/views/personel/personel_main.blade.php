@@ -28,7 +28,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#personel-master-data" aria-expanded="true" aria-controls="personel-master-data">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/personel/personel-data.png') }}" alt="Personel Data">
+						<img class="dropdown-logo" src="{{ url('/icons/personel/personnel-master-data.svg') }}" alt="Personel Data">
 						<span class="dropdown-title-text">{{ __('personel.data_entry') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -161,7 +161,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#personel-maintenance" aria-expanded="true" aria-controls="personel-maintenance">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/personel/personel-maintenance.png') }}" alt="Personel Maintenance">
+						<img class="dropdown-logo" src="{{ url('/icons/personel/personnel-maintenance.svg') }}" alt="Personel Maintenance">
 						<span class="dropdown-title-text">{{ __('personel.personel_maintenance') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>

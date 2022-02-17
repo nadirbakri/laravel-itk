@@ -20,6 +20,7 @@ return [
     'update_absenteeism_data' => 'Memperbarui Data Absensi',
     'input_balance_leave' => 'Masukan Saldo Cuti',
     'leave_transaction_by_employee_no' => 'Tinggalkan Transaksi Berdasarkan Nomor Karyawan',
+    'absenteeism_data_entry_by_employee_no' => 'Absensi Data Entri Berdasarkan Nomor Karyawan',
     'template_preparation' => 'Persiapan Template',
     'update_shift_by_date' => 'Perbarui Shift Berdasarkan Tanggal',
     'overtime_spl' => 'Jam Lembur',

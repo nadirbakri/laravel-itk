@@ -167,7 +167,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="row">
                     <div class="form-group ml-4">
                         <label for="include_resign">&nbsp;</label>

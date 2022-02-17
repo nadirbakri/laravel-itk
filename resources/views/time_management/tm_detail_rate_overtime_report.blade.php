@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
@@ -122,31 +123,40 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="absent_code">{{ __('tm_detail_rate_overtime_report.label_absent_code') }}</label>
+                                for="overtime_code">{{ __('tm_detail_rate_overtime_report.label_overtime_code') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="form-group">
-                            <label for="absent_code_all">&nbsp;</label>
                             <div class="form-radio">
-                                <input class="form-radio-input" type="radio" id="absent_code_all"
-                                    name="absent_code_all" value="true">
+                                <input class="form-radio-input" type="radio" id="all_overtime_code"
+                                    name="overtime_code" value="all">
                                 <label class="form-radio-label"
-                                    for="absent_code_all">{{ __('tm_detail_rate_overtime_report.label_absent_code_all') }}</label>
+                                    for="overtime_code">{{ __('tm_detail_rate_overtime_report.label_overtime_code_all') }}</label>
                             </div>
                         </div>
                     </div> 
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="absent_code_selection">&nbsp;</label>
                             <div class="form-radio">
-                                <input class="form-radio-input" type="radio" id="absent_code_selection"
-                                    name="absent_code_selection" value="true">
+                                <input class="form-radio-input" type="radio" id="selection_overtime_code"
+                                    name="overtime_code" value="selection">
                                 <label class="form-radio-label"
-                                    for="absent_code_selection">{{ __('tm_detail_rate_overtime_report.label_absent_code_selection') }}</label>
+                                    for="overtime_code">{{ __('tm_detail_rate_overtime_report.label_overtime_code_selection') }}</label>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="div-table col-6">
+                    <table id="detail_rate_overtime_report_table" class="table hover  width: 100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ __('tm_detail_rate_overtime_report.label_table_overtime_code') }}</th>
+                                <th>{{ __('tm_detail_rate_overtime_report.label_table_description') }}</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
                 <div class="row">
                     <div class="form-group ml-4">
@@ -219,6 +229,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -302,6 +313,8 @@
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
 
+        load_data_overtime_code();
+
         // $('select').on('select2:opening select2:closing', function( event ) {
         //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
         //     $searchfield.prop('disabled', true);
@@ -315,6 +328,100 @@
         //     $('.select2-search').append(html);
         // });
 
+        $('#detail_rate_overtime_report_table thead tr').clone(true).appendTo('#detail_rate_overtime_report_table thead');
+        $('#detail_rate_overtime_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+    
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        function load_data_overtime_code() {
+            table = $('#detail_rate_overtime_report_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/overtime_code/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type, row) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox" name="check_overtime_code[' + $("<div />").text(row.absentCode).html() + ']" value="1">' : ''
+                        }
+                    },
+                    {data: 'absentCode', name: 'absentCode',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="absentCode[' + $("<div />").text(row.absentCode).html() + ']" value="' +
+                                $('<div />').text(row.absentCode).html() + '">' + 
+                                $('<div />').text(row.absentCode).html();
+                        }},
+                    {data: 'description', name: 'description',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="description[' + $("<div />").text(row.description).html() + ']" value="' +
+                                $('<div />').text(row.description).html() + '">' + 
+                                $('<div />').text(row.description).html();
+                        }},
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
+        $('input[name="overtime_code"]').on('change', function () {
+            $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            if ($('#all_overtime_code').is(':checked')) {
+                table.rows().select();
+                $('#check_overtime_code', rows).prop('checked', true);
+            }
+            else {
+                table.rows().deselect();
+                $('#check_overtime_code', rows).prop('checked', false);
+            }
+        });
+
+        // $('#detail_rate_overtime_report_table tbody').on("change", 'input[type="checkbox"]', function(){
+        //     if(this.checked){
+        //         console.log("okay");
+        //     //    $('input=[type="checkbox"]:checked.not(:first)').each(function (){
+        //     //        selectvalue += table.row($(this).closest("tr")).data()[1]+" ";
+        //     //    });
+        //     }
+        // });
+
+        $('#detail_rate_overtime_report_table tbody').on('change', 'input[name="check_overtime_code[]"]', function(){
+            if(!this.checked){
+                var all = $('#all_overtime_code').get(0);
+                var selection = $('#selection_overtime_code').get(0);
+                if(all && all.checked && ('checked' in all)){
+                    all.checked = false;
+                    selection.checked = true;
+                }
+            } else  {
+                var selection = $('#selection_overtime_code').get(0);
+                if(selection && selection.checked && ('checked' in selection)){
+                    selection.checked = false;
+                }
+            }
+        });
+        
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
             $searchfield.prop('disabled', true);
@@ -904,6 +1011,11 @@
                         type: "POST",
                         data: $('#tm_detail_rate_overtime_report_form').serialize(),
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_detail_rate_overtime_report.btn_print") }}'
+                            );
+
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

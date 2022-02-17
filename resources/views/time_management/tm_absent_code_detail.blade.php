@@ -127,14 +127,14 @@
                             <label for="category">{{ __('tm_absent_code.label_category') }}</label>
                             <span class="required">*</span>
                             <select class="form-control" id="category" name="category"
-                                placeholder="{{ __('tm_absent_code.label_category') }}">
+                                placeholder="{{ __('tm_absent_code.label_category') }}"> </select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="deduct_leave">{{ __('tm_absent_code.label_deduct_leave') }}</label>
                             <select class="form-control" id="deduct_leave" name="deduct_leave"
-                                placeholder="{{ __('tm_absent_code.label_deduct_leave') }}">
+                                placeholder="{{ __('tm_absent_code.label_deduct_leave') }}"> </select>
                         </div>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
                             <label for="tolerance_request">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_tolerance_request"
-                                    name="check_tolerance_request" value="check_tolerance_request">
+                                    name="check_tolerance_request">
                                 <label
                                     for="tolerance_request">{{ __('tm_absent_code.label_tolerance_request') }}</label>
                             </div>
@@ -222,7 +222,7 @@
                         <div class="form-group">
                             <label for="back_date">{{ __('tm_absent_code.label_back_date') }}</label>
                             <input type="text" class="form-control" id="back_date" name="back_date"
-                                placeholder="{{ __('tm_absent_code.label_back_date') }}">
+                                placeholder="{{ __('tm_absent_code.label_back_date') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                         <div class="form-group">
                             <label for="max_per_request">{{ __('tm_absent_code.label_max_per_request') }}</label>
                             <input type="text" class="form-control" id="max_per_request" name="max_per_request"
-                                placeholder="{{ __('tm_absent_code.label_max_per_request') }}">
+                                placeholder="{{ __('tm_absent_code.label_max_per_request') }}" readonly>
                         </div>
                     </div>
                 </div>          
@@ -291,7 +291,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('time_management/work_pattern') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('time_management/absent_code') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('tm_absent_code.btn_cancel') }}
                         </a>
@@ -345,12 +345,17 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
         var checkboxes = $('#div-payroll-count');
         var j = 0;
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
         for (var i = 0; i < 25; i++) {
             if(i%5 == 0){
                 // console.log(i);
@@ -372,9 +377,173 @@
                 );
         }
 
-        loadDataAbsentCode();
+        var func = "{{ $func }}";
+        var arrData = @json($data);
+        var table = null;
 
-        function loadDataAbsentCode() {
+        if (func == 'new') {
+            $('#record_status').val("A");
+            $('#record_function').val("New");
+            $('#absent_code').val("");
+            $('#description').val("");
+            $('#category').val(null).trigger('change');
+            $('#deduct_leave').val(null).trigger('change');
+            $('#check_get_compensation_leave').prop('checked', false);
+            $('#check_must_woman').prop('checked', false);
+            $('#check_deduct_salary').prop('checked', false);
+            $('#check_deduct_allowance').prop('checked', false);
+            $('#check_warning').prop('checked', false);
+            $('#times_allowed').val("");
+            $('#check_tolerance_request').prop('checked', false);
+            $('#back_date').val("");
+            $('#max_per_request').val("");
+            $('#check_display_absent_code').prop('checked', false);
+            $('#check_need_attachment').prop('checked', false);
+            for(var i=0; i<25; i++){
+                $('#check_payroll'+ (i+1)).prop('checked', false);
+            }
+        }
+        else if (func == 'edit') {
+            $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
+            $('#record_function').val("Edit");
+            $('#absent_code').val(((typeof arrData[0].absentCode !== 'undefined') ? arrData[0].absentCode : ''));
+            $('#description').val(htmlDecode(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '')));
+            $('#times_allowed').val(((typeof arrData[0].timesAllowed !== 'undefined') ? arrData[0].timesAllowed : ''));
+            $('#back_date').val(((typeof arrData[0].reqBackDay !== 'undefined') ? arrData[0].reqBackDay : ''));
+            $('#max_per_request').val(((typeof arrData[0].reqAdvanceDay !== 'undefined') ? arrData[0].reqAdvanceDay : ''));
+            $.ajax({
+                type: 'GET',
+                url: '/absent_code/api',
+                data: {
+                    'absentType': "{{ isset($data[0]->absentType) ? $data[0]->absentType : '' }}"
+                }
+            }).then(function (data) {
+                // var option = new Option(data.positionCode, data.positionCode, true, true);
+                var option = $('<option/>', {
+                    id: data.absentType,
+                    title: data.description,
+                    text: data.absentType
+                });
+                $("#category").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
+                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
+                $("#category").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.absentType,
+                        text: data.absentType,
+                        data: data
+                    }
+                });
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/absent_code/api',
+                data: {
+                    'deductLeave': "{{ isset($data[0]->deductLeave) ? $data[0]->deductLeave : '' }}"
+                }
+            }).then(function (data) {
+                // var option = new Option(data.positionCode, data.positionCode, true, true);
+                var option = $('<option/>', {
+                    id: data.deductLeave,
+                    title: data.description,
+                    text: data.deductLeave
+                });
+                $("#deduct_leave").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
+                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
+                $("#deduct_leave").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.absentType,
+                        text: data.absentType,
+                        data: data
+                    }
+                });
+            });
+            var get_compensation_leave = ((typeof arrData[0].getCompensationLeave !== 'undefined') ? arrData[0].getCompensationLeave : '');
+            // console.log(work_on_holiday);
+            if ( get_compensation_leave == 1 ) {
+                $('#check_get_compensation_leave').prop('checked', true)
+            }
+            else {
+                $('#check_get_compensation_leave').prop('checked', false)
+            }
+            var must_woman = ((typeof arrData[0].mustWoman !== 'undefined') ? arrData[0].mustWoman : '');
+            // console.log(work_on_holiday);
+            if ( must_woman == 1 ) {
+                $('#check_must_woman').prop('checked', true)
+            }
+            else {
+                $('#check_must_woman').prop('checked', false)
+            }
+            var deduct_salary = ((typeof arrData[0].deductSalary !== 'undefined') ? arrData[0].deductSalary : '');
+            // console.log(work_on_holiday);
+            if ( deduct_salary == 1 ) {
+                $('#check_deduct_salary').prop('checked', true)
+            }
+            else {
+                $('#check_deduct_salary').prop('checked', false)
+            }
+            var deduct_allowance = ((typeof arrData[0].deductAllowance !== 'undefined') ? arrData[0].deductAllowance : '');
+            // console.log(work_on_holiday);
+            if ( deduct_allowance == 1 ) {
+                $('#check_deduct_allowance').prop('checked', true)
+            }
+            else {
+                $('#check_deduct_allowance').prop('checked', false)
+            }
+            var warning = ((typeof arrData[0].flagWarning !== 'undefined') ? arrData[0].flagWarning : '');
+            // console.log(work_on_holiday);
+            if ( warning == 1 ) {
+                $('#check_warning').prop('checked', true)
+            }
+            else {
+                $('#check_warning').prop('checked', false)
+            }
+            var tolerance_request = ((typeof arrData[0].flagReqDay !== 'undefined') ? arrData[0].flagReqDay : '');
+            // console.log(work_on_holiday);
+            if ( tolerance_request == 1 ) {
+                $('#check_tolerance_request').prop('checked', true)
+            }
+            else {
+                $('#check_tolerance_request').prop('checked', false)
+            }
+            var display_absent_code = ((typeof arrData[0].flagDisplayESS !== 'undefined') ? arrData[0].flagDisplayESS : '');
+            // console.log(work_on_holiday);
+            if ( display_absent_code == 1 ) {
+                $('#check_display_absent_code').prop('checked', true)
+            }
+            else {
+                $('#check_display_absent_code').prop('checked', false)
+            }
+            var need_attachment = ((typeof arrData[0].flagAttachment !== 'undefined') ? arrData[0].flagAttachment : '');
+            // console.log(work_on_holiday);
+            if ( need_attachment == 1 ) {
+                $('#check_need_attachment').prop('checked', true)
+            }
+            else {
+                $('#check_need_attachment').prop('checked', false)
+            }
+            for ( var i=0; i<25; i++ ) {
+                var data_payroll = 'payroll'+(i+1);
+                // console.log(arrData[0][data_payroll]);
+                var payroll = ((typeof arrData[0][data_payroll] !== 'undefined') ? arrData[0][data_payroll] : '');
+                if ( payroll == 1 ) {
+                    $('#check_payroll'+ (i+1)).prop('checked', true)
+                }
+                else {
+                    $('#check_payroll'+ (i+1)).prop('checked', false)
+                }
+            }
+
+        }
+        loadDataAbsentType();
+        loadDataDeductLeave();
+
+        function loadDataAbsentType() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -392,23 +561,11 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $('#absent_code').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Absent Type</b></div>' +
-            //             '<div class="col-6"><b>Absent Code</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             $('#category').select2({
                 width: '100%',
-                placeholder: 'Choose Absent Code',
+                placeholder: 'Choose Absent Type',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: false,
@@ -449,6 +606,82 @@
             });
         }
 
+        function loadDataDeductLeave() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Deduct Leave</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.deductLeave + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#deduct_leave').select2({
+                width: '100%',
+                placeholder: 'Choose Deduct Leave',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/absent_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.deductLeave,
+                                    id: item.deductLeave,
+                                    data: item,
+                                    title : item.description
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        $('#check_tolerance_request').on('change', function() {
+            if ($(this).is(':checked')) {
+            // console.log($('#check_tolerance_request').val());
+                $('#back_date').prop('readonly', false);
+                $('#max_per_request').prop('readonly', false);
+            }
+
+            else {
+                $('#back_date').prop('readonly', true);
+                $('#max_per_request').prop('readonly', true);
+            }
+        });
+
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
         }
@@ -456,8 +689,6 @@
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('time_management/absent_code') }}";
         });
-
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
