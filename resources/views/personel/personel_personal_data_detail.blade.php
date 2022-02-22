@@ -89,79 +89,80 @@
 
 <body>
     <div class="div-personel">
-        <form id="employee_profile_form" method="post" enctype="multipart/form-data">
+        {{-- <form id="employee_profile_form" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="div-profile">
-                <div class="row div-row-profile">
-                    <div class="col-2 subdiv-profile-image">
-                        <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
-                            alt="Profile"> -->
-                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
-                        <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
-                            {{ __('personel_personal_data.btn_change_picture') }}
-                            <input type="file" class="form-control" id="photo_profile" name="photo_profile" hidden>
-                        </label>
-                    </div>
-                    <div class="col-9 subdiv-profile">
-                        <div class="row">
-                            <div class="col-auto mr-auto">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <p id="employee_name_profile" name="employee_name_profile"></p>
+            
+        </form> --}}
+        <div class="div-form">
+            <form id="personal_data_form" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="div-profile">
+                    <div class="row div-row-profile">
+                        <div class="col-2 subdiv-profile-image">
+                            <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
+                                alt="Profile"> -->
+                            <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
+                            <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
+                                {{ __('personel_personal_data.btn_change_picture') }}
+                                <input type="file" class="form-control" id="photo_profile" name="photo_profile" value="true" hidden>
+                                <textarea name="photo_employee" id="photo_employee" cols="30" rows="10" hidden></textarea>
+                            </label>
+                        </div>
+                        <div class="col-9 subdiv-profile">
+                            <div class="row">
+                                <div class="col-auto mr-auto">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <p id="employee_name_profile" name="employee_name_profile"></p>
+                                        </div>
+                                        <div class="col-1">
+                                            <p>&emsp; | &emsp;</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p id="employee_no_profile" name="employee_no_profile"></p>
+                                        </div>
                                     </div>
-                                    <div class="col-1">
-                                        <p>&emsp; | &emsp;</p>
-                                    </div>
-                                    <div class="col-4">
-                                        <p id="employee_no_profile" name="employee_no_profile"></p>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
+                                            style="width: 100%;">
+                                            <i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <div class="row">
-                                    <button type="submit" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
-                                        style="width: 100%;">
-                                        <i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}
-                                    </button>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p class="small" id="company_name_profile" name="company_name_profile"></p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="small">&emsp; | &emsp;</p>
+                                </div>
+                                <div class="col-3">
+                                    <p  class="small" id="position_name_profile" name="position_name_profile"></p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p class="small" id="company_name_profile" name="company_name_profile"></p>
-                            </div>
-                            <div class="col-1">
-                                <p class="small">&emsp; | &emsp;</p>
-                            </div>
-                            <div class="col-3">
-                                <p  class="small" id="position_name_profile" name="position_name_profile"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p class="small" id="company_email_profile" name="company_email_profile"></p>
-                            </div>
-                            <div class="col-1">
-                                <p class="small">&emsp; | &emsp;</p>
-                            </div>
-                            <div class="col-3">
-                                <p  class="small" id="phone_number_profile" name="phone_number_profile"></p>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p class="small" id="company_email_profile" name="company_email_profile"></p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="small">&emsp; | &emsp;</p>
+                                </div>
+                                <div class="col-3">
+                                    <p  class="small" id="phone_number_profile" name="phone_number_profile"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-        <div class="div-title">
-            <a href="{{ url('personel/personal_data') }}" target="iframe_dashboard">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_personal_data.list_detail') }}</span>
-            </a>
-        </div>
-
-        <div class="div-form">
-            <form id="personal_data_form" method="post">
-                @csrf
+                <div class="div-title">
+                    <a href="{{ url('personel/personal_data') }}" target="iframe_dashboard">
+                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                        <span class="title-text">{{ __('personel_personal_data.list_detail') }}</span>
+                    </a>
+                </div>
                 <ul class="nav nav-tabs" id="tab-personal" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info_tab" role="tab"
@@ -1673,7 +1674,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_primary">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="text" class="form-control" id="percentage_primary"
+                                                <input type="number" min=0 class="form-control" id="percentage_primary"
                                                     name="percentage_primary"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -1741,7 +1742,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_optional_one">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="text" class="form-control" id="percentage_optional_one"
+                                                <input type="number" min=0 class="form-control" id="percentage_optional_one"
                                                     name="percentage_optional_one"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -1809,7 +1810,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_optional_two">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="text" class="form-control" id="percentage_optional_two"
+                                                <input type="number" min=0 class="form-control" id="percentage_optional_two"
                                                     name="percentage_optional_two"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -2678,6 +2679,7 @@
             $('#position_name_profile').text('Position Name');
             $('#company_email_profile').text('Company Email');
             $('#phone_number_profile').text('Phone Number');
+            $('#photo_employee').val('');
 
             // console.log(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
             //Tab Info
@@ -2833,11 +2835,7 @@
             
         }
         else if (func == 'edit') {
-            // console.log(arrData2[0].maritalStatus);
-            // console.log(arrData2[0].peMasterInfo.bloodType);
-
             //Profile
-            console.log(arrData[0].photo);
             $('#employee_name_profile').text(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
             $('#record_function').val("Edit");
@@ -2846,10 +2844,11 @@
             $('#position_name_profile').text(((typeof arrData[0].positionName !== 'undefined') ? arrData[0].positionName : ''));
             $('#company_email_profile').text(((typeof arrData[0].companyEmailAddress !== 'undefined') ? arrData[0].companyEmailAddress : ''));
             $('#phone_number_profile').text(((typeof arrData[0].personalHandphone !== 'undefined') ? arrData[0].personalHandphone : ''));
+            $('#photo_employee').val(((typeof arrData2[0].photo !== 'undefined') ? arrData2[0].photo : ''));
 
             //Tab Info
             $('#employee_no_info').val(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
-            $('#employee_no_info').prop('disabled', true);
+            $('#employee_no_info').prop('readonly', true);
             $('#fullname_info').val(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#title_info').val(((typeof arrData2[0].title !== 'undefined') ? arrData2[0].title : ''));
             
@@ -2863,7 +2862,7 @@
                 var option = $('<option/>', {
                     id: data.data_birth_place.cityCode,
                     title: data.data_birth_place.cityName,
-                    text: data.data_birth_place.cityName
+                    text: data.data_birth_place.cityCode
                 });
                 // console.log(data);
                 $("#birth_place_info").append(option).attr('data-alias', 'yourvalue').trigger(
@@ -2872,7 +2871,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_birth_place.cityCode,
-                        text: data.data_birth_place.cityName,
+                        text: data.data_birth_place.cityCode,
                         data: data.data_birth_place
                     }
                 });
@@ -2902,79 +2901,79 @@
                 }
             }).then(function (data) {
                 var option_gender = $('<option/>', {
-                    id: data.data_gender.value,
+                    id: data.data_gender.comGenCode,
                     title: data.data_gender.value,
-                    text: data.data_gender.value
+                    text: data.data_gender.comGenCode
                 });
                 var option_marital_status = $('<option/>', {
-                    id: data.data_marital_status.value,
+                    id: data.data_marital_status.comGenCode,
                     title: data.data_marital_status.value,
-                    text: data.data_marital_status.value
+                    text: data.data_marital_status.comGenCode
                 });
                 var option_religion = $('<option/>', {
-                    id: data.data_religion.value,
+                    id: data.data_religion.comGenCode,
                     title: data.data_religion.value,
-                    text: data.data_religion.value
+                    text: data.data_religion.comGenCode
                 });
                 var option_nationality = $('<option/>', {
-                    id: data.data_nationality.value,
+                    id: data.data_nationality.comGenCode,
                     title: data.data_nationality.value,
-                    text: data.data_nationality.value
+                    text: data.data_nationality.comGenCode
                 });
                 var option_employment_status = $('<option/>', {
-                    id: data.data_employment_status.value,
+                    id: data.data_employment_status.comGenCode,
                     title: data.data_employment_status.value,
-                    text: data.data_employment_status.value
+                    text: data.data_employment_status.comGenCode
                 });
                 var option_employment_type = $('<option/>', {
-                    id: data.data_employment_type.value,
+                    id: data.data_employment_type.comGenCode,
                     title: data.data_employment_type.value,
-                    text: data.data_employment_type.value
+                    text: data.data_employment_type.comGenCode
                 });
                 var option_termination_code = $('<option/>', {
-                    id: data.data_termination_code.value,
+                    id: data.data_termination_code.comGenCode,
                     title: data.data_termination_code.value,
-                    text: data.data_termination_code.value
+                    text: data.data_termination_code.comGenCode
                 });
                 var option_absenteeism_type = $('<option/>', {
-                    id: data.data_absenteeism_type.value,
+                    id: data.data_absenteeism_type.comGenCode,
                     title: data.data_absenteeism_type.value,
-                    text: data.data_absenteeism_type.value
+                    text: data.data_absenteeism_type.comGenCode
                 });
                 var option_tax_status = $('<option/>', {
-                    id: data.data_tax_status.value,
+                    id: data.data_tax_status.comGenCode,
                     title: data.data_tax_status.value,
-                    text: data.data_tax_status.value
+                    text: data.data_tax_status.comGenCode
                 });
                 var option_tax_status_next_year = $('<option/>', {
-                    id: data.data_tax_status_next_year.value,
+                    id: data.data_tax_status_next_year.comGenCode,
                     title: data.data_tax_status_next_year.value,
-                    text: data.data_tax_status_next_year.value
+                    text: data.data_tax_status_next_year.comGenCode
                 });
                 var option_tax_office = $('<option/>', {
-                    id: data.data_tax_office.value,
+                    id: data.data_tax_office.comGenCode,
                     title: data.data_tax_office.value,
-                    text: data.data_tax_office.value
+                    text: data.data_tax_office.comGenCode
                 });
                 var option_tax_calculation_method = $('<option/>', {
-                    id: data.data_tax_calculation_method.value,
+                    id: data.data_tax_calculation_method.comGenCode,
                     title: data.data_tax_calculation_method.value,
-                    text: data.data_tax_calculation_method.value
+                    text: data.data_tax_calculation_method.comGenCode
                 });
                 var option_currency_code_1 = $('<option/>', {
-                    id: data.data_currency_code_1.value,
+                    id: data.data_currency_code_1.comGenCode,
                     title: data.data_currency_code_1.value,
-                    text: data.data_currency_code_1.value
+                    text: data.data_currency_code_1.comGenCode
                 });
                 var option_currency_code_2 = $('<option/>', {
-                    id: data.data_currency_code_2.value,
+                    id: data.data_currency_code_2.comGenCode,
                     title: data.data_currency_code_2.value,
-                    text: data.data_currency_code_2.value
+                    text: data.data_currency_code_2.comGenCode
                 });
                 var option_currency_code_3 = $('<option/>', {
-                    id: data.data_currency_code_3.value,
+                    id: data.data_currency_code_3.comGenCode,
                     title: data.data_currency_code_3.value,
-                    text: data.data_currency_code_3.value
+                    text: data.data_currency_code_3.comGenCode
                 });
 
                 $("#gender_info").append(option_gender).attr('data-alias', 'yourvalue').trigger(
@@ -2983,7 +2982,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_gender.comGenCode,
-                        text: data.data_gender.value,
+                        text: data.data_gender.comGenCode,
                         data: data.data_gender
                     }
                 });
@@ -2993,7 +2992,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_marital_status.comGenCode,
-                        text: data.data_marital_status.value,
+                        text: data.data_marital_status.comGenCode,
                         data: data.data_marital_status
                     }
                 });
@@ -3003,7 +3002,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_religion.comGenCode,
-                        text: data.data_religion.value,
+                        text: data.data_religion.comGenCode,
                         data: data.data_religion
                     }
                 });
@@ -3013,7 +3012,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_nationality.comGenCode,
-                        text: data.data_nationality.value,
+                        text: data.data_nationality.comGenCode,
                         data: data.data_nationality
                     }
                 });
@@ -3023,7 +3022,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_employment_status.comGenCode,
-                        text: data.data_employment_status.value,
+                        text: data.data_employment_status.comGenCode,
                         data: data.data_employment_status
                     }
                 });
@@ -3033,7 +3032,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_employment_type.comGenCode,
-                        text: data.data_employment_type.value,
+                        text: data.data_employment_type.comGenCode,
                         data: data.data_employment_type
                     }
                 });
@@ -3043,7 +3042,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_termination_code.comGenCode,
-                        text: data.data_termination_code.value,
+                        text: data.data_termination_code.comGenCode,
                         data: data.data_termination_code
                     }
                 });
@@ -3053,7 +3052,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_absenteeism_type.comGenCode,
-                        text: data.data_absenteeism_type.value,
+                        text: data.data_absenteeism_type.comGenCode,
                         data: data.data_absenteeism_type
                     }
                 });
@@ -3063,7 +3062,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_status.comGenCode,
-                        text: data.data_tax_status.value,
+                        text: data.data_tax_status.comGenCode,
                         data: data.data_tax_status
                     }
                 });
@@ -3073,7 +3072,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_status_next_year.comGenCode,
-                        text: data.data_tax_status_next_year.value,
+                        text: data.data_tax_status_next_year.comGenCode,
                         data: data.data_tax_status_next_year
                     }
                 });
@@ -3083,7 +3082,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_office.comGenCode,
-                        text: data.data_tax_office.value,
+                        text: data.data_tax_office.comGenCode,
                         data: data.data_tax_office
                     }
                 });
@@ -3093,7 +3092,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_calculation_method.comGenCode,
-                        text: data.data_tax_calculation_method.value,
+                        text: data.data_tax_calculation_method.comGenCode,
                         data: data.data_tax_calculation_method
                     }
                 });
@@ -3103,7 +3102,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_currency_code_1.comGenCode,
-                        text: data.data_currency_code_1.value,
+                        text: data.data_currency_code_1.comGenCode,
                         data: data.data_currency_code_1
                     }
                 });
@@ -3113,7 +3112,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_currency_code_2.comGenCode,
-                        text: data.data_currency_code_2.value,
+                        text: data.data_currency_code_2.comGenCode,
                         data: data.data_currency_code_2
                     }
                 });
@@ -3123,7 +3122,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.data_currency_code_3.comGenCode,
-                        text: data.data_currency_code_3.value,
+                        text: data.data_currency_code_3.comGenCode,
                         data: data.data_currency_code_3
                     }
                 });
@@ -3147,14 +3146,14 @@
                     }
                 }).then(function (data) {
                     var option_blood_type = $('<option/>', {
-                        id: data.data_blood_type.value,
+                        id: data.data_blood_type.comGenCode,
                         title: data.data_blood_type.value,
-                        text: data.data_blood_type.value
+                        text: data.data_blood_type.comGenCode
                     });
                     var option_driving_license_car_type = $('<option/>', {
-                        id: data.data_driving_license_car_type.value,
+                        id: data.data_driving_license_car_type.comGenCode,
                         title: data.data_driving_license_car_type.value,
-                        text: data.data_driving_license_car_type.value
+                        text: data.data_driving_license_car_type.comGenCode
                     });
 
                     $("#blood_type_info").append(option_blood_type).attr('data-alias', 'yourvalue').trigger(
@@ -3163,7 +3162,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_blood_type.comGenCode,
-                            text: data.data_blood_type.value,
+                            text: data.data_blood_type.comGenCode,
                             data: data.data_blood_type
                         }
                     });
@@ -3173,7 +3172,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_driving_license_car_type.comGenCode,
-                            text: data.data_driving_license_car_type.value,
+                            text: data.data_driving_license_car_type.comGenCode,
                             data: data.data_driving_license_car_type
                         }
                     });
@@ -3194,32 +3193,32 @@
                     var option1 = $('<option/>', {
                         id: data.data_driving_license_car_no_place_registration.cityCode,
                         title: data.data_driving_license_car_no_place_registration.cityName,
-                        text: data.data_driving_license_car_no_place_registration.cityName
+                        text: data.data_driving_license_car_no_place_registration.cityCode
                     });
                     var option2 = $('<option/>', {
                         id: data.data_driving_license_motorcycle_no_place_registration.cityCode,
                         title: data.data_driving_license_motorcycle_no_place_registration.cityName,
-                        text: data.data_driving_license_motorcycle_no_place_registration.cityName
+                        text: data.data_driving_license_motorcycle_no_place_registration.cityCode
                     });
                     var option3 = $('<option/>', {
                         id: data.data_home_city_code.cityCode,
                         title: data.data_home_city_code.cityName,
-                        text: data.data_home_city_code.cityName
+                        text: data.data_home_city_code.cityCode
                     });
                     var option4 = $('<option/>', {
                         id: data.data_other_city_code.cityCode,
                         title: data.data_other_city_code.cityName,
-                        text: data.data_other_city_code.cityName
+                        text: data.data_other_city_code.cityCode
                     });
                     var option5 = $('<option/>', {
                         id: data.data_work_city_code.cityCode,
                         title: data.data_work_city_code.cityName,
-                        text: data.data_work_city_code.cityName
+                        text: data.data_work_city_code.cityCode
                     });
                     var option6 = $('<option/>', {
                         id: data.data_correspondence_city_code.cityCode,
                         title: data.data_correspondence_city_code.cityName,
-                        text: data.data_correspondence_city_code.cityName
+                        text: data.data_correspondence_city_code.cityCode
                     });
 
                     // console.log(data);
@@ -3229,7 +3228,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_driving_license_car_no_place_registration.cityCode,
-                            text: data.data_driving_license_car_no_place_registration.cityName,
+                            text: data.data_driving_license_car_no_place_registration.cityCode,
                             data: data.data_driving_license_car_no_place_registration
                         }
                     });
@@ -3239,7 +3238,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_driving_license_motorcycle_no_place_registration.cityCode,
-                            text: data.data_driving_license_motorcycle_no_place_registration.cityName,
+                            text: data.data_driving_license_motorcycle_no_place_registration.cityCode,
                             data: data.data_driving_license_motorcycle_no_place_registration
                         }
                     });
@@ -3249,7 +3248,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_home_city_code.cityCode,
-                            text: data.data_home_city_code.cityName,
+                            text: data.data_home_city_code.cityCode,
                             data: data.data_home_city_code
                         }
                     });
@@ -3259,7 +3258,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_other_city_code.cityCode,
-                            text: data.data_other_city_code.cityName,
+                            text: data.data_other_city_code.cityCode,
                             data: data.data_other_city_code
                         }
                     });
@@ -3269,7 +3268,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_work_city_code.cityCode,
-                            text: data.data_work_city_code.cityName,
+                            text: data.data_work_city_code.cityCode,
                             data: data.data_work_city_code
                         }
                     });
@@ -3279,13 +3278,13 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_correspondence_city_code.cityCode,
-                            text: data.data_correspondence_city_code.cityName,
+                            text: data.data_correspondence_city_code.cityCode,
                             data: data.data_correspondence_city_code
                         }
                     });
                 });
 
-                // console.log(arrData2[0].peMasterInfo.homeDistrictCode);
+                // console.log(arrData2[0].peMasterInfo.homeZipCode);
                 $.ajax({
                     type: 'GET',
                     url: '/zip_code/personal_data/api',
@@ -3398,7 +3397,7 @@
                     $("#district_select_home").trigger({
                         type: 'select2:select',
                         params: {
-                            id: data.data_home_district_code.zipCode,
+                            id: data.data_home_district_code.propinsi,
                             text: data.data_home_district_code.propinsi,
                             data: data.data_home_district_code
                         }
@@ -3519,16 +3518,31 @@
             }
 
             load_table_fringe_benefit();
-            for (var i = 0; i < arrData2[0].peMasterFringeBenefit.length; i++) {
+            if (arrData2[0].peMasterFringeBenefit !== 'undefined' || arrData2[0].peMasterFringeBenefit !== null) {
+                for (var i = 0; i < arrData2[0].peMasterFringeBenefit.length; i++) {
 
-                arrayFringeBenefit.push({
-                    "seqNoFringeBenefit": ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i),
-                    "benefits": ((typeof arrData2[0].peMasterFringeBenefit[i].benefits !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].benefits : ''),
-                    "description": ((typeof arrData2[0].peMasterFringeBenefit[i].description !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].description : ''),
-                    "startDate": ((typeof arrData2[0].peMasterFringeBenefit[i].startDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].startDate : ''),
-                    "endDate": ((typeof arrData2[0].peMasterFringeBenefit[i].endDate !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].endDate : '')
-                });
-                
+                    if (arrData2[0].peMasterFringeBenefit[i].startDate !== 'undefined' && arrData2[0].peMasterFringeBenefit[i].startDate !== null) {
+                        var startDate = moment(arrData2[0].peMasterFringeBenefit[i].startDate).format('YYYY-MM-DD');
+                    }
+                    else {
+                        var startDate = '';
+                    }
+
+                    if (arrData2[0].peMasterFringeBenefit[i].endDate !== 'undefined' && arrData2[0].peMasterFringeBenefit[i].endDate !== null) {
+                        var endDate = moment(arrData2[0].peMasterFringeBenefit[i].endDate).format('YYYY-MM-DD');
+                    }
+                    else {
+                        var endDate = '';
+                    }
+
+                    arrayFringeBenefit.push({
+                        "seqNoFringeBenefit": ((typeof arrData2[0].peMasterFringeBenefit[i].seqNo !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].seqNo : i),
+                        "benefits": ((typeof arrData2[0].peMasterFringeBenefit[i].benefits !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].benefits : ''),
+                        "description": ((typeof arrData2[0].peMasterFringeBenefit[i].description !== 'undefined') ? arrData2[0].peMasterFringeBenefit[i].description : ''),
+                        "startDate": startDate,
+                        "endDate": endDate
+                    });
+                }
             }
             $('#fringe_benefit_data_table').DataTable().destroy();
             load_table_fringe_benefit();
@@ -3587,7 +3601,7 @@
                 var option = $('<option/>', {
                     id: data.npwpCode,
                     title: data.pemotongKuasa,
-                    text: data.pemotongKuasa
+                    text: data.npwpCode
                 });
                 // console.log(option);
                 $("#group_npwp_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
@@ -3642,9 +3656,9 @@
                 }
             }).then(function (data) {
                 var option = $('<option/>', {
-                    id: data.groupAuthorizeDesc,
+                    id: data.groupAuthorizeCode,
                     title: data.groupAuthorizeDesc,
-                    text: data.groupAuthorizeDesc
+                    text: data.groupAuthorizeCode
                 });
                 // console.log(data);
                 $("#group_authorize_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
@@ -3858,13 +3872,22 @@
 
             //Tab Family & Dependent
             load_table_family_dependent_data();
-            for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
+            if (typeof arrData[0].peMasterFamily !== 'undefined' || arrData[0].peMasterFamily !== null) {
+                for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
+
+                if (arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
+                {
+                    var birthDate = moment(arrData2[0].peMasterFringeBenefit[i].birthDate).format('YYYY-MM-DD');
+                }
+                else {
+                    var birthDate = '';
+                }
 
                 arrayFamilyDependent.push({
                     "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
                     "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
                     "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
-                    "birthDate": ((typeof arrData2[0].peMasterFamily[i].birthDate !== 'undefined') ? arrData2[0].peMasterFamily[i].birthDate : ''),
+                    "birthDate": birthDate,
                     "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined') ? arrData2[0].peMasterFamily[i].birthPlace : ''),
                     "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
                     "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
@@ -3873,6 +3896,7 @@
                     "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
                     "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : '')
                 });
+                }
             }
 
             $('#family_dependent_data_table').DataTable().destroy();
@@ -3889,14 +3913,14 @@
                     }
                 }).then(function (data) {
                     var option1 = $('<option/>', {
-                        id: data.data_insurance_code.value,
+                        id: data.data_insurance_code.comGenCode,
                         title: data.data_insurance_code.value,
-                        text: data.data_insurance_code.value
+                        text: data.data_insurance_code.comGenCode
                     });
                     var option2 = $('<option/>', {
-                        id: data.data_insurance_class.value,
+                        id: data.data_insurance_class.comGenCode,
                         title: data.data_insurance_class.value,
-                        text: data.data_insurance_class.value
+                        text: data.data_insurance_class.comGenCode
                     });
 
                     // console.log(data);
@@ -3907,7 +3931,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_insurance_code.comGenCode,
-                            text: data.data_insurance_code.value,
+                            text: data.data_insurance_code.comGenCode,
                             data: data.data_insurance_code
                         }
                     });
@@ -3917,7 +3941,7 @@
                         type: 'select2:select',
                         params: {
                             id: data.data_insurance_class.comGenCode,
-                            text: data.data_insurance_class.value,
+                            text: data.data_insurance_class.comGenCode,
                             data: data.data_insurance_class
                         }
                     });
@@ -4025,7 +4049,10 @@
                     // $("#photo_profile").after(img);
                 }
             }
+            // $('#photo_profile').val(file);
         });
+
+        // console.log($('#photo').val());
 
         $('#city_select_home').on('select2:select', function (e) {
             var data = $('#city_select_home').select2('data');
@@ -6172,7 +6199,8 @@
 
         function load_table_family_dependent_data() {
             table2 = $('#family_dependent_data_table').DataTable({
-                processing: true,
+                // processing: true,
+                // orderCellsTop: true,
                 data: arrayFamilyDependent,
 
                 "sDom": 'lrtip',
@@ -6380,10 +6408,10 @@
             );
             arrayFringeBenefit.push({
                 "seqNoFringeBenefit": $("#seq_no_employment_data").val(),
-                "benefits": $("#benefits_employment_data").val(),
-                "description": $("#description_employment_data").val(),
-                "startDate": $("#start_date_employment_data").val(),
-                "endDate": $("#end_date_employment_data").val()
+                "benefits": (($("#benefits_employment_data").val()) ? $("#benefits_employment_data").val() : '-'),
+                "description": (($("#description_employment_data").val()) ? $("#description_employment_data").val() : '-'),
+                "startDate": (($("#start_date_employment_data").val()) ? $("#start_date_employment_data").val() : '-'),
+                "endDate": (($("#end_date_employment_data").val()) ? $("#end_date_employment_data").val() : '-')
             });
 
             $(this).prop("disabled", false);
@@ -6415,17 +6443,19 @@
             else {
                 $('#include_tax_family_dependent_data').val('false');
             }
+
+            console.log($("#gender_family_dependent_data").val());
             
             arrayFamilyDependent.push({
                 "seqNoFamilyDependent": $("#seq_no_family_dependent_data").val(),
-                "familyName": $("#name_family_dependent_data").val(),
-                "relationCode": $("#relation_family_dependent_data").val(),
-                "birthDate": $("#birth_date_family_dependent_data").val(),
-                "birthPlace": $("#birth_place_family_dependent_data").val(),
-                "gender": $("#gender_family_dependent_data").val(),
-                "bloodType": $("#blood_type_family_dependent_data").val(),
+                "familyName": (($("#name_family_dependent_data").val()) ? $("#name_family_dependent_data").val() : '-'),
+                "relationCode": (($("#relation_family_dependent_data").val()) ? $("#relation_family_dependent_data").val() : '-') ,
+                "birthDate": (($("#birth_date_family_dependent_data").val()) ? $("#birth_date_family_dependent_data").val() : '-'),
+                "birthPlace": (($("#birth_place_family_dependent_data").val()) ? $("#birth_place_family_dependent_data").val() : '-'),
+                "gender": (($("#gender_family_dependent_data").val()) ? $("#gender_family_dependent_data").val() : '-'),
+                "bloodType": (($("#blood_type_family_dependent_data").val()) ? $("#blood_type_family_dependent_data").val() : '-'),
                 "familyCardNumber": $("#family_card_no_family_dependent_data").val(),
-                "occupation": $("#occupation_family_dependent_data").val(),
+                "occupation": (($("#occupation_family_dependent_data").val()) ? $("#occupation_family_dependent_data").val() : '-'),
                 "flagMedical": $("#include_medical_family_dependent_data").val(),
                 "flagPayroll": $("#include_tax_family_dependent_data").val()
             });
@@ -6564,49 +6594,49 @@
                 },
                 messages: {
                     employee_no_info: {
-                        required: "{{ __('personel_personal_data_detail.employee_no_required') }}",
+                        required: "{{ __('personel_personal_data.employee_no_required') }}",
                     },
                     fullname_info: {
-                        required: "{{ __('personel_personal_data_detail.fullname_required') }}",
+                        required: "{{ __('personel_personal_data.fullname_required') }}",
                     },
                     joining_date_employment: {
-                        required: "{{ __('personel_personal_data_detail.joining_date_required') }}",
+                        required: "{{ __('personel_personal_data.joining_date_required') }}",
                     },
                     contract_start_date_employment: {
-                        required: "{{ __('personel_personal_data_detail.contract_start_date_required') }}",
+                        required: "{{ __('personel_personal_data.contract_start_date_required') }}",
                     },
                     contract_end_date_employment: {
-                        required: "{{ __('personel_personal_data_detail.contract_end_date_required') }}",
+                        required: "{{ __('personel_personal_data.contract_end_date_required') }}",
                     },
                     license_no_employment: {
-                        required: "{{ __('personel_personal_data_detail.license_no_required') }}",
+                        required: "{{ __('personel_personal_data.license_no_required') }}",
                     },
                     start_date_employment: {
-                        required: "{{ __('personel_personal_data_detail.start_date_required') }}",
+                        required: "{{ __('personel_personal_data.start_date_required') }}",
                     },
                     end_date_employment: {
-                        required: "{{ __('personel_personal_data_detail.end_date_required') }}",
+                        required: "{{ __('personel_personal_data.end_date_required') }}",
                     },
                     absenteeism_type_absenteeism: {
-                        required: "{{ __('personel_personal_data_detail.absenteeism_type_required') }}",
+                        required: "{{ __('personel_personal_data.absenteeism_type_required') }}",
                     },
                     work_pattern_code_absenteeism: {
-                        required: "{{ __('personel_personal_data_detail.work_pattern_code_required') }}",
+                        required: "{{ __('personel_personal_data.work_pattern_code_required') }}",
                     },
                     starting_day_absenteeism: {
-                        required: "{{ __('personel_personal_data_detail.starting_day_required') }}",
+                        required: "{{ __('personel_personal_data.starting_day_required') }}",
                     },
                     tax_status_payroll: {
-                        required: "{{ __('personel_personal_data_detail.tax_status_required') }}",
+                        required: "{{ __('personel_personal_data.tax_status_required') }}",
                     },
                     tax_status_next_year_payroll: {
-                        required: "{{ __('personel_personal_data_detail.tax_status_next_year_required') }}",
+                        required: "{{ __('personel_personal_data.tax_status_next_year_required') }}",
                     },
                     tax_office_payroll: {
-                        required: "{{ __('personel_personal_data_detail.tax_office_required') }}",
+                        required: "{{ __('personel_personal_data.tax_office_required') }}",
                     },
                     tax_calculation_method_payroll: {
-                        required: "{{ __('personel_personal_data_detail.tax_calculation_method_required') }}",
+                        required: "{{ __('personel_personal_data.tax_calculation_method_required') }}",
                     }
                 },
                 highlight: function (element) {
@@ -6631,10 +6661,16 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+
+                    var myform = document.getElementById("personal_data_form");
+                    var formdata = new FormData(myform);
+
                     $.ajax({
                         url: "{{ url('personel/personal_data/proses') }}",
                         type: "POST",
-                        data: $('#personal_data_form').serialize(),
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save-profile").prop("disabled", false);

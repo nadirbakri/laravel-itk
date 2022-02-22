@@ -79,6 +79,10 @@
         .select2-results__option[aria-selected=true] {
             display: none;
         }
+
+        .required {
+            color: red;
+        }
     </style>
 </head>
 
@@ -91,7 +95,7 @@
             </a> 
         </div>
         <div class="div-form">
-            <form id="tm_time_recording_process_upload_form" method="post">
+            <form id="tm_time_recording_process_upload_form" method="GET">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -163,7 +167,8 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="delete_date">{{ __('tm_time_recording_process_form.label_delete_date_from') }}</label>
+                                    <label for="delete_date_from">{{ __('tm_time_recording_process_form.label_delete_date_from') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="delete_date_from" name="delete_date_from"
                                             placeholder="{{ __('tm_time_recording_process_form.label_delete_date_from') }}">
@@ -175,7 +180,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="delete_date">{{ __('tm_time_recording_process_form.label_delete_date_to') }}</label>
+                                    <label for="delete_date_from">{{ __('tm_time_recording_process_form.label_delete_date_to') }}</label>
+                                    <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="delete_date_to" name="delete_date_to"
                                             placeholder="{{ __('tm_time_recording_process_form.label_delete_date_to') }}">
@@ -191,12 +197,14 @@
                                 <div class="form-group">
                                     <label
                                         for="employee_no_from">{{ __('tm_time_recording_process_form.label_employee_no_from') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="employee_no_to">{{ __('tm_time_recording_process_form.label_employee_no_to') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                                 </div>
                             </div>
@@ -418,13 +426,13 @@
                     var formdata = new FormData(myForm);
                     
                     $.ajax({
-                        url: "{{ url('time_management/time_recording_process_form/import') }}",
+                        url: "{{ url('time_management/time_recording_process_form/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
                         data: formdata,
                         success: function (response) {
-                            console.log(response);
+                            // console.log(response);
                             if (response[0].status == "true") {
                                 $("#btn-process-upload").prop("disabled", false);
                                 $("#btn-process-upload").html(
@@ -464,6 +472,108 @@
                             $('#notification').modal('show');
                             $('#message-notification').html(response);
                         }
+                    });
+                }
+            })
+        }
+
+        if ($("#tm_time_recording_process_delete_form").length > 0) {
+            $("#tm_time_recording_process_delete_form").validate({
+                rules: {
+                    delete_date_from : {
+                        required: true
+                    },
+                    delete_date_to: {
+                        required: true
+                    },
+                    employee_no_from: {
+                        required: true
+                    },
+                    employee_no_to: {
+                        required: true
+                    }
+                },
+                messages: {
+                    delete_date_from: {
+                        required: "{{ __('tm_time_recording_process_form.field_mandatory') }}",
+                    },
+                    delete_date_to: {
+                        required: "{{ __('tm_time_recording_process_form.field_mandatory') }}",
+                    },
+                    employee_no_from: {
+                        required: "{{ __('tm_time_recording_process_form.field_mandatory') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('tm_time_recording_process_form.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-process-delete").prop("disabled", false);
+                    $("#btn-process-delete").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_delete") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/time_recording_process_form/remove') }}",
+                        type: "GET",
+                        data: $('#tm_time_recording_process_delete_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-process-delete").prop("disabled", false);
+                                $("#btn-process-delete").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_delete") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/time_recording_process_form') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process-delete").prop("disabled", false);
+                                $("#btn-process-delete").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process-delete").prop("disabled", false);
+                            $("#btn-process-delete").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_delete") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
                     });
                 }
             })

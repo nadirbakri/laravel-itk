@@ -13,7 +13,6 @@ use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
-// use stdClass;
 
 class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMapping
 {
@@ -118,8 +117,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
     public function map($invoice): array
     {
         $date_ovt = date("Y-m-d\TH:i:s");
-
-        // var_dump($this->transformDateTime($invoice[3]));
+        
         return [
             (string) $invoice[0],
             $this->transformDate($invoice[1]),

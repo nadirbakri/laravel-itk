@@ -21,6 +21,7 @@ return [
     'input_balance_leave' => 'Input Balance Leave',
     'leave_transaction_by_employee_no' => 'Leave Transaction By Employee No',
     'absenteeism_data_entry_by_employee_no' => 'Absenteeism Data Entry By Employee No',
+    'absenteeism_data_entry_by_date' => 'Absenteeism Data Entry By Date',
     'template_preparation' => 'Template Preparation',
     'update_shift_by_date' => 'Update Shift By Date',
     'overtime_spl' => 'Overtime SPL',

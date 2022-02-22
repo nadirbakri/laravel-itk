@@ -7,6 +7,7 @@ use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
+use App\Imports\TimeRecordingProcessFormImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -38,6 +39,11 @@ class TimeManagementController extends Controller
     public function pageAbsenteeismDataEntryByEmployeeNo()
     {
         return view ('time_management.tm_absenteeism_data_entry_by_employee_no');
+    }
+
+    public function pageAbsenteeismDataEntryByDate()
+    {
+        return view ('time_management.tm_absenteeism_data_entry_by_date');
     }
 
     public function pageTemplatePreparation()
@@ -1583,6 +1589,55 @@ class TimeManagementController extends Controller
 
     }
 
+    public function prosesTimeRecordingProcessFormTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump($request->hasFile('file_location'));
+
+            if($request->hasFile('file_location')) {
+                $file = $request->file('file_location');
+                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('file_excel'), $filename);
+                $path = public_path('file_excel/');
+
+                var_dump($path);
+
+                $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'fileLocation' =>  $path,
+                            'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
+                            'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            'logActionUserID' => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkAppTM(Request $request)
     {
         try {
@@ -1839,6 +1894,40 @@ class TimeManagementController extends Controller
 
             $response = $client->delete(env('API_URL') . '/tmperiod',
                 ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeTimeRecordingProcessFormTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/tempabsentmachine/deletetempabsentmachine',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'deleteDateFrom' => $request->delete_date_from,
+                        'deleteDateTo' => $request->delete_date_to,
+                        'employeeNoFrom' => $request->employee_no_from,
+                        'employeeNoTo' => $request->employee_no_to,
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
             );
         } catch (RequestException $e) {
             var_dump($e->getResponse());

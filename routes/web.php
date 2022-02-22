@@ -370,6 +370,7 @@ Route::get('time_management/time_recording_process_form', 'TimeManagementControl
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
 Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreparation');
 Route::get('time_management/absenteeism_data_entry_by_employee_no', 'TimeManagementController@pageAbsenteeismDataEntryByEmployeeNo');
+Route::get('time_management/absenteeism_data_entry_by_date', 'TimeManagementController@pageAbsenteeismDataEntryByDate');
 Route::get('time_management/update_shift_by_date', 'TimeManagementController@pageUpdateShiftByDate');
 Route::get('time_management/overtime_spl', 'TimeManagementController@pageOvertimeSPL');
 Route::get('time_management/company_working_calendar', 'TimeManagementController@pageCompanyWorkingCalendar');
@@ -426,8 +427,10 @@ Route::post('time_management/period_maintenance/proses', 'TimeManagementControll
 Route::post('time_management/leave_transaction/proses', 'TimeManagementController@prosesLeaveTransactionTM');
 Route::post('time_management/absent_code/proses', 'TimeManagementController@prosesAbsentCodeTM');
 Route::post('time_management/shift_master_code/proses', 'TimeManagementController@prosesShiftMasterCodeTM');
+Route::post('time_management/time_recording_process_form/proses', 'TimeManagementController@prosesTimeRecordingProcessFormTM');
 
 /* Route untuk remove Time Managemnet */
+Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
 Route::get('time_management/overtime_spl/remove', 'TimeManagementController@removeOvertimeSPLTM');
 Route::get('time_management/period_maintenance/remove', 'TimeManagementController@removePeriodMaintenanceTM');
 
@@ -458,7 +461,6 @@ Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementC
 Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 
-Route::post('time_management/time_recording_process_form/import', 'TimeManagementController@importTimeRecordingProcessForm');
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 
 /* Route Untuk Menu Payroll */

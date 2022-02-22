@@ -1862,14 +1862,13 @@ class PersonelController extends Controller
                 $arrResult = json_decode($response->getBody()->getContents());
                 $arrResult2 = json_decode($response2->getBody()->getContents());  
 
-                // var_dump($arrResult->dataListSet);
-
                 if($arrResult->dataListSet == null){
                     $data = [];
                 }
                 else {
                     $data = $arrResult->dataListSet;
                     $data2 = $arrResult2->dataListSet;
+                    // var_dump($data[0]->photo);
                     if ($data[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
@@ -4669,15 +4668,6 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(base64_encode(file_get_contents($path . $filename)));
-
-            if($request->hasFile('photo_profile')) {
-                $file = $request->file('photo_profile');
-                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
-                $file->move(public_path('photo_profile'), $filename);
-                $path = public_path('photo_profile/');
-            }
-
             $param = [
                 'recordStatus' => $request->record_status,
                 'companyCode' => Session::get('companyCode'),
@@ -4721,7 +4711,6 @@ class PersonelController extends Controller
                 "groupCode" => null,
                 "groupAuthorizeCode" => (int) $request->group_authorize_payroll,
                 "specialResign" => isset($request->special_reason_resign_employment) ? (bool) $request->special_reason_resign_employment : false,
-                "photo" => ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($path . $filename)) : '',
                 "npwpMutationCode" => null,
                 "npwpMutationDate" => null,
                 "flagMutationNPWPFrom" => false,
@@ -4794,7 +4783,16 @@ class PersonelController extends Controller
                 "languageCode" => App::getLocale()
             ];
 
-            // var_dump($param);
+            if($request->hasFile('photo_profile')) {
+                $file = $request->file('photo_profile');
+                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('photo_profile'), $filename);
+                $path = public_path('photo_profile/');
+                $param["photo"] = ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($path . $filename)) : '';
+            }
+            else {
+                $param["photo"] = isset($request->photo_employee) ? $request->photo_employee : '';
+            }
 
             $datauser = [
                 "recordStatus" => $request->record_status,
@@ -4899,6 +4897,10 @@ class PersonelController extends Controller
                     "homeCityCode" => $request->city_select_home,
                     "homeZipCode" => $request->zip_code_select_home,
                     "homePhone" => $request->phone_number_home,
+                    "homeDistrictCode" => $request->district_select_home,
+                    "homeSubDistrictCode" => $request->subdistrict_select_home,
+                    "otherDistrictCode" => $request->district_select_other,
+                    "otherSubDistrictCode" => $request->subdistrict_select_other,
                     "otherAddress" => $request->address_other,
                     "otherCityCode" => $request->city_select_other,
                     "otherZipCode" => $request->zip_code_select_other,
@@ -4932,8 +4934,6 @@ class PersonelController extends Controller
                 ];
                 $param['peMasterInfo'] = $datapeMasterInfo;
             }
-            
-            // var_dump($datapeMasterInfo);
 
             if(!empty($request->insurance_code_insurance) && !is_null($request->insurance_code_insurance[0])){
                 $datapeMasterInsurance = [
@@ -4955,8 +4955,6 @@ class PersonelController extends Controller
                 ];
                 $param['peMasterInsurance'] = $datapeMasterInsurance;
             }
-
-            // var_dump($datapeMasterInsurance);
 
             if(!empty($request->fringe_benefits) && !is_null($request->fringe_benefits[0])){
                 foreach($request->seq_no_fringe_benefit as $value){
@@ -4980,8 +4978,6 @@ class PersonelController extends Controller
                 }
                 $param['peMasterFringeBenefit'] = $datapeMasterFringeBenefit;
             }
-
-            // var_dump($datapeMasterFringeBenefit);
 
             if(!empty($request->family_name) && !is_null($request->family_name[0])){
                 foreach($request->seq_no_family_dependent as $value){
@@ -5010,8 +5006,6 @@ class PersonelController extends Controller
                 }
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
-
-            var_dump($param);
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
@@ -5159,6 +5153,8 @@ class PersonelController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+
+            var_dump($request->supervisor_position_code);
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/position',
