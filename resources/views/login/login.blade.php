@@ -19,7 +19,8 @@
             max-width: 40%; 
             position: absolute; 
             right: 10%;
-            bottom: 1%;
+            top: 7%;
+            /* bottom: 1%; */
         }
 
         .right-content {
@@ -59,7 +60,8 @@
             max-width: 40%; 
             position: absolute; 
             right: 10%;
-            bottom: 1%;
+            top: 7%;
+            /* bottom: 1%; */
         }
 
         .right-content {

@@ -607,6 +607,7 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
@@ -745,7 +746,10 @@
                     },
                     {
                         data: 'awardDate',
-                        name: 'awardDate'
+                        name: 'awardDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'awardName',
@@ -798,7 +802,10 @@
                     },
                     {
                         data: 'decreeDate',
-                        name: 'decreeDate'
+                        name: 'decreeDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'sanctionName',
@@ -806,11 +813,17 @@
                     },
                     {
                         data: 'sanctionStartDate',
-                        name: 'sanctionStartDate'
+                        name: 'sanctionStartDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'sanctionEndDate',
-                        name: 'sanctionEndDate'
+                        name: 'sanctionEndDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'sanctionRemarks',
@@ -863,15 +876,24 @@
                     },
                     {
                         data: 'evaluationPeriodFrom',
-                        name: 'evaluationPeriodFrom'
+                        name: 'evaluationPeriodFrom',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'evaluationPeriodTo',
-                        name: 'evaluationPeriodTo'
+                        name: 'evaluationPeriodTo',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'evaluationDate',
-                        name: 'evaluationDate'
+                        name: 'evaluationDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'result',

@@ -460,6 +460,11 @@
         });
 
         $("#toolbar-save").on('click', function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span>Loading...</span>'
+            );
             $("#personel_reference_form").submit();
         });
 
@@ -510,6 +515,13 @@
                         data: $('#personel_reference_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
+                                $("#toolbar-save").prop("disabled", false);
+                                $("#toolbar-save").html(
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                    '<span>Save</span>'
+                                );
+
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
@@ -518,6 +530,13 @@
                                         "{{ url('personel/personel_reference') }}";
                                 }, 3000);
                             } else {
+                                $("#toolbar-save").prop("disabled", false);
+                                $("#toolbar-save").html(
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                    '<span>Save</span>'
+                                );
+
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
@@ -530,6 +549,13 @@
                             }
                         },
                         error: function (response) {
+                            $("#toolbar-save").prop("disabled", false);
+                            $("#toolbar-save").html(
+                                '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                '<span>Save</span>'
+                            );
+
                             $('#notification').modal('show');
                             $('#message-notification').html(response);
                         }

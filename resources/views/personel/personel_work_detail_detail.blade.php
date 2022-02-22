@@ -981,11 +981,17 @@
                     },
                     {
                         data: 'startDate',
-                        name: 'startDate'
+                        name: 'startDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'endDate',
-                        name: 'endDate'
+                        name: 'endDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'employmentStatus',
@@ -1050,11 +1056,17 @@
                     },
                     {
                         data: 'joinDate',
-                        name: 'joinDate'
+                        name: 'joinDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'terminateDate',
-                        name: 'terminateDate'
+                        name: 'terminateDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'positionName',

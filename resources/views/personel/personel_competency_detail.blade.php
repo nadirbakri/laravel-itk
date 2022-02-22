@@ -1123,6 +1123,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
@@ -1487,11 +1488,17 @@
                     },
                     {
                         data: 'startDate',
-                        name: 'startDate'
+                        name: 'startDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'endDate',
-                        name: 'endDate'
+                        name: 'endDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     }
                 ],
                 select: {
@@ -1658,11 +1665,17 @@
                     },
                     {
                         data: 'startDate',
-                        name: 'startDate'
+                        name: 'startDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'endDate',
-                        name: 'endDate'
+                        name: 'endDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'description',
@@ -1719,11 +1732,17 @@
                     },
                     {
                         data: 'startDate',
-                        name: 'startDate'
+                        name: 'startDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'endDate',
-                        name: 'endDate'
+                        name: 'endDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
                     },
                     {
                         data: 'certificateName',

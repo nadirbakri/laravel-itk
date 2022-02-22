@@ -38,4 +38,28 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Exception $e)
+    {
+        if ($this->isHttpException($e)) {
+            switch ($e->getStatusCode()) {
+
+                // not authorized
+                case '401':
+                    return \Response::view('error.login',array(),401);
+                    break;
+
+                // not found
+                case '404':
+                    return \Response::view('error.not_found',array(),404);
+                    break;
+
+                default:
+                    return \Response::view('error.bad_request',array(),500);
+                    break;
+            }
+        } else {
+            return parent::render($request, $e);
+        }
+    }
 }
