@@ -180,7 +180,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="delete_date_from">{{ __('tm_time_recording_process_form.label_delete_date_to') }}</label>
+                                    <label for="delete_date_to">{{ __('tm_time_recording_process_form.label_delete_date_to') }}</label>
                                     <span class="required">*</span>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="delete_date_to" name="delete_date_to"

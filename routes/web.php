@@ -514,6 +514,12 @@ Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
 Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCalculationProcess');
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
 
+/*Route untuk Tabel Payroll*/
+Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
+
+/*Route untuk detail Data Payroll*/
+Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
+
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
 Route::get('utilities/organization_chart', 'UtilitiesController@pageOrganizationStructureUtilities');
