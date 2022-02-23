@@ -938,7 +938,7 @@ class TimeManagementController extends Controller
         $file->move('file_excel', $nama_file);
         $import = new UpdateAbsenteeismDataImport;
         // var_dump($import);
-        Excel::import($import, public_path('/file_excel/'.$nama_file));
+        Excel::import($import, ('/file_excel/'.$nama_file));
         File::delete('file_excel/'.$nama_file);
         // var_dump(($import)->getArrResult());
         return ($import)->getArrResult();
@@ -1461,11 +1461,10 @@ class TimeManagementController extends Controller
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
-        // var_dump($request->check_work_on_holiday);
+
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
-        // var_dump($response); 
     }
 
     public function prosesShiftMasterCodeTM(Request $request)
@@ -1602,8 +1601,8 @@ class TimeManagementController extends Controller
 
             if($request->hasFile('file_location')) {
                 $file = $request->file('file_location');
-                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
-                $file->move(public_path('file_excel'), $filename);
+                $filename = rand().$file->getClientOriginalName();
+                $file->move('file_excel', $filename);
                 $path = public_path('file_excel/');
 
                 var_dump($path);
@@ -1922,7 +1921,7 @@ class TimeManagementController extends Controller
                         'employeeNoFrom' => $request->employee_no_from,
                         'employeeNoTo' => $request->employee_no_to,
                         "languageCode" => App::getLocale(),
-                        'sessionID' => Session::get('userID'),
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),

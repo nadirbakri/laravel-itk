@@ -428,6 +428,7 @@ Route::post('time_management/leave_transaction/proses', 'TimeManagementControlle
 Route::post('time_management/absent_code/proses', 'TimeManagementController@prosesAbsentCodeTM');
 Route::post('time_management/shift_master_code/proses', 'TimeManagementController@prosesShiftMasterCodeTM');
 Route::post('time_management/time_recording_process_form/proses', 'TimeManagementController@prosesTimeRecordingProcessFormTM');
+Route::post('time_management/time_recording_reference/proses', 'TimeManagementController@prosesTimeRecordingReferenceTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');

@@ -550,7 +550,7 @@
                             } else {
                                 $("#btn-process-delete").prop("disabled", false);
                                 $("#btn-process-delete").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_delete") }}'
                                 );
 
                                 $('#notification_error').modal('show');

@@ -327,8 +327,9 @@
             url: "{{ url('/time_management/time_recording_reference/table') }}",
             type: "GET",
             success: function (response) {
-                // console.log(response.length);
+                // console.log(response[0].inCode);
                 if (response) {
+                    $('#record_function').val("New");
                     $('#in_code').val((typeof response[0].inCode !== 'undefined') ? response[0].inCode : '');
                     $('#out_code').val((typeof response[0].outCode !== 'undefined') ? response[0].outCode : '');
 
@@ -359,6 +360,7 @@
                 }
 
                 else {
+                    $('#record_function').val("Edit");
                     $('#in_code').val("");
                     $('#out_code').val("");
 
@@ -475,56 +477,79 @@
             $("#time_recording_reference_form").submit();
         });
 
-        $("#time_recording_reference_form").on('submit', function () {
-            $.ajax({
-                type: "POST",
-                url: "{{ url('time_management/time_recording_reference/proses') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        if ($("#time_recording_reference_form").length > 0) {
+            $("#time_recording_reference_form").validate({
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
                 },
-                data: $('#time_recording_reference_form').serialize(),
-                success: function (response) {
-                    if (response.status == "true") {
-                        $("#btn-save").prop("disabled", false);
-                        $("#btn-save").html(
-                            '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_reference.btn_save") }}'
-                        );
-
-                        $('#notification_success').modal('show');
-                        $('#message-notification-success').html(response.message);
-                        $('#time_recording_reference_table').DataTable().destroy();
-                        load_data_table_time_recording_reference();
-                        setTimeout(function () {
-                            $('#notification_success').modal('hide');
-                        }, 3000);
-                    } else {
-                        $("#btn-save").prop("disabled", false);
-                        $("#btn-save").html(
-                            '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_reference.btn_save") }}'
-                        );
-
-                        $('#notification_error').modal('show');
-                        if (response.message == null || response.message == '') {
-                            $('#message-notification-error').html(
-                            "{{ __('login.error') }}");
-                        } else {
-                            $('#message-notification-error').html(response.message);
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
-                    }
-                },
-                error: function (response) {
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_reference.btn_save") }}'
-                    );
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/time_recording_reference/proses') }}",
+                        type: "POST",
+                        data: $('#time_recording_reference_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#toolbar-save").prop("disabled", false);
+                                $("#toolbar-save").html(
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                    '<span>Save</span>'
+                                );
 
-                    $('#notification').modal('show');
-                    $('#message-notification').html(response);
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/time_recording_reference') }}";
+                                }, 3000);
+                            } else {
+                                $("#toolbar-save").prop("disabled", false);
+                                $("#toolbar-save").html(
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                    '<span>Save</span>'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#toolbar-save").prop("disabled", false);
+                            $("#toolbar-save").html(
+                                '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                '<span>Save</span>'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
                 }
-            });
-
-            return false;
-        });
+            })
+        }
     })
 
 </script>
