@@ -101,7 +101,7 @@
                         <div class="col-2 subdiv-profile-image">
                             <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
                                 alt="Profile"> -->
-                            <img src="{{ 'photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
+                            <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
                             <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                                 {{ __('personel_personal_data.btn_change_picture') }}
                                 <input type="file" class="form-control" id="photo_profile" name="photo_profile" value="true" hidden>
