@@ -1874,7 +1874,7 @@ class PersonelController extends Controller
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(public_path("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
                     }
                 }
 
