@@ -37,6 +37,88 @@ class DataController extends Controller
 	    return response()->json($arrResult->dataListSet);
 	}
 
+	public function dataProcessStatusAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'ProcessStatus_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataDeductDayAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'DeductOvt_M',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
 	public function dataBloodAPI(Request $request)
     {
     	$search = $request->search;

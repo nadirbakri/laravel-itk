@@ -239,6 +239,41 @@ class TimeManagementController extends Controller
         }
     }
 
+    public function tableReferenceTimeManagementTM()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetmdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "sessionID" => 0,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        var_dump(Session::get('token'));
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function tableOvertimeCodeTM()
     {
         try {
@@ -1465,6 +1500,8 @@ class TimeManagementController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // var_dump($response);
+            
     }
 
     public function prosesShiftMasterCodeTM(Request $request)
