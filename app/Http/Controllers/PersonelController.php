@@ -5154,8 +5154,6 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump($request->supervisor_position_code);
-
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/position',
                     ['body' => json_encode(

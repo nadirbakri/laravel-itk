@@ -91,7 +91,7 @@
             </a> 
         </div>
         <div class="div-form">
-            <form id="tm_template_preparation_form" method="post">
+            <form id="template_preparation_form" method="post">
                 @csrf
                 {{-- @method('PUT') --}}
                 {{-- <input type="hidden" name="_method" value="PUT">
@@ -107,6 +107,7 @@
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
+                            <input type="text" class="form-control" id="period_year" name="period_year" hidden>
                         </div>
                     </div>
                 </div>
@@ -117,19 +118,19 @@
                     <div class="col-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="all_employee"
-                                name="radiobtn" value="all_employee">
+                                name="radiobtn[]" value=true checked>
                             <label class="form-check-label" 
                                 for="all_employee">{{ __('tm_template_preparation.label_all_employee') }}</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="new_employee"
-                                name="radiobtn" value="new_employee">
+                                name="radiobtn[]" value=true>
                             <label class="form-check-label" 
                                 for="new_employee">{{ __('tm_template_preparation.label_new_employee') }}</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="range"
-                                name="radiobtn" value="range">
+                                name="radiobtn[]" value=true>
                             <label class="form-check-label" 
                                 for="range">{{ __('tm_template_preparation.label_range') }}</label>
                         </div>
@@ -249,6 +250,16 @@
     $(document).ready(function() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+        var periodMonth = moment($('#processing_period').val()).format('M');
+        var periodYear = moment($('#processing_period').val()).format('YYYY');
+        $('#processing_period').val(periodMonth);
+        $('#period_year').val(periodYear);
+
+        $('#processing_period').on('change', function(e) {
+            $('#processing_period').val(periodMonth);
+            $('#period_year').val(periodYear);
+        })
+
         $.ajax({
             url: "{{ url('/time_management/period/data/detail') }}",
             type: "GET",
@@ -264,10 +275,11 @@
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
 
-        $('input[name="radiobtn"]').on('change', function () {
+        $('.form-check-input').on('change', function () {
             if ($('#range').is(':checked')) {
                 $('#employee_no_from').prop('disabled', false);
                 $('#employee_no_to').prop('disabled', false);
+                $()
             }
             else {
                 $('#employee_no_from').prop('disabled', true);
@@ -338,6 +350,80 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        if ($("#template_preparation_form").length > 0) {
+            $("#template_preparation_form").validate({  
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-process").prop("disabled", false);
+                    $("#btn-process").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_template_preparation.btn_process") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('time_management/template_preparation/proses') }}",
+                        type: "POST",
+                        data: $('#template_preparation_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_template_preparation.btn_process") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('time_management/template_preparation') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_template_preparation.btn_process") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("tm_template_preparation.btn_process") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
         }
     })
 </script>

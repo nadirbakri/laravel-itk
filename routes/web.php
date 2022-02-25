@@ -414,9 +414,6 @@ Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementCo
 /*Route untuk check bool Time Management */
 Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
 
-/*Route untuk check bool Time Management */
-Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
-
 /* Route untuk proses Time Management */
 Route::post('time_management/company_working_calendar/proses','TimeManagementController@prosesCompanyWorkingCalendar');
 Route::post('time_management/input_balance_leave/proses', 'TimeManagementController@prosesInputBalanceLeaveTM');
@@ -429,6 +426,7 @@ Route::post('time_management/absent_code/proses', 'TimeManagementController@pros
 Route::post('time_management/shift_master_code/proses', 'TimeManagementController@prosesShiftMasterCodeTM');
 Route::post('time_management/time_recording_process_form/proses', 'TimeManagementController@prosesTimeRecordingProcessFormTM');
 Route::post('time_management/time_recording_reference/proses', 'TimeManagementController@prosesTimeRecordingReferenceTM');
+Route::post('time_management/template_preparation/proses', 'TimeManagementController@prosesTemplatePreparationTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
@@ -517,6 +515,13 @@ Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculat
 
 /*Route untuk Tabel Payroll*/
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
+
+/*Route untuk Proses Payroll*/
+Route::post('payroll/bonus_data_entry/proses', 'PayrollController@prosesBonusDataEntryPY');
+Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
+
+/*Route untuk remove Payroll*/
+Route::get('payroll/bonus_data_entry/remove', 'PayrollController@removeBonusDataEntryPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
@@ -701,6 +706,9 @@ Route::get('insurance_class/api', 'DataController@dataInsuranceClassAPI');
 Route::get('insurance_code/api', 'DataController@dataInsuranceCodeAPI');
 Route::get('comgen/api', 'DataController@dataComGenAPI');
 Route::get('shift_master_code/api', 'DataController@dataShiftMasterCodeAPI');
+Route::get('performance_result/api', 'DataController@dataPerformanceResultAPI');
+Route::get('employee_no/bonus_thr_data_entry/api', 'DataController@dataEmployeeNoBonusTHRAPI');
+Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPerformanceResultBonusTHRAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

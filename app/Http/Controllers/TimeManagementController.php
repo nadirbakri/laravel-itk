@@ -388,8 +388,7 @@ class TimeManagementController extends Controller
                 'logActionUsername' => Session::get('userName'),
                 "languageCode" => App::getLocale()
             ];
-
-            var_dump($request->seqNo);
+            
             foreach($request->seqNo as $value){
                 $data_work_pattern_detail_list[] = [
                     'companyCode' => Session::get('companyCode'),
@@ -1628,6 +1627,42 @@ class TimeManagementController extends Controller
                     )]
                 );
             }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesTemplatePreparationTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/createtemplate',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'newEmployee' =>  isset($request->radiobtn) ? $request->radiobtn : '',
+                        'range' => isset($request->radiobtn) ? $request->radiobtn : '',
+                        'employeeNoFrom' => isset($request->employee_no_from) ? $request->employee_no_from : '',
+                        'employeeNoTo' => isset($request->employee_no_to) ? $request->employee_no_to : '',
+                        'periodMonth' => $request->processing_period,
+                        'periodYear' => $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }

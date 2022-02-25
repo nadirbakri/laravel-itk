@@ -362,8 +362,10 @@
 
         load_data_table_absenteeism_data_entry_by_employee_no();
 
-        $('#employee_no').on("select2:select", function (e) {
+        $('#employee_no, #period').on("select2:select, change", function (e) {
             var data = $('#employee_no').select2('data');
+            var data2 = $('#period').val();
+            console.log(data2);
             $('#employee_name').val(htmlDecode(data[0].title));
 
             var filter_employee_no_table = $('#employee_no').val();

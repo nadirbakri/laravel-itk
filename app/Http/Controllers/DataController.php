@@ -604,14 +604,14 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-				'data_home_zip_code' => $arrResult->dataListSet[0],
-				'data_other_zip_code' => $arrResult2->dataListSet[0],
-				'data_work_zip_code' => $arrResult3->dataListSet[0],
-				'data_correspondence_zip_code' => $arrResult4->dataListSet[0],
-				'data_home_district_code' => $arrResult5->dataListSet[0],
-				'data_other_district_code' => $arrResult6->dataListSet[0],
-				'data_home_subdistrict_code' => $arrResult7->dataListSet[0],
-				'data_other_district_code' => $arrResult8->dataListSet[0],
+				'data_home_zip_code' => ($request->homeZipCode == null) ? [] : $arrResult->dataListSet[0],
+				'data_other_zip_code' => ($request->otherZipCode == null) ? [] : $arrResult2->dataListSet[0],
+				'data_work_zip_code' => ($request->workZipCode == null) ? [] : $arrResult3->dataListSet[0],
+				'data_correspondence_zip_code' => ($request->correspondenceZipCode == null) ? [] : $arrResult4->dataListSet[0],
+				'data_home_district_code' => ($request->homeDistrictCode == null) ? [] : $arrResult5->dataListSet[0],
+				'data_other_district_code' => ($request->otherDistrictCode == null) ? [] : $arrResult6->dataListSet[0],
+				'data_home_subdistrict_code' => ($request->homeSubdistrictCode == null) ? [] : $arrResult7->dataListSet[0],
+				'data_other_district_code' => ($request->otherSubDistrictCode == null) ? [] : $arrResult8->dataListSet[0],
 			]
 		);
 	}
@@ -788,7 +788,12 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    return response()->json($arrResult->dataListSet[0]);
+		if ($request->workPatternCode) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 
 	public function dataCompanyBankCodeAPI(Request $request)
@@ -882,9 +887,9 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-				'data_company_bank_code_one' => $arrResult->dataListSet[0],
-				'data_company_bank_code_two' => $arrResult2->dataListSet[0],
-				'data_company_bank_code_three' => $arrResult3->dataListSet[0],
+				'data_company_bank_code_one' => ($request->companyBankCode1 == null) ? [] : $arrResult->dataListSet[0],
+				'data_company_bank_code_two' => ($request->companyBankCode2 == null) ? [] : $arrResult2->dataListSet[0],
+				'data_company_bank_code_three' => ($request->companyBankCode3 == null) ? [] : $arrResult3->dataListSet[0],
 			]
 		);
 	}
@@ -978,9 +983,9 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-				'data_employee_bank_code_one' => $arrResult->dataListSet[0],
-				'data_employee_bank_code_two' => $arrResult2->dataListSet[0],
-				'data_employee_bank_code_three' => $arrResult3->dataListSet[0],
+				'data_employee_bank_code_one' => ($request->employeeBankCode1 == null) ? [] : $arrResult->dataListSet[0],
+				'data_employee_bank_code_two' => ($request->employeeBankCode2 == null) ? [] : $arrResult2->dataListSet[0],
+				'data_employee_bank_code_three' => ($request->employeeBankCode3 == null) ? [] : $arrResult3->dataListSet[0],
 			]
 		);
 	}
@@ -1568,7 +1573,12 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    return response()->json($arrResult->dataListSet[0]);
+		if ((int) $request->groupAuthorizeCode == null) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 
 	public function dataPositionAPI(Request $request)
@@ -2344,13 +2354,13 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-				'data_birth_place' => $arrResult->dataListSet[0],
-				'data_driving_license_car_no_place_registration' => $arrResult2->dataListSet[0],
-				'data_driving_license_motorcycle_no_place_registration' => $arrResult3->dataListSet[0],
-				'data_home_city_code' => $arrResult4->dataListSet[0],
-				'data_other_city_code' => $arrResult5->dataListSet[0],
-				'data_work_city_code' => $arrResult6->dataListSet[0],
-				'data_correspondence_city_code' => $arrResult7->dataListSet[0],
+				'data_birth_place' => ($request->birthPlace == null) ? [] : $arrResult->dataListSet[0],
+				'data_driving_license_car_no_place_registration' => ($request->drivingLicenseMobilNoPlaceRegistration == null) ? [] : $arrResult2->dataListSet[0],
+				'data_driving_license_motorcycle_no_place_registration' => ($request->drivingLicenseMotorNoPlaceRegistration == null) ? [] : $arrResult3->dataListSet[0],
+				'data_home_city_code' => ($request->homeCityCode == null) ? [] : $arrResult4->dataListSet[0],
+				'data_other_city_code' => ($request->otherCityCode == null) ? [] : $arrResult5->dataListSet[0],
+				'data_work_city_code' => ($request->workCityCode == null) ? [] : $arrResult6->dataListSet[0],
+				'data_correspondence_city_code' => ($request->correspondenceCityCode == null) ? [] : $arrResult7->dataListSet[0],
 			]
 		);
 	}
@@ -4006,7 +4016,12 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    return response()->json($arrResult->dataListSet[0]);
+		if ($request->npwpCode) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 
 	public function dataBPJSAPI(Request $request)
@@ -4075,7 +4090,12 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    return response()->json($arrResult->dataListSet[0]);
+		if ($request->bpjsCode) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 
 	public function dataCostCenterAPI(Request $request)
@@ -4719,29 +4739,123 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-			'data_gender' => $arrResult->dataListSet[0], 
-			'data_marital_status' => $arrResult2->dataListSet[0], 
-			'data_religion' => $arrResult3->dataListSet[0], 
-			'data_nationality' => $arrResult4->dataListSet[0], 
-			'data_employment_status' => $arrResult5->dataListSet[0], 
-			'data_religion' => $arrResult3->dataListSet[0], 
-			'data_nationality' => $arrResult4->dataListSet[0], 
-			'data_employment_status' => $arrResult5->dataListSet[0], 
-			'data_employment_type' => $arrResult6->dataListSet[0], 
-			'data_termination_code' => $arrResult7->dataListSet[0], 
-			'data_absenteeism_type' => $arrResult8->dataListSet[0], 
-			'data_tax_status' => $arrResult9->dataListSet[0], 
-			'data_tax_status_next_year' => $arrResult10->dataListSet[0], 
-			'data_tax_office' => $arrResult11->dataListSet[0],
-			'data_tax_calculation_method' => $arrResult12->dataListSet[0],
-			'data_currency_code_1' => $arrResult13->dataListSet[0],
-			'data_currency_code_2' => $arrResult14->dataListSet[0],
-			'data_currency_code_3' => $arrResult15->dataListSet[0],
-			'data_blood_type' => $arrResult16->dataListSet[0],
-			'data_driving_license_car_type' => $arrResult17->dataListSet[0],
-			'data_insurance_code' => $arrResult18->dataListSet[0],
-			'data_insurance_class' => $arrResult19->dataListSet[0],
+			'data_gender' => ($request->gender == null) ? [] : $arrResult->dataListSet[0], 
+			'data_marital_status' => ($request->maritalStatus == null) ? [] : $arrResult2->dataListSet[0], 
+			'data_religion' => ($request->religionCode == null) ? [] : $arrResult3->dataListSet[0], 
+			'data_nationality' => ($request->nationality == null) ? [] : $arrResult4->dataListSet[0], 
+			'data_employment_status' => ($request->employmentStatus == null) ? [] : $arrResult5->dataListSet[0], 
+			'data_employment_type' => ($request->employmentType == null) ? [] : $arrResult6->dataListSet[0], 
+			'data_termination_code' => ($request->terminationCode == null) ? [] : $arrResult7->dataListSet[0], 
+			'data_absenteeism_type' => ($request->absenteeismType == null) ? [] : $arrResult8->dataListSet[0], 
+			'data_tax_status' => ($request->taxStatus == null) ? [] : $arrResult9->dataListSet[0], 
+			'data_tax_status_next_year' => ($request->taxStatusNextYear == null) ? [] : $arrResult10->dataListSet[0], 
+			'data_tax_office' => ($request->taxOffice == null) ? [] : $arrResult11->dataListSet[0],
+			'data_tax_calculation_method' => ($request->taxCalculationMethod == null) ? [] : $arrResult12->dataListSet[0],
+			'data_currency_code_1' => ($request->currencyCode1 == null) ? [] : $arrResult13->dataListSet[0],
+			'data_currency_code_2' => ($request->currencyCode2 == null) ? [] : $arrResult14->dataListSet[0],
+			'data_currency_code_3' => ($request->currencyCode3 == null) ? [] : $arrResult15->dataListSet[0],
+			'data_blood_type' => ($request->bloodType == null) ? [] : $arrResult16->dataListSet[0],
+			'data_driving_license_car_type' => ($request->drivingLicenseMobilType == null) ? [] : $arrResult17->dataListSet[0],
+			'data_insurance_code' => ($request->insuranceCode == null) ? [] : $arrResult18->dataListSet[0],
+			'data_insurance_class' => ($request->insuranceClassCode == null) ? [] : $arrResult19->dataListSet[0],
 			]
 		);
+	}
+
+	public function dataPerformanceResultAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}	    		
+				}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataEmployeeNoBonusTHRAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'employeeNo' => $request->employeeNo
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
+
+	public function dataPerformanceResultBonusTHRAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'value' => $request->value
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if ($request->value == null) {
+			return response()->json([]);
+		}
+
+		else {
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 }
