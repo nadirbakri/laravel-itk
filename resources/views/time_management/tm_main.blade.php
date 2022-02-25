@@ -27,7 +27,11 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-master-data" aria-expanded="true" aria-controls="time_management-master-data">
 				<div class="card-header">
 					<div class="div-dropdown-title">
+<<<<<<< Updated upstream
 						<img class="dropdown-logo" src="{{ url('/icons/time_management/timemanagement-masterdata.svg') }}" alt="Time Management">
+=======
+						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-masterdata.svg') }}" alt="Time Management">
+>>>>>>> Stashed changes
 						<span class="dropdown-title-text">{{ __('time_management.data_entry') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -117,7 +121,11 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-maintenance" aria-expanded="true" aria-controls="time_management-maintenance">
 				<div class="card-header">
 					<div class="div-dropdown-title">
+<<<<<<< Updated upstream
 						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-settings.svg') }}" alt="Time Management">
+=======
+						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-maintenance.svg') }}" alt="Time Management">
+>>>>>>> Stashed changes
 						<span class="dropdown-title-text">{{ __('time_management.maintenance') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -170,7 +178,11 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-report" aria-expanded="true" aria-controls="time_management-report">
 				<div class="card-header">
 					<div class="div-dropdown-title">
+<<<<<<< Updated upstream
 						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-process.svg') }}" alt="Time Management">
+=======
+						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-report.svg') }}" alt="Time Management">
+>>>>>>> Stashed changes
 						<span class="dropdown-title-text">{{ __('time_management.report') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -181,55 +193,55 @@
 					<div class="row div-child-data">
 						<div class="col col-3">
 							<a href="{{ url('time_management/monthly_absenteeism_analysis') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.monthly_absenteeism_analysis') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/monthly_absenteeism_detail') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.monthly_absenteeism_detail') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/absenteeism_overtime_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.absenteeism_overtime_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/detail_absenteeism_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.detail_absenteeism_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/monthly_leave_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.monthly_leave_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/detail_rate_overtime_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.detail_rate_overtime_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/detail_absenteeism_reason_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.detail_absenteeism_reason_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/postpone_leave_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.postpone_leave_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('time_management/unpaid_leave_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/time_management/menu-submenuicon-process.png') }}" alt="Child Time Management">
+								<img src="{{ url('/icons/time_management/submenu-report.svg') }}" alt="Child Time Management">
 								<span class="child-title-text">{{ __('time_management.unpaid_leave_report') }}</span>
 							</a>
 						</div>

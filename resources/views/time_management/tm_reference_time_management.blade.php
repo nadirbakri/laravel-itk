@@ -9,6 +9,7 @@
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 	<link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
 	<style type="text/css">
@@ -662,20 +663,346 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.11.3/dataRender/datetime.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        for(var i=0; i<60; i++){
             
+        }
+
+        // var $deduction1_from=$('#deduction1_from').flatpickr({
+        //     enableTime: true,
+        //     noCalendar: true,
+        //     altInput: true,
+        //     // static: true,
+        //     allowInput: true,
+        //     time_24hr: true,
+        //     defaultDate: "today",
+        //     altFormat: "H:i",
+        //     dateFormat: "H:i:ss"
+        // });
+
+        // var $deduction1_to=$('#deduction1_to').flatpickr({
+        //     enableTime: true,
+        //     noCalendar: true,
+        //     altInput: true,
+        //     // static: true,
+        //     allowInput: true,
+        //     time_24hr: true,
+        //     defaultDate: "today",
+        //     altFormat: "H:i",
+        //     dateFormat: "H:i:ss"
+        // });
+
+        loadDataProcessStatus();
+        loadDataAbsent();
+        loadDataDeductDay();
+
+        function loadDataProcessStatus() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Process Status</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#process_status').select2({
+                width: '100%',
+                placeholder: 'Choose Process Status',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/process_status/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataAbsent() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.description + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#not_clock_in, #not_clock_out, #late, #early_back, #not_clock_in_early_back, #late_early_back, #not_clock_out_late, #unpaid_leave, #absent, #overtime').select2({
+                width: '100%',
+                placeholder: 'Choose Absent',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/absent_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.description,
+                                    id: item.description,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+
+        }
+
+        var table = null;
+        $('.div-navbar a.disabled').attr('onclick', 'return false;');
+
+        $('#reference_time_management_table thead tr').clone(true).appendTo('#reference_time_management_table thead');
+        $('#reference_time_management_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+    
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        load_data_table_reference_time_management();
+
+        function load_data_table_reference_time_management() {
+            table = $('#reference_time_management_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/reference_time_management/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type, row) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'deductOvtDay', name: 'deductOvtDay'},
+                    {data: 'description', name: 'description'},
+                    {
+                        data: 'deductFrom1', 
+                        name: 'deductFrom1',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductTo1', 
+                        name: 'deductTo1',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductHour1', 
+                        name: 'deductHour1',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductFrom2', 
+                        name: 'deductFrom2',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductTo2', 
+                        name: 'deductTo2',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductHour2', 
+                        name: 'deductHour2',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductEvery3', 
+                        name: 'deductEvery3',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    },
+                    {
+                        data: 'deductHour3', 
+                        name: 'deductHour3',
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm:ss');
+                        }
+                    }
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
+        function loadDataDeductDay() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Deduct Day</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#deduct_day').select2({
+                width: '100%',
+                placeholder: 'Choose Deduct Day',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/deduct_day/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         $("#toolbar-new").on('click', function() {
             $.redirect("{{ url('time_management/shift_master_code/detail_data') }}", { 'shiftCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");

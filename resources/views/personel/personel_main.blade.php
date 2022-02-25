@@ -28,7 +28,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#personel-master-data" aria-expanded="true" aria-controls="personel-master-data">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/personel/personnel-master-data.svg') }}" alt="Personel Data">
+						<img class="dropdown-logo" src="{{ url('/icons/personel/personel-master-data.svg') }}" alt="Personel Data">
 						<span class="dropdown-title-text">{{ __('personel.data_entry') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -161,7 +161,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#personel-maintenance" aria-expanded="true" aria-controls="personel-maintenance">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/personel/personnel-maintenance.svg') }}" alt="Personel Maintenance">
+						<img class="dropdown-logo" src="{{ url('/icons/personel/personel-maintenance.svg') }}" alt="Personel Maintenance">
 						<span class="dropdown-title-text">{{ __('personel.personel_maintenance') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -513,61 +513,73 @@
 							</a>
 						</div> -->
 					</div>
-					<div class="div-head-data">
-						<span class="head-title-text">{{ __('personel.report') }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<a class="collapsed" data-toggle="collapse" href="#personel-report" aria-expanded="true" aria-controls="personel-report">
+				<div class="card-header">
+					<div class="div-dropdown-title">
+						<img class="dropdown-logo" src="{{ url('/icons/personel/personel-report.svg') }}" alt="Personel Report">
+						<span class="dropdown-title-text">{{ __('personel.personel_report') }}</span>
+						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
-					<div class="row div-child-data-maintenance">
+				</div>
+			</a>
+			<div id="personel-report" class="collapse">
+				<div class="card-block">
+					<div class="row div-child-data">
 						<div class="col col-3">
 							<a href="{{ url('personel/employee_list') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_list') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('personel/employee_report_by_status') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_report_by_status') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('personel/employee_dependents') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_dependents') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('personel/employee_card') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_card') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('personel/custom_report_employee') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.custom_report_employee') }}</span>
 							</a>
 						</div>
 						<!-- <div class="col col-3">
 							<a href="{{ url('personel/employee_notice_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_notice_report') }}</span>
 							</a>
 						</div> -->
 						<div class="col col-3">
 							<a href="{{ url('personel/evaluation_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.evaluation_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('personel/employee_skill_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_skill_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
 							<a href="{{ url('personel/employee_turn_over_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/personel/submenu-maintenance.svg') }}" alt="Child Personel">
+								<img src="{{ url('/icons/personel/submenu-report.svg') }}" alt="Child Personel">
 								<span class="child-title-text">{{ __('personel.employee_turn_over_report') }}</span>
 							</a>
 						</div>
