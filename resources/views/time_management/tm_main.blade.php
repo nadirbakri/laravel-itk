@@ -27,11 +27,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-master-data" aria-expanded="true" aria-controls="time_management-master-data">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-<<<<<<< Updated upstream
-						<img class="dropdown-logo" src="{{ url('/icons/time_management/timemanagement-masterdata.svg') }}" alt="Time Management">
-=======
 						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-masterdata.svg') }}" alt="Time Management">
->>>>>>> Stashed changes
 						<span class="dropdown-title-text">{{ __('time_management.data_entry') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -121,11 +117,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-maintenance" aria-expanded="true" aria-controls="time_management-maintenance">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-<<<<<<< Updated upstream
-						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-settings.svg') }}" alt="Time Management">
-=======
 						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-maintenance.svg') }}" alt="Time Management">
->>>>>>> Stashed changes
 						<span class="dropdown-title-text">{{ __('time_management.maintenance') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
@@ -178,11 +170,7 @@
 			<a class="collapsed" data-toggle="collapse" href="#time_management-report" aria-expanded="true" aria-controls="time_management-report">
 				<div class="card-header">
 					<div class="div-dropdown-title">
-<<<<<<< Updated upstream
-						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-process.svg') }}" alt="Time Management">
-=======
 						<img class="dropdown-logo" src="{{ url('/icons/time_management/time-management-report.svg') }}" alt="Time Management">
->>>>>>> Stashed changes
 						<span class="dropdown-title-text">{{ __('time_management.report') }}</span>
 						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
