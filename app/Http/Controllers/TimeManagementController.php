@@ -171,7 +171,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -200,7 +207,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -229,7 +243,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -262,7 +283,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         var_dump(Session::get('token'));
@@ -294,7 +322,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -325,7 +360,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -363,7 +405,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -396,7 +445,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -443,7 +499,14 @@ class TimeManagementController extends Controller
             );
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -478,7 +541,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -509,7 +579,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -537,7 +614,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -567,7 +651,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -594,7 +685,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents()); 
@@ -623,7 +721,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -649,7 +754,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -685,7 +797,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -724,7 +843,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents()); 
@@ -752,7 +878,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -778,7 +911,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -810,7 +950,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -836,7 +983,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -862,7 +1016,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -1035,7 +1196,14 @@ class TimeManagementController extends Controller
             );
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1078,7 +1246,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1122,7 +1297,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1181,7 +1363,14 @@ class TimeManagementController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1256,7 +1445,14 @@ class TimeManagementController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1302,7 +1498,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1339,7 +1542,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1399,7 +1609,14 @@ class TimeManagementController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1502,7 +1719,14 @@ class TimeManagementController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1628,7 +1852,14 @@ class TimeManagementController extends Controller
 
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
     }
@@ -1674,7 +1905,14 @@ class TimeManagementController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1710,7 +1948,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1737,7 +1982,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1787,7 +2039,14 @@ class TimeManagementController extends Controller
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1827,7 +2086,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1856,7 +2122,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1887,7 +2160,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1928,7 +2208,14 @@ class TimeManagementController extends Controller
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1976,7 +2263,14 @@ class TimeManagementController extends Controller
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2010,7 +2304,14 @@ class TimeManagementController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());

@@ -138,7 +138,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents()); 
@@ -448,7 +455,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -479,7 +493,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -510,7 +531,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -541,7 +569,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -721,7 +756,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -758,7 +800,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -789,7 +838,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -842,7 +898,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -873,7 +936,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -904,7 +974,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -935,7 +1012,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -966,7 +1050,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -997,7 +1088,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1028,7 +1126,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1059,7 +1164,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1090,7 +1202,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1121,7 +1240,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1152,7 +1278,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1291,7 +1424,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1322,7 +1462,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1353,7 +1500,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1421,7 +1575,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1452,7 +1613,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1573,7 +1741,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1603,7 +1778,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1701,7 +1883,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1732,7 +1921,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1780,7 +1976,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1894,7 +2097,14 @@ class PersonelController extends Controller
                 return view('personel.personel_personal_data_detail', ['data' => '', 'data2' => '', 'photo' => $filename, 'func' => $request->func]);
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
     }
 
@@ -1959,7 +2169,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -1993,7 +2210,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2052,7 +2276,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2081,7 +2312,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2121,7 +2359,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2149,7 +2394,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2177,7 +2429,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2205,7 +2464,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2234,7 +2500,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2262,7 +2535,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2290,7 +2570,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2319,7 +2606,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2347,7 +2641,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2375,7 +2676,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2404,7 +2712,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2474,7 +2789,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2501,7 +2823,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2529,7 +2858,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2568,7 +2904,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2596,7 +2939,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2654,7 +3004,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2681,7 +3038,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2733,7 +3097,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2767,7 +3138,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2807,7 +3185,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2833,7 +3218,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2865,7 +3257,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2897,7 +3296,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2939,7 +3345,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2971,7 +3384,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3004,7 +3424,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3036,7 +3463,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3068,7 +3502,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3104,7 +3545,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3136,7 +3584,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3168,7 +3623,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3201,7 +3663,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3234,7 +3703,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3266,7 +3742,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3298,7 +3781,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3331,7 +3821,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3363,7 +3860,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3395,7 +3899,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3551,7 +4062,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3588,7 +4106,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3624,7 +4149,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3685,7 +4217,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3721,7 +4260,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3763,7 +4309,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3797,7 +4350,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3830,7 +4390,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3864,7 +4431,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3899,7 +4473,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3932,7 +4513,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -3966,7 +4554,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4000,7 +4595,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4034,7 +4636,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4068,7 +4677,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4102,7 +4718,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4135,7 +4758,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4169,7 +4799,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4202,7 +4839,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4236,7 +4880,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4270,7 +4921,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4304,7 +4962,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4338,7 +5003,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4372,7 +5044,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4408,7 +5087,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4442,7 +5128,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4476,7 +5169,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4510,7 +5210,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4542,7 +5249,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4580,7 +5294,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4616,7 +5337,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4651,7 +5379,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5019,7 +5754,14 @@ class PersonelController extends Controller
                 );
             }  
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5077,7 +5819,14 @@ class PersonelController extends Controller
                 );
             }     
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5137,7 +5886,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5195,7 +5951,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5255,7 +6018,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5313,7 +6083,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5373,7 +6150,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5413,7 +6197,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5456,7 +6247,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5519,7 +6317,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5563,7 +6368,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5603,7 +6415,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5643,7 +6462,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5682,7 +6508,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5721,7 +6554,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5763,7 +6603,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5816,7 +6663,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5876,7 +6730,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5934,7 +6795,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -5990,7 +6858,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6052,7 +6927,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6112,7 +6994,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6180,7 +7069,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6236,7 +7132,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6292,7 +7195,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6348,7 +7258,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6404,7 +7321,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6460,7 +7384,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6575,7 +7506,14 @@ class PersonelController extends Controller
                 
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6613,7 +7551,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6650,7 +7595,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6688,7 +7640,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6748,7 +7707,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6804,7 +7770,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -6875,7 +7848,14 @@ class PersonelController extends Controller
             }
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7025,7 +8005,14 @@ class PersonelController extends Controller
                 }
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7088,7 +8075,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7127,7 +8121,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7184,7 +8185,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7243,7 +8251,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7281,7 +8296,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7325,7 +8347,14 @@ class PersonelController extends Controller
 
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7390,7 +8419,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7447,7 +8483,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7486,7 +8529,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7523,7 +8573,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7560,7 +8617,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7597,7 +8661,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7633,7 +8704,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7668,7 +8746,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7702,7 +8787,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7736,7 +8828,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7770,7 +8869,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7804,7 +8910,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7838,7 +8951,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7872,7 +8992,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7916,7 +9043,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -7961,7 +9095,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -8002,7 +9143,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -8056,7 +9204,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -8108,7 +9263,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -8168,7 +9330,14 @@ class PersonelController extends Controller
             }
 
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         return response()->json($number);
@@ -8313,7 +9482,14 @@ class PersonelController extends Controller
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -8357,7 +9533,14 @@ class PersonelController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -8420,7 +9603,14 @@ class PersonelController extends Controller
                 );
             }
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -8453,7 +9643,14 @@ class PersonelController extends Controller
     //             )]
     //         );
     //     } catch (RequestException $e) {
-    //         var_dump($e->getResponse());
+    //         $response = $e->getResponse();
+            // if($response->getStatusCode() == 401){
+            //     return view('error.login');
+            // }else if($response->getStatusCode() == 404){
+            //     return view('error.not_found');
+            // }else{
+            //     return view('error.bad_request');
+            // }
     //     }
 
     //     $arrResult = json_decode($response->getBody()->getContents());
