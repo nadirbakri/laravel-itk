@@ -228,10 +228,10 @@
             </button>
         </div>
         <div class="col-2">
-            <a class="btn btn-danger" href="{{ url('time_management/overtime_spl') }}" target="iframe_dashboard"
-                name="btn-delete" id="btn-delete" style="width: 100%;">
-                <i class="fa fa-times-circle"></i> {{ __('tm_overtime_spl.btn_delete') }}
-            </a>
+            <button type="button" class="btn btn-danger" name="btn-delete" id="btn-delete"
+                style="width: 100%;">
+                <i class="fa fa-times"></i> {{ __('tm_overtime_spl.btn_delete') }}
+            </button>
         </div>
     </div>
     <div class="modal fade" id="modal_add_overtime_spl" tabindex="-1" role="dialog" aria-hidden="true">

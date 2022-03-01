@@ -1197,6 +1197,45 @@ class DataController extends Controller
         return response()->json($religion);
 	}
 
+	public function dataReligionCodeAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prformulathr/getprformulathr',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->religionCode)){
+	    				return preg_match('/' . $search . '/i', $value->religionCode);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
 	public function dataStatusAPI(Request $request)
     {
     	try {
@@ -4628,8 +4667,6 @@ class DataController extends Controller
 
 	public function dataComGenAPI(Request $request)
     {
-
-		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
@@ -4641,7 +4678,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Gender_',
-	    				'comGenCode' => $request->gender
+	    				'comGenCode' => $request->gender,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4651,7 +4689,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'MaritalStatus_',
-	    				'comGenCode' => $request->maritalStatus
+	    				'comGenCode' => $request->maritalStatus,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4661,7 +4700,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Religion_',
-	    				'comGenCode' => $request->religionCode
+	    				'comGenCode' => $request->religionCode,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4671,7 +4711,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Nationality_',
-	    				'comGenCode' => $request->nationality
+	    				'comGenCode' => $request->nationality,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4681,7 +4722,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'EmploymentStatus_',
-	    				'comGenCode' => $request->employmentStatus
+	    				'comGenCode' => $request->employmentStatus,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4691,7 +4733,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'EmploymentType_',
-	    				'comGenCode' => $request->employmentType
+	    				'comGenCode' => $request->employmentType,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4701,7 +4744,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TerminationCode_',
-	    				'comGenCode' => $request->terminationCode
+	    				'comGenCode' => $request->terminationCode,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4711,7 +4755,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'AbsenteeismType_',
-	    				'comGenCode' => $request->absenteeismType
+	    				'comGenCode' => $request->absenteeismType,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4721,7 +4766,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxStatus_',
-	    				'comGenCode' => $request->taxStatus
+	    				'comGenCode' => $request->taxStatus,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4731,7 +4777,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxStatus_',
-	    				'comGenCode' => $request->taxStatusNextYear
+	    				'comGenCode' => $request->taxStatusNextYear,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4741,7 +4788,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxOffice_',
-	    				'comGenCode' => $request->taxOffice
+	    				'comGenCode' => $request->taxOffice,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4751,7 +4799,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxMethod_',
-	    				'comGenCode' => $request->taxCalculationMethod
+	    				'comGenCode' => $request->taxCalculationMethod,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4761,7 +4810,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Currency_',
-	    				'comGenCode' => $request->currencyCode1
+	    				'comGenCode' => $request->currencyCode1,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4771,7 +4821,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Currency_',
-	    				'comGenCode' => $request->currencyCode2
+	    				'comGenCode' => $request->currencyCode2,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4781,7 +4832,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Currency_',
-	    				'comGenCode' => $request->currencyCode3
+	    				'comGenCode' => $request->currencyCode3,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4791,7 +4843,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'BloodType_',
-	    				'comGenCode' => $request->bloodType
+	    				'comGenCode' => $request->bloodType,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4801,7 +4854,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'DrivingLicense_',
-	    				'comGenCode' => $request->drivingLicenseMobilType
+	    				'comGenCode' => $request->drivingLicenseMobilType,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4811,7 +4865,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'InsuranceCode_',
-	    				'comGenCode' => $request->insuranceCode
+	    				'comGenCode' => $request->insuranceCode,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4821,7 +4876,8 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'InsuranceClass_',
-	    				'comGenCode' => $request->insuranceClassCode
+	    				'comGenCode' => $request->insuranceClassCode,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -4948,6 +5004,8 @@ class DataController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
+
+			// var_dump($request->value);
 
 	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
 	    		['body' => json_encode(

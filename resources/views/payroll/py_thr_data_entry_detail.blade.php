@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_bonus_data_entry.judul') }}</title>
+    <title>{{ __('payroll_thr_data_entry.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -85,18 +85,18 @@
 <body>
     <div class="div-payroll">
         <div class="div-title">
-            <a href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard">
+            <a href="{{ url('payroll/thr_data_entry') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('payroll_bonus_data_entry.list_detail') }}</span>
+                <span class="title-text">{{ __('payroll_thr_data_entry.list_detail') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="bonus_data_entry_form" method="post">
+            <form id="thr_data_entry_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_no">{{ __('payroll_bonus_data_entry.label_employee_no') }}</label>
+                            <label for="employee_no">{{ __('payroll_thr_data_entry.label_employee_no') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
@@ -104,19 +104,19 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_name">{{ __('payroll_bonus_data_entry.label_employee_name') }}</label>
+                            <label for="employee_name">{{ __('payroll_thr_data_entry.label_employee_name') }}</label>
                             <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder="{{ __('payroll_bonus_data_entry.label_employee_name') }}">
+                                placeholder="{{ __('payroll_thr_data_entry.label_employee_name') }}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="entry_type">{{ __('payroll_bonus_data_entry.label_entry_type') }}</label>
+                            <label for="entry_type">{{ __('payroll_thr_data_entry.label_entry_type') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="entry_type" name="entry_type">
-                                <option value="" disabled selected>{{ __('payroll_bonus_data_entry.label_select_entry_type') }}</option>
+                                <option value="" disabled selected>{{ __('payroll_thr_data_entry.label_select_entry_type') }}</option>
                                 <option id="bonus" name="bonus" value="B">Bonus</option>
                                 <option id="thr" name="thr" value="T">THR</option>
                             </select>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="performance_result">{{ __('payroll_bonus_data_entry.label_performance_result') }}</label>
+                            <label for="performance_result">{{ __('payroll_thr_data_entry.label_performance_result') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="performance_result" name="performance_result"></select>
                         </div>
@@ -134,19 +134,19 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="service_month">{{ __('payroll_bonus_data_entry.label_service_month') }}</label>
+                            <label for="service_month">{{ __('payroll_thr_data_entry.label_service_month') }}</label>
                             <span class="required">*</span>
                             <input type="number" class="form-control" id="service_month" name="service_month"
-                                placeholder="{{ __('payroll_bonus_data_entry.label_service_month') }}">
+                                placeholder="{{ __('payroll_thr_data_entry.label_service_month') }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="payment_date">{{ __('payroll_bonus_data_entry.label_payment_date') }}</label>
+                            <label for="payment_date">{{ __('payroll_thr_data_entry.label_payment_date') }}</label>
                             <span class="required">*</span>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="payment_date" name="payment_date"
-                                    placeholder="{{ __('payroll_bonus_data_entry.label_payment_date') }}">
+                                    placeholder="{{ __('payroll_thr_data_entry.label_payment_date') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="payment_date_calendar"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -158,16 +158,16 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="currency_code">{{ __('payroll_bonus_data_entry.label_currency_code') }}</label>
+                            <label for="currency_code">{{ __('payroll_thr_data_entry.label_currency_code') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="currency_code" name="currency_code"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="nominal">{{ __('payroll_bonus_data_entry.label_nominal') }}</label>
+                            <label for="nominal">{{ __('payroll_thr_data_entry.label_nominal') }}</label>
                             <input type="number" class="form-control" id="nominal" name="nominal"
-                                placeholder="{{ __('payroll_bonus_data_entry.label_nominal') }}">
+                                placeholder="{{ __('payroll_thr_data_entry.label_nominal') }}">
                         </div>
                     </div>
                 </div>
@@ -175,13 +175,13 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('payroll_bonus_data_entry.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('payroll_thr_data_entry.btn_save') }}
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('payroll/thr_data_entry') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('payroll_bonus_data_entry.btn_cancel') }}
+                            <i class="fa fa-times-circle"></i> {{ __('payroll_thr_data_entry.btn_cancel') }}
                         </a>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_bonus_data_entry.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_thr_data_entry.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -358,8 +358,6 @@
                 $('#performance_result').prop('disabled', true);
             }
             $('#service_month').val((typeof arrData[0].serviceMonth !== 'undefined') ? arrData[0].serviceMonth : '');
-
-            // console.log((typeof arrData[0].performanceResult !== 'undefined') ? arrData[0].performanceResult : '');
 
             $.ajax({
                 type: 'GET',
@@ -652,11 +650,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#bonus_data_entry_form").submit();
+            $("#thr_data_entry_form").submit();
         });
 
-        if ($("#bonus_data_entry_form").length > 0) {
-            $("#bonus_data_entry_form").validate({
+        if ($("#thr_data_entry_form").length > 0) {
+            $("#thr_data_entry_form").validate({
             rules: {
                     employee_no: {
                         required: true,
@@ -679,16 +677,16 @@
                 },
                 messages: {
                     employee_no: {
-                        required: "{{ __('payroll_bonus_data_entry.field_mandatory') }}",
+                        required: "{{ __('payroll_thr_data_entry.field_mandatory') }}",
                     },
                     leave_code: {
-                        required: "{{ __('payroll_bonus_data_entry.field_mandatory') }}",
+                        required: "{{ __('payroll_thr_data_entry.field_mandatory') }}",
                     },
                     leave_date_from: {
-                        required: "{{ __('payroll_bonus_data_entry.field_mandatory') }}",
+                        required: "{{ __('payroll_thr_data_entry.field_mandatory') }}",
                     },
                     leave_date_to: {
-                        required: "{{ __('payroll_bonus_data_entry.field_mandatory') }}",
+                        required: "{{ __('payroll_thr_data_entry.field_mandatory') }}",
                     },
                 },
                 highlight: function (element) {
@@ -701,7 +699,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_save") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -716,12 +714,12 @@
                     $.ajax({
                         url: "{{ url('payroll/thr_bonus_data_entry/proses') }}",
                         type: "POST",
-                        data: $('#bonus_data_entry_form').serialize(),
+                        data: $('#thr_data_entry_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_save") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -729,12 +727,12 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/bonus_data_entry') }}";
+                                        "{{ url('payroll/thr_data_entry') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_save") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -751,7 +749,7 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_save") }}'
                             );
 
                             $('#notification').modal('show');
