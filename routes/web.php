@@ -728,15 +728,12 @@ Route::get('insurance_class/api', 'DataController@dataInsuranceClassAPI');
 Route::get('insurance_code/api', 'DataController@dataInsuranceCodeAPI');
 Route::get('comgen/api', 'DataController@dataComGenAPI');
 Route::get('shift_master_code/api', 'DataController@dataShiftMasterCodeAPI');
-<<<<<<< HEAD
 Route::get('shift_master_code/func/api', 'DataController@dataShiftMasterCodeFunctionAPI');
-=======
 Route::get('performance_result/api', 'DataController@dataPerformanceResultAPI');
 Route::get('employee_no/bonus_thr_data_entry/api', 'DataController@dataEmployeeNoBonusTHRAPI');
 Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPerformanceResultBonusTHRAPI');
 Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
->>>>>>> 9c11a6f4aea2b1d804bdac7a9cb991697b805bb8
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
