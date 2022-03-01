@@ -371,6 +371,7 @@ Route::get('time_management/time_recording_process_form', 'TimeManagementControl
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
 Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreparation');
 Route::get('time_management/absenteeism_data_entry_by_employee_no', 'TimeManagementController@pageAbsenteeismDataEntryByEmployeeNo');
+Route::get('time_management/absenteeism_data_entry_by_date', 'TimeManagementController@pageAbsenteeismDataEntryByDate');
 Route::get('time_management/update_shift_by_date', 'TimeManagementController@pageUpdateShiftByDate');
 Route::get('time_management/overtime_spl', 'TimeManagementController@pageOvertimeSPL');
 Route::get('time_management/company_working_calendar', 'TimeManagementController@pageCompanyWorkingCalendar');
@@ -405,14 +406,12 @@ Route::get('time_management/time_recording_reference/table', 'TimeManagementCont
 Route::get('time_management/overtime_code/table', 'TimeManagementController@tableOvertimeCodeTM');
 Route::get('time_management/shift_master_code/table', 'TimeManagementController@tableShiftMasterCodeTM');
 Route::get('time_management/absenteeism_data_entry_by_employee_no/table', 'TimeManagementController@tableAbsenteeismDataEntryByEmployeeNoTM');
+Route::get('time_management/reference_time_management/table', 'TimeManagementController@tableReferenceTimeManagementTM');
 
 /* Route untuk data detail Time Management */
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
-
-/*Route untuk check bool Time Management */
-Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
 
 /*Route untuk check bool Time Management */
 Route::get('time_management/user_detail/check', 'TimeManagementController@checkAppTM');
@@ -427,8 +426,12 @@ Route::post('time_management/period_maintenance/proses', 'TimeManagementControll
 Route::post('time_management/leave_transaction/proses', 'TimeManagementController@prosesLeaveTransactionTM');
 Route::post('time_management/absent_code/proses', 'TimeManagementController@prosesAbsentCodeTM');
 Route::post('time_management/shift_master_code/proses', 'TimeManagementController@prosesShiftMasterCodeTM');
+Route::post('time_management/time_recording_process_form/proses', 'TimeManagementController@prosesTimeRecordingProcessFormTM');
+Route::post('time_management/time_recording_reference/proses', 'TimeManagementController@prosesTimeRecordingReferenceTM');
+Route::post('time_management/template_preparation/proses', 'TimeManagementController@prosesTemplatePreparationTM');
 
 /* Route untuk remove Time Managemnet */
+Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
 Route::get('time_management/overtime_spl/remove', 'TimeManagementController@removeOvertimeSPLTM');
 Route::get('time_management/period_maintenance/remove', 'TimeManagementController@removePeriodMaintenanceTM');
 
@@ -438,6 +441,7 @@ Route::get('time_management/work_pattern/status', 'TimeManagementController@stat
 Route::get('time_management/absent_code/status', 'TimeManagementController@statusAbsentCodeTM');
 Route::get('time_management/shift_master_code/status', 'TimeManagementController@statusShiftMasterCodeTM');
 
+/* Route untuk detail Time Management */
 Route::get('time_management/input_balance_leave/detail', 'TimeManagementController@dataDetailInputBalanceLeave');
 Route::get('time_management/period/data/detail', 'TimeManagementController@dataDetailPeriodTM');
 Route::get('time_management/employee_name/detail', 'TimeManagementController@dataDetailEmployeeNameTM');
@@ -459,14 +463,13 @@ Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementC
 Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 
-Route::post('time_management/time_recording_process_form/import', 'TimeManagementController@importTimeRecordingProcessForm');
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll');
 /* Payroll Data Entry Menu */
-Route::get('payroll/other_allowance_deduction', 'PayrollController@pageOtherAllowanceDeduction');
-Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSippOnline');
+Route::get('payroll/salary_master_data', 'PayrollController@pageSalaryMasterData');
+Route::get('payroll/severance_data_entry', 'PayrollController@pageSeveracneDataEntry');
 Route::get('payroll/thr_formula', 'PayrollController@pageThrFormula');
 Route::get('payroll/thr_data_entry', 'PayrollController@pageThrDataEntry');
 Route::get('payroll/thr_calculation', 'PayrollController@pageThrCalculation');
@@ -478,24 +481,18 @@ Route::get('payroll/loan_data_entry', 'PayrollController@pageLoanDataEntry');
 Route::get('payroll/loan_payment', 'PayrollController@pageLoanPayment');
 Route::get('payroll/partial_full_loan_payment', 'PayrollController@pagePartialFullLoanPayment');
 /* Payroll Maintenance Menu */
-Route::get('payroll/reference_system_form', 'PayrollController@pageReferenceSystemForm');
 Route::get('payroll/payroll_calculation', 'PayrollController@pagePayrollCalculation');
-Route::get('payroll/denomination', 'PayrollController@pageDenomination');
 Route::get('payroll/reference_form', 'PayrollController@pageReferenceForm');
 Route::get('payroll/account', 'PayrollController@pageAccount');
-Route::get('payroll/jamsostek_overtime_component', 'PayrollController@pageJamsostekOvertimeComponent');
 Route::get('payroll/jamsostek_percentage', 'PayrollController@pageJamsostekPercentage');
-Route::get('payroll/overtime_formula', 'PayrollController@pageOvertimeFormula');
 Route::get('payroll/tax_calculation_table', 'PayrollController@pageTaxCalculationTable');
 Route::get('payroll/spt_format', 'PayrollController@pageSptFormat');
-Route::get('payroll/salary_increment', 'PayrollController@pageSalaryIncrement');
+Route::get('payroll/salary_component_form', 'PayrollController@pageSalaryComponentForm');
 Route::get('payroll/slip_format_salary_slip', 'PayrollController@pageSlipFormatSalarySlip');
 Route::get('payroll/slip_format_bonus_slip', 'PayrollController@pageSlipFormatBonusSlip');
 Route::get('payroll/slip_format_thr_slip', 'PayrollController@pageSlipFormatThrSlip');
 Route::get('payroll/journal_template', 'PayrollController@pageJournalTemplate');
 Route::get('payroll/report_format', 'PayrollController@pageReportFormat');
-Route::get('payroll/slip_format_custom', 'PayrollController@pageSlipFormatCustom');
-Route::get('payroll/salary_master', 'PayrollController@pageSalaryMaster');
 Route::get('payroll/tarif_master', 'PayrollController@pageTarifMaster');
 Route::get('payroll/multi_cost_center', 'PayrollController@pageMultiCostCenter');
 /* Payroll Process Menu */
@@ -503,15 +500,53 @@ Route::get('payroll/import_data_from_excel', 'PayrollController@pageImportDataFr
 Route::get('payroll/year_end_process', 'PayrollController@pageYearEndProcess');
 Route::get('payroll/yearly_adjusment', 'PayrollController@pageYearlyAdjusment');
 Route::get('payroll/spt_process', 'PayrollController@pageSptProcess');
-Route::get('payroll/transfer_e-spt_form', 'PayrollController@pageTransferE-SptForm');
 Route::get('payroll/final_tax_process', 'PayrollController@pageFinalTaxProcess');
-Route::get('payroll/transfer_e-spt_1721-i_masa', 'PayrollController@pageTransferE-Spt1721-IMasa');
 Route::get('payroll/periodical_update_process', 'PayrollController@pagePeriodicalUpdateProcess');
 Route::get('payroll/transfer_data_to_bank', 'PayrollController@pageTransferDataToBank');
 Route::get('payroll/overtime_calculation_process', 'PayrollController@pageOvertimeCalculationProcess');
 Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
 Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCalculationProcess');
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
+/* Payroll Report Menu */
+Route::get('payroll/dumtk', 'PayrollController@pageDumtk');
+Route::get('payroll/monthly_jamsostek_report', 'PayrollController@pageMonthlyJamsostekReport');
+Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSippOnline');
+Route::get('payroll/loan_report', 'PayrollController@pageLoanReport');
+Route::get('payroll/journal_report', 'PayrollController@pageJournalReport');
+Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveReport');
+Route::get('payroll/signature_list', 'PayrollController@pageSignatureList');
+Route::get('payroll/thr_report', 'PayrollController@pageThrReport');
+Route::get('payroll/export_data_kepesertaan_bpjs-tk', 'PayrollController@pageExportDataKepesertaanBpjk-Tk');
+Route::get('payroll/periodical_report', 'PayrollController@pagePeriodicalReport');
+Route::get('payroll/payment_slip', 'PayrollController@pagePaymentSlip');
+Route::get('payroll/severance_report', 'PayrollController@pageSeveranceReport');
+Route::get('payroll/salary_historical_report', 'PayrollController@pageSalaryHistoricalReport');
+Route::get('payroll/csv_e-spt_report_form', 'PayrollController@pageCsvE-SptReportForm');
+Route::get('payroll/spt_pph_1721a1', 'PayrollController@pageSptPph1721a1');
+Route::get('payroll/annual_report', 'PayrollController@pageAnnualReport');
+Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1Report');
+
+/* Route untuk tabel Payroll */
+Route::get('payroll/account/table', 'PayrollController@tableAccount');
+Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
+
+/*Route untuk Proses Payroll*/
+Route::post('payroll/bonus_data_entry/proses', 'PayrollController@prosesBonusDataEntryPY');
+Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
+
+/*Route untuk remove Payroll*/
+Route::get('payroll/bonus_data_entry/remove', 'PayrollController@removeBonusDataEntryPY');
+
+/*Route untuk detail Data Payroll*/
+/* Route untuk detail Payroll */
+Route::get('payroll/account/detail', 'PayrollController@dataAccount');
+Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
+
+/* Route untuk status Payroll */
+Route::get('payroll/account/status', 'PayrollController@statusAccount');
+
+/* Route untuk proses Time Management */
+Route::post('payroll/account/proses','PayrollController@prosesAccount');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -693,7 +728,15 @@ Route::get('insurance_class/api', 'DataController@dataInsuranceClassAPI');
 Route::get('insurance_code/api', 'DataController@dataInsuranceCodeAPI');
 Route::get('comgen/api', 'DataController@dataComGenAPI');
 Route::get('shift_master_code/api', 'DataController@dataShiftMasterCodeAPI');
+<<<<<<< HEAD
 Route::get('shift_master_code/func/api', 'DataController@dataShiftMasterCodeFunctionAPI');
+=======
+Route::get('performance_result/api', 'DataController@dataPerformanceResultAPI');
+Route::get('employee_no/bonus_thr_data_entry/api', 'DataController@dataEmployeeNoBonusTHRAPI');
+Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPerformanceResultBonusTHRAPI');
+Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
+Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
+>>>>>>> 9c11a6f4aea2b1d804bdac7a9cb991697b805bb8
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

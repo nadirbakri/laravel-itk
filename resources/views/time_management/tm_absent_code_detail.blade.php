@@ -416,7 +416,7 @@
         else if (func == 'edit') {
             $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
             $('#record_function').val("Edit");
-            $('#absent_code').val(((typeof arrData[0].absentCode !== 'undefined') ? arrData[0].absentCode : ''));
+            $('#absent_code').val(((typeof arrData[0].absentCode !== 'undefined') ? arrData[0].absentCode : '')).prop('readonly', true);
             $('#description').val(htmlDecode(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '')));
             $('#times_allowed').val(((typeof arrData[0].timesAllowed !== 'undefined') ? arrData[0].timesAllowed : ''));
             $('#back_date').val(((typeof arrData[0].reqBackDay !== 'undefined') ? arrData[0].reqBackDay : ''));

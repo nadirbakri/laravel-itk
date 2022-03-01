@@ -8,6 +8,7 @@ use App\Exports\MonthlyLeaveReportExport;
 use App\Exports\MonthlyAbsenteeismAnalysisExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
+use App\Imports\TimeRecordingProcessFormImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -39,6 +40,11 @@ class TimeManagementController extends Controller
     public function pageAbsenteeismDataEntryByEmployeeNo()
     {
         return view ('time_management.tm_absenteeism_data_entry_by_employee_no');
+    }
+
+    public function pageAbsenteeismDataEntryByDate()
+    {
+        return view ('time_management.tm_absenteeism_data_entry_by_date');
     }
 
     public function pageTemplatePreparation()
@@ -234,6 +240,41 @@ class TimeManagementController extends Controller
         }
     }
 
+    public function tableReferenceTimeManagementTM()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetmdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "sessionID" => 0,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        var_dump(Session::get('token'));
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function tableOvertimeCodeTM()
     {
         try {
@@ -383,8 +424,7 @@ class TimeManagementController extends Controller
                 'logActionUsername' => Session::get('userName'),
                 "languageCode" => App::getLocale()
             ];
-
-            var_dump($request->seqNo);
+            
             foreach($request->seqNo as $value){
                 $data_work_pattern_detail_list[] = [
                     'companyCode' => Session::get('companyCode'),
@@ -933,7 +973,7 @@ class TimeManagementController extends Controller
         $file->move('file_excel', $nama_file);
         $import = new UpdateAbsenteeismDataImport;
         // var_dump($import);
-        Excel::import($import, public_path('/file_excel/'.$nama_file));
+        Excel::import($import, ('/file_excel/'.$nama_file));
         File::delete('file_excel/'.$nama_file);
         // var_dump(($import)->getArrResult());
         return ($import)->getArrResult();
@@ -1463,11 +1503,12 @@ class TimeManagementController extends Controller
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
-        // var_dump($request->check_work_on_holiday);
+
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
-        // var_dump($response); 
+        // var_dump($response);
+            
     }
 
     public function prosesShiftMasterCodeTM(Request $request)
@@ -1589,6 +1630,91 @@ class TimeManagementController extends Controller
             var_dump($e->getResponse());
         }
 
+    }
+
+    public function prosesTimeRecordingProcessFormTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump($request->hasFile('file_location'));
+
+            if($request->hasFile('file_location')) {
+                $file = $request->file('file_location');
+                $filename = rand().$file->getClientOriginalName();
+                $file->move('file_excel', $filename);
+                $path = public_path('file_excel/');
+
+                var_dump($path);
+
+                $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'fileLocation' =>  $path,
+                            'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
+                            'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            'logActionUserID' => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesTemplatePreparationTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/createtemplate',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'newEmployee' =>  isset($request->radiobtn) ? $request->radiobtn : '',
+                        'range' => isset($request->radiobtn) ? $request->radiobtn : '',
+                        'employeeNoFrom' => isset($request->employee_no_from) ? $request->employee_no_from : '',
+                        'employeeNoTo' => isset($request->employee_no_to) ? $request->employee_no_to : '',
+                        'periodMonth' => $request->processing_period,
+                        'periodYear' => $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function checkAppTM(Request $request)
@@ -1847,6 +1973,40 @@ class TimeManagementController extends Controller
 
             $response = $client->delete(env('API_URL') . '/tmperiod',
                 ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeTimeRecordingProcessFormTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/tempabsentmachine/deletetempabsentmachine',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'deleteDateFrom' => $request->delete_date_from,
+                        'deleteDateTo' => $request->delete_date_to,
+                        'employeeNoFrom' => $request->employee_no_from,
+                        'employeeNoTo' => $request->employee_no_to,
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
             );
         } catch (RequestException $e) {
             var_dump($e->getResponse());

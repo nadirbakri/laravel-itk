@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ __('tm_absenteeism_data_entry_by_employee_no.judul') }}</title>
+    <title>{{ __('tm_absenteeism_data_entry_by_date.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -100,54 +100,21 @@
         <div class="div-title">
             <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('tm_absenteeism_data_entry_by_employee_no.list') }}</span>
+                <span class="title-text">{{ __('tm_absenteeism_data_entry_by_date.list') }}</span>
             </a> 
         </div>
         <div class="div-form">
-            <form id="tm_absenteeism_data_entry_by_employee_no_form" method="post">
+            <form id="tm_absenteeism_data_entry_by_date_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="employee_no">{{ __('tm_absenteeism_data_entry_by_employee_no.label_employee_no') }}</label>
-                            <select class="form-control select2" id="employee_no" name="employee_no"></select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="employee_name">{{ __('tm_absenteeism_data_entry_by_employee_no.label_employee_name') }}</label>
-                            <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_employee_name') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="ranking">{{ __('tm_absenteeism_data_entry_by_employee_no.label_ranking') }}</label>
-                            <input type="text" class="form-control" id="ranking" name="ranking"
-                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_ranking') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="position">{{ __('tm_absenteeism_data_entry_by_employee_no.label_position') }}</label>
-                            <input type="text" class="form-control" id="position" name="position"
-                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_position') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="period">{{ __('tm_absenteeism_data_entry_by_employee_no.label_period') }}</label>
+                                for="absenteeism_date">{{ __('tm_absenteeism_data_entry_by_date.label_absenteeism_date') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="period" name="period"
-                                    placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_period') }}">
-                                <div class="input-group-prepend" id="period-calendar">
+                                <input type="text" class="form-control" id="absenteeism_date" name="absenteeism_date"
+                                    placeholder="{{ __('tm_absenteeism_data_entry_by_date.label_absenteeism_date') }}">
+                                <div class="input-group-prepend" id="absenteeism_date-calendar">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
@@ -160,22 +127,23 @@
             <div class="col-3">
                 <button type="submit" class="btn btn-primary" name="btn-edit" id="btn-edit"
                     style="width: 100%;">
-                    <i class="fa fa-pencil"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_edit') }}
+                    <i class="fa fa-pencil"></i> {{ __('tm_absenteeism_data_entry_by_date.btn_edit') }}
                 </button>
             </div>
             <div class="col-3">
                 <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                     style="width: 100%;" disabled>
-                    <i class="fa fa-floppy-o"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_save') }}
+                    <i class="fa fa-floppy-o"></i> {{ __('tm_absenteeism_data_entry_by_date.btn_save') }}
                 </button>
             </div>
         </div>
-        <form id="absenteeism_data_entry_by_employee_no_table_form" method="post">
+        <form id="absenteeism_data_entry_by_date_table_form" method="post">
             <div class="div-table">
-                <table id="absenteeism_data_entry_by_employee_no_table" class="table hover">
+                <table id="absenteeism_data_entry_by_date_table" class="table hover">
                     <thead>
                         <tr>
-                            <th rowspan="2" class="middle" style="width:200px">Absent Date</th>
+                            <th colspan="2" class="middle">Employee Data</th>
+                            <th rowspan="2" class="middle" style="width: 50%">Absent Date</th>
                             <th rowspan="2" class="middle">Period</th>
                             <th rowspan="2" class="middle">Day</th>
                             <th rowspan="2" class="middle">Shift Code</th>
@@ -194,7 +162,9 @@
                             <th rowspan="2" class="middle">Grade</th>
                         </tr>
                         <tr>
-                            <th style="width: 10px">Date</th>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Date</th>
                             <th>Time</th>
                             <th>Date</th>
                             <th>Time</th>
@@ -249,7 +219,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('tm_absenteeism_data_entry_by_employee_no.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('tm_absenteeism_data_entry_by_date.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -282,24 +252,17 @@
     });
 
     function initMonthPicker() {
-        $('#period').flatpickr({
+        $('#absenteeism_date').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
-            plugins: [
-                new monthSelectPlugin({
-                    shorthand: true, //defaults to false
-                    dateFormat: "Y-m-01", //defaults to "F Y"
-                    altFormat: "F Y", //defaults to "F Y"
-                })
-            ],
             onReady: function () {
                 var flatPickrInstance = this;
                 // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#period-calendar").click(function () {
+                $flatPickrInput.siblings("#absenteeism_date-calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -360,12 +323,10 @@
     	    return $("<textarea/>").html(value).text();
 	    }
 
-        load_data_table_absenteeism_data_entry_by_employee_no();
+        load_data_table_absenteeism_data_entry_by_date();
 
-        $('#employee_no, #period').on("select2:select, change", function (e) {
+        $('#employee_no').on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
-            var data2 = $('#period').val();
-            console.log(data2);
             $('#employee_name').val(htmlDecode(data[0].title));
 
             var filter_employee_no_table = $('#employee_no').val();
@@ -384,7 +345,7 @@
             // loadDataDay('.select_day');
 
             $.ajax({
-                url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
+                url: "{{ url('time_management/absenteeism_data_entry_by_date/table') }}",
                 type: "GET",
                 data: {
                     'employeeNo': data[0].id
@@ -506,7 +467,7 @@
 
                         if (v.actualDateIn !== 'undefined' && v.actualDateIn !== null) {
                             var actual_date_in = moment(v.actualDateIn).format('DD-MMM-YYYY');
-                            // console.log(actual_date_in);
+                            console.log(actual_date_in);
                         }
                         else {
                             var actual_date_in = '';
@@ -519,7 +480,7 @@
                             '<select class="form-control select2" name="shift_code[]" id="shift_code'+ (k+1) +'" disabled></select>',
                             '<select class="form-control select2" name="cost_center_code[]" id="cost_center_code'+(k+1)+'" disabled></select>',
                             '<div class="input-group">' +
-                                '<input type="text" class="form-control" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
+                                '<input type="text" class="form-control" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" value="'+ actual_date_in +'" disabled>' +  
                                 '<div class="input-group-prepend" id="actual_date_in_calendar">' +
                                     '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
                                 '</div>' +
@@ -557,20 +518,24 @@
                             '<input type="text" class="form-control" name="grade[]" id="grade'+ (k+1) +'" value="'+ ((typeof v.gradeCode !== 'undefined' && v.gradeCode !== null) ? v.gradeCode : '') +'" readonly>'
                         ]).draw();
 
-                        // var window['pickeractualDateIn' + (k+1)] = $('#actual_date_in'+ (k+1)).flatpickr({
-                        //     altInput: true,
-                        //     allowInput: true,
-                        //     altFormat: "j-M-y",
-                        //     dateFormat: "Y-m-d",
-                        //     defaultDate: "today",
-                        //     onReady: function () {
-                        //         var flatPickrInstance = this;
-                        //         var $flatPickrInput = $(flatPickrInstance.element);
-                        //         $flatPickrInput.siblings("#actual_date_in_calendar").click(function () {
-                        //             flatPickrInstance.toggle();
-                        //         });
-                        //     }
-                        // });
+                        function loadDataDetailActualDateIn(field = '', actualDateIn = '') {
+                            $(field).flatpickr({
+                                altInput: true,
+                                clickOpens: false,
+                                allowInput: true,
+                                altFormat: actualDateIn,
+                                dateFormat: "Y-m-d",
+                                // defaultDate: "today",
+                                onReady: function () {
+                                    var flatPickrInstance = this;
+                                    // console.log(flatPickrInstance);
+                                    var $flatPickrInput = $(flatPickrInstance.element);
+                                    $flatPickrInput.siblings("#actual_date_in_calendar").click(function () {
+                                        flatPickrInstance.toggle();
+                                    });
+                                }
+                            }); 
+                        }
 
                         // console.log($('#actual_date_in' + (k+1)).val());
                         
@@ -590,7 +555,8 @@
                         //     }
                         // });  
 
-                        // window['pickeractualDateIn' + (k+1)].setDate(((typeof v.actualDateIn !== 'undefined') ? v.actualDateIn : ''));
+                        // pickeractualDateIn.setDate(((typeof v.actualDateIn !== 'undefined') ? v.actualDateIn : ''));
+                        // pickeractualDateOut.setDate(((typeof v.actualDateOut !== 'undefined') ? v.actualDateOut : ''));
 
                         loadDataDay("#day" + (k+1));
                         loadDataShiftCode("#shift_code" + (k+1));
@@ -607,13 +573,13 @@
                         loadDataDetailFingerAbsentCode('#finger_absent_code' + (k+1), ((typeof v.absentCode !== 'undefined' && v.absentCode !== null) ? v.absentCode : ''));
                         loadDataDetailAbsentCode('#absent_code' + (k+1), ((typeof v.absentCode2 !== 'undefined' && v.absentCode2 !== null) ? v.absentCode2 : ''));
 
-                        // loadDataDetailActualDateIn('#actual_date_in' + (k+1), actual_date_in);
+                        loadDataDetailActualDateIn('#actual_date_in' + (k+1), actual_date_in);
 
                         // console.log(setDate((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
 
                         initTimePicker('#actual_time_in' + (k+1));
                         initTimePicker('#actual_time_out' + (k+1));
-                        initDatePicker('#actual_date_in' + (k+1));
+                        // initDatePicker('#actual_date_in' + (k+1));
                         initDatePicker('#actual_date_out' + (k+1));
 
                         $('#btn-edit').on('click', function () {
@@ -674,7 +640,7 @@
             $('#employee_name').val('');
             $('#ranking').val('');
             $('#position').val('');
-            $('#absenteeism_data_entry_by_employee_no_table').DataTable().destroy();
+            $('#absenteeism_data_entry_by_date_table').DataTable().destroy();
         });
 
         loadDataEmployeeNo();
@@ -683,8 +649,8 @@
             
         // }
 
-        function load_data_table_absenteeism_data_entry_by_employee_no(filter_employee_no_table = '') {
-            table = $('#absenteeism_data_entry_by_employee_no_table').DataTable({
+        function load_data_table_absenteeism_data_entry_by_date(filter_employee_no_table = '') {
+            table = $('#absenteeism_data_entry_by_date_table').DataTable({
                 processing: true,
                 orderCellsTop: true,
                 "sDom": 'lrtip',
@@ -825,7 +791,7 @@
                     costCenterCode : overtimeCode
                 }
             }).then(function (data) {
-                // console.log(overtimeCode);
+                console.log(overtimeCode);
                 if (!$(field).find('option:contains(' + data[0].costCenterDescription + ')').length && overtimeCode !== '') {
                     $(field).append($('<option>').val(data[0].costCenterCode).text(data[0].costCenterDescription));
                 }
@@ -836,7 +802,7 @@
 
         function loadDataDetailFingerAbsentCode(field = '', fingerAbsentCode = '') {
             $(field).addClass('spinner-border');
-            // console.log(fingerAbsentCode);
+            console.log(fingerAbsentCode);
 
             $.ajax({
                 type: 'GET',

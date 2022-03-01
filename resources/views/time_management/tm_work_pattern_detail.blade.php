@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_personal_data.judul') }}</title>
+    <title>{{ __('tm_work_pattern.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">

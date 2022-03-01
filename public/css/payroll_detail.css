@@ -217,6 +217,10 @@ td.details-control {
 tr.shown td.details-control {
 	background: url('https://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
 }
+.list-functionbar-sm{
+	padding: auto;
+	width: 8% !important;
+}
 .list-functionbar-md{
 	width: 9% !important;
 }
