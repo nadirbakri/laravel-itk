@@ -84,7 +84,14 @@ class EmployeeReportByStatusExport implements FromView
             );
         } 
         catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ __('error_page.judul') }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
+	<link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
+	<style type="text/css">
+		.div-time_management {
+			max-width: 97%;
+			margin: auto;
+			margin-top: 1%;
+		}
+        .col-4, img {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        img {
+            max-width: 15%;
+            margin-top: 3%;
+        }
+        p {
+            margin-bottom: 0.1rem;
+        }
+	</style>
+</head>
+
+<body>
+	<div class="div-time_management">
+        <img src="{{ url('/pictures/500.svg') }}" alt="Toogle">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6" style="text-align: center; font-size: 1.5rem; font-family: Montserrat;">{{ __('error_page.subjudul') }}</div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6" style="text-align: center; font-size: 1rem;">
+                <p>{{ __('error_page.text1') }}</p>
+                <p>{{ __('error_page.text2') }}</p>
+                <br>
+                <p>{{ __('error_page.text3') }}</p>
+                <p>{{ __('error_page.text4') }}</p>
+                <p><a href="mailto:support@intikom.com">support@intikom.com</a></p>
+                <br><br>
+                <p class="text-muted">© Copyright PT Intikom Berlian Mustika 2021</p>
+            </div>
+            <div class="col-3"></div>
+        </div>
+	</div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>
