@@ -42,8 +42,8 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($this->isHttpException($e)) {
+            // var_dump($e->getStatusCode());
             switch ($e->getStatusCode()) {
-
                 // not authorized
                 case '401':
                     return \Response::view('error.login',array(),401);

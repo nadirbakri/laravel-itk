@@ -162,7 +162,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="selected_absent_code">&nbsp;</label>
+                            <label for="selected_absent_code">* Selected Items</label>
                             <textarea class="form-control" id="selected_absent_code" rows="15"></textarea>
                         </div>
                     </div>
@@ -410,20 +410,53 @@
         $('input[name="absent_code"]').on('change', function () {
             $('input[name="' + this.name + '"]').not(this).prop('checked', false);
             var rows = table.rows({ 'search': 'applied' }).nodes();
+            var data = table.rows({ 'search': 'applied' }).data().toArray();
+            var result = [];
             if ($('#all_absent_code').is(':checked')) {
                 table.rows().select();
-                $('#check_absent_code', rows).prop('checked', true);
+                $('.chk-select', rows).prop('checked', true);
             }
             else {
+                data = [];
                 table.rows().deselect();
-                $('#check_absent_code', rows).prop('checked', false);
+                $('.chk-select', rows).prop('checked', false);
             }
+
+            $.each(data, function(key, value) {
+                result.push(value.absentCode + " - " + value.description);
+            });
+
+            var textarea = document.getElementById("selected_absent_code");
+            textarea.value = result.join("\n");
         });
 
         $('#detail_absenteeism_report_table tbody').on('click', '.chk-select', function () {     
-            if(this.checked==true) {
-                console.log( table.row( this.closest('tr') ).data() );
+            var data = table.rows('.selected').data().toArray();
+            var data2 = table.row(this.closest('tr')).data();
+            var result = [];
+            
+            if(!this.checked){
+                data = data.filter(obj => obj.absentCode !== data2.absentCode);
+                var all = $('#all_absent_code').get(0);
+                var selection = $('#selection_absent_code').get(0);
+                if(all && all.checked && ('checked' in all)){
+                    all.checked = false;
+                    selection.checked = true;
+                }
+            } else  {
+                data.push(data2);
+                var selection = $('#selection_absent_code').get(0);
+                if(selection && selection.checked && ('checked' in selection)){
+                    selection.checked = false;
+                }
             }
+
+            $.each(data, function(key, value) {
+                result.push(value.absentCode + " - " + value.description);
+            });
+
+            var textarea = document.getElementById("selected_absent_code");
+            textarea.value = result.join("\n");
         });
 
         // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){
@@ -435,7 +468,7 @@
         //     }
         // });
 
-        $('#detail_absenteeism_report_table tbody').on('change', 'input[name="check_absent_code[]"]', function(){
+        $('#detail_absenteeism_report_table tbody').on('change', '.chk-select', function(){
             if(!this.checked){
                 var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);

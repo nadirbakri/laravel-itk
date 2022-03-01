@@ -147,16 +147,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="div-table col-6">
-                    <table id="detail_rate_overtime_report_table" class="table hover  width: 100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>{{ __('tm_detail_rate_overtime_report.label_table_overtime_code') }}</th>
-                                <th>{{ __('tm_detail_rate_overtime_report.label_table_description') }}</th>
-                            </tr>
-                        </thead>
-                    </table>
+                <div class="row">
+                    <div class="div-table col-6">
+                        <table id="detail_rate_overtime_report_table" class="table hover  width: 100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{{ __('tm_detail_rate_overtime_report.label_table_overtime_code') }}</th>
+                                    <th>{{ __('tm_detail_rate_overtime_report.label_table_description') }}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="selected_overtime_code">* Selected Items</label>
+                            <textarea class="form-control" id="selected_overtime_code" rows="15"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="form-group ml-4">
@@ -387,14 +395,53 @@
         $('input[name="overtime_code"]').on('change', function () {
             $('input[name="' + this.name + '"]').not(this).prop('checked', false);
             var rows = table.rows({ 'search': 'applied' }).nodes();
+            var data = table.rows({ 'search': 'applied' }).data().toArray();
+            var result = [];
             if ($('#all_overtime_code').is(':checked')) {
                 table.rows().select();
-                $('#check_overtime_code', rows).prop('checked', true);
+                $('.chk-select', rows).prop('checked', true);
             }
             else {
+                data = [];
                 table.rows().deselect();
-                $('#check_overtime_code', rows).prop('checked', false);
+                $('.chk-select', rows).prop('checked', false);
             }
+
+            $.each(data, function(key, value) {
+                result.push(value.absentCode + " - " + value.description);
+            });
+
+            var textarea = document.getElementById("selected_overtime_code");
+            textarea.value = result.join("\n");
+        });
+
+        $('#detail_rate_overtime_report_table tbody').on('click', '.chk-select', function () {     
+            var data = table.rows('.selected').data().toArray();
+            var data2 = table.row(this.closest('tr')).data();
+            var result = [];
+            
+            if(!this.checked){
+                data = data.filter(obj => obj.absentCode !== data2.absentCode);
+                var all = $('#all_overtime_code').get(0);
+                var selection = $('#selection_overtime_code').get(0);
+                if(all && all.checked && ('checked' in all)){
+                    all.checked = false;
+                    selection.checked = true;
+                }
+            } else  {
+                data.push(data2);
+                var selection = $('#selection_overtime_code').get(0);
+                if(selection && selection.checked && ('checked' in selection)){
+                    selection.checked = false;
+                }
+            }
+
+            $.each(data, function(key, value) {
+                result.push(value.absentCode + " - " + value.description);
+            });
+
+            var textarea = document.getElementById("selected_overtime_code");
+            textarea.value = result.join("\n");
         });
 
         // $('#detail_rate_overtime_report_table tbody').on("change", 'input[type="checkbox"]', function(){
@@ -405,8 +452,9 @@
         //     //    });
         //     }
         // });
+        
 
-        $('#detail_rate_overtime_report_table tbody').on('change', 'input[name="check_overtime_code[]"]', function(){
+        $('#detail_rate_overtime_report_table tbody').on('change', '.chk-select', function(){
             if(!this.checked){
                 var all = $('#all_overtime_code').get(0);
                 var selection = $('#selection_overtime_code').get(0);

@@ -6,6 +6,7 @@ use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
 use App\Exports\MonthlyAbsenteeismAnalysisExport;
+use App\Exports\AbsenteeismOvertimeReportExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\TimeRecordingProcessFormImport;
@@ -1243,17 +1244,17 @@ class TimeManagementController extends Controller
             // var_dump($request->day_code[1]);
             
             $param['workPatternDetailList'] = $data_work_pattern_detail_list;
-            var_dump(json_encode($param));
+            // var_dump(json_encode($param));
 
-            // if($request->record_function == 'New'){
-            //     $response = $client->post(env('API_URL') . '/tmworkpattern',
-            //         ['body' => json_encode($param)]
-            //     );
-            // }else{
-            //     $response = $client->put(env('API_URL') . '/tmworkpattern',
-            //         ['body' => json_encode($param)]
-            //     );
-            // }
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/tmworkpattern',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/tmworkpattern',
+                    ['body' => json_encode($param)]
+                );
+            }
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
