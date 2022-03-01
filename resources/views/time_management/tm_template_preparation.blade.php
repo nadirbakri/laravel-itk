@@ -113,26 +113,22 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <label for="employee_no_process form-check-label">{{ __('tm_template_preparation.label_employee_no_to_process') }}</label>
+                        <div class="form-group">
+                            <label for="employee_no_process form-check-label">{{ __('tm_template_preparation.label_employee_no_to_process') }}</label>
+                        </div>
                     </div>
                     <div class="col-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="all_employee"
-                                name="radiobtn[]" value=true checked>
-                            <label class="form-check-label" 
-                                for="all_employee">{{ __('tm_template_preparation.label_all_employee') }}</label>
+                            <input type="radio" id="all_employee" name="radiobtn[]" value=true checked>
+                            <label for="all_employee">{{ __('tm_template_preparation.label_all_employee') }}</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="new_employee"
-                                name="radiobtn[]" value=true>
-                            <label class="form-check-label" 
-                                for="new_employee">{{ __('tm_template_preparation.label_new_employee') }}</label>
+                            <input type="radio" id="new_employee" name="radiobtn[]" value=true>
+                            <label for="new_employee">{{ __('tm_template_preparation.label_new_employee') }}</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="range"
-                                name="radiobtn[]" value=true>
-                            <label class="form-check-label" 
-                                for="range">{{ __('tm_template_preparation.label_range') }}</label>
+                            <input type="radio" id="range" name="radiobtn[]" value=true>
+                            <label for="range">{{ __('tm_template_preparation.label_range') }}</label>
                         </div>
                     </div>
                 </div>
@@ -275,7 +271,7 @@
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
 
-        $('.form-check-input').on('change', function () {
+        $('input[type="radio"]').on('change', function () {
             if ($('#range').is(':checked')) {
                 $('#employee_no_from').prop('disabled', false);
                 $('#employee_no_to').prop('disabled', false);

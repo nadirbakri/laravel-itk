@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_bonus_data_entry.judul') }}</title>
+	<title>{{ __('payroll_thr_data_entry.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -112,7 +112,7 @@
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
             </a>
-            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_bonus_data_entry">
+            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_thr_data_entry">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
                 <span>Process</span>
@@ -121,11 +121,11 @@
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_bonus_data_entry.list') }}</span>
+				<span class="title-text">{{ __('payroll_thr_data_entry.list') }}</span>
 			</a>
 		</div>
         <div class="div-table">
-			<table id="bonus_data_entry_table" class="table hover">
+			<table id="thr_data_entry_table" class="table hover">
 				<thead>
 					<tr>
                         <th></th>
@@ -138,26 +138,26 @@
 			</table>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_process_bonus_data_entry" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_process_thr_data_entry" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('payroll_bonus_data_entry.list') }}</h5>
+                    <h5 class="modal-title">{{ __('payroll_thr_data_entry.list') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="bonus_data_entry_process_form" method="post">
+                    <form id="thr_data_entry_process_form" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="process_type">{{ __('payroll_bonus_data_entry.label_process_type') }}</label>
+                                        for="process_type">{{ __('payroll_thr_data_entry.label_process_type') }}</label>
                                     <select class="form-control select2" id="process_type" name="process_type">
-                                        <option value="" disabled selected>{{ __('payroll_bonus_data_entry.label_select_process_type') }}</option>
-                                        <option id="bonus" name="bonus" value="B">Bonus</option>
+                                        <option value="" disabled selected>{{ __('payroll_thr_data_entry.label_select_process_type') }}</option>
+                                        <option id="thr" name="thr" value="T">THR</option>
                                     </select>
                                 </div>
                             </div>
@@ -165,10 +165,19 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="bonus_cut_off_date">{{ __('payroll_bonus_data_entry.label_bonus_cut_off_date') }}</label>
+                                    <label
+                                        for="religion_code">{{ __('payroll_thr_data_entry.label_religion_code') }}</label>
+                                    <select class="form-control select2" id="religion_code" name="religion_code"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="thr_cut_off_date">{{ __('payroll_thr_data_entry.label_thr_cut_off_date') }}</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="bonus_cut_off_date" name="bonus_cut_off_date"
-                                            placeholder="{{ __('payroll_bonus_data_entry.label_bonus_cut_off_date') }}">
+                                        <input type="text" class="form-control" id="thr_cut_off_date" name="thr_cut_off_date"
+                                            placeholder="{{ __('payroll_thr_data_entry.label_thr_cut_off_date') }}">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -184,7 +193,7 @@
                                         <input class="form-check-input" type="checkbox" id="service_month_rounded"
                                             name="service_month_rounded" value="true">
                                         <label class="form-check-label"
-                                            for="service_month_rounded">{{ __('payroll_bonus_data_entry.label_service_month_rounded') }}</label>
+                                            for="service_month_rounded">{{ __('payroll_thr_data_entry.label_service_month_rounded') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -192,12 +201,12 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group" style="margin-bottom: 1px">
-                                    <label for="greater_than">{{ __('payroll_bonus_data_entry.label_greater_than') }}</label>
+                                    <label for="greater_than">{{ __('payroll_thr_data_entry.label_greater_than') }}</label>
                                 </div>
                                 <div class="form-group" style="display: flex">
                                     <input type="number" min=0 max=30 class="form-control" style="width: 50%" id="greater_than" name="greater_than"
-                                        placeholder={{ __('payroll_bonus_data_entry.label_greater_than') }}>
-                                    <label for="days" style="margin: auto">{{ __('payroll_bonus_data_entry.label_days_become_one_month') }}</label>
+                                        placeholder={{ __('payroll_thr_data_entry.label_greater_than') }}>
+                                    <label for="days" style="margin: auto">{{ __('payroll_thr_data_entry.label_days_become_one_month') }}</label>
                                 </div>
                             </div>
                         </div>
@@ -205,10 +214,10 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="submit" class="btn btn-process w-25" name="btn-process" id="btn-process">
-                        <i class="fa fa-play-circle-o"></i> {{ __('payroll_bonus_data_entry.btn_process') }}
+                        <i class="fa fa-play-circle-o"></i> {{ __('payroll_thr_data_entry.btn_process') }}
                     </button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                        class="fa fa-times-circle"></i> {{ __('payroll_bonus_data_entry.btn_cancel') }}</button>
+                        class="fa fa-times-circle"></i> {{ __('payroll_thr_data_entry.btn_cancel') }}</button>
                 </div>
                 </form>
             </div>
@@ -240,7 +249,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_bonus_data_entry.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_thr_data_entry.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -293,11 +302,11 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#bonus_data_entry_table thead tr').clone(true).appendTo('#bonus_data_entry_table thead');
-        $('#bonus_data_entry_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#thr_data_entry_table thead tr').clone(true).appendTo('#thr_data_entry_table thead');
+        $('#thr_data_entry_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
-
+    
             $('input', this).on('keyup change', function () {
                 if (table.column(i + 1).search() !== this.value) {
                     table
@@ -308,16 +317,77 @@
             } );
         });
 
-        load_data_table_bonus_data_entry();
+        loadDataReligionCode();
+        load_data_table_thr_data_entry();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_bonus_data_entry() {
-            table = $('#bonus_data_entry_table').DataTable({
+        function loadDataReligionCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.religionCode + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#religion_code').select2({
+                width: '100%',
+                placeholder: 'Choose Religion Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/religion_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.religionCode,
+                                    id: item.religionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function load_data_table_thr_data_entry() {
+            table = $('#thr_data_entry_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('payroll/bonus_data_entry/table') }}",
+                ajax: "{{ url('payroll/thr_data_entry/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -352,7 +422,7 @@
         }
 
         $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('payroll/bonus_data_entry/detail_data') }}", 
+            $.redirect("{{ url('payroll/thr_data_entry/detail_data') }}", 
             { 
                 'employeeNo' : null,
                 'func' : 'new' 
@@ -363,7 +433,7 @@
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/bonus_data_entry/detail_data') }}", 
+                $.redirect("{{ url('payroll/thr_data_entry/detail_data') }}", 
                 { 
                     'employeeNo' : data[0].employeeNo,
                     'receiptDate' : data[0].receiptDate,
@@ -392,8 +462,8 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response
                                 .message);
-                            $('#bonus_data_entry_table').DataTable().destroy();
-                            load_data_table_bonus_data_entry();
+                            $('#thr_data_entry_table').DataTable().destroy();
+                            load_data_table_thr_data_entry();
                             setTimeout(function () {
                                 $('#notification_success').modal('hide');
                             }, 3000);
@@ -418,9 +488,9 @@
             }
         });
 
-        $('#bonus_data_entry_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#thr_data_entry_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/bonus_data_entry/detail_data') }}", 
+            $.redirect("{{ url('payroll/thr_data_entry/detail_data') }}", 
             {   'employeeNo' : data.employeeNo, 
                 'receiptDate' : data.receiptDate,
                 'type' : data.flagType,
@@ -434,11 +504,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#bonus_data_entry_process_form").submit();
+            $("#thr_data_entry_process_form").submit();
         });
 
-        if ($("#bonus_data_entry_process_form").length > 0) {
-            $("#bonus_data_entry_process_form").validate({
+        if ($("#thr_data_entry_process_form").length > 0) {
+            $("#thr_data_entry_process_form").validate({
                 highlight: function (element) {
                     $(element).addClass('is-invalid');
                 },
@@ -449,7 +519,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-process").prop("disabled", false);
                     $("#btn-process").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_process") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_process") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -462,14 +532,14 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/bonus_data_entry_proses/proses') }}",
+                        url: "{{ url('payroll/thr_data_entry_proses/proses') }}",
                         type: "POST",
-                        data: $('#bonus_data_entry_process_form').serialize(),
+                        data: $('#thr_data_entry_process_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_process") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -477,12 +547,12 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/bonus_data_entry') }}";
+                                        "{{ url('payroll/thr_data_entry') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_process") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -499,7 +569,7 @@
                         error: function (response) {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_data_entry.btn_process") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_data_entry.btn_process") }}'
                             );
 
                             $('#notification').modal('show');

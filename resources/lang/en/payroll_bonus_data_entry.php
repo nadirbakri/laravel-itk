@@ -3,7 +3,7 @@
 return [
     'judul' => 'Bonus Data Entry',
     'list' => 'Bonus Data Entry',
-    'list_detail' => 'Bonus Data Entry Detail',
+    'list_detail' => 'List Bonus Data Entry',
     'label_employee_no' => 'Employee No',
     'label_employee_name' => 'Employee Name',
     'label_entry_type' => 'Entry Type',
@@ -19,6 +19,7 @@ return [
     'label_service_month_rounded' => 'Service Month Rounded',
     'label_greater_than' => 'Greater Than',
     'label_days_become_one_month' => 'Days Become 1 Month',
+    'btn_process' => 'Process',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',

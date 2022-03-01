@@ -528,19 +528,28 @@ Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1R
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccount');
+Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
+Route::get('payroll/thr_formula/table', 'PayrollController@tableTHRFormulaPY');
+Route::get('payroll/thr_formula_detail/table', 'PayrollController@tableTHRFormulaDetailPY');
+Route::get('payroll/bonus_formula/table', 'PayrollController@tableBonusFormulaPY');
+Route::get('payroll/bonus_formula_detail/table', 'PayrollController@tableBonusFormulaDetailPY');
 
 /*Route untuk Proses Payroll*/
-Route::post('payroll/bonus_data_entry/proses', 'PayrollController@prosesBonusDataEntryPY');
+Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
+Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
 Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
 
 /*Route untuk remove Payroll*/
-Route::get('payroll/bonus_data_entry/remove', 'PayrollController@removeBonusDataEntryPY');
+Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
+Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 
 /*Route untuk detail Data Payroll*/
-/* Route untuk detail Payroll */
 Route::get('payroll/account/detail', 'PayrollController@dataAccount');
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
+Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');
+Route::get('payroll/thr_formula/detail_data', 'PayrollController@dataDetailTHRFormulaPY');
+Route::get('payroll/bonus_formula/detail_data', 'PayrollController@dataDetailBonusFormulaPY');
 
 /* Route untuk status Payroll */
 Route::get('payroll/account/status', 'PayrollController@statusAccount');
@@ -640,6 +649,7 @@ Route::get('employee_bank_code/personal_data/api', 'DataController@dataEmployeeB
 Route::get('religion/api', 'DataController@dataReligionAPI');
 Route::get('religion/all/api', 'DataController@dataReligionAllAPI');
 Route::get('religion/func/api', 'DataController@dataReligionFunctionAPI');
+Route::get('religion_code/api', 'DataController@dataReligionCodeAPI');
 Route::get('status/api', 'DataController@dataStatusAPI');
 Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
 Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
