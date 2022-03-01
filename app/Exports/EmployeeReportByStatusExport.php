@@ -47,7 +47,7 @@ class EmployeeReportByStatusExport implements FromView
                 $URL = '/employeereportbystatus/getemployeereportcontract';
             }
 
-            elseif ($this->reportType=='terminate') {
+            else if ($this->reportType=='terminate') {
                 $URL = '/EmployeeReportByStatus/getEmployeeReportTerminate';
             }
             
@@ -89,7 +89,7 @@ class EmployeeReportByStatusExport implements FromView
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump(json_encode ($arrResult->dataListSet));
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_employee_report_by_status', [

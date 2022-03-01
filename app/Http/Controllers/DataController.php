@@ -4379,6 +4379,38 @@ class DataController extends Controller
 	    return response()->json($arrResult->dataListSet);
 	}
 
+	public function dataShiftMasterCodeFunctionAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'groupShift' => $request->groupShift
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if ($request->groupShift = '') {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
+	}
+
 	public function dataAbsentCodeFunctionAPI(Request $request)
     {
     	try {

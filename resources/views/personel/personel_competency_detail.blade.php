@@ -2257,6 +2257,7 @@
                 width: '100%',
                 placeholder: 'Choose Institution',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -2327,6 +2328,7 @@
                 width: '100%',
                 placeholder: 'Choose Major',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -2397,6 +2399,7 @@
                 width: '100%',
                 placeholder: 'Choose Title',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -2467,6 +2470,7 @@
                 width: '100%',
                 placeholder: 'Choose City',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -2537,6 +2541,7 @@
                 width: '100%',
                 placeholder: 'Choose Skill',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

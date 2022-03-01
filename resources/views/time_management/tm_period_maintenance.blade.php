@@ -121,10 +121,14 @@
             </button>
         </div>
         <div class="col-2">
-            <a class="btn btn-danger" href="{{ url('time_management/period_maintenance') }}" target="iframe_dashboard"
+            <button type="button" class="btn btn-danger" name="btn-remove" id="btn-remove"
+                style="width: 100%;">
+                <i class="fa fa-times-circle"></i> {{ __('tm_period_maintenance.btn_remove') }}
+            </button>
+            <!-- <a class="btn btn-danger" href="{{ url('time_management/period_maintenance') }}" target="iframe_dashboard"
                 name="btn-remove" id="btn-remove" style="width: 100%;">
                 <i class="fa fa-times-circle"></i> {{ __('tm_period_maintenance.btn_remove') }}
-            </a>
+            </a> -->
         </div>
     </div>
     <div class="modal fade" id="modal_add_overtime_spl" tabindex="-1" role="dialog" aria-hidden="true">
@@ -671,7 +675,7 @@
 
         $("#btn-remove").on('click', function () {
             var data = table.rows('.selected').data().toArray();
-
+            // console.log(data.length);
             if (data.length > 0) {
                 $.ajax({
                     url: "{{ url('time_management/period_maintenance/remove') }}",
@@ -680,6 +684,7 @@
                         'data' : data
                     },
                     success: function (response) {
+                        console.log(response);
                         if (response.status == "true") {
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response
@@ -814,13 +819,19 @@
                                 $("#btn-save-period-maintenance").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
                                 );
+
+                                $('#period_maintenance_table').DataTable().destroy();
+                                load_data_table_period_maintenance();
+
+                                $('#modal_add_overtime_spl').modal('hide'); 
                                 
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
-                                    window.location =
-                                        "{{ url('time_management/period_maintenance') }}";
+                                    $('#notification_success').modal('hide');
+                                    // window.location =
+                                        // "{{ url('time_management/period_maintenance') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save-period-maintenance").prop("disabled", false);

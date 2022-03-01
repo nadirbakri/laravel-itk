@@ -39,7 +39,7 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         if ($this->isHttpException($e)) {
             switch ($e->getStatusCode()) {

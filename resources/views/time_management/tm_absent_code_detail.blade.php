@@ -144,9 +144,9 @@
                             <label for="get_compensation_leave">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_get_compensation_leave"
-                                    name="check_get_compensation_leave" value="check_get_compensation_leave">
+                                    name="check_get_compensation_leave" value="true">
                                 <label
-                                    for="get_compensation_leave">{{ __('tm_absent_code.label_get_compensation_leave') }}</label>
+                                    for="check_get_compensation_leave">{{ __('tm_absent_code.label_get_compensation_leave') }}</label>
                             </div>
                         </div>
                     </div>
@@ -155,9 +155,9 @@
                             <label for="must_woman">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_must_woman"
-                                    name="check_must_woman" value="check_must_woman">
+                                    name="check_must_woman" value="true">
                                 <label
-                                    for="must_woman">{{ __('tm_absent_code.label_must_woman') }}</label>
+                                    for="check_must_woman">{{ __('tm_absent_code.label_must_woman') }}</label>
                             </div>
                         </div>
                     </div>
@@ -168,9 +168,9 @@
                             <label for="deduct_salary">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_deduct_salary"
-                                    name="check_deduct_salary" value="check_deduct_salary">
+                                    name="check_deduct_salary" value="true">
                                 <label
-                                    for="deduct_salary">{{ __('tm_absent_code.label_deduct_salary') }}</label>
+                                    for="check_deduct_salary">{{ __('tm_absent_code.label_deduct_salary') }}</label>
                             </div>
                         </div>
                     </div>
@@ -179,9 +179,9 @@
                             <label for="deduct_allowance">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_deduct_allowance"
-                                    name="check_deduct_allowance" value="check_deduct_allowance">
+                                    name="check_deduct_allowance" value="true">
                                 <label
-                                    for="deduct_allowance">{{ __('tm_absent_code.label_deduct_allowance') }}</label>
+                                    for="check_deduct_allowance">{{ __('tm_absent_code.label_deduct_allowance') }}</label>
                             </div>
                         </div>
                     </div>
@@ -192,9 +192,9 @@
                             <label for="warning">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_warning"
-                                    name="check_warning" value="check_warning">
+                                    name="check_warning" value="true">
                                 <label
-                                    for="warning">{{ __('tm_absent_code.label_warning') }}</label>
+                                    for="check_warning">{{ __('tm_absent_code.label_warning') }}</label>
                             </div>
                         </div>
                     </div>
@@ -212,17 +212,22 @@
                             <label for="tolerance_request">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_tolerance_request"
-                                    name="check_tolerance_request">
+                                    name="check_tolerance_request" value="true">
                                 <label
-                                    for="tolerance_request">{{ __('tm_absent_code.label_tolerance_request') }}</label>
+                                    for="check_tolerance_request">{{ __('tm_absent_code.label_tolerance_request') }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="back_date">{{ __('tm_absent_code.label_back_date') }}</label>
-                            <input type="text" class="form-control" id="back_date" name="back_date"
-                                placeholder="{{ __('tm_absent_code.label_back_date') }}" readonly>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" id="back_date" name="back_date"
+                                    placeholder="{{ __('tm_absent_code.label_back_date') }}" readonly>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Day</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,8 +237,13 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="max_per_request">{{ __('tm_absent_code.label_max_per_request') }}</label>
-                            <input type="text" class="form-control" id="max_per_request" name="max_per_request"
-                                placeholder="{{ __('tm_absent_code.label_max_per_request') }}" readonly>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" id="max_per_request" name="max_per_request"
+                                    placeholder="{{ __('tm_absent_code.label_max_per_request') }}" readonly>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Day</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>          
@@ -250,9 +260,9 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_display_absent_code"
-                                    name="check_display_absent_code" value="check_display_absent_code">
+                                    name="check_display_absent_code" value="true">
                                 <label
-                                    for="display_absent_code">{{ __('tm_absent_code.label_display_absent_code') }}</label>
+                                    for="check_display_absent_code">{{ __('tm_absent_code.label_display_absent_code') }}</label>
                             </div>
                         </div>
                     </div>
@@ -263,9 +273,9 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_need_attachment"
-                                    name="check_need_attachment" value="check_need_attachment">
+                                    name="check_need_attachment" value="true">
                                 <label
-                                    for="need_attachment">{{ __('tm_absent_code.label_need_attachment') }}</label>
+                                    for="check_need_attachment">{{ __('tm_absent_code.label_need_attachment') }}</label>
                             </div>
                         </div>
                     </div>
@@ -370,7 +380,7 @@
                     '<div class="form-group">'+
                     '<div class="form-check">'+
                     '<input class="form-check-input" type="checkbox" id="check_payroll'+ (i+1) +'" name="check_payroll'+ (i+1) +'">'+
-                    '<label for="check_payroll">' + (i+1) + '</label>'+
+                    '<label for="check_payroll'+ (i+1) +'">' + (i+1) + '</label>'+
                     '</div>'+
                     '</div>'+
                     '</div>'

@@ -127,9 +127,9 @@
                             <label for="work_on_holiday">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_work_on_holiday"
-                                    name="check_work_on_holiday" value="check_work_on_holiday">
+                                    name="check_work_on_holiday" value="true">
                                 <label
-                                    for="work_on_holiday">{{ __('tm_work_pattern.label_work_on_holiday') }}</label>
+                                    for="check_work_on_holiday">{{ __('tm_work_pattern.label_work_on_holiday') }}</label>
                             </div>
                         </div>
                     </div>
@@ -145,13 +145,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-8">
                         <div class="div-table">
                             <table id="work_pattern_detail_table" class="table hover">
                                 <thead>
                                       <tr>
-                                        <th>Seq No</th>
-                                        <th>Day Code</th>
+                                        <th width="15%">Seq No</th>
+                                        <th width="30%">Day Code</th>
                                         <th>Shift Code</th>
                                 </thead>
                             </table>
@@ -257,12 +257,12 @@
             }
             $('#no_of_day').val(((typeof arrData[0].noOfDay !== 'undefined') ? arrData[0].noOfDay : ''));
             load_table_detail_work_pattern();
-            // console.log(arrData[0].workPatternDetailList.length);
+            // console.log(arrData[0]);
             if (typeof arrData[0].noOfDay !== 'undefined') {
                 for (var i = 0; i < arrData[0].workPatternDetailList.length; i++) {
-                    console.log(arrData[0].workPatternDetailList[0].seqNo);
+                    console.log(arrData[0].workPatternDetailList[i].seqNo);
                     table.row.add([
-                        '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : i) +'">' + ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : i),
+                        '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : i) +'">' + ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : (i+1)),
                         '<select class="form-control select2 day_code" id="day_code'+ (i+1) +'" name="day_code[]">',
                         '<select class="form-control select2 shift_code" id="shift_code'+ (i+1) +'" name="shift_code[]">',
                     ]).draw();

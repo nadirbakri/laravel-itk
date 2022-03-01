@@ -117,7 +117,7 @@
                         <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
                 </div>
-                <div class="row row-employee-card">
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="include_list">&nbsp;</label>
@@ -133,7 +133,7 @@
                 <div class="row">
                     <div class="col-3"></div>
                     <div class="col-6">
-                        <div class="row row-employee-card">
+                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="family">&nbsp;</label>
@@ -408,7 +408,7 @@
                 placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

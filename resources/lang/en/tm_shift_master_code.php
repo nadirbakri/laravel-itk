@@ -3,6 +3,7 @@
 return [
     'judul' => 'Shift Master Code',
     'list' => 'Shift Master Code',
+    'choose' => 'Choose',
     'list_detail' => 'Shift Master Code List',
     'label_next' => 'Next',
     'label_back' => 'Back',

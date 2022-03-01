@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
+use App\Exports\MonthlyAbsenteeismAnalysisExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 
@@ -1175,44 +1176,51 @@ class TimeManagementController extends Controller
                 "languageCode" => App::getLocale()
             ];
 
-            // var_dump($request->day_code[1]);
-            foreach($request->seq_no as $value){
-                $data_work_pattern_detail_list[] = [
-                    'recordStatus' => $request->record_status,
-                    'companyCode' => Session::get('companyCode'),
-                    'patternCode' => $request->work_pattern_code,
-                    'seqNo' => (int) $value,
-                    'dayCode' => $request->day_code[$value - 1],
-                    'shiftCode' => $request->shift_code[$value - 1],
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => App::getLocale()
-                ];
-            }
-            $param['workPatternDetailList'] = $data_work_pattern_detail_list;
-            // var_dump($data_work_pattern_detail_list);
+            // var_dump(isset($request->seq_no));
 
-            if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/tmworkpattern',
-                    ['body' => json_encode($param)]
-                );
+            if(isset($request->seq_no)){
+                foreach($request->seq_no as $value){
+                    $data_work_pattern_detail_list[] = [
+                        'recordStatus' => $request->record_status,
+                        'companyCode' => Session::get('companyCode'),
+                        'patternCode' => $request->work_pattern_code,
+                        'seqNo' => (int) $value,
+                        'dayCode' => $request->day_code[$value - 1],
+                        'shiftCode' => $request->shift_code[$value - 1],
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ];
+                }
             }else{
-                $response = $client->put(env('API_URL') . '/tmworkpattern',
-                    ['body' => json_encode($param)]
-                );
+                $data_work_pattern_detail_list[] = null; 
             }
+            // var_dump($request->day_code[1]);
+            
+            $param['workPatternDetailList'] = $data_work_pattern_detail_list;
+            var_dump(json_encode($param));
+
+            // if($request->record_function == 'New'){
+            //     $response = $client->post(env('API_URL') . '/tmworkpattern',
+            //         ['body' => json_encode($param)]
+            //     );
+            // }else{
+            //     $response = $client->put(env('API_URL') . '/tmworkpattern',
+            //         ['body' => json_encode($param)]
+            //     );
+            // }
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }

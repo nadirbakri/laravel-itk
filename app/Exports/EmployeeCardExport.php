@@ -10,20 +10,26 @@ use Validator;
 use Session;
 use App;
 
-class UnpaidLeaveReportExport implements FromView
+class EmployeeCardExport implements FromView
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $includeResign, $position, $ranking, $location, $family, $training_records, $formal_education, $historical_jobs, $language, $work_experience, $organization, $award, $project_experience, $sanction)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
-        $this->period = $period;
         $this->includeResign = $includeResign;
-        $this->groupAuthorizeFrom = $groupAuthorizeFrom;
-        $this->groupAuthorizeTo = $groupAuthorizeTo;
         $this->position = $position;
         $this->ranking = $ranking;
         $this->location = $location;
-        $this->dataLevel = $dataLevel;
+        $this->family = $family;
+        $this->training_records = $training_records;
+        $this->formal_education = $formal_education;
+        $this->historical_jobs = $historical_jobs;
+        $this->language = $language;
+        $this->work_experience = $work_experience;
+        $this->organization = $organization;
+        $this->award = $award;
+        $this->project_experience = $project_experience;
+        $this->sanction = $sanction;
     }
     public function view(): View
     {
@@ -35,24 +41,25 @@ class UnpaidLeaveReportExport implements FromView
 
             $param = [ 
                 'companyCode' => Session::get('companyCode'), 
-                'languageCode' => App::getLocale(), 
+                'languageID' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'includeResign' => $this->includeResign
+                'includeResign' => $this->includeResign,
+                'family' => $this->family,
+                'training_records' => $this->training_records,
+                'formal_education' => $this->formal_education,
+                'historical_jobs' => $this->historical_jobs,
+                'language' => $this->language,
+                'work_experience' => $this->work_experience,
+                'organization' => $this->organization,
+                'award' => $this->award,
+                'project_experience' => $this->project_experience,
+                'sanction' => $this->sanction
             ];
 
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
                 $param['employeeNoFrom'] = $this->employeeNoFrom;
                 $param['employeeNoTo'] = $this->employeeNoTo;
-            }
-
-            if(!empty($this->period) || !empty($this->period)){
-                $param['period'] = $this->period;
-            }
-
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
@@ -82,44 +89,27 @@ class UnpaidLeaveReportExport implements FromView
                 $param['ranking'] = $data_ranking;
             }
 
-            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
-                foreach($this->dataLevel as $key => $value){
-                    $data_level_detail = [];
-                    foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = [
-                            'levelCode' => $value2
-                        ];
-                    }
-                    $data_level[] = [
-                        "companyCode" => Session::get('companyCode'),
-                        "levelType" => (string) ($key + 1),
-                        "levelCode" => $data_level_detail
-                    ];
-                }
-                $param['level'] = $data_level;
-            }
+            // var_dump($param['levelMaster']);
 
-            var_dump(json_encode($param));
-
-            // var_dump($param);
-
-            $response = $client->post(env('API_URL') . '/unpaidleavereport/getunpaidleavereport',
+            $response = $client->post(env('API_URL') . '/employeecard/getemployeecard',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             var_dump($e->getResponse());
         }
+
         $arrResult = json_decode($response->getBody()->getContents());
 
         // var_dump($arrResult->dataListSet);
+
         if($arrResult->dataListSet == null){
-            return view('time_management.tm_export_unpaid_leave_report', [
+            return view('personel.personel_export_employee_list', [
                 'data' => []
             ]);
         }else{
-            return view('time_management.tm_export_unpaid_leave_report', [
+            return view('personel.personel_export_employee_list', [
                 'data' => $arrResult->dataListSet
-            ]); 
+            ]);
         }
     }
 }

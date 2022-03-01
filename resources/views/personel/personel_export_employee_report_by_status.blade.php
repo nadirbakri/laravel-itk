@@ -39,13 +39,11 @@
 				<td>{{ $value->fullName }}</td>
                 <td>{{ $value->gender }}</td>
 				@if ($report_type=='terminate')
-					<td>{{ $value->joinDate }}</td>
-					<td>{{ $value->terminateDate }}</td>
-
+					<td>{{ $value->joindate }}</td>
+					<td>{{ $value->terminationDate }}</td>
 				@elseif ($report_type=='probation') 
-					<td>{{ $value->joinDate }}</td>
+					<td>{{ $value->joindate }}</td>
 					<td>{{ $value->probationEndDate }}</td>
-				
 				@else
 					<td>{{ $value->contractStartDate }}</td>
 					<td>{{ $value->contractEndDate }}</td>

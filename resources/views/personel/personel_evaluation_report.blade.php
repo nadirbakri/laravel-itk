@@ -438,7 +438,7 @@
                 placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -513,6 +513,7 @@
                 width: '100%',
                 placeholder: 'Choose Group Authorize',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -885,13 +886,13 @@
 
                             // The actual download
                             var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                type: 'application/pdf'
                             });
                             var link = document.createElement('a');
-                            // const url = URL.createObjectURL(blob);
-                            // link.href = window.open(url, "_blank");
+                            const url = URL.createObjectURL(blob);
+                            link.href = window.open(url, "_blank");
                             link.href = window.URL.createObjectURL(blob);
-                            // link.download = filename;
+                            link.download = filename;
 
                             document.body.appendChild(link);
 

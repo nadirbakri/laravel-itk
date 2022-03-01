@@ -28,19 +28,20 @@
 		.table_detail{
 			border-collapse:collapse;
 		}
+
+		.page_break { page-break-before: always; }
 	</style>
 </head>
 <body>
-	<?php
-	?>
+	@foreach($data as $key => $value)
 	<h2 style="text-align:center">Evaluation Report</h2>
-	<p style="text-align:center">Period : {{ \Carbon\Carbon::parse($data->evaluationPeriodFrom)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($data->evaluationPeriodTo)->format('d/m/Y') }} <p><br>
+	<p style="text-align:center">Period : {{ \Carbon\Carbon::parse($value->evaluationPeriodFrom)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($value->evaluationPeriodTo)->format('d/m/Y') }} <p><br>
 	<table style="width: 100%;">
 		<thead>
 			<tr>
 				<td>Employee No</td>
 				<td> : </td>
-				<td>{{ $data->employeeNo }}</td>
+				<td>{{ $value->employeeNo }}</td>
 				<td>  </td>
 				<td>  </td>
 				<td>  </td>
@@ -48,12 +49,12 @@
 				<td>  </td>
 				<td>Joining Date</td>
 				<td> : </td>
-				<td>{{ \Carbon\Carbon::parse($data->joinDate)->format('d/m/Y') }}</td>
+				<td>{{ \Carbon\Carbon::parse($value->joinDate)->format('d/m/Y') }}</td>
 			</tr>
 			<tr>
 				<td>Name</td>
 				<td> : </td>
-				<td>{{ $data->fullName }}</td>
+				<td>{{ $value->fullName }}</td>
 				<td>  </td>
 				<td>  </td>
 				<td>  </td>
@@ -61,12 +62,12 @@
 				<td>  </td>
 				<td>Evaluation Date</td>
 				<td> : </td>
-				<td>{{ \Carbon\Carbon::parse($data->evaluationDate)->format('d/m/Y') }}</td>
+				<td>{{ \Carbon\Carbon::parse($value->evaluationDate)->format('d/m/Y') }}</td>
 			</tr>
 			<tr>
 				<td>Ranking</td>
 				<td> : </td>
-				<td>{{ $data->ranking }}</td>
+				<td>{{ $value->ranking }}</td>
 				<td>  </td>
 				<td>  </td>
 				<td>  </td>
@@ -74,12 +75,12 @@
 				<td>  </td>
 				<td>Evaluator Name</td>
 				<td> : </td>
-				<td>{{ $data->evaluator }}</td>
+				<td>{{ $value->evaluator }}</td>
 			</tr>
 			<tr>
 				<td>Position</td>
 				<td> : </td>
-				<td>{{ $data->position }}</td>
+				<td>{{ $value->position }}</td>
 				<td>  </td>
 				<td>  </td>
 				<td>  </td>
@@ -87,12 +88,12 @@
 				<td>  </td>
 				<td>Evaluator Form</td>
 				<td> : </td>
-				<td>{{ $data->evaluationFormCode }}</td>
+				<td>{{ $value->evaluationFormCode }}</td>
 			</tr>
 			<tr>
 				<td>Location</td>
 				<td> : </td>
-				<td>{{ $data->location }}</td>
+				<td>{{ $value->location }}</td>
 			</tr>
 	</table>
 	<br><br>
@@ -105,20 +106,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($data->detail as $detail)
-			<tr>
-				<td>{{ $detail->evaluatedAspect }}</td>
-				<td>{{ $detail->predicate }}</td>
-                <td>{{ $detail->value }}</td>
-			</tr>
-			@endforeach
+			@if(empty($value->detail))
+				<tr>
+					<td colspan="3">No Data</td>
+				</tr>
+			@else
+				@foreach($value->detail as $detail)
+				<tr>
+					<td>{{ $detail->evaluatedAspect }}</td>
+					<td>{{ $detail->predicate }}</td>
+					<td>{{ $detail->value }}</td>
+				</tr>
+				@endforeach
+			@endif
 		</tbody>
 	</table>
 	<table>
 		<thead>
 			<tr>
 				<th>Total :</th>
-				<th>{{ $data->result }}</th>
+				<th>{{ $value->result }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -127,6 +134,10 @@
 			</tr>
 		</tbody>
 	</table>
+	@if($key != array_key_last($data))
+		<div class="page_break"></div>
+	@endif
+	@endforeach
 	<script type="text/php">
     if (isset($pdf)) {
         $pdf->page_script('

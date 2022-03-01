@@ -90,6 +90,8 @@ class MonthlyAbsenteeismAnalysisExport implements FromView
                 $param['levelMaster'] = $data_level;
             }
 
+            // var_dump(json_encode($param));
+
             // var_dump($param['levelMaster']);
 
             $response = $client->post(env('API_URL') . '/tmabsentemployee/getmonthlyabsenteeismanalysisreport',
@@ -100,8 +102,6 @@ class MonthlyAbsenteeismAnalysisExport implements FromView
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_analysis', [

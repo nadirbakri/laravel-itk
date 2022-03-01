@@ -7,6 +7,8 @@ use App\Exports\EmployeeReportByStatusExport;
 use App\Exports\EmployeeTurnOverReportExport;
 use App\Exports\EmployeeSkillReportExport;
 use App\Exports\CustomReportEmployeeExport;
+use App\Exports\EmployeeDependentsExport;
+use App\Exports\EmployeeCardExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -8219,6 +8221,12 @@ class PersonelController extends Controller
         return Excel::download(new EmployeeSkillReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Skill Report.xlsx');
     }
 
+    public function printEmployeeCardPersonel(Request $request)
+    {
+        return Excel::download(new EmployeeCardExport($request->employee_no_from, $request->employee_no_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, isset($request->family) ? (bool) $request->family : false, isset($request->training_records) ? (bool) $request->training_records : false, isset($request->formal_education) ? (bool) $request->formal_education : false, 
+        isset($request->historical_jobs) ? (bool) $request->historical_jobs : false, isset($request->language) ? (bool) $request->language : false, isset($request->work_experience) ? (bool) $request->work_experience : false, isset($request->organization) ? (bool) $request->organization : false, isset($request->award) ? (bool) $request->award : false, isset($request->project_experience) ? (bool) $request->project_experience : false, isset($request->sanction) ? (bool) $request->sanction : false), 'Employee Card Report.xlsx');
+    }
+
     public function printEvaluationReportPersonel(Request $request)
     {
         $dataLevel = [];
@@ -8324,7 +8332,7 @@ class PersonelController extends Controller
             $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Evaluation Report.pdf');
         }else{
-            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet[0]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Evaluation Report.pdf');
         }
 

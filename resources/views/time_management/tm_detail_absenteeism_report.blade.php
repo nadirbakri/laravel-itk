@@ -420,6 +420,12 @@
             }
         });
 
+        $('#detail_absenteeism_report_table tbody').on('click', '.chk-select', function () {     
+            if(this.checked==true) {
+                console.log( table.row( this.closest('tr') ).data() );
+            }
+        });
+
         // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){
         //     if(this.checked){
         //         console.log("okay");

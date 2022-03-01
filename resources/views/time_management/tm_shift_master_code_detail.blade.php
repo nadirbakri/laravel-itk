@@ -134,9 +134,9 @@
                             <label for="flexy">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_flexy"
-                                    name="check_flexy" value="check_flexy">
+                                    name="check_flexy" value="true">
                                 <label
-                                    for="flexy">{{ __('tm_shift_master_code.label_flexy') }}</label>
+                                    for="check_flexy">{{ __('tm_shift_master_code.label_flexy') }}</label>
                             </div>
                         </div>
                     </div>
@@ -474,6 +474,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select type="text" class="form-control" id="sa_monday_thursday_option" name="sa_monday_thursday_option">
+                                <option value="">{{ __('tm_shift_master_code.label_choose') }}</option>
                                 <option value="N">{{ __('tm_shift_master_code.label_no') }}</option>
                                 <option value="O">{{ __('tm_shift_master_code.label_yes_if_overtime') }}</option>
                                 <option value="Y">{{ __('tm_shift_master_code.label_yes') }}</option>
@@ -496,6 +497,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select type="text" class="form-control" id="sa_friday_option" name="sa_friday_option">
+                                <option value="">{{ __('tm_shift_master_code.label_choose') }}</option>
                                 <option value="N">{{ __('tm_shift_master_code.label_no') }}</option>
                                 <option value="O">{{ __('tm_shift_master_code.label_yes_if_overtime') }}</option>
                                 <option value="Y">{{ __('tm_shift_master_code.label_yes') }}</option>
@@ -518,6 +520,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select type="text" class="form-control" id="sa_saturday_option" name="sa_saturday_option">
+                                <option value="">{{ __('tm_shift_master_code.label_choose') }}</option>
                                 <option value="N">{{ __('tm_shift_master_code.label_no') }}</option>
                                 <option value="O">{{ __('tm_shift_master_code.label_yes_if_overtime') }}</option>
                                 <option value="Y">{{ __('tm_shift_master_code.label_yes') }}</option>
@@ -1532,11 +1535,12 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/shift_master_code/api',
+                url: '/shift_master_code/func/api',
                 data: {
                     'groupShift': "{{ isset($data[0]->groupShift) ? $data[0]->groupShift : '' }}"
                 }
             }).then(function (data) {
+                console.log(data);
                 // var option = new Option(data.positionCode, data.positionCode, true, true);
                 var option = $('<option/>', {
                     id: data.groupShift,
