@@ -157,7 +157,6 @@
                                         for="process_type">{{ __('payroll_thr_data_entry.label_process_type') }}</label>
                                     <select class="form-control select2" id="process_type" name="process_type">
                                         <option value="" disabled selected>{{ __('payroll_thr_data_entry.label_select_process_type') }}</option>
-                                        <option id="bonus" name="bonus" value="B">Bonus</option>
                                         <option id="thr" name="thr" value="T">THR</option>
                                     </select>
                                 </div>

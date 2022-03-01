@@ -117,7 +117,6 @@
                             <span class="required">*</span>
                             <select class="form-control select2" id="entry_type" name="entry_type">
                                 <option value="" disabled selected>{{ __('payroll_thr_data_entry.label_select_entry_type') }}</option>
-                                <option id="bonus" name="bonus" value="B">Bonus</option>
                                 <option id="thr" name="thr" value="T">THR</option>
                             </select>
                             <input type="text" class="form-control" id="entry_type_hidden" name="entry_type_hidden" hidden>
