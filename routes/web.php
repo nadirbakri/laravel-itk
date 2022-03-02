@@ -527,13 +527,15 @@ Route::get('payroll/annual_report', 'PayrollController@pageAnnualReport');
 Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1Report');
 
 /* Route untuk tabel Payroll */
-Route::get('payroll/account/table', 'PayrollController@tableAccount');
+Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
 Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
 Route::get('payroll/thr_formula/table', 'PayrollController@tableTHRFormulaPY');
 Route::get('payroll/thr_formula_detail/table', 'PayrollController@tableTHRFormulaDetailPY');
 Route::get('payroll/bonus_formula/table', 'PayrollController@tableBonusFormulaPY');
 Route::get('payroll/bonus_formula_detail/table', 'PayrollController@tableBonusFormulaDetailPY');
+Route::get('payroll/multi_cost_center/table', 'PayrollController@tableMultiCostCenterPY');
+Route::get('payroll/report_format/table', 'PayrollController@tableReportFormatPY');
 
 /*Route untuk Proses Payroll*/
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
@@ -545,17 +547,19 @@ Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBo
 Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 
 /*Route untuk detail Data Payroll*/
-Route::get('payroll/account/detail', 'PayrollController@dataAccount');
+Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
 Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');
 Route::get('payroll/thr_formula/detail_data', 'PayrollController@dataDetailTHRFormulaPY');
 Route::get('payroll/bonus_formula/detail_data', 'PayrollController@dataDetailBonusFormulaPY');
+Route::get('payroll/multi_cost_center/detail', 'PayrollController@dataMultiCostCenterPY');
+Route::get('payroll/report_format/detail', 'PayrollController@dataReportFormatPY');
 
 /* Route untuk status Payroll */
-Route::get('payroll/account/status', 'PayrollController@statusAccount');
+Route::get('payroll/account/status', 'PayrollController@statusAccountPY');
 
-/* Route untuk proses Time Management */
-Route::post('payroll/account/proses','PayrollController@prosesAccount');
+/* Route untuk proses Payroll */
+Route::post('payroll/account/proses','PayrollController@prosesAccountPY');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');

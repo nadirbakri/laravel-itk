@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('py_account.judul') }}</title>
+    <title>{{ __('payroll_account.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -88,7 +88,7 @@
         <div class="div-title">
             <a href="{{ url('payroll/account') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('py_account.list_detail') }}</span>
+                <span class="title-text">{{ __('payroll_account.list_detail') }}</span>
             </a>
         </div>
         <div class="div-form">
@@ -97,27 +97,27 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="account_no">{{ __('py_account.label_account_no') }}</label>
+                            <label for="account_no">{{ __('payroll_account.label_account_no') }}</label>
                             <span class="required">*</span>
                             <input type="text" class="form-control" id="account_no" name="account_no"
-                                placeholder="{{ __('py_account.label_account_no') }}">
+                                placeholder="{{ __('payroll_account.label_account_no') }}">
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="account_description">{{ __('py_account.label_account_description') }}</label>
+                            <label for="account_description">{{ __('payroll_account.label_account_description') }}</label>
                             <input type="text" class="form-control" id="account_description" name="account_description"
-                                placeholder="{{ __('py_account.label_account_description') }}">
+                                placeholder="{{ __('payroll_account.label_account_description') }}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="reference">{{ __('py_account.label_reference') }}</label>
+                            <label for="reference">{{ __('payroll_account.label_reference') }}</label>
                             <input type="text" class="form-control" id="reference" name="reference"
-                                placeholder="{{ __('py_account.label_reference') }}">
+                                placeholder="{{ __('payroll_account.label_reference') }}">
                         </div>
                     </div>
                 </div>
@@ -125,13 +125,13 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('py_account.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('payroll_account.btn_save') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <a class="btn btn-primary" href="{{ url('time_management/absent_code') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('py_account.btn_cancel') }}
+                            <i class="fa fa-times-circle"></i> {{ __('payroll_account.btn_cancel') }}
                         </a>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('py_account.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_account.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -233,7 +233,7 @@
                 },
                 messages: {
                     absent_code: {
-                        required: "{{ __('py_account.account_no_required') }}",
+                        required: "{{ __('payroll_account.account_no_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -246,7 +246,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("py_account.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_account.btn_save") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -266,7 +266,7 @@
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("py_account.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_account.btn_save") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -279,7 +279,7 @@
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("py_account.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_account.btn_save") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -296,7 +296,7 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("py_account.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_account.btn_save") }}'
                             );
 
                             $('#notification').modal('show');

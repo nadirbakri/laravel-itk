@@ -47,6 +47,12 @@
 								<span class="child-title-text">{{ __('payroll.severance_data_entry') }}</span>
 							</a>
 						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.tarif_master') }}</span>
+							</a>
+						</div>
 					</div>
 					<div class="div-head-data">
 						<span class="head-title-text">{{ __('payroll.thr') }}</span>
@@ -64,12 +70,6 @@
 								<span class="child-title-text">{{ __('payroll.thr_data_entry') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/thr_calculation') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.thr_calculation') }}</span>
-							</a>
-						</div>
 					</div>
 					<div class="div-head-data">
 						<span class="head-title-text">{{ __('payroll.bonus') }}</span>
@@ -85,12 +85,6 @@
 							<a href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.bonus_data_entry') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/bonus_calculation') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.bonus_calculation') }}</span>
 							</a>
 						</div>	
 					</div>
@@ -223,12 +217,6 @@
 					</div>
 					<div class="row div-child-data">
 						<div class="col col-3">
-							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.tarif_master') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
 							<a href="{{ url('payroll/multi_cost_center') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.multi_cost_center') }}</span>
@@ -292,9 +280,9 @@
 					</div>
 					<div class="row div-child-data">
 						<div class="col col-3">
-							<a href="{{ url('payroll/periodical_update_process') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/monthly_payroll_closing_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.periodical_update_process') }}</span>
+								<span class="child-title-text">{{ __('payroll.monthly_payroll_closing_process') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">

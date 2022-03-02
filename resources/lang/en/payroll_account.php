@@ -16,8 +16,6 @@ return [
     'label_reference' => 'Reference',
     'label_record_status' => 'Record Status',
     'account_no_required' => 'Account No Required',
-    'lable_account_description' => 'Account Description',
-    'lable_reference' => 'Reference',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',

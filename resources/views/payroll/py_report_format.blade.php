@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_account.judul') }}</title>
+	<title>{{ __('payroll_report_format.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -67,60 +67,59 @@
             <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
-                <span>{{ __('payroll_account.label_back') }}</span>
+                <span>{{ __('payroll_report_format.label_back') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
-                <span>{{ __('payroll_account.label_next') }}</span>
+                <span>{{ __('payroll_report_format.label_next') }}</span>
             </a>
             <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
-                <span>{{ __('payroll_account.label_new') }}</span>
+                <span>{{ __('payroll_report_format.label_new') }}</span>
             </a>
             <a href="javascript:void(0)" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
-                <span>{{ __('payroll_account.label_edit') }}</span>
+                <span>{{ __('payroll_report_format.label_edit') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
-                <span>{{ __('payroll_account.btn_save') }}</span>
+                <span>{{ __('payroll_report_format.btn_save') }}</span>
             </a>
             <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
-                <span>{{ __('payroll_account.label_activate') }}</span>
+                <span>{{ __('payroll_report_format.label_activate') }}</span>
             </a>
             <a class="list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
-                <span>{{ __('payroll_account.label_deactivate') }}</span>
+                <span>{{ __('payroll_report_format.label_deactivate') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
-                <span>{{ __('payroll_account.label_list') }}</span>
+                <span>{{ __('payroll_report_format.label_list') }}</span>
             </a>
         </div>
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_account.list') }}</span>
+				<span class="title-text">{{ __('payroll_report_format.list') }}</span>
 			</a>
 		</div>
-
         <div class="div-table">
-			<table id="account_table" class="table hover">
+			<table id="report_format_table" class="table hover">
 				<thead>
 					<tr>
                         <th></th>
-						<th>{{ __('payroll_account.label_account_no') }}</th>
-						<th>{{ __('payroll_account.label_account_description') }}</th>
-                        <th>{{ __('payroll_account.label_reference') }}</th>
-                        <th>{{ __('payroll_account.label_record_status') }}</th>
+						<th>{{ __('payroll_report_format.label_report_code') }}</th>
+						<th>{{ __('payroll_report_format.label_description') }}</th>
+                        <th>{{ __('payroll_report_format.label_font_size') }}</th>
+                        <th>{{ __('payroll_report_format.label_record_status') }}</th>
 					</tr>
 				</thead>
 			</table>
@@ -152,7 +151,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_account.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_report_format.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -175,8 +174,8 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#account_table thead tr').clone(true).appendTo('#account_table thead');
-        $('#account_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#report_format_table thead tr').clone(true).appendTo('#report_format_table thead');
+        $('#report_format_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
     
@@ -190,16 +189,16 @@
             } );
         });
 
-        load_data_table_account();
+        load_data_table_report_format();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_account() {
-            table = $('#account_table').DataTable({
+        function load_data_table_report_format() {
+            table = $('#report_format_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('payroll/account/table') }}",
+                ajax: "{{ url('payroll/report_format/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -215,9 +214,9 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'accountNo', name: 'accountNo'},
-                    {data: 'accountDescription', name: 'accountDescription'},
-                    {data: 'reference', name: 'reference'},
+                    {data: 'reportCode', name: 'reportCode'},
+                    {data: 'description', name: 'description'},
+                    {data: 'fontSize', name: 'fontSize'},
                     {data: 'recordStatus', name: 'recordStatus'}
                 ],
                 select: {
@@ -228,13 +227,13 @@
         }
 
         $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('payroll/account/detail') }}", { 'accountNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/report_format/detail') }}", { 'accountNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
         });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/account/detail') }}", { 'accountNo' : data[0].accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+                $.redirect("{{ url('payroll/report_format/detail') }}", { 'accountNo' : data[0].accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -267,7 +266,7 @@
                                 $('#message-notification-error').html(response.message);
                             }
                         }
-                        var oTable = $('#account_table').dataTable();
+                        var oTable = $('#report_format_table').dataTable();
                         oTable.fnDraw(false);
                     },
                     error: function(response) {
@@ -307,7 +306,7 @@
                                 $('#message-notification-error').html(response.message);
                             }
                         }
-                        var oTable = $('#account_table').dataTable();
+                        var oTable = $('#report_format_table').dataTable();
                         oTable.fnDraw(false);
                     },
                     error: function(response) {
@@ -321,9 +320,9 @@
             }
         });
 
-        $('#account_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#report_format_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/account/detail') }}", { 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/report_format/detail') }}", { 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     })
 </script>
