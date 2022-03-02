@@ -1881,8 +1881,6 @@ class TimeManagementController extends Controller
                 $file->move('file_excel', $filename);
                 $path = public_path('file_excel/');
 
-                var_dump($path);
-
                 $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
                     ['body' => json_encode(
                         [

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_thr_formula.judul') }}</title>
+	<title>{{ __('payroll_tarif_master.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -112,7 +112,7 @@
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
             </a>
-            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_bonus_data_entry">
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
                 <span>Process</span>
@@ -121,41 +121,25 @@
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_thr_formula.list') }}</span>
+				<span class="title-text">{{ __('payroll_tarif_master.list') }}</span>
 			</a>
 		</div>
-        <div class="row">
-            <div class="col-3">
-                <div class="form-check">
-                    <label for="formula_type">{{ __('payroll_thr_formula.label_formula_type') }}</label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-check">
-                    <input type="radio" id="thr" name="radiobtn[]" value=true checked>
-                    <label for="thr">{{ __('payroll_thr_formula.label_thr') }}</label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-check">
-                    <input type="radio" id="bonus" name="radiobtn[]" value=true>
-                    <label for="bonus">{{ __('payroll_thr_formula.label_bonus') }}</label>
-                </div>
-            </div>
-        </div>
         <div class="div-table">
-			<table id="thr_formula_table" class="table hover">
+			<table id="tariff_master_table" class="table hover">
 				<thead>
 					<tr>
                         <th></th>
-						<th>Religion Code</th>
-						<th>Religion Name</th>
+						<th>Employee No</th>
+						<th>Employee Name</th>
+                        <th>Month</th>
+                        <th>Year</th>
+						<th>Period</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
-    
+
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -182,7 +166,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_thr_formula.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_tarif_master.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -212,8 +196,8 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#thr_formula_table thead tr').clone(true).appendTo('#thr_formula_table thead');
-        $('#thr_formula_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#tariff_master_table thead tr').clone(true).appendTo('#tariff_master_table thead');
+        $('#tariff_master_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
 
@@ -227,25 +211,16 @@
             } );
         });
 
-        $('input[type="radio"]').on('change', function () {
-            if ($('#thr').is(':checked')) {
-                window.location.href = ("{{ url('payroll/thr_formula') }}");
-            }
-            else {
-                window.location.href = ("{{ url('payroll/bonus_formula') }}");
-            }
-        });
-
-        load_data_table_thr_formula();
+        load_data_table_tariff_master();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_thr_formula() {
-            table = $('#thr_formula_table').DataTable({
+        function load_data_table_tariff_master() {
+            table = $('#tariff_master_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('payroll/thr_formula/table') }}",
+                ajax: "{{ url('payroll/tariff_master/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -261,8 +236,11 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'comGenCode', name: 'comGenCode'},
-                    {data: 'value', name: 'value'}
+                    { data: 'employeeNo', name: 'employeeNo' },
+                    { data: 'fullName', name: 'fullName' },
+                    { data: 'periodMonth', name: 'periodMonth' },
+                    { data: 'periodYear', name: 'periodYear' },
+                    { data: 'statusPeriod', name: 'statusPeriod' },
                 ],
                 select: {
                     style:    'multi',
@@ -274,9 +252,9 @@
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/thr_formula/detail_data') }}", 
+                $.redirect("{{ url('payroll/tariff_master/detail_data') }}", 
                 { 
-                    'religionCode' : data[0].comGenCode 
+                    'employeeNo' : data[0].employeeNo
                 }, 
                 "GET", "iframe_dashboard");
             }else{
@@ -285,15 +263,17 @@
             }
         });
 
-        $('#thr_formula_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#tariff_master_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/thr_formula/detail_data') }}", 
+            $.redirect("{{ url('payroll/tariff_master/detail_data') }}", 
             {   
-                'religionCode' : data.comGenCode
+                'employeeNo' : data.employeeNo
             }, 
             "GET", "iframe_dashboard");
         });
     })
+
+
 </script>
 
 </html>

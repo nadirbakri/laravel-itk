@@ -23,6 +23,11 @@ class PayrollController extends Controller
         return view ('payroll.py_account');
     }
 
+    public function pageTarifMaster()
+    {
+        return view ('payroll.py_tariff_master');
+    }
+
     public function pageBonusFormula()
     {
         return view ('payroll.py_bonus_formula');
@@ -62,6 +67,40 @@ class PayrollController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableTariffMasterPY(Request $request) {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prtariffmaster/getprtariffmaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -379,6 +418,41 @@ class PayrollController extends Controller
         }
     }
 
+    public function dataDetailTariffMasterPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prtariffmaster/getprtariffmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('payroll.py_tariff_master_detail', ['data' => $arrResult->dataListSet]);
+    }
+
     public function dataDetailTHRDataEntryPY(Request $request)
     {
         try {
@@ -504,6 +578,19 @@ class PayrollController extends Controller
                     ]
                 )]
             );
+
+            $response_table = $client->post(env('API_URL') . '/prformulathr/getprformulathr',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'religionCode' => $request->religionCode,
+                        'languageCode' => App::getLocale(),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -516,8 +603,9 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response_table->getBody()->getContents());
 
-        return view('payroll.py_thr_formula_detail', ['data' => $arrResult->dataListSet]);
+        return view('payroll.py_thr_formula_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet]);
     }
 
     public function dataDetailBonusFormulaPY(Request $request)
@@ -570,6 +658,156 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return view('payroll.py_bonus_formula_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function prosesTHRFormulaPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/prformulathr/insertprformulathr',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'religionCode' => $request->religion_code,
+                            'serviceMonthFrom' => (int) $request->service_month_from,
+                            'serviceMonthTo' => (int) $request->service_month_to,
+                            "formula" => $request->preview_formula,
+                            "condition" => $request->preview_condition,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+
+            else {
+                $response = $client->put(env('API_URL') . '/prformulathr/updateprformulathr',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'religionCode' => $request->religion_code,
+                            'serviceMonthFrom' => (int) $request->service_month_from,
+                            'serviceMonthTo' => (int) $request->service_month_to,
+                            "formula" => $request->preview_formula,
+                            "condition" => $request->preview_condition,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesBonusFormulaPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/prformulabonus/insertformulabonus',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'bonusDate' => $request->bonus_date,
+                            'serviceMonthFrom' => (int) $request->service_month_from,
+                            'serviceMonthTo' => (int) $request->service_month_to,
+                            "performanceResult" => $request->performance_result,
+                            "formula" => $request->preview_formula,
+                            "condition" => $request->preview_condition,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+
+            else {
+                $response = $client->put(env('API_URL') . '/prformulathr/updateprformulathr',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'bonusDate' => $request->bonus_date,
+                            'serviceMonthFrom' => (int) $request->service_month_from,
+                            'serviceMonthTo' => (int) $request->service_month_to,
+                            "performanceResult" => $request->performance_result,
+                            "formula" => $request->preview_formula,
+                            "condition" => $request->preview_condition,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function prosesTHRBonusDataEntryPY(Request $request)
@@ -789,7 +1027,7 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
-    public function removeBonusFormulaPY(Request $request)
+    public function removeTHRFormulaPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         try {
@@ -798,8 +1036,45 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump($request->data);
-            // var_dump($request->serviceMonthFrom);
+            $response = $client->delete(env('API_URL') . '/prformulathr/deleteprformulathr',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "religionCode" => $request->religionCode,
+                        "serviceMonthFrom" => (int) $request->serviceMonthFrom,
+                        "serviceMonthTo" => (int) $request->serviceMonthTo,
+                        "formula" => $request->formula,
+                        "condition" => $request->condition,
+                        "changedNo" => 0,
+                        "languageCode" => App::getLocale(),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeBonusFormulaPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
             $response = $client->delete(env('API_URL') . '/prformulabonus/deleteformulabonus',
                 ['body' => json_encode(

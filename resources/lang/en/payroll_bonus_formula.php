@@ -12,6 +12,7 @@ return [
     'label_service_month_to' => 'Service Month To',
     'label_performance_result' => 'Performance Result',
     'label_table_chooser' => 'Table Chooser',
+    'label_select_table_chooser' => 'Choose Table Chooser',
     'label_field_chooser' => 'Field Chooser',
     'label_preview_formula' => 'Preview Formula',
     'label_preview_condition' => 'Preview Condition',
@@ -22,7 +23,8 @@ return [
     'btn_cancel' => 'Cancel',
     'btn_add_to_formula' => 'Add To Formula',
     'btn_add_to_condition' => 'Add To Condition',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'field_mandatory' => "This field can't be blank"
 ]
 
 ?>

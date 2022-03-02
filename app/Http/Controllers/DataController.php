@@ -5898,4 +5898,40 @@ class DataController extends Controller
 			return response()->json($arrResult->dataListSet[0]);
 		}
 	}
+
+	public function dataFieldAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+			// var_dump($request->tableName);
+
+	    	$response = $client->post(env('API_URL') . '/prformulathr/gettablefield',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'tableName' => $request->tableName
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	var_dump($e->getResponse());
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// var_dump($arrResult->dataListSet);
+
+		if ($request->tableName == null) {
+			return response()->json([]);
+		}
+
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
+	}
 }

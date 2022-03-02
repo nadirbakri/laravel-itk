@@ -226,14 +226,14 @@
             } );
         });
 
-        // $('input[type="radio"]').on('change', function () {
-        //     if ($('#thr').is(':checked')) {
-        //         $.redirect("{{ url('payroll/thr_formula') }}");
-        //     }
-        //     else {
-        //         $.redirect("{{ url('payroll/bonus_formula') }}");
-        //     }
-        // });
+        $('input[type="radio"]').on('change', function () {
+            if ($('#thr').is(':checked')) {
+                window.location.href = ("{{ url('payroll/thr_formula') }}");
+            }
+            else {
+                window.location.href = ("{{ url('payroll/bonus_formula') }}");
+            }
+        });
 
         load_data_table_bonus_formula();
 

@@ -528,6 +528,7 @@ Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1R
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
+Route::get('payroll/tariff_master/table', 'PayrollController@tableTariffMasterPY');
 Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
 Route::get('payroll/thr_formula/table', 'PayrollController@tableTHRFormulaPY');
@@ -541,13 +542,18 @@ Route::get('payroll/report_format/table', 'PayrollController@tableReportFormatPY
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
 Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
 Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
+Route::post('payroll/thr_formula/proses', 'PayrollController@prosesTHRFormulaPY');
+Route::post('payroll/bonus_formula/proses', 'PayrollController@prosesBonusFormulaPY');
+Route::post('payroll/account/proses','PayrollController@prosesAccountPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
+Route::get('payroll/thr_formula/remove', 'PayrollController@removeTHRFormulaPY');
 Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
+Route::get('payroll/tariff_master/detail_data', 'PayrollController@dataDetailTariffMasterPY');
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
 Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');
 Route::get('payroll/thr_formula/detail_data', 'PayrollController@dataDetailTHRFormulaPY');
@@ -557,9 +563,6 @@ Route::get('payroll/report_format/detail', 'PayrollController@dataReportFormatPY
 
 /* Route untuk status Payroll */
 Route::get('payroll/account/status', 'PayrollController@statusAccountPY');
-
-/* Route untuk proses Payroll */
-Route::post('payroll/account/proses','PayrollController@prosesAccountPY');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -748,6 +751,7 @@ Route::get('employee_no/bonus_thr_data_entry/api', 'DataController@dataEmployeeN
 Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPerformanceResultBonusTHRAPI');
 Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
+Route::get('field/api', 'DataController@dataFieldAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

@@ -78,153 +78,167 @@
 </head>
 
 <body>
-    <div class="div-payroll">
-        <div class="div-title">
-            <a href="{{ url('payroll/bonus_formula') }}" target="iframe_dashboard">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('payroll_bonus_formula.list_detail') }}</span>
-            </a>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="form-group">
-                    <label for="bonus_date">{{ __('payroll_bonus_formula.label_bonus_date') }}</label>
-                    <input type="text" class="form-control" name="bonus_date" id="bonus_date" readonly>
+    <div class="div-form">
+        <form id="bonus_formula_detail_form" method="post">
+            @csrf
+            <div class="div-payroll">
+                <div class="div-title">
+                    <a href="{{ url('payroll/bonus_formula') }}" target="iframe_dashboard">
+                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                        <span class="title-text">{{ __('payroll_bonus_formula.list_detail') }}</span>
+                    </a>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="bonus_date">{{ __('payroll_bonus_formula.label_bonus_date') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="bonus_date"
+                                    name="bonus_date"
+                                    placeholder="{{ __('payroll_bonus_formula.label_bonus_date') }}">
+                                <div class="input-group-prepend" id="bonus_date_calendar">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                                <input type="text" class="form-control" id="record_function" name="record_function" hidden>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="bonus_formula_detail_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Service Month From</th>
+                                <th>Service Month To</th>
+                                <th>Performance Result</th>
+                                <th>Formula</th>
+                                <th>Condition</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" name="btn-add" id="btn-add"
+                            style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_bonus_formula">
+                            <i class="fa fa-plus"></i> {{ __('payroll_bonus_formula.btn_add') }}
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" name="btn-edit" id="btn-edit"
+                            style="width: 100%;">
+                            <i class="fa fa-pencil"></i> {{ __('payroll_bonus_formula.btn_edit') }}
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-danger" name="btn-remove" id="btn-remove"
+                                style="width: 100%;">
+                            <i class="fa fa-times"></i> {{ __('payroll_bonus_formula.btn_remove') }}
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="div-table">
-			<table id="bonus_formula_detail_table" class="table hover">
-				<thead>
-					<tr>
-                        <th></th>
-						<th>Service Month From</th>
-						<th>Service Month To</th>
-						<th>Performance Result</th>
-						<th>Formula</th>
-						<th>Condition</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
-        <div class="row">
-            <div class="col-2">
-                <button type="submit" class="btn btn-primary" name="btn-add" id="btn-add"
-                    style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_bonus_formula">
-                    <i class="fa fa-plus"></i> {{ __('payroll_bonus_formula.btn_add') }}
-                </button>
+            <div class="modal fade" id="modal_add_edit_bonus_formula" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ __('payroll_bonus_formula.list') }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="service_month_from">{{ __('payroll_bonus_formula.label_service_month_from') }}</label>
+                                        <input type="number" class="form-control" id="service_month_from" name="service_month_from"
+                                            placeholder={{ __('payroll_bonus_formula.label_service_month_from') }}>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="service_month_to">{{ __('payroll_bonus_formula.label_service_month_to') }}</label>
+                                        <input type="number" class="form-control" id="service_month_to" name="service_month_to"
+                                            placeholder={{ __('payroll_bonus_formula.label_service_month_to') }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="performance_result">{{ __('payroll_bonus_formula.label_performance_result') }}</label>
+                                        <select class="form-control select2" id="performance_result" name="performance_result"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="table_chooser">{{ __('payroll_bonus_formula.label_table_chooser') }}</label>
+                                        <select class="form-control select2" id="table_chooser" name="table_chooser">
+                                            <option value="" disabled selected>{{ __('payroll_bonus_formula.label_select_table_chooser') }}</option>
+                                            <option value="PeMaster">PeMaster</option>
+                                            <option value="TmFixedComponent">TmFixedComponent</option>
+                                            <option value="PrSalaryMaster">PrSalaryMaster</option>
+                                            <option value="PrSalaryActual">PrSalaryActual</option>
+                                            <option value="PrYearly">PrYearly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="field_chooser">{{ __('payroll_bonus_formula.label_field_chooser') }}</label>
+                                        <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
+                                        {{ __('payroll_bonus_formula.btn_add_to_formula') }}
+                                    </button>
+                                </div>
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="preview_formula">{{ __('payroll_bonus_formula.label_preview_formula') }}</label>
+                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
+                                        {{ __('payroll_bonus_formula.btn_add_to_condition') }}
+                                    </button>
+                                </div>
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="preview_condition">{{ __('payroll_bonus_formula.label_preview_condition') }}</label>
+                                        <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" id="btn-save" class="btn btn-primary w-25"><i 
+                                    class="fa fa-floppy-o"></i> {{ __('payroll_bonus_formula.btn_save') }}</button>
+                                <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                    class="fa fa-times-circle"></i> {{ __('payroll_bonus_formula.btn_cancel') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-2">
-                <button type="submit" class="btn btn-primary" name="btn-edit" id="btn-edit"
-                    style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_bonus_formula">
-                    <i class="fa fa-pencil"></i> {{ __('payroll_bonus_formula.btn_edit') }}
-                </button>
-            </div>
-            <div class="col-2">
-                <button type="button" id="btn-save" class="btn btn-primary" name="btn-save" style="width: 100%;">
-                    <i class="fa fa-floppy-o"></i> {{ __('payroll_bonus_formula.btn_save') }}</button>
-            </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-danger" name="btn-remove" id="btn-remove"
-                        style="width: 100%;">
-                    <i class="fa fa-times"></i> {{ __('payroll_bonus_formula.btn_remove') }}
-                </button>
-            </div>
-        </div>
+        </form>
     </div>
-    <div class="modal fade" id="modal_add_edit_bonus_formula" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ __('payroll_bonus_formula.list') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="bonus_formula_detail_form" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label
-                                        for="service_month_from">{{ __('payroll_bonus_formula.label_service_month_from') }}</label>
-                                    <input type="number" class="form-control" id="service_month_from" name="service_month_from"
-                                        placeholder={{ __('payroll_bonus_formula.label_service_month_from') }}>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="service_month_to">{{ __('payroll_bonus_formula.label_service_month_to') }}</label>
-                                    <input type="text" class="form-control" id="service_month_to" name="service_month_to"
-                                        placeholder={{ __('payroll_bonus_formula.label_service_month_to') }}>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label
-                                        for="performance_result">{{ __('payroll_bonus_formula.label_performance_result') }}</label>
-                                    <select class="form-control select2" id="performance_result" name="performance_result"></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label
-                                        for="table_chooser">{{ __('payroll_bonus_formula.label_table_chooser') }}</label>
-                                    <select class="form-control select2" id="table_chooser" name="table_chooser"></select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label
-                                        for="field_chooser">{{ __('payroll_bonus_formula.label_field_chooser') }}</label>
-                                    <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <button type="submit" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
-                                    {{ __('payroll_bonus_formula.btn_add_to_formula') }}
-                                </button>
-                            </div>
-                            <div class="col-3"></div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="preview_formula">{{ __('payroll_bonus_formula.label_preview_formula') }}</label>
-                                    <textarea class="form-control" id="preview-formula" rows="10"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <button type="submit" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
-                                    {{ __('payroll_bonus_formula.btn_add_to_condition') }}
-                                </button>
-                            </div>
-                            <div class="col-3"></div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="preview_condition">{{ __('payroll_bonus_formula.label_preview_condition') }}</label>
-                                    <textarea class="form-control" id="preview-condition" rows="10"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" id="btn-save" class="btn btn-primary w-25"><i 
-                                class="fa fa-floppy-o"></i> {{ __('payroll_bonus_formula.btn_save') }}</button>
-                            <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                                class="fa fa-times-circle"></i> {{ __('payroll_bonus_formula.btn_cancel') }}</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -278,9 +292,26 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var table = null;
         var func = '{{ $func }}';
         var arrData = @json($data);
+        var table = null;
+        var tableChooser = null;
+        var fieldChooser = null;
+
+        let pickerBonusDate = $('#bonus_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#bonus_date_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
 
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
@@ -300,18 +331,20 @@
         });
 
         if (func === 'new') {
+            $('#record_function').val('New');
             $('#bonus_date').prop('readonly', false);
-            $('#bonus_date').val('');
         }
 
         else {
+            $('#record_function').val('Edit');
             $('#bonus_date').prop('readonly', true);
-            // console.log(arrData);
-            var bonusDate = typeof arrData[0].bonusDate !== 'undefined' ? moment(arrData[0].bonusDate).format('DD-MM-YYYY') : '';
-            $('#bonus_date').val(bonusDate);
+            pickerBonusDate._input.setAttribute("disabled", "disabled");
+
+            pickerBonusDate.setDate(((typeof arrData[0].bonusDate !== 'undefined') ? arrData[0].bonusDate : ''));
         }
 
         $('#btn-add').on('click', function () {
+            $('#record_function').val('New');
             $('#service_month_from').val('');
             $('#service_month_to').val('');
             $('#performance_result').val(null).trigger('change');
@@ -319,19 +352,40 @@
             $('#field_chooser').val(null).trigger('change');
             $('#preview_formula').val('');
             $('#preview_condition').val('');
+
+            $('#table_chooser').on('change', function () {
+                tableChooser = $('#table_chooser').val();
+                loadDataFieldChooser();
+            });
+
+            $('#field_chooser').on('change', function () {
+                fieldChooser = $('#field_chooser').val();
+            });
+
+            $('#btn-add-to-formula').on('click', function () {
+                $('#preview_formula').val(tableChooser + "." + fieldChooser);
+            });
+
+            $('#btn-add-to-condition').on('click', function () {
+                $('#preview_condition').val(tableChooser + "." + fieldChooser);
+            })
         });
 
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
-            // console.log(data);
+            console.log(data);
+            
             if(data.count() > 0){
-                $('#service_month_from').val((typeof arrData[0].serviceMonthFrom !== 'undefined') ? arrData[0].serviceMonthFrom : '');
-                $('#service_month_to').val((typeof arrData[0].serviceMonthTo !== 'undefined') ? arrData[0].serviceMonthTo : '');
+                $('#modal_add_edit_bonus_formula').modal('show');
+
+                $('#record_function').val('Edit');
+                $('#service_month_from').val((data[0].serviceMonthFrom !== null) ? data[0].serviceMonthFrom : '');
+                $('#service_month_to').val((data[0].serviceMonthTo !== null) ? data[0].serviceMonthTo : '');
                 $.ajax({
                     type: 'GET',
                     url: '/performance_result/bonus_thr_data_entry/api',
                     data: {
-                        'value': ((typeof arrData[0].performanceResult !== 'undefined') ? arrData[0].performanceResult : '')
+                        'value': ((typeof data[0].performanceResult !== null) ? data[0].performanceResult : '')
                     }
                 }).then(function (data) {
                     var option = $('<option/>', {
@@ -350,7 +404,28 @@
                         }
                     });
                 });
+
+                $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
+                $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
+
+                $('#table_chooser').on('change', function () {
+                    tableChooser = $('#table_chooser').val();
+                    loadDataFieldChooser();
+                });
+
+                $('#field_chooser').on('change', function () {
+                    fieldChooser = $('#field_chooser').val();
+                });
+
+                $('#btn-add-to-formula').on('click', function () {
+                    $('#preview_formula').val(tableChooser + "." + fieldChooser);
+                });
+
+                $('#btn-add-to-condition').on('click', function () {
+                    $('#preview_condition').val(tableChooser + "." + fieldChooser);
+                });
             }else{
+                $('#modal_add_edit_bonus_formula').modal('hide');
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
@@ -359,7 +434,7 @@
         $('#bonus_formula_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
             console.log(data);
-            $('#modal_add_edit_bonus_formula').modal();
+            $('#modal_add_edit_bonus_formula').modal('show');
 
             $('#service_month_from').val((typeof arrData[0].serviceMonthFrom !== 'undefined') ? arrData[0].serviceMonthFrom : '');
             $('#service_month_to').val((typeof arrData[0].serviceMonthTo !== 'undefined') ? arrData[0].serviceMonthTo : '');
@@ -456,7 +531,7 @@
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -493,9 +568,73 @@
             });
         }
 
+        function loadDataFieldChooser(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#field_chooser').select2({
+                width: '100%',
+                placeholder: 'Choose Field Chooser',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/field/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: {
+                        'tableName' : tableChooser
+                    }, function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        // console.log(data);
+                        return {
+                            results: $.map(data, function (item) {
+                                // console.log(item);
+                                return {
+                                    text: item,
+                                    id: item,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         $("#btn-remove").on('click', function () {
             var data = table.rows('.selected').data();
-            console.log(data.count());
+            console.log(data);
 
             if (data.count() > 0) {
                 $.ajax({
@@ -539,6 +678,128 @@
                 $('#message-notification-error').html('No Data Selected');
             }
         });
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#bonus_formula_detail_form").submit();
+        });
+
+        if ($("#bonus_formula_detail_form").length > 0) {
+            $("#bonus_formula_detail_form").validate({
+            rules: {
+                    bonus_date: {
+                        required: true,
+                    },
+                    service_month_from: {
+                        required: true,
+                    },
+                    service_month_to: {
+                        required: true,
+                    },
+                    performance_result: {
+                        required: true,
+                    },
+                    table_chooser: {
+                        required: true,
+                    },
+                    field_chooser: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    bonus_date: {
+                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
+                    },
+                    service_month_from: {
+                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
+                    },
+                    service_month_to: {
+                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
+                    },
+                    performance_result: {
+                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
+                    },
+                    table_chooser: {
+                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
+                    },
+                    field_chooser: {
+                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_formula.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/bonus_formula/proses') }}",
+                        type: "POST",
+                        data: $('#bonus_formula_detail_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_formula.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/bonus_formula') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_formula.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_formula.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
     });
 </script>
 
