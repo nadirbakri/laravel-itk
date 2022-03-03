@@ -543,7 +543,7 @@
                 width: '100%',
                 placeholder: 'Choose Performance Result',
                 allowClear: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -601,7 +601,7 @@
                 width: '100%',
                 placeholder: 'Choose Currency',
                 allowClear: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
