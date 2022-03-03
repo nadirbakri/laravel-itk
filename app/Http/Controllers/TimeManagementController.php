@@ -1270,6 +1270,8 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            var_dump($request->employee_no);
+
             $response = $client->post(env('API_URL') . '/tmovtspl/inserttmovtspl',
                 ['body' => json_encode(
                     [
@@ -1873,8 +1875,6 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump($request->hasFile('file_location'));
-
             if($request->hasFile('file_location')) {
                 $file = $request->file('file_location');
                 $filename = rand().$file->getClientOriginalName();
@@ -2254,8 +2254,6 @@ class TimeManagementController extends Controller
                     'languageCode' => App::getLocale()
                 ];
             }
-
-            // var_dump($param);
 
             $response = $client->delete(env('API_URL') . '/tmperiod',
                 ['body' => json_encode($param)]

@@ -21,7 +21,8 @@ return [
     'note_column_d' => 'Column D : Date Out (YYYY/MM/DD)',
     'note_column_e' => 'Column E : Hour & Minute Out (HH:MM)',
     'note_column_f' => 'Column F : Shift Code',
-    'field_mandatory' => "This field can't be blank"
+    'field_mandatory' => "This field can't be blank",
+    'alert_success' => 'Success !'
 ]
 
 ?>

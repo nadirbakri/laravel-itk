@@ -74,6 +74,10 @@
             font-size: 2.5vw;
             margin-left: 0.5%;
         }
+
+        .required {
+            color: red;
+        }
     </style>
 </head>
 
@@ -154,13 +158,15 @@
                                     <div class="form-group">
                                         <label
                                             for="service_month_from">{{ __('payroll_bonus_formula.label_service_month_from') }}</label>
+                                        <span class="required">*</span>
                                         <input type="number" class="form-control" id="service_month_from" name="service_month_from"
-                                            placeholder={{ __('payroll_bonus_formula.label_service_month_from') }}>
+                                            placeholder={{ __('payroll_bonus_formula.label_service_month_from') }} readonly>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="service_month_to">{{ __('payroll_bonus_formula.label_service_month_to') }}</label>
+                                        <span class="required">*</span>
                                         <input type="number" class="form-control" id="service_month_to" name="service_month_to"
                                             placeholder={{ __('payroll_bonus_formula.label_service_month_to') }}>
                                     </div>
@@ -171,6 +177,7 @@
                                     <div class="form-group">
                                         <label
                                             for="performance_result">{{ __('payroll_bonus_formula.label_performance_result') }}</label>
+                                        <span class="required">*</span>
                                         <select class="form-control select2" id="performance_result" name="performance_result"></select>
                                     </div>
                                 </div>
@@ -180,6 +187,7 @@
                                     <div class="form-group">
                                         <label
                                             for="table_chooser">{{ __('payroll_bonus_formula.label_table_chooser') }}</label>
+                                        <span class="required">*</span>
                                         <select class="form-control select2" id="table_chooser" name="table_chooser">
                                             <option value="" disabled selected>{{ __('payroll_bonus_formula.label_select_table_chooser') }}</option>
                                             <option value="PeMaster">PeMaster</option>
@@ -194,6 +202,7 @@
                                     <div class="form-group">
                                         <label
                                             for="field_chooser">{{ __('payroll_bonus_formula.label_field_chooser') }}</label>
+                                        <span class="required">*</span>
                                         <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
                                     </div>
                                 </div>
@@ -313,8 +322,6 @@
             }
         });
 
-        $('.div-navbar a.disabled').attr('onclick', 'return false;');
-
         $('#bonus_formula_detail_table thead tr').clone(true).appendTo('#bonus_formula_detail_table thead');
         $('#bonus_formula_detail_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
@@ -344,6 +351,8 @@
         }
 
         $('#btn-add').on('click', function () {
+            $('#service_month_from').prop('readonly', false);
+
             $('#record_function').val('New');
             $('#service_month_from').val('');
             $('#service_month_to').val('');
@@ -373,10 +382,10 @@
 
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
-            console.log(data);
             
             if(data.count() > 0){
                 $('#modal_add_edit_bonus_formula').modal('show');
+                $('#service_month_from').prop('readonly', true);
 
                 $('#record_function').val('Edit');
                 $('#service_month_from').val((data[0].serviceMonthFrom !== null) ? data[0].serviceMonthFrom : '');
@@ -431,37 +440,37 @@
             }
         });
 
-        $('#bonus_formula_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
-            var data = table.row(this).data();
-            console.log(data);
-            $('#modal_add_edit_bonus_formula').modal('show');
+        // $('#bonus_formula_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        //     var data = table.row(this).data();
 
-            $('#service_month_from').val((typeof arrData[0].serviceMonthFrom !== 'undefined') ? arrData[0].serviceMonthFrom : '');
-            $('#service_month_to').val((typeof arrData[0].serviceMonthTo !== 'undefined') ? arrData[0].serviceMonthTo : '');
-            $.ajax({
-                type: 'GET',
-                url: '/performance_result/bonus_thr_data_entry/api',
-                data: {
-                    'value': ((typeof arrData[0].performanceResult !== 'undefined') ? arrData[0].performanceResult : '')
-                }
-            }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.value,
-                    title: data.value,
-                    text: data.value
-                });
-                $("#performance_result").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#performance_result").trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data.value,
-                        text: data.value,
-                        data: data
-                    }
-                });
-            });
-        });
+        //     $('#modal_add_edit_bonus_formula').modal('show');
+
+        //     $('#service_month_from').val((typeof arrData[0].serviceMonthFrom !== 'undefined') ? arrData[0].serviceMonthFrom : '');
+        //     $('#service_month_to').val((typeof arrData[0].serviceMonthTo !== 'undefined') ? arrData[0].serviceMonthTo : '');
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/performance_result/bonus_thr_data_entry/api',
+        //         data: {
+        //             'value': ((typeof arrData[0].performanceResult !== 'undefined') ? arrData[0].performanceResult : '')
+        //         }
+        //     }).then(function (data) {
+        //         var option = $('<option/>', {
+        //             id: data.value,
+        //             title: data.value,
+        //             text: data.value
+        //         });
+        //         $("#performance_result").append(option).attr('data-alias', 'yourvalue').trigger(
+        //             'change');
+        //         $("#performance_result").trigger({
+        //             type: 'select2:select',
+        //             params: {
+        //                 id: data.value,
+        //                 text: data.value,
+        //                 data: data
+        //             }
+        //         });
+        //     });
+        // });
 
         loadDataPerformanceResult();
         load_data_table_bonus_formula_detail();
@@ -614,10 +623,8 @@
                         };
                     },
                     processResults: function (data) {
-                        // console.log(data);
                         return {
                             results: $.map(data, function (item) {
-                                // console.log(item);
                                 return {
                                     text: item,
                                     id: item,

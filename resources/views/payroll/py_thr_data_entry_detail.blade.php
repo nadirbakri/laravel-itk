@@ -307,8 +307,6 @@
             $('#entry_type').val(null).trigger('change');
             $('#performance_result').val(null).trigger('change');
             $('#service_month').val('');
-            // $('#payment_date').val(null).trigger('change');
-            // console.log($('#payment_date'));
             $('#currency_code').val(null).trigger('change');
             $('#nominal').val('');
         }
@@ -325,7 +323,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/bonus_thr_data_entry/api',
+                url: '/employee_no/req_detail/api',
                 data: {
                     'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
                 }
@@ -469,17 +467,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $('#employee_no').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Employee No</b></div>' +
-            //             '<div class="col-6"><b>Employee Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $('#employee_no').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee Name</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -545,8 +543,6 @@
                 width: '100%',
                 placeholder: 'Choose Performance Result',
                 allowClear: true,
-                // multiple: true,
-                // tags: true,
                 closeOnSelect: false,
                 language: {
                     errorLoading: function () {
@@ -605,8 +601,6 @@
                 width: '100%',
                 placeholder: 'Choose Currency',
                 allowClear: true,
-                // multiple: true,
-                // tags: true,
                 closeOnSelect: false,
                 language: {
                     errorLoading: function () {

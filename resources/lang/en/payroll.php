@@ -13,7 +13,7 @@ return [
 
     'judul' => 'Payroll',
     'data_entry' => 'Payroll Data Entry',
-    'salary_master_data' => 'Salary Master Data',
+    'salary_master' => 'Salary Master',
     'severance_data_entry' => 'Severance Data Entry',
     'tarif_master' => 'Tariff Master',
     'thr' => 'THR',

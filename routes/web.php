@@ -468,8 +468,8 @@ Route::post('time_management/update_absenteeism_data/import', 'TimeManagementCon
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll');
 /* Payroll Data Entry Menu */
-Route::get('payroll/salary_master_data', 'PayrollController@pageSalaryMasterData');
-Route::get('payroll/severance_data_entry', 'PayrollController@pageSeveracneDataEntry');
+Route::get('payroll/salary_master', 'PayrollController@pageSalaryMaster');
+Route::get('payroll/severance_data_entry', 'PayrollController@pageSeveranceDataEntry');
 Route::get('payroll/thr_formula', 'PayrollController@pageThrFormula');
 Route::get('payroll/thr_data_entry', 'PayrollController@pageThrDataEntry');
 Route::get('payroll/thr_calculation', 'PayrollController@pageThrCalculation');
@@ -528,7 +528,9 @@ Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1R
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
+Route::get('payroll/salary_master/table', 'PayrollController@tableSalaryMasterPY');
 Route::get('payroll/tariff_master/table', 'PayrollController@tableTariffMasterPY');
+Route::get('payroll/tariff_master_detail/table', 'PayrollController@tableTariffMasterDetailPY');
 Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
 Route::get('payroll/thr_formula/table', 'PayrollController@tableTHRFormulaPY');
@@ -553,6 +555,7 @@ Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormula
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
+Route::get('payroll/salary_master/detail_data', 'PayrollController@dataDetailSalaryMasterPY');
 Route::get('payroll/tariff_master/detail_data', 'PayrollController@dataDetailTariffMasterPY');
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
 Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');
@@ -662,6 +665,7 @@ Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
 Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
 Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
+Route::get('employee_no/req_detail/api', 'DataController@dataEmployeeNoReqDetailAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
 Route::get('module/api', 'DataController@dataModuleAPI');
@@ -747,7 +751,6 @@ Route::get('comgen/api', 'DataController@dataComGenAPI');
 Route::get('shift_master_code/api', 'DataController@dataShiftMasterCodeAPI');
 Route::get('shift_master_code/func/api', 'DataController@dataShiftMasterCodeFunctionAPI');
 Route::get('performance_result/api', 'DataController@dataPerformanceResultAPI');
-Route::get('employee_no/bonus_thr_data_entry/api', 'DataController@dataEmployeeNoBonusTHRAPI');
 Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPerformanceResultBonusTHRAPI');
 Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');

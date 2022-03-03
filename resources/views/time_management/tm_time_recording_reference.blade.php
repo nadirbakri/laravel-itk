@@ -450,25 +450,6 @@
             $("#toolbar-save").show();
         });
 
-        $('input[name="radiobtn1"]').on('change', function () {
-            if ($('#time_in_record_earliest').prop('checked', true)) {
-                $('input[name="radiobtn1"]').val('E');
-                // console.log($('input[name="radiobtn1"]').val());
-            }
-            else {
-                $('input[name="radiobtn1"]').val('L');
-            }
-        });
-
-        $('input[name="radiobtn2"]').on('change', function () {
-            if ($('#time_out_record_earliest').prop('checked', true)) {
-                $('input[name="radiobtn2"]').val('E');
-            }
-            else {
-                $('input[name="radiobtn2"]').val('L');
-            }
-        });
-
         $("#toolbar-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(

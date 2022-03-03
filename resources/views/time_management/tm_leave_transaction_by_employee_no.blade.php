@@ -475,7 +475,7 @@
                 width: '100%',
                 placeholder: 'Choose Leave Code',
                 allowClear: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

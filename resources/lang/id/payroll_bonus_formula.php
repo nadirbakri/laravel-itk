@@ -21,8 +21,8 @@ return [
     'btn_save' => 'Simpan',
     'btn_remove' => 'Hapus',
     'btn_cancel' => 'Batal',
-    'btn_add_to_formula' => 'Tambah Ke Formula',
-    'btn_add_to_condition' => 'Tambah Ke Kondisi',
+    'btn_add_to_formula' => 'Tambahkan pada Formula',
+    'btn_add_to_condition' => 'Tambahkan pada Kondisi',
     'alert_success' => 'Sukses !',
     'field_mandatory' => "Kolom ini tidak boleh kosong"
 ]

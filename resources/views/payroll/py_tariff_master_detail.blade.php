@@ -85,28 +85,29 @@
 <body>
     <div class="div-payroll">
         <div class="div-title">
-            <a href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard">
+            <a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('payroll_tariff_master.list_detail') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="bonus_data_entry_form" method="post">
+            <form id="tarif_master_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no">{{ __('payroll_tariff_master.label_employee_no') }}</label>
                             <span class="required">*</span>
-                            <select class="form-control select2" id="employee_no" name="employee_no"></select>
+                            <select class="form-control select2" id="employee_no" name="employee_no" disabled></select>
                         </div>
                         <input type="text" class="form-control" id="record_function" name="record_function" hidden>
+                        <input type="text" class="form-control" id="employee_no_hidden" name="employee_no_hidden" hidden>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_name">{{ __('payroll_tariff_master.label_employee_name') }}</label>
                             <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder="{{ __('payroll_tariff_master.label_employee_name') }}">
+                                placeholder="{{ __('payroll_tariff_master.label_employee_name') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -115,16 +116,29 @@
                         <div class="form-group">
                             <label for="month_year">{{ __('payroll_tariff_master.label_month_year') }}</label>
                             <input type="text" class="form-control" id="month_year" name="month_year"
-                                placeholder="{{ __('payroll_tariff_master.label_month_year') }}">
+                                placeholder="{{ __('payroll_tariff_master.label_month_year') }}" readonly>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="period">{{ __('payroll_tariff_master.label_period') }}</label>
                             <input type="text" class="form-control" id="period" name="period"
-                                placeholder="{{ __('payroll_tariff_master.label_period') }}">
+                                placeholder="{{ __('payroll_tariff_master.label_period') }}" readonly>
                         </div>
                     </div>
+                </div>
+                <div class="div-table">
+                    <table id="tariff_master_detail_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th>Field Name</th>
+                                <th>Description</th>
+                                <th>Fixed Component</th>
+                                <th>Currency Code</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -134,7 +148,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_tariff_master.btn_cancel') }}
                         </a>
@@ -185,6 +199,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -192,5 +207,188 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var arrData = @json($data);
+
+        $.ajax({
+            type: 'GET',
+            url: '/employee_no/req_detail/api',
+            data: {
+                'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
+            }
+        }).then(function (data) {
+            var option = $('<option/>', {
+                id: data.employeeNo,
+                title: data.fullName,
+                text: data.employeeNo
+            });
+            $("#employee_no").append(option).attr('data-alias', 'yourvalue').trigger(
+                'change');
+            $("#employee_no").trigger({
+                type: 'select2:select',
+                params: {
+                    id: data.employeeNo,
+                    text: data.employeeNo,
+                    data: data
+                }
+            });
+        });
+
+        $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
+
+        var month = (typeof arrData[0].periodMonth !== 'undefined') ? moment(arrData[0].periodMonth).format('MMMM') : '';
+        var year = (typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '';
+
+        $('#month_year').val(month + ' ' + year);
+        $('#period').val((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : '');
+
+        $('#tariff_master_detail_table thead tr').clone(true).appendTo('#tariff_master_detail_table thead');
+        $('#tariff_master_detail_table thead tr:eq(1) th').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        function htmlDecode(value) {
+    	    return $("<textarea/>").html(value).text();
+	    }
+
+        $('#employee_no').on('select2:select', function (e) {
+            var data = $('#employee_no').select2('data');
+            $('#employee_name').val(htmlDecode(data[0].title));
+        });
+
+        $('#employee_no').on('select2:unselecting', function (e) {
+            $('#employee_name').val('');
+        });
+
+        loadDataEmployeeNo();
+        load_data_table_tariff_master_detail();
+
+        function load_data_table_tariff_master_detail() {
+            table = $('#tariff_master_detail_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: 
+                    {
+                        url : "{{ url('payroll/tariff_master_detail/table') }}",
+                        data: {
+                            'employeeNo' : $('#employee_no').val()
+                        }
+                    },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    // {
+                    //     orderable: false,
+                    //     targets: 0, 
+                    //     "defaultContent": '',
+                    //     render: function(data, type) {
+                    //         return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    //     }
+                    // },
+                    {data: 'fieldName', name: 'fieldName'},
+                    {data: 'description', name: 'description'},
+                    {data: 'fieldType', name: 'fieldType'},
+                    {data: 'currencyCode', name: 'currencyCode'},
+                    {data: 'amount', name: 'amount'}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
+        function loadDataEmployeeNo() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#employee_no').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee Name</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#employee_no').select2({
+                width: '100%',
+                placeholder: 'Choose Employee',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employee_no/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.employeeNo,
+                                    id: item.employeeNo,
+                                    title: item.fullName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+    });
+
+</script>
 
 </html>

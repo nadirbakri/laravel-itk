@@ -13,7 +13,7 @@ return [
 
     'judul' => 'Daftar Gaji',
     'data_entry' => 'Data Entri Gaji',
-    'salary_master_data' => 'Data Master Gaji',
+    'salary_master' => 'Master Gaji',
     'severance_data_entry' => 'Data Entri Pesangon',
     'thr' => 'THR',
     'thr_formula' => 'Formula THR',

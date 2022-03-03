@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_tarif_master.judul') }}</title>
+	<title>{{ __('payroll_tariff_master.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -121,7 +121,7 @@
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_tarif_master.list') }}</span>
+				<span class="title-text">{{ __('payroll_tariff_master.list') }}</span>
 			</a>
 		</div>
         <div class="div-table">
@@ -166,7 +166,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_tarif_master.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_tariff_master.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -238,7 +238,13 @@
                     },
                     { data: 'employeeNo', name: 'employeeNo' },
                     { data: 'fullName', name: 'fullName' },
-                    { data: 'periodMonth', name: 'periodMonth' },
+                    { 
+                        data: 'periodMonth', 
+                        name: 'periodMonth',
+                        render: function (data, type, row) {
+                            return moment(data).format('MMMM');
+                        }
+                    },
                     { data: 'periodYear', name: 'periodYear' },
                     { data: 'statusPeriod', name: 'statusPeriod' },
                 ],
@@ -272,8 +278,6 @@
             "GET", "iframe_dashboard");
         });
     })
-
-
 </script>
 
 </html>

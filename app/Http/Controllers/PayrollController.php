@@ -23,6 +23,11 @@ class PayrollController extends Controller
         return view ('payroll.py_account');
     }
 
+    public function pageSalaryMaster()
+    {
+        return view ('payroll.py_salary_master');
+    }
+
     public function pageTarifMaster()
     {
         return view ('payroll.py_tariff_master');
@@ -93,7 +98,41 @@ class PayrollController extends Controller
         }
     }
 
-    public function tableTariffMasterPY(Request $request) {
+    public function tableSalaryMasterPY() {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prsalarymaster/getprsalarymaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableTariffMasterPY() {
         try {
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -104,6 +143,41 @@ class PayrollController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableTariffMasterDetailPY(Request $request) {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prtariffmaster/getprtariffmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo
                     ]
                 )]
             );
@@ -416,6 +490,41 @@ class PayrollController extends Controller
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
+    }
+
+    public function dataDetailSalaryMasterPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prsalarymaster/getprsalarymaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('payroll.py_salary_master_detail', ['data' => $arrResult->dataListSet]);
     }
 
     public function dataDetailTariffMasterPY(Request $request)

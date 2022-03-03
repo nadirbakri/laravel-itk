@@ -75,6 +75,10 @@
             margin-left: 0.5%;
         }
 
+        .select2-results__option[aria-selected=true] {
+            display: none;
+        }
+
         .required {
             color: red;
         }
@@ -160,7 +164,7 @@
                                             for="service_month_from">{{ __('payroll_thr_formula.label_service_month_from') }}</label>
                                         <span class="required">*</span>
                                         <input type="number" class="form-control" id="service_month_from" name="service_month_from"
-                                            placeholder={{ __('payroll_thr_formula.label_service_month_from') }}>
+                                            placeholder={{ __('payroll_thr_formula.label_service_month_from') }} readonly>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -298,8 +302,6 @@
         var fieldChooser = null;
         var arrayTHRFormulaDetail = null;
 
-        $('.div-navbar a.disabled').attr('onclick', 'return false;');
-
         $('#thr_formula_detail_table thead tr').clone(true).appendTo('#thr_formula_detail_table thead');
         $('#thr_formula_detail_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
@@ -315,11 +317,31 @@
             } );
         });
 
-        // console.log(arrData);
+        $('#select').focus(function (event) {
+                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+                $searchfield.prop('disabled', true);
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
+        
         $('#religion_code').val((typeof arrData[0].comGenCode !== 'undefined') ? arrData[0].comGenCode : '');
         $('#religion_name').val((typeof arrData[0].value !== 'undefined') ? arrData[0].value : '');
 
         $('#btn-add').on('click', function () {
+            $('#service_month_from').prop('readonly', false);
+
             $('#record_function').val('New');
             $('#service_month_from').val('');
             $('#service_month_to').val('');
@@ -351,6 +373,7 @@
             
             if(data.count() > 0){
                 $('#modal_add_edit_thr_formula').modal('show');
+                $('#service_month_from').prop('readonly', true);
                 
                 $('#record_function').val('Edit');
                 $('#service_month_from').val((data[0].serviceMonthFrom !== null) ? data[0].serviceMonthFrom : '');
@@ -381,10 +404,9 @@
             }
         });
 
-        $('#thr_formula_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
-            var data = table.row(this).data();
-            console.log(data);
-        });
+        // $('#thr_formula_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        //     var data = table.row(this).data();
+        // });
 
         load_data_table_thr_formula_detail();
 
@@ -450,8 +472,6 @@
                 width: '100%',
                 placeholder: 'Choose Field Chooser',
                 allowClear: true,
-                // multiple: true,
-                // tags: true,
                 closeOnSelect: true,
                 language: {
                     errorLoading: function () {

@@ -432,11 +432,10 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
-                            // console.log(response);
-                            if (response[0].status == "true") {
+                            if (response.status == "true") {
                                 $("#btn-process-upload").prop("disabled", false);
                                 $("#btn-process-upload").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_upload") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');

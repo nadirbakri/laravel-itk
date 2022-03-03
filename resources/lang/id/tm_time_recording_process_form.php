@@ -21,7 +21,8 @@ return [
     'note_column_d' => 'Column D : Date Out (YYYY/MM/DD)',
     'note_column_e' => 'Column E : Hour & Minute Out (HH:MM)',
     'note_column_f' => 'Column F : Shift Code',
-    'field_mandatory' => "Kolom ini tidak boleh kosong"
+    'field_mandatory' => "Kolom ini tidak boleh kosong",
+    'alert_success' => 'Sukses !'
 ]
 
 ?>

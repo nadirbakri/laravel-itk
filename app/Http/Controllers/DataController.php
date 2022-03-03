@@ -5825,7 +5825,7 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
-	public function dataEmployeeNoBonusTHRAPI(Request $request)
+	public function dataEmployeeNoReqDetailAPI(Request $request)
     {
     	try {
 	    	$client = new Client([
@@ -5901,13 +5901,13 @@ class DataController extends Controller
 
 	public function dataFieldAPI(Request $request)
     {
+    	$search = $request->search;
+
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
-
-			// var_dump($request->tableName);
 
 	    	$response = $client->post(env('API_URL') . '/prformulathr/gettablefield',
 	    		['body' => json_encode(
@@ -5919,19 +5919,31 @@ class DataController extends Controller
 	    		)]
 	    	);
 	    } catch (RequestException $e) {
-	    	var_dump($e->getResponse());
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		// var_dump($arrResult->dataListSet);
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->tableName)){
+	    				return preg_match('/' . $search . '/i', $value->tableName);
+	    			}	    		
+				}
+	    	);
+	    }
 
-		if ($request->tableName == null) {
-			return response()->json([]);
-		}
-
-		else {
-			return response()->json($arrResult->dataListSet);
-		}
+        return response()->json($data);
 	}
 }
