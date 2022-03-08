@@ -529,6 +529,7 @@ Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1R
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
 Route::get('payroll/salary_master/table', 'PayrollController@tableSalaryMasterPY');
+Route::get('payroll/severance_data_entry/table', 'PayrollController@tableSeveranceDataEntryPY');
 Route::get('payroll/tariff_master/table', 'PayrollController@tableTariffMasterPY');
 Route::get('payroll/tariff_master_detail/table', 'PayrollController@tableTariffMasterDetailPY');
 Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
@@ -544,6 +545,8 @@ Route::get('payroll/payroll_calculation/table', 'PayrollController@tablePayrollC
 Route::get('payroll/payroll_calculation_detail/table', 'PayrollController@tablePayrollCalculationDetailPY');
 
 /*Route untuk Proses Payroll*/
+Route::post('payroll/salary_master/proses', 'PayrollController@prosesSalaryMasterPY');
+Route::post('payroll/severance_data_entry/proses', 'PayrollController@prosesSeveranceDataEntryPY');
 Route::post('payroll/tariff_master/proses', 'PayrollController@prosesTariffMasterPY');
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
 Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
@@ -556,12 +559,14 @@ Route::post('payroll/report_format/proses','PayrollController@prosesReportFormat
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
+Route::get('payroll/severance_data_entry/remove', 'PayrollController@removeSeveranceDataEntryPY');
 Route::get('payroll/thr_formula/remove', 'PayrollController@removeTHRFormulaPY');
 Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
 Route::get('payroll/salary_master/detail_data', 'PayrollController@dataDetailSalaryMasterPY');
+Route::get('payroll/severance_data_entry/detail_data', 'PayrollController@dataDetailSeveranceDataEntryPY');
 Route::get('payroll/tariff_master/detail_data', 'PayrollController@dataDetailTariffMasterPY');
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
 Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');

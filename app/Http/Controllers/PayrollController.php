@@ -28,6 +28,11 @@ class PayrollController extends Controller
         return view ('payroll.py_salary_master');
     }
 
+    public function pageSeveranceDataEntry()
+    {
+        return view ('payroll.py_severance_data_entry');
+    }
+
     public function pageTarifMaster()
     {
         return view ('payroll.py_tariff_master');
@@ -116,6 +121,40 @@ class PayrollController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/prsalarymaster/getprsalarymaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableSeveranceDataEntryPY() {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prpensionseverance/getprpensionseverance',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -536,6 +575,34 @@ class PayrollController extends Controller
         }
     }
 
+    public function tablePayrollCalculationPY()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationprocess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function dataDetailSalaryMasterPY(Request $request)
     {
         try {
@@ -571,7 +638,7 @@ class PayrollController extends Controller
         return view('payroll.py_salary_master_detail', ['data' => $arrResult->dataListSet]);
     }
 
-    public function tablePayrollCalculationPY()
+    public function dataDetailSeveranceDataEntryPY(Request $request)
     {
         try {
             $client = new Client([
@@ -579,24 +646,31 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationprocess',
+            $response = $client->post(env('API_URL') . '/prpensionseverance/getprpensionseverance',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());  
 
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
-        }
+        return view('payroll.py_severance_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailTariffMasterPY(Request $request)
@@ -874,6 +948,147 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return view('payroll.py_bonus_formula_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function prosesSalaryMasterPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "employeeNo" => $request->employee_no_hidden,
+                "fullName" => $request->employee_name,
+                "periodYear" => (int) $request->year,
+                "periodMonth" => (int) $request->month,
+                "statusPeriod" => $request->period,
+                "remark" => $request->remark,
+                "changedNo" => 0,
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID')
+            ];
+
+            if(isset($request->field_name)) {
+                foreach($request->field_name as $key => $value) {
+                    $data_grid[] = [
+                        "fieldType" => $request->field_type[$key],
+                        "fieldName" => $value,
+                        "description" => $request->description[$key],
+                        "amount" => (float) $request->amount[$key],
+                        "currencyCode" => $request->currency_code[$key]
+                    ];
+                }
+            } else {
+                $data_grid[] = null;
+            }
+
+            $param['grid'] = $data_grid;
+
+            $response = $client->put(env('API_URL') . '/prsalarymaster/updateprsalarymaster',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesSeveranceDataEntryPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if ($request->func === 'New') {
+                $response = $client->post(env('API_URL') . '/prpensionseverance/insertprpensionseverance',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            "employeeNo" => $request->employee_no,
+                            "employeeName" => $request->employee_name,
+                            "paymentDate" => $request->payment_date,
+                            "paymentFor" => $request->payment_for,
+                            "amount" => $request->amount,
+                            "adjusment" => $request->adjustment,
+                            "totalAmount" => $request->total_amount,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+            else {
+                $response = $client->put(env('API_URL') . '/prsalarymaster/updateprsalarymaster',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            "employeeNo" => $request->employee_no_hidden,
+                            "employeeName" => $request->employee_name,
+                            "paymentDate" => $request->payment_date,
+                            "paymentFor" => $request->payment_for,
+                            "amount" => $request->amount,
+                            "adjusment" => $request->adjustment,
+                            "totalAmount" => $request->total_amount,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function prosesTariffMasterPY(Request $request)
@@ -1365,6 +1580,59 @@ class PayrollController extends Controller
 
             $response = $client->delete(env('API_URL') . '/prbonusthr/deleteprbonusthr',
                 ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeSeveranceDataEntryPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->employeeNo);
+            // var_dump($request->employeeName);
+            // var_dump($request->paymentDate);
+            // var_dump($request->paymentFor);
+            // var_dump($request->totalAmount);
+
+            $response = $client->delete(env('API_URL') . '/prpensionseverance/deleteprpensionseverance',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'employeeName' => $request->employeeName,
+                        'paymentDate' => $request->paymentDate,
+                        'paymentFor' => $request->paymentFor,
+                        'totalAmount' => (int) $request->totalAmount,
+                        'changedNo' => 0,
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedBy" => Session::get('userID'),
+                        'languageCode' => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
