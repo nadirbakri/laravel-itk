@@ -434,10 +434,11 @@
             url: "{{ url('time_management/user_detail/check') }}",
             type: "GET",
             success: function (response) {
+                console.log(response);
                 // console.log(response[0].detailList[0].flagAppLead);
                 var app_leader = response[0].detailList[0].flagAppLead;
                 var app_hrd = response[0].detailList[0].flagAppHRD;
-                if (app_leader == 'true') {
+                if (app_leader) {
                     $('#btn-app-leader').prop('disabled', false);
                     $('#check_all_app_leader').prop('disabled', false);
                     $('#uncheck_all_app_leader').prop('disabled', false);
@@ -448,7 +449,7 @@
                     $('#uncheck_all_app_leader').prop('disabled', true);
                 }
                 
-                if (app_hrd == 'true') {
+                if (app_hrd) {
                     $('#btn-app-hrd').prop('disabled', false);
                     $('#check_all_app_hrd').prop('disabled', false);
                     $('#uncheck_all_app_hrd').prop('disabled', false);

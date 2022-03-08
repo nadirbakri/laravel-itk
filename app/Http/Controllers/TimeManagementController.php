@@ -1189,7 +1189,7 @@ class TimeManagementController extends Controller
                 $param['level'] = $data_level;
             }
 
-            // var_dump($param);
+            // var_dump(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/tempabsentmachine/updateshiftbydate',
                 ['body' => json_encode($param)]
@@ -2309,7 +2309,7 @@ class TimeManagementController extends Controller
                 return view('error.bad_request');
             }
         }
-
+ 
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);

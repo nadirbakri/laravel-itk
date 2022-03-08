@@ -125,6 +125,12 @@
                     alt="Save">
                 <span>Save</span>
             </a>
+            <a class="list-functionbar-md" href="javascript:void(0)" style="display: none;" id="toolbar-cancel">
+                <img src="{{ url('/icons/functionbar/x.svg') }}" alt="Cancel">
+                <img src="{{ url('/icons/functionbar/x.svg') }}" class="functionbar-hover"
+                    alt="Cancel">
+                <span>Cancel</span>
+            </a>
             <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-active">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover"
@@ -159,6 +165,7 @@
                             <label for="in_code">{{ __('tm_time_recording_reference.label_in_code') }}</label>
                             <input type="number" min="0" class="form-control" id="in_code" name="in_code" readonly>
                         </div>
+                        <input type="hidden" class="form-control" id="record_function" name="record_function">
                     </div>
                     <div class="col-4">
                         <div class="form-group">
@@ -322,14 +329,14 @@
 <script text="text/javascript">
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var isData = 0;
 
         $.ajax({
             url: "{{ url('/time_management/time_recording_reference/table') }}",
             type: "GET",
             success: function (response) {
-                // console.log(response[0].inCode);
-                if (response) {
-                    $('#record_function').val("New");
+                isData = Object.keys(response).length;
+                if (Object.keys(response).length !== 0) {
                     $('#in_code').val((typeof response[0].inCode !== 'undefined') ? response[0].inCode : '');
                     $('#out_code').val((typeof response[0].outCode !== 'undefined') ? response[0].outCode : '');
 
@@ -358,9 +365,7 @@
                     $('#toolbar-new').hide();
                     $('#toolbar-edit').show();
                 }
-
                 else {
-                    $('#record_function').val("Edit");
                     $('#in_code').val("");
                     $('#out_code').val("");
 
@@ -421,6 +426,8 @@
             $('#shift_long').prop('readonly', false);
             $('#in_out_code_long').prop('readonly', false);
             $("#toolbar-save").show();
+            $('#toolbar-cancel').show();
+            $('#toolbar-new').hide();
         });
 
         $("#toolbar-edit").on('click', function () {
@@ -448,12 +455,48 @@
             $('#shift_long').prop('readonly', false);
             $('#in_out_code_long').prop('readonly', false);
             $("#toolbar-save").show();
+            $('#toolbar-cancel').show();
+            $('#toolbar-edit').hide();
+        });
+
+        $("#toolbar-cancel").on('click', function () {
+            $('#record_function').val("");
+            $('#in_code').prop('readonly', true);
+            $('#out_code').prop('readonly', true);
+            $('#employee_no_start').prop('readonly', true);
+            $('#year_start').prop('readonly', true);
+            $('#month_start').prop('readonly', true);
+            $('#day_start').prop('readonly', true);
+            $('#hour_start').prop('readonly', true);
+            $('#minute_start').prop('readonly', true);
+            $('#flag_start').prop('readonly', true);
+            $('#machine_code_start').prop('readonly', true);
+            $('#shift_start').prop('readonly', true);
+            $('#in_out_code_start').prop('readonly', true);
+            $('#employee_no_long').prop('readonly', true);
+            $('#year_long').prop('readonly', true);
+            $('#month_long').prop('readonly', true);
+            $('#day_long').prop('readonly', true);
+            $('#hour_long').prop('readonly', true);
+            $('#minute_long').prop('readonly', true);
+            $('#flag_long').prop('readonly', true);
+            $('#machine_code_long').prop('readonly', true);
+            $('#shift_long').prop('readonly', true);
+            $('#in_out_code_long').prop('readonly', true);
+            if(isData !== 0){
+                $('#toolbar-edit').show();
+            }else{
+                $('#toolbar-new').show();
+            }
+            $("#toolbar-save").hide();
+            $("#toolbar-cancel").hide();
         });
 
         $("#toolbar-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span>Loading...</span>'
             );
             $("#time_recording_reference_form").submit();
         });
