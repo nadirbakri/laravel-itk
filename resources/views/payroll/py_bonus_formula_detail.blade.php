@@ -18,7 +18,6 @@
         .div-payroll {
             max-width: 100%;
             margin: auto;
-            /*margin-top: 1%;*/
         }
 
         .div-profile {
@@ -109,7 +108,7 @@
                     </div>
                 </div>
                 <div class="div-table">
-                    <table id="bonus_formula_detail_table" class="table hover">
+                    <table id="bonus_formula_detail_table" class="table hover" style="width: 100%">
                         <thead>
                             <tr>
                                 <th></th>
@@ -346,8 +345,8 @@
             $('#record_function').val('Edit');
             $('#bonus_date').prop('readonly', true);
             pickerBonusDate._input.setAttribute("disabled", "disabled");
-
             pickerBonusDate.setDate(((typeof arrData[0].bonusDate !== 'undefined') ? arrData[0].bonusDate : ''));
+            load_data_table_bonus_formula_detail();
         }
 
         $('#btn-add').on('click', function () {
@@ -473,7 +472,6 @@
         // });
 
         loadDataPerformanceResult();
-        load_data_table_bonus_formula_detail();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 

@@ -18,7 +18,6 @@
         .div-payroll {
             max-width: 100%;
             margin: auto;
-            /*margin-top: 1%;*/
         }
 
         .div-profile {
@@ -74,11 +73,6 @@
             font-size: 2.5vw;
             margin-left: 0.5%;
         }
-
-        .required {
-            color: red;
-        }
-
     </style>
 </head>
 
@@ -97,10 +91,8 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no">{{ __('payroll_tariff_master.label_employee_no') }}</label>
-                            <span class="required">*</span>
                             <select class="form-control select2" id="employee_no" name="employee_no" disabled></select>
                         </div>
-                        <input type="text" class="form-control" id="record_function" name="record_function" hidden>
                         <input type="text" class="form-control" id="employee_no_hidden" name="employee_no_hidden" hidden>
                     </div>
                     <div class="col-6">
@@ -118,6 +110,8 @@
                             <input type="text" class="form-control" id="month_year" name="month_year"
                                 placeholder="{{ __('payroll_tariff_master.label_month_year') }}" readonly>
                         </div>
+                        <input type="text" class="form-control" id="month" name="month" hidden>
+                        <input type="text" class="form-control" id="year" name="year" hidden>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
@@ -128,7 +122,7 @@
                     </div>
                 </div>
                 <div class="div-table">
-                    <table id="tariff_master_detail_table" class="table hover">
+                    <table id="tariff_master_detail_table" class="table hover" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>Field Name</th>
@@ -136,6 +130,7 @@
                                 <th>Fixed Component</th>
                                 <th>Currency Code</th>
                                 <th>Amount</th>
+                                <th style="display: none;">Field Type</th>
                             </tr>
                         </thead>
                     </table>
@@ -213,6 +208,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrData = @json($data);
+        var table = null;
 
         $.ajax({
             type: 'GET',
@@ -244,22 +240,23 @@
         var year = (typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '';
 
         $('#month_year').val(month + ' ' + year);
+        $('#month').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
+        $('#year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         $('#period').val((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : '');
 
-        $('#tariff_master_detail_table thead tr').clone(true).appendTo('#tariff_master_detail_table thead');
-        $('#tariff_master_detail_table thead tr:eq(1) th').each( function (i) {
-            var title = $(this).text();
-            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
-
-            $('input', this).on('keyup change', function () {
-                if (table.column(i + 1).search() !== this.value) {
-                    table
-                        .column(i + 1)
-                        .search(this.value)
-                        .draw();
-                }
-            } );
-        });
+        load_data_table_tariff_master_detail();
+        if (typeof arrData[0].grid !== 'undefined') {
+            $.each(arrData[0].grid, function(k, v) {
+                table.row.add([
+                    '<input type="text" class="form-control" name="field_name[]" id="field_name" value="'+ ((typeof v.fieldName !== 'undefined' && v.fieldName !== null) ? v.fieldName : '') +'" readonly>',
+                    '<input type="text" class="form-control" name="description[]" id="description" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
+                    '<input type="text" class="form-control" name="fixed_component[]" id="fixed_component" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null && v.fieldType !== 'T' || v.fieldType !== 'P') ? 'Yes' : 'No') +'" readonly>',
+                    '<input type="text" class="form-control" name="currency_code[]" id="currency_code" value="'+ ((typeof v.currencyCode !== 'undefined' && v.currencyCode !== null) ? v.currencyCode : '') +'" readonly>',
+                    '<input type="number" min=0 max=0.9 step="0.1" class="form-control" name="amount[]" id="amount" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'">',
+                    '<input type="text" class="form-control" name="field_type[]" id="field_type" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null) ? v.fieldType : '') +'" hidden>',
+                ]).draw();
+            });
+        }
 
         function htmlDecode(value) {
     	    return $("<textarea/>").html(value).text();
@@ -275,45 +272,13 @@
         });
 
         loadDataEmployeeNo();
-        load_data_table_tariff_master_detail();
 
         function load_data_table_tariff_master_detail() {
             table = $('#tariff_master_detail_table').DataTable({
                 processing: true,
-                serverSide: true,
                 orderCellsTop: true,
-                ajax: 
-                    {
-                        url : "{{ url('payroll/tariff_master_detail/table') }}",
-                        data: {
-                            'employeeNo' : $('#employee_no').val()
-                        }
-                    },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    // {
-                    //     orderable: false,
-                    //     targets: 0, 
-                    //     "defaultContent": '',
-                    //     render: function(data, type) {
-                    //         return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    //     }
-                    // },
-                    {data: 'fieldName', name: 'fieldName'},
-                    {data: 'description', name: 'description'},
-                    {data: 'fieldType', name: 'fieldType'},
-                    {data: 'currencyCode', name: 'currencyCode'},
-                    {data: 'amount', name: 'amount'}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
             });
         }
 
@@ -386,6 +351,88 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#tarif_master_form").submit();
+        });
+
+        if ($("#tarif_master_form").length > 0) {
+            $("#tarif_master_form").validate({
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_tariff_master.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/tariff_master/proses') }}",
+                        type: "POST",
+                        data: $('#tarif_master_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_tariff_master.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/tarif_master') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_tariff_master.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_tariff_master.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
         }
     });
 

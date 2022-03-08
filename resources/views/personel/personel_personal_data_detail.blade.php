@@ -1115,7 +1115,7 @@
                         </div>
                         <div class="row">
                             <div class="col-9">
-                                <table id="fringe_benefit_data_table" class="table hover">
+                                <table id="fringe_benefit_data_table" class="table hover" style="width: 100%">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -1825,7 +1825,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="div-table">
-                                    <table id="family_dependent_data_table" class="table hover">
+                                    <table id="family_dependent_data_table" class="table hover" style="width: 100%">
                                         <thead>
                                             <tr>
                                                 <th></th>

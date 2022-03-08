@@ -53,6 +53,11 @@ class PayrollController extends Controller
         return view ('payroll.py_thr_data_entry');
     }
 
+    public function pageLoanMaster()
+    {
+        return view ('payroll.py_loan_master');
+    }
+
     public function pageMultiCostCenter()
     {
         return view ('payroll.py_multi_cost_center');
@@ -254,6 +259,40 @@ class PayrollController extends Controller
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableLoanMasterPY(Request $request) {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
                     ]
                 )]
             );
@@ -666,6 +705,41 @@ class PayrollController extends Controller
         return view('payroll.py_bonus_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
+    public function dataDetailLoanMasterPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'loanCode' => $request->loanCode,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('payroll.py_loan_master_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function dataDetailTHRFormulaPY(Request $request)
     {
         try {
@@ -767,6 +841,69 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return view('payroll.py_bonus_formula_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function prosesTariffMasterPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "employeeNo" => $request->employee_no_hidden,
+                "fullName" => $request->employee_name,
+                "periodYear" => (int) $request->year,
+                "periodMonth" => (int) $request->month,
+                "statusPeriod" => $request->period,
+                "changedNo" => 0,
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID')
+            ];
+
+            if(isset($request->field_name)) {
+                foreach($request->field_name as $key => $value) {
+                    $data_grid[] = [
+                        "fieldType" => $request->field_type[$key],
+                        "fieldName" => $value,
+                        "description" => $request->description[$key],
+                        "amount" => (float) $request->amount[$key],
+                        "currencyCode" => $request->currency_code[$key]
+                    ];
+                }
+            } else {
+                $data_grid[] = null;
+            }
+
+            $param['grid'] = $data_grid;
+
+            $response = $client->put(env('API_URL') . '/prtariffmaster/updateprtariffmaster',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function prosesTHRFormulaPY(Request $request)
@@ -879,7 +1016,7 @@ class PayrollController extends Controller
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/prformulathr/updateprformulathr',
+                $response = $client->put(env('API_URL') . '/prformulabonus/updateformulabonus',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -890,11 +1027,11 @@ class PayrollController extends Controller
                             "formula" => $request->preview_formula,
                             "condition" => $request->preview_condition,
                             "changedNo" => 0,
-                            "changedBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "createdDate" => date("Y-m-d\TH:i:s"),
                             "languageCode" => App::getLocale(),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
@@ -1004,8 +1141,6 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump($request->religion_code);
-
             $response = $client->post(env('API_URL') . '/prbonusthr/processbonusthr',
                 ['body' => json_encode(
                     [
@@ -1072,6 +1207,84 @@ class PayrollController extends Controller
                     ]
                 )]
             );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesLoanMasterPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/prloanmaster/insertloanmaster',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'loanCode' => $request->loan_code,
+                            'loanDescription' => $request->loan_description,
+                            'flagPlafond' => isset($request->check_plafond) ? (bool) $request->check_plafond : false,
+                            "percentagePlafond" => (int) $request->percentage_plafond,
+                            "flagIncludeOtherLoan" => isset($request->check_include_other_loan) ? (bool) $request->check_include_other_loan : false,
+                            "flagCollateral" => isset($request->check_collateral) ? (bool) $request->check_collateral : false,
+                            "serviceMonth" => (int) $request->service_month,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }else {
+                $response = $client->put(env('API_URL') . '/prloanmaster/updateloanmaster',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'loanCode' => $request->loan_code,
+                            'loanDescription' => $request->loan_description,
+                            'flagPlafond' => isset($request->check_plafond) ? (bool) $request->check_plafond : false,
+                            "percentagePlafond" => (int) $request->percentage_plafond,
+                            "flagIncludeOtherLoan" => isset($request->check_include_other_loan) ? (bool) $request->check_include_other_loan : false,
+                            "flagCollateral" => isset($request->check_collateral) ? (bool) $request->check_collateral : false,
+                            "serviceMonth" => (int) $request->service_month,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -1309,7 +1522,7 @@ class PayrollController extends Controller
         return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function statusAccountPY(Request $request)
+    public function statusLoanMasterPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         try {
@@ -1318,7 +1531,53 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump($request->accountNo);
+            $response = $client->put(env('API_URL') . '/prloanmaster/updateloanmaster',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'loanCode' => $request->loanCode,
+                        'loanDescription' => $request->loanDescription,
+                        'percentagePlafond' => (int) $request->percentagePlafond,
+                        'serviceMonth' => (int) $request->serviceMonth,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+            
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusAccountPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
             $response = $client->put(env('API_URL') . '/gmaccount/updategmaccount',
                 ['body' => json_encode(

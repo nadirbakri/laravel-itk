@@ -125,7 +125,7 @@
 			</a>
 		</div>
         <div class="div-table">
-			<table id="bonus_data_entry_table" class="table hover">
+			<table id="bonus_data_entry_table" class="table hover" style="width: 100%">
 				<thead>
 					<tr>
                         <th></th>

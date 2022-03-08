@@ -144,7 +144,7 @@
             </div>
         </div>
         <div class="div-table">
-			<table id="bonus_formula_table" class="table hover">
+			<table id="bonus_formula_table" class="table hover" style="width: 100%">
 				<thead>
 					<tr>
                         <th></th>

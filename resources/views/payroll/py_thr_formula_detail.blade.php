@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <div class="div-table">
-                        <table id="thr_formula_detail_table" class="table hover">
+                        <table id="thr_formula_detail_table" class="table hover" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th></th>
