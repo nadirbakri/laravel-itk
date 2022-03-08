@@ -1,0 +1,46 @@
+<?php
+
+return [
+    'judul' => 'Format Laporan',
+    'list' => 'Format Laporan',
+    'list_detail' => 'Format Laporan List',
+    'label_next' => 'Lanjut',
+    'label_back' => 'Kembali',
+    'label_list' => 'Daftar',
+    'label_new' => 'Baru',
+    'label_edit' => 'Edit',
+    'label_activate' => 'Mengaktifkan',
+    'label_deactivate' => 'Menonaktifkan',
+    'label_report_code' => 'Kode Laporan',
+    'label_description' => 'Deskripsi',
+    'label_font_size' => 'Ukuran Huruf',
+    'label_record_status' => 'Rekam Status',
+    'report_code_required' => 'Kode Laporan Harus Diisi',
+    'label_column_no' => 'No Kolom',
+    'label_table_name' => 'Nama Tabel',
+    'label_field_name' => 'Nama Bidang',
+    'label_column_header' => 'Judul Kolom',
+    'label_alignment' => 'Penyelarasan',
+    'label_data_format' => 'Format Data',
+    'label_display' => 'Tampilkan',
+    'label_select_table_name' => 'Pilih Nama Tabel',
+    'label_select_alignment' => 'Pilih Penyelarasan',
+    'label_select_data_format' => 'Pilih Format Data',
+    'label_select_criteria' => 'Pilih Kriteria',
+    'column_no_required' => 'No Kolom Harus Diisi',
+    'table_name_required' => 'Nama Tabel Harus Diisi',
+    'field_name_required' => 'Nama Bidang Harus Diisi',
+    'label_condition' => 'Kondisi',
+    'label_seq_no' => 'No Seq',
+    'label_criteria' => 'Kriteria',
+    'label_value' => 'Nilai',
+    'seq_no_required' => 'No Seq Harus Diisi',
+    'btn_save' => 'Simpan',
+    'btn_add' => 'Tambah',
+    'btn_cancel' => 'Batal',
+    'btn_remove'=> 'Hapus',
+    'alert_success' => 'Sukses !'
+
+]
+
+?>

@@ -540,6 +540,8 @@ Route::get('payroll/bonus_formula/table', 'PayrollController@tableBonusFormulaPY
 Route::get('payroll/bonus_formula_detail/table', 'PayrollController@tableBonusFormulaDetailPY');
 Route::get('payroll/multi_cost_center/table', 'PayrollController@tableMultiCostCenterPY');
 Route::get('payroll/report_format/table', 'PayrollController@tableReportFormatPY');
+Route::get('payroll/payroll_calculation/table', 'PayrollController@tablePayrollCalculationPY');
+Route::get('payroll/payroll_calculation_detail/table', 'PayrollController@tablePayrollCalculationDetailPY');
 
 /*Route untuk Proses Payroll*/
 Route::post('payroll/tariff_master/proses', 'PayrollController@prosesTariffMasterPY');
@@ -550,6 +552,7 @@ Route::post('payroll/loan_master/proses', 'PayrollController@prosesLoanMasterPY'
 Route::post('payroll/thr_formula/proses', 'PayrollController@prosesTHRFormulaPY');
 Route::post('payroll/bonus_formula/proses', 'PayrollController@prosesBonusFormulaPY');
 Route::post('payroll/account/proses','PayrollController@prosesAccountPY');
+Route::post('payroll/report_format/proses','PayrollController@prosesReportFormatPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
@@ -567,10 +570,14 @@ Route::get('payroll/thr_formula/detail_data', 'PayrollController@dataDetailTHRFo
 Route::get('payroll/bonus_formula/detail_data', 'PayrollController@dataDetailBonusFormulaPY');
 Route::get('payroll/multi_cost_center/detail', 'PayrollController@dataMultiCostCenterPY');
 Route::get('payroll/report_format/detail', 'PayrollController@dataReportFormatPY');
+Route::get('payroll/payroll_calculation/detail', 'PayrollController@dataPayrollCalculationPY');
 
 /* Route untuk status Payroll */
 Route::get('payroll/loan_master/status', 'PayrollController@statusLoanMasterPY');
 Route::get('payroll/account/status', 'PayrollController@statusAccountPY');
+
+/* Route untuk number checker Payroll */
+Route::get('payroll/number/check', 'PayrollController@checkNumberReportFormat');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -760,6 +767,7 @@ Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPe
 Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
 Route::get('field/api', 'DataController@dataFieldAPI');
+Route::get('deduct_leave/api', 'DataController@dataDeductLeaveAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

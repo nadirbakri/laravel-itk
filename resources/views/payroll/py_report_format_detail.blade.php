@@ -92,7 +92,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="account_form" method="post">
+            <form id="report_format_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -191,7 +191,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('time_management/absent_code') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('payroll/report_format') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_report_format.btn_cancel') }}
                         </a>
@@ -228,7 +228,14 @@
                                     <label
                                         for="table_name">{{ __('payroll_report_format.label_table_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="table_name" name="table_name"></select>
+                                    <select class="form-control select2" id="table_name" name="table_name">
+                                        <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
+                                        <option value="PrSalaryMaster">PrSalaryMaster</option>
+                                        <option value="PrSalaryActual">PrSalaryActual</option>
+                                        <option value="PrYearly">PrYearly</option>
+                                        <option value="PeMaster">PeMaster</option>
+                                        <option value="TmFixedComponent">TmFixedComponent</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -254,7 +261,12 @@
                                 <div class="form-group">
                                     <label
                                         for="alignment">{{ __('payroll_report_format.label_alignment') }}</label>
-                                    <select class="form-control select2" id="alignment" name="alignment"></select>
+                                        <select class="form-control select2" id="alignment" name="alignment">
+                                        <option value="" disabled selected>{{ __('payroll_report_format.label_select_alignment') }}</option>
+                                        <option value="1">1. Left</option>
+                                        <option value="2">2. Center</option>
+                                        <option value="3">3. Right</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -263,7 +275,13 @@
                                 <div class="form-group">
                                     <label
                                         for="data_format">{{ __('payroll_report_format.label_data_format') }}</label>
-                                    <select class="form-control select2" id="data_format" name="data_format"></select>
+                                        <select class="form-control select2" id="data_format" name="data_format">
+                                        <option value="" disabled selected>{{ __('payroll_report_format.label_select_data_format') }}</option>
+                                        <option value="#,##0.00">#,##0.00</option>
+                                        <option value="#,##0">#,##0</option>
+                                        <option value="dd/MM/yyyy">dd/MM/yyyy</option>
+                                        <option value="d MMMM yyyy">d MMMM yyyy</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -317,7 +335,14 @@
                                     <label
                                         for="table_name">{{ __('payroll_report_format.label_table_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="table_name" name="table_name"></select>
+                                    <select class="form-control select2" id="table_name" name="table_name">
+                                        <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
+                                        <option value="PrSalaryMaster">PrSalaryMaster</option>
+                                        <option value="PrSalaryActual">PrSalaryActual</option>
+                                        <option value="PrYearly">PrYearly</option>
+                                        <option value="PeMaster">PeMaster</option>
+                                        <option value="TmFixedComponent">TmFixedComponent</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -334,7 +359,14 @@
                                 <div class="form-group">
                                     <label
                                         for="criteria">{{ __('payroll_report_format.label_criteria') }}</label>
-                                    <select class="form-control select2" id="criteria" name="criteria"></select>
+                                        <select class="form-control select2" id="criteria" name="criteria">
+                                        <option value="" disabled selected>{{ __('payroll_report_format.label_select_criteria') }}</option>
+                                        <option value="=">=</option>
+                                        <option value="<>"><></option>
+                                        <option value=">=">>=</option>
+                                        <option value="<="><=</option>
+                                        <option value="like">like</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -412,22 +444,30 @@
         var func = "{{ $func }}";
         var arrData = @json($data);
         var table = null;
+        var tableName = null;
+        var fieldName = null;
+        var table1 = null;
+        var table2 = null;
+        // var tableNameCondition = null;
+        // var fieldNameCondition = null;
+        var arrayReportFormatDetail = [];
+        var arrayReportFormatCondition = [];
 
         if (func == 'new') {
             $('#record_function').val("New");
-            $('#record_code').val("");
+            $('#report_code').val("");
             $('#description').val("");
             $('#font_size').val("");
             $('#report_format_detail_table').DataTable().destroy();
             $('#report_format_condition_table').DataTable().destroy();
             load_table_report_format_detail();
-            load_table_report_condition_detail();
+            load_table_report_format_condition();
         }
         else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#account_no').val(((typeof arrData[0].accountNo !== 'undefined') ? arrData[0].accountNo : '')).prop('readonly', true);
-            $('#account_description').val(htmlDecode(((typeof arrData[0].accountDescription !== 'undefined') ? arrData[0].accountDescription : '')));
-            $('#reference').val(((typeof arrData[0].reference !== 'undefined') ? arrData[0].reference : ''));
+            $('#report_code').val(((typeof arrData[0].reportCode !== 'undefined') ? arrData[0].reportCode : '')).prop('readonly', true);
+            $('#description').val(htmlDecode(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '')));
+            $('#font_size').val(((typeof arrData[0].fontSize !== 'undefined') ? arrData[0].fontSize : ''));
         }
 
         function htmlDecode(value) {
@@ -435,33 +475,201 @@
         }
 
         function load_table_report_format_detail() {
-            table = $('#report_format_detail_table').DataTable({
+            table1 = $('#report_format_detail_table').DataTable({
+                // processing: true,
+                // orderCellsTop: true,
+                data: arrayReportFormatDetail,
+
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                'sPaginationType': 'ellipses',
+
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'columnNo',
+                        name: 'columnNo',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="column_no[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'tableName',
+                        name: 'tableName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="table_name[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'fieldName',
+                        name: 'fieldName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="field_name[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'columnHeader',
+                        name: 'columnHeader',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="column_header[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'alignment',
+                        name: 'alignment',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="alignment[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'dataFormat',
+                        name: 'dataFormat',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="data_format[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'display',
+                        name: 'display',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="display[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                }
             });
         }
 
-        function load_table_report_condition_detail() {
-            table = $('#report_format_condition_table').DataTable({
+        function load_table_report_format_condition() {
+            table2 = $('#report_format_condition_table').DataTable({
+                // processing: true,
+                // orderCellsTop: true,
+                data: arrayReportFormatCondition,
+
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                'sPaginationType': 'ellipses',
+
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'seqNo',
+                        name: 'seqNo',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="column_no[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'tableName',
+                        name: 'tableName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="table_name[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'fieldName',
+                        name: 'fieldName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="field_name[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'criteria',
+                        name: 'criteria',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="column_header[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'value',
+                        name: 'value',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="alignment[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                }
             });
         }
 
-        function loadDataTableName() {
+        $('#btn-add-report-format-detail').on('click', function () {
+            $('#column_no').val("");
+            $('#table_name').val("");
+            $('#field_name').val("");
+            $('#column_header').val("");
+            $('#alignment').val("");
+            $('#data_format').val("");
+            (($("#display").val() !== null) ? $("#display").val() : false);
+
+            $('#table_name').on('change', function () {
+                tableName = $('#table_name').val();
+                loadDataFieldName();
+            });
+
+            $('#field_name').on('change', function () {
+                fieldName = $('#field_name').val();
+            });
+        });
+
+        $('#btn-add-report-format-condition').on('click', function () {
+            $('#seq_no').val("");
+            $('#table_name').val("");
+            $('#field_name').val("");
+            $('#criteria').val("");
+            $('#value').val("");
+
+            $('#table_name').on('change', function () {
+                tableName = $('#table_name').val();
+                loadDataFieldName();
+            });
+
+            $('#field_name').on('change', function () {
+                fieldName = $('#field_name').val();
+                // console.log($('#field_name').val());
+            });
+        });
+
+        function loadDataFieldName(){
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Table Name</b></div>' +
-                        '<div class="col-6"><b>Shift Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.shiftCode + '</div>' +
-                        '<div class="col-6">' + data.data.shiftName + '</div>' +
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -470,12 +678,13 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#shift_overtime_spl').select2({
+            $('#field_name').select2({
                 width: '100%',
-                placeholder: 'Choose Shift',
+                placeholder: 'Choose Field Name',
                 allowClear: true,
+                // multiple: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -485,22 +694,26 @@
                     }
                 },
                 ajax: {
-                    url: '/shift_code/api',
+                    url: '/field/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
-                    data: function (params) {
+                    data: {
+                        'tableName' : tableName
+                    }, function (params) {
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term
                         };
                     },
                     processResults: function (data) {
+                        // console.log(data);
                         return {
                             results: $.map(data, function (item) {
+                                // console.log(item);
                                 return {
-                                    text: item.shiftName,
-                                    id: item.shiftCode,
+                                    text: item,
+                                    id: item,
                                     data: item
                                 }
                             })
@@ -512,8 +725,195 @@
             });
         }
 
+        $("#btn-save-report-format-detail").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            // var arraypush = [];
+            // arraypush["fieldName"] = $("#field_name").val();
+            // arraypush["columnHeader"] = $("#column_header").val();
+            arrayReportFormatDetail.push({
+                "columnNo": $("#column_no").val(),
+                "tableName": $("#table_name").val(),
+                "fieldName": $("#field_name").val(),
+                "columnHeader": $("#column_header").val(),
+                "alignment": $("#alignment").val(),
+                "dataFormat": $("#data_format").val(),
+                "display": (($("#display").val() !== null) ? $("#display").val() : false)
+            });
+
+            // console.log($("#data_format").val())
+
+            // console.log(arrayReportFormatDetail);
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
+            );
+            $('#modal_add_report_format_detail').modal('hide');
+            
+            $('#report_format_detail_table').DataTable().destroy();
+            load_table_report_format_detail();
+            //$("#field_name_form").submit();
+        });
+
+        $("#btn-save-report-format-condition").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            // var arraypush = [];
+            // arraypush["fieldName"] = $("#field_name").val();
+            // arraypush["columnHeader"] = $("#column_header").val();
+            arrayReportFormatCondition.push({
+                "seqNo": $("#seq_no").val(),
+                "tableName": $("#table_name").val(),
+                "fieldName": $("#field_name").val(),
+                "criteria": $("#criteria").val(),
+                "value": $("#value").val(),
+            });
+
+            // console.log($("#data_format").val())
+
+            // console.log(arrayReportFormatCondition);
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
+            );
+            $('#modal_add_report_format_condition').modal('hide');
+            
+            $('#report_format_condition_table').DataTable().destroy();
+            load_table_report_format_condition();
+            //$("#field_name_form").submit();
+        });
+
+        $('#modal_add_report_format_detail').on('show.bs.modal', function () {
+            if (func == 'new') {
+                var count = table1.rows().count();
+                $('#column_no').val(count);
+            }
+
+            else {
+                $.ajax({
+                    url: "{{ url('payroll/number/check') }}",
+                    type: "GET",
+                    data: {
+                        'url': '/pemaster/getpemasterdetail',
+                        'pemasterType' : 'detail',
+                        'columnNo': arrData2[0].detail.columnNo
+                    },
+                    success: function (response) {
+                        var count = table1.rows().count();
+                        // console.log(response);
+
+                        if (response > 0 && count !== response) {
+                            var total = parseInt(response) + parseInt(count);
+                            $('#column_no').val(total - 1);
+                        }
+                        else if (response > 0 && count == response) {
+                            // var total = parseInt(response) + parseInt(count);
+                            $('#column_no').val(response);
+                        }
+                        else {
+                            for (var i = 0; i <= count; i++){
+                                $('#column_no').val(i);
+                                // console.log(i);
+                            }
+                        }
+                        // console.log(count);
+                        // console.log(total);
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        });
+
+        $('#modal_add_report_format_condition').on('show.bs.modal', function () {
+            if (func == 'new') {
+                var count = table2.rows().count();
+                $('#seq_no').val(count);
+            }
+
+            else {
+                $.ajax({
+                    url: "{{ url('payroll/number/check') }}",
+                    type: "GET",
+                    data: {
+                        'url': '/pemaster/getpemasterdetail',
+                        'pemasterType' : 'condition',
+                        'seqNo': arrData2[0].condition.seqNo
+                    },
+                    success: function (response) {
+                        var count = table2.rows().count();
+                        // console.log(response);
+
+                        if (response > 0 && count !== response) {
+                            var total = parseInt(response) + parseInt(count);
+                            $('#seq_no').val(total - 1);
+                        }
+                        else if (response > 0 && count == response) {
+                            // var total = parseInt(response) + parseInt(count);
+                            $('#seq_no').val(response);
+                        }
+                        else {
+                            for (var i = 0; i <= count; i++){
+                                $('#seq_no').val(i);
+                                // console.log(i);
+                            }
+                        }
+                        // console.log(count);
+                        // console.log(total);
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        });
+
+        $("#btn-remove-report-format-detail").on('click', function() {
+            var data = table.rows('.selected').data().toArray();
+        // console.log(data.length);
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayReportFormatDetail.findIndex(x => x.columnNo == data[i].columnNo);
+                    arrayReportFormatDetail.splice(index, 1);
+                }
+                $('#report_format_detail_table').DataTable().destroy();
+                load_table_report_format_detail();
+                //console.log(arrayfieldName);
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#btn-remove-report-format-condition").on('click', function() {
+            var data = table.rows('.selected').data().toArray();
+        // console.log(data.length);
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayReportFormatCondition.findIndex(x => x.seqNo == data[i].seqNo);
+                    arrayReportFormatCondition.splice(index, 1);
+                }
+                $('#report_format_condition_table').DataTable().destroy();
+                load_table_report_format_condition();
+                //console.log(arrayfieldName);
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('payroll/account') }}";
+            window.location = "{{ url('payroll/report_format') }}";
         });
 
         $("#btn-save").click(function () {
@@ -521,19 +921,19 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#account_form").submit();
+            $("#report_format_form").submit();
         });
 
-        if ($("#account_form").length > 0) {
-            $("#account_form").validate({
+        if ($("#report_format_form").length > 0) {
+            $("#report_format_form").validate({
             rules: {
-                    account_no: {
+                    report_code: {
                         required: true,
                     },
                 },
                 messages: {
-                    absent_code: {
-                        required: "{{ __('payroll_report_format.account_no_required') }}",
+                    report_code: {
+                        required: "{{ __('payroll_report_format.report_code_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -559,9 +959,9 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/account/proses') }}",
+                        url: "{{ url('payroll/report_format/proses') }}",
                         type: "POST",
-                        data: $('#account_form').serialize(),
+                        data: $('#report_format_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
@@ -574,7 +974,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/account') }}";
+                                        "{{ url('payroll/report_format') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

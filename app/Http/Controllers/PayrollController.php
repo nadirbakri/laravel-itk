@@ -68,6 +68,11 @@ class PayrollController extends Controller
         return view ('payroll.py_report_format');
     }
 
+    public function pagePayrollCalculation()
+    {
+        return view ('payroll.py_payroll_calculation');
+    }
+
     public function tableAccountPY()
     {
         try {
@@ -564,6 +569,34 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());  
 
         return view('payroll.py_salary_master_detail', ['data' => $arrResult->dataListSet]);
+    }
+
+    public function tablePayrollCalculationPY()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationprocess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
     }
 
     public function dataDetailTariffMasterPY(Request $request)
@@ -1522,6 +1555,39 @@ class PayrollController extends Controller
         return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
+    public function dataPayrollCalculationPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationprocess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'fieldName' => $request->field_name,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('payroll.py_payroll_calculation_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function statusLoanMasterPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -1667,5 +1733,122 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesReportFormatPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'recordStatus' => "A",
+                'companyCode' => Session::get('companyCode'),
+                'reportCode' => $request->report_code,
+                'description' => $request->description,
+                'fontSize' => $request->font_size,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prreportformat/insertreportformat',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/prreportformat/updatereportformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function checkNumberReportFormat(Request $request)
+    {
+        // $pemasterType = 
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->employeeNo);
+
+            if(isset($request->reportCode)){
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'reportCode' => $request->reportCode,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet[0]->{$request->pemasterType});
+
+        if($arrResult->dataListSet[0]->{$request->pemasterType} == null){
+            $number = 1;
+        }else{
+            // $dataLevel[] = $request->{'level' . ($i+1)};
+            if(isset($arrResult->dataListSet[0]->{$request->pemasterType}[0]->columnNo)){
+                $number = max(array_column($arrResult->dataListSet[0]->{$request->pemasterType}, 'columnNo')) + 1;
+            }else if(isset($arrResult->dataListSet[0]->{$request->pemasterType}[0]->seqNo)){
+                $number = max(array_column($arrResult->dataListSet[0]->{$request->pemasterType}, 'seqNo')) + 1;
+            }
+        }
+
+        return response()->json($number);
+
     }
 }

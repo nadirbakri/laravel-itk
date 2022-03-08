@@ -18,7 +18,7 @@ return [
     'account_no_required' => 'Account No Required',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
-    'alert_success' => 'Success !',
+    'alert_success' => 'Success !'
 
 ]
 
