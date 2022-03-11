@@ -98,9 +98,10 @@
                         <div class="form-group">
                             <label for="employee_no">{{ __('payroll_bonus_data_entry.label_employee_no') }}</label>
                             <span class="required">*</span>
-                            <select class="form-control select2" id="employee_no" name="employee_no"></select>
+                            <select class="form-control select2" id="employee_no" name="employee_no" disabled></select>
                         </div>
                         <input type="text" class="form-control" id="record_function" name="record_function" hidden>
+                        <input type="text" class="form-control" id="employee_no_hidden" name="employee_no_hidden" hidden>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
@@ -126,7 +127,7 @@
                         <div class="form-group">
                             <label for="performance_result">{{ __('payroll_bonus_data_entry.label_performance_result') }}</label>
                             <span class="required">*</span>
-                            <select class="form-control select2" id="performance_result" name="performance_result"></select>
+                            <select class="form-control select2" id="performance_result" name="performance_result" disabled></select>
                         </div>
                     </div>
                 </div>
@@ -284,7 +285,7 @@
 
         if (func == 'new') {
             $('#record_function').val('New');
-            $('#employee_no').prop('readonly', false);
+            $('#employee_no').prop('disabled', false);
             $('#employee_name').prop('readonly', true);
             $('#entry_type').prop('disabled', false);
             $('#performance_result').prop('disabled', false);
@@ -312,10 +313,10 @@
         }
         else {
             $('#record_function').val('Edit');
-            $('#employee_no').prop('readonly', true);
+            $('#employee_no').prop('disabled', true);
             $('#employee_name').prop('readonly', true);
             $('#entry_type').prop('disabled', true);
-            $('#performance_result').prop('disabled', false);
+            $('#performance_result').prop('disabled', true);
             pickerPaymentDate._input.setAttribute("disabled", "disabled");
             $('#currency_code').prop('disabled', false);
             $('#nominal').prop('disabled', false);
@@ -345,6 +346,7 @@
                 });
             });
 
+            $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
             $('#employee_name').val((typeof arrData[0].employeeName !== 'undefined') ? arrData[0].employeeName : '');
             $('#entry_type').val((typeof arrData[0].flagType !== 'undefined') ? arrData[0].flagType : '');
             $('#entry_type_hidden').val((typeof arrData[0].flagType !== 'undefined') ? arrData[0].flagType : '');

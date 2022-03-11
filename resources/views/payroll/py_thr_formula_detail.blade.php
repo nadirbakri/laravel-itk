@@ -212,6 +212,7 @@
                                     <div class="form-group">
                                         <label for="preview_formula">{{ __('payroll_thr_formula.label_preview_formula') }}</label>
                                         <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
+                                        <textarea class="form-control" id="preview_formula_hidden" name="preview_formula_hidden" rows="5" hidden></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -226,6 +227,7 @@
                                     <div class="form-group">
                                         <label for="preview_condition">{{ __('payroll_thr_formula.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
+                                        <textarea class="form-control" id="preview_condition_hidden" name="preview_condition_hidden" rows="5" hidden></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -355,17 +357,37 @@
                 loadDataFieldChooser();
             });
 
-            $('#field_chooser').on('change', function () {
+            $('#field_chooser').on('select2:select', function (e) {
                 fieldChooser = $('#field_chooser').val();
+            });
+            
+            $('#field_chooser').on('select2:unselecting', function (e) {
+                fieldChooser = null;
+                $('#preview_formula_hidden').val('');
+                $('#preview_condition_hidden').val('');
+                $('#preview_formula').val('');
+                $('#preview_condition').val('');
             });
 
             $('#btn-add-to-formula').on('click', function () {
-                $('#preview_formula').val(tableChooser + "." + fieldChooser);
+                if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                    var formula = $('#preview_formula_hidden').val($('#preview_formula_hidden').val() + fieldChooser + ' + ');
+                    var previewFormula = formula.val().slice(0, -2);
+                    $('#preview_formula').val(previewFormula);
+                } else {
+                    $('#preview_formula').val('');
+                }
             });
 
             $('#btn-add-to-condition').on('click', function () {
-                $('#preview_condition').val(tableChooser + "." + fieldChooser);
-            })
+                if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                    var formula = $('#preview_condition_hidden').val($('#preview_condition_hidden').val() + fieldChooser + ' + ');
+                    var previewFormula = formula.val().slice(0, -2);
+                    $('#preview_condition').val(previewFormula);
+                } else {
+                    $('#preview_condition').val('');
+                }
+            });
         });
 
         $("#btn-edit").on('click', function() {
@@ -386,17 +408,37 @@
                     loadDataFieldChooser();
                 });
 
-                $('#field_chooser').on('change', function () {
+                $('#field_chooser').on('select2:select', function (e) {
                     fieldChooser = $('#field_chooser').val();
+                });
+                
+                $('#field_chooser').on('select2:unselecting', function (e) {
+                    fieldChooser = null;
+                    $('#preview_formula_hidden').val('');
+                    $('#preview_condition_hidden').val('');
+                    $('#preview_formula').val('');
+                    $('#preview_condition').val('');
                 });
 
                 $('#btn-add-to-formula').on('click', function () {
-                    $('#preview_formula').val(tableChooser + "." + fieldChooser);
+                    if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                        var formula = $('#preview_formula_hidden').val($('#preview_formula_hidden').val() + fieldChooser + ' + ');
+                        var previewFormula = formula.val().slice(0, -2);
+                        $('#preview_formula').val(previewFormula);
+                    } else {
+                        $('#preview_formula').val('');
+                    }
                 });
 
                 $('#btn-add-to-condition').on('click', function () {
-                    $('#preview_condition').val(tableChooser + "." + fieldChooser);
-                })
+                    if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                        var formula = $('#preview_condition_hidden').val($('#preview_condition_hidden').val() + fieldChooser + ' + ');
+                        var previewFormula = formula.val().slice(0, -2);
+                        $('#preview_condition').val(previewFormula);
+                    } else {
+                        $('#preview_condition').val('');
+                    }
+                });
             }else{
                 $('#modal_add_edit_thr_formula').modal('hide');
                 $('#notification_error').modal('show');
