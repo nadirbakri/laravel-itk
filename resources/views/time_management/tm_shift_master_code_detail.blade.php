@@ -1589,7 +1589,7 @@
                         '<div class="col-6"><b>Group Shift</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.groupShift + '</div>' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -1627,10 +1627,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.groupShift,
-                                    id: item.groupShift,
-                                    data: item,
-                                    title : item.description
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
                                 }
                             })
                         };

@@ -345,7 +345,7 @@
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

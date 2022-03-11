@@ -564,7 +564,7 @@
                         '<div class="col-6"><b>Absent Type</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.absentType + '</div>' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -588,7 +588,7 @@
                     }
                 },
                 ajax: {
-                    url: '/absent_code/api',
+                    url: '/absenteeism_type/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -602,10 +602,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.absentType,
-                                    id: item.absentType,
-                                    data: item,
-                                    title : item.description
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
                                 }
                             })
                         };
@@ -627,7 +626,7 @@
                         '<div class="col-6"><b>Deduct Leave</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.deductLeave + '</div>' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -651,7 +650,7 @@
                     }
                 },
                 ajax: {
-                    url: '/absent_code/api',
+                    url: '/deduct_leave/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -665,10 +664,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.deductLeave,
-                                    id: item.deductLeave,
-                                    data: item,
-                                    title : item.description
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
                                 }
                             })
                         };

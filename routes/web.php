@@ -530,19 +530,25 @@ Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1R
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
 Route::get('payroll/salary_master/table', 'PayrollController@tableSalaryMasterPY');
+Route::get('payroll/severance_data_entry/table', 'PayrollController@tableSeveranceDataEntryPY');
 Route::get('payroll/tariff_master/table', 'PayrollController@tableTariffMasterPY');
 Route::get('payroll/tariff_master_detail/table', 'PayrollController@tableTariffMasterDetailPY');
 Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
 Route::get('payroll/loan_master/table', 'PayrollController@tableLoanMasterPY');
+Route::get('payroll/loan_data_entry/table', 'PayrollController@tableLoanDataEntryPY');
 Route::get('payroll/thr_formula/table', 'PayrollController@tableTHRFormulaPY');
 Route::get('payroll/thr_formula_detail/table', 'PayrollController@tableTHRFormulaDetailPY');
 Route::get('payroll/bonus_formula/table', 'PayrollController@tableBonusFormulaPY');
 Route::get('payroll/bonus_formula_detail/table', 'PayrollController@tableBonusFormulaDetailPY');
 Route::get('payroll/multi_cost_center/table', 'PayrollController@tableMultiCostCenterPY');
 Route::get('payroll/report_format/table', 'PayrollController@tableReportFormatPY');
+Route::get('payroll/payroll_calculation/table', 'PayrollController@tablePayrollCalculationPY');
+Route::get('payroll/payroll_calculation_detail/table', 'PayrollController@tablePayrollCalculationDetailPY');
 
 /*Route untuk Proses Payroll*/
+Route::post('payroll/salary_master/proses', 'PayrollController@prosesSalaryMasterPY');
+Route::post('payroll/severance_data_entry/proses', 'PayrollController@prosesSeveranceDataEntryPY');
 Route::post('payroll/tariff_master/proses', 'PayrollController@prosesTariffMasterPY');
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
 Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
@@ -551,27 +557,35 @@ Route::post('payroll/loan_master/proses', 'PayrollController@prosesLoanMasterPY'
 Route::post('payroll/thr_formula/proses', 'PayrollController@prosesTHRFormulaPY');
 Route::post('payroll/bonus_formula/proses', 'PayrollController@prosesBonusFormulaPY');
 Route::post('payroll/account/proses','PayrollController@prosesAccountPY');
+Route::post('payroll/report_format/proses','PayrollController@prosesReportFormatPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
+Route::get('payroll/severance_data_entry/remove', 'PayrollController@removeSeveranceDataEntryPY');
 Route::get('payroll/thr_formula/remove', 'PayrollController@removeTHRFormulaPY');
 Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
 Route::get('payroll/salary_master/detail_data', 'PayrollController@dataDetailSalaryMasterPY');
+Route::get('payroll/severance_data_entry/detail_data', 'PayrollController@dataDetailSeveranceDataEntryPY');
 Route::get('payroll/tariff_master/detail_data', 'PayrollController@dataDetailTariffMasterPY');
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
 Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');
 Route::get('payroll/loan_master/detail_data', 'PayrollController@dataDetailLoanMasterPY');
+Route::get('payroll/loan_data_entry/detail_data', 'PayrollController@dataDetailLoanDataEntryPY');
 Route::get('payroll/thr_formula/detail_data', 'PayrollController@dataDetailTHRFormulaPY');
 Route::get('payroll/bonus_formula/detail_data', 'PayrollController@dataDetailBonusFormulaPY');
 Route::get('payroll/multi_cost_center/detail', 'PayrollController@dataMultiCostCenterPY');
 Route::get('payroll/report_format/detail', 'PayrollController@dataReportFormatPY');
+Route::get('payroll/payroll_calculation/detail', 'PayrollController@dataPayrollCalculationPY');
 
 /* Route untuk status Payroll */
 Route::get('payroll/loan_master/status', 'PayrollController@statusLoanMasterPY');
 Route::get('payroll/account/status', 'PayrollController@statusAccountPY');
+
+/* Route untuk number checker Payroll */
+Route::get('payroll/number/check', 'PayrollController@checkNumberReportFormat');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -672,6 +686,7 @@ Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
 Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
 Route::get('employee_no/req_detail/api', 'DataController@dataEmployeeNoReqDetailAPI');
+Route::get('employee_no_term_date/api', 'DataController@dataEmployeeNoTermDateNotNullAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
 Route::get('module/api', 'DataController@dataModuleAPI');
@@ -761,6 +776,8 @@ Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPe
 Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
 Route::get('field/api', 'DataController@dataFieldAPI');
+Route::get('deduct_leave/api', 'DataController@dataDeductLeaveAPI');
+Route::get('loan_code/api', 'DataController@dataLoanCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

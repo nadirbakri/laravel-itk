@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_thr_formula.judul') }}</title>
+    <title>{{ __('payroll_payroll_calculation.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -74,53 +74,44 @@
             font-size: 2.5vw;
             margin-left: 0.5%;
         }
-
-        .select2-results__option[aria-selected=true] {
-            display: none;
-        }
-
-        .required {
-            color: red;
-        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <form id="thr_formula_detail_form" method="post">
+        <form id="payroll_payroll_calculation_detail_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="{{ url('payroll/thr_formula') }}" target="iframe_dashboard">
+                    <a href="{{ url('payroll/payroll_calculation') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_thr_formula.list_detail') }}</span>
+                        <span class="title-text">{{ __('payroll_payroll_calculation.list_detail') }}</span>
                     </a>
                 </div>
                 <div class="div-form">
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="religion_code">{{ __('payroll_thr_formula.label_religion_code') }}</label>
-                                <input type="text" class="form-control" name="religion_code" id="religion_code" readonly>
+                                <label for="field_name">{{ __('payroll_payroll_calculation.label_field_name') }}</label>
+                                <select class="form-control select2" id="field_name" name="field_name"></select>
                             </div>
                             <input type="text" class="form-control" id="record_function" name="record_function" hidden>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="religion_name">{{ __('payroll_thr_formula.label_religion_name') }}</label>
-                                <input type="text" class="form-control" name="religion_name" id="religion_name" readonly>
+                                <label for="sequence">{{ __('payroll_payroll_calculation.label_sequence') }}</label>
+                                <input type="text" class="form-control" name="sequence" id="sequence">
                             </div>
                         </div>
                     </div>
                     <div class="div-table">
-                        <table id="thr_formula_detail_table" class="table hover" style="width: 100%">
+                        <table id="payroll_calculation_detail_table" class="table hover">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Service Month From</th>
-                                    <th>Service Month To</th>
-                                    <th>Formula</th>
-                                    <th>Condition</th>
+                                    <th>{{ __('payroll_payroll_calculation.label_no') }}</th>
+                                    <th>{{ __('payroll_payroll_calculation.label_condition') }}</th>
+                                    <th>{{ __('payroll_payroll_calculation.label_formula') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -128,30 +119,44 @@
                     <div class="row">
                         <div class="col-2">
                             <button type="button" class="btn btn-primary" name="btn-add" id="btn-add"
-                                style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_thr_formula">
-                                <i class="fa fa-plus"></i> {{ __('payroll_thr_formula.btn_add') }}
+                                style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_payroll_payroll_calculation">
+                                <i class="fa fa-plus"></i> {{ __('payroll_payroll_calculation.btn_add') }}
                             </button>
                         </div>
                         <div class="col-2">
                             <button type="button" class="btn btn-primary" name="btn-edit" id="btn-edit"
                                 style="width: 100%;">
-                                <i class="fa fa-pencil"></i> {{ __('payroll_thr_formula.btn_edit') }}
+                                <i class="fa fa-pencil"></i> {{ __('payroll_payroll_calculation.btn_edit') }}
                             </button>
                         </div>
                         <div class="col-2">
                             <button type="button" class="btn btn-danger" name="btn-remove" id="btn-remove"
                                     style="width: 100%;">
-                                <i class="fa fa-times"></i> {{ __('payroll_thr_formula.btn_remove') }}
+                                <i class="fa fa-times"></i> {{ __('payroll_payroll_calculation.btn_remove') }}
                             </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
+                                style="width: 100%;">
+                                <i class="fa fa-floppy-o"></i> {{ __('payroll_payroll_calculation.btn_save') }}
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-primary" href="{{ url('payroll/report_format') }}" target="iframe_dashboard"
+                                name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                                <i class="fa fa-times-circle"></i> {{ __('payroll_payroll_calculation.btn_cancel') }}
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modal_add_edit_thr_formula" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal_add_edit_payroll_payroll_calculation" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">{{ __('payroll_thr_formula.list') }}</h5>
+                            <h5 class="modal-title">{{ __('payroll_payroll_calculation.list') }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -160,19 +165,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label
-                                            for="service_month_from">{{ __('payroll_thr_formula.label_service_month_from') }}</label>
+                                        <label for="no">{{ __('payroll_payroll_calculation.label_no') }}</label>
                                         <span class="required">*</span>
-                                        <input type="number" class="form-control" id="service_month_from" name="service_month_from"
-                                            placeholder={{ __('payroll_thr_formula.label_service_month_from') }} readonly>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="service_month_to">{{ __('payroll_thr_formula.label_service_month_to') }}</label>
-                                        <span class="required">*</span>
-                                        <input type="number" class="form-control" id="service_month_to" name="service_month_to"
-                                            placeholder={{ __('payroll_thr_formula.label_service_month_to') }}>
+                                        <input type="text" class="form-control" id="no" name="no"
+                                            placeholder="{{ __('payroll_payroll_calculation.label_no') }}">
                                     </div>
                                 </div>
                             </div>
@@ -180,10 +176,10 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label
-                                            for="table_chooser">{{ __('payroll_thr_formula.label_table_chooser') }}</label>
+                                            for="table_chooser">{{ __('payroll_payroll_calculation.label_table_chooser') }}</label>
                                         <span class="required">*</span>
                                         <select class="form-control select2" id="table_chooser" name="table_chooser">
-                                            <option value="" disabled selected>{{ __('payroll_thr_formula.label_select_table_chooser') }}</option>
+                                            <option value="" disabled selected>{{ __('payroll_payroll_calculation.label_select_table_chooser') }}</option>
                                             <option value="PeMaster">PeMaster</option>
                                             <option value="TmFixedComponent">TmFixedComponent</option>
                                             <option value="PrSalaryMaster">PrSalaryMaster</option>
@@ -195,7 +191,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label
-                                            for="field_chooser">{{ __('payroll_thr_formula.label_field_chooser') }}</label>
+                                            for="field_chooser">{{ __('payroll_payroll_calculation.label_field_chooser') }}</label>
                                         <span class="required">*</span>
                                         <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
                                     </div>
@@ -204,38 +200,36 @@
                             <div class="row">
                                 <div class="col-3">
                                     <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
-                                        {{ __('payroll_thr_formula.btn_add_to_formula') }}
+                                        {{ __('payroll_payroll_calculation.btn_add_to_formula') }}
                                     </button>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="preview_formula">{{ __('payroll_thr_formula.label_preview_formula') }}</label>
+                                        <label for="preview_formula">{{ __('payroll_payroll_calculation.label_preview_formula') }}</label>
                                         <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
-                                        <textarea class="form-control" id="preview_formula_hidden" name="preview_formula_hidden" rows="5" hidden></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3">
                                     <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
-                                        {{ __('payroll_thr_formula.btn_add_to_condition') }}
+                                        {{ __('payroll_payroll_calculation.btn_add_to_condition') }}
                                     </button>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="preview_condition">{{ __('payroll_thr_formula.label_preview_condition') }}</label>
+                                        <label for="preview_condition">{{ __('payroll_payroll_calculation.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
-                                        <textarea class="form-control" id="preview_condition_hidden" name="preview_condition_hidden" rows="5" hidden></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" id="btn-save" class="btn btn-primary w-25"><i 
-                                    class="fa fa-floppy-o"></i> {{ __('payroll_thr_formula.btn_save') }}</button>
+                                    class="fa fa-floppy-o"></i> {{ __('payroll_payroll_calculation.btn_save') }}</button>
                                 <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                                    class="fa fa-times-circle"></i> {{ __('payroll_thr_formula.btn_cancel') }}</button>
+                                    class="fa fa-times-circle"></i> {{ __('payroll_payroll_calculation.btn_cancel') }}</button>
                             </div>
                         </div>
                     </div>
@@ -270,7 +264,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_thr_formula.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_payroll_calculation.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -298,14 +292,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var arrData = @json($data);
-        var arrData2 = @json($data_table);
         var table = null;
         var tableChooser = null;
         var fieldChooser = null;
         var arrayTHRFormulaDetail = null;
 
-        $('#thr_formula_detail_table thead tr').clone(true).appendTo('#thr_formula_detail_table thead');
-        $('#thr_formula_detail_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('.div-navbar a.disabled').attr('onclick', 'return false;');
+
+        $('#payroll_calculation_detail_table thead tr').clone(true).appendTo('#payroll_calculation_detail_table thead');
+        $('#payroll_calculation_detail_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
 
@@ -319,34 +314,26 @@
             } );
         });
 
-        $('#select').focus(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-        });
+        if (func === 'new') {
+            $('#record_function').val('New');
+            $('#field_name').val(null).trigger('change');
+            $('#sequence').val('');
+            $('#payroll_calculation_detail_table').DataTable().destroy();
+            load_table_payroll_calculation_detail();
 
-        $('#select').click(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
+        }
 
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
+        else {
+            $('#record_function').val('Edit');
+            $('#bonus_date').prop('readonly', true);
+            pickerBonusDate._input.setAttribute("disabled", "disabled");
 
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
-        
-        $('#religion_code').val((typeof arrData[0].comGenCode !== 'undefined') ? arrData[0].comGenCode : '');
-        $('#religion_name').val((typeof arrData[0].value !== 'undefined') ? arrData[0].value : '');
+            pickerBonusDate.setDate(((typeof arrData[0].bonusDate !== 'undefined') ? arrData[0].bonusDate : ''));
+        }
 
         $('#btn-add').on('click', function () {
-            $('#service_month_from').prop('readonly', false);
-
             $('#record_function').val('New');
-            $('#service_month_from').val('');
-            $('#service_month_to').val('');
+            $('#no').val('');
             $('#table_chooser').val(null).trigger('change');
             $('#field_chooser').val(null).trigger('change');
             $('#preview_formula').val('');
@@ -357,49 +344,27 @@
                 loadDataFieldChooser();
             });
 
-            $('#field_chooser').on('select2:select', function (e) {
+            $('#field_chooser').on('change', function () {
                 fieldChooser = $('#field_chooser').val();
-            });
-            
-            $('#field_chooser').on('select2:unselecting', function (e) {
-                fieldChooser = null;
-                $('#preview_formula_hidden').val('');
-                $('#preview_condition_hidden').val('');
-                $('#preview_formula').val('');
-                $('#preview_condition').val('');
             });
 
             $('#btn-add-to-formula').on('click', function () {
-                if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                    var formula = $('#preview_formula_hidden').val($('#preview_formula_hidden').val() + fieldChooser + ' + ');
-                    var previewFormula = formula.val().slice(0, -2);
-                    $('#preview_formula').val(previewFormula);
-                } else {
-                    $('#preview_formula').val('');
-                }
+                $('#preview_formula').val(tableChooser + "." + fieldChooser);
             });
 
             $('#btn-add-to-condition').on('click', function () {
-                if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                    var formula = $('#preview_condition_hidden').val($('#preview_condition_hidden').val() + fieldChooser + ' + ');
-                    var previewFormula = formula.val().slice(0, -2);
-                    $('#preview_condition').val(previewFormula);
-                } else {
-                    $('#preview_condition').val('');
-                }
-            });
+                $('#preview_condition').val(tableChooser + "." + fieldChooser);
+            })
         });
 
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
             
             if(data.count() > 0){
-                $('#modal_add_edit_thr_formula').modal('show');
-                $('#service_month_from').prop('readonly', true);
+                $('#modal_add_edit_payroll_calculation').modal('show');
                 
                 $('#record_function').val('Edit');
-                $('#service_month_from').val((data[0].serviceMonthFrom !== null) ? data[0].serviceMonthFrom : '');
-                $('#service_month_to').val((data[0].serviceMonthTo !== null) ? data[0].serviceMonthTo : '');
+                $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
                 $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
                 $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
 
@@ -408,60 +373,41 @@
                     loadDataFieldChooser();
                 });
 
-                $('#field_chooser').on('select2:select', function (e) {
+                $('#field_chooser').on('change', function () {
                     fieldChooser = $('#field_chooser').val();
-                });
-                
-                $('#field_chooser').on('select2:unselecting', function (e) {
-                    fieldChooser = null;
-                    $('#preview_formula_hidden').val('');
-                    $('#preview_condition_hidden').val('');
-                    $('#preview_formula').val('');
-                    $('#preview_condition').val('');
                 });
 
                 $('#btn-add-to-formula').on('click', function () {
-                    if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                        var formula = $('#preview_formula_hidden').val($('#preview_formula_hidden').val() + fieldChooser + ' + ');
-                        var previewFormula = formula.val().slice(0, -2);
-                        $('#preview_formula').val(previewFormula);
-                    } else {
-                        $('#preview_formula').val('');
-                    }
+                    $('#preview_formula').val(tableChooser + "." + fieldChooser);
                 });
 
                 $('#btn-add-to-condition').on('click', function () {
-                    if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                        var formula = $('#preview_condition_hidden').val($('#preview_condition_hidden').val() + fieldChooser + ' + ');
-                        var previewFormula = formula.val().slice(0, -2);
-                        $('#preview_condition').val(previewFormula);
-                    } else {
-                        $('#preview_condition').val('');
-                    }
-                });
+                    $('#preview_condition').val(tableChooser + "." + fieldChooser);
+                })
             }else{
-                $('#modal_add_edit_thr_formula').modal('hide');
+                $('#modal_add_edit_payroll_calculation').modal('hide');
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
         });
 
-        // $('#thr_formula_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
-        //     var data = table.row(this).data();
-        // });
+        $('#payroll_calculation_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
+            var data = table.row(this).data();
+            console.log(data);
+        });
 
-        load_data_table_thr_formula_detail();
+        load_table_payroll_calculation_detail();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_thr_formula_detail() {
-            table = $('#thr_formula_detail_table').DataTable({
+        function load_table_payroll_calculation_detail() {
+            table = $('#payroll_calculation_detail_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: 
                     {
-                        url : "{{ url('payroll/thr_formula_detail/table') }}",
+                        url : "{{ url('payroll/payroll_calculation_detail/table') }}",
                         data: {
                             'religionCode' : $('#religion_code').val()
                         }
@@ -481,10 +427,9 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'serviceMonthFrom', name: 'serviceMonthFrom'},
-                    {data: 'serviceMonthTo', name: 'serviceMonthTo'},
+                    {data: 'no', name: 'no'},
+                    {data: 'condition', name: 'condition'},
                     {data: 'formula', name: 'formula'},
-                    {data: 'condition', name: 'condition'}
                 ],
                 select: {
                     style:    'multi',
@@ -514,6 +459,8 @@
                 width: '100%',
                 placeholder: 'Choose Field Chooser',
                 allowClear: true,
+                // multiple: true,
+                // tags: true,
                 closeOnSelect: true,
                 language: {
                     errorLoading: function () {
@@ -572,8 +519,8 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response
                                 .message);
-                            $('#thr_formula_detail_table').DataTable().destroy();
-                            load_data_table_thr_formula_detail();
+                            $('#payroll_calculation_detail_table').DataTable().destroy();
+                            load_data_table_payroll_calculation_detail();
                             setTimeout(function () {
                                 $('#notification_success').modal('hide');
                             }, 3000);
