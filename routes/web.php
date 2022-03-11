@@ -535,6 +535,7 @@ Route::get('payroll/tariff_master_detail/table', 'PayrollController@tableTariffM
 Route::get('payroll/thr_data_entry/table', 'PayrollController@tableTHRDataEntryPY');
 Route::get('payroll/bonus_data_entry/table', 'PayrollController@tableBonusDataEntryPY');
 Route::get('payroll/loan_master/table', 'PayrollController@tableLoanMasterPY');
+Route::get('payroll/loan_data_entry/table', 'PayrollController@tableLoanDataEntryPY');
 Route::get('payroll/thr_formula/table', 'PayrollController@tableTHRFormulaPY');
 Route::get('payroll/thr_formula_detail/table', 'PayrollController@tableTHRFormulaDetailPY');
 Route::get('payroll/bonus_formula/table', 'PayrollController@tableBonusFormulaPY');
@@ -571,6 +572,7 @@ Route::get('payroll/tariff_master/detail_data', 'PayrollController@dataDetailTar
 Route::get('payroll/bonus_data_entry/detail_data', 'PayrollController@dataDetailBonusDataEntryPY');
 Route::get('payroll/thr_data_entry/detail_data', 'PayrollController@dataDetailTHRDataEntryPY');
 Route::get('payroll/loan_master/detail_data', 'PayrollController@dataDetailLoanMasterPY');
+Route::get('payroll/loan_data_entry/detail_data', 'PayrollController@dataDetailLoanDataEntryPY');
 Route::get('payroll/thr_formula/detail_data', 'PayrollController@dataDetailTHRFormulaPY');
 Route::get('payroll/bonus_formula/detail_data', 'PayrollController@dataDetailBonusFormulaPY');
 Route::get('payroll/multi_cost_center/detail', 'PayrollController@dataMultiCostCenterPY');
@@ -683,6 +685,7 @@ Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
 Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
 Route::get('employee_no/req_detail/api', 'DataController@dataEmployeeNoReqDetailAPI');
+Route::get('employee_no_term_date/api', 'DataController@dataEmployeeNoTermDateNotNullAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
 Route::get('module/api', 'DataController@dataModuleAPI');
@@ -773,6 +776,7 @@ Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
 Route::get('field/api', 'DataController@dataFieldAPI');
 Route::get('deduct_leave/api', 'DataController@dataDeductLeaveAPI');
+Route::get('loan_code/api', 'DataController@dataLoanCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

@@ -63,6 +63,11 @@ class PayrollController extends Controller
         return view ('payroll.py_loan_master');
     }
 
+    public function pageLoanDataEntry()
+    {
+        return view ('payroll.py_loan_data_entry');
+    }
+
     public function pageMultiCostCenter()
     {
         return view ('payroll.py_multi_cost_center');
@@ -334,6 +339,40 @@ class PayrollController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableLoanDataEntryPY() {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -847,6 +886,42 @@ class PayrollController extends Controller
         return view('payroll.py_loan_master_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
+    public function dataDetailLoanDataEntryPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'loanCode' => $request->loanCode,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('payroll.py_loan_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function dataDetailTHRFormulaPY(Request $request)
     {
         try {
@@ -1341,7 +1416,7 @@ class PayrollController extends Controller
             }else {
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
-                    'employeeNo' => $request->employee_no,
+                    'employeeNo' => $request->employee_no_hidden,
                     'receiptDate' => $request->payment_date_hidden,
                     'flagType' => $request->entry_type_hidden,
                     "currencyCode" => $request->currency_code,
