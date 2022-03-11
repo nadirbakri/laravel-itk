@@ -270,6 +270,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -323,6 +324,11 @@
         });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
@@ -408,6 +414,14 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             $("#tm_time_recording_process_upload_form").submit();
+        });
+
+        $("#btn-process-delete").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#tm_time_recording_process_delete_form").submit();
         });
 
         $('#notification_success').on('hide.bs.modal', function () {

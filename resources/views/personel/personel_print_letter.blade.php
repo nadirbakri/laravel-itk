@@ -76,7 +76,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="reference">{{ __('personel_print_letter.label_reference') }}</label>
-                            <input type="text" class="form-control" id="reference" name="reference"
+                            <input type="number" class="form-control" id="reference" name="reference"
                                 placeholder="{{ __('personel_print_letter.label_reference') }}">
                         </div>
                     </div>
@@ -418,12 +418,14 @@
                         type: "POST",
                         data: $('#print_letter_form').serialize(),
                         success: function (response) {
-                            $("#btn-print").prop("disabled", false);
-                            $("#btn-print").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("personel_print_letter.btn_print") }}'
-                            );
-                            
-                            if (response.status == "false") {
+                            if (response.status == "true") {
+                                $("#btn-print").prop("disabled", false);
+                                $("#btn-print").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_print_letter.btn_print") }}'
+                                );
+
+                                window.open('../print_letter/' + response.letter, '_blank')
+                            }else{
                                 $("#btn-print").prop("disabled", false);
                                 $("#btn-print").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("personel_print_letter.btn_print") }}'

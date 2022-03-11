@@ -1528,6 +1528,21 @@ class DataController extends Controller
         return response()->json($employees);
 	}
 
+	// public function unique_multidim_array($array, $key) { 
+	// 	$temp_array = array(); 
+	// 	$i = 0; 
+	// 	$key_array = array(); 
+		
+	// 	foreach($array as $val) { 
+	// 		if (!in_array($val[$key], $key_array)) { 
+	// 			$key_array[$i] = $val[$key]; 
+	// 			$temp_array[$i] = $val; 
+	// 		} 
+	// 		$i++; 
+	// 	} 
+	// 	return $temp_array; 
+	// }
+
 	public function dataEmployeeNoAPI2(Request $request)
     {
     	$search = $request->search;
@@ -1557,6 +1572,10 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// $arrData = unique_multidim_array($arrResult->dataListSet, 'employeeNo');
+
+		// var_dump($arrResult->dataListSet->pluck('employeeNo'));
 
 	    if($search == ''){
 	    	$data = $arrResult->dataListSet;
@@ -3496,50 +3515,59 @@ class DataController extends Controller
     {
     	$search = $request->search;
 
-    	try {
-	    	$client = new Client([
-	    		'headers' => [ 'Content-Type' => 'application/json',
-	    						'Authorization' => 'Bearer ' . Session::get('token') ]
-	    	]);
+		if($request->locationCode == "ALL"){
+			$location[] = (object) [
+				'locationCode' => 'ALL',
+				'locationName' => 'ALL'
+			];
+			
+			return response()->json($location);
+		}else{
+			try {
+				$client = new Client([
+					'headers' => [ 'Content-Type' => 'application/json',
+									'Authorization' => 'Bearer ' . Session::get('token') ]
+				]);
+	
+				$response = $client->post(env('API_URL') . '/location/getlocation',
+					['body' => json_encode(
+						[
+							'recordStatus' => 'A',
+							'companyCode' => Session::get('companyCode'),
+							'locationCode' => $request->locationCode
+						]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+	
+			$arrResult = json_decode($response->getBody()->getContents());
+	
+			if($search == ''){
+				$location = $arrResult->dataListSet;
+			}else{
+				$location = array_filter(
+					$arrResult->dataListSet,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->locationName)){
+							return preg_match('/' . $search . '/i', $value->locationName);
+						}else if(preg_match('/' . $search . '/i', $value->locationCode)){
+							return preg_match('/' . $search . '/i', $value->locationCode);
+						}
+					}
+				);
+			}
 
-	    	$response = $client->post(env('API_URL') . '/location/getlocation',
-	    		['body' => json_encode(
-	    			[
-	    				'recordStatus' => 'A',
-	    				'companyCode' => Session::get('companyCode'),
-						'locationCode' => $request->locationCode
-	    			]
-	    		)]
-	    	);
-	    } catch (RequestException $e) {
-	    	$response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-	    }
-
-	    $arrResult = json_decode($response->getBody()->getContents());
-
-	    if($search == ''){
-	    	$location = $arrResult->dataListSet;
-	    }else{
-	    	$location = array_filter(
-	    		$arrResult->dataListSet,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->locationName)){
-	    				return preg_match('/' . $search . '/i', $value->locationName);
-	    			}else if(preg_match('/' . $search . '/i', $value->locationCode)){
-	    				return preg_match('/' . $search . '/i', $value->locationCode);
-	    			}
-	    		}
-	    	);
-	    }
-
-        return response()->json($location);
+			return response()->json($location);	
+		}
 	}
 
 	public function dataLocationAllAPI(Request $request)
@@ -5066,9 +5094,10 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
-	    				'comGenCode' => $request->flagType
+						'variable' => 'CalendarType_',
+	    				'comGenCode' => $request->flagType,
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);

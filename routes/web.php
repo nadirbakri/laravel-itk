@@ -434,6 +434,7 @@ Route::post('time_management/template_preparation/proses', 'TimeManagementContro
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
 Route::get('time_management/overtime_spl/remove', 'TimeManagementController@removeOvertimeSPLTM');
 Route::get('time_management/period_maintenance/remove', 'TimeManagementController@removePeriodMaintenanceTM');
+Route::get('time_management/company_working_calendar/remove','TimeManagementController@removeCompanyWorkingCalendar');
 
 /* Route untuk cek status Time Management */
 Route::post('time_management/overtime_spl/status', 'TimeManagementController@statusOvertimeSPLTM');

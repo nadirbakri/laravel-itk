@@ -42,6 +42,41 @@
             border-top-right-radius: 5px;
         }
 
+        .modal-header-notification-success {
+            border-bottom: 1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -166,8 +201,7 @@
                                 <div class="form-group">
                                     <label
                                         for="location">{{ __('tm_company_working_calendar.label_location') }}</label>
-                                    <select class="form-control select2" name="location[]" id="location"
-                                        multiple="multiple"></select>
+                                    <select class="form-control select2" name="location" id="location"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -175,8 +209,6 @@
                                     <label for="calendar_type">{{ __('tm_company_working_calendar.label_type') }}</label>
                                     <select class="form-control select2" name="calendar_type" id="calendar_type"></select>
                                 </div>
-                                <input type="hidden" class="form-control" id="company_working_calendar_form"
-                                    name="company_working_calendar_form">
                             </div>
                         </div>
                     </div>
@@ -262,12 +294,8 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
-
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
+    $(document).ready(function() {
+        let pickerCalendarDate = $('#calendar_date').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -281,11 +309,7 @@
                 });
             }
         });
-    }
-</script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
         loadDataLocationCode();
         loadDataCalendarType();
 
@@ -316,7 +340,7 @@
             },
             "sDom": 'lrtip',
             'sPaginationType': 'ellipses',
-            "order": [[ 1, "asc" ]],
+            "order": [[ 1, "desc" ]],
             columns: [
                 {
                     orderable: false,
@@ -352,7 +376,7 @@
                 },
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
+                "order": [[ 1, "desc" ]],
                 columns: [
                     {
                         orderable: false,
@@ -362,7 +386,11 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'calendar', name: 'calendar'},
+                    {data: 'calendar', name: 'calendar',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    },
                     {data: 'description', name: 'description'},
                     {data: 'flagType', name: 'flagType'},
                     {data: 'locationCode', name: 'locationCode'}
@@ -372,6 +400,10 @@
                     selector: 'td:first-child'
                 }
             });
+        }
+
+        function htmlDecode(value) {
+            return $("<textarea/>").html(value).text();
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
@@ -537,44 +569,104 @@
 
         $("#btn-add-company").on('click', function() {
             $('#record_function').val("Add");
-            $('#calendar_date').val("");
             $('#description').val("");
             $('#location').val(null).trigger('change');
             $('#calendar_type').val(null).trigger('change');
         });
             
         $("#btn-edit-company").on('click', function() {
-            $('#record_function').val("Edit");
-            $('#calendar_date').val("");
-            $('#description').val("{{ isset($data[0]->description) ? $data[0]->description : '' }}");
-            $('#location').val(null).trigger('change');
-            $.ajax({
-                type: 'GET',
-                url: 'calendar_type/edit/api',
-                data: {
-                    'flagType' : "{{ isset($data[0]->flagType) ? $data[0]->flagType : '' }}"
-                }
-            }).then(function (data) {
-                // var option = new Option(data.positionCode, data.positionCode, true, true);
-                var option = $('<option/>', {
-                    id: data.comGenCode,
-                    title: data.value,
-                    text: data.value
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                $('#modal_add_company_working_calendar').modal('show');
+                $('#record_function').val("Edit");
+                pickerCalendarDate.setDate(data[0].calendar);
+                $('#description').val(htmlDecode(data[0].description));
+                $('#location').append(null).attr('data-alias', 'yourvalue').trigger('change');
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/location/detail/api',
+                    data: {
+                        'locationCode' : data[0].locationCode
+                    }
+                }).then(function (data2) {
+                    console.log(data2);
+                    var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                        .locationCode).text(data2[0].locationName);
+                    $("#location").append($newOption).trigger('change');
                 });
-                $("#calendar_type").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
-                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
-                $("calendar_type").trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data.comGenCode,
-                        text: data.value,
-                        data: data
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/calendar_type/edit/api',
+                    data: {
+                        'flagType' : data[0].flagType
+                    }
+                }).then(function (data2) {
+                    // var option = new Option(data.positionCode, data.positionCode, true, true);
+                    var option = $('<option/>', {
+                        id: data2.comGenCode,
+                        title: data2.value,
+                        text: data2.value
+                    });
+                    $("#calendar_type").append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    // $("#supervisor_position_code").val(data.positionCode).trigger("change");
+                    // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
+                    $("calendar_type").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data2.comGenCode,
+                            text: data2.value,
+                            data: data2
+                        }
+                    });
+                });
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#btn-delete-data").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+            if (data.length > 0) {
+                $.ajax({
+                    url: "{{ url('time_management/company_working_calendar/remove') }}",
+                    type: "GET",
+                    data: {
+                        'data': data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                    .message);
+                            $('#company_working_calendar_table').DataTable().destroy();
+                            load_data_company_working_calendar();
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
                     }
                 });
-            });
-        })
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
@@ -656,6 +748,7 @@
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_company_working_calendar.btn_save") }}'
                                 );
                                 
+                                $('#modal_add_company_working_calendar').modal('hide');
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {

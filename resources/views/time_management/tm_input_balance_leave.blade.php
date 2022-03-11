@@ -279,7 +279,13 @@
                     {data: 'leaveCode', name: 'leaveCode'},
                     {data: 'leaveBalance', name: 'leaveBalance'},
                     {data: 'leaveBalanceBefore', name: 'leaveBalanceBefore'},
-                    {data: 'leaveBalanceBeforeExpiredDate', name: 'leaveBalanceBeforeExpiredDate'}
+                    {
+                        data: 'leaveBalanceBeforeExpiredDate', 
+                        name: 'leaveBalanceBeforeExpiredDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
                 ],
                 select: {
                     style:    'multi',

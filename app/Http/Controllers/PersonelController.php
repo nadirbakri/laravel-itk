@@ -7621,22 +7621,25 @@ class PersonelController extends Controller
 
             $response = $client->post(env('API_URL') . '/printletter/createletter',
                 ['body' => json_encode(
-                    [[
+                    [
+                        'recordStatus' => "A",
                         'companyCode' => Session::get('companyCode'),
                         'letterType' => $request->letter_type,
-                        'letterReference' => $request->reference,
+                        'letterReference' => (int) $request->reference,
                         'letterDate' => $request->letter_date,
                         'employeeNo' => $request->employee_no,
+                        "languageID" => strtoupper(App::getLocale()),
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
-                        'userID' => Session::get('userID'),
+                        "sessionID" => 0,
+                        'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
                         "languageCode" => strtoupper(App::getLocale())
-                    ]]
+                    ]
                 )]
             );
         } catch (RequestException $e) {
@@ -7652,7 +7655,14 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        if($arrResult->dataListSet != null){
+            $filename = Session::get('companyCode') . '_' . $request->employee_no . "_" . $request->letter_type . '.docx';
+            file_put_contents(public_path('print_letter/') . $filename, base64_decode($arrResult->dataListSet[0]->letter64));
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'letter' => $filename]);
+        }else{
+
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        }
     }
 
     public function prosesFinalPerformanceResultPersonel(Request $request)
