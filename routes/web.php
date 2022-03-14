@@ -664,6 +664,7 @@ Route::get('tax_status/api', 'DataController@dataTaxStatusAPI');
 Route::get('tax_office/api', 'DataController@dataTaxOfficeAPI');
 Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMethodAPI');
 Route::get('absenteeism_type/api', 'DataController@dataAbsenteeismTypeAPI');
+Route::get('absenteeism_type/func/api', 'DataController@dataAbsenteeismTypeFuncAPI');
 Route::get('currency/api', 'DataController@dataCurrencyAPI');
 Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
 Route::get('zip_code/personal_data/api', 'DataController@dataZipCodePersonalDataAPI');
@@ -777,6 +778,7 @@ Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
 Route::get('field/api', 'DataController@dataFieldAPI');
 Route::get('deduct_leave/api', 'DataController@dataDeductLeaveAPI');
+Route::get('deduct_leave/func/api', 'DataController@dataDeductLeaveFuncAPI');
 Route::get('loan_code/api', 'DataController@dataLoanCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */

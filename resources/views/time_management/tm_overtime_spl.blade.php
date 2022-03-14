@@ -114,26 +114,19 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <label for=""></label>
-                        <button type="button" class="btn btn-primary" name="btn-app-leader" id="btn-app-leader"
-                            style="width: 100%;" >{{ __('tm_overtime_spl.btn_app_leader') }}
-                        </button>
+                        <div class="form-group align-items-center">
+                            <label>{{ __('tm_overtime_spl.btn_app_leader') }}</label>
+                            <button type="button" class="btn btn-primary" name="check_all_app_leader" id="check_all_app_leader"
+                                style="width: 100%;" >{{ __('tm_overtime_spl.label_check_all') }}
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <label for=""></label>
+                    <div class="col-2">
                         <div class="form-group">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="check_all_app_leader"
-                                    name="check_all_app_leader" value="check_all_app_leader" >
-                                <label class="form-check-label"
-                                    for="check_all_app_leader">{{ __('tm_overtime_spl.label_check_all') }}</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="uncheck_all_app_leader"
-                                    name="check_all_app_leader" value="uncheck_all_app_leader" >
-                                <label class="form-check-label"
-                                    for="uncheck_all_app_leader">{{ __('tm_overtime_spl.label_uncheck_all') }}</label>
-                            </div>
+                            <label for="">&nbsp;</label>
+                            <button type="button" class="btn btn-primary" name="uncheck_all_app_leader" id="uncheck_all_app_leader"
+                                style="width: 100%;" >{{ __('tm_overtime_spl.label_uncheck_all') }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -163,26 +156,19 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <label for=""></label>
-                        <button type="button" class="btn btn-primary" name="btn-app-hrd" id="btn-app-hrd"
-                            style="width: 100%;" >{{ __('tm_overtime_spl.btn_app_hrd') }}
-                        </button>
-                    </div>
-                    <div class="col-4">
-                        <label for=""></label>
                         <div class="form-group">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="check_all_app_hrd"
-                                    name="check_all_app_hrd" value="check_all_app_hrd" >
-                                <label class="form-check-label"
-                                    for="check_all_app_hrd">{{ __('tm_overtime_spl.label_check_all') }}</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="uncheck_all_app_hrd"
-                                    name="check_all_app_hrd" value="uncheck_all_app_hrd" >
-                                <label class="form-check-label"
-                                    for="uncheck_all_app_hrd">{{ __('tm_overtime_spl.label_uncheck_all') }}</label>
-                            </div>
+                            <label for="">{{ __('tm_overtime_spl.btn_app_hrd') }}</label>
+                            <button type="button" class="btn btn-primary" name="check_all_app_hrd" id="check_all_app_hrd"
+                                style="width: 100%;" >{{ __('tm_overtime_spl.label_check_all') }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="">&nbsp;</label>
+                            <button type="button" class="btn btn-primary" name="uncheck_all_app_hrd" id="uncheck_all_app_hrd"
+                                style="width: 100%;" >{{ __('tm_overtime_spl.label_uncheck_all') }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -404,11 +390,10 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
+    $(document).ready(function () {
+        var table = null;
+        // load_data_table_overtime_spl();
 
-    function initDatePicker() {
         $('.input-group input').flatpickr({
             altInput: true,
             allowInput: true,
@@ -422,40 +407,39 @@
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
                 });
+            },
+            onClose: function(selectedDates, dateStr, instance) {
+                var filter_employee_no_from_table = $('#employee_no_from').val();
+                var filter_employee_no_to_table = $('#employee_no_to').val();
+                var filter_date_from_table = $('#date_from').val();
+                var filter_date_to_table = $('#date_to').val();
+                // console.log($('#employee_no_from').val());
+                $('#overtime_spl_table').DataTable().destroy();
+                load_data_table_overtime_spl(filter_employee_no_from_table, filter_employee_no_to_table, filter_date_from_table, filter_date_to_table);
             }
         });
-    }
-
-    $(document).ready(function () {
-        var table = null;
-        // load_data_table_overtime_spl();
 
         $.ajax({
             url: "{{ url('time_management/user_detail/check') }}",
             type: "GET",
             success: function (response) {
-                console.log(response);
                 // console.log(response[0].detailList[0].flagAppLead);
                 var app_leader = response[0].detailList[0].flagAppLead;
                 var app_hrd = response[0].detailList[0].flagAppHRD;
                 if (app_leader) {
-                    $('#btn-app-leader').prop('disabled', false);
                     $('#check_all_app_leader').prop('disabled', false);
                     $('#uncheck_all_app_leader').prop('disabled', false);
                 }
                 else {
-                    $('#btn-app-leader').prop('disabled', true);
                     $('#check_all_app_leader').prop('disabled', true);
                     $('#uncheck_all_app_leader').prop('disabled', true);
                 }
                 
                 if (app_hrd) {
-                    $('#btn-app-hrd').prop('disabled', false);
                     $('#check_all_app_hrd').prop('disabled', false);
                     $('#uncheck_all_app_hrd').prop('disabled', false);
                 }
                 else {
-                    $('#btn-app-hrd').prop('disabled', true);
                     $('#check_all_app_hrd').prop('disabled', true);
                     $('#uncheck_all_app_hrd').prop('disabled', true);
                 }
@@ -466,52 +450,24 @@
             $('input[name="' + this.name + '"]').not(this).prop('checked', false);
         });
 
-        $('input[name="check_all_app_leader"]').on('change', function () {
+        $('#check_all_app_leader').on('click', function () {
             var rows = table.rows({ 'search': 'applied' }).nodes();
-            if ($('#check_all_app_leader').is(':checked')) {
-                $('.check_app_leader', rows).prop('checked', true);
-            }
-            else {
-                $('.check_app_leader', rows).prop('checked', false);
-            }
-        })
-
-        $('#overtime_spl_table tbody').on('change', 'input[name="check_app_leader[]"]', function(){
-            if(!this.checked){
-                var check = $('#check_all_app_leader').get(0);
-                if(check && check.checked && ('checked' in check)){
-                    check.checked = false;
-                }
-            } else  {
-                var uncheck = $('#uncheck_all_app_leader').get(0);
-                if(uncheck && uncheck.checked && ('checked' in uncheck)){
-                    uncheck.checked = false;
-                }
-            }
+            $('.check_app_leader', rows).prop('checked', true);
         });
 
-        $('input[name="check_all_app_hrd"]').on('change', function () {
+        $('#uncheck_all_app_leader').on('click', function () {
             var rows = table.rows({ 'search': 'applied' }).nodes();
-            if ($('#check_all_app_hrd').is(':checked')) {
-                $('.check_app_hrd', rows).prop('checked', true);
-            }
-            else {
-                $('.check_app_hrd', rows).prop('checked', false);
-            }
-        })
+            $('.check_app_leader', rows).prop('checked', false);
+        });
 
-        $('#overtime_spl_table tbody').on('change', 'input[name="check_app_hrd[]"]', function(){
-            if(!this.checked){
-                var check = $('#check_all_app_hrd').get(0);
-                if(check && check.checked && ('checked' in check)){
-                    check.checked = false;
-                }
-            } else  {
-                var uncheck = $('#uncheck_all_app_hrd').get(0);
-                if(uncheck && uncheck.checked && ('checked' in uncheck)){
-                    uncheck.checked = false;
-                }
-            }
+        $('#check_all_app_hrd').on('click', function () {
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            $('.check_app_hrd', rows).prop('checked', true);
+        });
+
+        $('#uncheck_all_app_hrd').on('click', function () {
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            $('.check_app_hrd', rows).prop('checked', false);
         });
 
         var hour_min = $('#before_in, #start_overtime_spl, #finish_overtime_spl');
@@ -575,13 +531,6 @@
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
             // console.log(data[0].title);
-            $.ajax({
-                url: "{{ url('time_management/employee_name/detail') }}",
-                type: "GET",
-                data: {
-                    'employeeNo': data[0].id
-                },
-            })
         });
 
         $('#employee_no').on("select2:unselecting", function (e) {
@@ -733,10 +682,8 @@
             // console.log(data);
         }
 
-        var filter = $('#employee_no_from, #employee_no_to, #date_from, #date_to');
-        // console.log($('#employee_no_from').val());
-
-        filter.on('change', function() {
+        // $('#employee_no_from, #employee_no_to, #date_from, #date_to').on('change', function() {
+        $('select').on("select2:select", function (e) {
             var filter_employee_no_from_table = $('#employee_no_from').val();
             var filter_employee_no_to_table = $('#employee_no_to').val();
             var filter_date_from_table = $('#date_from').val();
@@ -744,26 +691,36 @@
             // console.log($('#employee_no_from').val());
             $('#overtime_spl_table').DataTable().destroy();
             load_data_table_overtime_spl(filter_employee_no_from_table, filter_employee_no_to_table, filter_date_from_table, filter_date_to_table);
-        })
-
-        $('#select').focus(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
         });
 
-        $('#select').click(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
+        // $("#date_to").change(function () {
+        //     var filter_employee_no_from_table = $('#employee_no_from').val();
+        //     var filter_employee_no_to_table = $('#employee_no_to').val();
+        //     var filter_date_from_table = $('#date_from').val();
+        //     var filter_date_to_table = $('#date_to').val();
+        //     // console.log($('#employee_no_from').val());
+        //     $('#overtime_spl_table').DataTable().destroy();
+        //     load_data_table_overtime_spl(filter_employee_no_from_table, filter_employee_no_to_table, filter_date_from_table, filter_date_to_table);
+        // });
 
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
+        // $('#select').focus(function (event) {
+        //         var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        //         $searchfield.prop('disabled', true);
+        // });
 
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
+        // $('#select').click(function (event) {
+        //     var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        //     $searchfield.prop('disabled', true);
+        // });
+
+        // $('#select').change(function (event) {
+        //     var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        //     $searchfield.prop('disabled', true);
+        // });
+
+        // $('select').on('select2:close', function (e) {
+        //     $('.header-select').remove();
+        // });
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {

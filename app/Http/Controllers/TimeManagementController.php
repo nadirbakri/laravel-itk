@@ -1346,25 +1346,6 @@ class TimeManagementController extends Controller
                     )]
                 );
             }else{
-                var_dump(json_encode(
-                    [
-                        "companyCode" => Session::get('companyCode'),
-                        "calendar" => $request->calendar_date,
-                        "description" => $request->description,
-                        "flagType" => $request->calendar_type,
-                        "locationCode" => $request->location,
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        "languageCode" => App::getLocale(),
-                        "sessionID" => 0,
-                        'sessionUserID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                    ]
-                ));
                 $response = $client->put(env('API_URL') . '/tmcalendar',
                     ['body' => json_encode(
                         [
@@ -1908,11 +1889,30 @@ class TimeManagementController extends Controller
                 $file->move('file_excel', $filename);
                 $path = public_path('file_excel/');
 
+                var_dump(json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'fileLocation' =>  $path . "" . $filename,
+                        'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
+                        'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'logActionUserID' => Session::get('userID')
+                    ]
+                    ));
+
                 $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
-                            'fileLocation' =>  $path,
+                            'fileLocation' =>  $path . "" . $filename,
                             'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
                             'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
                             "changedNo" => 0,
@@ -1931,6 +1931,7 @@ class TimeManagementController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2142,7 +2143,8 @@ class TimeManagementController extends Controller
                         'companyCode' => Session::get('companyCode'),
                         'absentCode' => $request->absentCode,
                         'description' => $request->description,
-                        'absentType' => $request->absentType
+                        'absentType' => $request->absentType,
+                        'languageCode' => App::getLocale()
                     ]
                 )]
             );
@@ -2310,6 +2312,21 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            var_dump(json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    'deleteDateFrom' => $request->delete_date_from,
+                    'deleteDateTo' => $request->delete_date_to,
+                    'employeeNoFrom' => $request->employee_no_from,
+                    'employeeNoTo' => $request->employee_no_to,
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ]
+                ));
+
             $response = $client->delete(env('API_URL') . '/tempabsentmachine/deletetempabsentmachine',
                 ['body' => json_encode(
                     [
@@ -2328,6 +2345,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2337,9 +2355,9 @@ class TimeManagementController extends Controller
             }
         }
  
-        $arrResult = json_decode($response->getBody()->getContents());
+        // $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function removeCompanyWorkingCalendar(Request $request)

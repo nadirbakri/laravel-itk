@@ -582,6 +582,7 @@
                 pickerCalendarDate.setDate(data[0].calendar);
                 $('#description').val(htmlDecode(data[0].description));
                 $('#location').append(null).attr('data-alias', 'yourvalue').trigger('change');
+                $('#calendar_type').append(null).attr('data-alias', 'yourvalue').trigger('change');
 
                 $.ajax({
                     type: 'GET',
@@ -590,7 +591,6 @@
                         'locationCode' : data[0].locationCode
                     }
                 }).then(function (data2) {
-                    console.log(data2);
                     var $newOption = $("<option selected='selected'></option>").val(data2[0]
                         .locationCode).text(data2[0].locationName);
                     $("#location").append($newOption).trigger('change');
@@ -603,24 +603,10 @@
                         'flagType' : data[0].flagType
                     }
                 }).then(function (data2) {
-                    // var option = new Option(data.positionCode, data.positionCode, true, true);
-                    var option = $('<option/>', {
-                        id: data2.comGenCode,
-                        title: data2.value,
-                        text: data2.value
-                    });
-                    $("#calendar_type").append(option).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    // $("#supervisor_position_code").val(data.positionCode).trigger("change");
-                    // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
-                    $("calendar_type").trigger({
-                        type: 'select2:select',
-                        params: {
-                            id: data2.comGenCode,
-                            text: data2.value,
-                            data: data2
-                        }
-                    });
+                    console.log(data2);
+                    var $newOption = $("<option selected='selected'></option>").val(data2
+                        .comGenCode).text(data2.value);
+                    $("#calendar_type").append($newOption).trigger('change');
                 });
             }else{
                 $('#notification_error').modal('show');

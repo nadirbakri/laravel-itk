@@ -423,42 +423,39 @@
             $('#max_per_request').val(((typeof arrData[0].reqAdvanceDay !== 'undefined') ? arrData[0].reqAdvanceDay : ''));
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/api',
+                url: '/absenteeism_type/func/api',
                 data: {
                     'absentType': "{{ isset($data[0]->absentType) ? $data[0]->absentType : '' }}"
                 }
             }).then(function (data) {
-                // var option = new Option(data.positionCode, data.positionCode, true, true);
                 var option = $('<option/>', {
-                    id: data.absentType,
-                    title: data.description,
-                    text: data.absentType
+                    id: data[0].comGenCode,
+                    title: data[0].value,
+                    text: data[0].value
                 });
                 $("#category").append(option).attr('data-alias', 'yourvalue').trigger(
                     'change');
-                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
-                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
                 $("#category").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.absentType,
-                        text: data.absentType,
-                        data: data
+                        id: data[0].comGenCode,
+                        text: data[0].value,
+                        data: data[0]
                     }
                 });
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/api',
+                url: '/deduct_leave/func/api',
                 data: {
                     'deductLeave': "{{ isset($data[0]->deductLeave) ? $data[0]->deductLeave : '' }}"
                 }
             }).then(function (data) {
                 // var option = new Option(data.positionCode, data.positionCode, true, true);
                 var option = $('<option/>', {
-                    id: data.deductLeave,
-                    title: data.description,
-                    text: data.deductLeave
+                    id: data[0].comGenCode,
+                    title: data[0].value,
+                    text: data[0].value
                 });
                 $("#deduct_leave").append(option).attr('data-alias', 'yourvalue').trigger(
                     'change');
@@ -467,9 +464,9 @@
                 $("#deduct_leave").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.absentType,
-                        text: data.absentType,
-                        data: data
+                        id: data[0].comGenCode,
+                        text: data[0].value,
+                        data: data[0]
                     }
                 });
             });
