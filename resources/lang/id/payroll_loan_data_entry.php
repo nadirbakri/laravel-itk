@@ -27,6 +27,7 @@ return [
     'label_outstanding_balance' => 'Saldo Terutang',
     'label_termination_loan' => 'Pinjaman Terminasi',
     'label_paid_on' => 'Dibayarkan pada',
+    'label_select_payment_type' => 'Pilih Tipe Pembayaran',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'

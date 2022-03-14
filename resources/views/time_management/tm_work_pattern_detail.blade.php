@@ -339,7 +339,6 @@
         table.clear().draw();
 
             for (var i = 1; i <= no_of_day; i++) {
-                console.log(no_of_day);
 
                 if (func == 'new') {
                     table.row.add([

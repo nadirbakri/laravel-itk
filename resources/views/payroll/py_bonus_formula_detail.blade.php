@@ -217,7 +217,6 @@
                                     <div class="form-group">
                                         <label for="preview_formula">{{ __('payroll_bonus_formula.label_preview_formula') }}</label>
                                         <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
-                                        <textarea class="form-control" id="preview_formula_hidden" name="preview_formula_hidden" rows="5" hidden></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +231,6 @@
                                     <div class="form-group">
                                         <label for="preview_condition">{{ __('payroll_bonus_formula.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
-                                        <textarea class="form-control" id="preview_condition_hidden" name="preview_condition_hidden" rows="5" hidden></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -374,17 +372,14 @@
             
             $('#field_chooser').on('select2:unselecting', function (e) {
                 fieldChooser = null;
-                $('#preview_formula_hidden').val('');
-                $('#preview_condition_hidden').val('');
                 $('#preview_formula').val('');
                 $('#preview_condition').val('');
             });
 
             $('#btn-add-to-formula').on('click', function () {
                 if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                    var formula = $('#preview_formula_hidden').val($('#preview_formula_hidden').val() + tableChooser + '.' + fieldChooser + ' + ');
-                    var previewFormula = formula.val().slice(0, -2);
-                    $('#preview_formula').val(previewFormula);
+                    var formula = tableChooser + '.' + fieldChooser;
+                    $('#preview_formula').val(formula);
                 } else {
                     $('#preview_formula').val('');
                 }
@@ -392,9 +387,8 @@
 
             $('#btn-add-to-condition').on('click', function () {
                 if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                    var formula = $('#preview_condition_hidden').val($('#preview_condition_hidden').val() + tableChooser + '.' + fieldChooser + ' + ');
-                    var previewFormula = formula.val().slice(0, -2);
-                    $('#preview_condition').val(previewFormula);
+                    var formula = tableChooser + '.' + fieldChooser;
+                    $('#preview_condition').val(formula);
                 } else {
                     $('#preview_condition').val('');
                 }
@@ -449,17 +443,14 @@
                 
                 $('#field_chooser').on('select2:unselecting', function (e) {
                     fieldChooser = null;
-                    $('#preview_formula_hidden').val('');
-                    $('#preview_condition_hidden').val('');
                     $('#preview_formula').val('');
                     $('#preview_condition').val('');
                 });
 
                 $('#btn-add-to-formula').on('click', function () {
                     if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                        var formula = $('#preview_formula_hidden').val($('#preview_formula_hidden').val() + tableChooser + '.' + fieldChooser + ' + ');
-                        var previewFormula = formula.val().slice(0, -2);
-                        $('#preview_formula').val(previewFormula);
+                        var formula = tableChooser + '.' + fieldChooser;
+                        $('#preview_formula').val(formula);
                     } else {
                         $('#preview_formula').val('');
                     }
@@ -467,9 +458,8 @@
 
                 $('#btn-add-to-condition').on('click', function () {
                     if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                        var formula = $('#preview_condition_hidden').val($('#preview_condition_hidden').val() + tableChooser + '.' + fieldChooser + ' + ');
-                        var previewFormula = formula.val().slice(0, -2);
-                        $('#preview_condition').val(previewFormula);
+                        var formula = tableChooser + '.' + fieldChooser;
+                        $('#preview_condition').val(formula);
                     } else {
                         $('#preview_condition').val('');
                     }
@@ -811,10 +801,12 @@
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
+                                $('#bonus_formula_detail_table').DataTable().destroy();
+                                load_data_table_bonus_formula_detail();
                                 setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/bonus_formula') }}";
+                                    $('#notification_success').modal('hide');
                                 }, 3000);
+                                $('#modal_add_edit_bonus_formula').modal('hide');
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(

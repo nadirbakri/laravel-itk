@@ -309,7 +309,7 @@
                             <tr>
                                 <th></th>
                                 <th>Date</th>
-                                <th>Req</th>
+                                <th>Seq</th>
                                 <th>Type</th>
                                 <th>Principal</th>
                                 <th>Interest</th>
@@ -379,6 +379,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -421,6 +422,21 @@
             }
         });
 
+        let pickerPaymentDate = $('#payment_date_table').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#payment_date_table_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         var func = '{{ $func }}';
         var arrData = @json($data);
         var interest = null;
@@ -429,6 +445,8 @@
         var downPayment = null;
         var installmentPerMonth = null;
         var ratePerYear = null;
+        var principalTable = null;
+        var interestTable = null
 
         if (func === 'new') {
             $('#record_function').val('New');
@@ -471,6 +489,8 @@
             $('#loan_amount_balance').val('');
             $('#outstanding_balance').val('');
             $('#termination_loan').val('');
+            $('#loan_data_entry_detail_table').DataTable().destroy();
+            load_data_table_loan_data_entry_detail();
         }   
         else {
 
@@ -489,12 +509,13 @@
             $('#employee_name').val('');
         });
 
-        $('#interest, #interest_type, #loan_amount, #down_payment, #no_of_installment, #rate_per_year').on('input', function () {
+        $('#interest, #interest_type, #loan_amount, #down_payment, #no_of_installment, #rate_per_year, #installment_per_month').on('input', function () {
             interest = $('#interest').val();
             loanAmount = $('#loan_amount').val();
             downPayment = $('#down_payment').val();
             noOfInstallment = $('#no_of_installment').val();
             ratePerYear = $('#rate_per_year').val();
+            installmentPerMonth = $('#installment_per_month').val();
 
             if (interest !== '' && interest !== null && loanAmount !== '' && loanAmount !== null) {
                 $('#principal_plus_interest').val(parseInt(interest) + parseInt(loanAmount));
@@ -514,14 +535,64 @@
 
             if ($('#interest_type').val() === 'F' && interest !== '' && loanAmount !== '' && noOfInstallment !== '' && noOfInstallment > 0) {
                 installmentPerMonth = (parseInt(loanAmount) + parseInt(interest)) / parseInt(noOfInstallment);
+                principalTable = parseInt(loanAmount) / parseInt(noOfInstallment);
+
                 $('#installment_per_month').val(installmentPerMonth);
-            } else if ($('#interest_type').val() === 'E' || $('#interest_type').val() === 'A' && loanAmount !== '' && noOfInstallment !== '' && noOfInstallment > 0) {
+            } else if ($('#interest_type').val() === 'E' && loanAmount !== '' && noOfInstallment !== '' && noOfInstallment > 0) {
                 installmentPerMonth = (parseInt(loanAmount)) * (parseInt(ratePerYear) / 12) * (1 / (1 - (1 / (1 + (parseInt(ratePerYear) / 12)^parseInt(noOfInstallment)))));
+                principalTable = parseInt(loanAmount) / parseInt(noOfInstallment);
+
+                $('#installment_per_month').val(installmentPerMonth);
+            } else if ($('#interest_type').val() === 'A' && loanAmount !== '' && noOfInstallment !== '' && noOfInstallment > 0) {
+                installmentPerMonth = (parseInt(loanAmount)) * (parseInt(ratePerYear) / 12) * (1 / (1 - (1 / (1 + (parseInt(ratePerYear) / 12)^parseInt(noOfInstallment)))));
+                // principalTable = parseInt(payment) / parseInt(noOfInstallment);
+
                 $('#installment_per_month').val(installmentPerMonth);
             } else {
                 $('#installment_per_month').val('');
             }
+
+            // $('#loan_data_entry_detail_table').DataTable().destroy();
+            // load_data_table_loan_data_entry_detail();
+
+            table.clear().draw();
+
+            for (var i = 0; i < installmentPerMonth; i++) {
+                console.log(principalTable);
+
+                if (func === 'new') {
+                    table.row.add([
+                        '<div class="form-check">' +
+                            '<input class="form-check-input" type="checkbox" id="check_table" name="check_table" value="true">' +
+                        '</div>',
+                        '<div class="input-group">' +
+                            '<input type="text" class="form-control" id="payment_date_table" name="payment_date_table[]">' +  
+                            '<div class="input-group-prepend" id="payment_date_table_calendar">' +
+                                '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
+                            '</div>' +
+                        '</div>',
+                        '<input type="number" class="form-control" name="seq_no_table[]" value="'+ i +'">',
+                        '<select class="form-control select2" id="payment_type" name="payment_type">' +
+                                '<option value="" disabled selected>{{ __("payroll_loan_data_entry.label_select_payment_type") }}</option>' +
+                                '<option value="S">Salary</option>' +
+                                '<option value="B">Bonus</option>' +
+                                '<option value="T">THR</option>' +
+                                '<option value="C">Cash</option>' +
+                        '</select>',
+                        '<input type="number" class="form-control" id="principal_table" name="principal_table[]" value="'+ principalTable +'">',
+                        '<input type="number" class="form-control" id="interest_table" name="interest_table[]">',
+                        '<input type="text" class="form-control" id="payment_table" name="payment_table[]">',
+                        '<input type="text" class="form-control" id="outstanding_table" name="outstanding_table[]">',
+                        '<input type="text" class="form-control" id="paid_table" name="paid_table[]">',
+                    ])
+                }
+            }
         });
+
+        // $('#installment_per_month').on('change', function () {
+        //     installmentPerMonth = $('#installment_per_month').val();
+        //     console.log(installmentPerMonth);
+        // });
 
         // $('#loan_amount, #down_payment').on('input', function () {
         //     loanAmount = $('#loan_amount').val();
@@ -559,12 +630,11 @@
         loadDataEmployeeNo();
         loadDataLoanCode();
         loadDataCurrencyCode();
-        load_data_table_loan_data_entry_detail();
 
         function load_data_table_loan_data_entry_detail() {
-            table = $('#loan_data_entry_detail').DataTable({
-                processing: true,
-                orderCellsTop: true,
+            table = $('#loan_data_entry_detail_table').DataTable({
+                // processing: true,
+                // orderCellsTop: true,
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
             });

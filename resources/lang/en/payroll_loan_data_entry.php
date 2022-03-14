@@ -27,6 +27,7 @@ return [
     'label_outstanding_balance' => 'Outstanding Balance',
     'label_termination_loan' => 'Termination Loan',
     'label_paid_on' => 'Paid On',
+    'label_select_payment_type' => 'Choose Payment Type',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'
