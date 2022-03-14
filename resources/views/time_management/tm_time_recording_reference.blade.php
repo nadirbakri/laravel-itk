@@ -163,14 +163,14 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="in_code">{{ __('tm_time_recording_reference.label_in_code') }}</label>
-                            <input type="number" min="0" class="form-control" id="in_code" name="in_code" readonly>
+                            <input type="text" class="form-control" id="in_code" name="in_code" readonly>
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="out_code">{{ __('tm_time_recording_reference.label_out_code') }}</label>
-                            <input type="number" min="0" class="form-control" id="out_code" name="out_code" readonly>
+                            <input type="text" class="form-control" id="out_code" name="out_code" readonly>
                         </div>
                     </div>
                 </div>
