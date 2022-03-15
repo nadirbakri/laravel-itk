@@ -107,7 +107,7 @@
                         <th>Overtime Start</th>
                         <th>Overtime End</th>
                         <th>Salary Start</th>
-                        <th>Salary End</th>
+                        <th>Salary End&nbsp;&nbsp;</th>
                     </tr>
                 </thead>
             </table>
@@ -115,9 +115,15 @@
     </div>
     <div class="row">
         <div class="col-2">
-            <button type="submit" class="btn btn-primary" name="btn-add" id="btn-add"
+            <button type="button" class="btn btn-primary" name="btn-add" id="btn-add"
                 style="width: 100%;" data-toggle="modal" data-target="#modal_add_overtime_spl">
                 <i class="fa fa-plus"></i> {{ __('tm_period_maintenance.btn_add') }}
+            </button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary" name="btn-edit" id="btn-edit"
+                style="width: 100%;" data-toggle="modal" data-target="#modal_add_overtime_spl">
+                <i class="fa fa-pencil"></i> {{ __('tm_period_maintenance.btn_edit') }}
             </button>
         </div>
         <div class="col-2">
@@ -151,6 +157,7 @@
                                         <span class="required">*</span>
                                     <select class="form-control select2" id="year" name="year"></select>
                                 </div>
+                                <input type="hidden" class="form-control" id="record_function" name="record_function">
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
@@ -170,7 +177,7 @@
                                     <label for="period">{{ __('tm_period_maintenance.label_period') }}</label>
                                     <span class="required">*</span>
                                     <select class="form-control" id="period" name="period">
-                                        <option disabled selected value>{{ __('tm_period_maintenance.select_period') }}</option>
+                                        <option selected value>{{ __('tm_period_maintenance.select_period') }}</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -387,6 +394,7 @@
             ],
             onReady: function () {
                 var flatPickrInstance = this;
+                flatPickrInstance.monthNav.style.display = "none";
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#month-calendar").click(function () {
                     flatPickrInstance.toggle();
@@ -516,6 +524,7 @@
             var periodYear = moment(year).format('YY');
             // console.log(periodYear);
             var month = $('#month').val();
+            console.log(month);
             var periodMonth = moment(month).format('MM');
             // console.log(month);
             // console.log($('#month').val());
@@ -663,6 +672,29 @@
                     });
                 }
             });
+        });
+
+        $("#btn-add").on('click', function () {
+            $('#record_function').val("New");
+            $('#year').val("2017").trigger('change');
+            $('#month').val(null).trigger('change');
+            $('#period').val(null).trigger('change');
+            $('#absenteeism_from').val(null).trigger('change');
+            $('#absenteeism_to').val(null).trigger('change');
+            $('#overtime_from').val(null).trigger('change');
+            $('#overtime_to').val(null).trigger('change');
+            $('#salary_from').val(null).trigger('change');
+            $('#salary_to').val(null).trigger('change');
+        });
+
+        $("#btn-edit").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+            if (data.length > 0) {
+
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
         });
 
         $("#btn-save-period-maintenance").click(function () {

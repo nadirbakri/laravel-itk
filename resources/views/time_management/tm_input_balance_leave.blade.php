@@ -367,8 +367,14 @@
                         };
                     },
                     processResults: function (data) {
+                        var result = data.reduce((unique, o) => {
+                            if(!unique.some(obj => obj.employeeNo === o.employeeNo)) {
+                            unique.push(o);
+                            }
+                            return unique;
+                        },[]);
                         return {
-                            results: $.map(data, function (item) {
+                            results: $.map(result, function (item) {
                                 return {
                                     text: item.employeeNo,
                                     id: item.employeeNo,

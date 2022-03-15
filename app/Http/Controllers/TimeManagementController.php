@@ -293,8 +293,6 @@ class TimeManagementController extends Controller
             }
         }
 
-        var_dump(Session::get('token'));
-
         $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
@@ -377,8 +375,6 @@ class TimeManagementController extends Controller
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
-
-        // var_dump($arrResult);
     }
 
     public function tableOvertimeSPL(Request $request)
@@ -388,8 +384,6 @@ class TimeManagementController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump($request->dateFrom);
 
             $response = $client->post(env('API_URL') . '/tmovtspl/gettmovtsplgrid',
                 ['body' => json_encode(
@@ -422,8 +416,6 @@ class TimeManagementController extends Controller
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
-
-        // var_dump($arrResult->dataListSet);
     }
 
     public function tableWorkPatternTM(Request $request)
@@ -626,8 +618,6 @@ class TimeManagementController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
-
         return response()->json($arrResult->dataListSet);
     }
 
@@ -732,7 +722,7 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
-        // var_dump($arrResult->dataListSet);
+
         return view('time_management.tm_input_balance_leave_detail', ['data' => $arrResult->dataListSet]);
     }
 
@@ -782,9 +772,6 @@ class TimeManagementController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump($request->employeeNo);
-            // var_dump($request->leaveCode);
             
             $response = $client->post(env('API_URL') . '/leavetransaction/getleavetransaction',
                 ['body' => json_encode(
@@ -808,7 +795,6 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             $data = [];
@@ -826,8 +812,6 @@ class TimeManagementController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump((int) $request->month);
 
             $response = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                 ['body' => json_encode(
@@ -1045,8 +1029,6 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        // var_dump($request->period);
-
         return Excel::download(new UnpaidLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Unpaid Leave Report.xlsx');
     }
 
@@ -1057,8 +1039,6 @@ class TimeManagementController extends Controller
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
-
-        // var_dump($request->period);
 
         return Excel::download(new PostponeLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Postpone Leave Report.xlsx');
     }
@@ -1071,8 +1051,6 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        // var_dump($request->period);
-
         return Excel::download(new MonthlyLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->have_balance_only) ? (bool) $request->have_balance_only : false, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Leave Report.xlsx');
     }
 
@@ -1083,8 +1061,6 @@ class TimeManagementController extends Controller
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
-
-        // var_dump($request->period);
 
         return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
@@ -1097,8 +1073,6 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        // var_dump($request->period);
-
         return Excel::download(new DetailAbsenteeismReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
@@ -1109,8 +1083,6 @@ class TimeManagementController extends Controller
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
-
-        // var_dump($request->period);
 
         return Excel::download(new MonthlyAbsenteeismDetailExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
@@ -1123,8 +1095,6 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        // var_dump($request->period);
-
         return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), 'Absenteeism & Overtime Report.xlsx');
     }
 
@@ -1134,10 +1104,8 @@ class TimeManagementController extends Controller
         $nama_file = rand().$file->getClientOriginalName();
         $file->move('file_excel', $nama_file);
         $import = new UpdateAbsenteeismDataImport;
-        // var_dump($import);
         Excel::import($import, public_path('file_excel/'.$nama_file));
         File::delete('file_excel/'.$nama_file);
-        // var_dump(($import)->getArrResult());
         return ($import)->getArrResult();
     }
 
@@ -1145,8 +1113,6 @@ class TimeManagementController extends Controller
     public function prosesUpdateShiftByDateTM(Request $request)
     {
         $dataLevel = [];
-
-        // var_dump($request->level_format);
 
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
@@ -1189,8 +1155,6 @@ class TimeManagementController extends Controller
                 $param['level'] = $data_level;
             }
 
-            // var_dump(json_encode($param));
-
             $response = $client->put(env('API_URL') . '/tempabsentmachine/updateshiftbydate',
                 ['body' => json_encode($param)]
             );
@@ -1208,10 +1172,7 @@ class TimeManagementController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->message);
-
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
-        // return response()->json();
     }
 
     public function prosesInputBalanceLeaveTM(Request $request)
@@ -1270,7 +1231,38 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump($request->employee_no);
+            var_dump(json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    "ovtDate" => $request->date_overtime_spl,
+                    "shiftCode" => $request->shift_overtime_spl,
+                    // "seqNo" => 2,
+                    "ovtIn" => $request->date_overtime_spl . "T" . $request->start_overtime_spl,
+                    "ovtOut" => $request->date_overtime_spl . "T" . $request->finish_overtime_spl,
+                    "ovtHour" => $request->date_overtime_spl . "T" . $request->hour_overtime_spl,
+                    "ovtConvert" => (int) $request->convert_overtime_spl,
+                    "ovtBeforeIn" => $request->date_overtime_spl . "T" . $request->before_in,
+                    "ovtCode" => $request->code_overtime_spl,
+                    "ovtDescription" => $request->description,
+                    "hrdApprove" => true,
+                    "leadApprove" => true,
+                    "xfactor1" => 0,
+                    "xfactor2" => 0,
+                    "xfactor3" => 0,
+                    "xfactor4" => 0,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "sessionID" => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => App::getLocale()
+                ]
+            ));
 
             $response = $client->post(env('API_URL') . '/tmovtspl/inserttmovtspl',
                 ['body' => json_encode(
@@ -1279,6 +1271,7 @@ class TimeManagementController extends Controller
                         'employeeNo' => $request->employee_no,
                         "ovtDate" => $request->date_overtime_spl,
                         "shiftCode" => $request->shift_overtime_spl,
+                        // "seqNo" => 2,
                         "ovtIn" => $request->date_overtime_spl . "T" . $request->start_overtime_spl,
                         "ovtOut" => $request->date_overtime_spl . "T" . $request->finish_overtime_spl,
                         "ovtHour" => $request->date_overtime_spl . "T" . $request->hour_overtime_spl,
@@ -1286,12 +1279,19 @@ class TimeManagementController extends Controller
                         "ovtBeforeIn" => $request->date_overtime_spl . "T" . $request->before_in,
                         "ovtCode" => $request->code_overtime_spl,
                         "ovtDescription" => $request->description,
+                        "hrdApprove" => true,
+                        "leadApprove" => true,
+                        "xfactor1" => 0,
+                        "xfactor2" => 0,
+                        "xfactor3" => 0,
+                        "xfactor4" => 0,
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
-                        'userID' => Session::get('userID'),
+                        "sessionID" => 0,
+                        'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
                         "languageCode" => App::getLocale()
@@ -1412,8 +1412,6 @@ class TimeManagementController extends Controller
                 "languageCode" => App::getLocale()
             ];
 
-            // var_dump(isset($request->seq_no));
-
             if(isset($request->seq_no)){
                 foreach($request->seq_no as $value){
                     $data_work_pattern_detail_list[] = [
@@ -1436,10 +1434,8 @@ class TimeManagementController extends Controller
             }else{
                 $data_work_pattern_detail_list[] = null; 
             }
-            // var_dump($request->day_code[1]);
             
             $param['workPatternDetailList'] = $data_work_pattern_detail_list;
-            // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/tmworkpattern',
@@ -1462,8 +1458,6 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
@@ -1515,8 +1509,6 @@ class TimeManagementController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->message);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
@@ -1575,8 +1567,6 @@ class TimeManagementController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump($request->check_work_on_holiday);
 
             $param = [
                 'recordStatus' => $request->record_status,
@@ -1742,8 +1732,6 @@ class TimeManagementController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
-        // var_dump($response);
-            
     }
 
     public function prosesShiftMasterCodeTM(Request $request)
@@ -1841,8 +1829,6 @@ class TimeManagementController extends Controller
                 'logActionUserID' => Session::get('userID')
             ];
 
-            // var_dump(isset($request->flexy_work_hour));
-
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/tmshiftcode',
                     ['body' => json_encode($param)]
@@ -1887,32 +1873,13 @@ class TimeManagementController extends Controller
                 $file = $request->file('file_location');
                 $filename = rand().$file->getClientOriginalName();
                 $file->move('file_excel', $filename);
-                $path = public_path('file_excel/');
-
-                var_dump(json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'fileLocation' =>  $path . "" . $filename,
-                        'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
-                        'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        "languageCode" => App::getLocale(),
-                        'sessionID' => 0,
-                        'sessionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        'logActionUserID' => Session::get('userID')
-                    ]
-                    ));
+                $path = public_path('file_excel\\');
 
                 $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
-                            'fileLocation' =>  $path . "" . $filename,
+                            'fileLocation' =>  $path . '' . $filename,
                             'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
                             'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
                             "changedNo" => 0,
@@ -1931,7 +1898,6 @@ class TimeManagementController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2039,15 +2005,14 @@ class TimeManagementController extends Controller
             $param = [];
 
             foreach($request->id_overtime_spl as $value){
-                // var_dump()
                 if(!empty($request->selected_overtime_spl_table) && isset($request->selected_overtime_spl_table[$value])){
                     $param = [ 
                         'companyCode' => Session::get('companyCode'), 
                         'employeeNo' => $request->employee_no_overtime_spl[$value],
                         'ovtDate' => $request->ovt_date_overtime_spl[$value],
                         'seqNo' => (int) $request->seq_no_overtime_spl[$value],
-                        'hrdApprove' => isset($request->check_app_leader[$value]) ? (bool) $request->check_app_leader[$value] : false,
-                        'leadApprove' => isset($request->check_app_hrd[$value]) ? (bool) $request->check_app_hrd[$value] : false,
+                        'hrdApprove' => isset($request->check_app_hrd[$value]) ? (bool) $request->check_app_hrd[$value] : false,
+                        'leadApprove' => isset($request->check_app_leader[$value]) ? (bool) $request->check_app_leader[$value] : false,
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
@@ -2213,8 +2178,6 @@ class TimeManagementController extends Controller
             
             $param = [];
 
-            // var_dump($request->id_overtime_spl);
-
             foreach($request->data as $key => $value){
                 $param[] = [
                     'companyCode' => $value['companyCode'],
@@ -2228,8 +2191,6 @@ class TimeManagementController extends Controller
                     'languageCode' => App::getLocale()
                 ];
             }
-
-            // var_dump($param);
 
             $response = $client->delete(env('API_URL') . '/tmovtspl/deletetmovtspl',
                 ['body' => json_encode($param)]
@@ -2261,10 +2222,7 @@ class TimeManagementController extends Controller
             
             $param = [];
 
-            // var_dump($request->id_overtime_spl);
-
             foreach($request->data as $key => $value){
-                // var_dump($value['absenteeismStart']);
                 $param[] = [
                     'companyCode' => $value['companyCode'],
                     'periodYear' => (int) $value['periodYear'],
@@ -2312,21 +2270,6 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'deleteDateFrom' => $request->delete_date_from,
-                    'deleteDateTo' => $request->delete_date_to,
-                    'employeeNoFrom' => $request->employee_no_from,
-                    'employeeNoTo' => $request->employee_no_to,
-                    "languageCode" => App::getLocale(),
-                    'sessionID' => 0,
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                ]
-                ));
-
             $response = $client->delete(env('API_URL') . '/tempabsentmachine/deletetempabsentmachine',
                 ['body' => json_encode(
                     [
@@ -2345,7 +2288,6 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2355,9 +2297,9 @@ class TimeManagementController extends Controller
             }
         }
  
-        // $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function removeCompanyWorkingCalendar(Request $request)
@@ -2385,8 +2327,6 @@ class TimeManagementController extends Controller
                     'languageCode' => App::getLocale()
                 ];
             }
-
-            // var_dump($param);
 
             $response = $client->delete(env('API_URL') . '/tmcalendar',
                 ['body' => json_encode($param)]

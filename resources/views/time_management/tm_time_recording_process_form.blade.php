@@ -95,10 +95,10 @@
             </a> 
         </div>
         <div class="div-form">
-            <form id="tm_time_recording_process_upload_form" method="GET">
-                @csrf
-                <div class="row">
-                    <div class="col-6">
+            <div class="row">
+                <div class="col-6">
+                    <form id="tm_time_recording_process_upload_form" method="GET">
+                        @csrf
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -144,26 +144,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <p><u>{{ __('tm_time_recording_process_form.label_text') }}</u></p>
-                        <p>{{ __('tm_time_recording_process_form.label_text_detail') }}</p>
-                        <p><u>{{ __('tm_time_recording_process_form.label_excel') }}</u></p>
-                        <p>{{ __('tm_time_recording_process_form.note_column_a') }}</p>
-                        <p>{{ __('tm_time_recording_process_form.note_column_b') }}</p>
-                        <p>{{ __('tm_time_recording_process_form.note_column_c') }}</p>
-                        <p>{{ __('tm_time_recording_process_form.note_column_d') }}</p>
-                        <p>{{ __('tm_time_recording_process_form.note_column_e') }}</p>
-                        <p>{{ __('tm_time_recording_process_form.note_column_f') }}</p>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="div-form">
-            <form id="tm_time_recording_process_delete_form">
-                @csrf
-                <div class="row">
-                    <div class="col-6">
+                    </form>
+                    <br><br>
+                    <form id="tm_time_recording_process_delete_form">
+                    @csrf
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -216,10 +200,23 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6"></div>
+                    </form>
                 </div>
-            </form>
+                <div class="col-6">
+                    <p><u>{{ __('tm_time_recording_process_form.label_text') }}</u></p>
+                    <p>{{ __('tm_time_recording_process_form.label_text_detail') }}</p>
+                    <p><u>{{ __('tm_time_recording_process_form.label_excel') }}</u></p>
+                    <p>{{ __('tm_time_recording_process_form.note_column_a') }}</p>
+                    <p>{{ __('tm_time_recording_process_form.note_column_b') }}</p>
+                    <p>{{ __('tm_time_recording_process_form.note_column_c') }}</p>
+                    <p>{{ __('tm_time_recording_process_form.note_column_d') }}</p>
+                    <p>{{ __('tm_time_recording_process_form.note_column_e') }}</p>
+                    <p>{{ __('tm_time_recording_process_form.note_column_f') }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="div-form">
+            
         </div>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">

@@ -601,10 +601,9 @@
                         name: 'ovtDate',
                         render: function (data, type, row) {
                             var id = $('<div />').text(row.employeeNo).html() + $('<div />').text(row.ovtDate).html() + $('<div />').text(row.seqNo).html();
-                            return moment(data).format('DD-MM-YYYY')
-                                '<input type="hidden" class="form-control" name="ovt_date_overtime_spl[' + id + ']" value="' +
+                            return '<input type="hidden" class="form-control" name="ovt_date_overtime_spl[' + id + ']" value="' +
                                 $('<div />').text(row.ovtDate).html() + '">' + 
-                                $('<div />').text(row.ovtDate).html();
+                                moment(data).format('DD-MM-YYYY');
                         }
                     },
                     {
