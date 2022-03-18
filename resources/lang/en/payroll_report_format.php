@@ -15,7 +15,6 @@ return [
     'label_description' => 'Description',
     'label_font_size' => 'Font Size',
     'label_record_status' => 'Record Status',
-    'report_code_required' => 'Report Code Required',
     'label_column_no' => 'Column No',
     'label_table_name' => 'Table Name',
     'label_field_name' => 'Field Name',
@@ -27,9 +26,6 @@ return [
     'label_select_alignment' => 'Choose Alignment',
     'label_select_data_format' => 'Choose Data Format',
     'label_select_criteria' => 'Choose Criteria',
-    'column_no_required' => 'Column No Required',
-    'table_name_required' => 'Table Name Required',
-    'field_name_required' => 'Field Name Required',
     'label_condition' => 'Condition',
     'label_seq_no' => 'Seq No',
     'label_criteria' => 'Criteria',
@@ -39,7 +35,8 @@ return [
     'btn_add' => 'Add',
     'btn_cancel' => 'Cancel',
     'btn_remove'=> 'Remove',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'field_mandatory' => "This field can't be blank"
 
 ]
 

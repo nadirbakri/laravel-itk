@@ -1358,7 +1358,7 @@
                 }
             });
         });
-
+        
         $('#format_code').on("select2:select", function (e) {
             var data = $('#format_code').select2('data');
             $('#description_free_format_field').val(data[0].title);

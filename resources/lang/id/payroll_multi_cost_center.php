@@ -9,6 +9,7 @@ return [
     'label_list' => 'Daftar',
     'label_new' => 'Baru',
     'label_edit' => 'Edit',
+    'label_delete' => 'Hapus',
     'label_employee_no' => 'No Karyawan',
     'label_year' => 'Tahun',
     'label_month' => 'Bulan',

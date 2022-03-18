@@ -124,6 +124,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
+                                <input type="text" class="form-control" id="month" name="month" hidden>
+                                <input type="text" class="form-control" id="year" name="year" hidden>
                             </div>
                         </div>
                     </div>
@@ -138,7 +140,7 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <table id="cost_center_table" class="table hover">
+                        <table id="cost_center_table" class="table hover" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -173,7 +175,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('time_management/absent_code') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('payroll/multi_cost_center') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_multi_cost_center.btn_cancel') }}
                         </a>
@@ -224,6 +226,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -238,7 +241,7 @@
     });
 
     function initDatePicker() {
-        $('.input-group input').flatpickr({
+        $('#month_year').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -252,9 +255,13 @@
                 })
             ],
             onReady: function () {
+                // var month = $('#month');
+                // var year = $('#year');
+                // month = $('month_year').format('mm');
+                // year = $('month_year').format('yyyy');
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#month_year").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -273,8 +280,8 @@
         if (func == 'new') {
             $('#record_function').val("New");
             $('#employee_no').val(null).trigger('change');
-            $('#month_year').val("");
             $('#period').val(1);
+
             $('#cost_center_table').DataTable().destroy();
             load_table_cost_center();
         }
@@ -394,11 +401,9 @@
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
                         '<div class="col-6"><b>Cost Center Code</b></div>' +
-                        '<div class="col-6"><b>Cost Center Description</b></div>' +
                         '</div>' +
                         '<div class="row">' +
                         '<div class="col-6">' + data.data.costCenterCode + '</div>' +
-                        '<div class="col-6">' + data.data.costCenterDescription + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -436,8 +441,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.costCenterDescription,
+                                    text: item.costCenterCode,
                                     id: item.costCenterCode,
+                                    title: item.costCenterDescription,
                                     data: item
                                 }
                             })
@@ -452,37 +458,55 @@
         function load_table_cost_center() {
             table = $('#cost_center_table').DataTable({
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                'sPaginationType': 'ellipses',
+                "columnDefs": [
+                    {
+                        "className": "dt-center",
+                        "targets": "_all"
+                    }
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
             });
         }
 
-        $('#btn-add-cost').on('click', function () {
-        table.clear().draw();
-            if (func == 'new') {
-                table.row.add([
-                    '<input type="checkbox" class="form-control" name="[]">',
-                    '<select class="form-control select2 cost_center" id="cost_center" name="cost_center[]">',
-                    '<input type="text" class="form-control" name="description[]" readonly>',
-                    '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
-                    '<input type="checkbox"  class="form-control chk-select" name="isDefault[]">'
-                ]).draw();
-                loadDataCostCenterCode("#cost_center");
-            }
-        });
-            
-        // $('#btn-add-cost').on('click', function () {
-        //     table.row.add([
-        //         '<input type="checkbox" class="form-control" name="[]">',
-        //         '<select class="form-control select2 cost_center" id="cost_center" name="cost_center[]">',
-        //         '<input type="text" class="form-control" name="description[]">',
-        //         '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
-        //         '<input type="checkbox"  class="form-control chk-select" name="isDefault[]">'
-        //     ]).draw();
-        //     loadDataCostCenterCode("#cost_center");
-        // });
+        var data_cost_center = 0;
 
-        $('#btn-remove-cost').on('click', function () {
-            table.row(':last-child').remove().draw();
+        $('#btn-add-cost').on('click', function () {
+        // table.clear().draw();
+        // var data_cost_center = table.rows().count();
+            if (func == 'new') {
+                data_cost_center++;
+                table.row.add([
+                    '<input type="checkbox" class="chk-select" id="check_grid">',
+                    '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
+                    '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
+                    '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
+                    '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
+                ]).draw();
+                loadDataCostCenterCode("#cost_center"+(data_cost_center));
+                
+            }
+            $('#cost_center'+(data_cost_center)).on("select2:select", function (e) {
+                // console.log(data_cost_center);
+                // console.log(data[0]);
+                var data = $('#cost_center'+data_cost_center).select2('data');
+                $('#description'+(data_cost_center )).val(htmlDecode(data[0].title));
+            });
+
+            $('#cost_center'+(data_cost_center)).on("select2:unselecting", function (e) {
+                $('#description'+(data_cost_center)).val('');
+            });
+        });
+
+        $('.isDefault').on('change', function() {
+            $('.isDefault').not(this).prop('checked', false);
+        });
+
+        $('#btn-remove-cost').on("click", function () {
+            table.rows('.selected').remove().draw();
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
@@ -500,13 +524,25 @@
         if ($("#multi_cost_center_form").length > 0) {
             $("#multi_cost_center_form").validate({
             rules: {
-                    account_no: {
+                    employee_no: {
+                        required: true,
+                    },
+                    month_year: {
+                        required: true,
+                    },
+                    period: {
                         required: true,
                     },
                 },
                 messages: {
-                    absent_code: {
-                        required: "{{ __('payroll_multi_cost_center.account_no_required') }}",
+                    employee_no: {
+                        required: "{{ __('payroll_multi_cost_center.field_mandatory') }}",
+                    },
+                    month_year: {
+                        required: "{{ __('payroll_multi_cost_center.field_mandatory') }}",
+                    },
+                    period: {
+                        required: "{{ __('payroll_multi_cost_center.field_mandatory') }}",
                     },
                 },
                 highlight: function (element) {
@@ -532,7 +568,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/account/proses') }}",
+                        url: "{{ url('payroll/multi_cost_center/proses') }}",
                         type: "POST",
                         data: $('#multi_cost_center_form').serialize(),
                         success: function (response) {
@@ -547,7 +583,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/account') }}";
+                                        "{{ url('payroll/multi_cost_center') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

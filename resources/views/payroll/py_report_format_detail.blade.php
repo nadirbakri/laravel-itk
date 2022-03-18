@@ -226,9 +226,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="table_name">{{ __('payroll_report_format.label_table_name') }}</label>
+                                        for="table_name_detail">{{ __('payroll_report_format.label_table_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="table_name" name="table_name">
+                                    <select class="form-control select2" id="table_name_detail" name="table_name_detail">
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
                                         <option value="PrSalaryMaster">PrSalaryMaster</option>
                                         <option value="PrSalaryActual">PrSalaryActual</option>
@@ -241,9 +241,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="field_name">{{ __('payroll_report_format.label_field_name') }}</label>
+                                        for="field_name_detail">{{ __('payroll_report_format.label_field_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="field_name" name="field_name"></select>
+                                    <select class="form-control select2" id="field_name_detail" name="field_name_detail"></select>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +280,7 @@
                                         <option value="#,##0.00">#,##0.00</option>
                                         <option value="#,##0">#,##0</option>
                                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
-                                        <option value="d MMMM yyyy">d MMMM yyyy</option>
+                                        <option value="dd MM yyyy">dd MM yyyy</option>
                                     </select>
                                 </div>
                             </div>
@@ -333,9 +333,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="table_name">{{ __('payroll_report_format.label_table_name') }}</label>
+                                        for="table_name_condition">{{ __('payroll_report_format.label_table_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="table_name" name="table_name">
+                                    <select class="form-control select2" id="table_name_condition" name="table_name_condition">
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
                                         <option value="PrSalaryMaster">PrSalaryMaster</option>
                                         <option value="PrSalaryActual">PrSalaryActual</option>
@@ -348,9 +348,9 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="field_name">{{ __('payroll_report_format.label_field_name') }}</label>
+                                        for="field_name_condition">{{ __('payroll_report_format.label_field_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="field_name" name="field_name"></select>
+                                    <select class="form-control select2" id="field_name_condition" name="field_name_condition"></select>
                                 </div>
                             </div>
                         </div>
@@ -430,6 +430,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -443,15 +444,13 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
         var arrData = @json($data);
-        var table = null;
         var tableName = null;
         var fieldName = null;
         var table1 = null;
         var table2 = null;
-        // var tableNameCondition = null;
-        // var fieldNameCondition = null;
         var arrayReportFormatDetail = [];
         var arrayReportFormatCondition = [];
+
 
         if (func == 'new') {
             $('#record_function').val("New");
@@ -468,6 +467,42 @@
             $('#report_code').val(((typeof arrData[0].reportCode !== 'undefined') ? arrData[0].reportCode : '')).prop('readonly', true);
             $('#description').val(htmlDecode(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '')));
             $('#font_size').val(((typeof arrData[0].fontSize !== 'undefined') ? arrData[0].fontSize : ''));
+
+            load_table_report_format_detail();
+            console.log(arrData[0].detail);
+            if (arrData[0].detail !== 'undefined' || arrData[0].detail !== null) {
+                for (var i = 0; i < arrData[0].detail.length; i++) {
+                    arrayReportFormatDetail.push({
+                        "columnNo": ((typeof arrData[0].detail[i].columnNo !== 'undefined') ? arrData[0].detail[i].columnNo : ''),
+                        "tableName": ((typeof arrData[0].detail[i].tableName !== 'undefined') ? arrData[0].detail[i].tableName : ''),
+                        "fieldName": ((typeof arrData[0].detail[i].fieldName !== 'undefined') ? arrData[0].detail[i].fieldName : ''),
+                        "columnHeader": ((typeof arrData[0].detail[i].columnHeader !== 'undefined') ? arrData[0].detail[i].columnHeader : ''),
+                        "alignment": ((typeof arrData[0].detail[i].alignment !== 'undefined') ? arrData[0].detail[i].alignment : ''),
+                        "dataFormat": ((typeof arrData[0].detail[i].dataFormat !== 'undefined') ? arrData[0].detail[i].dataFormat : ''),
+                        "display": ((typeof arrData[0].detail[i].isDisplayed !== 'undefined') ? arrData[0].detail[i].isDisplayed : ''),
+                    });
+                    // console.log(arrayReportFormatDetail);
+                }
+            }
+            $('#report_format_detail_table').DataTable().destroy();
+            load_table_report_format_detail();
+
+            load_table_report_format_condition();
+            if (arrData[0].condition !== 'undefined' || arrData[0].condition !== null) {
+                // console.log(arrData[0]);
+                // console.log(arrData[1].condition);
+                for (var i = 0; i < arrData[0].condition.length; i++) {
+                    arrayReportFormatCondition.push({
+                        "seqNo": ((typeof arrData[0].condition[i].seqNo !== 'undefined') ? arrData[0].condition[i].seqNo : i),
+                        "tableName": ((typeof arrData[0].condition[i].tableName !== 'undefined') ? arrData[0].condition[i].tableName : ''),
+                        "fieldName": ((typeof arrData[0].condition[i].fieldName !== 'undefined') ? arrData[0].condition[i].fieldName : ''),
+                        "criteria": ((typeof arrData[0].condition[i].criteria !== 'undefined') ? arrData[0].condition[i].criteria : ''),
+                        "value": ((typeof arrData[0].condition[i].value !== 'undefined') ? arrData[0].condition[i].value : ''),
+                    });
+                }
+            }
+            $('#report_format_condition_table').DataTable().destroy();
+            load_table_report_format_condition();
         }
 
         function htmlDecode(value) {
@@ -476,7 +511,7 @@
 
         function load_table_report_format_detail() {
             table1 = $('#report_format_detail_table').DataTable({
-                // processing: true,
+                processing: true,
                 // orderCellsTop: true,
                 data: arrayReportFormatDetail,
 
@@ -496,16 +531,16 @@
                     {   
                         data: 'columnNo',
                         name: 'columnNo',
-                        render: function (data, type, row) {
+                        render: function (data, type, row, meta) {
                             return '<input type="hidden" class="form-control" name="column_no[]" value="' +
-                                data + '">' + data;
+                            meta.row +'">' + (meta.row + 1);
                         }
                     },
                     {
                         data: 'tableName',
                         name: 'tableName',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="table_name[]" value="' +
+                            return '<input type="hidden" class="form-control" name="table_name_detail[]" value="' +
                                 data + '">' + data;
                         }
                     },
@@ -513,7 +548,7 @@
                         data: 'fieldName',
                         name: 'fieldName',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="field_name[]" value="' +
+                            return '<input type="hidden" class="form-control" name="field_name_detail[]" value="' +
                                 data + '">' + data;
                         }
                     },
@@ -579,16 +614,17 @@
                     {   
                         data: 'seqNo',
                         name: 'seqNo',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="column_no[]" value="' +
-                                data + '">' + data;
+                        render: function (data, type, row, meta) {
+                            console.log(data);
+                            return '<input type="hidden" class="form-control" name="seq_no[]" value="' +
+                            meta.row + '">' + (meta.row + 1);
                         }
                     },
                     {
                         data: 'tableName',
                         name: 'tableName',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="table_name[]" value="' +
+                            return '<input type="hidden" class="form-control" name="table_name_condition[]" value="' +
                                 data + '">' + data;
                         }
                     },
@@ -596,7 +632,7 @@
                         data: 'fieldName',
                         name: 'fieldName',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="field_name[]" value="' +
+                            return '<input type="hidden" class="form-control" name="field_name_condition[]" value="' +
                                 data + '">' + data;
                         }
                     },
@@ -604,7 +640,7 @@
                         data: 'criteria',
                         name: 'criteria',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="column_header[]" value="' +
+                            return '<input type="hidden" class="form-control" name="criteria[]" value="' +
                                 data + '">' + data;
                         }
                     },
@@ -612,7 +648,7 @@
                         data: 'value',
                         name: 'value',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="alignment[]" value="' +
+                            return '<input type="hidden" class="form-control" name="value[]" value="' +
                                 data + '">' + data;
                         }
                     },
@@ -626,38 +662,40 @@
 
         $('#btn-add-report-format-detail').on('click', function () {
             $('#column_no').val("");
-            $('#table_name').val("");
-            $('#field_name').val("");
+            $('#table_name_detail').val("");
+            $('#field_name_detail').val("");
             $('#column_header').val("");
             $('#alignment').val("");
             $('#data_format').val("");
             (($("#display").val() !== null) ? $("#display").val() : false);
 
-            $('#table_name').on('change', function () {
-                tableName = $('#table_name').val();
+            $('#table_name_detail').on('change', function () {
+                tableName = $('#table_name_detail').val();
                 loadDataFieldName();
             });
 
-            $('#field_name').on('change', function () {
-                fieldName = $('#field_name').val();
+            $('#field_name_detail').on('change', function () {
+                fieldName = $('#field_name_detail').val();
             });
         });
 
         $('#btn-add-report-format-condition').on('click', function () {
             $('#seq_no').val("");
-            $('#table_name').val("");
-            $('#field_name').val("");
+            $('#table_name_condition').val("");
+            $('#field_name_condition').val("");
             $('#criteria').val("");
             $('#value').val("");
 
-            $('#table_name').on('change', function () {
-                tableName = $('#table_name').val();
+            $('#table_name_condition').on('change', function () {
+                tableName = $('#table_name_condition').val();
                 loadDataFieldName();
+
+                // console.log(tableName);
             });
 
-            $('#field_name').on('change', function () {
-                fieldName = $('#field_name').val();
-                // console.log($('#field_name').val());
+            $('#field_name_condition').on('change', function () {
+                fieldName = $('#field_name_condition').val();
+                // console.log($('#field_name_condition').val());
             });
         });
 
@@ -678,7 +716,7 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#field_name').select2({
+            $('#field_name_detail, #field_name_condition').select2({
                 width: '100%',
                 placeholder: 'Choose Field Name',
                 allowClear: true,
@@ -734,17 +772,15 @@
             // arraypush["fieldName"] = $("#field_name").val();
             // arraypush["columnHeader"] = $("#column_header").val();
             arrayReportFormatDetail.push({
-                "columnNo": $("#column_no").val(),
-                "tableName": $("#table_name").val(),
-                "fieldName": $("#field_name").val(),
-                "columnHeader": $("#column_header").val(),
-                "alignment": $("#alignment").val(),
-                "dataFormat": $("#data_format").val(),
-                "display": (($("#display").val() !== null) ? $("#display").val() : false)
+                "columnNo": $("#column_no").val() ? $("column_no").val() : "",
+                "tableName": $("#table_name_detail").val(),
+                "fieldName": $("#field_name_detail").val(),
+                "columnHeader": $("#column_header").val() ? $("column_header").val() : "",
+                "alignment": $("#alignment").val() ? $("alignment").val() : "",
+                "dataFormat": $("#data_format").val() ? $("data_format").val() : "",
+                "display": ($("#display").is(":checked") ? $("#display").val() : false)
             });
-
-            // console.log($("#data_format").val())
-
+            // console.log($("#display").is(":checked"))
             // console.log(arrayReportFormatDetail);
 
             $(this).prop("disabled", false);
@@ -752,10 +788,38 @@
                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
             );
             $('#modal_add_report_format_detail').modal('hide');
+            // console.log(arrayReportFormatDetail);
             
             $('#report_format_detail_table').DataTable().destroy();
             load_table_report_format_detail();
             //$("#field_name_form").submit();
+        });
+
+        $("#report_format_detail_form").on("submit", function(){
+            $("#report_format_detail_form").validate({
+                rules: {
+                    column_no: {
+                        required: true
+                    },
+                    table_name_detail: {
+                        required: true
+                    },
+                    field_name_detail: {
+                        required: true
+                    }
+                },
+                messages: {
+                    column_no: {
+                        required: "{{ __('payroll_report_format.field_mandatory') }}",
+                    },
+                    table_name_detail: {
+                        required: "{{ __('payroll_report_format.field_mandatory') }}",
+                    },
+                    field_name_detail: {
+                        required: "{{ __('payroll_report_format.field_mandatory') }}",
+                    }
+                }
+            });
         });
 
         $("#btn-save-report-format-condition").click(function () {
@@ -768,10 +832,10 @@
             // arraypush["columnHeader"] = $("#column_header").val();
             arrayReportFormatCondition.push({
                 "seqNo": $("#seq_no").val(),
-                "tableName": $("#table_name").val(),
-                "fieldName": $("#field_name").val(),
-                "criteria": $("#criteria").val(),
-                "value": $("#value").val(),
+                "tableName": $("#table_name_condition").val(),
+                "fieldName": $("#field_name_condition").val(),
+                "criteria": $("#criteria").val() ? $("criteria").val() : "",
+                "value": $("#value").val() ? $("value").val() : "",
             });
 
             // console.log($("#data_format").val())
@@ -792,20 +856,20 @@
         $('#modal_add_report_format_detail').on('show.bs.modal', function () {
             if (func == 'new') {
                 var count = table1.rows().count();
-                $('#column_no').val(count);
+                $('#column_no').val(count+1);
             }
 
             else {
                 $.ajax({
-                    url: "{{ url('payroll/number/check') }}",
+                    url: "{{ url('payroll/report_format_number/check') }}",
                     type: "GET",
                     data: {
-                        'url': '/pemaster/getpemasterdetail',
+                        'url': '/prreportformat/getreportformatlist',
                         'pemasterType' : 'detail',
-                        'columnNo': arrData2[0].detail.columnNo
+                        'columnNo': arrData[0].detail.columnNo
                     },
                     success: function (response) {
-                        var count = table1.rows().count();
+                        var count = (table1.rows().count())+1;
                         // console.log(response);
 
                         if (response > 0 && count !== response) {
@@ -822,7 +886,7 @@
                                 // console.log(i);
                             }
                         }
-                        // console.log(count);
+                        console.log(count);
                         // console.log(total);
                     },
                     error: function (response) {
@@ -836,7 +900,7 @@
         $('#modal_add_report_format_condition').on('show.bs.modal', function () {
             if (func == 'new') {
                 var count = table2.rows().count();
-                $('#seq_no').val(count);
+                $('#seq_no').val(count+1);
             }
 
             else {
@@ -844,12 +908,12 @@
                     url: "{{ url('payroll/number/check') }}",
                     type: "GET",
                     data: {
-                        'url': '/pemaster/getpemasterdetail',
+                        'url': '/prreportformat/getreportformatlist',
                         'pemasterType' : 'condition',
-                        'seqNo': arrData2[0].condition.seqNo
+                        'seqNo': arrData[0].condition.seqNo
                     },
                     success: function (response) {
-                        var count = table2.rows().count();
+                        var count = (table2.rows().count())+1;
                         // console.log(response);
 
                         if (response > 0 && count !== response) {
@@ -878,8 +942,8 @@
         });
 
         $("#btn-remove-report-format-detail").on('click', function() {
-            var data = table.rows('.selected').data().toArray();
-        // console.log(data.length);
+            var data = table1.rows('.selected').data().toArray();
+            console.log(data.length);
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     var index = arrayReportFormatDetail.findIndex(x => x.columnNo == data[i].columnNo);
@@ -895,7 +959,7 @@
         });
 
         $("#btn-remove-report-format-condition").on('click', function() {
-            var data = table.rows('.selected').data().toArray();
+            var data = table2.rows('.selected').data().toArray();
         // console.log(data.length);
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
@@ -929,12 +993,12 @@
             rules: {
                     report_code: {
                         required: true,
-                    },
+                    }
                 },
                 messages: {
                     report_code: {
-                        required: "{{ __('payroll_report_format.report_code_required') }}",
-                    },
+                        required: "{{ __('payroll_report_format.field_mandatory') }}",
+                    }
                 },
                 highlight: function (element) {
                     $(element).addClass('is-invalid');

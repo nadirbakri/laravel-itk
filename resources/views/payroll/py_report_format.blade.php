@@ -112,7 +112,7 @@
 			</a>
 		</div>
         <div class="div-table">
-			<table id="report_format_table" class="table hover">
+			<table id="report_format_table" class="table hover" style="width:100%">
 				<thead>
 					<tr>
                         <th></th>
@@ -227,13 +227,13 @@
         }
 
         $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('payroll/report_format/detail') }}", { 'accountNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/report_format/detail_data') }}", { 'reportCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
         });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/report_format/detail') }}", { 'accountNo' : data[0].accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+                $.redirect("{{ url('payroll/report_format/detail_data') }}", { 'reportCode' : data[0].reportCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -244,19 +244,19 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.ajax({
-                    url: "{{ url('payroll/account/status') }}",
+                    url: "{{ url('payroll/report_format/status') }}",
                     type: "GET",
                     data: { 
-                        'accountNo' : data[0].accountNo, 
-                        'accountDescription' : data[0].accountDescription,
-                        'reference' : data[0].reference,
+                        'reportCode' : data[0].reportCode, 
+                        'description' : data[0].description,
+                        'fontSize' : data[0].fontSize,
                         'func' : 'A' },
                     success: function(response) {
                         if(response.status == "true"){
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function(){ 
-                                window.location = "{{ url('payroll/account') }}";
+                                window.location = "{{ url('payroll/report_format') }}";
                             }, 3000);
                         }else{
                             $('#notification_error').modal('show');
@@ -284,19 +284,19 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.ajax({
-                    url: "{{ url('payroll/account/status') }}",
+                    url: "{{ url('payroll/report_format/status') }}",
                     type: "GET",
                     data: { 
-                        'accountNo' : data[0].accountNo, 
-                        'accountDescription' : data[0].accountDescription,
-                        'reference' : data[0].reference,
+                        'reportCode' : data[0].reportCode, 
+                        'description' : data[0].description,
+                        'fontSize' : data[0].fontSize,
                         'func' : 'D' },
                     success: function(response) {
                         if(response.status == "true"){
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function(){ 
-                                window.location = "{{ url('payroll/account') }}";
+                                window.location = "{{ url('payroll/report_format') }}";
                             }, 3000);
                         }else{
                             $('#notification_error').modal('show');
@@ -322,7 +322,7 @@
 
         $('#report_format_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/report_format/detail') }}", { 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/report_format/detail_data') }}", { 'reportCode' : data.reportCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     })
 </script>

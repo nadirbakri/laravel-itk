@@ -83,6 +83,11 @@ class PayrollController extends Controller
         return view ('payroll.py_payroll_calculation');
     }
 
+    public function pageSlipFormat()
+    {
+        return view ('payroll.py_slip_format');
+    }
+
     public function tableAccountPY()
     {
         try {
@@ -712,6 +717,48 @@ class PayrollController extends Controller
         return view('payroll.py_severance_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
+    public function tablePayrollCalculationDetailPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->religionCode);
+
+            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "fieldName" => $request->fieldName,
+                        "languageCode" => App::getLocale(),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function dataDetailTariffMasterPY(Request $request)
     {
         try {
@@ -1089,6 +1136,169 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesAccountPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            // var_dump(Session::get('token'));
+
+            $param = [
+                'recordStatus' => "A",
+                'companyCode' => Session::get('companyCode'),
+                'accountNo' => $request->account_no,
+                'accountDescription' => $request->account_description,
+                'reference' => $request->reference,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/gmaccount/insertgmaccount',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/gmaccount/updategmaccount',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesReportFormatPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if (isset($request->column_no)) {
+                foreach ($request->column_no as $key => $value) {
+                    $data_detail [] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "reportCode" => $request->report_code,
+                        "columnNo" => (int) $value,
+                        "tableName" => $request->table_name_detail[$key],
+                        "fieldName" => $request->field_name_detail[$key],
+                        "columnHeader" => $request->column_header[$key],
+                        "alignment" => (int) $request->alignment[$key],
+                        "dataFormat" => $request->data_format[$key],
+                        "isDisplayed" => isset($request->display[$key]) ? (bool) $request->display[$key] : false,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID')
+                    ];
+                }
+                // var_dump($request->table_name_detail[$value]);
+                // var_dump($request->alignment[$value]);
+            }
+            else {
+                $data_detail [] = null;
+            }
+            
+            if (isset($request->seq_no)) {
+                foreach ($request->seq_no as $key => $value1) {
+                    $data_condition [] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "reportCode" => $request->report_code,
+                        "seqNo" => (int) $value1,
+                        "tableName" => $request->table_name_condition[$key],
+                        "fieldName" => $request->field_name_condition[$key],
+                        "criteria" => $request->criteria[$key],
+                        "value" => $request->value[$key],
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID')
+                    ];
+                    // var_dump($request->table_name_condition[$value1]);
+                    // var_dump($request->criteria[$value1]);
+                }
+            }
+            else {
+                $data_condition [] = null;
+            }
+
+            // var_dump($data_detail);
+
+            $param = [
+                'recordStatus' => "A",
+                'companyCode' => Session::get('companyCode'),
+                'reportCode' => $request->report_code,
+                'description' => $request->description,
+                'fontSize' => (int) $request->font_size,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageID" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+            $param['detail'] = $data_detail;
+            $param['condition'] = $data_condition;
+
+            // var_dump($param);
+
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prreportformat/insertreportformat',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/prreportformat/updatereportformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesSeveranceDataEntryPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -1164,6 +1374,95 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesMultiCostCenterPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if (isset($request->cost_center_code)) {
+                foreach ($request->cost_center_code as $key => $value) {
+                    $data_detail [] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNo" => $request->employee_no,
+                        "periodYear" => (int) date('Y', strtotime($request->month_year)),
+                        "periodMonth" => (int) date('m', strtotime($request->month_year)),
+                        "statusPeriod" => $request->period,
+                        "costCenterCode" => $value,
+                        "percentage" => (int) $request->percentage[$key],
+                        "isDefault" => isset($request->isDefault[$key]) ? (bool) $request->isDefault[$key] : false,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ];
+                }
+                // var_dump($request->table_name_detail[$value]);
+                // var_dump($request->alignment[$value]);
+            }
+            else {
+                $data_detail [] = null;
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employee_no,
+                "periodYear" => (int) date('Y', strtotime($request->month_year)),
+                "periodMonth" => (int) date('m', strtotime($request->month_year)),
+                "statusPeriod" => $request->period,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+            $param['detail'] = $data_detail;
+
+            var_dump($data_detail);
+
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prmulticost/insertprmulticost',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/prmulticost/updateprmulticostdetail',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        // var_dump($response);
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function prosesTariffMasterPY(Request $request)
@@ -1624,6 +1923,148 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesPayrollCalculationPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/prcalculation/insertprcalculationprocess',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            'fieldName' => $request->field_name,
+                            'seqProcess' => (int) $request->sequence,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+
+            else {
+                $response = $client->put(env('API_URL') . '/prcalculation/updateprcalculationprocess',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'fieldName' => $request->field_name,
+                            'seqProcess' => (int) $request->sequence,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesPayrollCalculationDetailPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/prcalculation/insertprcalculationdetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'fieldName' => $request->field_name,
+                            'seqNo' => (int) $request->no,
+                            "condition" => $request->preview_condition,
+                            "formula" => $request->preview_formula,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+
+            else {
+                $response = $client->put(env('API_URL') . '/prcalculation/updateprcalculationdetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'fieldName' => $request->field_name,
+                            'seqNo' => (int) $request->no,
+                            "condition" => $request->preview_condition,
+                            "formula" => $request->preview_formula,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function removeTHRBonusDataEntryPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -1813,6 +2254,52 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function removePayrollCalculationPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->delete(env('API_URL') . '/prcalculation/deleteprcalculationdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'fieldName' => $request->field_name,
+                        'seqNo' => (int) $request->no,
+                        "condition" => $request->preview_condition,
+                        "formula" => $request->preview_formula,
+                        "changedNo" => 0,
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function dataAccountPY(Request $request)
     {
         try {
@@ -1872,13 +2359,15 @@ class PayrollController extends Controller
         return view('payroll.py_multi_cost_center_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataReportFormatPY(Request $request)
+    public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+
+            // var_dump($request->reportCode);
 
             $response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
                 ['body' => json_encode(
@@ -2026,7 +2515,7 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
-    public function prosesAccountPY(Request $request)
+    public function statusReportFormatPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         try {
@@ -2035,33 +2524,19 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [
-                'recordStatus' => "A",
-                'companyCode' => Session::get('companyCode'),
-                'accountNo' => $request->account_no,
-                'accountDescription' => $request->account_description,
-                'reference' => $request->reference,
-                "changedNo" => 0,
-                "createdDate" => date("Y-m-d\TH:i:s"),
-                "createdBy" => Session::get('userID'),
-                "changedDate" => date("Y-m-d\TH:i:s"),
-                "changedBy" => Session::get('userID'),
-                "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
-            ];
-
-            if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmaccount/insertgmaccount',
-                    ['body' => json_encode($param)]
-                );
-            }else{
-                $response = $client->put(env('API_URL') . '/gmaccount/updategmaccount',
-                    ['body' => json_encode($param)]
-                );
-            }
+            $response = $client->put(env('API_URL') . '/prreportformat/updatestatus',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'reportCode' => $request->reportCode,
+                        'description' => $request->description,
+                        'fontSize' => (int) $request->fontSize
+                    ]
+                )]
+            );
+            // var_dump($request->reportCode);
+            
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2075,10 +2550,10 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
-    public function prosesReportFormatPY(Request $request)
+    public function statusPayrollCalculationPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         try {
@@ -2087,33 +2562,28 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [
-                'recordStatus' => "A",
-                'companyCode' => Session::get('companyCode'),
-                'reportCode' => $request->report_code,
-                'description' => $request->description,
-                'fontSize' => $request->font_size,
-                "changedNo" => 0,
-                "createdDate" => date("Y-m-d\TH:i:s"),
-                "createdBy" => Session::get('userID'),
-                "changedDate" => date("Y-m-d\TH:i:s"),
-                "changedBy" => Session::get('userID'),
-                "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
-            ];
-
-            if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/prreportformat/insertreportformat',
-                    ['body' => json_encode($param)]
-                );
-            }else{
-                $response = $client->put(env('API_URL') . '/prreportformat/updatereportformat',
-                    ['body' => json_encode($param)]
-                );
-            }
+            $response = $client->put(env('API_URL') . '/prcalculation/updateprcalculationprocess',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'fieldName' => $request->fieldName,
+                        'seqProcess' => (int) $request->seqProcess,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+            // var_dump($request->reportCode);
+            
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2127,10 +2597,10 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
-    public function checkNumberReportFormat(Request $request)
+    public function checkNumberReportFormatPY(Request $request)
     {
         // $pemasterType = 
         try {
@@ -2193,5 +2663,63 @@ class PayrollController extends Controller
 
         return response()->json($number);
 
+    }
+
+    public function checkNumberPayrollCalculationPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->fieldName)){
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'fieldName' => $request->fieldName,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $number = 1;
+        }else{
+            if(isset($arrResult->dataListSet[0]->sequenceNo)){
+                $number = max(array_column($arrResult->dataListSet, 'sequenceNo')) + 1;
+            }else if(isset($arrResult->dataListSet[0]->seqNo)){
+                $number = max(array_column($arrResult->dataListSet, 'seqNo')) + 1;
+            }
+        }
+
+        return response()->json($number);
     }
 }
