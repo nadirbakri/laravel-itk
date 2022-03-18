@@ -875,9 +875,15 @@ class TimeManagementController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('time_management.tm_work_pattern_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('time_management.tm_work_pattern_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailAbsentCodeTM(Request $request)

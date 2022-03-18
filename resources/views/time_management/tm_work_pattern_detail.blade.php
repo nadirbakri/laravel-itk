@@ -246,7 +246,6 @@
             $('#record_function').val("Edit");
             $('#work_pattern_code').val(((typeof arrData[0].patternCode !== 'undefined') ? arrData[0].patternCode : ''));
             $('#description').val(htmlDecode(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '')));
-            // console.log('{{ $data[0]->holidayFlag }}');
             var work_on_holiday = ((typeof arrData[0].holidayFlag !== 'undefined') ? arrData[0].holidayFlag : '');
             // console.log(work_on_holiday);
             if ( work_on_holiday == 1 ) {
