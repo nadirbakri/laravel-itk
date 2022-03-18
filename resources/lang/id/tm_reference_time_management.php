@@ -17,7 +17,7 @@ return [
     'label_template_preparation_process' => 'Proses Persiapan Template:',
     'label_by_shift' => 'Dengan Shift',
     'label_blank' => 'Kosong',
-    'label_attendance_absent_code' => '? Kehadiran / Kode Absen ?',
+    'label_attendance' => 'Kehadiran',
     'label_not_clock_in' => 'Tidak Masuk',
     'label_late' => 'Terlambat',
     'label_not_clock_out' => 'Tidak Keluar',

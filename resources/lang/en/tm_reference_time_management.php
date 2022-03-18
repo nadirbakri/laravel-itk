@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'judul' => 'Reference Time Management',
-    'list' => 'Reference Time Management',
+    'judul' => 'Time Management Reference',
+    'list' => 'Time Management Reference',
     'list_detail' => 'Reference Time Management List',
     'label_next' => 'Next',
     'label_back' => 'Back',
@@ -17,7 +17,7 @@ return [
     'label_template_preparation_process' => 'Template Preparation Process:',
     'label_by_shift' => 'By Shift',
     'label_blank' => 'Blank',
-    'label_attendance_absent_code' => '? Attendance / Absent Code ?',
+    'label_attendance' => 'Attendance',
     'label_not_clock_in' => 'Not Clock In',
     'label_late' => 'Late',
     'label_not_clock_out' => 'Not Clock Out',

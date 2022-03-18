@@ -125,25 +125,44 @@
                                 for="absent_code">{{ __('tm_detail_absenteeism_reason_report.label_absent_code') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="form-group">
                             <div class="form-radio">
-                                <input class="form-radio-input" type="radio" id="absent_code_all"
-                                    name="absent_code_all" value="true">
+                                <input class="form-radio-input" type="radio" id="all_absent_code"
+                                    name="absent_code" value="all">
                                 <label class="form-radio-label"
-                                    for="absent_code_all">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_all') }}</label>
+                                    for="absent_code">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_all') }}</label>
                             </div>
                         </div>
                     </div> 
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="absent_code_selection">&nbsp;</label>
                             <div class="form-radio">
-                                <input class="form-radio-input" type="radio" id="absent_code_selection"
-                                    name="absent_code_selection" value="true">
+                                <input class="form-radio-input" type="radio" id="selection_absent_code"
+                                    name="absent_code" value="selection">
                                 <label class="form-radio-label"
-                                    for="absent_code_selection">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_selection') }}</label>
+                                    for="absent_code">{{ __('tm_detail_absenteeism_reason_report.label_absent_code_selection') }}</label>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="div-table col-6">
+                        <table id="detail_absenteeism_reason_report_table" class="table hover  width: 100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{{ __('tm_detail_absenteeism_reason_report.label_table_absent_code') }}</th>
+                                    <th>{{ __('tm_detail_absenteeism_reason_report.label_table_description') }}</th>
+                                    <th>{{ __('tm_detail_absenteeism_reason_report.label_table_leave') }}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="selected_absent_code">* Selected Items</label>
+                            <textarea class="form-control" id="selected_absent_code" rows="15"></textarea>
                         </div>
                     </div>
                 </div>
@@ -218,6 +237,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -259,6 +279,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var table = null;
+
         $.ajax({
             url: "{{ url('personel/report/level/check') }}",
             type: "GET",
@@ -301,6 +323,8 @@
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
 
+        load_data_absent_code();
+
         // $('select').on('select2:opening select2:closing', function( event ) {
         //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
         //     $searchfield.prop('disabled', true);
@@ -313,6 +337,145 @@
         //     '</div>';
         //     $('.select2-search').append(html);
         // });
+
+        $('#detail_absenteeism_reason_report_table thead tr').clone(true).appendTo('#detail_absenteeism_reason_report_table thead');
+        $('#detail_absenteeism_reason_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+    
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        function load_data_absent_code() {
+            table = $('#detail_absenteeism_reason_report_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: "{{ url('time_management/absent_code/table') }}",
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type, row) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox" name="check_absent_code[' + $("<div />").text(row.absentCode).html() + ']" value="1">' : ''
+                        }
+                    },
+                    {data: 'absentCode', name: 'absentCode',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="absentCode[' + $("<div />").text(row.absentCode).html() + ']" value="' +
+                                $('<div />').text(row.absentCode).html() + '">' + 
+                                $('<div />').text(row.absentCode).html();
+                        }},
+                    {data: 'description', name: 'description',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="description[' + $("<div />").text(row.description).html() + ']" value="' +
+                                $('<div />').text(row.description).html() + '">' + 
+                                $('<div />').text(row.description).html();
+                        }},
+                    {data: 'deductLeave', name: 'deductLeave',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="deductLeave[' + $("<div />").text(row.deductLeave).html() + ']" value="' +
+                                $('<div />').text(row.deductLeave).html() + '">' + 
+                                $('<div />').text(row.deductLeave).html();
+                        }},
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
+
+        $('input[name="absent_code"]').on('change', function () {
+            $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+            var rows = table.rows({ 'search': 'applied' }).nodes();
+            var data = table.rows({ 'search': 'applied' }).data().toArray();
+            var result = [];
+            if ($('#all_absent_code').is(':checked')) {
+                table.rows().select();
+                $('.chk-select', rows).prop('checked', true);
+            }
+            else {
+                data = [];
+                table.rows().deselect();
+                $('.chk-select', rows).prop('checked', false);
+            }
+
+            $.each(data, function(key, value) {
+                result.push(value.absentCode + " - " + value.description);
+            });
+
+            var textarea = document.getElementById("selected_absent_code");
+            textarea.value = result.join("\n");
+        });
+
+        $('#detail_absenteeism_reason_report_table tbody').on('click', '.chk-select', function () {     
+            var data = table.rows('.selected').data().toArray();
+            var data2 = table.row(this.closest('tr')).data();
+            var result = [];
+            
+            if(!this.checked){
+                data = data.filter(obj => obj.absentCode !== data2.absentCode);
+                var all = $('#all_absent_code').get(0);
+                var selection = $('#selection_absent_code').get(0);
+                if(all && all.checked && ('checked' in all)){
+                    all.checked = false;
+                    selection.checked = true;
+                }
+            } else  {
+                data.push(data2);
+                var selection = $('#selection_absent_code').get(0);
+                if(selection && selection.checked && ('checked' in selection)){
+                    selection.checked = false;
+                }
+            }
+
+            $.each(data, function(key, value) {
+                result.push(value.absentCode + " - " + value.description);
+            });
+
+            var textarea = document.getElementById("selected_absent_code");
+            textarea.value = result.join("\n");
+        });
+
+        // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){
+        //     if(this.checked){
+        //         console.log("okay");
+        //     //    $('input=[type="checkbox"]:checked.not(:first)').each(function (){
+        //     //        selectvalue += table.row($(this).closest("tr")).data()[1]+" ";
+        //     //    });
+        //     }
+        // });
+
+        $('#detail_absenteeism_reason_report_table tbody').on('change', '.chk-select', function(){
+            if(!this.checked){
+                var all = $('#all_absent_code').get(0);
+                var selection = $('#selection_absent_code').get(0);
+                if(all && all.checked && ('checked' in all)){
+                    all.checked = false;
+                    selection.checked = true;
+                }
+            } else  {
+                var selection = $('#selection_absent_code').get(0);
+                if(selection && selection.checked && ('checked' in selection)){
+                    selection.checked = false;
+                }
+            }
+        });
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -890,6 +1053,8 @@
         if ($("#tm_detail_absenteeism_reason_report_form").length > 0) {
             $("#tm_detail_absenteeism_reason_report_form").validate({
                 submitHandler: function (form) {
+                    var arrData = table.rows('.selected').data().toArray();
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -901,7 +1066,7 @@
                         },
                         url: "{{ url('time_management/detail_absenteeism_reason_report/print') }}",
                         type: "POST",
-                        data: $('#tm_detail_absenteeism_reason_report_form').serialize(),
+                        data: { 'field' : $('#tm_detail_absenteeism_reason_report_form').serialize(), 'field_name' : JSON.stringify(arrData) },
                         success: function (result, status, xhr) {
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');

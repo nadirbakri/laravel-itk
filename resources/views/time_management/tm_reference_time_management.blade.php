@@ -118,7 +118,7 @@
                     <div class="col-0.5">
                         <div class="form-group">
                             <label class="pt-1"><br></label>
-                            <p><b>/</b></p>
+                            <p style="font-size: 1.5rem;"><b>/</b></p>
                         </div>
                     </div>
                     <div class="col-3">
@@ -135,7 +135,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="period_status">{{ __('tm_reference_time_management.label_period_status') }}</label>
-                            <input type="text" class="form-control" id="period_status" name="deperiod_statusscription"
+                            <input type="number" class="form-control" id="period_status" name="period_status"
                                 placeholder="{{ __('tm_reference_time_management.label_period_status') }}">
                         </div>
                     </div>
@@ -177,8 +177,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label
-                                for="attendance_absent_code">{{ __('tm_reference_time_management.label_attendance_absent_code') }}</label>
+                            <h5
+                                for="attendance_absent_code">{{ __('tm_reference_time_management.label_attendance') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -255,8 +255,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label
-                                for="calculate_hour">{{ __('tm_reference_time_management.label_calculate_hour') }}</label>
+                            <h5
+                                for="calculate_hour">{{ __('tm_reference_time_management.label_calculate_hour') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -319,8 +319,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label
-                                for="overtime">{{ __('tm_reference_time_management.label_overtime') }}</label>
+                            <h5
+                                for="overtime">{{ __('tm_reference_time_management.label_overtime') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -411,8 +411,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label
-                                for="minute_rounded">{{ __('tm_reference_time_management.label_minute_rounded') }}</label>
+                            <h5
+                                for="minute_rounded">{{ __('tm_reference_time_management.label_minute_rounded') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -448,8 +448,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label
-                                for="hour_deduction">{{ __('tm_reference_time_management.label_hour_deduction') }}</label>
+                            <h5
+                                for="hour_deduction">{{ __('tm_reference_time_management.label_hour_deduction') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -513,8 +513,8 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label
-                                        for="deduction1">{{ __('tm_reference_time_management.label_deduction1') }}</label>
+                                    <h6
+                                        for="deduction1">{{ __('tm_reference_time_management.label_deduction1') }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -550,8 +550,8 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label
-                                        for="deduction2">{{ __('tm_reference_time_management.label_deduction2') }}</label>
+                                    <h6
+                                        for="deduction2">{{ __('tm_reference_time_management.label_deduction2') }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -587,8 +587,8 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label
-                                        for="deduction3">{{ __('tm_reference_time_management.label_deduction3') }}</label>
+                                    <h6
+                                        for="deduction3">{{ __('tm_reference_time_management.label_deduction3') }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -680,34 +680,6 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        for(var i=0; i<60; i++){
-            
-        }
-
-        // var $deduction1_from=$('#deduction1_from').flatpickr({
-        //     enableTime: true,
-        //     noCalendar: true,
-        //     altInput: true,
-        //     // static: true,
-        //     allowInput: true,
-        //     time_24hr: true,
-        //     defaultDate: "today",
-        //     altFormat: "H:i",
-        //     dateFormat: "H:i:ss"
-        // });
-
-        // var $deduction1_to=$('#deduction1_to').flatpickr({
-        //     enableTime: true,
-        //     noCalendar: true,
-        //     altInput: true,
-        //     // static: true,
-        //     allowInput: true,
-        //     time_24hr: true,
-        //     defaultDate: "today",
-        //     altFormat: "H:i",
-        //     dateFormat: "H:i:ss"
-        // });
-
         loadDataProcessStatus();
         loadDataAbsent();
         loadDataDeductDay();
@@ -720,15 +692,23 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Process Status</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.value + '</div>' +
+                        '<div class="col-12">' + data.data.value + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#process_status').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-12"><b>Process Status</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -736,7 +716,6 @@
                 width: '100%',
                 placeholder: 'Choose Process Status',
                 allowClear: true,
-                // tags: true,
                 closeOnSelect: false,
                 language: {
                     errorLoading: function () {

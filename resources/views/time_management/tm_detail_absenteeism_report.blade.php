@@ -1061,6 +1061,8 @@
         if ($("#tm_detail_absenteeism_report_form").length > 0) {
             $("#tm_detail_absenteeism_report_form").validate({
                 submitHandler: function (form) {
+                    var arrData = table.rows('.selected').data().toArray();
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1072,7 +1074,7 @@
                         },
                         url: "{{ url('time_management/detail_absenteeism_report/print') }}",
                         type: "POST",
-                        data: $('#tm_detail_absenteeism_report_form').serialize(),
+                        data: { 'field' : $('#tm_detail_absenteeism_report_form').serialize(), 'field_name' : JSON.stringify(arrData) },
                         success: function (result, status, xhr) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(

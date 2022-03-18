@@ -461,7 +461,8 @@ Route::post('time_management/monthly_leave_report/print', 'TimeManagementControl
 Route::post('time_management/monthly_absenteeism_analysis/print', 'TimeManagementController@printMonthlyAbsenteeismAnalysis');
 Route::post('time_management/detail_absenteeism_report/print', 'TimeManagementController@printDetailAbsenteeismReport');
 Route::post('time_management/monthly_absenteeism_detail/print', 'TimeManagementController@printMonthlyAbsenteeismDetail');
-Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@PrintDetailAbsenteeismReasonReport');
+Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@printDetailAbsenteeismReasonReport');
+Route::post('time_management/detail_rate_overtime_report/print', 'TimeManagementController@printDetailRateOvertimeReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
