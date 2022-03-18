@@ -42,6 +42,7 @@ return [
     'label_max' => 'Maks',
     'label_after' => 'Setelah',
     'label_shift_allowance' => 'Tunjangan Shift',
+    'label_choose_sa' => 'Pilih Tunjangan Shift',
     'label_no' => 'Tidak',
     'label_yes_if_overtime' => 'Ya Jika Lembur',
     'label_yes' => 'Ya',

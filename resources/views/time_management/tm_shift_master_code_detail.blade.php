@@ -474,7 +474,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select type="text" class="form-control" id="sa_monday_thursday_option" name="sa_monday_thursday_option">
-                                <option value="">{{ __('tm_shift_master_code.label_choose') }}</option>
+                                <option value="">{{ __('tm_shift_master_code.label_choose_sa') }}</option>
                                 <option value="N">{{ __('tm_shift_master_code.label_no') }}</option>
                                 <option value="O">{{ __('tm_shift_master_code.label_yes_if_overtime') }}</option>
                                 <option value="Y">{{ __('tm_shift_master_code.label_yes') }}</option>
@@ -497,7 +497,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select type="text" class="form-control" id="sa_friday_option" name="sa_friday_option">
-                                <option value="">{{ __('tm_shift_master_code.label_choose') }}</option>
+                                <option value="">{{ __('tm_shift_master_code.label_choose_sa') }}</option>
                                 <option value="N">{{ __('tm_shift_master_code.label_no') }}</option>
                                 <option value="O">{{ __('tm_shift_master_code.label_yes_if_overtime') }}</option>
                                 <option value="Y">{{ __('tm_shift_master_code.label_yes') }}</option>
@@ -520,7 +520,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select type="text" class="form-control" id="sa_saturday_option" name="sa_saturday_option">
-                                <option value="">{{ __('tm_shift_master_code.label_choose') }}</option>
+                                <option value="">{{ __('tm_shift_master_code.label_choose_sa') }}</option>
                                 <option value="N">{{ __('tm_shift_master_code.label_no') }}</option>
                                 <option value="O">{{ __('tm_shift_master_code.label_yes_if_overtime') }}</option>
                                 <option value="Y">{{ __('tm_shift_master_code.label_yes') }}</option>
