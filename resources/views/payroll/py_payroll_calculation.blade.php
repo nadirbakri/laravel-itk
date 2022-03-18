@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_payroll_calculation.judul') }}</title>
+	<title>{{ __('payroll_calculation.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -67,48 +67,48 @@
             <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
-                <span>{{ __('payroll_payroll_calculation.label_back') }}</span>
+                <span>{{ __('payroll_calculation.label_back') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
-                <span>{{ __('payroll_payroll_calculation.label_next') }}</span>
+                <span>{{ __('payroll_calculation.label_next') }}</span>
             </a>
             <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
-                <span>{{ __('payroll_payroll_calculation.label_new') }}</span>
+                <span>{{ __('payroll_calculation.label_new') }}</span>
             </a>
             <a href="javascript:void(0)" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
-                <span>{{ __('payroll_payroll_calculation.label_edit') }}</span>
+                <span>{{ __('payroll_calculation.label_edit') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
-                <span>{{ __('payroll_payroll_calculation.btn_save') }}</span>
+                <span>{{ __('payroll_calculation.btn_save') }}</span>
             </a>
             <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
                 <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
-                <span>{{ __('payroll_payroll_calculation.label_activate') }}</span>
+                <span>{{ __('payroll_calculation.label_activate') }}</span>
             </a>
             <a class="list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
-                <span>{{ __('payroll_payroll_calculation.label_deactivate') }}</span>
+                <span>{{ __('payroll_calculation.label_deactivate') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
-                <span>{{ __('payroll_payroll_calculation.label_list') }}</span>
+                <span>{{ __('payroll_calculation.label_list') }}</span>
             </a>
         </div>
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_payroll_calculation.list') }}</span>
+				<span class="title-text">{{ __('payroll_calculation.list') }}</span>
 			</a>
 		</div>
 
@@ -117,9 +117,9 @@
 				<thead>
 					<tr>
                         <th></th>
-						<th>{{ __('payroll_payroll_calculation.label_field_name') }}</th>
-						<th>{{ __('payroll_payroll_calculation.label_sequence') }}</th>
-                        <th>{{ __('payroll_payroll_calculation.label_record_status') }}</th>
+						<th>{{ __('payroll_calculation.label_field_name') }}</th>
+						<th>{{ __('payroll_calculation.label_sequence') }}</th>
+                        <th>{{ __('payroll_calculation.label_record_status') }}</th>
 					</tr>
 				</thead>
 			</table>
@@ -151,7 +151,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_payroll_calculation.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_calculation.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -243,19 +243,18 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.ajax({
-                    url: "{{ url('payroll/account/status') }}",
+                    url: "{{ url('payroll/payroll_calculation/status') }}",
                     type: "GET",
                     data: { 
-                        'accountNo' : data[0].accountNo, 
-                        'accountDescription' : data[0].accountDescription,
-                        'reference' : data[0].reference,
+                        'fieldName' : data[0].fieldName, 
+                        'seqProcess' : data[0].seqProcess,
                         'func' : 'A' },
                     success: function(response) {
                         if(response.status == "true"){
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function(){ 
-                                window.location = "{{ url('payroll/account') }}";
+                                window.location = "{{ url('payroll/payroll_calculation') }}";
                             }, 3000);
                         }else{
                             $('#notification_error').modal('show');
@@ -283,19 +282,18 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.ajax({
-                    url: "{{ url('payroll/account/status') }}",
+                    url: "{{ url('payroll/payroll_calculation/status') }}",
                     type: "GET",
                     data: { 
-                        'accountNo' : data[0].accountNo, 
-                        'accountDescription' : data[0].accountDescription,
-                        'reference' : data[0].reference,
+                        'fieldName' : data[0].fieldName, 
+                        'seqProcess' : data[0].seqProcess,
                         'func' : 'D' },
                     success: function(response) {
                         if(response.status == "true"){
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function(){ 
-                                window.location = "{{ url('payroll/account') }}";
+                                window.location = "{{ url('payroll/payroll_calculation') }}";
                             }, 3000);
                         }else{
                             $('#notification_error').modal('show');
@@ -321,7 +319,7 @@
 
         $('#payroll_calculation_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/account/detail') }}", { 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/payroll_calculation/detail') }}", { 'fieldName' : data.fieldName, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     })
 </script>

@@ -105,9 +105,9 @@
                 <span>{{ __('payroll_multi_cost_center.label_list') }}</span>
             </a>
             <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-delete">
-                <img src="{{ url('/icons/functionbar/x.svg') }}" alt="Delete">
-                <img src="{{ url('/icons/functionbar/x.svg') }}" class="functionbar-hover" alt="Delete">
-                <span>Delete</span>
+                <img src="{{ url('/icons/functionbar/remove.svg') }}" alt="Delete">
+                <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
+                <span>{{ __('payroll_multi_cost_center.label_delete') }}</span>
             </a>
         </div>
         <div class="div-title">

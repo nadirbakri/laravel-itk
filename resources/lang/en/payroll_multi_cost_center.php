@@ -9,6 +9,7 @@ return [
     'label_list' => 'List',
     'label_new' => 'New',
     'label_edit' => 'Edit',
+    'label_delete' => 'Delete',
     'label_employee_no' => 'Employee No',
     'label_year' => 'Year',
     'label_month' => 'Month',
@@ -16,9 +17,6 @@ return [
     'label_employee_name' => 'Employee Name',
     'label_month_year' => 'Month / Year',
     'label_period' => 'Period',
-    'employee_no_required' => 'Employee No Required',
-    'month_year_required' => 'Month / Year Required',
-    'period_required' => 'Period Required',
     'label_cost_center' => 'Cost Center',
     'label_description' => 'Description',
     'label_percentage' => 'Percentage',
@@ -27,7 +25,8 @@ return [
     'btn_add' => 'Add',
     'btn_cancel' => 'Cancel',
     'btn_remove'=> 'Remove',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'field_mandatory' => "This field can't be blank"
 
 ]
 

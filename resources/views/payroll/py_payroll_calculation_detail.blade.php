@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_payroll_calculation.judul') }}</title>
+    <title>{{ __('payroll_calculation.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -74,32 +74,38 @@
             font-size: 2.5vw;
             margin-left: 0.5%;
         }
+
+        .required {
+            color: red;
+        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <form id="payroll_payroll_calculation_detail_form" method="post">
+        <form id="payroll_calculation_detail_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll/payroll_calculation') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_payroll_calculation.list_detail') }}</span>
+                        <span class="title-text">{{ __('payroll_calculation.list_detail') }}</span>
                     </a>
                 </div>
                 <div class="div-form">
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="field_name">{{ __('payroll_payroll_calculation.label_field_name') }}</label>
+                                <label for="field_name">{{ __('payroll_calculation.label_field_name') }}</label>
+                                <span class="required">*</span>
                                 <select class="form-control select2" id="field_name" name="field_name"></select>
                             </div>
                             <input type="text" class="form-control" id="record_function" name="record_function" hidden>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="sequence">{{ __('payroll_payroll_calculation.label_sequence') }}</label>
+                                <label for="sequence">{{ __('payroll_calculation.label_sequence') }}</label>
+                                <span class="required">*</span>
                                 <input type="text" class="form-control" name="sequence" id="sequence">
                             </div>
                         </div>
@@ -109,9 +115,9 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>{{ __('payroll_payroll_calculation.label_no') }}</th>
-                                    <th>{{ __('payroll_payroll_calculation.label_condition') }}</th>
-                                    <th>{{ __('payroll_payroll_calculation.label_formula') }}</th>
+                                    <th>{{ __('payroll_calculation.label_no') }}</th>
+                                    <th>{{ __('payroll_calculation.label_condition') }}</th>
+                                    <th>{{ __('payroll_calculation.label_formula') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -119,20 +125,20 @@
                     <div class="row">
                         <div class="col-2">
                             <button type="button" class="btn btn-primary" name="btn-add" id="btn-add"
-                                style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_payroll_payroll_calculation">
-                                <i class="fa fa-plus"></i> {{ __('payroll_payroll_calculation.btn_add') }}
+                                style="width: 100%;" data-toggle="modal" data-target="#modal_add_edit_payroll_calculation">
+                                <i class="fa fa-plus"></i> {{ __('payroll_calculation.btn_add') }}
                             </button>
                         </div>
                         <div class="col-2">
                             <button type="button" class="btn btn-primary" name="btn-edit" id="btn-edit"
                                 style="width: 100%;">
-                                <i class="fa fa-pencil"></i> {{ __('payroll_payroll_calculation.btn_edit') }}
+                                <i class="fa fa-pencil"></i> {{ __('payroll_calculation.btn_edit') }}
                             </button>
                         </div>
                         <div class="col-2">
                             <button type="button" class="btn btn-danger" name="btn-remove" id="btn-remove"
                                     style="width: 100%;">
-                                <i class="fa fa-times"></i> {{ __('payroll_payroll_calculation.btn_remove') }}
+                                <i class="fa fa-times"></i> {{ __('payroll_calculation.btn_remove') }}
                             </button>
                         </div>
                     </div>
@@ -140,23 +146,28 @@
                         <div class="col-3">
                             <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                                 style="width: 100%;">
-                                <i class="fa fa-floppy-o"></i> {{ __('payroll_payroll_calculation.btn_save') }}
+                                <i class="fa fa-floppy-o"></i> {{ __('payroll_calculation.btn_save') }}
                             </button>
                         </div>
                         <div class="col-3">
-                            <a class="btn btn-primary" href="{{ url('payroll/report_format') }}" target="iframe_dashboard"
+                            <a class="btn btn-primary" href="{{ url('payroll/payroll_calculation') }}" target="iframe_dashboard"
                                 name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                                <i class="fa fa-times-circle"></i> {{ __('payroll_payroll_calculation.btn_cancel') }}
+                                <i class="fa fa-times-circle"></i> {{ __('payroll_calculation.btn_cancel') }}
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modal_add_edit_payroll_payroll_calculation" tabindex="-1" role="dialog" aria-hidden="true">
+        </form>
+    </div>
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_add_edit_payroll_calculation" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">{{ __('payroll_payroll_calculation.list') }}</h5>
+                            <h5 class="modal-title">{{ __('payroll_calculation.list') }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -165,10 +176,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="no">{{ __('payroll_payroll_calculation.label_no') }}</label>
+                                        <label for="no">{{ __('payroll_calculation.label_no') }}</label>
                                         <span class="required">*</span>
                                         <input type="text" class="form-control" id="no" name="no"
-                                            placeholder="{{ __('payroll_payroll_calculation.label_no') }}">
+                                            placeholder="{{ __('payroll_calculation.label_no') }}">
                                     </div>
                                 </div>
                             </div>
@@ -176,10 +187,10 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label
-                                            for="table_chooser">{{ __('payroll_payroll_calculation.label_table_chooser') }}</label>
+                                            for="table_chooser">{{ __('payroll_calculation.label_table_chooser') }}</label>
                                         <span class="required">*</span>
                                         <select class="form-control select2" id="table_chooser" name="table_chooser">
-                                            <option value="" disabled selected>{{ __('payroll_payroll_calculation.label_select_table_chooser') }}</option>
+                                            <option value="" disabled selected>{{ __('payroll_calculation.label_select_table_chooser') }}</option>
                                             <option value="PeMaster">PeMaster</option>
                                             <option value="TmFixedComponent">TmFixedComponent</option>
                                             <option value="PrSalaryMaster">PrSalaryMaster</option>
@@ -191,7 +202,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label
-                                            for="field_chooser">{{ __('payroll_payroll_calculation.label_field_chooser') }}</label>
+                                            for="field_chooser">{{ __('payroll_calculation.label_field_chooser') }}</label>
                                         <span class="required">*</span>
                                         <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
                                     </div>
@@ -200,13 +211,13 @@
                             <div class="row">
                                 <div class="col-3">
                                     <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
-                                        {{ __('payroll_payroll_calculation.btn_add_to_formula') }}
+                                        {{ __('payroll_calculation.btn_add_to_formula') }}
                                     </button>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="preview_formula">{{ __('payroll_payroll_calculation.label_preview_formula') }}</label>
+                                        <label for="preview_formula">{{ __('payroll_calculation.label_preview_formula') }}</label>
                                         <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
                                     </div>
                                 </div>
@@ -214,22 +225,22 @@
                             <div class="row">
                                 <div class="col-3">
                                     <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
-                                        {{ __('payroll_payroll_calculation.btn_add_to_condition') }}
+                                        {{ __('payroll_calculation.btn_add_to_condition') }}
                                     </button>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="preview_condition">{{ __('payroll_payroll_calculation.label_preview_condition') }}</label>
+                                        <label for="preview_condition">{{ __('payroll_calculation.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" id="btn-save" class="btn btn-primary w-25"><i 
-                                    class="fa fa-floppy-o"></i> {{ __('payroll_payroll_calculation.btn_save') }}</button>
+                                <button type="button" id="btn-save-detail" class="btn btn-primary w-25"><i 
+                                    class="fa fa-floppy-o"></i> {{ __('payroll_calculation.btn_save') }}</button>
                                 <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                                    class="fa fa-times-circle"></i> {{ __('payroll_payroll_calculation.btn_cancel') }}</button>
+                                    class="fa fa-times-circle"></i> {{ __('payroll_calculation.btn_cancel') }}</button>
                             </div>
                         </div>
                     </div>
@@ -264,7 +275,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_payroll_calculation.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_calculation.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -292,10 +303,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var arrData = @json($data);
+        var func = "{{ $func }}";
         var table = null;
         var tableChooser = null;
         var fieldChooser = null;
-        var arrayTHRFormulaDetail = null;
 
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
@@ -318,17 +329,40 @@
             $('#record_function').val('New');
             $('#field_name').val(null).trigger('change');
             $('#sequence').val('');
-            $('#payroll_calculation_detail_table').DataTable().destroy();
-            load_table_payroll_calculation_detail();
-
         }
 
         else {
             $('#record_function').val('Edit');
-            $('#bonus_date').prop('readonly', true);
-            pickerBonusDate._input.setAttribute("disabled", "disabled");
-
-            pickerBonusDate.setDate(((typeof arrData[0].bonusDate !== 'undefined') ? arrData[0].bonusDate : ''));
+            $('#sequence').val(((typeof arrData[0].seqNo !== 'undefined') ? arrData[0].seqNo : ''));
+            $('#payroll_calculation_detail_table').DataTable().destroy();
+            load_table_payroll_calculation_detail("{{ isset($data[0]->fieldName) ? $data[0]->fieldName : '' }}");
+            $.ajax({
+                type: 'GET',
+                url: '/field_name_salary_component/api',
+                data: {
+                    'fieldName': "{{ isset($data[0]->fieldName) ? $data[0]->fieldName : '' }}"
+                }
+            }).then(function (data) {
+                // var option = new Option(data.positionCode, data.positionCode, true, true);
+                var option = $('<option/>', {
+                    id: item.fieldName,
+                    text: item.fieldName,
+                    title: item.description
+                });
+                $("#field_name").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
+                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
+                $("#field_name").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: item.fieldName,
+                        text: item.fieldName,
+                        data: data
+                    }
+                });
+            });
+            
         }
 
         $('#btn-add').on('click', function () {
@@ -356,6 +390,71 @@
                 $('#preview_condition').val(tableChooser + "." + fieldChooser);
             })
         });
+
+        loadDataFieldName();
+
+        function loadDataFieldName() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Field Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.fieldName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#field_name').select2({
+                width: '100%',
+                placeholder: 'Choose Field Name',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: false,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/field_name_salary_component/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.fieldName,
+                                    id: item.fieldName,
+                                    title: item.description,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
@@ -391,49 +490,59 @@
             }
         });
 
-        $('#payroll_calculation_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
-            var data = table.row(this).data();
-            console.log(data);
-        });
-
-        load_table_payroll_calculation_detail();
-
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_table_payroll_calculation_detail() {
+        function load_table_payroll_calculation_detail(fieldName = '') {
             table = $('#payroll_calculation_detail_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: 
-                    {
-                        url : "{{ url('payroll/payroll_calculation_detail/table') }}",
-                        data: {
-                            'religionCode' : $('#religion_code').val()
-                        }
-                    },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                ajax: {
+                    url: "{{ url('payroll/payroll_calculation_detail/table') }}",
+                    data: {
+                        fieldName: fieldName
+                    }
+                },
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
+                        "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
+                "order": [
+                    [2, "asc"]
+                ],
+                columns: [{
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
                     {
                         orderable: false,
-                        targets: 0, 
+                        targets: 0,
                         "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'no', name: 'no'},
-                    {data: 'condition', name: 'condition'},
-                    {data: 'formula', name: 'formula'},
+                    {
+                        data: 'seqNo',
+                        name: 'seqNo'
+                    },
+                    {
+                        data: 'condition',
+                        name: 'condition'
+                    },
+                    {
+                        data: 'formula',
+                        name: 'formula'
+                    }
                 ],
                 select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
+                    style: 'multi',
+                    selector: 'td:nth-child(2)'
                 }
             });
         }
@@ -500,17 +609,41 @@
             });
         }
 
+        $('#modal_add_edit_payroll_calculation').on('show.bs.modal', function () {
+            if (func == 'new') {
+                var count = table.rows().count();
+                $('#no').val(count+1);
+            }
+
+            else {
+                $.ajax({
+                    url: "{{ url('payroll/payroll_calculation_number/check') }}",
+                    type: "GET",
+                    data: {
+                        'url': '/prcalculation/getprcalculationdetail',
+                        'fieldName': "{{ $data[0]->fieldName }}"
+                    },
+                    success: function (response) {
+                        $('#no').val(response);
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        });
+
         $("#btn-remove").on('click', function () {
             var data = table.rows('.selected').data();
 
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('payroll/thr_formula/remove') }}",
+                    url: "{{ url('payroll/payroll_calculation/remove') }}",
                     type: "GET",
                     data: {
-                        'religionCode' : data[0].religionCode,
-                        'serviceMonthFrom' : data[0].serviceMonthFrom,
-                        'serviceMonthTo' : data[0].serviceMonthTo,
+                        'fieldName' : data[0].fieldName,
+                        'seqNo' : data[0].seqNo,
                         'formula' : data[0].formula,
                         'condition' : data[0].condition,
                     },
@@ -520,7 +653,7 @@
                             $('#message-notification-success').html(response
                                 .message);
                             $('#payroll_calculation_detail_table').DataTable().destroy();
-                            load_data_table_payroll_calculation_detail();
+                            load_table_payroll_calculation_detail();
                             setTimeout(function () {
                                 $('#notification_success').modal('hide');
                             }, 3000);
@@ -545,24 +678,18 @@
             }
         });
 
-        $("#btn-save").click(function () {
+        $("#btn-save-detail").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#thr_formula_detail_form").submit();
+            $("#payroll_calculation_detail_modal_form").submit();
         });
 
-        if ($("#thr_formula_detail_form").length > 0) {
-            $("#thr_formula_detail_form").validate({
+        if ($("#payroll_calculation_detail_modal_form").length > 0) {
+            $("#payroll_calculation_detail_modal_form").validate({
             rules: {
-                    religion_code: {
-                        required: true,
-                    },
-                    service_month_from: {
-                        required: true,
-                    },
-                    service_month_to: {
+                    no: {
                         required: true,
                     },
                     table_chooser: {
@@ -573,20 +700,14 @@
                     }
                 },
                 messages: {
-                    religion_code: {
-                        required: "{{ __('payroll_thr_formula.field_mandatory') }}",
-                    },
-                    service_month_from: {
-                        required: "{{ __('payroll_thr_formula.field_mandatory') }}",
-                    },
-                    service_month_to: {
-                        required: "{{ __('payroll_thr_formula.field_mandatory') }}",
+                    no: {
+                        required: "{{ __('payroll_calculation.field_mandatory') }}",
                     },
                     table_chooser: {
-                        required: "{{ __('payroll_thr_formula.field_mandatory') }}",
+                        required: "{{ __('payroll_calculation.field_mandatory') }}",
                     },
                     field_chooser: {
-                        required: "{{ __('payroll_thr_formula.field_mandatory') }}",
+                        required: "{{ __('payroll_calculation.field_mandatory') }}",
                     },
                 },
                 highlight: function (element) {
@@ -599,7 +720,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_formula.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -612,14 +733,14 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/thr_formula/proses') }}",
+                        url: "{{ url('payroll/payroll_calculation_detail/proses') }}",
                         type: "POST",
-                        data: $('#thr_formula_detail_form').serialize(),
+                        data: $('#payroll_calculation_detail_modal_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_formula.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -627,12 +748,12 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/thr_formula') }}";
+                                        "{{ url('payroll/payroll_calculation') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_formula.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -649,7 +770,105 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_thr_formula.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#payroll_calculation_detail_form").submit();
+        });
+
+        if ($("#payroll_calculation_detail_form").length > 0) {
+            $("#payroll_calculation_detail_form").validate({
+            rules: {
+                    field_name: {
+                        required: true,
+                    },
+                    sequence: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    field_name: {
+                        required: "{{ __('payroll_calculation.field_mandatory') }}",
+                    },
+                    sequence: {
+                        required: "{{ __('payroll_calculation.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/payroll_calculation/proses') }}",
+                        type: "POST",
+                        data: $('#payroll_calculation_detail_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/payroll_calculation') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
                             );
 
                             $('#notification').modal('show');
