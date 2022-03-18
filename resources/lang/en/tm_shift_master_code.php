@@ -45,6 +45,7 @@ return [
     'label_max' => 'Max',
     'label_after' => 'After',
     'label_shift_allowance' => 'Shift Allowance',
+    'label_choose_sa' => 'Choose Shift Allowance',
     'label_no' => 'No',
     'label_yes_if_overtime' => 'Yes If Overtime',
     'label_yes' => 'Yes',
