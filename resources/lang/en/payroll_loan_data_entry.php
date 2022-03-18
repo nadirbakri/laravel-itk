@@ -28,6 +28,7 @@ return [
     'label_termination_loan' => 'Termination Loan',
     'label_paid_on' => 'Paid On',
     'label_select_payment_type' => 'Choose Payment Type',
+    'label_select_paid_table' => 'True/False',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'

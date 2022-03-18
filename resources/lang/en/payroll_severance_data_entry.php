@@ -15,9 +15,13 @@ return [
     'label_total_amount' => 'Total Amount',
     'label_amount' => 'Amount',
     'label_adjusment' => 'Adjusment',
+    'label_delete_data' => 'Will The Data Be Deleted?',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
+    'btn_yes' => 'Yes',
+    'btn_no' => 'No',
     'alert_success' => 'Success !',
+    'alert_warning' => 'Warning',
     'field_mandatory' => "This field can't be blank"
 ]
 

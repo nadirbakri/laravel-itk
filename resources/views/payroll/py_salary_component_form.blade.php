@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_severance_data_entry.judul') }}</title>
+	<title>{{ __('payroll_salary_component_data.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -40,16 +40,6 @@
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
         }
-        .modal-header-notification-warning {
-            border-bottom: 1px solid #eee;
-            background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
         .div-title-notification {
             margin: 1.5%;
             margin-top: 2%;
@@ -58,16 +48,6 @@
             text-decoration: none;
             display: flex;
             align-items:center;
-            justify-content: center;
-        }
-        .div-title-notification-warning {
-            margin: 1.5%;
-            margin-top: 2%;
-            margin-bottom: 2%;
-            font-family: Monserrat;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
             justify-content: center;
         }
         .div-title-notification img {
@@ -80,11 +60,6 @@
             font-weight: 700;
             font-size: 2.5vw;
             margin-left: 0.5%;
-        }
-        .title-text-notification-warning {
-            font-family: Inter;
-            font-weight: 500;
-            font-size: 2.5vw;
         }
 	</style>
 </head>
@@ -132,12 +107,12 @@
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
                 <span>List</span>
             </a>
-            <a class="list-functionbar-sm" href="javascript:void(0)" id="toolbar-delete">
+            <a class="list-functionbar-sm" style="display: none;" href="javascript:void(0)" id="toolbar-delete">
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" alt="Delete">
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
             </a>
-            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process">
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_salary_component_data">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
                 <span>Process</span>
@@ -146,51 +121,24 @@
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_severance_data_entry.list') }}</span>
+				<span class="title-text">{{ __('payroll_salary_component_data.list') }}</span>
 			</a>
 		</div>
         <div class="div-table">
-			<table id="severance_data_entry_table" class="table hover" style="width:100%">
+			<table id="salary_component_data_table" class="table hover" style="width: 100%">
 				<thead>
 					<tr>
                         <th></th>
-						<th>Employee No</th>
-						<th>Employee Name</th>
-                        <th>Payment Date</th>
-                        <th>Payment For</th>
-						<th>Total Amount</th>
+						<th>Field Name</th>
+						<th>Description</th>
+                        <th>Display In</th>
+                        <th>Field Type</th>
+                        <th>Tax</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
-    <div class="modal fade" id="modal_warning_severance_data_entry" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header modal-header-notification-warning text-center">
-                    <h5 class="modal-title w-100 title-text-notification-warning">{{ __('payroll_severance_data_entry.alert_warning') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group" style="text-align: center;">
-                                <label for="delete_data">{{ __('payroll_severance_data_entry.label_delete_data') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="submit" id="btn-yes" name="btn-yes" class="btn btn-primary w-25"><i 
-                            class="fa fa-floppy-o"></i> {{ __('payroll_severance_data_entry.btn_yes') }}</button>
-                        <button type="submit" id="btn-no" class="btn btn-primary w-25" data-dismiss="modal"><i
-                            class="fa fa-floppy-o"></i> {{ __('payroll_severance_data_entry.btn_no') }}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -217,7 +165,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_severance_data_entry.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_salary_component_data.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -247,8 +195,8 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#severance_data_entry_table thead tr').clone(true).appendTo('#severance_data_entry_table thead');
-        $('#severance_data_entry_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#salary_component_data_table thead tr').clone(true).appendTo('#salary_component_data_table thead');
+        $('#salary_component_data_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
 
@@ -262,16 +210,16 @@
             } );
         });
 
-        load_data_table_severance_data_entry();
+        load_data_table_salary_component_data();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_severance_data_entry() {
-            table = $('#severance_data_entry_table').DataTable({
+        function load_data_table_salary_component_data() {
+            table = $('#salary_component_data_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('payroll/severance_data_entry/table') }}",
+                ajax: "{{ url('payroll/salary_component_data/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -287,17 +235,55 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    { data: 'employeeNo', name: 'employeeNo' },
-                    { data: 'employeeName', name: 'employeeName' },
-                    { 
-                        data: 'paymentDate', 
-                        name: 'paymentDate',
+                    {data: 'fieldName', name: 'fieldName'},
+                    {data: 'description', name: 'description'},
+                    {
+                        data: 'displayIn', 
+                        name: 'displayIn',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MMM-YYYY');
+                            if (data === 'M') {
+                                return 'Salary Master';
+                            } else if (data === 'T') {
+                                return 'Annual Data Entry';
+                            } else if (data === 'F') {
+                                return 'Tariff Master';
+                            } else {
+                                return 'Not Display';
+                            }
                         }
                     },
-                    { data: 'paymentFor', name: 'paymentFor' },
-                    { data: 'totalAmount', name: 'totalAmount' },
+                    {
+                        data: 'fieldType', 
+                        name: 'fieldType',
+                        render: function (data, type, row) {
+                            if (data === 'T') {
+                                return 'Fixed Allowance';
+                            } else if (data === 'N') {
+                                return 'Non Fixed Allowance';
+                            } else if (data === 'L') {
+                                return 'Others';
+                            } else if (data === 'P') {
+                                return 'Fixed Deduction';
+                            } else if (data === 'A') {
+                                return 'Non Fixed Deduction';
+                            } else {
+                                return 'Flag';
+                            }
+                        }
+                    },
+                    {
+                        data: 'flagTax', 
+                        name: 'flagTax',
+                        render: function (data, type, row) {
+                            if (data === 'T') {
+                                return 'Increase Tax';
+                            } else if (data === 'T') {
+                                return 'Non Taxable';
+                            } else {
+                                return 'Decrease Tax';
+                            }
+                        }
+                    },
                 ],
                 select: {
                     style:    'multi',
@@ -307,11 +293,9 @@
         }
 
         $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('payroll/severance_data_entry/detail_data') }}", 
+            $.redirect("{{ url('payroll/salary_component_data/detail_data') }}", 
             { 
-                'employeeNo' : null,
-                'paymentDate' : null,
-                'paymentFor' : null,
+                'fieldName' : null,
                 'func' : 'new' 
             }, 
             "GET", "iframe_dashboard");
@@ -320,12 +304,10 @@
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/severance_data_entry/detail_data') }}", 
+                $.redirect("{{ url('payroll/salary_component_data/detail_data') }}", 
                 { 
-                    'employeeNo' : data[0].employeeNo,
-                    'paymentDate' : data[0].paymentDate,
-                    'paymentFor' : data[0].paymentFor,
-                    'func' : 'edit'
+                    'fieldName' : data[0].fieldName,
+                    'func' : 'edit' 
                 }, 
                 "GET", "iframe_dashboard");
             }else{
@@ -334,72 +316,15 @@
             }
         });
 
-        $('#severance_data_entry_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#salary_component_data_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/severance_data_entry/detail_data') }}", 
+            $.redirect("{{ url('payroll/salary_component_data/detail_data') }}", 
             {   
-                'employeeNo' : data.employeeNo,
-                'paymentDate' : data.paymentDate,
-                'paymentFor' : data.paymentFor,
-                'func' : 'edit'
+                'fieldName' : data.fieldName,
+                'func' : 'edit' 
             }, 
             "GET", "iframe_dashboard");
         });
-
-        $("#toolbar-delete").on('click', function () {
-            var data = table.rows('.selected').data().toArray();
-
-            if (data.length > 0) {
-                $('#modal_warning_severance_data_entry').modal('show');
-            } else {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html('No Data Selected');
-            }
-        });
-
-        $('#btn-yes').on('click', function () {
-            var data = table.rows('.selected').data().toArray();
-
-            if (data.length > 0) {
-                $.ajax({
-                    url: "{{ url('payroll/severance_data_entry/remove') }}",
-                    type: "GET",
-                    data: {
-                        'employeeNo' : data[0].employeeNo,
-                        'employeeName' : data[0].employeeName,
-                        'paymentDate' : data[0].paymentDate,
-                        'paymentFor' : data[0].paymentFor,
-                        'totalAmount' : data[0].totalAmount,
-                    },
-                    success: function (response) {
-                        if (response.status == "true") {
-                            $('#notification_success').modal('show');
-                            $('#message-notification-success').html(response
-                                .message);
-                            $('#severance_data_entry_table').DataTable().destroy();
-                            load_data_table_severance_data_entry();
-                            setTimeout(function () {
-                                $('#notification_success').modal('hide');
-                            }, 3000);
-                            $('#modal_warning_severance_data_entry').modal('hide');
-                        } else {
-                            $('#notification_error').modal('show');
-                            if (response.message == null || response.message == '') {
-                                $('#message-notification-error').html(
-                                    "{{ __('login.error') }}");
-                            } else {
-                                $('#message-notification-error').html(response.message);
-                            }
-                        }
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            }
-        })
-
     })
 </script>
 

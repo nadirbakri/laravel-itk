@@ -129,7 +129,9 @@
                                 <th>Description</th>
                                 <th>Fixed Component</th>
                                 <th>Currency Code</th>
-                                <th>Amount</th>
+                                <th>Amount
+                                    <small class="text-muted">(0 - 0,9)</small>
+                                </th>
                                 <th style="display: none;">Field Type</th>
                             </tr>
                         </thead>

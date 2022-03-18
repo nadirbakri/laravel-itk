@@ -802,6 +802,39 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
+	public function dataCurrencyCodeLoanDataEntryAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'currencyCode' => $request->currencyCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
+
 	public function dataZipCodeAPI(Request $request)
     {
     	$search = $request->search;
@@ -6081,6 +6114,72 @@ class DataController extends Controller
         return response()->json($employees);
 	}
 
+	public function dataEmployeeNoSeveranceAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prpensionseverance/getprpensionseverance',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'employeeNo' => $request->employeeNo
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
+
+	public function dataEmployeeNoLoanDataEntryAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'employeeNo' => $request->employeeNo
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
+
 	public function dataPerformanceResultBonusTHRAPI(Request $request)
     {
     	try {
@@ -6236,7 +6335,7 @@ class DataController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            $response = $e->getResponse();
+			$response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6244,10 +6343,43 @@ class DataController extends Controller
             }else{
                 return view('error.bad_request');
             }
-        }
+	    }
 
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json($arrResult->dataListSet);
     }
+	
+	public function dataLoanCodeLoanDataEntryAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'loanCode' => $request->loanCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
 }

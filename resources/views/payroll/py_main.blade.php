@@ -170,9 +170,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/salary_component_form') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/salary_component_data') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.salary_component_form') }}</span>
+								<span class="child-title-text">{{ __('payroll.salary_component_data') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">

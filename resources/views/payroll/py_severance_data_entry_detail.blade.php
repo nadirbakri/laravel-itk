@@ -140,8 +140,8 @@
                             <span class="required">*</span>
                             <select class="form-control select2" id="payment_for" name="payment_for">
                                 <option value="" disabled selected>{{ __('payroll_severance_data_entry.label_select_payment_for') }}</option>
-                                <option value="pesangon">Pesangon</option>
-                                <option value="pensiun">Pensiun</option>
+                                <option value="Pesangon">Pesangon</option>
+                                <option value="Pensiun">Pensiun</option>
                             </select>
                         </div>
                     </div>
@@ -157,14 +157,16 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="amount">{{ __('payroll_severance_data_entry.label_amount') }}</label>
-                            <input type="number" class="form-control" id="amount" name="amount"
+                            <small class="text-muted">(0 - 0,9)</small>
+                            <input type="number" min=0 max=0.9 step=0.1 class="form-control" id="amount" name="amount"
                                 placeholder="{{ __('payroll_severance_data_entry.label_amount') }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="adjusment">{{ __('payroll_severance_data_entry.label_adjusment') }}</label>
-                            <input type="number" class="form-control" id="adjusment" name="adjusment"
+                            <label for="adjustment">{{ __('payroll_severance_data_entry.label_adjusment') }}</label>
+                            <small class="text-muted">(0 - 0,9)</small>
+                            <input type="number" min=0 max=0.9 step=0.1 class="form-control" id="adjustment" name="adjustment"
                                 placeholder="{{ __('payroll_severance_data_entry.label_adjusment') }}">
                         </div>
                     </div>
@@ -237,12 +239,10 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
+    $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
+        let pickerPaymentDate = $('.input-group input').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -256,12 +256,6 @@
                 });
             }
         });
-    }
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var func = '{{ $func }}';
         var arrData = @json($data);
@@ -277,17 +271,60 @@
             $('#total_amount').val('');
             $('#amount').val('');
             $('#adjustment').val('');
+
+            $('#employee_no').on('select2:select', function (e) {
+                var data = $('#employee_no').select2('data');
+                $.ajax({
+                    url: "{{ url('/employee_no/req_detail/api') }}",
+                    type: "GET",
+                    data : {
+                        'employeeNo': data[0].data
+                    },
+                    success: function(response) {
+                        $('#employee_name').val(response.fullName);
+                        $('#resign_date').val(moment(response.terminationDate).format('D-MMM-YYYY'));
+                    }
+                });
+            });
+
+            $('#employee_no').on('select2:unselecting', function (e) {
+                $('#employee_name').val('');
+            });
         }
         else {
             $('#record_function').val('Edit');
 
-            $('#employee_no').val(null).trigger('change');
-            $('#employee_no_hidden').val('');
-            $('#employee_name').val('');
-            $('#payment_for').val('');
-            $('#total_amount').val('');
-            $('#amount').val('');
-            $('#adjustment').val('');
+            $.ajax({
+                type: 'GET',
+                url: '/employee_no/severance/api',
+                data: {
+                    'employeeNo': (typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.employeeNo,
+                    title: data.employeeNo,
+                    text: data.employeeNo
+                });
+                $("#employee_no").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employee_no").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.employeeNo,
+                        text: data.employeeNo,
+                        data: data
+                    }
+                });
+            });
+            $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
+            $('#employee_name').val((typeof arrData[0].employeeName !== 'undefined') ? arrData[0].employeeName : '');
+            pickerPaymentDate.setDate((typeof arrData[0].paymentDate !== 'undefined') ? arrData[0].paymentDate : '');
+            $('#resign_date').val((typeof arrData[0].resignDate !== 'undefined') ? moment(arrData[0].resignDate).format('D-MMM-YYYY') : '');
+            $('#payment_for').val((typeof arrData[0].paymentFor !== 'undefined') ? arrData[0].paymentFor : '').trigger('change');
+            $('#total_amount').val((typeof arrData[0].totalAmount !== 'undefined') ? arrData[0].totalAmount : '');
+            $('#amount').val((typeof arrData[0].amount !== 'undefined') ? arrData[0].amount : '');
+            $('#adjustment').val((typeof arrData[0].adjustment !== 'undefined') ? arrData[0].adjustment : '');
         }
 
         loadDataEmployeeNo();
@@ -296,33 +333,13 @@
     	    return $("<textarea/>").html(value).text();
 	    }
 
-        $('#employee_no').on('select2:select', function (e) {
-            var data = $('#employee_no').select2('data');
-            $.ajax({
-                url: "{{ url('/employee_no/req_detail/api') }}",
-                type: "GET",
-                data : {
-                    'employeeNo': data[0].data
-                },
-                success: function(response) {
-                    var terminationDate = moment(response.terminationDate).format('DD-MM-YYYY');
-                    $('#employee_name').val(response.fullName);
-                    $('#resign_date').val(terminationDate);
-                }
-            });
-        });
-
-        $('#employee_no').on('select2:unselecting', function (e) {
-            $('#employee_name').val('');
-        });
-
-        $('#amount, #adjusment').on('change', function () {
-            var amount = $('#amount').val();
-            var adjusment = $('#adjusment').val();
-            if (amount !== '' && amount !== null && adjusment !== '' && adjusment !== null) {
-                $('#total_amount').val(parseInt(amount) + parseInt(adjusment));
+        $('#amount, #adjustment').on('input', function () {
+            var amount = parseFloat($('#amount').val());
+            var adjustment = parseFloat($('#adjustment').val());
+            if (amount !== '' && amount !== null && adjustment !== '' && adjustment !== null) {
+                $('#total_amount').val(amount + adjustment);
             } else if (amount == '' || amount == null){
-                $('#total_amount').val(adjusment);
+                $('#total_amount').val(adjustment);
             } else {
                 $('#total_amount').val(amount);
             }
