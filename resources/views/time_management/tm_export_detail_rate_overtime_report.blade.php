@@ -28,7 +28,7 @@
                 <th rowspan="2">Status Day</th>
                 <th rowspan="2">Total Hours Ovt</th>
                 <th rowspan="2">Total Normal Hour</th>
-                <th colspan="2">Overtime</th>
+                <th colspan="4">Overtime</th>
                 <th rowspan="2">Total Ovt Index</th>
                 <th rowspan="2">Rate Hour</th>
                 <th rowspan="2">Overtime Rate</th>
@@ -43,12 +43,25 @@
 		<tbody>
             <?php $no = 1; ?>
 			@foreach($data as $value)
+			<?php $length_overtime = count($value->rateOvertime); ?>
 			<tr>
-                <td>{{ $no++ }}</td>
-				<td>{{ $value->employeeNo }}</td>
-				<td>{{ $value->fullName }}</td>
-				<td>{{ $value->valueString }}</td>
-				<td>{{ isset($value->valueNum) ? $value->valueNum : $value->valueDec }}</td>
+                <td rowspan="{{ $length_overtime }}">{{ $no++ }}</td>
+				<td rowspan="{{ $length_overtime }}">{{ $value->employeeNo }}</td>
+				<td rowspan="{{ $length_overtime }}">{{ $value->fullName }}</td>
+				@foreach($value->rateOvertime as $value2)
+					<td>{{ date('Y-m-d',strtotime($value2->absentDate)) }}</td>
+					<td>{{ $value2->day }}</td>
+					<td>{{ $value2->statusDay }}</td>
+					<td>{{ date('H:i',strtotime($value2->hourOvt)) }}</td>
+					<td>{{ date('H:i',strtotime($value2->totalNormalHour)) }}</td>
+					<td>{{ $value2->xfactor1 }}</td>
+					<td>{{ $value2->xfactor2 }}</td>
+					<td>{{ $value2->xfactor3 }}</td>
+					<td>{{ $value2->xfactor4 }}</td>
+					<td>{{ $value2->hourOvtCvt }}</td>
+					<td>{{ $value2->rateHour }}</td>
+					<td>{{ $value2->overtimeRate }}</td>
+				@endforeach
 			</tr>
 			@endforeach
 		</tbody>

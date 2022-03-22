@@ -101,8 +101,6 @@ class DetailRateOvertimeReportExport implements FromView
                 $param['overtimeCode'] = $data_field;
             }
 
-            var_dump(json_encode($param));
-
             $response = $client->post(env('API_URL') . '/detailrateovertimereport/getdetailrateovertimereport',
                 ['body' => json_encode($param)]
             );
