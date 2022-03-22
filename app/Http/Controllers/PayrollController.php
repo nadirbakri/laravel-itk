@@ -1135,9 +1135,15 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('payroll.py_account_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_account_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataMultiCostCenterPY(Request $request)
