@@ -13,6 +13,7 @@ return [
     'label_salary_from' => 'Salary Start',
     'label_salary_to' => 'Salary End',
     'btn_add' => 'Add',
+    'btn_edit' => 'Edit',
     'btn_remove' => 'Remove',
     'select_period' => 'Select Period',
     'btn_save' => 'Save',

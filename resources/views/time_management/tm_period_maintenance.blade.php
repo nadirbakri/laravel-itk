@@ -122,7 +122,7 @@
         </div>
         <div class="col-2">
             <button type="button" class="btn btn-primary" name="btn-edit" id="btn-edit"
-                style="width: 100%;" data-toggle="modal" data-target="#modal_add_overtime_spl">
+                style="width: 100%;">
                 <i class="fa fa-pencil"></i> {{ __('tm_period_maintenance.btn_edit') }}
             </button>
         </div>
@@ -357,34 +357,23 @@
 
 <script text="text/javascript">
     $(function () {
-        initDatePicker();
         selectMonth();
     });
 
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
+    function selectMonth() {
+        
     }
 
-    function selectMonth() {
-        $('.month input').flatpickr({
+    $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var table = null;
+
+        let pickerMonth = $('#month').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "F",
             dateFormat: "m",
-            // defaultDate: "today",
             plugins: [
                 new monthSelectPlugin({
                     shorthand: true, //defaults to false
@@ -399,14 +388,147 @@
                 $flatPickrInput.siblings("#month-calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
+            },
+            onClose: function(selectedDates, dateStr, instance) {
+                var year = $('#year').val();
+                var periodYear = moment(year).format('YY');
+                var month = $('#month').val();
+                var periodMonth = moment(month).format('MM');
+
+                if(year !== "" && month !== ""){
+                    $.ajax({
+                        url: "{{ url('/time_management/period_maintenance/data/detail') }}",
+                        type: "GET",
+                        success: function (response) {
+                            //absenteeism
+                            var absenteeism_from = moment(response[0].absenteeismEnd).format('MM/DD/YYYY');
+                            var add_absenteeism_date_from = moment(absenteeism_from).add(1, 'days');
+                            var absenteeism_date_from = year + '-' + periodMonth + '-' + moment(add_absenteeism_date_from).format('DD');
+                            pickerAbsenteeismDateFrom.setDate(absenteeism_date_from);
+
+                            var add_absenteeism_date_to = moment(absenteeism_date_from).add(1, 'months').subtract(1, 'days');
+                            var absenteeism_date_to = moment(add_absenteeism_date_to).format('YYYY-MM-DD');
+                            pickerAbsenteeismDateTo.setDate(absenteeism_date_to);
+
+                            //overtime
+                            var overtime_from = moment(response[0].overtimeEnd).format('MM/DD/YYYY');
+                            var add_overtime_date_from = moment(overtime_from).add(1, 'days');
+                            var overtime_date_from = year + '-' + periodMonth + '-' + moment(add_overtime_date_from).format('DD');
+                            pickerOvertimeDateFrom.setDate(overtime_date_from);
+
+                            var add_overtime_date_to = moment(overtime_date_from).add(1, 'months').subtract(1, 'days');
+                            var overtime_date_to = moment(add_overtime_date_to).format('YYYY-MM-DD');
+                            pickerOvertimeDateTo.setDate(overtime_date_to);
+
+                            //salary                    
+                            var salary_from = moment(response[0].salaryEnd).format('MM/DD/YYYY');
+                            var add_salary_date_from = moment(salary_from).add(1, 'days');
+                            var salary_date_from = year + '-' + periodMonth + '-' + moment(add_salary_date_from).format('DD');
+                            pickerSalaryDateFrom.setDate(salary_date_from);
+
+                            var add_salary_date_to = moment(salary_date_from).add(1, 'months').subtract(1, 'days');
+                            var salary_date_to = moment(add_salary_date_to).format('YYYY-MM-DD');
+                            pickerSalaryDateTo.setDate(salary_date_to);
+
+                        },
+                        error: function (response) {
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
             }
         });
-    }
 
-    $(document).ready(function () {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        let pickerAbsenteeismDateFrom = $('#absenteeism_from').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                    flatPickrInstance.togge();
+                });
+            }
+        });
 
-        var table = null;
+        let pickerAbsenteeismDateTo = $('#absenteeism_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerOvertimeDateFrom = $('#overtime_from').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerOvertimeDateTo = $('#overtime_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerSalaryDateFrom = $('#salary_from').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerSalaryDateTo = $('#salary_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
 
         $('#period_maintenance_table thead tr').clone(true).appendTo('#period_maintenance_table thead');
         $('#period_maintenance_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
@@ -497,200 +619,93 @@
                     selector: 'td:first-child'
                 }
             });
-            // console.log(data);
         }
-
-        var rangeYear = [];
 
         var prevYear = moment().subtract(5, 'years');
         var nextYear = moment().add(5, 'years');
 
-        // console.log(prevYear);
-
         var prevYear = moment(prevYear).format('YYYY');
         var nextYear = moment(nextYear).format('YYYY');
 
+        var attrYear = $('#year');
+
         for (var i = prevYear; i <= nextYear; i++){
-            rangeYear.push(i);
-            // var newDate = prevYear + 1;
-            $('#year').append($('<option></option>').val(i).html(i));
+            var option = $("<option/>", {
+                value: i,
+                text: i
+            });
+            attrYear.append(option);
         }
-        // console.log(rangeYear);
 
-        var year_month = $('#year, #month');
-
-        year_month.on('change', function () {
+        $('#year').change(function () {
             var year = $('#year').val();
             var periodYear = moment(year).format('YY');
-            // console.log(periodYear);
             var month = $('#month').val();
-            console.log(month);
             var periodMonth = moment(month).format('MM');
-            // console.log(month);
-            // console.log($('#month').val());
 
-            // console.log($('#absenteeism_from').val());
+            if(year !== "" && month !== ""){
+                $.ajax({
+                    url: "{{ url('/time_management/period_maintenance/data/detail') }}",
+                    type: "GET",
+                    success: function (response) {
+                        //absenteeism
+                        var absenteeism_from = moment(response[0].absenteeismEnd).format('MM/DD/YYYY');
+                        var add_absenteeism_date_from = moment(absenteeism_from).add(1, 'days');
+                        var absenteeism_date_from = year + '-' + periodMonth + '-' + moment(add_absenteeism_date_from).format('DD');
+                        pickerAbsenteeismDateFrom.setDate(absenteeism_date_from);
 
-            $.ajax({
-                url: "{{ url('/time_management/period_maintenance/data/detail') }}",
-                type: "GET",
-                success: function (response) {
-                    //absenteeism
-                    var absenteeism_from = moment(response[0].absenteeismEnd).format('MM/DD/YYYY');
-                    // console.log(response[0].absenteeismEnd);
-                    var add_absenteeism_date_from = moment(absenteeism_from).add(1, 'days');
-                    var absenteeism_date_from = year + '-' + periodMonth + '-' + moment(add_absenteeism_date_from).format('DD');
-                    // console.log(absenteeism_date_from);
-                    pickerAbsenteeismDateFrom.setDate(absenteeism_date_from);
+                        var add_absenteeism_date_to = moment(absenteeism_date_from).add(1, 'months').subtract(1, 'days');
+                        var absenteeism_date_to = moment(add_absenteeism_date_to).format('YYYY-MM-DD');
+                        pickerAbsenteeismDateTo.setDate(absenteeism_date_to);
 
-                    var add_absenteeism_date_to = moment(absenteeism_date_from).add(1, 'months').subtract(1, 'days');
-                    var absenteeism_date_to = moment(add_absenteeism_date_to).format('YYYY-MM-DD');
-                    // console.log(absenteeism_date_to);
-                    pickerAbsenteeismDateTo.setDate(absenteeism_date_to);
+                        //overtime
+                        var overtime_from = moment(response[0].overtimeEnd).format('MM/DD/YYYY');
+                        var add_overtime_date_from = moment(overtime_from).add(1, 'days');
+                        var overtime_date_from = year + '-' + periodMonth + '-' + moment(add_overtime_date_from).format('DD');
+                        pickerOvertimeDateFrom.setDate(overtime_date_from);
 
-                    //overtime
-                    var overtime_from = moment(response[0].overtimeEnd).format('MM/DD/YYYY');
-                    var add_overtime_date_from = moment(overtime_from).add(1, 'days');
-                    var overtime_date_from = year + '-' + periodMonth + '-' + moment(add_overtime_date_from).format('DD');
-                    pickerOvertimeDateFrom.setDate(overtime_date_from);
+                        var add_overtime_date_to = moment(overtime_date_from).add(1, 'months').subtract(1, 'days');
+                        var overtime_date_to = moment(add_overtime_date_to).format('YYYY-MM-DD');
+                        pickerOvertimeDateTo.setDate(overtime_date_to);
 
-                    var add_overtime_date_to = moment(overtime_date_from).add(1, 'months').subtract(1, 'days');
-                    var overtime_date_to = moment(add_overtime_date_to).format('YYYY-MM-DD');
-                    pickerOvertimeDateTo.setDate(overtime_date_to);
+                        //salary                    
+                        var salary_from = moment(response[0].salaryEnd).format('MM/DD/YYYY');
+                        var add_salary_date_from = moment(salary_from).add(1, 'days');
+                        var salary_date_from = year + '-' + periodMonth + '-' + moment(add_salary_date_from).format('DD');
+                        pickerSalaryDateFrom.setDate(salary_date_from);
 
-                    //salary                    
-                    var salary_from = moment(response[0].salaryEnd).format('MM/DD/YYYY');
-                    var add_salary_date_from = moment(salary_from).add(1, 'days');
-                    var salary_date_from = year + '-' + periodMonth + '-' + moment(add_salary_date_from).format('DD');
-                    pickerSalaryDateFrom.setDate(salary_date_from);
+                        var add_salary_date_to = moment(salary_date_from).add(1, 'months').subtract(1, 'days');
+                        var salary_date_to = moment(add_salary_date_to).format('YYYY-MM-DD');
+                        pickerSalaryDateTo.setDate(salary_date_to);
 
-                    var add_salary_date_to = moment(salary_date_from).add(1, 'months').subtract(1, 'days');
-                    var salary_date_to = moment(add_salary_date_to).format('YYYY-MM-DD');
-                    pickerSalaryDateTo.setDate(salary_date_to);
-                    // console.log($('#absenteeism_from'));
-                    // console.log($('#absenteeism_to'));
-
-                },
-                error: function (response) {
-                    $('#notification_error').modal('show');
-                    $('#message-notification-error').html(response);
-                }
-            });
-
-            let pickerAbsenteeismDateFrom = $('#absenteeism_from').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                // defaultDate: "today",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
-
-            let pickerAbsenteeismDateTo = $('#absenteeism_to').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                // defaultDate: "today",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
-
-            let pickerOvertimeDateFrom = $('#overtime_from').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                // defaultDate: "today",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
-
-            let pickerOvertimeDateTo = $('#overtime_to').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                // defaultDate: "today",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
-
-            let pickerSalaryDateFrom = $('#salary_from').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                // defaultDate: "today",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
-
-            let pickerSalaryDateTo = $('#salary_to').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                // defaultDate: "today",
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings("#absenteeism_from_calendar").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
         });
 
         $("#btn-add").on('click', function () {
             $('#record_function').val("New");
             $('#year').val("2017").trigger('change');
-            $('#month').val(null).trigger('change');
-            $('#period').val(null).trigger('change');
-            $('#absenteeism_from').val(null).trigger('change');
-            $('#absenteeism_to').val(null).trigger('change');
-            $('#overtime_from').val(null).trigger('change');
-            $('#overtime_to').val(null).trigger('change');
-            $('#salary_from').val(null).trigger('change');
-            $('#salary_to').val(null).trigger('change');
         });
 
         $("#btn-edit").on('click', function () {
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
-
+                $('#modal_add_overtime_spl').modal('show');
+                $('#record_function').val("Edit");
+                $('#year').val(data[0].periodYear).trigger('change');
+                pickerMonth.setDate(data[0].periodYear + "-" + data[0].periodMonth + "-01");
+                $('#period').val(data[0].period).trigger('change');
+                pickerAbsenteeismDateFrom.setDate(data[0].absenteeismStart);
+                pickerAbsenteeismDateTo.setDate(data[0].absenteeismEnd);
+                pickerOvertimeDateFrom.setDate(data[0].overtimeStart);
+                pickerOvertimeDateTo.setDate(data[0].overtimeEnd);
+                pickerSalaryDateFrom.setDate(data[0].salaryStart);
+                pickerSalaryDateTo.setDate(data[0].salaryEnd);
             } else {
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');

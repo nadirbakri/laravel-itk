@@ -13,6 +13,7 @@ return [
     'label_salary_from' => 'Gaji Dari',
     'label_salary_to' => 'Gaji Ke',
     'btn_add' => 'Tambah',
+    'btn_edit' => 'Ubah',
     'btn_remove' => 'Hapus',
     'select_month' => 'Pilih Bulan',
     'select_period' => 'Pilih Periode',

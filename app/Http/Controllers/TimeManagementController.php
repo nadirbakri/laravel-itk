@@ -1274,39 +1274,6 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'employeeNo' => $request->employee_no,
-                    "ovtDate" => $request->date_overtime_spl,
-                    "shiftCode" => $request->shift_overtime_spl,
-                    // "seqNo" => 2,
-                    "ovtIn" => $request->date_overtime_spl . "T" . $request->start_overtime_spl,
-                    "ovtOut" => $request->date_overtime_spl . "T" . $request->finish_overtime_spl,
-                    "ovtHour" => $request->date_overtime_spl . "T" . $request->hour_overtime_spl,
-                    "ovtConvert" => (int) $request->convert_overtime_spl,
-                    "ovtBeforeIn" => $request->date_overtime_spl . "T" . $request->before_in,
-                    "ovtCode" => $request->code_overtime_spl,
-                    "ovtDescription" => $request->description,
-                    "hrdApprove" => true,
-                    "leadApprove" => true,
-                    "xfactor1" => 0,
-                    "xfactor2" => 0,
-                    "xfactor3" => 0,
-                    "xfactor4" => 0,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "sessionID" => 0,
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => App::getLocale()
-                ]
-            ));
-
             $response = $client->post(env('API_URL') . '/tmovtspl/inserttmovtspl',
                 ['body' => json_encode(
                     [
@@ -1514,32 +1481,61 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmperiod',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'periodMonth' => (int) $request->month,
-                        'periodYear' => (int) $request->year,
-                        'period' => (int) $request->period,
-                        'salaryStart' => $request->salary_from,
-                        'salaryEnd' => $request->salary_to,
-                        'overtimeStart' => $request->overtime_from,
-                        'overtimeEnd' => $request->overtime_to,
-                        'absenteeismStart' => $request->absenteeism_from,
-                        'absenteeismEnd' => $request->absenteeism_to,
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        'sessionID' => 0,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        "languageCode" => App::getLocale()
-                    ]
-                )]
-            );
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/tmperiod',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'periodMonth' => (int) $request->month,
+                            'periodYear' => (int) $request->year,
+                            'period' => (int) $request->period,
+                            'salaryStart' => $request->salary_from,
+                            'salaryEnd' => $request->salary_to,
+                            'overtimeStart' => $request->overtime_from,
+                            'overtimeEnd' => $request->overtime_to,
+                            'absenteeismStart' => $request->absenteeism_from,
+                            'absenteeismEnd' => $request->absenteeism_to,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionID' => 0,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/tmperiod',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'periodMonth' => (int) $request->month,
+                            'periodYear' => (int) $request->year,
+                            'period' => (int) $request->period,
+                            'salaryStart' => $request->salary_from,
+                            'salaryEnd' => $request->salary_to,
+                            'overtimeStart' => $request->overtime_from,
+                            'overtimeEnd' => $request->overtime_to,
+                            'absenteeismStart' => $request->absenteeism_from,
+                            'absenteeismEnd' => $request->absenteeism_to,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionID' => 0,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
