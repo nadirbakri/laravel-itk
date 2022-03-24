@@ -28,10 +28,11 @@ return [
     'label_termination_loan' => 'Termination Loan',
     'label_paid_on' => 'Paid On',
     'label_select_payment_type' => 'Choose Payment Type',
-    'label_select_paid_table' => 'True/False',
+    'label_select_paid_table' => 'true/false',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'field_mandatory' => "This field can't be blank"
 ]
 
 ?>

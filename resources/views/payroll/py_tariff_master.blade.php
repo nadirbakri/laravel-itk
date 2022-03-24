@@ -260,7 +260,8 @@
             if(data.count() > 0){
                 $.redirect("{{ url('payroll/tariff_master/detail_data') }}", 
                 { 
-                    'employeeNo' : data[0].employeeNo
+                    'employeeNo' : data[0].employeeNo,
+                    'statusPeriod' : data[0].statusPeriod
                 }, 
                 "GET", "iframe_dashboard");
             }else{
@@ -273,7 +274,8 @@
             var data = table.row(this).data();
             $.redirect("{{ url('payroll/tariff_master/detail_data') }}", 
             {   
-                'employeeNo' : data.employeeNo
+                'employeeNo' : data.employeeNo,
+                'statusPeriod' : data.statusPeriod,
             }, 
             "GET", "iframe_dashboard");
         });

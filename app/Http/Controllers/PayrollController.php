@@ -68,6 +68,11 @@ class PayrollController extends Controller
         return view ('payroll.py_loan_data_entry');
     }
 
+    public function pagePartialFullLoanPayment()
+    {
+        return view ('payroll.py_full_partial_loan_payment');
+    }
+
     public function pageMultiCostCenter()
     {
         return view ('payroll.py_multi_cost_center');
@@ -409,6 +414,40 @@ class PayrollController extends Controller
         }
     }
 
+    public function tableFullPartialLoanPaymentPY() {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function tableMultiCostCenterPY()
     {
         try {
@@ -652,7 +691,7 @@ class PayrollController extends Controller
         }
     }
 
-    public function tableSalaryComponentForm()
+    public function tableSalaryComponentFormPY()
     {
         try {
             $client = new Client([
@@ -693,6 +732,7 @@ class PayrollController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
+                        'statusPeriod' => $request->statusPeriod,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -710,9 +750,15 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_salary_master_detail', ['data' => $arrResult->dataListSet]);
+        return view('payroll.py_salary_master_detail', ['data' => $data]);
     }
 
     public function dataDetailSeveranceDataEntryPY(Request $request)
@@ -749,7 +795,13 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('payroll.py_severance_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_severance_data_entry_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function tablePayrollCalculationDetailPY(Request $request)
@@ -807,6 +859,7 @@ class PayrollController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
+                        'statusPeriod' => $request->statusPeriod,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -824,9 +877,15 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_tariff_master_detail', ['data' => $arrResult->dataListSet]);
+        return view('payroll.py_tariff_master_detail', ['data' => $data]);
     }
 
     public function dataDetailTHRDataEntryPY(Request $request)
@@ -876,9 +935,15 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_thr_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('payroll.py_thr_data_entry_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailBonusDataEntryPY(Request $request)
@@ -928,9 +993,15 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_bonus_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('payroll.py_bonus_data_entry_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailLoanMasterPY(Request $request)
@@ -963,12 +1034,18 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_loan_master_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('payroll.py_loan_master_detail', ['data' => $data, 'func' => $request->func]);
     }
 
-    public function dataDetailLoanDataEntryPY(Request $request)
+    public function dataDetailFullPartialLoanPaymentPY(Request $request)
     {
         try {
             $client = new Client([
@@ -976,12 +1053,22 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+            $response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
-                        'loanCode' => $request->loanCode,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response2 = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -1000,8 +1087,59 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult2 = json_decode($response2->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null || $arrResult2->dataListSet == null){
+            $data = [];
+            $data2 = [];
+        }else{
+            $data = $arrResult->dataListSet;
+            $data2 = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_loan_data_entry_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('payroll.py_full_partial_loan_payment_detail', ['data' => $data, 'data2' => $data2, 'func' => $request->func]);
+    }
+
+    public function dataDetailLoanDataEntryPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'loanNo' => (int) $request->loanNo,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_loan_data_entry_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailTHRFormulaPY(Request $request)
@@ -1051,8 +1189,16 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response_table->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null || $arrResult2->dataListSet == null){
+            $data = [];
+            $data_table = [];
+        }else{
+            $data = $arrResult->dataListSet;
+            $data_table = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_thr_formula_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet]);
+        return view('payroll.py_thr_formula_detail', ['data' => $data, 'data_table' => $data_table]);
     }
 
     public function dataDetailBonusFormulaPY(Request $request)
@@ -1104,7 +1250,13 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('payroll.py_bonus_formula_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_bonus_formula_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataAccountPY(Request $request)
@@ -1263,7 +1415,13 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('payroll.py_salary_component_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_salary_component_form_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesSalaryMasterPY(Request $request)
@@ -2119,6 +2277,113 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesLoanDataEntryPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $paramDetail[] = [
+                "paymentSeq" => (int) $request->seq_no_table[0],
+                "paymentDate" => $request->payment_date_table[0],
+                "paymentType" => isset($request->payment_type[0]) ? $request->payment_type[0] : '',
+                "paymentPrincipal" => (float) $request->principal_table[0],
+                "payment" => (float) $request->payment_table[0],
+                "paymentInterest" => (float) $request->interest_table[0],
+                "outStandingAmount" => (float) $request->outstanding_table[0],
+                "flagStatus" => (bool) $request->paid_table[0]
+            ];
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/prloandataentry/insertloanemployee',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            "employeeName" => $request->employee_name,
+                            "employeeNo" => $request->employee_no,
+                            "loanNo" => (int) $request->loan_no,
+                            "loanCode" => $request->loan_code,
+                            "sourceDocument" => $request->source_document,
+                            "description" => $request->loan_description,
+                            "loanDate" => $request->loan_date,
+                            "interestType" => $request->interest_type,
+                            "firstPaymentDate" => $request->first_payment_date,
+                            "currencyCode" => $request->currency_code,
+                            "loanAmount" => (float) $request->loan_amount,
+                            "noOfInstallment" => (int) $request->no_of_installment,
+                            "ratePerYear" => (float) $request->rate_per_year,
+                            "interest" => (float) $request->interest,
+                            "downPayment" => (float) $request->down_payment,
+                            "paidOn" => $request->paid_on,
+                            "detail" => $paramDetail,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }else {
+                $response = $client->put(env('API_URL') . '/prloandataentry/updateloanemployee',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            "employeeName" => $request->employee_name,
+                            "employeeNo" => $request->employee_no,
+                            "loanNo" => (int) $request->loan_no,
+                            "loanCode" => $request->loan_code,
+                            "sourceDocument" => $request->source_document,
+                            "description" => $request->loan_description,
+                            "loanDate" => $request->loan_date,
+                            "interestType" => $request->interest_type,
+                            "firstPaymentDate" => $request->first_payment_date,
+                            "currencyCode" => $request->currency_code,
+                            "loanAmount" => (float) $request->loan_amount,
+                            "noOfInstallment" => (int) $request->no_of_installment,
+                            "ratePerYear" => (float) $request->rate_per_year,
+                            "interest" => (float) $request->interest,
+                            "downPayment" => (float) $request->down_payment,
+                            "paidOn" => $request->paid_on,
+                            "detail" => $paramDetail,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesPayrollCalculationPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -2513,9 +2778,15 @@ class PayrollController extends Controller
             var_dump($e->getResponse());
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
-        return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('payroll.py_report_format_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function statusLoanMasterPY(Request $request)
@@ -2740,8 +3011,6 @@ class PayrollController extends Controller
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            // var_dump($param);
-
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/salarycomponentdata',
                     ['body' => json_encode($param)]
@@ -2751,6 +3020,46 @@ class PayrollController extends Controller
                     ['body' => json_encode($param)]
                 );
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSalaryComponentDataProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/salarycomponentdata/processcomponent',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
+                        "period" => (int) $request->period,
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2881,6 +3190,62 @@ class PayrollController extends Controller
                 $number = max(array_column($arrResult->dataListSet, 'sequenceNo')) + 1;
             }else if(isset($arrResult->dataListSet[0]->seqNo)){
                 $number = max(array_column($arrResult->dataListSet, 'seqNo')) + 1;
+            }
+        }
+
+        return response()->json($number);
+    }
+
+    public function checkNumberLoanNoPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->loanNo)){
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->loanNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $number = 1;
+        }else{
+            if(isset($arrResult->dataListSet[0]->loanNo)){
+                $number = max(array_column($arrResult->dataListSet, 'loanNo')) + 1;
             }
         }
 

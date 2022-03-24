@@ -100,12 +100,6 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/loan_payment') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.loan_payment') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
 							<a href="{{ url('payroll/partial_full_loan_payment') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.partial_full_loan_payment') }}</span>

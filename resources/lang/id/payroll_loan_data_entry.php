@@ -28,9 +28,11 @@ return [
     'label_termination_loan' => 'Pinjaman Terminasi',
     'label_paid_on' => 'Dibayarkan pada',
     'label_select_payment_type' => 'Pilih Tipe Pembayaran',
+    'label_select_paid_table' => 'true/false',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',
-    'alert_success' => 'Sukses !'
+    'alert_success' => 'Sukses !',
+    'field_mandatory' => "Kolom ini tidak boleh kosong"
 ]
 
 ?>
