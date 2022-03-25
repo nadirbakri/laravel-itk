@@ -246,11 +246,50 @@
             }
         });
 
-        
+        $("#toolbar-delete").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+
+            if (data.length > 0) {
+                $.ajax({
+                    url: "{{ url('payroll/multi_cost_center/remove') }}",
+                    type: "GET",
+                    data: {
+                        'data' : data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            $('#bonus_data_entry_table').DataTable().destroy();
+                            load_data_table_bonus_data_entry();
+                            setTimeout(function(){ 
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
 
         $('#multi_cost_center_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : data.employeeNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     })
 </script>

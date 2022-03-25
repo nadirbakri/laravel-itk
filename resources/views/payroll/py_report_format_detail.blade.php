@@ -469,7 +469,7 @@
             $('#font_size').val(((typeof arrData[0].fontSize !== 'undefined') ? arrData[0].fontSize : ''));
 
             load_table_report_format_detail();
-            console.log(arrData[0].detail);
+            // console.log(arrData[0].detail);
             if (arrData[0].detail !== 'undefined' || arrData[0].detail !== null) {
                 for (var i = 0; i < arrData[0].detail.length; i++) {
                     arrayReportFormatDetail.push({

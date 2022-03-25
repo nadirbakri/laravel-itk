@@ -6053,6 +6053,7 @@ class DataController extends Controller
 	    	);
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
+			// var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6063,6 +6064,8 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// var_dump($arrResult->dataListSet[0]);
 
         return response()->json($arrResult->dataListSet[0]);
 	}
@@ -6367,8 +6370,8 @@ class DataController extends Controller
 	    			]
 	    		)]
 	    	);
-	    } catch (RequestException $e) {
-	    	$response = $e->getResponse();
+		} catch (RequestException $e) {
+            $response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6376,10 +6379,90 @@ class DataController extends Controller
             }else{
                 return view('error.bad_request');
             }
-	    }
+        }
 
-	    $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json($arrResult->dataListSet[0]);
-	}
+    }
+
+	public function dataEditFieldNameSalaryComponentAPI(Request $request)
+    {
+
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+			// var_dump($request->fieldName);
+
+            $response = $client->post(env('API_URL') . '/salarycomponentdata/getsalarycomponentdata',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+						'fieldName' => $request->fieldName
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+		if ($request->absentCode = '') {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
+    }
+
+	public function dataEmployeeNoSlipFormatAPI(Request $request)
+    {
+
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+			// var_dump($request->fieldName);
+
+            $response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+						'employeeNo' => "8890"
+                    ]
+                )]
+            );
+		} catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if ($request->absentCode = '') {
+            return response()->json([]);
+        }
+        else {
+            return response()->json($arrResult->dataListSet);
+        }
+    }
 }

@@ -101,6 +101,7 @@
                                 <select class="form-control select2" id="field_name" name="field_name"></select>
                             </div>
                             <input type="text" class="form-control" id="record_function" name="record_function" hidden>
+                            <input type="text" class="form-control" id="field_name_hidden" name="field_name_hidden" hidden>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
@@ -303,10 +304,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var arrData = @json($data);
+        var arrData2 = @json($data_table);
         var func = "{{ $func }}";
         var table = null;
         var tableChooser = null;
         var fieldChooser = null;
+        var arrayPayrollCalculation = [];
 
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
@@ -328,45 +331,60 @@
         if (func === 'new') {
             $('#record_function').val('New');
             $('#field_name').val(null).trigger('change');
-            $('#sequence').val('');
+            $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : '')+1);
+            $('#payroll_calculation_detail_table').DataTable().destroy();
+            load_table_payroll_calculation_detail();
         }
 
-        else {
+        else if (func ==='edit') {
             $('#record_function').val('Edit');
-            $('#sequence').val(((typeof arrData[0].seqNo !== 'undefined') ? arrData[0].seqNo : ''));
-            $('#payroll_calculation_detail_table').DataTable().destroy();
-            load_table_payroll_calculation_detail("{{ isset($data[0]->fieldName) ? $data[0]->fieldName : '' }}");
+            $('#field_name').prop('disabled', true);
+            $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : ''));
             $.ajax({
                 type: 'GET',
-                url: '/field_name_salary_component/api',
+                url: '/field_name_edit_salary_component/api',
                 data: {
-                    'fieldName': "{{ isset($data[0]->fieldName) ? $data[0]->fieldName : '' }}"
+                    'fieldName': ((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '')
                 }
             }).then(function (data) {
-                // var option = new Option(data.positionCode, data.positionCode, true, true);
                 var option = $('<option/>', {
-                    id: item.fieldName,
-                    text: item.fieldName,
-                    title: item.description
+                    id: data[0].fieldName,
+                    title: data[0].description,
+                    text: data[0].description
                 });
+                // console.log(data);
                 $("#field_name").append(option).attr('data-alias', 'yourvalue').trigger(
                     'change');
-                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
-                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
                 $("#field_name").trigger({
                     type: 'select2:select',
                     params: {
-                        id: item.fieldName,
-                        text: item.fieldName,
-                        data: data
+                        id: data[0].fieldName,
+                        text: data[0].description,
+                        data: data[0]
                     }
                 });
             });
-            
+            $('#field_name_hidden').val((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '');
+            // console.log(arrData[0].fieldName);
+            // console.log(arrData[0].seqProcess);
+
+            load_table_payroll_calculation_detail();
+            // console.log(arrData2[0].seqNo);
+            if (arrData2[0].seqNo !== 'undefined' && arrData2[0].seqNo !== "") {
+                for (var i = 0; i < arrData2.length; i++) {
+                    arrayPayrollCalculation.push({
+                        "seqNo": ((typeof arrData2[i].seqNo !== 'undefined') ? arrData2[i].seqNo : ''),
+                        "condition": ((typeof arrData2[i].condition !== 'undefined') ? arrData2[i].condition : ''),
+                        "formula": ((typeof arrData2[i].formula !== 'undefined') ? arrData2[i].formula : '')
+                    });
+                    // console.log(arrayPayrollCalculation);
+                }
+            }
+            $('#payroll_calculation_detail_table').DataTable().destroy();
+            load_table_payroll_calculation_detail();
         }
 
         $('#btn-add').on('click', function () {
-            $('#record_function').val('New');
             $('#no').val('');
             $('#table_chooser').val(null).trigger('change');
             $('#field_chooser').val(null).trigger('change');
@@ -402,9 +420,11 @@
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
                         '<div class="col-6"><b>Field Name</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
                         '</div>' +
                         '<div class="row">' +
                         '<div class="col-6">' + data.data.fieldName + '</div>' +
+                        '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -442,7 +462,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.fieldName,
+                                    text: item.description,
                                     id: item.fieldName,
                                     title: item.description,
                                     data: item
@@ -458,11 +478,9 @@
 
         $("#btn-edit").on('click', function() {
             var data = table.rows('.selected').data();
-            
+            // console.log(data[0].seqNo);
             if(data.count() > 0){
                 $('#modal_add_edit_payroll_calculation').modal('show');
-                
-                $('#record_function').val('Edit');
                 $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
                 $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
                 $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
@@ -492,32 +510,16 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_table_payroll_calculation_detail(fieldName = '') {
+        function load_table_payroll_calculation_detail() {
             table = $('#payroll_calculation_detail_table').DataTable({
                 processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url: "{{ url('payroll/payroll_calculation_detail/table') }}",
-                    data: {
-                        fieldName: fieldName
-                    }
-                },
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
-                        "\r\n" + ajaxOptions.responseText);
-                },
+                // orderCellsTop: true,
+                data: arrayPayrollCalculation,
+
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
-                "order": [
-                    [2, "asc"]
-                ],
-                columns: [{
-                        "className": 'details-control',
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": ''
-                    },
+
+                columns: [
                     {
                         orderable: false,
                         targets: 0,
@@ -527,25 +529,38 @@
                                 '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {
+                    {   
                         data: 'seqNo',
-                        name: 'seqNo'
+                        name: 'seqNo',
+                        render: function (data, type, row, meta) {
+                            return '<input type="hidden" class="form-control" name="no[]" value="' +
+                            meta.row +'">' + (meta.row + 1);
+                        }
                     },
                     {
                         data: 'condition',
-                        name: 'condition'
+                        name: 'condition',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="condition[]" value="' +
+                                data + '">' + data;
+                        }
                     },
                     {
                         data: 'formula',
-                        name: 'formula'
-                    }
+                        name: 'formula',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="formula[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
                 ],
                 select: {
                     style: 'multi',
-                    selector: 'td:nth-child(2)'
+                    selector: 'td:first-child'
                 }
             });
         }
+
 
         function loadDataFieldChooser(){
             function formatSelect(data) {
@@ -609,7 +624,48 @@
             });
         }
 
-        $('#modal_add_edit_payroll_calculation').on('show.bs.modal', function () {
+        $("#btn-save-detail").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            arrayPayrollCalculation.push({
+                "seqNo": $("#no").val() ? $("#no").val() : "",
+                "condition": $("#preview_condition").val(),
+                "formula": $("#preview_formula").val()
+            });
+            // console.log(arrayReportFormatDetail);
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
+            );
+            $('#modal_add_edit_payroll_calculation').modal('hide');
+            // console.log(arrayPayrollCalculation);
+            
+            $('#payroll_calculation_detail_table').DataTable().destroy();
+            load_table_payroll_calculation_detail();
+            //$("#field_name_form").submit();
+        });
+
+        $("#btn-remove").on('click', function() {
+            var data = table.rows('.selected').data().toArray();
+            // console.log(data.length);
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayPayrollCalculation.findIndex(x => x.columnNo == data[i].columnNo);
+                    arrayPayrollCalculation.splice(index, 1);
+                }
+                $('#payroll_calculation_detail_table').DataTable().destroy();
+                load_table_payroll_calculation_detail();
+                //console.log(arrayfieldName);
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $('#btn-add').on('show.bs.modal', function () {
             if (func == 'new') {
                 var count = table.rows().count();
                 $('#no').val(count+1);
@@ -621,10 +677,28 @@
                     type: "GET",
                     data: {
                         'url': '/prcalculation/getprcalculationdetail',
-                        'fieldName': "{{ $data[0]->fieldName }}"
+                        'seqNo': arrData2[0].seqNo
                     },
                     success: function (response) {
-                        $('#no').val(response);
+                        var count = (table.rows().count())+1;
+                        // console.log(response);
+
+                        if (response > 0 && count !== response) {
+                            var total = parseInt(response) + parseInt(count);
+                            $('#no').val(total - 1);
+                        }
+                        else if (response > 0 && count == response) {
+                            // var total = parseInt(response) + parseInt(count);
+                            $('#no').val(response);
+                        }
+                        else {
+                            for (var i = 0; i <= count; i++){
+                                $('#no').val(i);
+                                // console.log(i);
+                            }
+                        }
+                        // console.log(count);
+                        // console.log(total);
                     },
                     error: function (response) {
                         $('#notification_error').modal('show');
@@ -633,154 +707,6 @@
                 });
             }
         });
-
-        $("#btn-remove").on('click', function () {
-            var data = table.rows('.selected').data();
-
-            if (data.count() > 0) {
-                $.ajax({
-                    url: "{{ url('payroll/payroll_calculation/remove') }}",
-                    type: "GET",
-                    data: {
-                        'fieldName' : data[0].fieldName,
-                        'seqNo' : data[0].seqNo,
-                        'formula' : data[0].formula,
-                        'condition' : data[0].condition,
-                    },
-                    success: function (response) {
-                        if (response.status == "true") {
-                            $('#notification_success').modal('show');
-                            $('#message-notification-success').html(response
-                                .message);
-                            $('#payroll_calculation_detail_table').DataTable().destroy();
-                            load_table_payroll_calculation_detail();
-                            setTimeout(function () {
-                                $('#notification_success').modal('hide');
-                            }, 3000);
-                        } else {
-                            $('#notification_error').modal('show');
-                            if (response.message == null || response.message == '') {
-                                $('#message-notification-error').html(
-                                    "{{ __('login.error') }}");
-                            } else {
-                                $('#message-notification-error').html(response.message);
-                            }
-                        }
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            } else {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html('No Data Selected');
-            }
-        });
-
-        $("#btn-save-detail").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#payroll_calculation_detail_modal_form").submit();
-        });
-
-        if ($("#payroll_calculation_detail_modal_form").length > 0) {
-            $("#payroll_calculation_detail_modal_form").validate({
-            rules: {
-                    no: {
-                        required: true,
-                    },
-                    table_chooser: {
-                        required: true,
-                    },
-                    field_chooser: {
-                        required: true,
-                    }
-                },
-                messages: {
-                    no: {
-                        required: "{{ __('payroll_calculation.field_mandatory') }}",
-                    },
-                    table_chooser: {
-                        required: "{{ __('payroll_calculation.field_mandatory') }}",
-                    },
-                    field_chooser: {
-                        required: "{{ __('payroll_calculation.field_mandatory') }}",
-                    },
-                },
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
-                    );
-
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "{{ url('payroll/payroll_calculation_detail/proses') }}",
-                        type: "POST",
-                        data: $('#payroll_calculation_detail_modal_form').serialize(),
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $("#btn-save").prop("disabled", false);
-                                $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
-                                );
-                                
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/payroll_calculation') }}";
-                                }, 3000);
-                            } else {
-                                $("#btn-save").prop("disabled", false);
-                                $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
-                                );
-
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
-                            $("#btn-save").prop("disabled", false);
-                            $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
-                            );
-
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-
-                    });
-                }
-            })
-        }
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);

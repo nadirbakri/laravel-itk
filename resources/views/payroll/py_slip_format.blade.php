@@ -23,6 +23,23 @@
             /*margin-top: 1%;*/
         }
 
+        .col-0-5 {
+            @extend .col;
+            flex: 0 0 4.16666667%;
+            max-width: 4.16666667%;
+        }
+
+        .col-1-5 {
+            @extend .col;
+            flex: 0 0 8.5%;
+            max-width: 12.5%;
+        }
+
+        .no-border {
+            border-width:0px; 
+            border:none;
+        }
+
         .loading {
             background-color: #ffffff;
             background-image: url("https://c.tenor.com/tEBoZu1ISJ8AAAAC/spinning-loading.gif");
@@ -67,7 +84,7 @@
                                 for="slip_type">{{ __('payroll_slip_format.label_slip_type') }}</label>
                                 <select class="form-control select2" id="slip_type" name="slip_type">
                                 <option value="" disabled selected>{{ __('payroll_slip_format.label_select_slip_type') }}</option>
-                                <option value="Salary">Salary<option>
+                                <option value="Salary">Salary</option>
                                 <option value="THR">THR</option>
                                 <option value="Bonus">Bonus</option>
                             </select>
@@ -114,7 +131,7 @@
                                 for="number_format">{{ __('payroll_slip_format.label_number_format') }}</label>
                                 <select class="form-control select2" id="number_format" name="number_format">
                                 <option value="" disabled selected>{{ __('payroll_slip_format.label_select_number_format') }}</option>
-                                <option value="#,##0.00">#,##0.00<option>
+                                <option value="##0.00">#,##0.00</option>
                                 <option value="#,##0">#,##0</option>
                             </select>
                         </div>
@@ -127,53 +144,436 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <input id="employee_no" name="employee_no">
-                    </div>
-                    <div class="col-4">
                         <div class="form-group">
-                            <label for="join_date">{{ __('payroll_slip_format.label_join_date') }}</label>
-                            <div class='input-group'>
-                                <input type="text" class="form-control" id="employee_no" name="employee_no"
-                                    placeholder="{{ __('payroll_slip_format.label_employee_no') }}">
-                            </div>
+                            <input id="employee_no" name="employee_no" class="no-border">
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-0-5">
+                    </div>
+                    <div class="col-1-5">
                         <div class="form-group">
-                            <label for="custom1">{{ __('payroll_slip_format.label_custom1') }}</label>
-                            <div class='input-group'>
-                                <input type="text" class="form-control" id="employee_no" name="employee_no"
-                                    placeholder="{{ __('payroll_slip_format.label_employee_no') }}">
-                            </div>
+                            <label for="join_date">{{ __('payroll_slip_format.label_join_date') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <input id="join_date" name="join_date" class="no-border" readonly>
+                        </div>
+                    </div>
+                    <div class="col-0-5">
+                    </div>
+                    <div class="col-1-5">
+                        <div class="form-group">
+                            <label for="custom1" id="label_custom1">{{ __('payroll_slip_format.label_custom1') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <input id="custom1" name="custom1" class="no-border">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="employee_name">{{ __('payroll_slip_format.label_employee_name') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <input id="employee_name" name="employee_name" class="no-border" readonly>
+                    </div>
+                    <div class="col-0-5">
+                    </div>
+                    <div class="col-1-5">
+                        <div class="form-group">
+                            <label for="position">{{ __('payroll_slip_format.label_position') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <input id="position" name="position" class="no-border" readonly>
+                        </div>
+                    </div>
+                    <div class="col-0-5">
+                    </div>
+                    <div class="col-1-5">
+                        <div class="form-group">
+                            <label for="custom2" id="label_custom2">{{ __('payroll_slip_format.label_custom2') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <input id="custom2" name="custom2" class="no-border">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance1">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction1">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="employee_name">{{ __('payroll_slip_format.label_employee_name') }}</label>
-                            <div class='input-group'>
-                                <input type="text" class="form-control" id="employee_no" name="employee_no"
-                                    placeholder="{{ __('payroll_slip_format.label_employee_no') }}">
-                            </div>
+                            <label for="allowance" class="allowance" id="allowance2">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-1">
                         <div class="form-group">
-                            <label for="position">{{ __('payroll_slip_format.label_position') }}</label>
-                            <div class='input-group'>
-                                <input type="text" class="form-control" id="employee_no" name="employee_no"
-                                    placeholder="{{ __('payroll_slip_format.label_employee_no') }}">
-                            </div>
+                            <label>IDR</label>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="custom2">{{ __('payroll_slip_format.label_custom2') }}</label>
-                            <div class='input-group'>
-                                <input type="text" class="form-control" id="employee_no" name="employee_no"
-                                    placeholder="{{ __('payroll_slip_format.label_employee_no') }}">
-                            </div>
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction2">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance3">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction3">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance4">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction4">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance5">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction5">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance6">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction6">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance7">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction7">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance8">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction8">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance9">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction9">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="allowance" class="allowance" id="allowance10">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label class="head-title-text">IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number head-title-text"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="deduction" class="deduction" id="deduction10">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="total_allowance" class="total_allowance" id="total_allowance">{{ __('payroll_slip_format.label_total_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group head-title-text">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group head-title-text">
+                            <label class="number"></label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="total_deduction" class="total_deduction" id="total_deduction">{{ __('payroll_slip_format.label_total_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number"></label>
                         </div>
                     </div>
                 </div>
@@ -212,41 +612,51 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(function () {
-            initDatePicker();
-        });
-
-        function initDatePicker() {
-            $('.input-group input').flatpickr({
-                altInput: true,
-                allowInput: true,
-                altFormat: "j-M-y",
-                dateFormat: "Y-m-d",
-                defaultDate: "today",
-                // plugins: [
-                //     new monthSelectPlugin({
-                //         shorthand: true, //defaults to false
-                //         dateFormat: "Y-m-01", //defaults to "F Y"
-                //         altFormat: "F Y", //defaults to "F Y"
-                //     })
-                // ],
-                onReady: function () {
-                    var flatPickrInstance = this;
-                    var $flatPickrInput = $(flatPickrInstance.element);
-                    $flatPickrInput.siblings(".input-group-prepend").click(function () {
-                        flatPickrInstance.toggle();
-                    });
-                }
-            });
-        }
-    });
-
-</script>
-
-<script type="text/javascript">
     $(document).ready(function () {
         var table = null;
+
+        loadDataEmployeeNo();
+
+        function loadDataEmployeeNo() {
+            $('#employee_no').val({
+                width: '100%',
+                allowClear: true,
+                // tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employee_no_slip_format/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    id: item.employeeNo,
+                                    title: item.fullName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         $.ajax({
             url: "{{ url('personel/report/level/check') }}",
@@ -273,13 +683,6 @@
                 $('#message-notification-error').html(response);
             }
         });
-        loadDataEmployeeNo('#employee_no_from');
-        loadDataEmployeeNo('#employee_no_to');
-        loadDataGroupAuthorize('#group_authorize_from');
-        loadDataGroupAuthorize('#group_authorize_to');
-        loadDataPositionCode();
-        loadDataLocationCode();
-        loadDataRankingCode();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
@@ -548,95 +951,6 @@
                     $(field).append($('<option>').val(data.levelCode).text(data.levelName));
                 }
                 $(field).val(data.levelCode);
-            });
-        }
-
-        function loadDataEmployeeNo(field = '') {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
-                        '<div class="col-6">' + data.data.fullName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            // $(field).on('select2:open', function (e) {
-            //     html = '<div class="row header-select">' +
-            //         '<div class="col-6"><b>Employee No</b></div>' +
-            //         '<div class="col-6"><b>Employee Name</b></div>' +
-            //         '</div>';
-            //     $('.select2-search').append(html);
-            // });
-
-            // $(field).on('select2:close', function (event) {
-            //     var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            //     $searchfield.prop('disabled', true);
-            // });
-
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Employee No</b></div>' +
-            //             '<div class="col-6"><b>Full Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            var $employeeNo = $(field).select2({
-                width: '100%',
-                placeholder: 'Choose Employee',
-                allowClear: true,
-                // tags: true,
-                closeOnSelect: false,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/employee_no/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.fullName,
-                                    id: item.employeeNo,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
             });
         }
 
