@@ -170,6 +170,7 @@
                                 <option value="E">Effective</option>
                             </select>
                         </div>
+                        <input type="text" class="form-control" id="interest_type_hidden" name="interest_type_hidden" hidden>
                     </div>
                 </div>
                 <div class="row">
@@ -494,6 +495,7 @@
         var paidTableSeq = null;
         var outstandingBalance = null;
         var loan_amount = null;
+        var noOfInstallmentChanged = false;
 
         if (func === 'new') {
             $('#record_function').val('New');
@@ -506,7 +508,7 @@
             $('#interest_type').prop('disabled', false);
             $('#currency_code').prop('disabled', false);
             $('#no_of_installment').prop('readonly', false);
-            $('#interest').prop('readonly', false);
+            $('#interest').prop('readonly', true);
             $('#rate_per_year').prop('readonly', false);
             $('#installment_per_month').prop('readonly', true);
             $('#loan_amount').prop('readonly', false);
@@ -517,7 +519,7 @@
             $('#outstanding_balance').prop('readonly', true);
             $('#termination_loan').prop('readonly', true);
 
-            // $('#employee_no').val(null).trigger('change');
+            $('#employee_no').val(null).trigger('change');
             $('#employee_name').val('');
             $.ajax({
                 url: "{{ url('payroll_loan_no/number/check') }}",
@@ -596,7 +598,8 @@
                     }
                 });
             });
-            $('#employee_name').val('');
+            $('#employee_no_hidden').val(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
+            $('#employee_name').val(((typeof arrData[0].employeeName !== 'undefined') ? arrData[0].employeeName : ''));
             $('#loan_no').val(((typeof arrData[0].loanNo !== 'undefined') ? arrData[0].loanNo : ''));
             $.ajax({
                 type: 'GET',
@@ -621,10 +624,12 @@
                     }
                 });
             });
+            $('#loan_code_hidden').val(((typeof arrData[0].loanCode !== 'undefined') ? arrData[0].loanCode : ''));
             $('#source_document').val(((typeof arrData[0].sourceDocument !== 'undefined') ? arrData[0].sourceDocument : ''));
             $('#loan_description').val(((typeof arrData[0].description !== 'undefined') ? arrData[0].description : ''));
             pickerLoanDate.setDate(((typeof arrData[0].loanDate !== 'undefined') ? arrData[0].loanDate : ''));
             $('#interest_type').val(((typeof arrData[0].interestType !== 'undefined') ? arrData[0].interestType : '')).trigger('change');
+            $('#interest_type_hidden').val(((typeof arrData[0].interestType !== 'undefined') ? arrData[0].interestType : ''));
             pickerFirstPaymentDate.setDate(((typeof arrData[0].firstPaymentDate !== 'undefined') ? arrData[0].firstPaymentDate : ''));
             $.ajax({
                 type: 'GET',
@@ -649,6 +654,7 @@
                     }
                 });
             });
+            $('#currency_code_hidden').val(((typeof arrData[0].currencyCode !== 'undefined') ? arrData[0].currencyCode : ''));
             $('#no_of_installment').val(((typeof arrData[0].noOfInstallment !== 'undefined') ? arrData[0].noOfInstallment : ''));
             $('#interest').val(((typeof arrData[0].interest !== 'undefined') ? arrData[0].interest : ''));
             $('#rate_per_year').val(((typeof arrData[0].ratePerYear !== 'undefined') ? arrData[0].ratePerYear : ''));
@@ -680,6 +686,8 @@
         });
 
         $('#interest, #interest_type, #loan_amount, #down_payment, #no_of_installment, #rate_per_year, #installment_per_month, #first_payment_date').on('input', function () {
+            noOfInstallmentChanged = true; 
+
             interest = $('#interest').val();
             loanAmount = $('#loan_amount').val();
             downPayment = $('#down_payment').val();
@@ -740,7 +748,7 @@
         }
 
         function load_data_grid() {
-            if (func === 'new') {
+            if (func === 'new' || func === 'edit' && noOfInstallmentChanged == true) {
                 for (var i = 0; i <= noOfInstallment; i++) {
                     table.row.add([
                         '<div class="form-check">' +
@@ -760,8 +768,8 @@
                                 '<option value="T">THR</option>' +
                                 '<option value="C">Cash</option>' +
                         '</select>',
-                        '<input type="number" class="form-control" id="principal_table'+ i +'" data-seq = "'+ i +'" name="principal_table[]" readonly>',
-                        '<input type="number" class="form-control" id="interest_table'+ i +'" name="interest_table[]" readonly>',
+                        '<input type="number" class="form-control" id="principal_table'+ i +'" name="principal_table[]" readonly>',
+                        '<input type="number" class="form-control" id="interest_table'+ i +'" data-seq = "'+ i +'" name="interest_table[]" readonly>',
                         '<input type="number" class="form-control" id="payment_table'+ i +'" name="payment_table[]" readonly>',
                         '<input type="number" class="form-control" id="outstanding_table'+ i +'" data-seq = "'+ i +'" name="outstanding_table[]" readonly>',
                         '<input type="text" class="form-control paid-table" id="paid_table'+ i +'" data-seq = "'+ i +'" name="paid_table[]" value="false" placeholder={{ __("payroll_loan_data_entry.label_select_paid_table") }} readonly>',
@@ -796,35 +804,47 @@
 
                     if ($('#interest_type').val() === 'F' && loanAmount !== '' && noOfInstallment !== '' && ratePerYear !== '' && noOfInstallment > 0) {
                         principalTable = parseFloat(loanAmount) / parseFloat(noOfInstallment);
+                        $('#principal_table' + 0).val(parseInt(0));
                         $('#principal_table' + i).val(parseFloat(principalTable).toFixed(2));
 
                         interestTable = (parseFloat(loanAmount) * parseFloat(ratePerYear) / 12);
+                        $('#interest_table' + 0).val(parseInt(0));
                         $('#interest_table' + i).val(parseFloat(interestTable).toFixed(2));
 
                         principal_table = $('#principal_table'+ i).val();
                         interest_table = $('#interest_table' + i).val();
 
                         paymentTable = parseFloat(principal_table) + parseFloat(interest_table);
+                        $('#payment_table' + 0).val(parseInt(0));
                         $('#payment_table' + i).val(parseFloat(paymentTable).toFixed(2));
 
                         loan_amount = $('#loan_amount').val();
                         $('#outstanding_table' + 0).val(parseFloat(loan_amount).toFixed(2));
 
                         outstandingTableSeq = parseInt($('#outstanding_table' + 0).attr('data-seq'));
+                        var totalPayment = parseFloat(0);
+                        var sum = parseFloat(0);
                         for (var k = outstandingTableSeq; k <= noOfInstallment; k++) {
                             outstanding_table = $('#outstanding_table' + k).val();
                             outstandingTable = parseFloat(outstanding_table) - parseFloat(principal_table);
                             $('#outstanding_table' + (k + 1)).val(parseFloat(outstandingTable).toFixed(2));
+
+                            paid_table = $('#paid_table' + k).val();
+                            payment_table = $('#payment_table' + k).val();
+                            if (paid_table == 'true') {
+                                totalPayment = parseFloat(totalPayment) + parseFloat(payment_table);
+                            }
+                            $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
+                            
+                            sum += parseFloat($('#interest_table' + k).val());
+                            $('#interest').val(parseFloat(sum).toFixed(2));
                         }
 
-                        var totalPayment = parseFloat(0);
-
-                        paid_table = $('#paid_table' + i).val();
-                        payment_table = $('#payment_table' + i).val();
-                        if (paid_table == 'true') {
-                            totalPayment = parseFloat(totalPayment) + parseFloat(payment_table);
-                        }
-                        $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
+                        interest = $('#interest').val();
+                        loanAmount = $('#loan_amount').val();
+                        noOfInstallment = $('#no_of_installment').val();
+                        installmentPerMonth = (parseFloat(loanAmount) + parseFloat(interest)) / parseInt(noOfInstallment);
+                        $('#installment_per_month').val(parseFloat(installmentPerMonth).toFixed(2));
                         
                         principalPlusInterest = $('#principal_plus_interest').val();
                         totalPayment = $('#total_payment').val();
@@ -833,35 +853,41 @@
 
                     } else if ($('#interest_type').val() === 'E' && loanAmount !== '' && noOfInstallment !== '' && noOfInstallment > 0) {
                         principalTable = parseFloat(loanAmount) / parseFloat(noOfInstallment);
+                        $('#principal_table' + 0).val(parseInt(0));
                         $('#principal_table' + i).val(parseFloat(principalTable).toFixed(2));
 
                         seq_no_table = $('#seq_no_table' + i).val();
                         principal_table = $('#principal_table' + i).val();
                         interestTable = (parseFloat(loanAmount) - ((parseFloat(seq_no_table) - 1) * parseFloat(principal_table))) * (parseFloat(ratePerYear) / 12);
+                        $('#interest_table' + 0).val(parseInt(0));
                         $('#interest_table' + i).val(parseFloat(interestTable).toFixed(2));
 
                         interest_table = $('#interest_table' + i).val();
                         paymentTable = parseFloat(principal_table) + parseFloat(interest_table);
+                        $('#payment_table' + 0).val(parseInt(0));
                         $('#payment_table' + i).val(parseFloat(paymentTable).toFixed(2));
 
                         loan_amount = $('#loan_amount').val();
                         $('#outstanding_table' + 0).val(parseFloat(loan_amount).toFixed(2));
 
                         outstandingTableSeq = parseInt($('#outstanding_table' + 0).attr('data-seq'));
+                        var totalPayment = parseFloat(0);
+                        var sum = parseFloat(0);
                         for (var k = outstandingTableSeq; k <= noOfInstallment; k++) {
                             outstanding_table = $('#outstanding_table' + k).val();
                             outstandingTable = parseFloat(outstanding_table) - parseFloat(principal_table);
                             $('#outstanding_table' + (k + 1)).val(parseFloat(outstandingTable).toFixed(2));
-                        }
 
-                        var totalPayment = parseFloat(0);
-
-                        paid_table = $('#paid_table' + i).val();
-                        payment_table = $('#payment_table' + i).val();
-                        if (paid_table == 'true') {
-                            totalPayment = parseFloat(totalPayment) + parseFloat(payment_table);
+                            paid_table = $('#paid_table' + k).val();
+                            payment_table = $('#payment_table' + k).val();
+                            if (paid_table == 'true') {
+                                totalPayment = parseFloat(totalPayment) + parseFloat(payment_table);
+                            }
+                            $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
+                            
+                            sum += parseFloat($('#interest_table' + k).val());
+                            $('#interest').val(parseFloat(sum).toFixed(2));
                         }
-                        $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
                         
                         principalPlusInterest = $('#principal_plus_interest').val();
                         totalPayment = $('#total_payment').val();
@@ -872,13 +898,14 @@
                         loan_amount = $('#loan_amount').val();
                         $('#outstanding_table' + 0).val(parseFloat(loan_amount).toFixed(2));
 
-                        outstandingTableSeq = parseInt($('#outstanding_table' + 0).attr('data-seq'));
-
-                        payment_table = $('#payment_table' + 0).val();
-                        interest_table = $('#interest_table' + 0).val();
-                        principalTable = parseFloat(payment_table) - parseFloat(interest_table);
-                        $('#principal_table' + 0).val(parseFloat(principalTable).toFixed(2));
+                        $('#payment_table' + 0).val(parseInt(0));
+                        $('#interest_table' + 0).val(parseInt(0));
+                        $('#interest_table' + 0).val(parseInt(0));
+                        $('#principal_table' + 0).val(parseInt(0));
                         
+                        outstandingTableSeq = parseInt($('#outstanding_table' + 0).attr('data-seq'));
+                        var totalPayment = parseFloat(0);
+                        var sum = parseFloat(0);
                         for (var k = outstandingTableSeq; k <= noOfInstallment; k++) {
                             outstanding_table = $('#outstanding_table' + k).val();
                             interestTable = parseFloat(outstanding_table) * (parseFloat(ratePerYear) / 12);
@@ -892,22 +919,20 @@
                             principal_table = $('#principal_table' + (k+1)).val();
                             outstandingTable = parseFloat(outstanding_table) - parseFloat(principal_table);
                             $('#outstanding_table' + (k+1)).val(parseFloat(outstandingTable).toFixed(2));
-                        }
 
-                        interestTable = parseFloat(loanAmount) * parseFloat(ratePerYear) / 12
-                        $('#interest_table' + 0).val(parseFloat(interestTable).toFixed(2));
+                            paid_table = $('#paid_table' + k).val();
+                            payment_table = $('#payment_table' + k).val();
+                            if (paid_table == 'true') {
+                                totalPayment = parseFloat(totalPayment) + parseFloat(payment_table);
+                            }
+                            $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
+                            
+                            sum += parseFloat($('#interest_table' + k).val());
+                            $('#interest').val(parseFloat(sum).toFixed(2));
+                        }
 
                         paymentTable = (parseFloat(loanAmount)) * (parseFloat(ratePerYear) / 12) * (1 / (1 - (1 / (1 + (parseFloat(ratePerYear) / 12)^parseInt(noOfInstallment)))));
                         $('#payment_table' + i).val(parseFloat(paymentTable).toFixed(2));
-
-                        var totalPayment = parseFloat(0);
-
-                        paid_table = $('#paid_table' + i).val();
-                        payment_table = $('#payment_table' + i).val();
-                        if (paid_table == 'true') {
-                            totalPayment = parseFloat(totalPayment) + parseFloat(payment_table);
-                        }
-                        $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
                         
                         principalPlusInterest = $('#principal_plus_interest').val();
                         totalPayment = $('#total_payment').val();
@@ -942,7 +967,7 @@
                                 '<option value="T">THR</option>' +
                                 '<option value="C">Cash</option>' +
                         '</select>',
-                        '<input type="number" class="form-control" id="principal_table'+ k +'" data-seq = "'+ k +'" name="principal_table[]" value="'+ ((typeof v.paymentPrincipal !== 'undefined' && v.paymentPrincipal !== null) ? v.paymentPrincipal : '') +'" readonly>',
+                        '<input type="number" class="form-control" id="principal_table'+ k +'" name="principal_table[]" value="'+ ((typeof arrData[0].detail[k].paymentPrincipal !== 'undefined' && v.paymentPrincipal !== null) ? v.paymentPrincipal : '') +'" readonly>',
                         '<input type="number" class="form-control" id="interest_table'+ k +'" name="interest_table[]" value="'+ ((typeof v.paymentInterest !== 'undefined' && v.paymentInterest !== null) ? v.paymentInterest : '') +'" readonly>',
                         '<input type="number" class="form-control" id="payment_table'+ k +'" name="payment_table[]" value="'+ ((typeof v.payment !== 'undefined' && v.payment !== null) ? v.payment : '') +'" readonly>',
                         '<input type="number" class="form-control" id="outstanding_table'+ k +'" data-seq = "'+ k +'" name="outstanding_table[]" value="'+ ((typeof v.outStandingAmount !== 'undefined' && v.outStandingAmount !== null) ? v.outStandingAmount : '') +'" readonly>',
@@ -952,6 +977,30 @@
                     var paymentDateTable = pickerPaymentDateTable('#payment_date_table' + k);
 
                     $('#payment_type' + k).val((typeof v.paymentType !== 'undefined' && v.paymentType !== null) ? v.paymentType : '').trigger('change');
+
+                    $('#payment_type' + 0).on('change', function() {
+                        if ($(this).val() == 'S') {
+                            for (j = 0; j <= arrData[0].detail.length; j++) {
+                                console.log(j);
+                                $('#payment_type' + (j+1)).val('S').trigger('change');
+                            }
+                        }
+                        else if ($(this).val() == 'B') {
+                            for (j = 0; j <= arrData[0].detail.length; j++) {
+                                $('#payment_type' + (j+1)).val('B').trigger('change');
+                            }
+                        }
+                        else if ($(this).val() == 'T') {
+                            for (j = 0; j <= arrData[0].detail.length; j++) {
+                                $('#payment_type' + (j+1)).val('T').trigger('change');
+                            }
+                        }
+                        else {
+                            for (j = 0; j <= arrData[0].detail.length; j++) {
+                                $('#payment_type' + (j+1)).val('C').trigger('change');
+                            }
+                        }
+                    });
                 });
             }
         }
