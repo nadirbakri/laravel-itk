@@ -722,7 +722,7 @@
                 installmentPerMonth = (parseFloat(loanAmount)) * (parseFloat(ratePerYear) / 12) * (1 / (1 - (1 / (1 + (parseFloat(ratePerYear) / 12)^parseInt(noOfInstallment)))));
                 $('#installment_per_month').val(parseFloat(installmentPerMonth).toFixed(2));
             } else if ($('#interest_type').val() === 'A' && loanAmount !== '' && noOfInstallment !== '' && ratePerYear !== '' && noOfInstallment > 0) {
-                installmentPerMonth = (parseFloat(loanAmount)) * (parseFloat(ratePerYear) / 12) * (1 / (1 - (1 / (1 + (parseFloat(ratePerYear) / 12)^parseInt(noOfInstallment)))));
+                installmentPerMonth = (parseFloat(loanAmount) * (parseFloat(ratePerYear) / 12)) * (1 / (1 - (1 / ((1 + parseFloat(ratePerYear) / 12)^parseInt(noOfInstallment)))));
                 $('#installment_per_month').val(parseFloat(installmentPerMonth).toFixed(2));
             } else {
                 $('#installment_per_month').val('');
