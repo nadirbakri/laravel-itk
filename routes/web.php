@@ -564,7 +564,6 @@ Route::post('payroll/bonus_formula/proses', 'PayrollController@prosesBonusFormul
 Route::post('payroll/account/proses','PayrollController@prosesAccountPY');
 Route::post('payroll/report_format/proses','PayrollController@prosesReportFormatPY');
 Route::post('payroll/payroll_calculation/proses','PayrollController@prosesPayrollCalculationPY');
-Route::post('payroll/payroll_calculation_detail/proses','PayrollController@prosesPayrollCalculationDetailPY');
 Route::post('payroll/multi_cost_center/proses','PayrollController@prosesMultiCostCenterPY');
 Route::post('payroll/salary_component_data/proses', 'PayrollController@prosesSalaryComponentDataPY');
 Route::post('payroll/salary_component_data_process/proses', 'PayrollController@prosesSalaryComponentDataProcessPY');
@@ -575,6 +574,7 @@ Route::get('payroll/severance_data_entry/remove', 'PayrollController@removeSever
 Route::get('payroll/thr_formula/remove', 'PayrollController@removeTHRFormulaPY');
 Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 Route::get('payroll/payroll_calculation/remove', 'PayrollController@removePayrollCalculationPY');
+Route::get('payroll/multi_cost_center/remove', 'PayrollController@removeMultiCostCenterPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
@@ -803,6 +803,8 @@ Route::get('employee_no/severance/api', 'DataController@dataEmployeeNoSeveranceA
 Route::get('employee_no/loan_data_entry/api', 'DataController@dataEmployeeNoLoanDataEntryAPI');
 Route::get('loan_code/loan_data_entry/api', 'DataController@dataLoanCodeLoanDataEntryAPI');
 Route::get('currency_code/loan_data_entry/api', 'DataController@dataCurrencyCodeLoanDataEntryAPI');
+Route::get('field_name_edit_salary_component/api', 'DataController@dataEditFieldNameSalaryComponentAPI');
+Route::get('employee_no_slip_format/api', 'DataController@dataEmployeeNoSlipFormatAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

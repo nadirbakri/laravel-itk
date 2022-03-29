@@ -104,6 +104,7 @@
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
+                        <input type="text" class="form-control" id="employee_no_hidden" name="employee_no_hidden" hidden>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
@@ -122,10 +123,9 @@
                                 <input type="text" class="form-control" id="month_year" name="month_year"
                                     placeholder="{{ __('payroll_multi_cost_center.label_month_year') }}">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                    <span class="input-group-text" id="month_year_calender"><span class="fa fa-calendar"></span></span>
                                 </div>
-                                <input type="text" class="form-control" id="month" name="month" hidden>
-                                <input type="text" class="form-control" id="year" name="year" hidden>
+                                <input type="text" class="form-control" id="month_year_hidden" name="month_year_hidden" hidden>
                             </div>
                         </div>
                     </div>
@@ -255,13 +255,9 @@
                 })
             ],
             onReady: function () {
-                // var month = $('#month');
-                // var year = $('#year');
-                // month = $('month_year').format('mm');
-                // year = $('month_year').format('yyyy');
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#month_year").click(function () {
+                $flatPickrInput.siblings("#month_year_hidden").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -272,24 +268,127 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        let pickerMonthYear = $('#month_year').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#month_year_hidden").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
         var arrData = @json($data);
+        var arrData2 = @json($data_table);
         var table = null;
 
         if (func == 'new') {
             $('#record_function').val("New");
             $('#employee_no').val(null).trigger('change');
             $('#period').val(1);
-
             $('#cost_center_table').DataTable().destroy();
             load_table_cost_center();
         }
         else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#account_no').val(((typeof arrData[0].accountNo !== 'undefined') ? arrData[0].accountNo : '')).prop('readonly', true);
-            $('#account_description').val(htmlDecode(((typeof arrData[0].accountDescription !== 'undefined') ? arrData[0].accountDescription : '')));
-            $('#reference').val(((typeof arrData[0].reference !== 'undefined') ? arrData[0].reference : ''));
+            $('#employee_no').prop('disabled', true);
+            $('#period').prop('disabled', true);
+            $('#month_year').prop('disabled', true);
+            $('#period').val(((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : ''));
+            load_table_cost_center();
+            for (var i=0; i<arrData2.length; i++ ){
+                $.ajax({
+                    type: 'GET',
+                    url: '/cost_center/api',
+                    data: {
+                        'costCenterCode': ((typeof arrData2[i].costCenterCode !== 'undefined') ? arrData2[i].costCenterCode : '')
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data.costCenterCode,
+                        title: data.costCenterDescription,
+                        text: data.costCenterDescription
+                    });
+                    $("#cost_center"+(data_cost_center)).append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#cost_center"+(data_cost_center)).trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data.costCenterCode,
+                            text: data.costCenterDescription,
+                            data: data
+                        }
+                    });
+                });
+                // console.log(arrData2[i].costCenterCode);
+            }
+            $('#cost_center_table').DataTable().destroy();
+            load_table_cost_center();
+            $('#percentage'+data_cost_center).val((typeof arrData2[0].percentage !== 'undefined' || arrData2[0].percentage !== null) ? arrData2[0].percentage : '');
+            $.ajax({
+                type: 'GET',
+                url: '/employee_no/req_detail/api',
+                data: {
+                    'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.employeeNo,
+                    title: data.fullName,
+                    text: data.employeeNo
+                });
+                $("#employee_no").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employee_no").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.employeeNo,
+                        text: data.employeeNo,
+                        data: data
+                    }
+                });
+            });
+            $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
+            var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString().padStart(2,0) + "-01").format('YYYY-MM-DD');
+            let pickerMonthYear = $('#month_year').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "j-M-y",
+                dateFormat: "Y-m-d",
+                defaultDate: "today",
+                plugins: [
+                    new monthSelectPlugin({
+                        shorthand: true, //defaults to false
+                        dateFormat: "Y-m-01", //defaults to "F Y"
+                        altFormat: "F Y", //defaults to "F Y"
+                    })
+                ],
+                onReady: function () {
+                    var flatPickrInstance = this;
+                    // console.log(flatPickrInstance);
+                    var $flatPickrInput = $(flatPickrInstance.element);
+                    $flatPickrInput.siblings("#month_year_calendar").click(function () {
+                        flatPickrInstance.toggle();
+                    });
+                }
+            });
+            pickerMonthYear._input.setAttribute("disabled", "disabled");
+            pickerMonthYear.setDate(month_year);
+
         }
 
         function htmlDecode(value) {
@@ -441,7 +540,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.costCenterCode,
+                                    text: item.costCenterDescription,
                                     id: item.costCenterCode,
                                     title: item.costCenterDescription,
                                     data: item
@@ -484,6 +583,27 @@
                     '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
                     '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
                     '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
+                    '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
+                ]).draw();
+                loadDataCostCenterCode("#cost_center"+(data_cost_center));
+                
+            }
+
+            else {
+                data_cost_center++;
+
+                if (typeof arrData2[0].isDefault !== 'undefined' || arrData2[0].isDefault !== null && arrData2[0].isDefault == 'true') {
+                    $('.isDefault').prop('checked', true);
+                }
+                else {
+                    $('.isDefault').prop('checked', false);
+                }
+
+                table.row.add([
+                    '<input type="checkbox" class="chk-select" id="check_grid">',
+                    '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
+                    '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
+                    '<input type="number" min=0 max=100 default=0 class="form-control" id="percentage'+(data_cost_center)+'" name="percentage[]">',
                     '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
                 ]).draw();
                 loadDataCostCenterCode("#cost_center"+(data_cost_center));
