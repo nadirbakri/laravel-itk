@@ -586,7 +586,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/location/detail/api',
+                    url: '/process_status/detail/api',
                     data: {
                         'locationCode' : data[0].locationCode
                     }

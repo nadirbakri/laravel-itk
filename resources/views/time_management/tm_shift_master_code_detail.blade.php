@@ -954,6 +954,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -966,6 +967,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -978,6 +980,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -990,6 +993,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1002,6 +1006,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1014,6 +1019,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1026,6 +1032,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1038,6 +1045,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1050,6 +1058,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1062,6 +1071,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1074,6 +1084,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1086,6 +1097,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1098,6 +1110,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1110,6 +1123,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1122,6 +1136,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1134,6 +1149,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1146,6 +1162,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1158,6 +1175,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1170,6 +1188,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1182,6 +1201,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1194,6 +1214,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1206,6 +1227,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1218,6 +1240,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1230,6 +1253,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1242,6 +1266,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1254,6 +1279,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1266,6 +1292,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1278,6 +1305,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1290,6 +1318,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1302,6 +1331,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"
@@ -1314,6 +1344,7 @@
             // static: true,
             allowInput: true,
             time_24hr: true,
+            minuteIncrement: 1,
             defaultDate: "today",
             altFormat: "H:i",
             dateFormat: "H:i:ss"

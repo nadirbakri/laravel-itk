@@ -429,12 +429,15 @@ Route::post('time_management/shift_master_code/proses', 'TimeManagementControlle
 Route::post('time_management/time_recording_process_form/proses', 'TimeManagementController@prosesTimeRecordingProcessFormTM');
 Route::post('time_management/time_recording_reference/proses', 'TimeManagementController@prosesTimeRecordingReferenceTM');
 Route::post('time_management/template_preparation/proses', 'TimeManagementController@prosesTemplatePreparationTM');
+Route::post('time_management/reference_time_management/proses', 'TimeManagementController@prosesReferenceTimeManagementTM');
+Route::post('time_management/reference_time_management/detail/proses', 'TimeManagementController@prosesReferenceTimeManagementDetailTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
 Route::get('time_management/overtime_spl/remove', 'TimeManagementController@removeOvertimeSPLTM');
 Route::get('time_management/period_maintenance/remove', 'TimeManagementController@removePeriodMaintenanceTM');
 Route::get('time_management/company_working_calendar/remove','TimeManagementController@removeCompanyWorkingCalendar');
+Route::get('time_management/reference_time_management/detail/remove','TimeManagementController@removeReferenceTimeManagementDetail');
 
 /* Route untuk cek status Time Management */
 Route::post('time_management/overtime_spl/status', 'TimeManagementController@statusOvertimeSPLTM');
@@ -789,6 +792,7 @@ Route::get('shift_master_code/func/api', 'DataController@dataShiftMasterCodeFunc
 Route::get('performance_result/api', 'DataController@dataPerformanceResultAPI');
 Route::get('performance_result/bonus_thr_data_entry/api', 'DataController@dataPerformanceResultBonusTHRAPI');
 Route::get('process_status/api', 'DataController@dataProcessStatusAPI');
+Route::get('process_status/detail/api', 'DataController@dataProcessStatusDetailAPI');
 Route::get('deduct_day/api', 'DataController@dataDeductDayAPI');
 Route::get('field/api', 'DataController@dataFieldAPI');
 Route::get('deduct_leave/api', 'DataController@dataDeductLeaveAPI');

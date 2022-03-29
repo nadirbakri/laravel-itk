@@ -356,14 +356,6 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script text="text/javascript">
-    $(function () {
-        selectMonth();
-    });
-
-    function selectMonth() {
-        
-    }
-
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 

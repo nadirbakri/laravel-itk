@@ -108,7 +108,36 @@ class TimeManagementController extends Controller
 
     public function pageReferenceTimeManagement()
     {
-        return view ('time_management.tm_reference_time_management');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view('time_management.tm_reference_time_management', ['data' => $arrResult->dataListSet]);
     }    
 
     public function pageUnpaidLeaveReport()
@@ -1994,6 +2023,205 @@ class TimeManagementController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesReferenceTimeManagementTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'periodMonth' => (int) $request->processing_period_month,
+            //         'periodYear' => (int) $request->processing_period_year,
+            //         'statusProcess' => $request->process_status,
+            //         'statusPeriod' => $request->period_status,
+            //         'templatePreparation' => $request->template_preparation_process,
+            //         'calculateLateHour' => $request->late_hour,
+            //         'calculateEarlyBackHour' => $request->early_back_hour,
+            //         'calculateOvertime' => $request->default_calculation,
+            //         'ovtBeforeHourFrom' => $request->overtime_before_from,
+            //         'ovtAfterHourFrom' => $request->overtime_after_from,
+            //         'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
+            //         'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
+            //         'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
+            //         'overtimeCode' => $request->overtime,
+            //         'absentCode' => $request->absent,
+            //         'unpaidLeaveCode' => $request->unpaid_leave,
+            //         'lateCode' => $request->late,
+            //         'earlybackCode' => $request->early_back,
+            //         'lateEarlybackCode' => $request->late_early_back,
+            //         'noTimeInCode' => $request->not_clock_in,
+            //         'noTimeOutCode' => $request->not_clock_out,
+            //         'noTimeInEarlybackCode' => $request->not_clock_in_early_back,
+            //         'lateNoTimeOutCode' => $request->not_clock_out_late,
+            //         "changedNo" => 0,
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "changedBy" => Session::get('userID'),  
+            //         "languageCode" => App::getLocale(),
+            //         'sessionID' => 0,
+            //         'userID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName'),
+            //     ]
+            //     ));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/referencetm',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'periodMonth' => (int) $request->processing_period_month,
+                            'periodYear' => (int) $request->processing_period_year,
+                            'statusProcess' => $request->process_status,
+                            'statusPeriod' => $request->period_status,
+                            'templatePreparation' => $request->template_preparation_process,
+                            'calculateLateHour' => $request->late_hour,
+                            'calculateEarlyBackHour' => $request->early_back_hour,
+                            'calculateOvertime' => $request->default_calculation,
+                            'ovtBeforeHourFrom' => $request->overtime_before_from,
+                            'ovtAfterHourFrom' => $request->overtime_after_from,
+                            'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
+                            'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
+                            'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
+                            'overtimeCode' => $request->overtime,
+                            'absentCode' => $request->absent,
+                            'unpaidLeaveCode' => $request->unpaid_leave,
+                            'lateCode' => $request->late,
+                            'earlybackCode' => $request->early_back,
+                            'lateEarlybackCode' => $request->late_early_back,
+                            'noTimeInCode' => $request->not_clock_in,
+                            'noTimeOutCode' => $request->not_clock_out,
+                            'noTimeInEarlybackCode' => $request->not_clock_in_early_back,
+                            'lateNoTimeOutCode' => $request->not_clock_out_late,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),  
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/referencetm',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'periodMonth' => (int) $request->processing_period_month,
+                            'periodYear' => (int) $request->processing_period_year,
+                            'statusProcess' => $request->process_status,
+                            'statusPeriod' => $request->period_status,
+                            'templatePreparation' => $request->template_preparation_process,
+                            'calculateLateHour' => $request->late_hour,
+                            'calculateEarlyBackHour' => $request->early_back_hour,
+                            'calculateOvertime' => $request->default_calculation,
+                            'ovtBeforeHourFrom' => $request->overtime_before_from,
+                            'ovtAfterHourFrom' => $request->overtime_after_from,
+                            'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
+                            'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
+                            'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
+                            'overtimeCode' => $request->overtime,
+                            'absentCode' => $request->absent,
+                            'unpaidLeaveCode' => $request->unpaid_leave,
+                            'lateCode' => $request->late,
+                            'earlybackCode' => $request->early_back,
+                            'lateEarlybackCode' => $request->late_early_back,
+                            'noTimeInCode' => $request->not_clock_in,
+                            'noTimeOutCode' => $request->not_clock_out,
+                            'noTimeInEarlybackCode' => $request->not_clock_in_early_back,
+                            'lateNoTimeOutCode' => $request->not_clock_out_late,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),  
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesReferenceTimeManagementDetailTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/insertdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'deductOvtDay' => $request->deduct_day,
+                        'deductFrom1' => date("Y-m-d") . "T" . $request->deduction1_from,
+                        'deductTo1' => date("Y-m-d") . "T" . $request->deduction1_to,
+                        'deductHour1' => date("Y-m-d") . "T" . $request->deduction1_deduct,
+                        'deductFrom2' => date("Y-m-d") . "T" . $request->deduction2_from,
+                        'deductTo2' => date("Y-m-d") . "T" . $request->deduction2_to,
+                        'deductHour2' => date("Y-m-d") . "T" . $request->deduction2_deduct,
+                        'deductEvery3' => date("Y-m-d") . "T" . $request->deduction3_every,
+                        'deductHour3' => date("Y-m-d") . "T" . $request->deduction3_deduct,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),  
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkAppTM(Request $request)
     {
         try {
@@ -2368,6 +2596,49 @@ class TimeManagementController extends Controller
             }
 
             $response = $client->delete(env('API_URL') . '/tmcalendar',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeReferenceTimeManagementDetail(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            $param = [];
+
+            foreach($request->data as $key => $value){
+                $param[] = [
+                    'companyCode' => $value['companyCode'],
+                    'deductOvtDay' => $value['deductOvtDay'],
+                    'description' => $value['description'],
+                    'sessionID' => 0,
+                    'userID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/referencetm/removedetail',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
