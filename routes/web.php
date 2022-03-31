@@ -361,6 +361,10 @@ Route::post('personel/employee_report_by_status/print', 'PersonelController@prin
 Route::post('personel/employee_card/print', 'PersonelController@printEmployeeCardPersonel');
 Route::post('personel/custom_report_employee/print', 'PersonelController@printCustomReportEmployee');
 Route::post('personel/evaluation_report/print', 'PersonelController@printEvaluationReportPersonel');
+Route::post('personel/employee_dependents/print', 'PersonelController@printEmployeeDependentsPersonel');
+Route::post('personel/personal_data/template', 'PersonelController@templatePersonalDataPersonel');
+Route::post('personel/personal_data/export', 'PersonelController@exportPersonalDataPersonel');
+Route::post('personel/personal_data/import', 'PersonelController@importPersonalDataPersonel');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');

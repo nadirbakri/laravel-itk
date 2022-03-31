@@ -10,16 +10,19 @@ use Validator;
 use Session;
 use App;
 
-class EmployeeDependentsExport implements FromView
+class MonthlyAbsenteeismDetailExport implements FromView
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $includeMedical, $includePayroll, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $absentMonthFrom, $absentMonthTo, $includeResign, $changeHeader, $dataDetail, $hourOut, $hourTo, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
-        $this->period = $period;
+        $this->absentMonthFrom = $absentMonthFrom;
+        $this->absentMonthTo = $absentMonthTo;
         $this->includeResign = $includeResign;
-        $this->includeMedical = $includeMedical;
-        $this->includePayroll = $includePayroll;
+        $this->changeHeader = $changeHeader;
+        $this->dataDetail = $dataDetail;
+        $this->hourOut = $hourOut;
+        $this->hourTo = $hourTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
         $this->groupAuthorizeTo = $groupAuthorizeTo;
         $this->position = $position;
@@ -27,6 +30,7 @@ class EmployeeDependentsExport implements FromView
         $this->location = $location;
         $this->dataLevel = $dataLevel;
     }
+
     public function view(): View
     {
         try {
@@ -37,12 +41,11 @@ class EmployeeDependentsExport implements FromView
 
             $param = [ 
                 'companyCode' => Session::get('companyCode'), 
-                'languageID' => App::getLocale(), 
+                'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'includeResign' => $this->includeResign,
-                'includeMedical' => $this->includeMedical,
-                'includePayroll' => $this->includePayroll
+                'incResign' => $this->includeResign,
+                'changeHeader' => $this->changeHeader
             ];
 
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
@@ -50,13 +53,29 @@ class EmployeeDependentsExport implements FromView
                 $param['employeeNoTo'] = $this->employeeNoTo;
             }
 
-            if(!empty($this->period) || !empty($this->period)){
-                $param['period'] = $this->period;
+            if(!empty($this->absentMonthFrom) || !empty($this->absentMonthFrom)){
+                $param['absentMonthFrom'] = $this->absentMonthFrom;
+                $param['absentMonthTo'] = $this->absentMonthTo;
+            }
+
+            if(!empty($this->dataDetail) && !is_null($this->dataDetail[0])){
+                foreach($this->dataDetail as $key => $value){
+                    $data_detail[] = $value->absentCode;
+                }
+                $param['absenCode'] = $data_detail;
+            }else{
+                $this->dataDetail = null;
+                $param['dataDetail'] = null;
+            }
+
+            if(!empty($this->hourOut) || !empty($this->hourOut)){
+                $param['hourOut'] = date('Y-m-d') . "T" . $this->hourOut;
+                $param['hourOutTo'] = date('Y-m-d') . "T" . $this->hourTo;
             }
 
             if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
+                $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
+                $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
@@ -94,7 +113,11 @@ class EmployeeDependentsExport implements FromView
                 $param['levelMaster'] = $data_level;
             }
 
-            $response = $client->post(env('API_URL') . '/reportemployeedependents/getreportemployeedependents',
+            // var_dump(json_encode($param));
+
+            // var_dump($param['levelMaster']);
+
+            $response = $client->post(env('API_URL') . '/monthlyabsenteeismdetailreport/getmonthlyabsenteeismdetailreport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -110,15 +133,13 @@ class EmployeeDependentsExport implements FromView
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
-
         if($arrResult->dataListSet == null){
-            return view('personel.personel_export_employee_dependents', [
-                'data' => []
+            return view('time_management.tm_export_monthly_absenteeism_detail', [
+                'data' => [], 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo 
             ]);
         }else{
-            return view('personel.personel_export_employee_dependents', [
-                'data' => $arrResult->dataListSet
+            return view('time_management.tm_export_monthly_absenteeism_detail', [
+                'data' => $arrResult->dataListSet, 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo
             ]);
         }
     }

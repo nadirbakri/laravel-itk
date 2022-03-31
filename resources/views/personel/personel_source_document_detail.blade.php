@@ -505,10 +505,6 @@
             loadDataPositionCode();
         });
 
-        $("#btn-save-letter").on('click', function () {
-            $('#source_document_form').submit();
-        });
-
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         function loadDataDetailField() {

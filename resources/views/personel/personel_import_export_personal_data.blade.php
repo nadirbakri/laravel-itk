@@ -41,6 +41,41 @@
             border-top-right-radius: 5px;
         }
 
+        .modal-header-notification-success {
+            border-bottom: 1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -57,7 +92,7 @@
         </div>
     </div>
     <div class="div-form">
-        <form id="import_export_personal_data_form" method="post">
+        <form id="import_export_personal_data_form" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
@@ -76,26 +111,60 @@
             <div class="row">
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-import" id="btn-import"
-                        style="width: 100%;" data-toggle="modal" data-target="#modal_import_document">
+                        style="width: 100%;">
                         {{ __('personel_import_export_personal_data.btn-import') }}
                     </button>
                 </div>
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-export" id="btn-export"
-                        style="width: 100%;" data-toggle="modal" data-target="#modal_export_document">
+                        style="width: 100%;">
                         {{ __('personel_import_export_personal_data.btn-export') }}
                     </button>
                 </div>
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template"
-                        style="width: 100%;" data-toggle="modal" data-target="#modal_download_template_document">
+                        style="width: 100%;">
                         {{ __('personel_import_export_personal_data.btn-download-template') }}
                     </button>
                 </div>
             </div>
         </form>
     </div>
-
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('personel_import_export_personal_data.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -112,6 +181,213 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
+
+        $("#btn-import").on('click', function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $('#import_export_personal_data_form').submit();
+        });
+
+        $("#btn-export").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('personel/personal_data/export') }}",
+                type: "POST",
+                success: function (result, status, xhr) {
+                    $("#btn-export").prop("disabled", false);
+                    $("#btn-export").html(
+                        '{{ __("personel_import_export_personal_data.btn-export") }}'
+                    );
+                    
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'audit_trail.xlsx');
+                
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#btn-export").prop("disabled", false);
+                    $("#btn-export").html(
+                        '{{ __("personel_import_export_personal_data.btn-export") }}'
+                    );
+                    $('#notification').modal('show');
+                    $('#message-notification').html(response);
+                }
+            });
+        });
+
+        $("#btn-download-template").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('personel/personal_data/template') }}",
+                type: "POST",
+                success: function (result, status, xhr) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '{{ __("personel_import_export_personal_data.btn-download-template") }}'
+                    );
+
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'audit_trail.xlsx');
+                
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '{{ __("personel_import_export_personal_data.btn-download-template") }}'
+                    );
+                    $('#notification').modal('show');
+                    $('#message-notification').html(response);
+                }
+            });
+        });
+
+        if ($("#import_export_personal_data_form").length > 0) {
+            $("#import_export_personal_data_form").validate({
+                rules: {
+                    import_export: {
+                        extension: "xls|xlsx|xml",
+                    },
+                },
+                messages: {
+                    import_export: {
+                        extension: "{{ __('personel_import_export_personal_data.import_export_extension') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-import").prop("disabled", false);
+                    $("#btn-import").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    var myform = document.getElementById("import_export_personal_data_form");
+                    var formdata = new FormData(myform);
+
+                    $.ajax({
+                        url: "{{ url('personel/personal_data/import') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            if (response[0].status == "true") {
+                                $("#btn-import").prop("disabled", false);
+                                $("#btn-import").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                                );
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response[0]
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('personel/import_export_personal_data') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-import").prop("disabled", false);
+                                $("#btn-import").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response[0].message == null || response[0].message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response[0]
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-import").prop("disabled", false);
+                            $("#btn-import").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
+        }
     })
 </script>
 

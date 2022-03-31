@@ -13,6 +13,7 @@ return [
     */
 
     'judul' => 'Monthly Absenteeism Detail Report',
+    'judul_export' => 'Monthly Absenteeism Detail',
     'list' => 'Time Management Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',

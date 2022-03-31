@@ -9,6 +9,9 @@ use App\Exports\EmployeeSkillReportExport;
 use App\Exports\CustomReportEmployeeExport;
 use App\Exports\EmployeeDependentsExport;
 use App\Exports\EmployeeCardExport;
+use App\Exports\PersonalDataExport;
+use App\Exports\PersonalDataTemplateExport;
+use App\Imports\PersonalDataImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -16,6 +19,7 @@ use GuzzleHttp\Exception\RequestException;
 use Validator;
 use Session;
 use App;
+use File;
 use DataTables;
 use Excel;
 use PDF;
@@ -640,14 +644,43 @@ class PersonelController extends Controller
 
     public function tableEmployeeAttachmentPersonel(Request $request)
     {
-        if ($request->ajax()) {
-            $data = collect([
-                (object) [
-                    'employee_no' => 1304020,
-                    'employee_name' => 'Yudha Nugraha'
-                ]
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            return Datatables::of($data)->make(true);
+
+            var_dump($request->employeeNo);
+
+            $response = $client->post(env('API_URL') . '/peattachment/getpeattachment',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -9675,5 +9708,37 @@ class PersonelController extends Controller
         $arrData2 = json_decode($request->field_name);
 
         return Excel::download(new CustomReportEmployeeExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['employment_status'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData2), 'Custom Report Employee.xlsx');
+    }
+
+    public function printEmployeeDependentsPersonel(Request $request)
+    {
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new EmployeeDependentsExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, isset($request->include_medical) ? (bool) $request->include_medical : false, isset($request->include_payroll) ? (bool) $request->include_payroll : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Dependents Report.xlsx');
+    }
+
+    public function templatePersonalDataPersonel()
+    {
+        return Excel::download(new PersonalDataTemplateExport, 'Template Personel Data.xlsx');
+    }
+
+    public function exportPersonalDataPersonel(Request $request)
+    {
+        return Excel::download(new PersonalDataExport, 'Personel Data.xlsx');
+    }
+
+    public function importPersonalDataPersonel(Request $request)
+    {
+        $file = $request->file('import_export');
+        $nama_file = rand().$file->getClientOriginalName();
+        $file->move('file_excel', $nama_file);
+        $import = new PersonalDataImport;
+        Excel::import($import, public_path('file_excel/'.$nama_file));
+        File::delete('file_excel/'.$nama_file);
+        return $import->getArrResult();
     }
 }

@@ -80,7 +80,7 @@
                         <div class="form-group">
                             <label for="absent_month_from">{{ __('tm_monthly_absenteeism_detail.label_absent_month_from') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="absent_month_from" name="absent_month_from"
+                                <input type="text" class="form-control input-month" id="absent_month_from" name="absent_month_from"
                                     placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_month_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <label for="absent_month_to">{{ __('tm_monthly_absenteeism_detail.label_absent_month_to') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control" id="absent_month_to" name="absent_month_to"
+                                <input type="text" class="form-control input-month" id="absent_month_to" name="absent_month_to"
                                     placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_month_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-8">
                         <div class="div-table">
                             <table id="monthly_absenteeism_detail_table" class="table hover" style="width: 100%">
                                 <thead>
@@ -159,13 +159,13 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="hour_out">{{ __('tm_monthly_absenteeism_detail.label_hour_out') }}</label>
-                            <input type="time" class="form-control" id="hour_out" name="hour_out">
+                            <input type="text" class="form-control input-hour" id="hour_out" name="hour_out">
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="hour_to">{{ __('tm_monthly_absenteeism_detail.label_hour_to') }}</label>
-                            <input type="time" class="form-control" id="hour_to" name="hour_to">
+                            <label for="hour_to">{{ __('tm_monthly_absenteeism_detail.label_hour_to') }} &nbsp;&nbsp;</label>
+                            <input type="text" class="form-control input-hour" id="hour_to" name="hour_to">
                         </div>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
+                        <button type="button" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('tm_monthly_absenteeism_detail.btn_print') }}
                         </button>
@@ -238,7 +238,7 @@
                     <form id="absent_code_form" method="post">
                         @csrf
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label
@@ -249,21 +249,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">{{ __('tm_monthly_absenteeism_detail.label_description') }}</label>
                                     <input type="text" class="form-control" id="description" name="description"
-                                        placeholder={{ __('tm_monthly_absenteeism_detail.label_description') }} disabled>
+                                        placeholder="{{ __('tm_monthly_absenteeism_detail.label_description') }}" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label
                                         for="header_name">{{ __('tm_monthly_absenteeism_detail.label_header_name') }}</label>
                                     <input type="text" class="form-control" id="header_name" name="header_name" 
-                                        placeholder={{ __('tm_monthly_absenteeism_detail.label_header_name') }} readonly>
+                                        placeholder="{{ __('tm_monthly_absenteeism_detail.label_header_name') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -315,7 +315,7 @@
     });
 
     function initDatePicker() {
-        $('.input-group input').flatpickr({
+        $('.input-month').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -336,12 +336,18 @@
                 });
             }
         });
-        // $('#hour').flatpickr({
-        //     enableTime: true,
-        //     noCalendar: true,
-        //     dateFormat: "H:i K",
-        //     defaultDate: "00:00"
-        // });
+
+        $('.input-hour').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            altInput: true,
+            static: true,
+            allowInput: true,
+            time_24hr: true,
+            defaultDate: "today",
+            altFormat: "H:i",
+            dateFormat: "H:i:ss"
+        });
     }
 
 </script>
@@ -441,26 +447,13 @@
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
 
-        // $('select').on('select2:opening select2:closing', function( event ) {
-        //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
-        //     $searchfield.prop('disabled', true);
-        // });
-
-        // $('#employee_no_from').on('select2:open', function (e) {
-        //     html = '<div class="row header-select">' +
-        //     '<div class="col-6"><b>Employee No</b></div>' +
-        //     '<div class="col-6"><b>Employee Name</b></div>' +
-        //     '</div>';
-        //     $('.select2-search').append(html);
-        // });
-
         $('#modal_add_absent_code').on('show.bs.modal', function () {
+            $('#absent_code').val(null).trigger('change');
+            $('#description').val('');
+            $('#header_name').val('');
             if ($('#change_header').is(':checked')) {
-                // console.log($('#change_header').val());
                 $('#header_name').prop('readonly', false);
-            }
-
-            else {
+            } else {
                 $('#header_name').prop('readonly', true);
             }
         })
@@ -473,14 +466,6 @@
         $('#absent_code').on("select2:select", function (e) {
             var data = $('#absent_code').select2('data');
             $('#description').val(htmlDecode(data[0].title));
-            // console.log(data[0].title);
-            $.ajax({
-                url: "{{ url('/time_management/absent_code/detail') }}",
-                type: "GET",
-                data: {
-                    'absentCode': data[0].id
-                },
-            })
         });
 
         $('#absent_code').on("select2:unselecting", function (e) {
@@ -1060,12 +1045,12 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Absent Type</b></div>' +
                         '<div class="col-6"><b>Absent Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.absentType + '</div>' +
                         '<div class="col-6">' + data.data.absentCode + '</div>' +
+                        '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -1129,17 +1114,9 @@
             });
         }
 
-        $("#btn-print-data").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#monthly_absenteeism_detail_form").submit();
-        });
-
         $("#btn-remove-data").on('click', function() {
             var data = table.rows('.selected').data().toArray();
-        // console.log(data.length);
+
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     var index = arrayabsentCode.findIndex(x => x.absentCode == data[i].absentCode);
@@ -1147,21 +1124,17 @@
                 }
                 $('#monthly_absenteeism_detail_table').DataTable().destroy();
                 load_table_monthly_absenteeism_detail();
-                //console.log(arrayfieldName);
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
         });
 
-        // var no = arrayabsentCode.length+1;
-
         $("#btn-save-employment-data").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            var arraypush = [];
             arrayabsentCode.push({
                 "no": "",
                 "absentCode": $("#absent_code").val(),
@@ -1180,38 +1153,32 @@
             //$("#field_name_form").submit();
         });
 
+        $("#btn-print-data").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#monthly_absenteeism_detail_form").submit();
+        });
+
         if ($("#monthly_absenteeism_detail_form").length > 0) {
             $("#monthly_absenteeism_detail_form").validate({
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
-                    );
-
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-
-                Handler: function (form) {
+                submitHandler: function (form) {
+                    var arrData = table.rows().data().toArray();
+                    
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+
                     $.ajax({
                         xhrFields: {
                             responseType: 'blob',
                         },
                         url: "{{ url('time_management/monthly_absenteeism_detail/print') }}",
                         type: "POST",
-                        data: $('#monthly_absenteeism_detail_form').serialize(),
+                        data: { 'field' : $('#monthly_absenteeism_detail_form').serialize(), 'field_name' : JSON.stringify(arrData) },
                         success: function (result, status, xhr) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(

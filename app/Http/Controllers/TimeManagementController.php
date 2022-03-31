@@ -6,6 +6,7 @@ use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
 use App\Exports\MonthlyAbsenteeismAnalysisExport;
+use App\Exports\MonthlyAbsenteeismDetailExport;
 use App\Exports\AbsenteeismOvertimeReportExport;
 use App\Exports\DetailAbsenteeismReportExport;
 use App\Exports\DetailAbsenteeismReasonReportExport;
@@ -1152,11 +1153,14 @@ class TimeManagementController extends Controller
     {
         $dataLevel = [];
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+        parse_str($request->field, $arrData);
+        $arrData2 = json_decode($request->field_name);
+
+        for($i = 0; $i < $arrData['level_format']; $i++){
+            $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new MonthlyAbsenteeismDetailExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_month_from'], $arrData['absent_month_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData2, $arrData['hour_out'], $arrData['hour_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
     public function printAbsenteeismOvertimeReport(Request $request)

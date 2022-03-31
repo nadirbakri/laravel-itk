@@ -57,7 +57,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="employee_list_form" method="post">
+            <form id="employee_dependents_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -246,6 +246,7 @@
             url: "{{ url('personel/report/level/check') }}",
             type: "GET",
             success: function (response) {
+                console.log(response.data[0].levelFormat);
                 $('#level_format').val(response.data[0].levelFormat);
                 for (var i = 1; i <= response.data[0].levelFormat; i++) {
                     $('#div-level').append(
@@ -868,11 +869,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#employee_list_form").submit();
+            $("#employee_dependents_form").submit();
         });
 
-        if ($("#employee_list_form").length > 0) {
-            $("#employee_list_form").validate({
+        if ($("#employee_dependents_form").length > 0) {
+            $("#employee_dependents_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -883,9 +884,9 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_list/print') }}",
+                        url: "{{ url('personel/employee_dependents/print') }}",
                         type: "POST",
-                        data: $('#employee_list_form').serialize(),
+                        data: $('#employee_dependents_form').serialize(),
                         success: function (result, status, xhr) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(
