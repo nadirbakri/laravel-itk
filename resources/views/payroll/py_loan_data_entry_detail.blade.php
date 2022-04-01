@@ -222,8 +222,13 @@
                             <small id="no_of_installment_rules" class="text-muted">
                                 (0 - 100)
                             </small>
-                            <input type="number" min=0 max=100 class="form-control" id="rate_per_year" name="rate_per_year"
+                            <div class="input-group">
+                                <input type="number" min=0 max=100 class="form-control" id="rate_per_year" name="rate_per_year"
                                 placeholder="{{ __('payroll_loan_data_entry.label_rate_per_year') }}" readonly>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span>%</span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
@@ -455,8 +460,7 @@
 
         function pickerPaymentDateTable(field='') {
             $(field).flatpickr({
-                // altInput: true,
-                // clickOpens: false,
+                altInput: true,
                 allowInput: true,
                 altFormat: "j-M-y",
                 dateFormat: "Y-m-d",
@@ -574,6 +578,7 @@
             $('#outstanding_balance').prop('readonly', true);
             $('#termination_loan').prop('readonly', true);
             pickerPaidOn._input.setAttribute("disabled", "disabled");
+            // pickerPaymentDate._input.setAttribute("disabled", "disabled");
 
             $.ajax({
                 type: 'GET',
@@ -960,7 +965,7 @@
                             '</div>' +
                         '</div>',
                         '<input type="number" class="form-control" id="seq_no_table'+ k +'" name="seq_no_table[]" value="'+ ((typeof v.paymentSeq !== 'undefined' && v.paymentSeq !== null) ? v.paymentSeq : '') +'" readonly>',
-                        '<select class="form-control select2" id="payment_type'+ k +'" name="payment_type">' +
+                        '<select class="form-control select2" id="payment_type'+ k +'" name="payment_type" disabled>' +
                                 '<option value="" disabled selected>{{ __("payroll_loan_data_entry.label_select_payment_type") }}</option>' +
                                 '<option value="S">Salary</option>' +
                                 '<option value="B">Bonus</option>' +

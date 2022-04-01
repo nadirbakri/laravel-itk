@@ -154,7 +154,6 @@
                             <label for="payment_method">{{ __('payroll_full_partial_loan_payment.label_payment_method') }}</label>
                             <select class="form-control select2" id="payment_method" name="payment_method" disabled></select>
                         </div>
-                        <input type="text" class="form-control" id="payment_method_hidden" name="payment_method_hidden" hidden>
                     </div>
                 </div>
                 <div class="row">
@@ -221,6 +220,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label for="payment_amount">{{ __('payroll_full_partial_loan_payment.label_payment_amount') }}</label>
+                            <small class="text-muted">({{ __('payroll_full_partial_loan_payment.label_payment_amount_rules') }})</small>
                             <input type="number" class="form-control" id="payment_amount" name="payment_amount"
                                 placeholder="{{ __('payroll_full_partial_loan_payment.label_payment_amount') }}">
                         </div>
@@ -290,6 +290,22 @@
                     </div>
                     <div class="col-3"></div>
                 </div>
+                <div class="div-table">
+                    <table id="full_partial_loan_payment_detail_table" class="table hover" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%">Date</th>
+                                <th style="width: 7%">Seq</th>
+                                <th style="width: 15%">Type</th>
+                                <th style="width: 10%">Principal</th>
+                                <th style="width: 10%">Interest</th>
+                                <th style="width: 10%">Payment</th>
+                                <th style="width: 10%">Outstanding</th>
+                                <th style="width: 18%">Paid</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
@@ -298,7 +314,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('payroll/full_partial_loan_payment') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('payroll/partial_full_loan_payment') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_full_partial_loan_payment.btn_cancel') }}
                         </a>
@@ -363,9 +379,26 @@
 
         var func = '{{ $func }}';
         var arrData = @json($data);
-        var arrData2 = @json($data2);
+        var filter_employee_no = null;
+        var filter_loan_no = 0;
+        var table = null;
 
-        console.log(arrData2);
+        $('.div-navbar a.disabled').attr('onclick', 'return false;');
+
+        $('#full_partial_loan_payment_detail_table thead tr').clone(true).appendTo('#full_partial_loan_payment_detail_table thead');
+        $('#full_partial_loan_payment_detail_table thead tr:eq(1) th').each( function (i) {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+
+            $('input', this).on('keyup change', function () {
+                if (table.column(i + 1).search() !== this.value) {
+                    table
+                        .column(i + 1)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        });
 
         if (func == 'new') {
             $('#record_function').val('New');
@@ -390,6 +423,24 @@
 
             $('#employee_no').val(null).trigger('change');
             $('#employee_name').val("");
+            $('#loan_no').val("");
+            $('#rate_per_year').val("");
+            $('#paid_loan_seq').val("");
+            $('#no_of_installment_not_yet_paid').val("");
+            $('#payment_method').val(null).trigger('change');
+            $('#currency_code').val(null).trigger('change');
+            $('#principal_amount_installment').val("");
+            $('#interest_amount_per_installment').val("");
+            $('#outstanding_amount').val("");
+            $('#total_not_yet_paid').val("");
+            $('#payment_amount').val("");
+            $('#other_cost').val("");
+            $('#total_payment').val("");
+            $('#new_outstanding_amount').val("");
+            $('#new_rate_per_year').val("");
+            $('#new_no_of_installment_not_yet_paid').val("");
+            $('#full_partial_loan_payment_detail_table').DataTable().destroy();
+            load_data_table_loan_payment(filter_employee_no, filter_loan_no);
         }
 
         function htmlDecode(value) {
@@ -399,13 +450,81 @@
         $('#employee_no').on('select2:select', function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
+
+            $.ajax({
+                url: "{{ url('payroll/full_partial_loan_payment/data') }}",
+                type: "GET",
+                data: {
+                    'employeeNo': data[0].id
+                },
+                success: function (response) {
+                    $('#loan_no').val(response[0].loanNo);
+                    $('#rate_per_year').val(response[0].ratePerYear);
+
+                    filter_employee_no = $('#employee_no').val();
+                    filter_loan_no = $('#loan_no').val();
+                    $('#full_partial_loan_payment_detail_table').DataTable().destroy();
+                    load_data_table_loan_payment(filter_employee_no, filter_loan_no);
+                }
+            });
         });
 
         $('#employee_no').on('select2:unselecting', function (e) {
             $('#employee_name').val('');
+            $('#loan_no').val('');
+            $('#rate_per_year').val('');
         });
 
         loadDataEmployeeNo();
+        loadDataCurrencyCode();
+        loadDataPaymentMethod();
+
+        function load_data_table_loan_payment(filter_employee_no = '', filter_loan_no = '') {
+            table = $('#full_partial_loan_payment_detail_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('payroll/full_partial_loan_payment_detail/table') }}",
+                    data: {
+                        'employeeNo' : filter_employee_no,
+                        'loanNo' : filter_loan_no,
+                   } 
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                columns: [
+                    {
+                        data: 'paymentDate', 
+                        name: 'paymentDate',
+                        render: function (data, type, row) {
+                            var id = $('<div />').text(row.paymentDate).html();
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    },
+                    {
+                        data: 'paymentSeq', 
+                        name: 'paymentSeq',
+                        render: function (data, type, row) {
+                            var id = $('<div />').text(row.paymentSeq).html();
+                            return '<input type="hidden" class="form-control" id="payment_seq_table[' + id + ']" name="payment_seq_table[' + id + ']" value="' +
+                                $('<div />').text(row.paymentSeq).html() + '">' +
+                                $('<div />').text(row.paymentSeq).html();
+                        }
+
+                    },
+                    {data: 'paymentType', name: 'paymentType'},
+                    {data: 'paymentPrincipal', name: 'paymentPrincipal'},
+                    {data: 'paymentInterest', name: 'paymentInterest'},
+                    {data: 'ratePerYear', name: 'ratePerYear'},
+                    {data: 'outStandingAmount', name: 'outStandingAmount'},
+                    {data: 'flagStatus', name: 'flagStatus'}
+                ],
+            });
+        }
 
         function loadDataEmployeeNo() {
             function formatSelect(data) {
@@ -475,6 +594,88 @@
                     cache: true,
                 },
                 templateResult: formatSelect
+            });
+        }
+
+        function loadDataCurrencyCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#currency_code').select2({
+                width: '100%',
+                placeholder: 'Choose Currency Code',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/currency/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataPaymentMethod() {
+
+            var listPaymentMethod = [
+                { id: 'P', text: 'Partial Payment' },
+                { id: 'F', text: 'Full Payment' }
+            ];
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#payment_method').select2({
+                data: listPaymentMethod,
+                width: '100%',
+                placeholder: 'Choose Payment Method',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
             });
         }
     })

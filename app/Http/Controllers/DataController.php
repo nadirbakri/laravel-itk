@@ -93,7 +93,7 @@ class DataController extends Controller
 	}
 
 	public function dataProcessStatusDetailAPI(Request $request)
-    {
+	{
     	$search = $request->search;
 
     	try {
@@ -1932,6 +1932,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
+						'companyCode' => Session::get('companyCode'),
 	    				'recordStatus' => 'A'
 	    			]
 	    		)]

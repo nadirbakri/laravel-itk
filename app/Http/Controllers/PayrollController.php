@@ -98,6 +98,11 @@ class PayrollController extends Controller
         return view ('payroll.py_salary_component_form');
     }
 
+    public function pageReferencePayroll()
+    {
+        return view ('payroll.py_reference_payroll');
+    }
+
     public function tableAccountPY()
     {
         try {
@@ -448,6 +453,44 @@ class PayrollController extends Controller
         }
     }
 
+    public function tableDetailFullPartialLoanPaymentPY(Request $request) {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloanpayment/getemployeedetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'loanNo' => (int) $request->loanNo,
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function tableMultiCostCenterPY()
     {
         try {
@@ -719,6 +762,48 @@ class PayrollController extends Controller
         }
     }
 
+    public function tablePayrollCalculationDetailPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->religionCode);
+
+            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "fieldName" => $request->fieldName,
+                        "languageCode" => App::getLocale(),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function dataDetailSalaryMasterPY(Request $request)
     {
         try {
@@ -802,48 +887,6 @@ class PayrollController extends Controller
         }
 
         return view('payroll.py_severance_data_entry_detail', ['data' => $data, 'func' => $request->func]);
-    }
-
-    public function tablePayrollCalculationDetailPY(Request $request)
-    {
-        try {
-            $client = new Client([
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            // var_dump($request->religionCode);
-
-            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        "fieldName" => $request->fieldName,
-                        "languageCode" => App::getLocale(),
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-        }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
-        }
     }
 
     public function dataDetailTariffMasterPY(Request $request)
@@ -1065,10 +1108,54 @@ class PayrollController extends Controller
                 )]
             );
 
-            $response2 = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+            // $response2 = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+            //     ['body' => json_encode(
+            //         [
+            //             'companyCode' => Session::get('companyCode'),
+            //             'sessionUserID' => Session::get('userID'),
+            //             'logActionUserID' => Session::get('userID'),
+            //             'logActionUsername' => Session::get('userName')
+            //         ]
+            //     )]
+            // );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+        // $arrResult2 = json_decode($response2->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+            // $data2 = [];
+        }else{
+            $data = $arrResult->dataListSet;
+            // $data2 = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_full_partial_loan_payment_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
+    public function dataFullPartialLoanPaymentPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -1086,18 +1173,9 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
-        $arrResult2 = json_decode($response2->getBody()->getContents());
-        
-        if($arrResult->dataListSet == null || $arrResult2->dataListSet == null){
-            $data = [];
-            $data2 = [];
-        }else{
-            $data = $arrResult->dataListSet;
-            $data2 = $arrResult->dataListSet;
-        }
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('payroll.py_full_partial_loan_payment_detail', ['data' => $data, 'data2' => $data2, 'func' => $request->func]);
+        return response()->json($arrResult->dataListSet);
     }
 
     public function dataDetailLoanDataEntryPY(Request $request)
@@ -1389,6 +1467,113 @@ class PayrollController extends Controller
         }
 
         return view('payroll.py_salary_component_form_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
+    public function dataDetailReportFormatPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump($request->reportCode);
+
+            $response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'reportCode' => $request->reportCode,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataPayrollCalculationPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationprocess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'fieldName' => $request->fieldName,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+
+            $response_table = $client->post(env('API_URL') . '/prcalculation/getprcalculationdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'fieldName' => $request->fieldName,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response_table->getBody()->getContents());
+
+        return view('payroll.py_payroll_calculation_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailReferencePayroll(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencepayroll/getreferencepayroll',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
     }
 
     public function prosesSalaryMasterPY(Request $request)
@@ -2768,79 +2953,6 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
-    public function dataDetailReportFormatPY(Request $request)
-    {
-        try {
-            $client = new Client([
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            // var_dump($request->reportCode);
-
-            $response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'reportCode' => $request->reportCode,
-                        'languageCode' => App::getLocale()
-                    ]
-                )]
-            );
-        } catch (RequestException $e) {
-            var_dump($e->getResponse());
-        }
-
-        $arrResult = json_decode($response->getBody()->getContents());  
-
-        return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
-    }
-
-    public function dataPayrollCalculationPY(Request $request)
-    {
-        try {
-            $client = new Client([
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            $response = $client->post(env('API_URL') . '/prcalculation/getprcalculationprocess',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'fieldName' => $request->fieldName,
-                        'languageCode' => App::getLocale()
-                    ]
-                )]
-            );
-
-            $response_table = $client->post(env('API_URL') . '/prcalculation/getprcalculationdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'fieldName' => $request->fieldName,
-                        'languageCode' => App::getLocale()
-                    ]
-                )]
-            );
-
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-        }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-        $arrResult2 = json_decode($response_table->getBody()->getContents());
-
-        return view('payroll.py_payroll_calculation_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet, 'func' => $request->func]);
-    }
-
     public function statusLoanMasterPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -3112,6 +3224,132 @@ class PayrollController extends Controller
                     ]
                 )]
             );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesReferencePayrollPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "paymentPeriod" => (int) $request->payroll_payment_period,
+                "taxRegisteredNo" => $request->tax_registered_no,
+                "jamsostekNo" => $request->jamsostek_no,
+                "pensionNo" => $request->pension_no,
+                "retirementAgeLimit" => (int) $request->retirement_age_limit,
+                "dependentsMax" => (int) $request->maximum_dependents,
+                "thpRoundedFrom" => (float) $request->take_home_pay_rounded_from,
+                "thpRoundedBecome" => (float) $request->take_home_pay_rounded_become,
+                "transRateType" => $request->transaction_rate_type,
+                "taxRateType" => $request->tax_rate_type,
+                "roundingMethodReport" => $request->rounding_method_report,
+                "roundingDecimalReport" => (int) $request->rounding_decimal_report,
+                "roundingMethodSpt" => $request->rounding_method_spt,
+                "roundingDecimalSpt" => (int) $request->rounding_decimal_spt,
+                "appreciation" => isset($request->check_appreciation_and_employee_service) ? (bool) $request->check_appreciation_and_employee_service : false,
+                "bonusCooefficient" => (float) $request->bonus_cooficient,
+                "taxAllowanceBonus" => isset($request->check_tax_allowance_bonus) ? (bool) $request->check_tax_allowance_bonus : false,
+                "taxAllowanceTHR" => isset($request->check_tax_allowance_thr) ? (bool) $request->check_tax_allowance_thr : false,
+                "pensionContributionEmployee" => (float) $request->pension_contribution_employee,
+                "pensionContributionEmployer" => (float) $request->pension_contribution_employer,
+                "workRelateAccidentInsurance" => (float) $request->work_related_accident_insurance_one,
+                "workRelateAccidentInsurance2" => (float) $request->work_related_accident_insurance_two,
+                "workRelateAccidentInsurance3" => (float) $request->work_related_accident_insurance_three,
+                "nonAccidentalDeathInsurance" => (float) $request->non_accidental_death_insurance,
+                "healthInsuranceCompany" => (float) $request->health_insurance_company,
+                "healthInsuranceEmployee" => (float) $request->health_insurance_employee,
+                "maxCalcBaseHealthIns" => (float) $request->max_calculation_health_insurance,
+                "minCalcBaseHealthIns" => (float) $request->min_calculation_health_insurance,
+                "pensionInsuranceCompany" => (float) $request->pension_insurance_company,
+                "pensionInsuranceEmployee" => (float) $request->pension_insurance_employee,
+                "maxCalcBasePensionIns" => (float) $request->max_calculation_pension_insurance,
+                "minCalcBasePensionIns" => (float) $request->min_calculation_pension_insurance,
+                "calculationMethod" => $request->calculation_method,
+                "multiplicationFactorDailyWorkers" => (int) $request->multiplication_factor_daily_worker,
+                "deductedOnPeriod" => (int) $request->deduction_on_period_jamsostek,
+                "remissionPaymentPercentage" => (int) $request->work_insurance_remision_payment_percentage,
+                "remissionEndPeriod" => $request->work_insurance_remision_end_period,
+                "nonTaxableIncomeEmployee" => (float) $request->non_taxable_income_employee,
+                "nonTaxableIncomeDependent" => (float) $request->non_taxable_income_each_dependent,
+                "occupationalPercentage" => (float) $request->occupational_percentage,
+                "occupationalMaximum" => (float) $request->occupational_maximum,
+                "flagtaxableIncomeRounded" => isset($request->check_nearest_taxable_income) ? (bool) $request->check_nearest_taxable_income : false,
+                "nearestTaxableIncomeRounded" => (float) $request->nearest_taxable_income,
+                "timeTest" => (int) $request->time_test,
+                "taxRateWithintimeTest" => (float) $request->tax_rate_with_time_test,
+                "maxGrossIncome" => (float) $request->max_gross_income,
+                "taxRate1" => (float) $request->tax_rate1,
+                "taxableIncome1" => (int) $request->taxable_income_from1,
+                "taxRate2" => (float) $request->tax_rate2,
+                "taxableIncome2" => (int) $request->taxable_income_from2,
+                "taxRate3" => (float) $request->tax_rate3,
+                "taxableIncome3" => (int) $request->taxable_income_from3,
+                "taxRate4" => (float) $request->tax_rate4,
+                "taxableIncome4" => (int) $request->taxable_income_from4,
+                "taxRate5" => (float) $request->tax_rate5,
+                "taxableIncome5" => (int) $request->taxable_income_from5,
+                "taxRate6" => (float) $request->tax_rate6,
+                "taxableIncome6" => (int) $request->taxable_income_from6,
+                "taxGovernmentTK" => (int) $request->tax_by_government_tk,
+                "taxGovernmentK0" => (int) $request->tax_by_government_k0,
+                "taxGovernmentK1" => (int) $request->tax_by_government_k1,
+                "taxGovernmentK2" => (int) $request->tax_by_government_k2,
+                "taxGovernmentK3" => (int) $request->tax_by_government_k3,
+                "taxDeductedOnPeriod" => (int) $request->deduction_on_period_tax_calculation_table,
+                "salaryTaxPenalties" => (int) $request->tax_penalties_salary,
+                "bonusTaxPenalties" => (int) $request->tax_penalties_bonus,
+                "thrTaxPenalties" => (int) $request->tax_penalties_thr,
+                "pensionTaxableIncome1" => (int) $request->severance_payment_from1,
+                "pensionTaxRate1" => (float) $request->severance_payment_rate1,
+                "pensionTaxableIncome2" => (int) $request->severance_payment_from2,
+                "pensionTaxRate2" => (float) $request->severance_payment_rate2,
+                "pensionTaxableIncome3" => (int) $request->severance_payment_from3,
+                "pensionTaxRate3" => (float) $request->severance_payment_rate3,
+                "pensionTaxableIncome4" => (int) $request->severance_payment_from4,
+                "pensionTaxRate4" => (float) $request->severance_payment_rate4,
+                "pensionTaxableIncome5" => (int) $request->severance_payment_from5,
+                "pensionTaxRate5" => (float) $request->severance_payment_rate5,
+                "prorateMethod" => $request->prorate_method,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'userID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/referencepayroll/insertrefrencepayroll',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/referencepayroll/updaterefrencepayroll',
+                    ['body' => json_encode($param)]
+                );
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){

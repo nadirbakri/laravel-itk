@@ -32,12 +32,11 @@ return [
     'maintenance' => 'Payroll Maintenance',
     'payroll_calculation' => 'Payroll Calculation',
     'reference_program' => 'Reference Program',
-    'reference_form' => 'Reference Form',
+    'reference_payroll' => 'Reference Payroll',
     'account' => 'Account',
     'spt_format' => 'SPT Format',
     'slip_format' => 'Slip Format',
     'salary_component_data' => 'Salary Component Data',
-    'journal_template' => 'Journal Template',
     'report_format' => 'Report Format',
     'multi_cost_center' => 'Multi Cost Center',
 
