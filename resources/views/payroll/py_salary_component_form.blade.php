@@ -224,7 +224,6 @@
             success: function (response) {
                 isData = Object.keys(response).length;
                 if (isData !== 0) {
-                    console.log((typeof response[0].periodMonth !== 'undefined') ? response[0].periodMonth : '');
                     $('#period_month').val((typeof response[0].periodMonth !== 'undefined') ? response[0].periodMonth : '');
                     $('#period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
                     $('#period').val((typeof response[0].statusProcess !== 'undefined') ? response[0].statusProcess : '');

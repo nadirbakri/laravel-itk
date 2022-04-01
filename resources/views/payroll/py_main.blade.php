@@ -146,9 +146,9 @@
 					</div>
 					<div class="row div-child-data">
 						<div class="col col-3">
-							<a href="{{ url('payroll/reference_form') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/reference_payroll') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.reference_form') }}</span>
+								<span class="child-title-text">{{ __('payroll.reference_payroll') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -175,13 +175,6 @@
 								<span class="child-title-text">{{ __('payroll.slip_format') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/journal_template') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.journal_template') }}</span>
-							</a>
-						</div>
-
 						<div class="col col-3">
 							<a href="{{ url('payroll/report_format') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">

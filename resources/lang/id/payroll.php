@@ -32,7 +32,7 @@ return [
     'thr_formula' => 'Formula THR',
     'bonus_formula' => 'Formula Bonus',
     'reference_program' => 'Program Referensi',
-    'reference_form' => 'Formulir Referensi',
+    'reference_payroll' => 'Referensi Penggajian',
     'account' => 'Akun',
     'spt_format' => 'Format SPT',
     'slip_format' => 'Slip Format',
