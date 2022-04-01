@@ -141,6 +141,7 @@
                                     <label for="file_name">{{ __('personel_employee_attachment.label_file_name') }}</label>
                                     <input type="text" class="form-control" id="file_name" name="file_name" placeholder="{{ __('personel_employee_attachment.label_file_name') }}">
                                 </div>
+                                <input type="hidden" class="form-control" id="employee_no_detail" name="employee_no_detail">
                             </div>
                         </div>
                         <div class="row">
@@ -258,17 +259,96 @@
     });
 
     loadDataEmployeeNo();
-    // load_table_employee_attachment();
+    loadDataAttachmentCode();
 
     $('#employee_no').on("select2:select", function (e) {
         var data = $('#employee_no').select2('data');
         $('#employee_name').val(htmlDecode(data[0].title));
+        $('#employee_no_detail').val(htmlDecode(data[0].id));
 
+        $('#employee_attachment_table').DataTable().destroy();
         load_table_employee_attachment(data[0].id);
     });
 
     $('#employee_no').on("select2:unselecting", function (e) {
         $('#employee_name').val('');
+        $('#employee_no_detail').val('')
+    });
+
+    $("#btn-remove").on('click', function () {
+        var data = table.rows('.selected').data().toArray();
+        if (data.length > 0) {
+            $.ajax({
+                url: "{{ url('personel/employee_attachment/remove') }}",
+                type: "GET",
+                data: {
+                    'data': data,
+                },
+                success: function (response) {
+                    if (response.status == "true") {
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response
+                            .message);
+                        $('#employee_attachment_table').DataTable().destroy();
+                        load_table_employee_attachment(data[0].employeeNo);
+                        setTimeout(function () {
+                            $('#notification_success').modal('hide');
+                        }, 3000);
+                    } else {
+                        $('#notification_error').modal('show');
+                        if (response.message == null || response.message == '') {
+                            $('#message-notification-error').html(
+                                "{{ __('login.error') }}");
+                        } else {
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                },
+                error: function (response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        } else {
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#btn-view").on('click', function () {
+        var data = table.rows('.selected').data().toArray();
+        if (data.length > 0) {
+            console.log(data);
+            $.ajax({
+                url: "{{ url('personel/employee_attachment/view') }}",
+                type: "GET",
+                data: {
+                    'attachmentCode': data[0].attachmentCode,
+                    'employeeNo' : data[0].employeeNo,
+                    'fileName' : data[0].fileName
+                },
+                success: function (response) {
+                    if (response.filename != null) {
+                        window.open('../attachment/' + response.filename, '_blank').focus();
+                    } else {
+                        $('#notification_error').modal('show');
+                        if (response.message == null || response.message == '') {
+                            $('#message-notification-error').html(
+                                "{{ __('login.error') }}");
+                        } else {
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                },
+                error: function (response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        } else {
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
     });
 
     function load_table_employee_attachment(employeeNo = ''){
@@ -376,6 +456,183 @@
             },
             templateResult: formatSelect
         });
+    }
+
+    function loadDataAttachmentCode() {
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' +
+                    '<div class="col-12">' + data.data.value + '</div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        // var headerIsAppend = false;
+        // $('#employee_no').on('select2:open', function (e) {
+        //     if (!headerIsAppend) {
+        //         html = '<div class="row">' +
+        //             '<div class="col-6"><b>Employee No</b></div>' +
+        //             '<div class="col-6"><b>Employee Name</b></div>' +
+        //             '</div>';
+        //         $('.select2-search').append(html);
+        //         headerIsAppend = true;
+        //     }
+        // });
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+        $('#attachment_code').select2({
+            width: '100%',
+            placeholder: 'Choose Attachment Code',
+            allowClear: true,
+            language: {
+                errorLoading: function() {
+                    return $search;
+                },
+                searching: function() {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: '/attachment_code/api',
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: CSRF_TOKEN,
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.value,
+                                id: item.comGenCode,
+                                title: item.value,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    if ($("#employee_attachment_form").length > 0) {
+        $("#employee_attachment_form").validate({
+            rules: {
+                file_name: {
+                    required: true,
+                },
+                attachment_code: {
+                    required: true,
+                },
+                attachment_file: {
+                    required: true,
+                    extension: "jpg|jpeg|pdf|xlsx|docx",
+                },
+            },
+            messages: {
+                file_name: {
+                    required: "{{ __('personel_employee_attachment.file_name_required') }}",
+                },
+                attachment_code: {
+                    required: "{{ __('personel_employee_attachment.attachment_code_required') }}",
+                },
+                attachment_file: {
+                    required: "{{ __('personel_employee_attachment.attachment_file_required') }}",
+                    extension: "{{ __('personel_employee_attachment.attachment_file_extension') }}",
+                },
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid');
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                $("#btn-save").prop("disabled", false);
+                $("#btn-save").html(
+                    '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_attachment.btn_save") }}'
+                );
+
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            submitHandler: function (form) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var myform = document.getElementById("employee_attachment_form");
+                var formdata = new FormData(myform);
+
+                $.ajax({
+                    url: "{{ url('personel/employee_attachment/proses') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $("#btn-save").prop("disabled",
+                                false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_attachment.btn_save") }}'
+                            );
+                            $('#modal_add_attachment').modal('hide');
+                            $('#employee_no').val(null).trigger('change');
+                            $('#employee_attachment_table').DataTable()
+                                .destroy();
+                            load_table_employee_attachment(response.employeeNo);
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $("#btn-save").prop("disabled",
+                                false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_attachment.btn_save") }}'
+                            );
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $("#btn-save").prop("disabled", false);
+                        $("#btn-save").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_attachment.btn_save") }}'
+                        );
+                        $('#notification').modal('show');
+                        $('#message-notification').html(response);
+                    }
+
+                });
+            }
+        })
     }
   });
 </script>

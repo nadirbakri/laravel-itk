@@ -104,11 +104,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
             }
         }
 
-        $this->arrResult = [json_decode($response->getBody()->getContents())];
-
-        // var_dump($this->arrResult[0]->status);
-
-        return response()->json(['status' => $this->arrResult[0]->status, 'message' => $this->arrResult[0]->message]);
+        $this->arrResult[] = json_decode($response->getBody()->getContents());
     }
 
     public function startRow(): int

@@ -334,6 +334,7 @@ Route::post('personel/free_format_field/detail/proses', 'PersonelController@pros
 Route::post('personel/city/proses', 'PersonelController@prosesCityPersonel');
 Route::post('personel/title/proses', 'PersonelController@prosesTitlePersonel');
 Route::post('personel/employee_mutation/proses', 'PersonelController@prosesEmployeeMutationPersonel');
+Route::post('personel/employee_attachment/proses', 'PersonelController@prosesEmployeeAttachmentPersonel');
 
 Route::get('personel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');
@@ -349,6 +350,7 @@ Route::get('personel/competency/reference/remove', 'PersonelController@removeCom
 Route::get('personel/competency/skill/remove', 'PersonelController@removeCompetencySkillPersonel');
 Route::get('personel/competency/project_experience/remove', 'PersonelController@removeCompetencyProjectExperiencePersonel');
 Route::post('personel/competency/training_list/remove', 'PersonelController@removeCompetencyTrainingListPersonel');
+Route::get('personel/employee_attachment/remove', 'PersonelController@removeEmployeeAttachmentPersonel');
 
 Route::get('personel/number/check', 'PersonelController@checkNumberPersonel');
 Route::get('personel_data_detail/number/check', 'PersonelController@checkNumberPersonelDataDetail');
@@ -368,6 +370,7 @@ Route::post('personel/personal_data/import', 'PersonelController@importPersonalD
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');
+Route::get('personel/employee_attachment/view', 'PersonelController@viewEmployeeAttachmentPersonel');
 
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement');
@@ -809,6 +812,7 @@ Route::get('loan_code/loan_data_entry/api', 'DataController@dataLoanCodeLoanData
 Route::get('currency_code/loan_data_entry/api', 'DataController@dataCurrencyCodeLoanDataEntryAPI');
 Route::get('field_name_edit_salary_component/api', 'DataController@dataEditFieldNameSalaryComponentAPI');
 Route::get('employee_no_slip_format/api', 'DataController@dataEmployeeNoSlipFormatAPI');
+Route::get('attachment_code/api', 'DataController@dataAttachmentCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

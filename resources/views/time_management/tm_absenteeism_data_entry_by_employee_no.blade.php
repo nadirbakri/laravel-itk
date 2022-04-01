@@ -316,15 +316,12 @@
 
         function initDatePicker(field='') {
             $(field).flatpickr({
-                // altInput: true,
-                // clickOpens: false,
                 allowInput: true,
                 altFormat: "j-M-y",
                 dateFormat: "Y-m-d",
                 defaultDate: "today",
                 onReady: function () {
                     var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
                     var $flatPickrInput = $(flatPickrInstance.element);
                     $flatPickrInput.siblings(".date").click(function () {
                         flatPickrInstance.toggle();
@@ -337,9 +334,6 @@
             $(field).flatpickr({
                 enableTime: true,
                 noCalendar: true,
-                // altInput: true,
-                // clickOpens: false,
-                // static: true,
                 allowInput: true,
                 time_24hr: true,
                 defaultDate: "today",
@@ -352,7 +346,6 @@
             url: "{{ url('time_management/period/data/detail') }}",
             type: "GET",
             success: function (response) {
-                // console.log(response);
             }
         })
 
@@ -381,7 +374,6 @@
                     $('#position').val(response[0].positionCode);
                 }
             })
-            // loadDataDay('.select_day');
 
             $.ajax({
                 url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
@@ -391,7 +383,6 @@
                 },
                 success: function (response) {
                     $.each(response, function(k, v) {    
-                        // console.log(v);
                         if (v.absentDate !== 'undefined' && v.absentDate !== null) {
                             var absent_date = moment(v.absentDate).format('DD-MM-YYYY');
                         }
@@ -506,7 +497,6 @@
 
                         if (v.actualDateIn !== 'undefined' && v.actualDateIn !== null) {
                             var actual_date_in = moment(v.actualDateIn).format('DD-MMM-YYYY');
-                            // console.log(actual_date_in);
                         }
                         else {
                             var actual_date_in = '';
@@ -556,41 +546,6 @@
                             '<input type="text" class="form-control" name="location[]" id="location'+ (k+1) +'" value="'+ ((typeof v.locationCode !== 'undefined' && v.locationCode !== null) ? v.locationCode : '') +'" readonly>',
                             '<input type="text" class="form-control" name="grade[]" id="grade'+ (k+1) +'" value="'+ ((typeof v.gradeCode !== 'undefined' && v.gradeCode !== null) ? v.gradeCode : '') +'" readonly>'
                         ]).draw();
-
-                        // var window['pickeractualDateIn' + (k+1)] = $('#actual_date_in'+ (k+1)).flatpickr({
-                        //     altInput: true,
-                        //     allowInput: true,
-                        //     altFormat: "j-M-y",
-                        //     dateFormat: "Y-m-d",
-                        //     defaultDate: "today",
-                        //     onReady: function () {
-                        //         var flatPickrInstance = this;
-                        //         var $flatPickrInput = $(flatPickrInstance.element);
-                        //         $flatPickrInput.siblings("#actual_date_in_calendar").click(function () {
-                        //             flatPickrInstance.toggle();
-                        //         });
-                        //     }
-                        // });
-
-                        // console.log($('#actual_date_in' + (k+1)).val());
-                        
-                        // let pickeractualDateOut = $('#actual_date_out').flatpickr({
-                        //     altInput: true,
-                        //     allowInput: true,
-                        //     altFormat: "j-M-y",
-                        //     dateFormat: "Y-m-d",
-                        //     defaultDate: "today",
-                        //     onReady: function () {
-                        //         var flatPickrInstance = this;
-                        //         // console.log(flatPickrInstance);
-                        //         var $flatPickrInput = $(flatPickrInstance.element);
-                        //         $flatPickrInput.siblings("#actual_date_out_calendar").click(function () {
-                        //             flatPickrInstance.toggle();
-                        //         });
-                        //     }
-                        // });  
-
-                        // window['pickeractualDateIn' + (k+1)].setDate(((typeof v.actualDateIn !== 'undefined') ? v.actualDateIn : ''));
 
                         loadDataDay("#day" + (k+1));
                         loadDataShiftCode("#shift_code" + (k+1));

@@ -1182,7 +1182,7 @@ class TimeManagementController extends Controller
         $import = new UpdateAbsenteeismDataImport;
         Excel::import($import, public_path('file_excel/'.$nama_file));
         File::delete('file_excel/'.$nama_file);
-        return ($import)->getArrResult();
+        return $import->getArrResult();
     }
 
 

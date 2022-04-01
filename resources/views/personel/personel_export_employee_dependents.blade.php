@@ -38,10 +38,13 @@
             <?php $no = 0; ?>
 			@foreach($data as $value)
 			<tr>
-                <td rowspan="{{ count($data->employeeFamily) }}">{{ $no++ }}</td>
-				<td rowspan="{{ count($data->employeeFamily) }}">{{ $value->employeeNo }}</td>
-				<td rowspan="{{ count($data->employeeFamily) }}">{{ $value->fullName }}</td>
-                @foreach($data->employeeFamily as $value2)
+                <td rowspan="{{ count($value->family) }}">{{ $no++ }}</td>
+				<td rowspan="{{ count($value->family) }}">{{ $value->employeeNo }}</td>
+				<td rowspan="{{ count($value->family) }}">{{ $value->fullName }}</td>
+                @foreach($value->family as $key2 => $value2)
+					@if($key2 !== array_key_first($value->family))
+					<tr>
+					@endif
                     <td>{{ $value2->familyName }}</td>
                     <td>{{ $value2->relation }}</td>
                     <td>{{ date('Y-m-d', strtotime($value2->birthDate)) }}</td>

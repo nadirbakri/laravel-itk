@@ -224,7 +224,6 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
-                            console.log(response);
                             if (response[0].status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
@@ -232,7 +231,7 @@
                                 );
                                 
                                 $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
+                                $('#message-notification-success').html(response[0]
                                     .message);
                                 setTimeout(function () {
                                     window.location =
@@ -245,12 +244,12 @@
                                 );
 
                                 $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
+                                if (response[0].message == null || response[0].message ==
                                     '') {
                                     $('#message-notification-error').html(
                                         "{{ __('login.error') }}");
                                 } else {
-                                    $('#message-notification-error').html(response
+                                    $('#message-notification-error').html(response[0]
                                         .message);
                                 }
                             }

@@ -70,9 +70,6 @@
 					<td>{{ $value2->until }}</td>
 					<td>{{ $value2->to }}</td>
 					<td>{{ $value2->after }}</td>
-					@if($key2 !== array_key_first($value->workingData))
-					<tr>
-					@endif
 				@endforeach
 			</tr>
 			@endforeach
