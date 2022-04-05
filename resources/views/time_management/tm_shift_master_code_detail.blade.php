@@ -1571,21 +1571,9 @@
                     'groupShift': "{{ isset($data[0]->groupShift) ? $data[0]->groupShift : '' }}"
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data[0].comGenCode,
-                    title: data[0].value,
-                    text: data[0].value
-                });
-                $("#group_shift").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#group_shift").trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data[0].comGenCode,
-                        text: data[0].value,
-                        data: data[0]
-                    }
-                });
+                var $newOption = $("<option selected='selected'></option>").val(data[0].comGenCode).text(
+                    data[0].value);
+                $('#group_shift').append($newOption).trigger('change');
             });
             var flexy = ((typeof arrData[0].flexyFlag !== 'undefined') ? arrData[0].flexyFlag : '');
             // console.log(work_on_holiday);

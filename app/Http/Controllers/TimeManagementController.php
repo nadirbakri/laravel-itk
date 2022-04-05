@@ -870,9 +870,11 @@ class TimeManagementController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents()); 
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet);
+        $data = end($arrResult->dataListSet);
+
+        return response()->json($data);
     }
 
     public function dataDetailWorkPatternTM(Request $request)
