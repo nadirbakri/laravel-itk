@@ -229,14 +229,14 @@
                         data: 'normalTimeIn', 
                         name: 'normalTimeIn',
                         render: function (data, type, row) {
-                            return moment(data).format('HH:mm:ss');
+                            return moment(data).format('HH:mm');
                         }
                     },
                     {
                         data: 'normalTimeOut', 
                         name: 'normalTimeOut',
                         render: function (data, type, row) {
-                            return moment(data).format('HH:mm:ss');
+                            return moment(data).format('HH:mm');
                         }
                     },
                     {data: 'flexyFlag', name: 'flexyFlag'},

@@ -2418,7 +2418,8 @@ class TimeManagementController extends Controller
                         'sessionID' => 0,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
                     ]
                 )]
             );

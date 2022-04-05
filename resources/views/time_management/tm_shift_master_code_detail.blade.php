@@ -1571,21 +1571,19 @@
                     'groupShift': "{{ isset($data[0]->groupShift) ? $data[0]->groupShift : '' }}"
                 }
             }).then(function (data) {
-                console.log(data);
-                // var option = new Option(data.positionCode, data.positionCode, true, true);
                 var option = $('<option/>', {
-                    id: data.groupShift,
-                    title: data.description,
-                    text: data.groupShift
+                    id: data[0].comGenCode,
+                    title: data[0].value,
+                    text: data[0].value
                 });
                 $("#group_shift").append(option).attr('data-alias', 'yourvalue').trigger(
                     'change');
                 $("#group_shift").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.groupShift,
-                        text: data.groupShift,
-                        data: data
+                        id: data[0].comGenCode,
+                        text: data[0].value,
+                        data: data[0]
                     }
                 });
             });
@@ -1659,7 +1657,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })

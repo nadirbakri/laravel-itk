@@ -5601,11 +5601,13 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-						'groupShift' => $request->groupShift
+						'variable' => 'groupshift_',
+						'comGenCode' => $request->groupShift,
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);

@@ -175,7 +175,7 @@
                 <table id="absenteeism_data_entry_by_employee_no_table" class="table hover">
                     <thead>
                         <tr>
-                            <th rowspan="2" class="middle" style="width:200px">Absent Date</th>
+                            <th rowspan="2" class="middle" style="width:300px">Absent Date</th>
                             <th rowspan="2" class="middle">Period</th>
                             <th rowspan="2" class="middle">Day</th>
                             <th rowspan="2" class="middle">Shift Code</th>
@@ -642,8 +642,8 @@
             table = $('#absenteeism_data_entry_by_employee_no_table').DataTable({
                 processing: true,
                 orderCellsTop: true,
+                paging: false,
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
             });
         }
 
