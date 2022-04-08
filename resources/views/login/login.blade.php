@@ -310,13 +310,10 @@
             return false;
         });
 
-        $("#btn_submit").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#login_form").submit();
-        });
+        // $("#btn_submit").click(function () {
+            
+        //     $("#login_form").submit();
+        // });
 
         $("#btn_clear").click(function () {
             $('#login_form').trigger("reset");
@@ -364,6 +361,11 @@
                     }
                 },
                 submitHandler: function (form) {
+                    $("#btn_submit").prop("disabled", true);
+                    $("#btn_submit").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                    );
+                    
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -374,6 +376,7 @@
                         type: "POST",
                         data: $('#login_form').serialize(),
                         success: function (response) {
+                            console.log(response);
                             if (response.status == "true") {
                                 window.location = response.message;
                             } else {

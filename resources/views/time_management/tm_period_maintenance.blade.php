@@ -383,10 +383,7 @@
             },
             onValueUpdate: function(selectedDates, dateStr, instance) {
                 var year = $('#year').val();
-                var periodYear = moment(year).format('YY');
                 var month = $('#month').val();
-                var periodMonth = moment(month).format('MM');
-                var record_function = $('#record_function').val();
 
                 if(year !== "" && month !== ""){
                     $.ajax({
@@ -396,7 +393,7 @@
                             //absenteeism
                             var absenteeism_from = moment(response.absenteeismEnd).format('MM/DD/YYYY');
                             var add_absenteeism_date_from = moment(absenteeism_from).add(1, 'days');
-                            var absenteeism_date_from = year + '-' + periodMonth + '-' + moment(add_absenteeism_date_from).format('DD');
+                            var absenteeism_date_from = year + '-' + month + '-' + moment(add_absenteeism_date_from).format('DD');
                             pickerAbsenteeismDateFrom.setDate(absenteeism_date_from);
 
                             var add_absenteeism_date_to = moment(absenteeism_date_from).add(1, 'months').subtract(1, 'days');
@@ -406,7 +403,7 @@
                             //overtime
                             var overtime_from = moment(response.overtimeEnd).format('MM/DD/YYYY');
                             var add_overtime_date_from = moment(overtime_from).add(1, 'days');
-                            var overtime_date_from = year + '-' + periodMonth + '-' + moment(add_overtime_date_from).format('DD');
+                            var overtime_date_from = year + '-' + month + '-' + moment(add_overtime_date_from).format('DD');
                             pickerOvertimeDateFrom.setDate(overtime_date_from);
 
                             var add_overtime_date_to = moment(overtime_date_from).add(1, 'months').subtract(1, 'days');
@@ -416,7 +413,7 @@
                             //salary                    
                             var salary_from = moment(response.salaryEnd).format('MM/DD/YYYY');
                             var add_salary_date_from = moment(salary_from).add(1, 'days');
-                            var salary_date_from = year + '-' + periodMonth + '-' + moment(add_salary_date_from).format('DD');
+                            var salary_date_from = year + '-' + month + '-' + moment(add_salary_date_from).format('DD');
                             pickerSalaryDateFrom.setDate(salary_date_from);
 
                             var add_salary_date_to = moment(salary_date_from).add(1, 'months').subtract(1, 'days');
@@ -632,9 +629,7 @@
 
         $('#year').on('change', function () {
             var year = $('#year').val();
-            var periodYear = moment(year).format('YY');
             var month = $('#month').val();
-            var periodMonth = moment(month).format('MM');
 
             if(year !== "" && month !== ""){
                 $.ajax({
@@ -644,7 +639,7 @@
                         //absenteeism
                         var absenteeism_from = moment(response.absenteeismEnd).format('MM/DD/YYYY');
                         var add_absenteeism_date_from = moment(absenteeism_from).add(1, 'days');
-                        var absenteeism_date_from = year + '-' + periodMonth + '-' + moment(add_absenteeism_date_from).format('DD');
+                        var absenteeism_date_from = year + '-' + month + '-' + moment(add_absenteeism_date_from).format('DD');
                         pickerAbsenteeismDateFrom.setDate(absenteeism_date_from);
 
                         var add_absenteeism_date_to = moment(absenteeism_date_from).add(1, 'months').subtract(1, 'days');
@@ -654,7 +649,7 @@
                         //overtime
                         var overtime_from = moment(response.overtimeEnd).format('MM/DD/YYYY');
                         var add_overtime_date_from = moment(overtime_from).add(1, 'days');
-                        var overtime_date_from = year + '-' + periodMonth + '-' + moment(add_overtime_date_from).format('DD');
+                        var overtime_date_from = year + '-' + month + '-' + moment(add_overtime_date_from).format('DD');
                         pickerOvertimeDateFrom.setDate(overtime_date_from);
 
                         var add_overtime_date_to = moment(overtime_date_from).add(1, 'months').subtract(1, 'days');
@@ -664,7 +659,7 @@
                         //salary                    
                         var salary_from = moment(response.salaryEnd).format('MM/DD/YYYY');
                         var add_salary_date_from = moment(salary_from).add(1, 'days');
-                        var salary_date_from = year + '-' + periodMonth + '-' + moment(add_salary_date_from).format('DD');
+                        var salary_date_from = year + '-' + month + '-' + moment(add_salary_date_from).format('DD');
                         pickerSalaryDateFrom.setDate(salary_date_from);
 
                         var add_salary_date_to = moment(salary_date_from).add(1, 'months').subtract(1, 'days');
@@ -681,7 +676,18 @@
 
         $("#btn-add").on('click', function () {
             $('#record_function').val("New");
-            $('#year').val("2017").trigger('change');
+            $('#year').val("2017");
+            $('#period').val("");
+            $('#year').prop('disabled', false);
+            pickerMonth._input.removeAttribute('disabled');
+            $('#period').prop('disabled', false);
+            pickerMonth.clear();
+            pickerAbsenteeismDateFrom.clear();
+            pickerAbsenteeismDateTo.clear();
+            pickerOvertimeDateFrom.clear();
+            pickerOvertimeDateTo.clear();
+            pickerSalaryDateFrom.clear();
+            pickerSalaryDateTo.clear();
         });
 
         $("#btn-edit").on('click', function () {
@@ -689,9 +695,12 @@
             if (data.length > 0) {
                 $('#modal_add_overtime_spl').modal('show');
                 $('#record_function').val("Edit");
-                $('#year').val(data[0].periodYear).trigger('change');
-                pickerMonth.setDate(data[0].periodYear + "-" + data[0].periodMonth + "-01");
-                $('#period').val(data[0].period).trigger('change');
+                $('#year').val(data[0].periodYear);
+                $('#year').prop('disabled', true);
+                pickerMonth._input.setAttribute("disabled", "disabled");
+                $('#period').prop('disabled', true);
+                pickerMonth.setDate(String(data[0].periodMonth).padStart(2, '0') + "/01/" + data[0].periodYear, false);
+                $('#period').val(data[0].period);
                 pickerAbsenteeismDateFrom.setDate(data[0].absenteeismStart);
                 pickerAbsenteeismDateTo.setDate(data[0].absenteeismEnd);
                 pickerOvertimeDateFrom.setDate(data[0].overtimeStart);
@@ -708,6 +717,9 @@
             var data = table.row(this).data();
             $('#modal_add_overtime_spl').modal('show');
             $('#record_function').val("Edit");
+            $('#year').prop('disabled', true);
+            pickerMonth._input.setAttribute("disabled", "disabled");
+            $('#period').prop('disabled', true);
             $('#year').val(data.periodYear);
             pickerMonth.setDate(String(data.periodMonth).padStart(2, '0') + "/01/" + data.periodYear, false);
             $('#period').val(data.period);

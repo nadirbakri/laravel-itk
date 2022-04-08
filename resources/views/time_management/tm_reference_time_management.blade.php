@@ -418,7 +418,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <label for="minute_rounded_from">{{ __('tm_reference_time_management.label_from') }}</label>
@@ -443,7 +443,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
@@ -804,21 +804,21 @@
             dateFormat: "H:i:ss"
         });
 
-        var attrMinuteRoundedFrom = $('#minute_rounded_from');
-        var attrMinuteRoundedTo = $('#minute_rounded_to');
-        var attrMinuteRoundedBecome = $('#minute_rounded_become');
+        // var attrMinuteRoundedFrom = $('#minute_rounded_from');
+        // var attrMinuteRoundedTo = $('#minute_rounded_to');
+        // var attrMinuteRoundedBecome = $('#minute_rounded_become');
 
-        for (var i = 0; i <= 60; i++){
-            if(i == 0){
-                attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
-            }else if(i == 60){
-                attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
-            }else{
-                attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
-                attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
-            }
-            attrMinuteRoundedBecome.append($('<option/>').val(i).text(i));
-        }
+        // for (var i = 0; i <= 60; i++){
+        //     if(i == 0){
+        //         attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
+        //     }else if(i == 60){
+        //         attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
+        //     }else{
+        //         attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
+        //         attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
+        //     }
+        //     attrMinuteRoundedBecome.append($('<option/>').val(i).text(i));
+        // }
 
         loadDataProcessStatus();
         loadDataAbsent();
@@ -858,7 +858,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#not_clock_in").append($newOption).trigger('change');
             });
             $.ajax({
@@ -869,7 +869,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#not_clock_out").append($newOption).trigger('change');
             });
             $.ajax({
@@ -880,7 +880,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#late").append($newOption).trigger('change');
             });
             $.ajax({
@@ -891,7 +891,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#early_back").append($newOption).trigger('change');
             });
             $.ajax({
@@ -902,7 +902,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#not_clock_in_early_back").append($newOption).trigger('change');
             });
             $.ajax({
@@ -913,7 +913,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#late_early_back").append($newOption).trigger('change');
             });
             $.ajax({
@@ -924,7 +924,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#not_clock_out_late").append($newOption).trigger('change');
             });
             $.ajax({
@@ -935,7 +935,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#unpaid_leave").append($newOption).trigger('change');
             });
             $.ajax({
@@ -946,7 +946,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#absent").append($newOption).trigger('change');
             });
             $.ajax({
@@ -957,7 +957,7 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .absentCode).text(data2[0].description);
+                    .absentCode).text(data2[0].absentCode);
                 $("#overtime").append($newOption).trigger('change');
             });
             if (typeof arrData[0].calculateLateHour !== 'undefined') {
@@ -1097,13 +1097,25 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.absentCode + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#not_clock_in, #not_clock_out, #late, #early_back, #not_clock_in_early_back, #late_early_back, #not_clock_out_late, #unpaid_leave, #absent, #overtime').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Absent Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -1136,7 +1148,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.description,
+                                    text: item.absentCode,
                                     id: item.absentCode,
                                     data: item
                                 }

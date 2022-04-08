@@ -109,7 +109,7 @@
                 <td>{{ $value->nationalityCode }}</td>
                 <td>{{ $value->costCenterCode }}</td>
                 <td>{{ $value->employmentStatus }}</td>
-                <td>{{ ($value->flagIsExpat) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagIsExpat) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->expatLicenseNo }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->expatLicenseStartDate)) }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->expatLicenseEndDate)) }}</td>
@@ -125,32 +125,32 @@
                 <td>{{ $value->workNatureCode }}</td>
                 <td>{{ $value->groupCode }}</td>
                 <td>{{ $value->groupAuthorizeCode }}</td>
-                <td>{{ ($value->flagIsCommissioner) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagIsCommissioner) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->motherName }}</td>
                 <td>{{ $value->absenteeismType }}</td>
                 <td>{{ $value->workPatternCode }}</td>
                 <td>{{ $value->startAtDay }}</td>
-                <td>{{ ($value->flagNotAbsent) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagNotFinger) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagNotAbsent) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagNotFinger) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->taxStatus }}</td>
                 <td>{{ $value->taxStatusNextYear }}</td>
                 <td>{{ $value->taxCalculationMethod }}</td>
-                <td>{{ ($value->flagAstekDeathNonAccident) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagAstekWorkAccident) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagAstekWorkAccident2) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagAstekWorkAccident3) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagAstekPensionEmployee) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagAstekPensionEmployer) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagAstekHealthInsurance) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagTaxByGovernment) ? "1" : "0" }}</td>
-                <td>{{ ($value->flagPensionInsurance) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagAstekDeathNonAccident) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagAstekWorkAccident) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagAstekWorkAccident2) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagAstekWorkAccident3) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagAstekPensionEmployee) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagAstekPensionEmployer) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagAstekHealthInsurance) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagTaxByGovernment) ? "TRUE" : "FALSE" }}</td>
+                <td>{{ ($value->flagPensionInsurance) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->groupNpwp }}</td>
                 <td>{{ $value->groupBpjs }}</td>
-                <td>{{ ($value->flagBPJSKesehatan) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagBPJSKesehatan) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->bpjsKesehatanNo }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->bpjsKesehatanJoinDate)) }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->bpjsKesehatanPeriodStartDate)) }}</td>
-                <td>{{ ($value->flagBPJSTenagaKerja) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagBPJSTenagaKerja) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->bpjsTenagaKerjaNo }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->bpjsTenagaKerjaJoinDate)) }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->bpjsTenagaKerjaPeriodStartDate)) }}</td>
@@ -172,7 +172,7 @@
                 <td>{{ $value->bankPercentageSalary3 }}</td>
                 <td>{{ $value->companyBankCode3 }}</td>
                 <td>{{ $value->currencyCode3 }}</td>
-                <td>{{ ($value->flagExcludePayroll) ? "1" : "0" }}</td>
+                <td>{{ ($value->flagExcludePayroll) ? "TRUE" : "FALSE" }}</td>
             </tr>
             @endforeach
         </tbody>
