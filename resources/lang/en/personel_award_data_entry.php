@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Award Data Entry Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

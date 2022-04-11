@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kode Pos',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Kode Pos',
     'label_record_status' => 'Status Data',
     'label_zip_code' => 'Kode Pos',

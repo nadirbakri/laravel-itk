@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Nature of Work Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Nature of Work List',
     'label_record_status' => 'Record Status',
     'label_nature_of_work_code' => 'Nature of Work Code',

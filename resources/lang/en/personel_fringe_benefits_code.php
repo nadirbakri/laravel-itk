@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Fringe Benefits Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

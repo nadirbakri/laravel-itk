@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Lampiran Pegawai',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'alert_success' => 'Sukses !',
     'btn_add' => 'Tambah',
     'btn_view' => 'Lihat',

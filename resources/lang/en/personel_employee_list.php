@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Employee List Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
     'label_period' => 'Period',

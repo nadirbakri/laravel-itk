@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Evaluation Form Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Evaluation Form List',
     'title_modal_evaluated_aspect' => 'Add New Data Evaluated Aspect',
     'label_record_status' => 'Record Status',

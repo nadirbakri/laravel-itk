@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kode Cost Center',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Kode Cost Center',
     'label_record_status' => 'Status Data',
     'label_cost_center_code' => 'Kode Cost Center',

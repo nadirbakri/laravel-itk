@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Grup BPJS',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Grup BPJS',
     'label_record_status' => 'Status Data',
     'label_bpjs_code' => 'Kode BPJS',

@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Sifat Pekerjaan',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Sifat Pekerjaan',
     'label_record_status' => 'Status Data',
     'label_nature_of_work_code' => 'Kode Sifat Pekerjaan',

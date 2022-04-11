@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Ranking',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Ranking',
     'label_record_status' => 'Record Status',
     'label_ranking_code' => 'Kode Ranking',

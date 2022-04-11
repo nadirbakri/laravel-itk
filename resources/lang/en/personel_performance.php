@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Employee Performance Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Performance Data List',
     'btn_change_picture' => 'Change Picture',
     'award_tab' => 'Award',

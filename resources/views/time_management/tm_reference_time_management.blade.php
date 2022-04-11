@@ -418,32 +418,32 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
+                <div class="div-table col-6">
+                    <table id="minutes_rounded_table" class="table hover  width: 100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ __('tm_reference_time_management.label_from') }}</th>
+                                <th>{{ __('tm_reference_time_management.label_to') }}</th>
+                                <th>{{ __('tm_reference_time_management.label_become') }}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="row">
                     <div class="col-3">
-                        <div class="form-group">
-                            <label for="minute_rounded_from">{{ __('tm_reference_time_management.label_from') }}</label>
-                            <div class='input-group'>
-                                <select class="form-control" id="minute_rounded_from" name="minute_rounded_from" disabled></select>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-primary" name="btn-add-minutes-rounded" id="btn-add-minutes-rounded"
+                            style="width: 100%;" data-toggle="modal" data-target="#modal_add_minutes_rounded" disabled>
+                            <i class="fa fa-plus"></i> {{ __('tm_reference_time_management.btn_add') }}
+                        </button>
                     </div>
                     <div class="col-3">
-                        <div class="form-group">
-                            <label for="minute_rounded_to">{{ __('tm_reference_time_management.label_to') }}</label>
-                            <div class='input-group'>
-                                <select class="form-control" id="minute_rounded_to" name="minute_rounded_to" disabled></select>                            
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-danger" name="btn-remove-minutes-rounded" id="btn-remove-minutes-rounded"
+                            style="width: 100%;" disabled>
+                            <i class="fa fa-times"></i> {{ __('tm_reference_time_management.btn_remove') }}
+                        </button>
                     </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="minute_rounded_become">{{ __('tm_reference_time_management.label_become') }}</label>
-                            <div class='input-group'>
-                                <select class="form-control" id="minute_rounded_become" name="minute_rounded_become" disabled></select>                              
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
@@ -486,6 +486,55 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_add_minutes_rounded" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('tm_reference_time_management.list_minutes_rounded') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="minutes_rounded_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="minute_rounded_from">{{ __('tm_reference_time_management.label_from') }}</label>
+                                    <div class='input-group'>
+                                        <select class="form-control" id="minute_rounded_from" name="minute_rounded_from"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="minute_rounded_to">{{ __('tm_reference_time_management.label_to') }}</label>
+                                    <div class='input-group'>
+                                        <select class="form-control" id="minute_rounded_to" name="minute_rounded_to"></select>                            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="minute_rounded_become">{{ __('tm_reference_time_management.label_become') }}</label>
+                                    <div class='input-group'>
+                                        <select class="form-control" id="minute_rounded_become" name="minute_rounded_become"></select>                              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" id="btn-save-minutes-rounded" class="btn btn-primary w-25"><i 
+                                    class="fa fa-floppy-o"></i> {{ __('tm_reference_time_management.btn_save') }}</button>
+                            <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                    class="fa fa-times-circle"></i> {{ __('tm_reference_time_management.btn_cancel') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="modal_add_reference_time_management" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1179,7 +1228,19 @@
             } );
         });
 
+        load_data_table_minutes_rounded();
         load_data_table_reference_time_management();
+
+        function load_data_table_minutes_rounded() {
+            table = $('#minutes_rounded_table').DataTable({
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
 
         function load_data_table_reference_time_management() {
             table = $('#reference_time_management_table').DataTable({
@@ -1345,9 +1406,8 @@
             $('#default_calculation_blank').prop('checked', true).trigger('change');
             $('#overtime_before_from_normal').prop('checked', true).trigger('change');
             $('#overtime_after_from_normal').prop('checked', true).trigger('change');
-            $('#minute_rounded_from').val("0").trigger('change');
-            $('#minute_rounded_to').val("0").trigger('change');
-            $('#minute_rounded_become').val("0").trigger('change');
+            $('#minutes_rounded_table').DataTable().destroy();
+            load_data_table_minutes_rounded();
             $('#reference_time_management_table').DataTable().destroy();
             load_data_table_reference_time_management();
             $('#processing_period_month').prop('disabled', false);
@@ -1376,9 +1436,8 @@
             $('#overtime_before_from_overtime').prop('disabled', false).trigger('change');
             $('#overtime_after_from_normal').prop('disabled', false).trigger('change');
             $('#overtime_after_from_overtime').prop('disabled', false).trigger('change');
-            $('#minute_rounded_from').prop('disabled', false);
-            $('#minute_rounded_to').prop('disabled', false);
-            $('#minute_rounded_become').prop('disabled', false);
+            $('#btn-add-minutes-rounded').prop('disabled', false);
+            $('#btn-remove-minutes-rounded').prop('disabled', false);
             $('#btn-add-reference-time-management').prop('disabled', false);
             $('#btn-remove-data').prop('disabled', false);
             $("#toolbar-save").show();
@@ -1412,9 +1471,8 @@
             $('#overtime_before_from_overtime').prop('disabled', false).trigger('change');
             $('#overtime_after_from_normal').prop('disabled', false).trigger('change');
             $('#overtime_after_from_overtime').prop('disabled', false).trigger('change');
-            $('#minute_rounded_from').prop('disabled', false);
-            $('#minute_rounded_to').prop('disabled', false);
-            $('#minute_rounded_become').prop('disabled', false);
+            $('#btn-add-minutes-rounded').prop('disabled', false);
+            $('#btn-remove-minutes-rounded').prop('disabled', false);
             $('#btn-add-reference-time-management').prop('disabled', false);
             $('#btn-remove-data').prop('disabled', false);
             $("#toolbar-save").show();
@@ -1429,6 +1487,53 @@
                 '<span>Loading...</span>'
             );
             $("#reference_time_management_form").submit();
+        });
+
+        $("#btn-save-minutes-rounded").on('click', function() {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            arrayfieldName.push({
+                "fieldName": $("#field_name").val(),
+                "columnHeader": $("#column_header").val()
+            });
+
+            $('#minute_rounded_from').val("0").trigger('change');
+            $('#minute_rounded_to').val("0").trigger('change');
+            $('#minute_rounded_become').val("0").trigger('change');
+
+            $(this).prop("disabled", false);
+            $(this).html(
+                '<i class="fa fa-floppy-o"></i> {{ __("tm_reference_time_management.btn_save") }}'
+            );
+            $('#modal_add_minutes_rounded').modal('hide');
+            
+            $('#minutes_rounded_table').DataTable().destroy();
+            load_data_table_minutes_rounded();
+        });
+
+        $("#btn-add-minutes-rounded").on('click', function() {
+            $('#minute_rounded_from').val("0").trigger('change');
+            $('#minute_rounded_to').val("0").trigger('change');
+            $('#minute_rounded_become').val("0").trigger('change');
+        });
+
+        $("#btn-remove-minutes-rounded").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayMinutesRounded.findIndex(x => x.fieldName === data[i].fieldName);
+                    // console.log(index);
+                    arrayMinutesRounded.splice(index, 1);
+                }
+                $('#custom_report_employee_table').DataTable().destroy();
+                load_table_custom_report();
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
         });
 
         $("#btn-add-reference-time-management").on('click', function() {

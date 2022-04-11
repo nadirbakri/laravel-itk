@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Dokumen Sumber',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Dokumen Sumber',
     'label_record_status' => 'Status Data',
     'label_letter_type' => 'Tipe Surat',

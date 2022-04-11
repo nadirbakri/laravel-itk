@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Keahlian',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Keahlian',
     'label_record_status' => 'Status Data',
     'label_major_code' => 'Kode Keahlian',

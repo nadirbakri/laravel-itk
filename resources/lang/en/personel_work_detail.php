@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Work Detail Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Work Detail List',
     'btn_change_picture' => 'Change Picture',
     'btn_add' => 'Add',

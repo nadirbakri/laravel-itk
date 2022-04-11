@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kode Lokasi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Kode Lokasi',
     'label_record_status' => 'Status Data',
     'label_location_code' => 'Kode Lokasi',

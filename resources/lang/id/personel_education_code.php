@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Kode Edukasi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

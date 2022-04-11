@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Bank Sumber',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

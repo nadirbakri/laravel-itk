@@ -12,8 +12,8 @@ return [
     |
     */
 
-    'judul' => 'Halaman Referensi Personil',
-    'list' => 'Daftar Menu Personil',
+    'judul' => 'Halaman Referensi Personel',
+    'list' => 'Daftar Menu Personel',
     'label_probation_period' => 'Masa Percobaan (Bulan)',
     'label_probation_period' => 'Pilih Masa Periode',
     'label_cost_center_format' => 'Format Cost Center',

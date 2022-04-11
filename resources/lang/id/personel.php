@@ -12,15 +12,15 @@ return [
     |
     */
 
-    'judul' => 'Personil',
-    'data_entry' => 'Data Entry Personil',
+    'judul' => 'Personel',
+    'data_entry' => 'Data Entry Personel',
     'employee_master' => 'Master Pegawai',
     'personnel_data' => 'Data Pribadi',
     'employee_detail' => 'Detil Pegawai',
     'employee_mutation' => 'Mutasi Pegawai',
     'personel_maintenance' => 'Pemeliharaan Pegawai',
     'reference' => 'Referensi',
-    'personel_reference' => 'Referensi Personil',
+    'personel_reference' => 'Referensi Personel',
     'job_description' => 'Uraian Pekerjaan',
     'npwp_bpjs_group' => 'Grup NPWP & BPJS',
     'bpjs_group' => 'Grup BPJS',

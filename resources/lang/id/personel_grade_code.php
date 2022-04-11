@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kode Grade',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Kode Grade',
     'label_record_status' => 'Status Data',
     'label_grade_code' => 'Kode Grade',

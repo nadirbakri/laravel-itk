@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Type of Course Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Type of Course List',
     'label_record_status' => 'Record Status',
     'label_type_of_course_code' => 'Course Type Code',

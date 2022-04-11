@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Mutasi Pegawai',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'label_current' => 'Saat Ini',
     'label_new' => 'Baru',
     'label_employee_no' => 'No Karyawan',

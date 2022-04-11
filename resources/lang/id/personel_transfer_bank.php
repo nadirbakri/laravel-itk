@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Bank Transfer',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

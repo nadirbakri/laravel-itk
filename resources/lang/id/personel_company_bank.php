@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Bank Perusahaan',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Bank Perusahaan',
     'label_bank_code' => 'Kode Bank',
     'label_account_no' => 'No Rekening',

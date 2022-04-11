@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Rate Type Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

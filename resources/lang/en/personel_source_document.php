@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Source Document Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Source Document List',
     'label_record_status' => 'Record Status',
     'label_letter_type' => 'Letter Type',

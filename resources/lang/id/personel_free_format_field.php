@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Field Format Bebas',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Field Format Bebas',
     'title_modal_field_list' => 'Tambah Daftar Field Baru',
     'label_record_status' => 'Status Data',

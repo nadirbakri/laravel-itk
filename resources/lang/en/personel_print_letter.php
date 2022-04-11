@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Print Letter Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'title_modal_list_data' => 'List Data',
     'label_letter_type' => 'Letter Type',
     'label_letter_date' => 'Letter Date',

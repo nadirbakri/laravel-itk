@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Cetak Surat',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'title_modal_list_data' => 'List Data',
     'label_letter_type' => 'Tipe Surat',
     'label_letter_date' => 'Tanggal Surat',

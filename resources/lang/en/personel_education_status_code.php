@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Education Status Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

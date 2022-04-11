@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Insurance Class Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

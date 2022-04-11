@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Bank',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Bank',
     'label_record_status' => 'Status Data',
     'label_bank_code' => 'Kode Bank',

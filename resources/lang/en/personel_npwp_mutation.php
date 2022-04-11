@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'NPWP Mutation Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

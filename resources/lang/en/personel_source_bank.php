@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Source Bank Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

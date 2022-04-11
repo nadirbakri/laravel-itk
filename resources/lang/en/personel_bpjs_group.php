@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'BPJS Group Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'BPJS Group List',
     'label_record_status' => 'Record Status',
     'label_bpjs_code' => 'BPJS Code',

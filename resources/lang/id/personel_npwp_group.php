@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Grup NPWP',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Grup NPWP',
     'label_record_status' => 'Status Data',
     'label_npwp_code' => 'Kode NPWP',

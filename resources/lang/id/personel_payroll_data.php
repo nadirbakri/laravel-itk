@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Data Payroll',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

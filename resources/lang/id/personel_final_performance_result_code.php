@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Hasil Performa Final',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Hasil Performa Final',
     'title_modal' => 'Form Hasil Performa',
     'label_no' => 'No',

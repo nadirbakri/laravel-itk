@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'City Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'City List',
     'label_record_status' => 'Record Status',
     'label_city_code' => 'City Code',

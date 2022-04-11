@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Line of Business Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

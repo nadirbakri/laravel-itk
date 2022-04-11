@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Performa Pegawai',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Data Performa',
     'btn_change_picture' => 'Ubah Foto',
     'award_tab' => 'Penghargaan',

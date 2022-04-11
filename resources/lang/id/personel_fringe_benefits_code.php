@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Kode Tunjangan',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Entri Data Sanksi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

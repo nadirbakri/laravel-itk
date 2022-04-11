@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Zip Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Zip Code List',
     'label_record_status' => 'Record Status',
     'label_zip_code' => 'Zip Code',

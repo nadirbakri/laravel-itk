@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Tipe Mata Pelajaran',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Tipe Mata Pelajaran',
     'label_record_status' => 'Status Data',
     'label_type_of_course_code' => 'Kode Tipe Mata Pelajaran',

@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Data Pribadi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Data Pribadi',
     'btn_change_picture' => 'Ubah Foto',
     'btn_add' => 'Tambah',

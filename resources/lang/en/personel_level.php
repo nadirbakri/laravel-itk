@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Level Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Level List',
     'label_record_status' => 'Record Status',
     'label_level_type' => 'Level Type',

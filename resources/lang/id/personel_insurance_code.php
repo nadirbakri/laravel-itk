@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Kode Asuransi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

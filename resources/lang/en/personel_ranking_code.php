@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Ranking Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Ranking List',
     'label_record_status' => 'Record Status',
     'label_ranking_code' => 'Ranking Code',

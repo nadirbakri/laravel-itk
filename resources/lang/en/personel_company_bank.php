@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Company Bank Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Company Bank List',
     'label_record_status' => 'Record Status',
     'label_bank_code' => 'Bank Code',

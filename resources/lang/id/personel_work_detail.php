@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Detail Pekerjaan',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Detail Pekerjaan',
     'btn_change_picture' => 'Ubah Foto',
     'btn_add' => 'Tambah',

@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kompetensi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Data Kompetensi',
     'btn_change_picture' => 'Ubah Foto',
     'btn_add' => 'Tambah',

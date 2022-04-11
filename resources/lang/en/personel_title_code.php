@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Title Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Title List',
     'label_record_status' => 'Record Status',
     'label_title_code' => 'Title Code',

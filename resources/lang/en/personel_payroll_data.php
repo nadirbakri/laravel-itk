@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Payroll Data Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
 
 ];

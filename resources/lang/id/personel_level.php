@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Tingkatan',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Tingkatan',
     'label_record_status' => 'Status Data',
     'label_level_type' => 'Tipe Tingkatan',

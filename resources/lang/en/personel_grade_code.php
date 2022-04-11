@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Grade Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Grade Code List',
     'label_record_status' => 'Record Status',
     'label_grade_code' => 'Grade Code',

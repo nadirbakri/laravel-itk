@@ -92,7 +92,7 @@ return [
     'free_format_field' => 'Free Format Field',
     // 'format_report' => 'Format Report',
     // 'relation_code' => 'Relation Code',
-    'personel_report' => 'Personel Report',
+    'personel_report' => 'Personnel Report',
     'employee_report_by_status' => 'Employee Report By Status',
     'employee_dependents' => 'Employee Dependents',
     'employee_card' => 'Employee Card',

@@ -12,8 +12,8 @@ return [
     |
     */
 
-    'judul' => 'Personel Reference Page',
-    'list' => 'Personel Menu List',
+    'judul' => 'Personnel Reference Page',
+    'list' => 'Personnel Menu List',
     'label_probation_period' => 'Probation Period (Month)',
     'label_select_probation_period' => 'Choose Period',
     'label_cost_center_format' => 'Cost Center Format',

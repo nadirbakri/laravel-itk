@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Final Performance Result Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Final Performance Result List',
     'title_modal' => 'Performance Result Form',
     'label_no' => 'No',

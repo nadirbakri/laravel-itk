@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Skill Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Skill List',
     'label_record_status' => 'Record Status',
     'label_skill_code' => 'Skill Code',

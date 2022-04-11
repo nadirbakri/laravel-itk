@@ -620,20 +620,20 @@
         });
 
         $("#btn-remove-data").on('click', function() {
-        var data = table.rows('.selected').data().toArray();
-        if(data.length > 0){
-            for (var i = 0; i < data.length; i++) {
-                var index = arrayfieldName.findIndex(x => x.fieldName === data[i].fieldName);
-                // console.log(index);
-                arrayfieldName.splice(index, 1);
+            var data = table.rows('.selected').data().toArray();
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayfieldName.findIndex(x => x.fieldName === data[i].fieldName);
+                    // console.log(index);
+                    arrayfieldName.splice(index, 1);
+                }
+                $('#custom_report_employee_table').DataTable().destroy();
+                load_table_custom_report();
+                //console.log(arrayfieldName);
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
             }
-            $('#custom_report_employee_table').DataTable().destroy();
-            load_table_custom_report();
-            //console.log(arrayfieldName);
-        }else{
-            $('#notification_error').modal('show');
-            $('#message-notification-error').html('No Data Selected');
-        }
         });
 
         $("#btn-save-employment-data").click(function () {

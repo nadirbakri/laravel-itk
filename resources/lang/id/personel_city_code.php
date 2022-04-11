@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kota',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Kota',
     'label_record_status' => 'Status Data',
     'label_city_code' => 'Kode Kota',

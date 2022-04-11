@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Kartu Karyawan',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'label_employee_no_from' => 'Dari No Karyawan',
     'label_employee_no_to' => 'Sampai No Karyawan',
     'label_include_resign' => 'Termasuk Karyawan Mengundurkan Diri',

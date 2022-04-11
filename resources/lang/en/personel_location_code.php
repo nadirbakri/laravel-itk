@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Location Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Location Code List',
     'label_record_status' => 'Record Status',
     'label_location_code' => 'Location Code',

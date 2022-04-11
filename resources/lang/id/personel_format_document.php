@@ -13,6 +13,6 @@ return [
     */
 
     'judul' => 'Halaman Format Dokumen',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
 
 ];

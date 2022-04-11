@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Employee Mutation Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'label_current' => 'Current',
     'label_new' => 'New',
     'label_employee_no' => 'Employee No',

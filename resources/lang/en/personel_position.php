@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Position Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Position List',
     'label_record_status' => 'Record Status',
     'label_position_code' => 'Position Code',

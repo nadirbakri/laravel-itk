@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Free Format Field Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Free Format Field List',
     'title_modal_field_list' => 'Add New Field List',
     'label_record_status' => 'Record Status',

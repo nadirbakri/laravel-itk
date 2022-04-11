@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Form Evaluasi',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Form Evaluasi',
     'title_modal_evaluated_aspect' => 'Tambah Data Baru Aspek Evaluasi',
     'label_record_status' => 'Status Data',

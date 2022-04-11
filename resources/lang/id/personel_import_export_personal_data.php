@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'judul' => 'Halaman Impor dan Ekspor Data Personil',
-    'list' => 'Impor dan Ekspor Data Personil',
+    'judul' => 'Halaman Impor dan Ekspor Data Personel',
+    'list' => 'Impor dan Ekspor Data Personel',
     'label_import_export' => 'Impor dan Ekspor',
     'help_import_export' => '(Ekstensi File : XLS, XLSX, XML)',
     'btn-import' => 'Impor',

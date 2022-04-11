@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Employee Attachment Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'alert_success' => 'Success !',
     'btn_add' => 'Add',
     'btn_view' => 'View',

@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Halaman Grup',
-    'list' => 'Daftar Menu Personil',
+    'list' => 'Daftar Menu Personel',
     'list_detail' => 'Daftar Grup',
     'label_record_status' => 'Status Data',
     'label_group_code' => 'Kode Grup',

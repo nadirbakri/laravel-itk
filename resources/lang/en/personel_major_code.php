@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Major Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Major List',
     'label_record_status' => 'Record Status',
     'label_major_code' => 'Major Code',

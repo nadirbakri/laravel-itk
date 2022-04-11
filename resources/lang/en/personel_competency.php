@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Competency Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Competency Data List',
     'btn_change_picture' => 'Change Picture',
     'btn_add' => 'Add',

@@ -13,7 +13,7 @@ return [
     */
 
     'judul' => 'Cost Center Code Page',
-    'list' => 'Personel Menu List',
+    'list' => 'Personnel Menu List',
     'list_detail' => 'Cost Center Code List',
     'label_record_status' => 'Record Status',
     'label_cost_center_code' => 'Cost Center Code',
