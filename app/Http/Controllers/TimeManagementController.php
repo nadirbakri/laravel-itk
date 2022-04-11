@@ -1749,7 +1749,6 @@ class TimeManagementController extends Controller
                     )]
                 );
             }
-
             else {
                 $response = $client->put(env('API_URL') . '/referencetimerecord',
                     ['body' => json_encode(
@@ -2031,6 +2030,9 @@ class TimeManagementController extends Controller
 
     public function prosesReferenceTimeManagementTM(Request $request)
     {
+        parse_str($request->field, $arrData);
+        $arrData2 = json_decode($request->field_name);
+
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
@@ -2038,131 +2040,75 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'periodMonth' => (int) $request->processing_period_month,
-            //         'periodYear' => (int) $request->processing_period_year,
-            //         'statusProcess' => $request->process_status,
-            //         'statusPeriod' => $request->period_status,
-            //         'templatePreparation' => $request->template_preparation_process,
-            //         'calculateLateHour' => $request->late_hour,
-            //         'calculateEarlyBackHour' => $request->early_back_hour,
-            //         'calculateOvertime' => $request->default_calculation,
-            //         'ovtBeforeHourFrom' => $request->overtime_before_from,
-            //         'ovtAfterHourFrom' => $request->overtime_after_from,
-            //         'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
-            //         'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
-            //         'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
-            //         'overtimeCode' => $request->overtime,
-            //         'absentCode' => $request->absent,
-            //         'unpaidLeaveCode' => $request->unpaid_leave,
-            //         'lateCode' => $request->late,
-            //         'earlybackCode' => $request->early_back,
-            //         'lateEarlybackCode' => $request->late_early_back,
-            //         'noTimeInCode' => $request->not_clock_in,
-            //         'noTimeOutCode' => $request->not_clock_out,
-            //         'noTimeInEarlybackCode' => $request->not_clock_in_early_back,
-            //         'lateNoTimeOutCode' => $request->not_clock_out_late,
-            //         "changedNo" => 0,
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "changedBy" => Session::get('userID'),  
-            //         "languageCode" => App::getLocale(),
-            //         'sessionID' => 0,
-            //         'userID' => Session::get('userID'),
-            //         'logActionUserID' => Session::get('userID'),
-            //         'logActionUsername' => Session::get('userName'),
-            //     ]
-            //     ));
+            $param = [ 
+                'companyCode' => Session::get('companyCode'),
+                'periodMonth' => (int) $arrData['processing_period_month'],
+                'periodYear' => (int) $arrData['processing_period_year'],
+                'statusProcess' => $arrData['process_status'],
+                'statusPeriod' => $arrData['period_status'],
+                'templatePreparation' => $arrData['template_preparation_process'],
+                'calculateLateHour' => $arrData['late_hour'],
+                'calculateEarlyBackHour' => $arrData['early_back_hour'],
+                'calculateOvertime' => $arrData['default_calculation'],
+                'ovtBeforeHourFrom' => $arrData['overtime_before_from'],
+                'ovtAfterHourFrom' => $arrData['overtime_after_from'],
+                // 'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
+                // 'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
+                // 'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
+                'overtimeCode' => $arrData['overtime'],
+                'absentCode' => $arrData['absent'],
+                'unpaidLeaveCode' => $arrData['unpaid_leave'],
+                'lateCode' => $arrData['late'],
+                'earlybackCode' => $arrData['early_back'],
+                'lateEarlybackCode' => $arrData['late_early_back'],
+                'noTimeInCode' => $arrData['not_clock_in'],
+                'noTimeOutCode' => $arrData['not_clock_out'],
+                'noTimeInEarlybackCode' => $arrData['not_clock_in_early_back'],
+                'lateNoTimeOutCode' => $arrData['not_clock_out_late'],
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),  
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0,
+                'userID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+            ];
 
-            if($request->record_function == 'New'){
+            if(!empty($arrData2) && !is_null($arrData2[0])){
+                foreach($arrData2 as $key => $value){
+                    $data_field[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "seqNo" => (int) ($key + 1),
+                        "minutesFrom" => (int) $value->from,
+                        "minutesTo" => (int) $value->to,
+                        "become" => (int) $value->become,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID') 
+                    ];
+                }
+                $param['ovtRounded'] = $data_field;
+            }
+
+            // var_dump(json_encode($param));
+
+            if($arrData['record_function'] == 'New'){
                 $response = $client->post(env('API_URL') . '/referencetm',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'periodMonth' => (int) $request->processing_period_month,
-                            'periodYear' => (int) $request->processing_period_year,
-                            'statusProcess' => $request->process_status,
-                            'statusPeriod' => $request->period_status,
-                            'templatePreparation' => $request->template_preparation_process,
-                            'calculateLateHour' => $request->late_hour,
-                            'calculateEarlyBackHour' => $request->early_back_hour,
-                            'calculateOvertime' => $request->default_calculation,
-                            'ovtBeforeHourFrom' => $request->overtime_before_from,
-                            'ovtAfterHourFrom' => $request->overtime_after_from,
-                            'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
-                            'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
-                            'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
-                            'overtimeCode' => $request->overtime,
-                            'absentCode' => $request->absent,
-                            'unpaidLeaveCode' => $request->unpaid_leave,
-                            'lateCode' => $request->late,
-                            'earlybackCode' => $request->early_back,
-                            'lateEarlybackCode' => $request->late_early_back,
-                            'noTimeInCode' => $request->not_clock_in,
-                            'noTimeOutCode' => $request->not_clock_out,
-                            'noTimeInEarlybackCode' => $request->not_clock_in_early_back,
-                            'lateNoTimeOutCode' => $request->not_clock_out_late,
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),  
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0,
-                            'userID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                        ]
-                    )]
+                    ['body' => json_encode($param)]
                 );
             }else{
                 $response = $client->put(env('API_URL') . '/referencetm',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'periodMonth' => (int) $request->processing_period_month,
-                            'periodYear' => (int) $request->processing_period_year,
-                            'statusProcess' => $request->process_status,
-                            'statusPeriod' => $request->period_status,
-                            'templatePreparation' => $request->template_preparation_process,
-                            'calculateLateHour' => $request->late_hour,
-                            'calculateEarlyBackHour' => $request->early_back_hour,
-                            'calculateOvertime' => $request->default_calculation,
-                            'ovtBeforeHourFrom' => $request->overtime_before_from,
-                            'ovtAfterHourFrom' => $request->overtime_after_from,
-                            'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
-                            'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
-                            'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
-                            'overtimeCode' => $request->overtime,
-                            'absentCode' => $request->absent,
-                            'unpaidLeaveCode' => $request->unpaid_leave,
-                            'lateCode' => $request->late,
-                            'earlybackCode' => $request->early_back,
-                            'lateEarlybackCode' => $request->late_early_back,
-                            'noTimeInCode' => $request->not_clock_in,
-                            'noTimeOutCode' => $request->not_clock_out,
-                            'noTimeInEarlybackCode' => $request->not_clock_in_early_back,
-                            'lateNoTimeOutCode' => $request->not_clock_out_late,
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),  
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0,
-                            'userID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                        ]
-                    )]
+                    ['body' => json_encode($param)]
                 );
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

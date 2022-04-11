@@ -2,8 +2,10 @@
 
 return [
     'judul' => 'Time Management Reference',
-    'list' => 'Time Management Reference',
+    'list' => 'Time Management Reference ',
     'list_detail' => 'Reference Time Management List',
+    'list_ovt_deduct' => 'Overtime Deduct List',
+    'list_minutes_rounded' => 'Minuted Rounded List',
     'label_next' => 'Next',
     'label_back' => 'Back',
     'label_list' => 'List',

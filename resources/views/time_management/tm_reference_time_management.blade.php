@@ -104,7 +104,7 @@
 			</a>
         </div>
         <div class="div-form">
-            <form id="reference_time_management_form" method="post">
+            <form id="reference_time_management_form" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-2">
@@ -541,7 +541,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('tm_reference_time_management.list') }}</h5>
+                    <h5 class="modal-title">{{ __('tm_reference_time_management.list_ovt_deduct') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -747,7 +747,9 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var table = null;
+        var table_minutes = null;
         var arrData = @json($data);
+        var arrayMinutesRounded = [];
 
         let deduction1_from = $('#deduction1_from').flatpickr({
             enableTime: true,
@@ -853,21 +855,21 @@
             dateFormat: "H:i:ss"
         });
 
-        // var attrMinuteRoundedFrom = $('#minute_rounded_from');
-        // var attrMinuteRoundedTo = $('#minute_rounded_to');
-        // var attrMinuteRoundedBecome = $('#minute_rounded_become');
+        var attrMinuteRoundedFrom = $('#minute_rounded_from');
+        var attrMinuteRoundedTo = $('#minute_rounded_to');
+        var attrMinuteRoundedBecome = $('#minute_rounded_become');
 
-        // for (var i = 0; i <= 60; i++){
-        //     if(i == 0){
-        //         attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
-        //     }else if(i == 60){
-        //         attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
-        //     }else{
-        //         attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
-        //         attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
-        //     }
-        //     attrMinuteRoundedBecome.append($('<option/>').val(i).text(i));
-        // }
+        for (var i = 0; i <= 60; i++){
+            if(i == 0){
+                attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
+            }else if(i == 60){
+                attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
+            }else{
+                attrMinuteRoundedFrom.append($('<option/>').val(i).text(i));
+                attrMinuteRoundedTo.append($('<option/>').val(i).text(i));
+            }
+            attrMinuteRoundedBecome.append($('<option/>').val(i).text(i));
+        }
 
         loadDataProcessStatus();
         loadDataAbsent();
@@ -1044,12 +1046,22 @@
                     $('#overtime_after_from_overtime').prop('checked', true).trigger('change');
                 }
             }
-            var minuteRoundedFrom = parseInt(moment(arrData[0].ovtRoundedFrom).format('mm'));
-            $('#minute_rounded_from').val(minuteRoundedFrom.toString()).trigger('change');
-            var minuteRoundedTo = parseInt(moment(arrData[0].ovtRoundedTo).format('mm'));
-            $('#minute_rounded_to').val(minuteRoundedTo.toString()).trigger('change');
-            var minuteRoundedBecome = parseInt(moment(arrData[0].ovtRoundedBecome).format('mm'));
-            $('#minute_rounded_become').val(minuteRoundedBecome.toString()).trigger('change');
+            if(arrData[0].ovtRounded.length > 0){
+                for (const obj of arrData[0].ovtRounded) {
+                    arrayMinutesRounded.push({
+                        "from": obj.minutesFrom,
+                        "to": obj.minutesTo,
+                        "become": obj.become
+                    });
+                }
+            }
+            // load_data_table_minutes_rounded();
+            // var minuteRoundedFrom = parseInt(moment(arrData[0].ovtRoundedFrom).format('mm'));
+            // $('#minute_rounded_from').val(minuteRoundedFrom.toString()).trigger('change');
+            // var minuteRoundedTo = parseInt(moment(arrData[0].ovtRoundedTo).format('mm'));
+            // $('#minute_rounded_to').val(minuteRoundedTo.toString()).trigger('change');
+            // var minuteRoundedBecome = parseInt(moment(arrData[0].ovtRoundedBecome).format('mm'));
+            // $('#minute_rounded_become').val(minuteRoundedBecome.toString()).trigger('change');
             $("#toolbar-new").hide();
             $("#toolbar-edit").show();
         } else {
@@ -1063,8 +1075,9 @@
             $('#overtime_before_from_normal').prop('checked', true).trigger('change');
             $('#overtime_after_from_normal').prop('checked', true).trigger('change');
             $('#minute_rounded_from').val("0").trigger('change');
-            $('#minute_rounded_to').val("0").trigger('change');
+            $('#minute_rounded_to').val("1").trigger('change');
             $('#minute_rounded_become').val("0").trigger('change');
+            load_data_table_minutes_rounded();
             $("#toolbar-new").show();
             $("#toolbar-edit").hide();
         }
@@ -1232,9 +1245,36 @@
         load_data_table_reference_time_management();
 
         function load_data_table_minutes_rounded() {
-            table = $('#minutes_rounded_table').DataTable({
+            table_minutes = $('#minutes_rounded_table').DataTable({
+                processing: true,
+                data: arrayMinutesRounded,
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
+                "order": [
+                    [1, "asc"]
+                ],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'from',
+                        name: 'from'
+                    },
+                    {
+                        data: 'to',
+                        name: 'to'
+                    },
+                    {
+                        data: 'become',
+                        name: 'become'
+                    }
+                ],
                 select: {
                     style:    'multi',
                     selector: 'td:first-child'
@@ -1495,13 +1535,14 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
 
-            arrayfieldName.push({
-                "fieldName": $("#field_name").val(),
-                "columnHeader": $("#column_header").val()
+            arrayMinutesRounded.push({
+                "from": $("#minute_rounded_from").val(),
+                "to": $("#minute_rounded_to").val(),
+                "become": $("#minute_rounded_become").val()
             });
 
             $('#minute_rounded_from').val("0").trigger('change');
-            $('#minute_rounded_to').val("0").trigger('change');
+            $('#minute_rounded_to').val("1").trigger('change');
             $('#minute_rounded_become').val("0").trigger('change');
 
             $(this).prop("disabled", false);
@@ -1516,20 +1557,22 @@
 
         $("#btn-add-minutes-rounded").on('click', function() {
             $('#minute_rounded_from').val("0").trigger('change');
-            $('#minute_rounded_to').val("0").trigger('change');
+            $('#minute_rounded_to').val("1").trigger('change');
             $('#minute_rounded_become').val("0").trigger('change');
         });
 
         $("#btn-remove-minutes-rounded").on('click', function () {
-            var data = table.rows('.selected').data().toArray();
+            var data = table_minutes.rows('.selected').data();
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    var index = arrayMinutesRounded.findIndex(x => x.fieldName === data[i].fieldName);
+                    var index = arrayMinutesRounded.findIndex(function(itm) {
+                        return itm.from === data[i].from && itm.to === data[i].to && itm.become === data[i].become;
+                    });
                     // console.log(index);
                     arrayMinutesRounded.splice(index, 1);
                 }
-                $('#custom_report_employee_table').DataTable().destroy();
-                load_table_custom_report();
+                $('#minutes_rounded_table').DataTable().destroy();
+                load_data_table_minutes_rounded();
             } else {
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -1774,7 +1817,7 @@
                     $.ajax({
                         url: "{{ url('time_management/reference_time_management/proses') }}",
                         type: "POST",
-                        data: $('#reference_time_management_form').serialize(),
+                        data: { 'field' : $('#reference_time_management_form').serialize(), 'field_name' : JSON.stringify(arrayMinutesRounded) },
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#toolbar-save").prop("disabled", false);
