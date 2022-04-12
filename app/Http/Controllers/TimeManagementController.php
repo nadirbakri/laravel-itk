@@ -2093,9 +2093,9 @@ class TimeManagementController extends Controller
                     ];
                 }
                 $param['ovtRounded'] = $data_field;
+            }else{
+                $param['ovtRounded'] = null;
             }
-
-            // var_dump(json_encode($param));
 
             if($arrData['record_function'] == 'New'){
                 $response = $client->post(env('API_URL') . '/referencetm',
@@ -2108,7 +2108,6 @@ class TimeManagementController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

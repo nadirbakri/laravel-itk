@@ -80,7 +80,7 @@
             <a class="list-functionbar-xl" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_salary_component_data">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
                 <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
-                <span>Process New Component/Employee</span>
+                <span>Process New Component / Employee</span>
             </a>
             <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
@@ -350,24 +350,14 @@
         $("#toolbar-process").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span>Loading...</span>'
             );
             $("#salary_component_data_process_form").submit();
         });
 
         if ($("#salary_component_data_process_form").length > 0) {
             $("#salary_component_data_process_form").validate({
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -384,15 +374,14 @@
                                 $("#toolbar-process").html(
                                     '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
                                     '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
-                                    '<span>Process New Component/Employee</span>'
+                                    '<span>Process New Component / Employee</span>'
                                 );
 
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/salary_component_data') }}";
+                                    $('#notification_success').modal('hide');
                                 }, 3000);
                             } else {
                                 $("#toolbar-process").prop("disabled", false);

@@ -3209,21 +3209,38 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/salarycomponentdata/processcomponent',
+            $response_tm = $client->post(env('API_URL') . '/referencetm/getreferencetm',
                 ['body' => json_encode(
                     [
-                        "companyCode" => Session::get('companyCode'),
-                        "periodMonth" => (int) $request->period_month,
-                        "periodYear" => (int) $request->period_year,
-                        "period" => (int) $request->period,
-                        "languageCode" => App::getLocale(),
-                        "sessionID" => 0,
-                        "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
+
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+
+            if($arrResult_tm->dataListSet == null){
+                return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
+            }else{  
+                $response = $client->post(env('API_URL') . '/salarycomponentdata/processcomponent',
+                    ['body' => json_encode(
+                        [
+                            "companyCode" => Session::get('companyCode'),
+                            "periodMonth" => (int) $arrResult_tm->dataListSet[0]->periodMonth,
+                            "periodYear" => (int) $arrResult_tm->dataListSet[0]->periodYear,
+                            "period" => (int) $arrResult_tm->dataListSet[0]->statusPeriod,
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userName') 
+                        ]
+                    )]
+                );
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){

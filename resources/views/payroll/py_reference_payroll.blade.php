@@ -213,961 +213,991 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <h5><u>{{ __('payroll_reference_payroll.label_reference') }}</u></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="tax_registered_no">{{ __('payroll_reference_payroll.label_tax_registered_no') }}</label>
-                            <input type="text" class="form-control" id="tax_registered_no" name="tax_registered_no"
-                                placeholder="{{ __('payroll_reference_payroll.label_tax_registered_no') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="jamsostek_no">{{ __('payroll_reference_payroll.label_jamsostek_no') }}</label>
-                            <input type="text" class="form-control" id="jamsostek_no" name="jamsostek_no"
-                                placeholder="{{ __('payroll_reference_payroll.label_jamsostek_no') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="pension_no">{{ __('payroll_reference_payroll.label_pension_no') }}</label>
-                            <input type="text" class="form-control" id="pension_no" name="pension_no"
-                                placeholder="{{ __('payroll_reference_payroll.label_pension_no') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="retirement_age_limit">{{ __('payroll_reference_payroll.label_retirement_age_limit') }}</label>
-                            <input type="number" class="form-control" id="retirement_age_limit" name="retirement_age_limit"
-                                placeholder="{{ __('payroll_reference_payroll.label_retirement_age_limit') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="prorate_method">{{ __('payroll_reference_payroll.label_prorate_method') }}</label>
-                            <select class="form-control select2" id="prorate_method" name="prorate_method" disabled>
-                                <option value="" disabled selected></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="maximum_dependents">{{ __('payroll_reference_payroll.label_maximum_dependents') }}</label>
-                            <input type="number" class="form-control" id="maximum_dependents" name="maximum_dependents"
-                                placeholder="{{ __('payroll_reference_payroll.label_maximum_dependents') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="take_home_pay_rounded_from">{{ __('payroll_reference_payroll.label_take_home_pay_rounded_from') }}</label>
-                            <input type="number" class="form-control" id="take_home_pay_rounded_from" name="take_home_pay_rounded_from"
-                                placeholder="{{ __('payroll_reference_payroll.label_take_home_pay_rounded_from') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="take_home_pay_rounded_become">{{ __('payroll_reference_payroll.label_take_home_pay_rounded_become') }}</label>
-                            <input type="number" class="form-control" id="take_home_pay_rounded_become" name="take_home_pay_rounded_become"
-                                placeholder="{{ __('payroll_reference_payroll.label_take_home_pay_rounded_become') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                {{-- <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="transfer_data_from_medical">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="transfer_data_from_medical"
-                                    name="check_transfer_data_from_medical" value="true">
-                                <label
-                                    for="check_transfer_data_from_medical">{{ __('payroll_reference_payroll.label_transfer_data_from_medical') }}</label>
+                <div class="card">
+                    <a class="collapsed" data-toggle="collapse" href="#reference-data" aria-expanded="true"
+                                aria-controls="reference-data">
+                        <div class="card-header">
+                            <div class="div-dropdown-title">
+                                <span
+                                    class="dropdown-title-text">{{ __('payroll_reference_payroll.label_reference') }}</span>
+                                <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}"
+                                    alt="Triangle">
                             </div>
                         </div>
-                    </div>
-                </div> --}}
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="transaction_rate_type">{{ __('payroll_reference_payroll.label_transaction_rate_type') }}</label>
-                            <select class="form-control select2" id="transaction_rate_type" name="transaction_rate_type" disabled>
-                                <option value="" disabled selected></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="tax_rate_type">{{ __('payroll_reference_payroll.label_tax_rate_type') }}</label>
-                            <select class="form-control select2" id="tax_rate_type" name="tax_rate_type" disabled>
-                                <option value="" disabled selected></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="rounding_method_report">{{ __('payroll_reference_payroll.label_rounding_method_report') }}</label>
-                            <select class="form-control select2" id="rounding_method_report" name="rounding_method_report" disabled>
-                                <option value="" disabled selected></select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="rounding_decimal_report">{{ __('payroll_reference_payroll.label_rounding_decimal_report') }}</label>
-                            <input type="number" class="form-control" id="rounding_decimal_report" name="rounding_decimal_report"
-                                placeholder="{{ __('payroll_reference_payroll.label_rounding_decimal_report') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="rounding_method_spt">{{ __('payroll_reference_payroll.label_rounding_method_spt') }}</label>
-                            <select class="form-control select2" id="rounding_method_spt" name="rounding_method_spt" disabled>
-                                <option value="" disabled selected></option></select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="rounding_decimal_spt">{{ __('payroll_reference_payroll.label_rounding_decimal_spt') }}</label>
-                            <input type="number" class="form-control" id="rounding_decimal_spt" name="rounding_decimal_spt"
-                                placeholder="{{ __('payroll_reference_payroll.label_rounding_decimal_spt') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="check_appreciation_and_employee_service">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="check_appreciation_and_employee_service"
-                                    name="check_appreciation_and_employee_service" value="true" disabled>
-                                <label
-                                    for="check_appreciation_and_employee_service">{{ __('payroll_reference_payroll.label_appreciation_and_employee_service') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="bonus_cooficient">{{ __('payroll_reference_payroll.label_bonus_cooficient') }}</label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" id="bonus_cooficient" name="bonus_cooficient"
-                                    placeholder="{{ __('payroll_reference_payroll.label_bonus_cooficient') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>x</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3"> 
-                        <div class="form-group">
-                            <label for="tax_allowance">{{ __('payroll_reference_payroll.label_tax_allowance') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="check_tax_allowance_bonus"
-                                name="check_tax_allowance_bonus" value="true" disabled>
-                            <label
-                                for="check_tax_allowance_bonus">{{ __('payroll_reference_payroll.label_tax_allowance_bonus') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="check_tax_allowance_thr"
-                                name="check_tax_allowance_thr" value="true" disabled>
-                            <label
-                                for="check_tax_allowance_thr">{{ __('payroll_reference_payroll.label_tax_allowance_thr') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <h5><u>{{ __('payroll_reference_payroll.label_jamsostek') }}</u></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="pension_contribution_employee">{{ __('payroll_reference_payroll.label_pension_contribution_employee') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="pension_contribution_employee" name="pension_contribution_employee"
-                                    placeholder="{{ __('payroll_reference_payroll.label_pension_contribution_employee') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="pension_contribution_employer">{{ __('payroll_reference_payroll.label_pension_contribution_employer') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="pension_contribution_employer" name="pension_contribution_employer"
-                                    placeholder="{{ __('payroll_reference_payroll.label_pension_contribution_employer') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="work_related_accident_insurance_one">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_one') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_one" name="work_related_accident_insurance_one"
-                                    placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_one') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="work_related_accident_insurance_two">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_two') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_two" name="work_related_accident_insurance_two"
-                                    placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_two') }}"readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="work_related_accident_insurance_three">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_three') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_three" name="work_related_accident_insurance_three"
-                                    placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_three') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="non_accidental_death_insurance">{{ __('payroll_reference_payroll.label_non_accidental_death_insurance') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="non_accidental_death_insurance" name="non_accidental_death_insurance"
-                                    placeholder="{{ __('payroll_reference_payroll.label_non_accidental_death_insurance') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="health_insurance_company">{{ __('payroll_reference_payroll.label_health_insurance_company') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="health_insurance_company" name="health_insurance_company"
-                                    placeholder="{{ __('payroll_reference_payroll.label_health_insurance_company') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="health_insurance_employee">{{ __('payroll_reference_payroll.label_health_insurance_employee') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="health_insurance_employee" name="health_insurance_employee"
-                                    placeholder="{{ __('payroll_reference_payroll.label_health_insurance_employee') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="min_calculation_health_insurance">{{ __('payroll_reference_payroll.label_min_calculation_health_insurance') }}</label>
-                            <input type="number" class="form-control" id="min_calculation_health_insurance" name="min_calculation_health_insurance"
-                                placeholder="{{ __('payroll_reference_payroll.label_min_calculation_health_insurance') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="max_calculation_health_insurance">{{ __('payroll_reference_payroll.label_max_calculation_health_insurance') }}</label>
-                            <input type="number" class="form-control" id="max_calculation_health_insurance" name="max_calculation_health_insurance"
-                                placeholder="{{ __('payroll_reference_payroll.label_max_calculation_health_insurance') }}" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="pension_insurance_company">{{ __('payroll_reference_payroll.label_pension_insurance_company') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="pension_insurance_company" name="pension_insurance_company"
-                                    placeholder="{{ __('payroll_reference_payroll.label_pension_insurance_company') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="pension_insurance_employee">{{ __('payroll_reference_payroll.label_pension_insurance_employee') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="pension_insurance_employee" name="pension_insurance_employee"
-                                    placeholder="{{ __('payroll_reference_payroll.label_pension_insurance_employee') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="min_calculation_pension_insurance">{{ __('payroll_reference_payroll.label_min_calculation_pension_insurance') }}</label>
-                            <input type="number" class="form-control" id="min_calculation_pension_insurance" name="min_calculation_pension_insurance"
-                                placeholder="{{ __('payroll_reference_payroll.label_min_calculation_pension_insurance') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="max_calculation_pension_insurance">{{ __('payroll_reference_payroll.label_max_calculation_pension_insurance') }}</label>
-                            <input type="number" class="form-control" id="max_calculation_pension_insurance" name="max_calculation_pension_insurance"
-                                placeholder="{{ __('payroll_reference_payroll.label_max_calculation_pension_insurance') }}" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="multiplication_factor_daily_worker">{{ __('payroll_reference_payroll.label_multiplication_factor_daily_worker') }}</label>
-                            <input type="number" class="form-control" id="multiplication_factor_daily_worker" name="multiplication_factor_daily_worker"
-                                placeholder="{{ __('payroll_reference_payroll.label_multiplication_factor_daily_worker') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3"> 
-                        <div class="form-group">
-                            <label for="calculation_method">{{ __('payroll_reference_payroll.label_calculation_method') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <input class="form-check-input" type="radio" id="calculation_method_actual"
-                                name="calculation_method" value="A" disabled checked>
-                            <label
-                                for="calculation_method_actual">{{ __('payroll_reference_payroll.label_calculation_method_actual') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <input class="form-check-input" type="radio" id="calculation_method_basic"
-                                name="calculation_method" value="B" disabled>
-                            <label
-                                for="calculation_method_basic">{{ __('payroll_reference_payroll.label_calculation_method_basic') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3"> 
-                        <div class="form-group">
-                            <label for="deduction_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <input class="form-check-input" type="radio" id="check_all_period_jamsostek"
-                                name="deduction_on_period_jamsostek" value=0 disabled checked>
-                            <label
-                                for="check_all_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group" style="display:inline-block;">
-                            <input class="form-check-input" type="radio" id="check_on_period_jamsostek" name="deduction_on_period_jamsostek" disabled>
-                            <label
-                                for="check_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
-                            <small class="text-muted">(1 - 12)</small>
-                            <input class="form-control" type="number" min=1 max=12 id="on_period_jamsostek" name="deduction_on_period_jamsostek" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="work_insurance_remision_payment_percentage">{{ __('payroll_reference_payroll.label_work_insurance_remision_payment_percentage') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="work_insurance_remision_payment_percentage" name="work_insurance_remision_payment_percentage"
-                                    placeholder="{{ __('payroll_reference_payroll.label_work_insurance_remision_payment_percentage') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="work_insurance_remision_end_period">{{ __('payroll_reference_payroll.label_work_insurance_remision_end_period') }}</label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" id="work_insurance_remision_end_period" name="work_insurance_remision_end_period"
-                                    placeholder="{{ __('payroll_reference_payroll.label_work_insurance_remision_end_period') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="work_insurance_remision_end_period_calendar"><span class="fa fa-calendar"></span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <h5><u>{{ __('payroll_reference_payroll.label_tax_calculation_table') }}</u></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <br>
-                            <label for="non_taxable_income">{{ __('payroll_reference_payroll.label_non_taxable_income') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="non_taxable_income_employee">{{ __('payroll_reference_payroll.label_non_taxable_income_employee') }}</label>
-                            <input type="number" class="form-control" id="non_taxable_income_employee" name="non_taxable_income_employee"
-                                placeholder="{{ __('payroll_reference_payroll.label_non_taxable_income_employee') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="non_taxable_income_each_dependent">{{ __('payroll_reference_payroll.label_non_taxable_income_each_dependent') }}</label>
-                            <input type="number" class="form-control" id="non_taxable_income_each_dependent" name="non_taxable_income_each_dependent"
-                                placeholder="{{ __('payroll_reference_payroll.label_non_taxable_income_each_dependent') }}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <br>
-                            <label for="occupational">{{ __('payroll_reference_payroll.label_occupational') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="occupational_percentage">{{ __('payroll_reference_payroll.label_occupational_percentage') }}</label>
-                            <input type="number" class="form-control" id="occupational_percentage" name="occupational_percentage"
-                                placeholder="{{ __('payroll_reference_payroll.label_occupational_percentage') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="occupational_maximum">{{ __('payroll_reference_payroll.label_occupational_maximum') }}</label>
-                            <small class="text-muted">(0 - 100)</small>
-                            <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="occupational_maximum" name="occupational_maximum"
-                                    placeholder="{{ __('payroll_reference_payroll.label_occupational_maximum') }}" readonly>
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span>%</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8 box">
-                        <div class="row">
-                            <div class="col-3">
-                                <h6 for="tax_rate">{{ __('payroll_reference_payroll.label_tax_rate') }}</h6>
-                            </div>
-                            <div class="col-3">
-                                <h6 for="taxable_income">{{ __('payroll_reference_payroll.label_taxable_income') }}</h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="row">
+                    </a>
+                    <div id="reference-data" class="collapse show">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-6">
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="tax_rate1" name="tax_rate1" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 1" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
-                                            </div>
+                                        <label for="tax_registered_no">{{ __('payroll_reference_payroll.label_tax_registered_no') }}</label>
+                                        <input type="text" class="form-control" id="tax_registered_no" name="tax_registered_no"
+                                            placeholder="{{ __('payroll_reference_payroll.label_tax_registered_no') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="jamsostek_no">{{ __('payroll_reference_payroll.label_jamsostek_no') }}</label>
+                                        <input type="text" class="form-control" id="jamsostek_no" name="jamsostek_no"
+                                            placeholder="{{ __('payroll_reference_payroll.label_jamsostek_no') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pension_no">{{ __('payroll_reference_payroll.label_pension_no') }}</label>
+                                        <input type="text" class="form-control" id="pension_no" name="pension_no"
+                                            placeholder="{{ __('payroll_reference_payroll.label_pension_no') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="retirement_age_limit">{{ __('payroll_reference_payroll.label_retirement_age_limit') }}</label>
+                                        <input type="number" class="form-control" id="retirement_age_limit" name="retirement_age_limit"
+                                            placeholder="{{ __('payroll_reference_payroll.label_retirement_age_limit') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="prorate_method">{{ __('payroll_reference_payroll.label_prorate_method') }}</label>
+                                        <select class="form-control select2" id="prorate_method" name="prorate_method" disabled>
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="maximum_dependents">{{ __('payroll_reference_payroll.label_maximum_dependents') }}</label>
+                                        <input type="number" class="form-control" id="maximum_dependents" name="maximum_dependents"
+                                            placeholder="{{ __('payroll_reference_payroll.label_maximum_dependents') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="take_home_pay_rounded_from">{{ __('payroll_reference_payroll.label_take_home_pay_rounded_from') }}</label>
+                                        <input type="number" class="form-control" id="take_home_pay_rounded_from" name="take_home_pay_rounded_from"
+                                            placeholder="{{ __('payroll_reference_payroll.label_take_home_pay_rounded_from') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="take_home_pay_rounded_become">{{ __('payroll_reference_payroll.label_take_home_pay_rounded_become') }}</label>
+                                        <input type="number" class="form-control" id="take_home_pay_rounded_become" name="take_home_pay_rounded_become"
+                                            placeholder="{{ __('payroll_reference_payroll.label_take_home_pay_rounded_become') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="transfer_data_from_medical">&nbsp;</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="transfer_data_from_medical"
+                                                name="check_transfer_data_from_medical" value="true">
+                                            <label
+                                                for="check_transfer_data_from_medical">{{ __('payroll_reference_payroll.label_transfer_data_from_medical') }}</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                            </div> --}}
+                            <div class="row">
+                                <div class="col-6">
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="tax_rate2" name="tax_rate2" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 2" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
-                                            </div>
+                                        <label for="transaction_rate_type">{{ __('payroll_reference_payroll.label_transaction_rate_type') }}</label>
+                                        <select class="form-control select2" id="transaction_rate_type" name="transaction_rate_type" disabled>
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="tax_rate_type">{{ __('payroll_reference_payroll.label_tax_rate_type') }}</label>
+                                        <select class="form-control select2" id="tax_rate_type" name="tax_rate_type" disabled>
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="rounding_method_report">{{ __('payroll_reference_payroll.label_rounding_method_report') }}</label>
+                                        <select class="form-control select2" id="rounding_method_report" name="rounding_method_report" disabled>
+                                            <option value="" disabled selected></select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="rounding_decimal_report">{{ __('payroll_reference_payroll.label_rounding_decimal_report') }}</label>
+                                        <input type="number" class="form-control" id="rounding_decimal_report" name="rounding_decimal_report"
+                                            placeholder="{{ __('payroll_reference_payroll.label_rounding_decimal_report') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="rounding_method_spt">{{ __('payroll_reference_payroll.label_rounding_method_spt') }}</label>
+                                        <select class="form-control select2" id="rounding_method_spt" name="rounding_method_spt" disabled>
+                                            <option value="" disabled selected></option></select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="rounding_decimal_spt">{{ __('payroll_reference_payroll.label_rounding_decimal_spt') }}</label>
+                                        <input type="number" class="form-control" id="rounding_decimal_spt" name="rounding_decimal_spt"
+                                            placeholder="{{ __('payroll_reference_payroll.label_rounding_decimal_spt') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="check_appreciation_and_employee_service">&nbsp;</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="check_appreciation_and_employee_service"
+                                                name="check_appreciation_and_employee_service" value="true" disabled>
+                                            <label
+                                                for="check_appreciation_and_employee_service">{{ __('payroll_reference_payroll.label_appreciation_and_employee_service') }}</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-6">
                                     <div class="form-group">
+                                        <label for="bonus_cooficient">{{ __('payroll_reference_payroll.label_bonus_cooficient') }}</label>
                                         <div class="input-group">
-                                            <input type="number" class="form-control" id="tax_rate3" name="tax_rate3" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 3" readonly />
+                                            <input type="number" class="form-control" id="bonus_cooficient" name="bonus_cooficient"
+                                                placeholder="{{ __('payroll_reference_payroll.label_bonus_cooficient') }}" readonly>
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="tax_rate4" name="tax_rate4" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 4" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="tax_rate5" name="tax_rate5" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 5" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="tax_rate6" name="tax_rate6" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 6" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
+                                                <span class="input-group-text"><span>x</span></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="row">
+                            <div class="row">
+                                <div class="col-3"> 
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_from1" name="taxable_income_from1" data-seq=1 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                        <label for="tax_allowance">{{ __('payroll_reference_payroll.label_tax_allowance') }}</label>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-2">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_from2" name="taxable_income_from2" data-seq=2 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_from3" name="taxable_income_from3" data-seq=3 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_from4" name="taxable_income_from4" data-seq=4 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_from5" name="taxable_income_from5" data-seq=5 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_from6" name="taxable_income_from6" data-seq=6 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 6" readonly />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-0.5">
-                                <div class="form-group">
-                                    <div id="div-grid-taxable-income-minus"></div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_to1" name="taxable_income_to1" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_to2" name="taxable_income_to2" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_to3" name="taxable_income_to3" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_to4" name="taxable_income_to4" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="taxable_income_to5" name="taxable_income_to5" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div id="div-grid-taxable-income-to"></div>
-                                    &nbsp;
-                                    <label for="and_on_taxable_income">{{ __('payroll_reference_payroll.label_and_on') }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="nearest_taxable_income">&nbsp;</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="check_nearest_taxable_income" name="check_nearest_taxable_income">
+                                        <input class="form-check-input" type="checkbox" id="check_tax_allowance_bonus"
+                                            name="check_tax_allowance_bonus" value="true" disabled>
                                         <label
-                                            for="nearest_taxable_income">{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}</label>
-                                        <input type="number" class="form-control" id="nearest_taxable_income" name="nearest_taxable_income"
-                                            placeholder="{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}" readonly>
+                                            for="check_tax_allowance_bonus">{{ __('payroll_reference_payroll.label_tax_allowance_bonus') }}</label>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label
-                                        for="time_test">{{ __('payroll_reference_payroll.label_time_test') }}</label>
-                                    <input type="number" class="form-control" id="time_test" name="time_test"
-                                        placeholder="{{ __('payroll_reference_payroll.label_time_test') }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_rate_with_time_test">{{ __('payroll_reference_payroll.label_tax_rate_with_time_test') }}</label>
-                                    <small class="text-muted">(0 - 100)</small>
-                                    <div class="input-group">
-                                        <input type="number" min=0 max=100 class="form-control" id="tax_rate_with_time_test" name="tax_rate_with_time_test"
-                                            placeholder="{{ __('payroll_reference_payroll.label_tax_rate_with_time_test') }}" readonly>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><span>%</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label
-                                        for="max_gross_income">{{ __('payroll_reference_payroll.label_max_gross_income') }}</label>
-                                    <input type="number" class="form-control" id="max_gross_income" name="max_gross_income"
-                                        placeholder="{{ __('payroll_reference_payroll.label_max_gross_income') }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4 box">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_by_government">{{ __('payroll_reference_payroll.label_tax_by_government') }}</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_by_government_tk">T/K</label>
-                                    <input type="number" class="form-control" id="tax_by_government_tk" name="tax_by_government_tk"
-                                        placeholder="T/K" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_by_government_k0">K/0</label>
-                                    <input type="number" class="form-control" id="tax_by_government_k0" name="tax_by_government_k0"
-                                        placeholder="K/0" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_by_government_k1">K/1</label>
-                                    <input type="number" class="form-control" id="tax_by_government_k1" name="tax_by_government_k1"
-                                        placeholder="K/1" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_by_government_k2">K/2</label>
-                                    <input type="number" class="form-control" id="tax_by_government_k2" name="tax_by_government_k2"
-                                        placeholder="K/2" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tax_by_government_k3">K/3</label>
-                                    <input type="number" class="form-control" id="tax_by_government_k3" name="tax_by_government_k3"
-                                        placeholder="K/3" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col-4"> 
-                                <div class="form-group">
-                                    <label for="deduction_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input class="form-check-input" type="radio" id="check_all_period_tax_calculation_table"
-                                        name="deduction_on_period_tax_calculation_table" value=0 disabled checked>
-                                    <label
-                                        for="check_all_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group" style="display:inline-block;">
-                                    <input class="form-check-input" type="radio" id="check_on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" disabled>
-                                    <label
-                                        for="check_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
-                                    <small class="text-muted">(1 - 12)</small>
-                                    <input class="form-control" type="number" min=1 max=12 id="on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="tax_penalties">{{ __('payroll_reference_payroll.label_tax_penalties') }}</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="tax_penalties_salary">{{ __('payroll_reference_payroll.label_tax_penalties_salary') }}</label>
-                                    <small class="text-muted">(0 - 100)</small>
-                                    <div class="input-group">
-                                        <input type="number" min=0 max=100 class="form-control" id="tax_penalties_salary" name="tax_penalties_salary"
-                                            placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_salary') }}" readonly>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><span>%</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="tax_penalties_bonus">{{ __('payroll_reference_payroll.label_tax_penalties_bonus') }}</label>
-                                    <small class="text-muted">(0 - 100)</small>
-                                    <div class="input-group">
-                                        <input type="number" min=0 max=100 class="form-control" id="tax_penalties_bonus" name="tax_penalties_bonus"
-                                            placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_bonus') }}" readonly>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><span>%</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="tax_penalties_thr">{{ __('payroll_reference_payroll.label_tax_penalties_thr') }}</label>
-                                    <small class="text-muted">(0 - 100)</small>
-                                    <div class="input-group">
-                                        <input type="number" min=0 max=100 class="form-control" id="tax_penalties_thr" name="tax_penalties_thr"
-                                            placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_thr') }}" readonly>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><span>%</span></span>
-                                        </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="check_tax_allowance_thr"
+                                            name="check_tax_allowance_thr" value="true" disabled>
+                                        <label
+                                            for="check_tax_allowance_thr">{{ __('payroll_reference_payroll.label_tax_allowance_thr') }}</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-8 box">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <h6 for="severance_payment_rate">{{ __('payroll_reference_payroll.label_severance_payment_rate') }}</h6>
+                <div class="card">
+                    <a class="collapsed" data-toggle="collapse" href="#jamsostek-data" aria-expanded="true"
+                                aria-controls="jamsostek-data">
+                        <div class="card-header">
+                            <div class="div-dropdown-title">
+                                <span
+                                    class="dropdown-title-text">{{ __('payroll_reference_payroll.label_jamsostek') }}</span>
+                                <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}"
+                                    alt="Triangle">
+                            </div>
+                        </div>
+                    </a>
+                    <div id="jamsostek-data" class="collapse show">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pension_contribution_employee">{{ __('payroll_reference_payroll.label_pension_contribution_employee') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="pension_contribution_employee" name="pension_contribution_employee"
+                                                placeholder="{{ __('payroll_reference_payroll.label_pension_contribution_employee') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pension_contribution_employer">{{ __('payroll_reference_payroll.label_pension_contribution_employer') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="pension_contribution_employer" name="pension_contribution_employer"
+                                                placeholder="{{ __('payroll_reference_payroll.label_pension_contribution_employer') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="work_related_accident_insurance_one">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_one') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_one" name="work_related_accident_insurance_one"
+                                                placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_one') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="work_related_accident_insurance_two">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_two') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_two" name="work_related_accident_insurance_two"
+                                                placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_two') }}"readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="work_related_accident_insurance_three">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_three') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_three" name="work_related_accident_insurance_three"
+                                                placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_three') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="non_accidental_death_insurance">{{ __('payroll_reference_payroll.label_non_accidental_death_insurance') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="non_accidental_death_insurance" name="non_accidental_death_insurance"
+                                                placeholder="{{ __('payroll_reference_payroll.label_non_accidental_death_insurance') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="health_insurance_company">{{ __('payroll_reference_payroll.label_health_insurance_company') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="health_insurance_company" name="health_insurance_company"
+                                                placeholder="{{ __('payroll_reference_payroll.label_health_insurance_company') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="health_insurance_employee">{{ __('payroll_reference_payroll.label_health_insurance_employee') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="health_insurance_employee" name="health_insurance_employee"
+                                                placeholder="{{ __('payroll_reference_payroll.label_health_insurance_employee') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="min_calculation_health_insurance">{{ __('payroll_reference_payroll.label_min_calculation_health_insurance') }}</label>
+                                        <input type="number" class="form-control" id="min_calculation_health_insurance" name="min_calculation_health_insurance"
+                                            placeholder="{{ __('payroll_reference_payroll.label_min_calculation_health_insurance') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="max_calculation_health_insurance">{{ __('payroll_reference_payroll.label_max_calculation_health_insurance') }}</label>
+                                        <input type="number" class="form-control" id="max_calculation_health_insurance" name="max_calculation_health_insurance"
+                                            placeholder="{{ __('payroll_reference_payroll.label_max_calculation_health_insurance') }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pension_insurance_company">{{ __('payroll_reference_payroll.label_pension_insurance_company') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="pension_insurance_company" name="pension_insurance_company"
+                                                placeholder="{{ __('payroll_reference_payroll.label_pension_insurance_company') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pension_insurance_employee">{{ __('payroll_reference_payroll.label_pension_insurance_employee') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="pension_insurance_employee" name="pension_insurance_employee"
+                                                placeholder="{{ __('payroll_reference_payroll.label_pension_insurance_employee') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="min_calculation_pension_insurance">{{ __('payroll_reference_payroll.label_min_calculation_pension_insurance') }}</label>
+                                        <input type="number" class="form-control" id="min_calculation_pension_insurance" name="min_calculation_pension_insurance"
+                                            placeholder="{{ __('payroll_reference_payroll.label_min_calculation_pension_insurance') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="max_calculation_pension_insurance">{{ __('payroll_reference_payroll.label_max_calculation_pension_insurance') }}</label>
+                                        <input type="number" class="form-control" id="max_calculation_pension_insurance" name="max_calculation_pension_insurance"
+                                            placeholder="{{ __('payroll_reference_payroll.label_max_calculation_pension_insurance') }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="multiplication_factor_daily_worker">{{ __('payroll_reference_payroll.label_multiplication_factor_daily_worker') }}</label>
+                                        <input type="number" class="form-control" id="multiplication_factor_daily_worker" name="multiplication_factor_daily_worker"
+                                            placeholder="{{ __('payroll_reference_payroll.label_multiplication_factor_daily_worker') }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"> 
+                                    <div class="form-group">
+                                        <label for="calculation_method">{{ __('payroll_reference_payroll.label_calculation_method') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input class="form-check-input" type="radio" id="calculation_method_actual"
+                                            name="calculation_method" value="A" disabled checked>
+                                        <label
+                                            for="calculation_method_actual">{{ __('payroll_reference_payroll.label_calculation_method_actual') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input class="form-check-input" type="radio" id="calculation_method_basic"
+                                            name="calculation_method" value="B" disabled>
+                                        <label
+                                            for="calculation_method_basic">{{ __('payroll_reference_payroll.label_calculation_method_basic') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"> 
+                                    <div class="form-group">
+                                        <label for="deduction_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input class="form-check-input" type="radio" id="check_all_period_jamsostek"
+                                            name="deduction_on_period_jamsostek" value=0 disabled checked>
+                                        <label
+                                            for="check_all_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group" style="display:inline-block;">
+                                        <input class="form-check-input" type="radio" id="check_on_period_jamsostek" name="deduction_on_period_jamsostek" disabled>
+                                        <label
+                                            for="check_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
+                                        <small class="text-muted">(1 - 12)</small>
+                                        <input class="form-control" type="number" min=1 max=12 id="on_period_jamsostek" name="deduction_on_period_jamsostek" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="work_insurance_remision_payment_percentage">{{ __('payroll_reference_payroll.label_work_insurance_remision_payment_percentage') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min=0 max=100 class="form-control" id="work_insurance_remision_payment_percentage" name="work_insurance_remision_payment_percentage"
+                                                placeholder="{{ __('payroll_reference_payroll.label_work_insurance_remision_payment_percentage') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="work_insurance_remision_end_period">{{ __('payroll_reference_payroll.label_work_insurance_remision_end_period') }}</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="work_insurance_remision_end_period" name="work_insurance_remision_end_period"
+                                                placeholder="{{ __('payroll_reference_payroll.label_work_insurance_remision_end_period') }}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="work_insurance_remision_end_period_calendar"><span class="fa fa-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="row">
+                    </div>
+                </div>
+                <div class="card">
+                    <a class="collapsed" data-toggle="collapse" href="#tax-calculation-data" aria-expanded="true"
+                                aria-controls="tax-calculation-data">
+                        <div class="card-header">
+                            <div class="div-dropdown-title">
+                                <span
+                                    class="dropdown-title-text">{{ __('payroll_reference_payroll.label_tax_calculation_table') }}</span>
+                                <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}"
+                                    alt="Triangle">
+                            </div>
+                        </div>
+                    </a>
+                    <div id="tax-calculation-data" class="collapse show">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-3">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_from1" name="severance_payment_from1" data-seq="1" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 1" readonly />
+                                        <br>
+                                        <label for="non_taxable_income">{{ __('payroll_reference_payroll.label_non_taxable_income') }}</label>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-4">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_from2" name="severance_payment_from2" data-seq="2" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 2" readonly />
+                                        <label for="non_taxable_income_employee">{{ __('payroll_reference_payroll.label_non_taxable_income_employee') }}</label>
+                                        <input type="number" class="form-control" id="non_taxable_income_employee" name="non_taxable_income_employee"
+                                            placeholder="{{ __('payroll_reference_payroll.label_non_taxable_income_employee') }}" readonly>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-4">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_from3" name="severance_payment_from3" data-seq="3" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 3" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_from4" name="severance_payment_from4" data-seq="4" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 4" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_from5" name="severance_payment_from5" data-seq="5" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 5" readonly />
+                                        <label for="non_taxable_income_each_dependent">{{ __('payroll_reference_payroll.label_non_taxable_income_each_dependent') }}</label>
+                                        <input type="number" class="form-control" id="non_taxable_income_each_dependent" name="non_taxable_income_each_dependent"
+                                            placeholder="{{ __('payroll_reference_payroll.label_non_taxable_income_each_dependent') }}" readonly>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-0.5">
-                                <div class="form-group">
-                                    <div id="div-grid-severance-payment-minus"></div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="row">
+                            <div class="row">
+                                <div class="col-3">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_to1" name="severance_payment_to1" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 1" readonly />
+                                        <br>
+                                        <label for="occupational">{{ __('payroll_reference_payroll.label_occupational') }}</label>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-4">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_to2" name="severance_payment_to2" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 2" readonly />
+                                        <label for="occupational_percentage">{{ __('payroll_reference_payroll.label_occupational_percentage') }}</label>
+                                        <input type="number" class="form-control" id="occupational_percentage" name="occupational_percentage"
+                                            placeholder="{{ __('payroll_reference_payroll.label_occupational_percentage') }}" readonly>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-4">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_to3" name="severance_payment_to3" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 3" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_to4" name="severance_payment_to4" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 4" readonly />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="severance_payment_to5" name="severance_payment_to5" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 5" readonly />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-0.5">
-                                <div class="form-group">
-                                    <div id="div-grid-severance-payment-equals"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="row">
-                                    <div class="form-group">
+                                        <label for="occupational_maximum">{{ __('payroll_reference_payroll.label_occupational_maximum') }}</label>
+                                        <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" class="form-control" id="severance_payment_rate1" name="severance_payment_rate1" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 1" readonly />
+                                            <input type="number" min=0 max=100 class="form-control" id="occupational_maximum" name="occupational_maximum"
+                                                placeholder="{{ __('payroll_reference_payroll.label_occupational_maximum') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="severance_payment_rate2" name="severance_payment_rate2" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 2" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 box">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <h6 for="tax_rate">{{ __('payroll_reference_payroll.label_tax_rate') }}</h6>
+                                        </div>
+                                        <div class="col-3">
+                                            <h6 for="taxable_income">{{ __('payroll_reference_payroll.label_taxable_income') }}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="tax_rate1" name="tax_rate1" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 1" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="tax_rate2" name="tax_rate2" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 2" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="tax_rate3" name="tax_rate3" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 3" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="tax_rate4" name="tax_rate4" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 4" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="tax_rate5" name="tax_rate5" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 5" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="tax_rate6" name="tax_rate6" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 6" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_from1" name="taxable_income_from1" data-seq=1 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_from2" name="taxable_income_from2" data-seq=2 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_from3" name="taxable_income_from3" data-seq=3 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_from4" name="taxable_income_from4" data-seq=4 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_from5" name="taxable_income_from5" data-seq=5 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_from6" name="taxable_income_from6" data-seq=6 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 6" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-0.5">
+                                            <div class="form-group">
+                                                <div id="div-grid-taxable-income-minus"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_to1" name="taxable_income_to1" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_to2" name="taxable_income_to2" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_to3" name="taxable_income_to3" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_to4" name="taxable_income_to4" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="taxable_income_to5" name="taxable_income_to5" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div id="div-grid-taxable-income-to"></div>
+                                                &nbsp;
+                                                <label for="and_on_taxable_income">{{ __('payroll_reference_payroll.label_and_on') }}</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="severance_payment_rate3" name="severance_payment_rate3" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 3" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
+                                <div class="col-4">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="nearest_taxable_income">&nbsp;</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="check_nearest_taxable_income" name="check_nearest_taxable_income">
+                                                    <label
+                                                        for="nearest_taxable_income">{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}</label>
+                                                    <input type="number" class="form-control" id="nearest_taxable_income" name="nearest_taxable_income"
+                                                        placeholder="{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="time_test">{{ __('payroll_reference_payroll.label_time_test') }}</label>
+                                                <input type="number" class="form-control" id="time_test" name="time_test"
+                                                    placeholder="{{ __('payroll_reference_payroll.label_time_test') }}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_rate_with_time_test">{{ __('payroll_reference_payroll.label_tax_rate_with_time_test') }}</label>
+                                                <small class="text-muted">(0 - 100)</small>
+                                                <div class="input-group">
+                                                    <input type="number" min=0 max=100 class="form-control" id="tax_rate_with_time_test" name="tax_rate_with_time_test"
+                                                        placeholder="{{ __('payroll_reference_payroll.label_tax_rate_with_time_test') }}" readonly>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span>%</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="max_gross_income">{{ __('payroll_reference_payroll.label_max_gross_income') }}</label>
+                                                <input type="number" class="form-control" id="max_gross_income" name="max_gross_income"
+                                                    placeholder="{{ __('payroll_reference_payroll.label_max_gross_income') }}" readonly>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="severance_payment_rate4" name="severance_payment_rate4" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 4" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 box">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_by_government">{{ __('payroll_reference_payroll.label_tax_by_government') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_by_government_tk">T/K</label>
+                                                <input type="number" class="form-control" id="tax_by_government_tk" name="tax_by_government_tk"
+                                                    placeholder="T/K" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_by_government_k0">K/0</label>
+                                                <input type="number" class="form-control" id="tax_by_government_k0" name="tax_by_government_k0"
+                                                    placeholder="K/0" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_by_government_k1">K/1</label>
+                                                <input type="number" class="form-control" id="tax_by_government_k1" name="tax_by_government_k1"
+                                                    placeholder="K/1" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_by_government_k2">K/2</label>
+                                                <input type="number" class="form-control" id="tax_by_government_k2" name="tax_by_government_k2"
+                                                    placeholder="K/2" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="tax_by_government_k3">K/3</label>
+                                                <input type="number" class="form-control" id="tax_by_government_k3" name="tax_by_government_k3"
+                                                    placeholder="K/3" readonly>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="severance_payment_rate5" name="severance_payment_rate5" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 5" readonly />
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-4"> 
+                                            <div class="form-group">
+                                                <label for="deduction_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <input class="form-check-input" type="radio" id="check_all_period_tax_calculation_table"
+                                                    name="deduction_on_period_tax_calculation_table" value=0 disabled checked>
+                                                <label
+                                                    for="check_all_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group" style="display:inline-block;">
+                                                <input class="form-check-input" type="radio" id="check_on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" disabled>
+                                                <label
+                                                    for="check_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
+                                                <small class="text-muted">(1 - 12)</small>
+                                                <input class="form-control" type="number" min=1 max=12 id="on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="tax_penalties">{{ __('payroll_reference_payroll.label_tax_penalties') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="tax_penalties_salary">{{ __('payroll_reference_payroll.label_tax_penalties_salary') }}</label>
+                                                <small class="text-muted">(0 - 100)</small>
+                                                <div class="input-group">
+                                                    <input type="number" min=0 max=100 class="form-control" id="tax_penalties_salary" name="tax_penalties_salary"
+                                                        placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_salary') }}" readonly>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span>%</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="tax_penalties_bonus">{{ __('payroll_reference_payroll.label_tax_penalties_bonus') }}</label>
+                                                <small class="text-muted">(0 - 100)</small>
+                                                <div class="input-group">
+                                                    <input type="number" min=0 max=100 class="form-control" id="tax_penalties_bonus" name="tax_penalties_bonus"
+                                                        placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_bonus') }}" readonly>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span>%</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="tax_penalties_thr">{{ __('payroll_reference_payroll.label_tax_penalties_thr') }}</label>
+                                                <small class="text-muted">(0 - 100)</small>
+                                                <div class="input-group">
+                                                    <input type="number" min=0 max=100 class="form-control" id="tax_penalties_thr" name="tax_penalties_thr"
+                                                        placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_thr') }}" readonly>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span>%</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 box">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <h6 for="severance_payment_rate">{{ __('payroll_reference_payroll.label_severance_payment_rate') }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_from1" name="severance_payment_from1" data-seq="1" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 1" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_from2" name="severance_payment_from2" data-seq="2" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 2" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_from3" name="severance_payment_from3" data-seq="3" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 3" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_from4" name="severance_payment_from4" data-seq="4" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 4" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_from5" name="severance_payment_from5" data-seq="5" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 5" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-0.5">
+                                            <div class="form-group">
+                                                <div id="div-grid-severance-payment-minus"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_to1" name="severance_payment_to1" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 1" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_to2" name="severance_payment_to2" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 2" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_to3" name="severance_payment_to3" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 3" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_to4" name="severance_payment_to4" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 4" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="severance_payment_to5" name="severance_payment_to5" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 5" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-0.5">
+                                            <div class="form-group">
+                                                <div id="div-grid-severance-payment-equals"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="severance_payment_rate1" name="severance_payment_rate1" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 1" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="severance_payment_rate2" name="severance_payment_rate2" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 2" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="severance_payment_rate3" name="severance_payment_rate3" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 3" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="severance_payment_rate4" name="severance_payment_rate4" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 4" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" id="severance_payment_rate5" name="severance_payment_rate5" placeholder="{{ __("payroll_reference_payroll.label_severance_payment_rate") }} 5" readonly />
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><span>%</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

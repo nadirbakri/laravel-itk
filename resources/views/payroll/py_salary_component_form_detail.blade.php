@@ -259,7 +259,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="cummulative_update">&nbsp;</label>
                             <div class="form-check">
@@ -270,7 +270,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6"></div>
+                    <div class="col-5"></div>
                     <div class="col-2">
                         <div class="form-group">
                             <label for="retroactive">&nbsp;</label>
@@ -464,6 +464,8 @@
         } else {
             $('#record_function').val('Edit');
             $('#field_name').prop('readonly', true);
+            $('#field_width').prop('readonly', true);
+            $('#decimal_point').prop('readonly', true);
 
             $('#field_name').val((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '');
             $('#description').val((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '');
@@ -517,7 +519,8 @@
                 else {
                     $('#flag').prop('checked', true).trigger('change');
                 }
-            }
+            }    
+
             if (typeof arrData[0].flagTax !== 'undefined') {
                 if (arrData[0].flagTax === 'T') {
                     $('#increase_tax').prop('checked', true).trigger('change');
@@ -529,6 +532,7 @@
                     $('#decrease_tax').prop('checked', true).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagPension !== 'undefined') {
                 if (arrData[0].flagPension === true) {
                     $('#pension').prop('checked', true).trigger('change');
@@ -537,6 +541,7 @@
                     $('#pension').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagYearlyUpdate !== 'undefined') {
                 if (arrData[0].flagYearlyUpdate === true) {
                     $('#yearly_update').prop('checked', true).trigger('change');
@@ -545,6 +550,7 @@
                     $('#yearly_update').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagCummulativeUpdate !== 'undefined') {
                 if (arrData[0].flagCummulativeUpdate === true) {
                     $('#cummulative_update').prop('checked', true).trigger('change');
@@ -553,6 +559,7 @@
                     $('#cummulative_update').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagRetroactive !== 'undefined') {
                 if (arrData[0].flagRetroactive === true) {
                     $('#retroactive').prop('checked', true).trigger('change');
@@ -561,6 +568,7 @@
                     $('#retroactive').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagTaxAllowance !== 'undefined') {
                 if (arrData[0].flagTaxAllowance === true) {
                     $('#tax_allowance').prop('checked', true).trigger('change');
@@ -569,6 +577,7 @@
                     $('#tax_allowance').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagLimitMedical !== 'undefined') {
                 if (arrData[0].flagLimitMedical === true) {
                     $('#for_limit_medical').prop('checked', true).trigger('change');
@@ -577,6 +586,7 @@
                     $('#for_limit_medical').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagJamsostek !== 'undefined') {
                 if (arrData[0].flagJamsostek === true) {
                     $('#jamsostek').prop('checked', true).trigger('change');
@@ -585,6 +595,7 @@
                     $('#jamsostek').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagHealthInsurance !== 'undefined') {
                 if (arrData[0].flagHealthInsurance === true) {
                     $('#health_insurance').prop('checked', true).trigger('change');
@@ -593,6 +604,7 @@
                     $('#health_insurance').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagPensionInsurance !== 'undefined') {
                 if (arrData[0].flagPensionInsurance === true) {
                     $('#pension_insurance').prop('checked', true).trigger('change');
@@ -601,6 +613,7 @@
                     $('#pension_insurance').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagOvtAlternative1 !== 'undefined') {
                 if (arrData[0].flagOvtAlternative1 === true) {
                     $('#overtime_alternative_1').prop('checked', true).trigger('change');
@@ -609,6 +622,7 @@
                     $('#overtime_alternative_1').prop('checked', false).trigger('change');
                 }
             }
+
             if (typeof arrData[0].flagOvtAlternative2 !== 'undefined') {
                 if (arrData[0].flagOvtAlternative2 === true) {
                     $('#overtime_alternative_2').prop('checked', true).trigger('change');
@@ -617,12 +631,38 @@
                     $('#overtime_alternative_2').prop('checked', false).trigger('change');
                 }
             }
+
+            if (arrData[0].fieldType === 'T') {
+                $('#jamsostek').prop('disabled', false);
+                $('#health_insurance').prop('disabled', false);
+                $('#pension_insurance').prop('disabled', false);
+                $('#overtime_alternative_1').prop('disabled', false);
+                $('#overtime_alternative_2').prop('disabled', false);
+            }else if(arrData[0].fieldType === 'L' && arrData[0].displayIn === 'F') {
+                $('#jamsostek').prop('disabled', false);
+                $('#health_insurance').prop('disabled', false);
+                $('#pension_insurance').prop('disabled', false);
+                $('#overtime_alternative_1').prop('disabled', false);
+                $('#overtime_alternative_2').prop('disabled', false);
+            }else{
+                $('#jamsostek').prop('disabled', true);
+                $('#health_insurance').prop('disabled', true);
+                $('#pension_insurance').prop('disabled', true);
+                $('#overtime_alternative_1').prop('disabled', true);
+                $('#overtime_alternative_2').prop('disabled', true);
+            }
         }
 
-        enableCheck();
-
-        function enableCheck () {
-            if ((displayIn === 'F' && fieldType === 'L') || fieldType === 'T') {
+        $('input[name=display_in]').on('change', function () {
+            displayIn = $('input[name=display_in]:checked').val();
+            fieldType = $('input[name=field_type]:checked').val();
+            if (displayIn == 'F' && fieldType === 'L') {
+                $('#jamsostek').prop('disabled', false);
+                $('#health_insurance').prop('disabled', false);
+                $('#pension_insurance').prop('disabled', false);
+                $('#overtime_alternative_1').prop('disabled', false);
+                $('#overtime_alternative_2').prop('disabled', false);
+            } else if (fieldType == 'T') {
                 $('#jamsostek').prop('disabled', false);
                 $('#health_insurance').prop('disabled', false);
                 $('#pension_insurance').prop('disabled', false);
@@ -635,16 +675,30 @@
                 $('#overtime_alternative_1').prop('disabled', true);
                 $('#overtime_alternative_2').prop('disabled', true);
             }
-        };
-
-        $('input[name=display_in]').on('change', function () {
-            displayIn = $(this).val();
-            enableCheck();
         });
 
         $('input[name=field_type]').on('change', function () {
-            fieldType = $(this).val();
-            enableCheck();
+            fieldType = $('input[name=field_type]:checked').val();
+            displayIn = $('input[name=display_in]:checked').val();
+            if (fieldType == 'T') {
+                $('#jamsostek').prop('disabled', false);
+                $('#health_insurance').prop('disabled', false);
+                $('#pension_insurance').prop('disabled', false);
+                $('#overtime_alternative_1').prop('disabled', false);
+                $('#overtime_alternative_2').prop('disabled', false);
+            } else if (displayIn == 'F' && fieldType === 'L') {
+                $('#jamsostek').prop('disabled', false);
+                $('#health_insurance').prop('disabled', false);
+                $('#pension_insurance').prop('disabled', false);
+                $('#overtime_alternative_1').prop('disabled', false);
+                $('#overtime_alternative_2').prop('disabled', false);
+            }else {
+                $('#jamsostek').prop('disabled', true);
+                $('#health_insurance').prop('disabled', true);
+                $('#pension_insurance').prop('disabled', true);
+                $('#overtime_alternative_1').prop('disabled', true);
+                $('#overtime_alternative_2').prop('disabled', true);
+            }
         });
 
         $("#btn-save").click(function () {
@@ -657,7 +711,7 @@
 
         if ($("#salary_component_data_form").length > 0) {
             $("#salary_component_data_form").validate({
-            rules: {
+                rules: {
                     field_name: {
                         required: true,
                     }

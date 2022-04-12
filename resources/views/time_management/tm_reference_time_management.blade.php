@@ -489,7 +489,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal_add_minutes_rounded" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ __('tm_reference_time_management.list_minutes_rounded') }}</h5>
@@ -501,7 +501,7 @@
                     <form id="minutes_rounded_form" method="post">
                         @csrf
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="minute_rounded_from">{{ __('tm_reference_time_management.label_from') }}</label>
                                     <div class='input-group'>
@@ -509,7 +509,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="minute_rounded_to">{{ __('tm_reference_time_management.label_to') }}</label>
                                     <div class='input-group'>
@@ -517,7 +517,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="minute_rounded_become">{{ __('tm_reference_time_management.label_become') }}</label>
                                     <div class='input-group'>
