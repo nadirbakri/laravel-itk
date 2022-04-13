@@ -1919,6 +1919,55 @@ class DataController extends Controller
         return response()->json($employees);
 	}
 
+	public function dataEmployeeNoLoanPaymentAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/loanlookup',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$employees = $arrResult->dataListSet;
+	    }else{
+	    	$employees    = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->employeeNo)){
+	    				return preg_match('/' . $search . '/i', $value->employeeNo);
+	    			}else if(preg_match('/' . $search . '/i', $value->employeeName)){
+	    				return preg_match('/' . $search . '/i', $value->employeeName);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($employees);
+	}
+
 	public function dataCompanyAPI(Request $request)
     {
     	$search = $request->search;
@@ -6091,7 +6140,7 @@ class DataController extends Controller
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
-	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    			'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
 	    	$response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',

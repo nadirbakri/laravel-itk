@@ -42,6 +42,12 @@
 							</a>
 						</div>
 						<div class="col col-3">
+							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.tarif_master') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
 							<a href="{{ url('payroll/severance_data_entry') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.severance_data_entry') }}</span>
@@ -51,12 +57,6 @@
 							<a href="{{ url('payroll/salary_accumulation_data') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.salary_accumulation_data') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.tarif_master') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -100,9 +100,15 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/partial_full_loan_payment') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/full_partial_loan_payment') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.partial_full_loan_payment') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/loan_payment') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.loan_payment') }}</span>
 							</a>
 						</div>
 					</div>

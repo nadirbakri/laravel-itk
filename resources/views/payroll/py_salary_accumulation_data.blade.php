@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_full_partial_loan_payment.judul') }}</title>
+	<title>{{ __('payroll_salary_accumulation_data.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -77,7 +77,7 @@
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
                 <span>Next</span>
             </a>
-            <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
                 <span>New</span>
@@ -121,24 +121,22 @@
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_full_partial_loan_payment.list') }}</span>
+				<span class="title-text">{{ __('payroll_salary_accumulation_data.list') }}</span>
 			</a>
 		</div>
         <div class="div-table">
-			<table id="full_partial_loan_payment_table" class="table hover" style="width:100%">
+			<table id="salary_accumulation_data_table" class="table hover" style="width: 100%">
 				<thead>
 					<tr>
                         <th></th>
 						<th>Employee No</th>
 						<th>Employee Name</th>
-                        <th>Loan No</th>
-						<th>Audit Loan Seq No</th>
+                        <th>Year</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
-
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -165,7 +163,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_full_partial_loan_payment.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_salary_accumulation_data.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -195,8 +193,8 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#full_partial_loan_payment_table thead tr').clone(true).appendTo('#full_partial_loan_payment_table thead');
-        $('#full_partial_loan_payment_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#salary_accumulation_data_table thead tr').clone(true).appendTo('#salary_accumulation_data_table thead');
+        $('#salary_accumulation_data_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
 
@@ -210,16 +208,16 @@
             } );
         });
 
-        load_data_table_full_partial_loan_payment();
+        load_data_table_salary_accumulation_data();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_full_partial_loan_payment() {
-            table = $('#full_partial_loan_payment_table').DataTable({
+        function load_data_table_salary_accumulation_data() {
+            table = $('#salary_accumulation_data_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('payroll/full_partial_loan_payment/table') }}",
+                ajax: "{{ url('payroll/salary_accumulation_data/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -236,9 +234,14 @@
                         }
                     },
                     {data: 'employeeNo', name: 'employeeNo'},
-                    {data: 'employeeName', name: 'employeeName'},
-                    {data: 'loanNo', name: 'loanNo'},
-                    {data: 'auditLoanSeqNo', name: 'auditLoanSeqNo'}
+                    {data: 'fullName', name: 'fullName'},
+                    {
+                        data: 'periodYear', 
+                        name: 'periodYear',
+                        render: function (data, type, row) {
+                            return moment(data).format('YYYY');
+                        }
+                    }
                 ],
                 select: {
                     style:    'multi',
@@ -247,26 +250,13 @@
             });
         }
 
-        $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('payroll/full_partial_loan_payment/detail_data') }}", 
-            { 
-                'employeeNo' : null,
-                'loanNo' : null,
-                'auditLoanSeqNo' : null,
-                'func' : 'new' 
-            }, 
-            "GET", "iframe_dashboard");
-        });
-
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/full_partial_loan_payment/detail_data') }}", 
+                $.redirect("{{ url('payroll/salary_accumulation_data/detail_data') }}", 
                 { 
                     'employeeNo' : data[0].employeeNo,
-                    'loanNo' : data[0].loanNo,
-                    'auditLoanSeqNo' : data[0].auditLoanSeqNo,
-                    'func' : 'edit' 
+                    'periodYear' : data[0].periodYear
                 }, 
                 "GET", "iframe_dashboard");
             }else{
@@ -275,19 +265,15 @@
             }
         });
 
-        $('#full_partial_loan_payment_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#salary_accumulation_data_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/full_partial_loan_payment/detail_data') }}", 
-            {
-                'employeeNo' : data.employeeNo,
-                'loanNo' : data.loanNo,
-                'auditLoanSeqNo' : data.auditLoanSeqNo,
-                'func' : 'edit' 
+            $.redirect("{{ url('payroll/salary_accumulation_data/detail_data') }}", 
+            {   'employeeNo' : data.employeeNo, 
+                'periodYear' : data.periodYear
             }, 
             "GET", "iframe_dashboard");
         });
     })
-
 </script>
 
 </html>
