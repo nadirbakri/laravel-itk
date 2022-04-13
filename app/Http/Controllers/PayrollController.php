@@ -100,7 +100,58 @@ class PayrollController extends Controller
 
     public function pageReferencePayroll()
     {
-        return view ('payroll.py_reference_payroll');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response_tm = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response_cpy = $client->post(env('API_URL') . '/company/getcompany',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+	    				'recordStatus' => 'A'
+                    ]
+                )]
+            );
+
+            $response_pr = $client->post(env('API_URL') . '/referencepayroll/getreferencepayroll',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult_tm = json_decode($response_tm->getBody()->getContents());
+        $arrResult_cpy = json_decode($response_cpy->getBody()->getContents()); 
+        $arrResult_pr = json_decode($response_pr->getBody()->getContents()); 
+
+        return view('payroll.py_reference_payroll', ['data_tm' => $arrResult_tm->dataListSet, 'data_cpy' => $arrResult_cpy->dataListSet, 'data_pr' => $arrResult_pr->dataListSet]);
     }
 
     public function tableAccountPY()
@@ -1540,40 +1591,6 @@ class PayrollController extends Controller
         $arrResult2 = json_decode($response_table->getBody()->getContents());
 
         return view('payroll.py_payroll_calculation_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet, 'func' => $request->func]);
-    }
-
-    public function dataDetailReferencePayroll(Request $request)
-    {
-        try {
-            $client = new Client([
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            $response = $client->post(env('API_URL') . '/referencepayroll/getreferencepayroll',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'sessionUserID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-        }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        return response()->json($arrResult->dataListSet);
     }
 
     public function prosesSalaryMasterPY(Request $request)
@@ -3369,6 +3386,7 @@ class PayrollController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

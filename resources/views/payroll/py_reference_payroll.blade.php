@@ -160,13 +160,13 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label><br></label>
+                            <label>&nbsp;</label>
                             <p style="font-size: 1.5rem;"><b>/</b></p>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label><br></label>
+                            <label>&nbsp;</label>
                             <input type="number" class="form-control" id="process_period_year" name="process_period_year"
                                 placeholder="{{ __('payroll_reference_payroll.label_process_period_year') }}" readonly>
                         </div>
@@ -640,12 +640,14 @@
                                             for="check_all_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group" style="display:inline-block;">
-                                        <input class="form-check-input" type="radio" id="check_on_period_jamsostek" name="deduction_on_period_jamsostek" disabled>
-                                        <label
-                                            for="check_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
-                                        <small class="text-muted">(1 - 12)</small>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="check_on_period_jamsostek" name="deduction_on_period_jamsostek" disabled>
+                                            <label
+                                                for="check_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
+                                            <small class="text-muted">(1 - 12)</small>
+                                        </div>
                                         <input class="form-control" type="number" min=1 max=12 id="on_period_jamsostek" name="deduction_on_period_jamsostek" readonly>
                                     </div>
                                 </div>
@@ -757,61 +759,73 @@
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" id="tax_rate1" name="tax_rate1" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 1" readonly />
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><span>%</span></span>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tax_rate1" name="tax_rate1" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 1" readonly />
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span>%</span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" id="tax_rate2" name="tax_rate2" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 2" readonly />
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><span>%</span></span>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tax_rate2" name="tax_rate2" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 2" readonly />
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span>%</span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" id="tax_rate3" name="tax_rate3" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 3" readonly />
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><span>%</span></span>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tax_rate3" name="tax_rate3" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 3" readonly />
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span>%</span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" id="tax_rate4" name="tax_rate4" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 4" readonly />
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><span>%</span></span>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tax_rate4" name="tax_rate4" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 4" readonly />
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span>%</span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" id="tax_rate5" name="tax_rate5" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 5" readonly />
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><span>%</span></span>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tax_rate5" name="tax_rate5" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 5" readonly />
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span>%</span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="number" class="form-control" id="tax_rate6" name="tax_rate6" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 6" readonly />
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><span>%</span></span>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tax_rate6" name="tax_rate6" placeholder="{{ __('payroll_reference_payroll.label_tax_rate') }} 6" readonly />
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span>%</span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -819,33 +833,45 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_from1" name="taxable_income_from1" data-seq=1 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_from1" name="taxable_income_from1" data-seq=1 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_from2" name="taxable_income_from2" data-seq=2 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_from2" name="taxable_income_from2" data-seq=2 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_from3" name="taxable_income_from3" data-seq=3 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_from3" name="taxable_income_from3" data-seq=3 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_from4" name="taxable_income_from4" data-seq=4 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_from4" name="taxable_income_from4" data-seq=4 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_from5" name="taxable_income_from5" data-seq=5 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_from5" name="taxable_income_from5" data-seq=5 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_from6" name="taxable_income_from6" data-seq=6 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 6" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_from6" name="taxable_income_from6" data-seq=6 placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 6" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -856,34 +882,46 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_to1" name="taxable_income_to1" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_to1" name="taxable_income_to1" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 1" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_to2" name="taxable_income_to2" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_to2" name="taxable_income_to2" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 2" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_to3" name="taxable_income_to3" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_to3" name="taxable_income_to3" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 3" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_to4" name="taxable_income_to4" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_to4" name="taxable_income_to4" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 4" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="taxable_income_to5" name="taxable_income_to5" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" id="taxable_income_to5" name="taxable_income_to5" placeholder="{{ __("payroll_reference_payroll.label_taxable_income") }} 5" readonly />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div id="div-grid-taxable-income-to"></div>
-                                                &nbsp;
-                                                <label for="and_on_taxable_income">{{ __('payroll_reference_payroll.label_and_on') }}</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="and_on_taxable_income">{{ __('payroll_reference_payroll.label_and_on') }}</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -894,12 +932,12 @@
                                             <div class="form-group">
                                                 <label for="nearest_taxable_income">&nbsp;</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="check_nearest_taxable_income" name="check_nearest_taxable_income">
+                                                    <input class="form-check-input" type="checkbox" id="check_nearest_taxable_income" name="check_nearest_taxable_income" value="true" disabled>
                                                     <label
                                                         for="nearest_taxable_income">{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}</label>
-                                                    <input type="number" class="form-control" id="nearest_taxable_income" name="nearest_taxable_income"
-                                                        placeholder="{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}" readonly>
                                                 </div>
+                                                <input type="number" class="form-control" id="nearest_taxable_income" name="nearest_taxable_income"
+                                                        placeholder="{{ __('payroll_reference_payroll.label_nearest_taxable_income') }}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -1002,20 +1040,26 @@
                                                 <label for="deduction_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period') }}</label>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
                                             <div class="form-group">
-                                                <input class="form-check-input" type="radio" id="check_all_period_tax_calculation_table"
-                                                    name="deduction_on_period_tax_calculation_table" value=0 disabled checked>
-                                                <label
-                                                    for="check_all_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="check_all_period_tax_calculation_table"
+                                                        name="deduction_on_period_tax_calculation_table" value=0 disabled checked>
+                                                    <label
+                                                        for="check_all_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_all_period') }}</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-4">
-                                            <div class="form-group" style="display:inline-block;">
-                                                <input class="form-check-input" type="radio" id="check_on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" disabled>
-                                                <label
-                                                    for="check_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
-                                                <small class="text-muted">(1 - 12)</small>
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="check_on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" disabled>
+                                                    <label
+                                                        for="check_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
+                                                    <small class="text-muted">(1 - 12)</small>
+                                                </div>
                                                 <input class="form-control" type="number" min=1 max=12 id="on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" readonly>
                                             </div>
                                         </div>
@@ -1263,10 +1307,12 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+        var arrDataTM = @json($data_tm);
+        var arrDataCPY = @json($data_cpy);
+        var arrDataPR = @json($data_pr);
         var formTaxableIncomeMinus = $('#div-grid-taxable-income-minus');
         var formSeverancePaymentMinus = $('#div-grid-severance-payment-minus');
         var formSeverancePaymentEquals = $('#div-grid-severance-payment-equals');
-        var isData = 0;
         var taxableIncomeFrom = 0;
         var taxableIncomeFromSeq = 0;
         var severancePaymentFrom = 0;
@@ -1288,6 +1334,260 @@
         });
 
         pickerEndPeriod._input.setAttribute("disabled", "disabled");
+
+        if (arrDataTM) {
+            $('#process_period_month').val((typeof arrDataTM[0].periodMonth !== 'undefined') ? arrDataTM[0].periodMonth : '');
+            $('#process_period_year').val((typeof arrDataTM[0].periodYear !== 'undefined') ? arrDataTM[0].periodYear : '');
+            $('#payroll_payment_period').val((typeof arrDataTM[0].statusPeriod !== 'undefined') ? arrDataTM[0].statusPeriod : '');
+            $.ajax({
+                type: 'GET',
+                url: '/process_status/detail/api',
+                data: {
+                    'processStatus': ((typeof arrDataTM[0].statusProcess !== 'undefined') ? arrDataTM[0].statusProcess : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data[0].comGenCode,
+                    title: data[0].value,
+                    text: data[0].value
+                });
+                $("#process_status").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#process_status").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].comGenCode,
+                        text: data[0].value,
+                        data: data
+                    }
+                });
+            });
+        }else{
+            $('#process_period_month').val('');
+            $('#process_period_year').val('');
+            $('#payroll_payment_period').val('');
+            $("#process_status").val(null).trigger('change');
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html("{{ __('payroll_reference_payroll.error_tm') }}");
+            window.location =
+                "{{ url('time_management/reference_time_management') }}";
+        }
+
+        if (arrDataCPY) {
+            $('#company_name').val((typeof arrDataCPY[0].companyName !== 'undefined') ? arrDataCPY[0].companyName : '');
+            $('#address').val((typeof arrDataCPY[0].address !== 'undefined') ? arrDataCPY[0].address : '');
+            $('#city').val((typeof arrDataCPY[0].locationCode !== 'undefined') ? arrDataCPY[0].locationCode : '');
+        }else{
+            $('#company_name').val('');
+            $('#address').val('');
+            $('#city').val('');
+        }
+
+        if (arrDataPR) {
+            $("#toolbar-new").hide();
+            $("#toolbar-edit").show();
+            $('#tax_registered_no').val((typeof arrDataPR[0].taxRegisteredNo !== 'undefined') ? arrDataPR[0].taxRegisteredNo : '');
+            $('#jamsostek_no').val((typeof arrDataPR[0].jamsostekNo !== 'undefined') ? arrDataPR[0].jamsostekNo : '');
+            $('#pension_no').val((typeof arrDataPR[0].pensionNo !== 'undefined') ? arrDataPR[0].pensionNo : '');
+            $('#retirement_age_limit').val((typeof arrDataPR[0].retirementAgeLimit !== 'undefined') ? arrDataPR[0].retirementAgeLimit : '');
+            $('#prorate_method').val((typeof arrDataPR[0].prorateMethod !== 'undefined') ? arrDataPR[0].prorateMethod : '').trigger('change');
+            $('#maximum_dependents').val((typeof arrDataPR[0].dependentsMax !== 'undefined') ? arrDataPR[0].dependentsMax : '');
+            $('#take_home_pay_rounded_from').val((typeof arrDataPR[0].thpRoundedFrom !== 'undefined') ? arrDataPR[0].thpRoundedFrom : '');
+            $('#take_home_pay_rounded_become').val((typeof arrDataPR[0].thpRoundedBecome !== 'undefined') ? arrDataPR[0].thpRoundedBecome : '');
+            $('#transaction_rate_type').val((typeof arrDataPR[0].transRateType !== 'undefined') ? arrDataPR[0].transRateType : '').trigger('change');
+            $('#tax_rate_type').val((typeof arrDataPR[0].taxRateType !== 'undefined') ? arrDataPR[0].taxRateType : '').trigger('change');
+            $('#rounding_method_report').val((typeof arrDataPR[0].roundingMethodReport !== 'undefined') ? arrDataPR[0].roundingMethodReport : '').trigger('change');
+            $('#rounding_decimal_report').val((typeof arrDataPR[0].roundingDecimalReport !== 'undefined') ? arrDataPR[0].roundingDecimalReport : '');
+            $('#rounding_method_spt').val((typeof arrDataPR[0].roundingMethodSpt !== 'undefined') ? arrDataPR[0].roundingMethodSpt : '').trigger('change');
+            $('#rounding_decimal_spt').val((typeof arrDataPR[0].roundingDecimalSpt !== 'undefined') ? arrDataPR[0].roundingDecimalSpt : '');
+            if (typeof arrDataPR[0].appreciation !== 'undefined' && arrDataPR[0].appreciation == true) {
+                $('#check_appreciation_and_employee_service').prop('checked', true);
+            }
+            $('#bonus_cooficient').val((typeof arrDataPR[0].bonusCooefficient !== 'undefined') ? arrDataPR[0].bonusCooefficient : '');
+            if (typeof arrDataPR[0].taxAllowanceBonus !== 'undefined' && arrDataPR[0].taxAllowanceBonus == true) {
+                $('#check_tax_allowance_bonus').prop('checked', true);
+            }
+            if (typeof arrDataPR[0].taxAllowanceTHR !== 'undefined' && arrDataPR[0].taxAllowanceTHR == true) {
+                $('#check_tax_allowance_thr').prop('checked', true);
+            }
+            $('#pension_contribution_employee').val((typeof arrDataPR[0].pensionContributionEmployee !== 'undefined') ? arrDataPR[0].pensionContributionEmployee : '');
+            $('#pension_contribution_employer').val((typeof arrDataPR[0].pensionContributionEmployer !== 'undefined') ? arrDataPR[0].pensionContributionEmployer : '');
+            $('#work_related_accident_insurance_one').val((typeof arrDataPR[0].workRelateAccidentInsurance !== 'undefined') ? arrDataPR[0].workRelateAccidentInsurance : '');
+            $('#work_related_accident_insurance_two').val((typeof arrDataPR[0].workRelateAccidentInsurance2 !== 'undefined') ? arrDataPR[0].workRelateAccidentInsurance2 : '');
+            $('#work_related_accident_insurance_three').val((typeof arrDataPR[0].workRelateAccidentInsurance3 !== 'undefined') ? arrDataPR[0].workRelateAccidentInsurance3 : '');
+            $('#non_accidental_death_insurance').val((typeof arrDataPR[0].nonAccidentalDeathInsurance !== 'undefined') ? arrDataPR[0].nonAccidentalDeathInsurance : '');
+            $('#health_insurance_company').val((typeof arrDataPR[0].healthInsuranceCompany !== 'undefined') ? arrDataPR[0].healthInsuranceCompany : '');
+            $('#health_insurance_employee').val((typeof arrDataPR[0].healthInsuranceEmployee !== 'undefined') ? arrDataPR[0].healthInsuranceEmployee : '');
+            $('#min_calculation_health_insurance').val((typeof arrDataPR[0].minCalcBaseHealthIns !== 'undefined') ? arrDataPR[0].minCalcBaseHealthIns : '');
+            $('#max_calculation_health_insurance').val((typeof arrDataPR[0].maxCalcBaseHealthIns !== 'undefined') ? arrDataPR[0].maxCalcBaseHealthIns : '');
+            $('#pension_insurance_company').val((typeof arrDataPR[0].pensionInsuranceCompany !== 'undefined') ? arrDataPR[0].pensionInsuranceCompany : '');
+            $('#pension_insurance_employee').val((typeof arrDataPR[0].pensionInsuranceEmployee !== 'undefined') ? arrDataPR[0].pensionInsuranceEmployee : '');
+            $('#min_calculation_pension_insurance').val((typeof arrDataPR[0].minCalcBasePensionIns !== 'undefined') ? arrDataPR[0].minCalcBasePensionIns : '');
+            $('#max_calculation_pension_insurance').val((typeof arrDataPR[0].maxCalcBasePensionIns !== 'undefined') ? arrDataPR[0].maxCalcBasePensionIns : '');
+            $('#multiplication_factor_daily_worker').val((typeof arrDataPR[0].multiplicationFactorDailyWorkers !== 'undefined') ? arrDataPR[0].multiplicationFactorDailyWorkers : '');
+            if (typeof arrDataPR[0].calculationMethod !== 'undefined' && arrDataPR[0].calculationMethod === 'A') {
+                $('#calculation_method_actual').prop('checked', true);
+            }
+            else {
+                $('#calculation_method_basic').prop('checked', true);
+            }
+            if (typeof arrDataPR[0].deductedOnPeriod !== 'undefined' && arrDataPR[0].deductedOnPeriod === 0) {
+                $('#check_all_period_jamsostek').prop('checked', true);
+            }
+            else {
+                $('#check_on_period_jamsostek').prop('checked', true);
+                $('#on_period_jamsostek').prop('readonly', true);
+                $('#on_period_jamsostek').val((typeof arrDataPR[0].deductedOnPeriod !== 'undefined') ? arrDataPR[0].deductedOnPeriod : '');
+            }
+            $('#work_insurance_remision_payment_percentage').val((typeof arrDataPR[0].remissionPaymentPercentage !== 'undefined') ? arrDataPR[0].remissionPaymentPercentage : '');
+            pickerEndPeriod.setDate((typeof arrDataPR[0].remissionEndPeriod !== 'undefined') ? arrDataPR[0].remissionEndPeriod : '');
+            $('#non_taxable_income_employee').val((typeof arrDataPR[0].nonTaxableIncomeEmployee !== 'undefined') ? arrDataPR[0].nonTaxableIncomeEmployee : '');
+            $('#non_taxable_income_each_dependent').val((typeof arrDataPR[0].nonTaxableIncomeDependent !== 'undefined') ? arrDataPR[0].nonTaxableIncomeDependent : '');
+            $('#occupational_percentage').val((typeof arrDataPR[0].occupationalPercentage !== 'undefined') ? arrDataPR[0].occupationalPercentage : '');
+            $('#occupational_maximum').val((typeof arrDataPR[0].occupationalMaximum !== 'undefined') ? arrDataPR[0].occupationalMaximum : '');
+            $('#tax_rate1').val((typeof arrDataPR[0].taxRate1 !== 'undefined') ? arrDataPR[0].taxRate1 : '');
+            $('#tax_rate2').val((typeof arrDataPR[0].taxRate2 !== 'undefined') ? arrDataPR[0].taxRate2 : '');
+            $('#tax_rate3').val((typeof arrDataPR[0].taxRate3 !== 'undefined') ? arrDataPR[0].taxRate3 : '');
+            $('#tax_rate4').val((typeof arrDataPR[0].taxRate4 !== 'undefined') ? arrDataPR[0].taxRate4 : '');
+            $('#tax_rate5').val((typeof arrDataPR[0].taxRate5 !== 'undefined') ? arrDataPR[0].taxRate5 : '');
+            $('#tax_rate6').val((typeof arrDataPR[0].taxRate6 !== 'undefined') ? arrDataPR[0].taxRate6 : '');
+            $('#taxable_income_from1').val((typeof arrDataPR[0].taxableIncome1 !== 'undefined') ? arrDataPR[0].taxableIncome1 : '');
+            $('#taxable_income_from2').val((typeof arrDataPR[0].taxableIncome2 !== 'undefined') ? arrDataPR[0].taxableIncome2 : '');
+            $('#taxable_income_from3').val((typeof arrDataPR[0].taxableIncome3 !== 'undefined') ? arrDataPR[0].taxableIncome3 : '');
+            $('#taxable_income_from4').val((typeof arrDataPR[0].taxableIncome4 !== 'undefined') ? arrDataPR[0].taxableIncome4 : '');
+            $('#taxable_income_from5').val((typeof arrDataPR[0].taxableIncome5 !== 'undefined') ? arrDataPR[0].taxableIncome5 : '');
+            $('#taxable_income_from6').val((typeof arrDataPR[0].taxableIncome6 !== 'undefined') ? arrDataPR[0].taxableIncome6 : '');
+            $('#taxable_income_to1').val((typeof arrDataPR[0].taxableIncome2 !== 'undefined') ? (arrDataPR[0].taxableIncome2 - 1) : '');
+            $('#taxable_income_to2').val((typeof arrDataPR[0].taxableIncome3 !== 'undefined') ? (arrDataPR[0].taxableIncome3 - 1) : '');
+            $('#taxable_income_to3').val((typeof arrDataPR[0].taxableIncome4 !== 'undefined') ? (arrDataPR[0].taxableIncome4 - 1) : '');
+            $('#taxable_income_to4').val((typeof arrDataPR[0].taxableIncome5 !== 'undefined') ? (arrDataPR[0].taxableIncome5 - 1) : '');
+            $('#taxable_income_to5').val((typeof arrDataPR[0].taxableIncome6 !== 'undefined') ? (arrDataPR[0].taxableIncome6 - 1) : '');
+            if (typeof arrDataPR[0].flagtaxableIncomeRounded !== 'undefined' && arrDataPR[0].flagtaxableIncomeRounded == true) {
+                $('#check_nearest_taxable_income').prop('checked', true);
+                $('#nearest_taxable_income').prop('readonly', true);
+            }
+            $('#nearest_taxable_income').val((typeof arrDataPR[0].nearestTaxableIncomeRounded !== 'undefined') ? arrDataPR[0].nearestTaxableIncomeRounded : '');
+            $('#time_test').val((typeof arrDataPR[0].timeTest !== 'undefined') ? arrDataPR[0].timeTest : '');
+            $('#tax_rate_with_time_test').val((typeof arrDataPR[0].taxRateWithintimeTest !== 'undefined') ? arrDataPR[0].taxRateWithintimeTest : '');
+            $('#max_gross_income').val((typeof arrDataPR[0].maxGrossIncome !== 'undefined') ? arrDataPR[0].maxGrossIncome : '');
+            $('#tax_by_government_tk').val((typeof arrDataPR[0].taxGovernmentTK !== 'undefined') ? arrDataPR[0].taxGovernmentTK : '');
+            $('#tax_by_government_k0').val((typeof arrDataPR[0].taxGovernmentK0 !== 'undefined') ? arrDataPR[0].taxGovernmentK0 : '');
+            $('#tax_by_government_k1').val((typeof arrDataPR[0].taxGovernmentK1 !== 'undefined') ? arrDataPR[0].taxGovernmentK1 : '');
+            $('#tax_by_government_k2').val((typeof arrDataPR[0].taxGovernmentK2 !== 'undefined') ? arrDataPR[0].taxGovernmentK2 : '');
+            $('#tax_by_government_k3').val((typeof arrDataPR[0].taxGovernmentK3 !== 'undefined') ? arrDataPR[0].taxGovernmentK3 : '');
+            if (typeof arrDataPR[0].taxDeductedOnPeriod !== 'undefined' && arrDataPR[0].taxDeductedOnPeriod === 0) {
+                $('#check_all_period_tax_calculation_table').prop('checked', true);
+            }
+            else {
+                $('#check_on_period_tax_calculation_table').prop('checked', true);
+                $('#on_period_tax_calculation_table').prop('readonly', true);
+                $('#on_period_tax_calculation_table').val((typeof arrDataPR[0].taxDeductedOnPeriod !== 'undefined') ? arrDataPR[0].taxDeductedOnPeriod : '');
+            }
+            $('#tax_penalties_salary').val((typeof arrDataPR[0].salaryTaxPenalties !== 'undefined') ? arrDataPR[0].salaryTaxPenalties : '');
+            $('#tax_penalties_bonus').val((typeof arrDataPR[0].bonusTaxPenalties !== 'undefined') ? arrDataPR[0].bonusTaxPenalties : '');
+            $('#tax_penalties_thr').val((typeof arrDataPR[0].thrTaxPenalties !== 'undefined') ? arrDataPR[0].thrTaxPenalties : '');
+            $('#severance_payment_from1').val((typeof arrDataPR[0].pensionTaxableIncome1 !== 'undefined') ? arrDataPR[0].pensionTaxableIncome1 : '');
+            $('#severance_payment_from2').val((typeof arrDataPR[0].pensionTaxableIncome2 !== 'undefined') ? arrDataPR[0].pensionTaxableIncome2 : '');
+            $('#severance_payment_from3').val((typeof arrDataPR[0].pensionTaxableIncome3 !== 'undefined') ? arrDataPR[0].pensionTaxableIncome3 : '');
+            $('#severance_payment_from4').val((typeof arrDataPR[0].pensionTaxableIncome4 !== 'undefined') ? arrDataPR[0].pensionTaxableIncome4 : '');
+            $('#severance_payment_from5').val((typeof arrDataPR[0].pensionTaxableIncome5 !== 'undefined') ? arrDataPR[0].pensionTaxableIncome5 : '');
+            $('#severance_payment_to1').val((typeof arrDataPR[0].pensionTaxableIncome2 !== 'undefined') ? (arrDataPR[0].pensionTaxableIncome2 - 1) : '');
+            $('#severance_payment_to2').val((typeof arrDataPR[0].pensionTaxableIncome3 !== 'undefined') ? (arrDataPR[0].pensionTaxableIncome3 - 1) : '');
+            $('#severance_payment_to3').val((typeof arrDataPR[0].pensionTaxableIncome4 !== 'undefined') ? (arrDataPR[0].pensionTaxableIncome4 - 1) : '');
+            $('#severance_payment_to4').val((typeof arrDataPR[0].pensionTaxableIncome5 !== 'undefined') ? (arrDataPR[0].pensionTaxableIncome5 - 1) : '');
+            $('#severance_payment_rate1').val((typeof arrDataPR[0].pensionTaxRate1 !== 'undefined') ? arrDataPR[0].pensionTaxRate1 : '');
+            $('#severance_payment_rate2').val((typeof arrDataPR[0].pensionTaxRate2 !== 'undefined') ? arrDataPR[0].pensionTaxRate2 : '');
+            $('#severance_payment_rate3').val((typeof arrDataPR[0].pensionTaxRate3 !== 'undefined') ? arrDataPR[0].pensionTaxRate3 : '');
+            $('#severance_payment_rate4').val((typeof arrDataPR[0].pensionTaxRate4 !== 'undefined') ? arrDataPR[0].pensionTaxRate4 : '');
+            $('#severance_payment_rate5').val((typeof arrDataPR[0].pensionTaxRate5 !== 'undefined') ? arrDataPR[0].pensionTaxRate5 : '');
+        }else{
+            $("#toolbar-new").show();
+            $("#toolbar-edit").hide();
+            $('#tax_registered_no').val('');
+            $('#jamsostek_no').val('');
+            $('#pension_no').val('');
+            $('#retirement_age_limit').val('');
+            $('#prorate_method').val(null).trigger('change');
+            $('#maximum_dependents').val('');
+            $('#take_home_pay_rounded_from').val('');
+            $('#take_home_pay_rounded_become').val('');
+            $('#transaction_rate_type').val(null).trigger('change');
+            $('#tax_rate_type').val('').trigger('change');
+            $('#rounding_method_report').val(null).trigger('change');
+            $('#rounding_decimal_report').val('');
+            $('#rounding_method_spt').val('').trigger('change');
+            $('#rounding_decimal_spt').val('');
+            $('#check_appreciation_and_employee_service').prop('checked', false);
+            $('#bonus_cooficient').val('');
+            $('#check_tax_allowance_bonus').prop('checked', false);
+            $('#check_tax_allowance_thr').prop('checked', false);
+            $('#pension_contribution_employee').val('');
+            $('#pension_contribution_employer').val('');
+            $('#work_related_accident_insurance_one').val('');
+            $('#work_related_accident_insurance_two').val('');
+            $('#work_related_accident_insurance_three').val('');
+            $('#non_accidental_death_insurance').val('');
+            $('#health_insurance_company').val('');
+            $('#health_insurance_employee').val('');
+            $('#min_calculation_health_insurance').val('');
+            $('#max_calculation_health_insurance').val('');
+            $('#pension_insurance_company').val('');
+            $('#pension_insurance_employee').val('');
+            $('#min_calculation_pension_insurance').val('');
+            $('#max_calculation_pension_insurance').val('');
+            $('#multiplication_factor_daily_worker').val('');
+            $('#on_period_jamsostek').val('');
+            $('#work_insurance_remision_payment_percentage').val('');
+            $('#non_taxable_income_employee').val('');
+            $('#non_taxable_income_each_dependent').val('');
+            $('#occupational_percentage').val('');
+            $('#occupational_maximum').val('');
+            $('#tax_rate1').val('');
+            $('#tax_rate2').val('');
+            $('#tax_rate3').val('');
+            $('#tax_rate4').val('');
+            $('#tax_rate5').val('');
+            $('#tax_rate6').val('');
+            $('#taxable_income_from1').val('');
+            $('#taxable_income_from2').val('');
+            $('#taxable_income_from3').val('');
+            $('#taxable_income_from4').val('');
+            $('#taxable_income_from5').val('');
+            $('#taxable_income_from6').val('');
+            $('#taxable_income_to1').val('');
+            $('#taxable_income_to2').val('');
+            $('#taxable_income_to3').val('');
+            $('#taxable_income_to4').val('');
+            $('#taxable_income_to5').val('');
+            $('#check_nearest_taxable_income').prop('checked', false);
+            $('#nearest_taxable_income').val(0);
+            $('#time_test').val('');
+            $('#tax_rate_with_time_test').val('');
+            $('#max_gross_income').val('');
+            $('#tax_by_government_tk').val('');
+            $('#tax_by_government_k0').val('');
+            $('#tax_by_government_k1').val('');
+            $('#tax_by_government_k2').val('');
+            $('#tax_by_government_k3').val('');
+            $('#on_period_tax_calculation_table').val('');
+            $('#tax_penalties_salary').val('');
+            $('#tax_penalties_bonus').val('');
+            $('#tax_penalties_thr').val('');
+            $('#severance_payment_from1').val('');
+            $('#severance_payment_from2').val('');
+            $('#severance_payment_from3').val('');
+            $('#severance_payment_from4').val('');
+            $('#severance_payment_from5').val('');
+            $('#severance_payment_to1').val('');
+            $('#severance_payment_to2').val('');
+            $('#severance_payment_to3').val('');
+            $('#severance_payment_to4').val('');
+            $('#severance_payment_rate1').val('');
+            $('#severance_payment_rate2').val('');
+            $('#severance_payment_rate3').val('');
+            $('#severance_payment_rate4').val('');
+            $('#severance_payment_rate5').val('');
+        }
 
         $('#toolbar-new').on('click', function () {
             $('#toolbar-save').show();
@@ -1357,6 +1657,7 @@
             $('#tax_by_government_k3').prop('readonly', false);
             $('#check_all_period_tax_calculation_table').prop('disabled', false);
             $('#check_on_period_tax_calculation_table').prop('disabled', false);
+            $('#check_nearest_taxable_income').prop('disabled', false);
             $('#tax_penalties_salary').prop('readonly', false);
             $('#tax_penalties_bonus').prop('readonly', false);
             $('#tax_penalties_thr').prop('readonly', false);
@@ -1414,6 +1715,7 @@
             $('#calculation_method_basic').prop('disabled', false);
             $('#check_all_period_jamsostek').prop('disabled', false);
             $('#check_on_period_jamsostek').prop('disabled', false);
+            $('#check_nearest_taxable_income').prop('disabled', false);
             $('#work_insurance_remision_payment_percentage').prop('readonly', false);
             pickerEndPeriod._input.removeAttribute("disabled");
             $('#non_taxable_income_employee').prop('readonly', false);
@@ -1440,6 +1742,24 @@
             for (var i = 0; i < 6; i++) {
                 $('#severance_payment_from' + i).prop('readonly', false);
                 $('#severance_payment_rate' + i).prop('readonly', false);
+            }
+            if (typeof arrDataPR[0].deductedOnPeriod !== 'undefined' && arrDataPR[0].deductedOnPeriod === 0) {
+                $('#check_all_period_jamsostek').prop('checked', true);
+            }
+            else {
+                $('#check_on_period_jamsostek').prop('checked', true);
+                $('#on_period_jamsostek').prop('readonly', false);
+            }
+            if (typeof arrDataPR[0].flagtaxableIncomeRounded !== 'undefined' && arrDataPR[0].flagtaxableIncomeRounded == true) {
+                $('#check_nearest_taxable_income').prop('checked', true);
+                $('#nearest_taxable_income').prop('readonly', false);
+            }
+            if (typeof arrDataPR[0].taxDeductedOnPeriod !== 'undefined' && arrDataPR[0].taxDeductedOnPeriod === 0) {
+                $('#check_all_period_tax_calculation_table').prop('checked', true);
+            }
+            else {
+                $('#check_on_period_tax_calculation_table').prop('checked', true);
+                $('#on_period_tax_calculation_table').prop('readonly', false);
             }
         });
 
@@ -1482,7 +1802,6 @@
         $('input[name="deduction_on_period_jamsostek"]').on('change', function () {
             if ($('#check_all_period_jamsostek').is(':checked')) {
                 $('#on_period_jamsostek').prop('readonly', true);
-                $('#on_period_jamsostek').val('');
             }
             else {
                 $('#on_period_jamsostek').prop('readonly', false);
@@ -1492,7 +1811,6 @@
         $('input[name="deduction_on_period_tax_calculation_table"]').on('change', function () {
             if ($('#check_all_period_tax_calculation_table').is(':checked')) {
                 $('#on_period_tax_calculation_table').prop('readonly', true);
-                $('#on_period_tax_calculation_table').val('');
             }
             else {
                 $('#on_period_tax_calculation_table').prop('readonly', false);
@@ -1532,278 +1850,6 @@
                 }
             });
         }
-
-        $.ajax({
-            url: "{{ url('/time_management/period/data/detail') }}",
-            type: "GET",
-            success: function (response) {
-                isData = Object.keys(response).length;
-                if (isData !== 0) {
-                    $('#toolbar-new').hide();
-                    $('#process_period_month').val((typeof response[0].periodMonth !== 'undefined') ? response[0].periodMonth : '');
-                    $('#process_period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
-                    $('#payroll_payment_period').val((typeof response[0].statusPeriod !== 'undefined') ? response[0].statusPeriod : '');
-                    $.ajax({
-                        type: 'GET',
-                        url: '/process_status/detail/api',
-                        data: {
-                            'processStatus': ((typeof response[0].statusProcess !== 'undefined') ? response[0].statusProcess : '')
-                        }
-                    }).then(function (data) {
-                        var option = $('<option/>', {
-                            id: data[0].comGenCode,
-                            title: data[0].value,
-                            text: data[0].value
-                        });
-                        $("#process_status").append(option).attr('data-alias', 'yourvalue').trigger(
-                            'change');
-                        $("#process_status").trigger({
-                            type: 'select2:select',
-                            params: {
-                                id: data[0].comGenCode,
-                                text: data[0].value,
-                                data: data
-                            }
-                        });
-                    });
-                }
-                else {
-                    $('#toolbar-new').show();
-                    $('#process_period_month').val('');
-                    $('#process_period_year').val('');
-                    $('#payroll_payment_period').val('');
-                    $("#process_status").val(null).trigger('change');
-                }
-            }
-        });
-
-        $.ajax({
-            url: "{{ url('/company/api') }}",
-            type: "GET",
-            success: function (response) {
-                isData = Object.keys(response).length;
-                if (isData !== 0) {
-                    $('#company_name').val((typeof response[0].companyName !== 'undefined') ? response[0].companyName : '');
-                    $('#address').val((typeof response[0].address !== 'undefined') ? response[0].address : '');
-                    $('#city').val((typeof response[0].locationCode !== 'undefined') ? response[0].locationCode : '');
-                }
-                else {
-                    $('#company_name').val('');
-                    $('#address').val('');
-                    $('#city').val('');
-                }
-            }
-        });
-
-        $.ajax({
-            url: "{{ url('/payroll/reference_payroll/data_detail') }}",
-            type: "GET",
-            success: function (response) {
-                isData = Object.keys(response).length;
-                if (isData !== 0) {
-                    $('#tax_registered_no').val((typeof response[0].taxRegisteredNo !== 'undefined') ? response[0].taxRegisteredNo : '');
-                    $('#jamsostek_no').val((typeof response[0].jamsostekNo !== 'undefined') ? response[0].jamsostekNo : '');
-                    $('#pension_no').val((typeof response[0].pensionNo !== 'undefined') ? response[0].pensionNo : '');
-                    $('#retirement_age_limit').val((typeof response[0].retirementAgeLimit !== 'undefined') ? response[0].retirementAgeLimit : '');
-                    $('#prorate_method').val((typeof response[0].prorateMethod !== 'undefined') ? response[0].prorateMethod : '').trigger('change');
-                    $('#maximum_dependents').val((typeof response[0].dependentsMax !== 'undefined') ? response[0].dependentsMax : '');
-                    $('#take_home_pay_rounded_from').val((typeof response[0].thpRoundedFrom !== 'undefined') ? response[0].thpRoundedFrom : '');
-                    $('#take_home_pay_rounded_become').val((typeof response[0].thpRoundedBecome !== 'undefined') ? response[0].thpRoundedBecome : '');
-                    $('#transaction_rate_type').val((typeof response[0].transRateType !== 'undefined') ? response[0].transRateType : '').trigger('change');
-                    $('#tax_rate_type').val((typeof response[0].taxRateType !== 'undefined') ? response[0].taxRateType : '').trigger('change');
-                    $('#rounding_method_report').val((typeof response[0].roundingMethodReport !== 'undefined') ? response[0].roundingMethodReport : '').trigger('change');
-                    $('#rounding_decimal_report').val((typeof response[0].roundingDecimalReport !== 'undefined') ? response[0].roundingDecimalReport : '');
-                    $('#rounding_method_spt').val((typeof response[0].roundingMethodSpt !== 'undefined') ? response[0].roundingMethodSpt : '').trigger('change');
-                    $('#rounding_decimal_spt').val((typeof response[0].roundingDecimalSpt !== 'undefined') ? response[0].roundingDecimalSpt : '');
-                    if (typeof response[0].appreciation !== 'undefined' && response[0].appreciation == true) {
-                        $('#check_appreciation_and_employee_service').prop('checked', true);
-                    }
-                    $('#bonus_cooficient').val((typeof response[0].bonusCooefficient !== 'undefined') ? response[0].bonusCooefficient : '');
-                    if (typeof response[0].taxAllowanceBonus !== 'undefined' && response[0].taxAllowanceBonus == true) {
-                        $('#check_tax_allowance_bonus').prop('checked', true);
-                    }
-                    if (typeof response[0].taxAllowanceTHR !== 'undefined' && response[0].taxAllowanceTHR == true) {
-                        $('#check_tax_allowance_thr').prop('checked', true);
-                    }
-                    $('#pension_contribution_employee').val((typeof response[0].pensionContributionEmployee !== 'undefined') ? response[0].pensionContributionEmployee : '');
-                    $('#pension_contribution_employer').val((typeof response[0].pensionContributionEmployer !== 'undefined') ? response[0].pensionContributionEmployer : '');
-                    $('#work_related_accident_insurance_one').val((typeof response[0].workRelateAccidentInsurance !== 'undefined') ? response[0].workRelateAccidentInsurance : '');
-                    $('#work_related_accident_insurance_two').val((typeof response[0].workRelateAccidentInsurance2 !== 'undefined') ? response[0].workRelateAccidentInsurance2 : '');
-                    $('#work_related_accident_insurance_three').val((typeof response[0].workRelateAccidentInsurance3 !== 'undefined') ? response[0].workRelateAccidentInsurance3 : '');
-                    $('#non_accidental_death_insurance').val((typeof response[0].nonAccidentalDeathInsurance !== 'undefined') ? response[0].nonAccidentalDeathInsurance : '');
-                    $('#health_insurance_company').val((typeof response[0].healthInsuranceCompany !== 'undefined') ? response[0].healthInsuranceCompany : '');
-                    $('#health_insurance_employee').val((typeof response[0].healthInsuranceEmployee !== 'undefined') ? response[0].healthInsuranceEmployee : '');
-                    $('#min_calculation_health_insurance').val((typeof response[0].minCalcBaseHealthIns !== 'undefined') ? response[0].minCalcBaseHealthIns : '');
-                    $('#max_calculation_health_insurance').val((typeof response[0].maxCalcBaseHealthIns !== 'undefined') ? response[0].maxCalcBaseHealthIns : '');
-                    $('#pension_insurance_company').val((typeof response[0].pensionInsuranceCompany !== 'undefined') ? response[0].pensionInsuranceCompany : '');
-                    $('#pension_insurance_employee').val((typeof response[0].pensionInsuranceEmployee !== 'undefined') ? response[0].pensionInsuranceEmployee : '');
-                    $('#min_calculation_pension_insurance').val((typeof response[0].minCalcBasePensionIns !== 'undefined') ? response[0].minCalcBasePensionIns : '');
-                    $('#max_calculation_pension_insurance').val((typeof response[0].maxCalcBasePensionIns !== 'undefined') ? response[0].maxCalcBasePensionIns : '');
-                    $('#multiplication_factor_daily_worker').val((typeof response[0].multiplicationFactorDailyWorkers !== 'undefined') ? response[0].multiplicationFactorDailyWorkers : '');
-                    if (typeof response[0].calculationMethod !== 'undefined' && response[0].calculationMethod === 'A') {
-                        $('#calculation_method_actual').prop('checked', true);
-                    }
-                    else {
-                        $('#calculation_method_basic').prop('checked', true);
-                    }
-                    if (typeof response[0].deductedOnPeriod !== 'undefined' && response[0].deductedOnPeriod === 0) {
-                        $('#check_all_period_jamsostek').prop('checked', true);
-                    }
-                    else {
-                        $('#check_on_period_jamsostek').prop('checked', true);
-                        $('#on_period_jamsostek').prop('readonly', false);
-                        $('#on_period_jamsostek').val((typeof response[0].deductedOnPeriod !== 'undefined') ? response[0].deductedOnPeriod : '');
-                    }
-                    $('#work_insurance_remision_payment_percentage').val((typeof response[0].remissionPaymentPercentage !== 'undefined') ? response[0].remissionPaymentPercentage : '');
-                    pickerEndPeriod.setDate((typeof response[0].remissionEndPeriod !== 'undefined') ? response[0].remissionEndPeriod : '');
-                    $('#non_taxable_income_employee').val((typeof response[0].nonTaxableIncomeEmployee !== 'undefined') ? response[0].nonTaxableIncomeEmployee : '');
-                    $('#non_taxable_income_each_dependent').val((typeof response[0].nonTaxableIncomeDependent !== 'undefined') ? response[0].nonTaxableIncomeDependent : '');
-                    $('#occupational_percentage').val((typeof response[0].occupationalPercentage !== 'undefined') ? response[0].occupationalPercentage : '');
-                    $('#occupational_maximum').val((typeof response[0].occupationalMaximum !== 'undefined') ? response[0].occupationalMaximum : '');
-                    $('#tax_rate1').val((typeof response[0].taxRate1 !== 'undefined') ? response[0].taxRate1 : '');
-                    $('#tax_rate2').val((typeof response[0].taxRate2 !== 'undefined') ? response[0].taxRate2 : '');
-                    $('#tax_rate3').val((typeof response[0].taxRate3 !== 'undefined') ? response[0].taxRate3 : '');
-                    $('#tax_rate4').val((typeof response[0].taxRate4 !== 'undefined') ? response[0].taxRate4 : '');
-                    $('#tax_rate5').val((typeof response[0].taxRate5 !== 'undefined') ? response[0].taxRate5 : '');
-                    $('#tax_rate6').val((typeof response[0].taxRate6 !== 'undefined') ? response[0].taxRate6 : '');
-                    $('#taxable_income_from1').val((typeof response[0].taxableIncome1 !== 'undefined') ? response[0].taxableIncome1 : '');
-                    $('#taxable_income_from2').val((typeof response[0].taxableIncome2 !== 'undefined') ? response[0].taxableIncome2 : '');
-                    $('#taxable_income_from3').val((typeof response[0].taxableIncome3 !== 'undefined') ? response[0].taxableIncome3 : '');
-                    $('#taxable_income_from4').val((typeof response[0].taxableIncome4 !== 'undefined') ? response[0].taxableIncome4 : '');
-                    $('#taxable_income_from5').val((typeof response[0].taxableIncome5 !== 'undefined') ? response[0].taxableIncome5 : '');
-                    $('#taxable_income_from6').val((typeof response[0].taxableIncome6 !== 'undefined') ? response[0].taxableIncome6 : '');
-                    $('#taxable_income_to1').val((typeof response[0].taxableIncome2 !== 'undefined') ? (response[0].taxableIncome2 - 1) : '');
-                    $('#taxable_income_to2').val((typeof response[0].taxableIncome3 !== 'undefined') ? (response[0].taxableIncome3 - 1) : '');
-                    $('#taxable_income_to3').val((typeof response[0].taxableIncome4 !== 'undefined') ? (response[0].taxableIncome4 - 1) : '');
-                    $('#taxable_income_to4').val((typeof response[0].taxableIncome5 !== 'undefined') ? (response[0].taxableIncome5 - 1) : '');
-                    $('#taxable_income_to5').val((typeof response[0].taxableIncome6 !== 'undefined') ? (response[0].taxableIncome6 - 1) : '');
-                    if (typeof response[0].flagtaxableIncomeRounded !== 'undefined' && response[0].flagtaxableIncomeRounded == true) {
-                        $('#check_nearest_taxable_income').prop('checked', true);
-                        $('#nearest_taxable_income').prop('readonly', false);
-                    }
-                    $('#nearest_taxable_income').val((typeof response[0].nearestTaxableIncomeRounded !== 'undefined') ? response[0].nearestTaxableIncomeRounded : '');
-                    $('#time_test').val((typeof response[0].timeTest !== 'undefined') ? response[0].timeTest : '');
-                    $('#tax_rate_with_time_test').val((typeof response[0].taxRateWithintimeTest !== 'undefined') ? response[0].taxRateWithintimeTest : '');
-                    $('#max_gross_income').val((typeof response[0].maxGrossIncome !== 'undefined') ? response[0].maxGrossIncome : '');
-                    $('#tax_by_government_tk').val((typeof response[0].taxGovernmentTK !== 'undefined') ? response[0].taxGovernmentTK : '');
-                    $('#tax_by_government_k0').val((typeof response[0].taxGovernmentK0 !== 'undefined') ? response[0].taxGovernmentK0 : '');
-                    $('#tax_by_government_k1').val((typeof response[0].taxGovernmentK1 !== 'undefined') ? response[0].taxGovernmentK1 : '');
-                    $('#tax_by_government_k2').val((typeof response[0].taxGovernmentK2 !== 'undefined') ? response[0].taxGovernmentK2 : '');
-                    $('#tax_by_government_k3').val((typeof response[0].taxGovernmentK3 !== 'undefined') ? response[0].taxGovernmentK3 : '');
-                    if (typeof response[0].taxDeductedOnPeriod !== 'undefined' && response[0].taxDeductedOnPeriod === 0) {
-                        $('#check_all_period_tax_calculation_table').prop('checked', true);
-                    }
-                    else {
-                        $('#check_on_period_tax_calculation_table').prop('checked', true);
-                        $('#on_period_tax_calculation_table').prop('readonly', false);
-                        $('#on_period_tax_calculation_table').val((typeof response[0].taxDeductedOnPeriod !== 'undefined') ? response[0].taxDeductedOnPeriod : '');
-                    }
-                    $('#tax_penalties_salary').val((typeof response[0].salaryTaxPenalties !== 'undefined') ? response[0].salaryTaxPenalties : '');
-                    $('#tax_penalties_bonus').val((typeof response[0].bonusTaxPenalties !== 'undefined') ? response[0].bonusTaxPenalties : '');
-                    $('#tax_penalties_thr').val((typeof response[0].thrTaxPenalties !== 'undefined') ? response[0].thrTaxPenalties : '');
-                    $('#severance_payment_from1').val((typeof response[0].pensionTaxableIncome1 !== 'undefined') ? response[0].pensionTaxableIncome1 : '');
-                    $('#severance_payment_from2').val((typeof response[0].pensionTaxableIncome2 !== 'undefined') ? response[0].pensionTaxableIncome2 : '');
-                    $('#severance_payment_from3').val((typeof response[0].pensionTaxableIncome3 !== 'undefined') ? response[0].pensionTaxableIncome3 : '');
-                    $('#severance_payment_from4').val((typeof response[0].pensionTaxableIncome4 !== 'undefined') ? response[0].pensionTaxableIncome4 : '');
-                    $('#severance_payment_from5').val((typeof response[0].pensionTaxableIncome5 !== 'undefined') ? response[0].pensionTaxableIncome5 : '');
-                    $('#severance_payment_to1').val((typeof response[0].pensionTaxableIncome2 !== 'undefined') ? (response[0].pensionTaxableIncome2 - 1) : '');
-                    $('#severance_payment_to2').val((typeof response[0].pensionTaxableIncome3 !== 'undefined') ? (response[0].pensionTaxableIncome3 - 1) : '');
-                    $('#severance_payment_to3').val((typeof response[0].pensionTaxableIncome4 !== 'undefined') ? (response[0].pensionTaxableIncome4 - 1) : '');
-                    $('#severance_payment_to4').val((typeof response[0].pensionTaxableIncome5 !== 'undefined') ? (response[0].pensionTaxableIncome5 - 1) : '');
-                    $('#severance_payment_rate1').val((typeof response[0].pensionTaxRate1 !== 'undefined') ? response[0].pensionTaxRate1 : '');
-                    $('#severance_payment_rate2').val((typeof response[0].pensionTaxRate2 !== 'undefined') ? response[0].pensionTaxRate2 : '');
-                    $('#severance_payment_rate3').val((typeof response[0].pensionTaxRate3 !== 'undefined') ? response[0].pensionTaxRate3 : '');
-                    $('#severance_payment_rate4').val((typeof response[0].pensionTaxRate4 !== 'undefined') ? response[0].pensionTaxRate4 : '');
-                    $('#severance_payment_rate5').val((typeof response[0].pensionTaxRate5 !== 'undefined') ? response[0].pensionTaxRate5 : '');
-                }
-                else {                    
-                    $('#tax_registered_no').val('');
-                    $('#jamsostek_no').val('');
-                    $('#pension_no').val('');
-                    $('#retirement_age_limit').val('');
-                    $('#prorate_method').val(null).trigger('change');
-                    $('#maximum_dependents').val('');
-                    $('#take_home_pay_rounded_from').val('');
-                    $('#take_home_pay_rounded_become').val('');
-                    $('#transaction_rate_type').val(null).trigger('change');
-                    $('#tax_rate_type').val('').trigger('change');
-                    $('#rounding_method_report').val(null).trigger('change');
-                    $('#rounding_decimal_report').val('');
-                    $('#rounding_method_spt').val('').trigger('change');
-                    $('#rounding_decimal_spt').val('');
-                    $('#check_appreciation_and_employee_service').prop('checked', false);
-                    $('#bonus_cooficient').val('');
-                    $('#check_tax_allowance_bonus').prop('checked', false);
-                    $('#check_tax_allowance_thr').prop('checked', false);
-                    $('#pension_contribution_employee').val('');
-                    $('#pension_contribution_employer').val('');
-                    $('#work_related_accident_insurance_one').val('');
-                    $('#work_related_accident_insurance_two').val('');
-                    $('#work_related_accident_insurance_three').val('');
-                    $('#non_accidental_death_insurance').val('');
-                    $('#health_insurance_company').val('');
-                    $('#health_insurance_employee').val('');
-                    $('#min_calculation_health_insurance').val('');
-                    $('#max_calculation_health_insurance').val('');
-                    $('#pension_insurance_company').val('');
-                    $('#pension_insurance_employee').val('');
-                    $('#min_calculation_pension_insurance').val('');
-                    $('#max_calculation_pension_insurance').val('');
-                    $('#multiplication_factor_daily_worker').val('');
-                    $('#on_period_jamsostek').val('');
-                    $('#work_insurance_remision_payment_percentage').val('');
-                    $('#non_taxable_income_employee').val('');
-                    $('#non_taxable_income_each_dependent').val('');
-                    $('#occupational_percentage').val('');
-                    $('#occupational_maximum').val('');
-                    $('#tax_rate1').val('');
-                    $('#tax_rate2').val('');
-                    $('#tax_rate3').val('');
-                    $('#tax_rate4').val('');
-                    $('#tax_rate5').val('');
-                    $('#tax_rate6').val('');
-                    $('#taxable_income_from1').val('');
-                    $('#taxable_income_from2').val('');
-                    $('#taxable_income_from3').val('');
-                    $('#taxable_income_from4').val('');
-                    $('#taxable_income_from5').val('');
-                    $('#taxable_income_from6').val('');
-                    $('#taxable_income_to1').val('');
-                    $('#taxable_income_to2').val('');
-                    $('#taxable_income_to3').val('');
-                    $('#taxable_income_to4').val('');
-                    $('#taxable_income_to5').val('');
-                    $('#check_nearest_taxable_income').prop('checked', false);
-                    $('#nearest_taxable_income').val(0);
-                    $('#time_test').val('');
-                    $('#tax_rate_with_time_test').val('');
-                    $('#max_gross_income').val('');
-                    $('#tax_by_government_tk').val('');
-                    $('#tax_by_government_k0').val('');
-                    $('#tax_by_government_k1').val('');
-                    $('#tax_by_government_k2').val('');
-                    $('#tax_by_government_k3').val('');
-                    $('#on_period_tax_calculation_table').val('');
-                    $('#tax_penalties_salary').val('');
-                    $('#tax_penalties_bonus').val('');
-                    $('#tax_penalties_thr').val('');
-                    $('#severance_payment_from1').val('');
-                    $('#severance_payment_from2').val('');
-                    $('#severance_payment_from3').val('');
-                    $('#severance_payment_from4').val('');
-                    $('#severance_payment_from5').val('');
-                    $('#severance_payment_to1').val('');
-                    $('#severance_payment_to2').val('');
-                    $('#severance_payment_to3').val('');
-                    $('#severance_payment_to4').val('');
-                    $('#severance_payment_rate1').val('');
-                    $('#severance_payment_rate2').val('');
-                    $('#severance_payment_rate3').val('');
-                    $('#severance_payment_rate4').val('');
-                    $('#severance_payment_rate5').val('');
-                }
-            }
-        });
 
         loadDataProcessStatus();
         loadDataProrateMethod();

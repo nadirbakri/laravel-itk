@@ -459,6 +459,12 @@
             $('#overtime_alternative_1').prop('checked', false).trigger('change');
             $('#overtime_alternative_2').prop('checked', false).trigger('change');
 
+            $('#jamsostek').prop('disabled', false);
+            $('#health_insurance').prop('disabled', false);
+            $('#pension_insurance').prop('disabled', false);
+            $('#overtime_alternative_1').prop('disabled', false);
+            $('#overtime_alternative_2').prop('disabled', false);
+
             displayIn = $('input[name=display_in]').val();
             fieldType = $('input[name=field_type]').val();
         } else {

@@ -1285,7 +1285,6 @@
         function load_data_table_reference_time_management() {
             table = $('#reference_time_management_table').DataTable({
                 processing: true,
-                serverSide: true,
                 orderCellsTop: true,
                 ajax: "{{ url('time_management/reference_time_management/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
