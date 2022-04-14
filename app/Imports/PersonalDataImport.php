@@ -162,7 +162,37 @@ class PersonalDataImport implements ToCollection, WithStartRow
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')
+                    'logActionUsername' => Session::get('userName'),
+                    'peMasterLeave' => [
+                        "companyCode" => Session::get('companyCode'),
+                        "employeeNo" => !is_null($row[0]) ? strval($row[0]) : null,
+                        "leaveCode" => !is_null($row[0]) ? strval($row[0]) : null,
+                        "deductLeave" => "0",
+                        "leaveBalance" => 0,
+                        "leaveBalanceBefore" => 0,
+                        "leaveBalanceBeforeExpiredDate" => null, 
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ],
+                    'peMasterHistoryJob' => [
+                        "companyCode" =>
+                        "employeeNo" =>
+                        "seqNo" =>
+                        "historyCompanyCode" =>
+                        "startDate" =>
+                        "endDate" =>
+                        "employmentStatus" =>
+                        "employmentType" =>
+                        "contractStartDate" =>
+                        "contractEndDate" =>
+                        "decreeCode" =>
+                        ""
+                    ],
                 ];
             }
 

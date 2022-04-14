@@ -3652,17 +3652,17 @@ class PayrollController extends Controller
                 "taxRateWithintimeTest" => (float) $request->tax_rate_with_time_test,
                 "maxGrossIncome" => (float) $request->max_gross_income,
                 "taxRate1" => (float) $request->tax_rate1,
-                "taxableIncome1" => (int) $request->taxable_income_from1,
+                "taxableIncome1" => (float) $request->taxable_income_from1,
                 "taxRate2" => (float) $request->tax_rate2,
-                "taxableIncome2" => (int) $request->taxable_income_from2,
+                "taxableIncome2" => (float) $request->taxable_income_from2,
                 "taxRate3" => (float) $request->tax_rate3,
-                "taxableIncome3" => (int) $request->taxable_income_from3,
+                "taxableIncome3" => (float) $request->taxable_income_from3,
                 "taxRate4" => (float) $request->tax_rate4,
-                "taxableIncome4" => (int) $request->taxable_income_from4,
+                "taxableIncome4" => (float) $request->taxable_income_from4,
                 "taxRate5" => (float) $request->tax_rate5,
-                "taxableIncome5" => (int) $request->taxable_income_from5,
+                "taxableIncome5" => (float) $request->taxable_income_from5,
                 "taxRate6" => (float) $request->tax_rate6,
-                "taxableIncome6" => (int) $request->taxable_income_from6,
+                "taxableIncome6" => (float) $request->taxable_income_from6,
                 "taxGovernmentTK" => (int) $request->tax_by_government_tk,
                 "taxGovernmentK0" => (int) $request->tax_by_government_k0,
                 "taxGovernmentK1" => (int) $request->tax_by_government_k1,
@@ -3672,15 +3672,15 @@ class PayrollController extends Controller
                 "salaryTaxPenalties" => (int) $request->tax_penalties_salary,
                 "bonusTaxPenalties" => (int) $request->tax_penalties_bonus,
                 "thrTaxPenalties" => (int) $request->tax_penalties_thr,
-                "pensionTaxableIncome1" => (int) $request->severance_payment_from1,
+                "pensionTaxableIncome1" => (float) $request->severance_payment_from1,
                 "pensionTaxRate1" => (float) $request->severance_payment_rate1,
-                "pensionTaxableIncome2" => (int) $request->severance_payment_from2,
+                "pensionTaxableIncome2" => (float) $request->severance_payment_from2,
                 "pensionTaxRate2" => (float) $request->severance_payment_rate2,
-                "pensionTaxableIncome3" => (int) $request->severance_payment_from3,
+                "pensionTaxableIncome3" => (float) $request->severance_payment_from3,
                 "pensionTaxRate3" => (float) $request->severance_payment_rate3,
-                "pensionTaxableIncome4" => (int) $request->severance_payment_from4,
+                "pensionTaxableIncome4" => (float) $request->severance_payment_from4,
                 "pensionTaxRate4" => (float) $request->severance_payment_rate4,
-                "pensionTaxableIncome5" => (int) $request->severance_payment_from5,
+                "pensionTaxableIncome5" => (float) $request->severance_payment_from5,
                 "pensionTaxRate5" => (float) $request->severance_payment_rate5,
                 "prorateMethod" => $request->prorate_method,
                 "changedNo" => 0,
@@ -3706,7 +3706,6 @@ class PayrollController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

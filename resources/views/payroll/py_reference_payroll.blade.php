@@ -590,7 +590,6 @@
                                         <label for="max_calculation_pension_insurance">{{ __('payroll_reference_payroll.label_max_calculation_pension_insurance') }}</label>
                                         <input type="number" class="form-control" id="max_calculation_pension_insurance" name="max_calculation_pension_insurance"
                                             placeholder="{{ __('payroll_reference_payroll.label_max_calculation_pension_insurance') }}" readonly>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -93,6 +93,60 @@
 				<th>Company Bank Code 3</th>
 				<th>Currency Code 3</th>
 				<th>Flag Exclude Payroll</th>
+				<th>Nickname</th>
+				<th>Blood Type</th>
+				<th>Passport No</th>
+				<th>Passport Date</th>
+				<th>Passport Place Registration</th>
+				<th>Passport Expiry Date</th>
+				<th>Driving License Car No</th>
+				<th>Driving License Car Type</th>
+				<th>Driving License Car No Date</th>
+				<th>Driving License Car No Place Registration</th>
+				<th>Driving License Car No Expiry Date</th>
+				<th>Driving License Motor No</th>
+				<th>Driving License Motor No Date</th>
+				<th>Driving License Motor No Place Registration</th>
+				<th>Driving License Motor No Expiry Date</th>
+				<th>Employee Card ID</th>
+				<th>ID No</th>
+				<th>ID No Date</th>
+				<th>ID No Place Registration</th>
+				<th>ID No Expiry Date</th>
+				<th>Home Address</th>
+				<th>Home City Code</th>
+				<th>Home Zip Code</th>
+				<th>Home Phone</th>
+				<th>Other Address</th>
+				<th>Other City Code</th>
+				<th>Other Zip Code</th>
+				<th>Other Phone</th>
+				<th>Work Address</th>
+				<th>Work City Code</th>
+				<th>Work Zip Code</th>
+				<th>Work Phone</th>
+				<th>Correspondence Address</th>
+				<th>Correspondence City Code</th>
+				<th>Correspondence Zip Code</th>
+				<th>Correspondence Phone</th>
+				<th>Personal Handphone</th>
+				<th>Personal Email Address</th>
+				<th>Company Email Address</th>
+				<th>Emergency Name</th>
+				<th>Emergency Address</th>
+				<th>Emergency Phone</th>
+				<th>Emergency Relation</th>
+				<th>Emergency Email Address</th>
+				<th>Home District Code</th>
+				<th>Home Sub District Code</th>
+				<th>Other District Code</th>
+				<th>Other Sub District Code</th>
+				<th>Insurance Code</th>
+				<th>Insurance Class Code</th>
+				<th>Insurance Start Date</th>
+				<th>Insurance End Date</th>
+				<th>Insurance Policy No</th>
+				<th>Leave Code</th>
 			</tr>
 		</thead>
         <tbody>
@@ -173,6 +227,123 @@
                 <td>{{ $value->companyBankCode3 }}</td>
                 <td>{{ $value->currencyCode3 }}</td>
                 <td>{{ ($value->flagExcludePayroll) ? "TRUE" : "FALSE" }}</td>
+				@if(count((array) $value->peMasterInfo) > 0)
+					<td>{{ $value->peMasterInfo->nickName }}</td>
+					<td>{{ $value->peMasterInfo->bloodType }}</td>
+					<td>{{ $value->peMasterInfo->passportNo }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->passportDate)) }}</td>
+					<td>{{ $value->peMasterInfo->passportPlaceRegistration }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->passportExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMobilNo }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMobilType }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMobilNoDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMobilNoPlaceRegistration }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMobilNoExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMotorNo }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMotorNoDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMotorNoPlaceRegistration }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMotorNoExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->employeeCardId }}</td>
+					<td>{{ $value->peMasterInfo->idNo }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->idNoDate)) }}</td>
+					<td>{{ $value->peMasterInfo->idNoPlaceRegistration }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->idNoExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->homeAddress }}</td>
+					<td>{{ $value->peMasterInfo->homeCityCode }}</td>
+					<td>{{ $value->peMasterInfo->homeZipCode }}</td>
+					<td>{{ $value->peMasterInfo->homePhone }}</td>
+					<td>{{ $value->peMasterInfo->otherAddress }}</td>
+					<td>{{ $value->peMasterInfo->otherCityCode }}</td>
+					<td>{{ $value->peMasterInfo->otherZipCode }}</td>
+					<td>{{ $value->peMasterInfo->otherPhone }}</td>
+					<td>{{ $value->peMasterInfo->workAddress }}</td>
+					<td>{{ $value->peMasterInfo->workCityCode }}</td>
+					<td>{{ $value->peMasterInfo->workZipCode }}</td>
+					<td>{{ $value->peMasterInfo->workPhone }}</td>
+					<td>{{ $value->peMasterInfo->correspondenceAddress }}</td>
+					<td>{{ $value->peMasterInfo->correspondenceCityCode }}</td>
+					<td>{{ $value->peMasterInfo->correspondenceZipCode }}</td>
+					<td>{{ $value->peMasterInfo->correspondencePhone }}</td>
+					<td>{{ $value->peMasterInfo->personalHandphone }}</td>
+					<td>{{ $value->peMasterInfo->personalEmailAddress }}</td>
+					<td>{{ $value->peMasterInfo->companyEmailAddress }}</td>
+					<td>{{ $value->peMasterInfo->emergencyName }}</td>
+					<td>{{ $value->peMasterInfo->emergencyAddress }}</td>
+					<td>{{ $value->peMasterInfo->emergencyPhone }}</td>
+					<td>{{ $value->peMasterInfo->emergencyRelation }}</td>
+					<td>{{ $value->peMasterInfo->emergencyEmailAddress }}</td>
+					<td>{{ $value->peMasterInfo->homeDistrictCode }}</td>
+					<td>{{ $value->peMasterInfo->homeSubDistrictCode }}</td>
+					<td>{{ $value->peMasterInfo->otherDistrictCode }}</td>
+					<td>{{ $value->peMasterInfo->otherSubDistrictCode }}</td>
+				@else
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				@endif
+				@if(count((array) $value->peMasterInsurance) > 0)
+					<td>{{ $value->peMasterInsurance->insuranceCode }}</td>
+					<td>{{ $value->peMasterInsurance->insuranceClassCode }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInsurance->insuranceStartDate)) }}</td>
+					<td>{{ date('Y-m-d', strtotime($value->peMasterInsurance->insuranceEndDate)) }}</td>
+					<td>{{ $value->peMasterInsurance->insurancePolicyNo }}</td>
+				@else
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				@endif
+				@if(count((array) $value->peMasterLeave) > 0)
+                	<td>{{ $value->peMasterLeave->leaveCode }}</td>
+				@else
+					<td></td>
+				@endif
             </tr>
             @endforeach
         </tbody>

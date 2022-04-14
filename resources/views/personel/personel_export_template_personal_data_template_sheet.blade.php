@@ -93,6 +93,60 @@
 				<th>Company Bank Code 3</th>
 				<th>Currency Code 3</th>
 				<th>Flag Exclude Payroll</th>
+				<th>Nickname</th>
+				<th>Blood Type</th>
+				<th>Passport No</th>
+				<th>Passport Date</th>
+				<th>Passport Place Registration</th>
+				<th>Passport Expiry Date</th>
+				<th>Driving License Car No</th>
+				<th>Driving License Car Type</th>
+				<th>Driving License Car No Date</th>
+				<th>Driving License Car No Place Registration</th>
+				<th>Driving License Car No Expiry Date</th>
+				<th>Driving License Motor No</th>
+				<th>Driving License Motor No Date</th>
+				<th>Driving License Motor No Place Registration</th>
+				<th>Driving License Motor No Expiry Date</th>
+				<th>Employee Card ID</th>
+				<th>ID No</th>
+				<th>ID No Date</th>
+				<th>ID No Place Registration</th>
+				<th>ID No Expiry Date</th>
+				<th>Home Address</th>
+				<th>Home City Code</th>
+				<th>Home Zip Code</th>
+				<th>Home Phone</th>
+				<th>Other Address</th>
+				<th>Other City Code</th>
+				<th>Other Zip Code</th>
+				<th>Other Phone</th>
+				<th>Work Address</th>
+				<th>Work City Code</th>
+				<th>Work Zip Code</th>
+				<th>Work Phone</th>
+				<th>Correspondence Address</th>
+				<th>Correspondence City Code</th>
+				<th>Correspondence Zip Code</th>
+				<th>Correspondence Phone</th>
+				<th>Personal Handphone</th>
+				<th>Personal Email Address</th>
+				<th>Company Email Address</th>
+				<th>Emergency Name</th>
+				<th>Emergency Address</th>
+				<th>Emergency Phone</th>
+				<th>Emergency Relation</th>
+				<th>Emergency Email Address</th>
+				<th>Home District Code</th>
+				<th>Home Sub District Code</th>
+				<th>Other District Code</th>
+				<th>Other Sub District Code</th>
+				<th>Insurance Code</th>
+				<th>Insurance Class Code</th>
+				<th>Insurance Start Date</th>
+				<th>Insurance End Date</th>
+				<th>Insurance Policy No</th>
+				<th>Leave Code</th>
 			</tr>
 		</thead>
 	</table>
