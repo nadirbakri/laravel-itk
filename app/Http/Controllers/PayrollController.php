@@ -43,6 +43,11 @@ class PayrollController extends Controller
         return view ('payroll.py_salary_accumulation_data');
     }
 
+    public function pageImportDataFromExcel() 
+    {
+        return view ('payroll.py_import_data_from_excel');
+    }
+
     public function pageBonusFormula()
     {
         return view ('payroll.py_bonus_formula');
@@ -336,7 +341,7 @@ class PayrollController extends Controller
         }
     }
 
-    public function tableSalaryAccumulationDataPY() {
+    public function tableSalaryAccumulationDataPY(Request $request) {
         try {
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -346,7 +351,8 @@ class PayrollController extends Controller
             $response = $client->post(env('API_URL') . '/pryearly/getpryearly',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'periodYear' => (int) $request->periodYear
                     ]
                 )]
             );
@@ -1037,7 +1043,7 @@ class PayrollController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
-                        'periodYear' => $request->periodYear,
+                        'periodYear' => (int) $request->periodYear,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -2766,6 +2772,9 @@ class PayrollController extends Controller
                             "ratePerYear" => (float) $request->rate_per_year,
                             "noOfInstallmentNotYetPaid" => (int) $request->no_of_installment_not_yet_paid,
                             "currencyCode" => $request->currency_code,
+                            "periodYear" => (int) $request->period_year,
+                            "periodMonth" => (int) $request->period_month,
+                            "statusPeriod" => (int) $request->status_period,
                             "principalAmount" => (float) $request->principal_amount_installment,
                             "interestAmount" => (float) $request->interest_amount_per_installment,
                             "outstandingAmount" => (float) $request->outstanding_amount,
@@ -2790,11 +2799,12 @@ class PayrollController extends Controller
                     )]
                 );
 
-                var_dump(array_merge($request->seq_no_table, $request->seq_no_table_new));
-                $merged = array_merge($request->seq_no_table, $request->seq_no_table_new);
+                // var_dump(array_merge($request->seq_no_table, $request->seq_no_table_new));
+                // $merged = array_merge($request->seq_no_table, $request->seq_no_table_new);
+                // var_dump($request->seq_no_table);
 
                 if(isset($request->seq_no_table)) {
-                    foreach($merged as $key => $value) {
+                    foreach($request->seq_no_table as $key => $value) {
                         var_dump($key);
                         $paramDetail[] = [
                             'companyCode' => Session::get('companyCode'),
