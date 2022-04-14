@@ -3705,6 +3705,8 @@ class PayrollController extends Controller
                 'logActionUsername' => Session::get('userName')        
             ];
 
+            // var_dump(json_encode($param));
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/referencepayroll/insertrefrencepayroll',
                     ['body' => json_encode($param)]

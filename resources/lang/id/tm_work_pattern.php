@@ -10,6 +10,7 @@ return [
     'label_work_on_holiday' => 'Kerja di Hari Libur',
     'label_no_of_day' => 'No. Hari',
     'work_pattern_code_required' => 'Kode Pola Kerja Harus Diisi',
+    'description_required' => 'Deskripsi Harus Diisi',
     'no_of_day_required' => 'No. Hari Harus Diisi',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',

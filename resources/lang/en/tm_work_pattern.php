@@ -10,6 +10,7 @@ return [
     'label_work_on_holiday' => 'Work On Holiday',
     'label_no_of_day' => 'No. Of Day',
     'work_pattern_code_required' => 'Work Pattern Code Required',
+    'description_required' => 'Description Required',
     'no_of_day_required' => 'No. Of Day Required',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',

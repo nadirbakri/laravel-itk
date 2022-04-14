@@ -116,6 +116,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="description">{{ __('tm_work_pattern.label_description') }}</label>
+                            <span class="required">*</span>
                             <input type="text" class="form-control" id="description" name="description"
                                 placeholder="{{ __('tm_work_pattern.label_description') }}">
                         </div>
@@ -290,7 +291,7 @@
         function load_table_detail_work_pattern() {
             table = $('#work_pattern_detail_table').DataTable({
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                "bPaginate": false,
             });
         }
 
@@ -505,6 +506,9 @@
                     work_pattern_code: {
                         required: true,
                     },
+                    description: {
+                        required: true,
+                    },
                     no_of_day: {
                         required: true,
                     },
@@ -512,6 +516,9 @@
                 messages: {
                     work_pattern_code: {
                         required: "{{ __('tm_work_pattern.work_pattern_code_required') }}",
+                    },
+                    description: {
+                        required: "{{ __('tm_work_pattern.description_required') }}",
                     },
                     no_of_day: {
                         required: "{{ __('tm_work_pattern.no_of_day_required') }}",
