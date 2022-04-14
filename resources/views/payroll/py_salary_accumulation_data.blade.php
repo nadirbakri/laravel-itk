@@ -136,6 +136,12 @@
 				</thead>
 			</table>
 		</div>
+        <div class="div-form">
+            <form id="salary_accumulation_data_form" method="post">
+                @csrf
+                <input type="text" class="form-control" id="period_year" name="period_year" hidden>
+            </form>
+        </div>
 	</div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -191,6 +197,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var table = null;
+        var period_year = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
         $('#salary_accumulation_data_table thead tr').clone(true).appendTo('#salary_accumulation_data_table thead');
@@ -208,7 +215,18 @@
             } );
         });
 
-        load_data_table_salary_accumulation_data();
+        $.ajax({
+            url: "{{ url('/time_management/period/data/detail') }}",
+            type: "GET",
+            success: function (response) {
+                isData = Object.keys(response).length;
+                if (isData !== 0) {
+                    $('#period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
+                    period_year = $('#period_year').val();
+                    load_data_table_salary_accumulation_data();
+                }
+            }
+        });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -217,7 +235,12 @@
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('payroll/salary_accumulation_data/table') }}",
+                ajax: {
+                    url: "{{ url('payroll/salary_accumulation_data/table') }}",
+                    data: {
+                        'periodYear': period_year
+                    }
+                },
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -235,13 +258,7 @@
                     },
                     {data: 'employeeNo', name: 'employeeNo'},
                     {data: 'fullName', name: 'fullName'},
-                    {
-                        data: 'periodYear', 
-                        name: 'periodYear',
-                        render: function (data, type, row) {
-                            return moment(data).format('YYYY');
-                        }
-                    }
+                    {data: 'periodYear', name: 'periodYear'}
                 ],
                 select: {
                     style:    'multi',

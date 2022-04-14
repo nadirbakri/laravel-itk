@@ -556,7 +556,6 @@
                     'loanNo': data[0].description
                 },
                 success: function (response) {
-                    console.log(response);
                     responseGrid = response;
                     $('#rate_per_year').val(response[0].ratePerYear);
 

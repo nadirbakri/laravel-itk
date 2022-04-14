@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-payroll {
@@ -43,6 +43,18 @@
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .modal-header-authentication {
+            border-bottom: 1px solid #eee;
+            background-color: #004883;
+            color: white;
             -webkit-border-top-left-radius: 5px;
             -webkit-border-top-right-radius: 5px;
             -moz-border-radius-topleft: 5px;
@@ -84,6 +96,58 @@
 
 <body>
     <div class="div-payroll">
+        <div class="div-navbar sticky-navbar">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
+                <span>Back</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
+                <span>Next</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
+                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
+                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
+                <span>New</span>
+            </a>
+            <a href="javascript:void(0)" id="toolbar-edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit" data-toggle="modal" data-target="#modal_authentication">
+                <span>Edit</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
+                <span>Save</span>
+            </a>
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-active">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
+                <span>Activate</span>
+            </a>
+            <a class="list-functionbar-lg" style="display: none;" href="javascript:void(0)" id="toolbar-deactive">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
+                <span>Deactivate</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
+                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
+                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
+                <span>List</span>
+            </a>
+            <a class="list-functionbar-sm" style="display: none;" href="javascript:void(0)" id="toolbar-delete">
+                <img src="{{ url('/icons/functionbar/remove.svg') }}" alt="Delete">
+                <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
+                <span>Delete</span>
+            </a>
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
+                <span>Process</span>
+            </a>
+        </div>
         <div class="div-title">
             <a href="{{ url('payroll/salary_accumulation_data') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
@@ -147,50 +211,43 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="modal_edit_salary_accumulation_data" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_authentication" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ __('payroll_salary_accumulation_data.list') }}</h5>
+                <div class="modal-header modal-header-authentication text-center">
+                    <h5 class="modal-title w-100 title-text-notification-warning">{{ __('payroll_salary_accumulation_data.header_password_form') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="salary_accumulation_data_edit_form" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="user_id">{{ __('payroll_salary_accumulation_data.label_user_id') }}</label>
-                                        <input type="text" class="form-control" id="user_id" name="user_id"
-                                            placeholder="{{ __('payroll_salary_accumulation_data.label_user_id') }}">
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label
+                                    for="user_id">{{ __('payroll_salary_accumulation_data.label_user_id') }}</label>
+                                <input type="text" class="form-control" id="user_id" name="user_id"
+                                    placeholder={{ __('payroll_salary_accumulation_data.label_user_id') }}>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="password">{{ __('payroll_salary_accumulation_data.label_password') }}</label>
-                                        <input type="text" class="form-control" id="password" name="password"
-                                            placeholder="{{ __('payroll_salary_accumulation_data.label_password') }}">
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label
+                                    for="password">{{ __('payroll_salary_accumulation_data.label_password') }}</label>
+                                <input type="text" class="form-control" id="password" name="password"
+                                    placeholder={{ __('payroll_salary_accumulation_data.label_password') }}>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" id="btn-ok" name="btn-ok" class="btn btn-primary w-25"><i>
+                            </i> {{ __('payroll_salary_accumulation_data.btn_ok') }}</button>
+                        <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                            class="fa fa-times-circle"></i> {{ __('payroll_salary_accumulation_data.btn_cancel') }}</button>
+                    </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-process w-25" name="btn-save" id="btn-save">
-                        <i class="fa fa-play-circle-o"></i> {{ __('payroll_salary_accumulation_data.btn_save') }}
-                    </button>
-                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                        class="fa fa-times-circle"></i> {{ __('payroll_salary_accumulation_data.btn_cancel') }}</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
@@ -243,5 +300,15 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        
+        $('#toolbar-edit').on('click', function () {
+            $('#modal_authentication').show();
+        })
+    })
+</script>
 
 </html>
