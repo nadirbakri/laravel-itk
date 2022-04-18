@@ -390,6 +390,7 @@
                 width: '100%',
                 placeholder: 'Choose Day Code',
                 allowClear: true,
+                closeOnSelect: true,
                 // multiple: true,
                 // tags: true,
                 language: {
@@ -454,6 +455,7 @@
                 width: '100%',
                 placeholder: 'Choose Shift Code',
                 allowClear: true,
+                closeOnSelect: true,
                 // multiple: true,
                 // tags: true,
                 language: {

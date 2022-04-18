@@ -748,7 +748,7 @@
                 placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -813,7 +813,7 @@
                 placeholder: 'Choose Shift',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -875,7 +875,7 @@
                 placeholder: 'Choose Code',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

@@ -469,6 +469,7 @@
                 width: '100%',
                 placeholder: 'Choose Location',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -531,6 +532,7 @@
                 width: '100%',
                 placeholder: 'Choose Calendar Type',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

@@ -368,7 +368,7 @@
                 placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

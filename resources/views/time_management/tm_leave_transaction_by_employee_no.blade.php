@@ -405,6 +405,7 @@
                 width: '100%',
                 placeholder: 'Choose Employee',
                 allowClear: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function() {
                         return $search;

@@ -1114,7 +1114,7 @@
                 width: '100%',
                 placeholder: 'Choose Process Status',
                 allowClear: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -1393,7 +1393,7 @@
                 placeholder: 'Choose Deduct Day',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
