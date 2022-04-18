@@ -669,7 +669,7 @@
                 placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -851,7 +851,7 @@
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -915,7 +915,7 @@
                 placeholder: 'Choose Shift',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -980,6 +980,7 @@
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -1044,6 +1045,7 @@
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -1108,6 +1110,7 @@
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

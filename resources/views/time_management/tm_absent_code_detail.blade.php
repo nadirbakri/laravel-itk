@@ -575,7 +575,7 @@
                 placeholder: 'Choose Absent Type',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -637,7 +637,7 @@
                 placeholder: 'Choose Deduct Leave',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
