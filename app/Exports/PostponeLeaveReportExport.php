@@ -6,11 +6,12 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Validator;
 use Session;
 use App;
 
-class PostponeLeaveReportExport implements FromView
+class PostponeLeaveReportExport implements FromView, ShouldAutoSize 
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {

@@ -5,8 +5,9 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class TemplatePersonalDataTemplateSheet implements FromView, WithTitle
+class TemplatePersonalDataTemplateSheet implements FromView, WithTitle, ShouldAutoSize
 {
     public function view(): View
     {

@@ -6,11 +6,12 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Validator;
 use Session;
 use App;
 
-class MonthlyAbsenteeismDetailExport implements FromView
+class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $absentMonthFrom, $absentMonthTo, $includeResign, $changeHeader, $dataDetail, $hourOut, $hourTo, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {

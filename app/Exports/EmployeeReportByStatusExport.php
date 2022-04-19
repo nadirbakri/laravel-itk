@@ -6,11 +6,12 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Validator;
 use Session;
 use App;
 
-class EmployeeReportByStatusExport implements FromView
+class EmployeeReportByStatusExport implements FromView, ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection

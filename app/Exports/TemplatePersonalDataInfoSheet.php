@@ -7,11 +7,12 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Validator;
 use Session;
 use App;
 
-class TemplatePersonalDataInfoSheet implements FromView, WithTitle
+class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSize
 {
     public function view(): View
     {
