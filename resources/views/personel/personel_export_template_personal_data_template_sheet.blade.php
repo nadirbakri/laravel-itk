@@ -20,7 +20,7 @@
             <tr>
 				<th>Employee No *</th>
 				<th>Employee Name *</th>
-				<th>Birth Place</th>
+				<th>Birth Place *</th>
 				<th>Birth Date *</th>
 				<th>Gender *</th>
 				<th>MaritalStatus *</th>
@@ -29,7 +29,7 @@
 				<th>NationalityCode</th>
 				<th>CostCenterCode</th>
 				<th>EmploymentStatus *</th>
-				<th>FlagIsExpat</th>
+				<th>FlagIsExpat *</th>
 				<th>ExpatLicenceNo</th>
 				<th>ExpatLicenceStartDate</th>
 				<th>ExpatLicenceEndDate</th>
@@ -45,32 +45,32 @@
 				<th>Work Nature Code</th>
 				<th>Group Code</th>
 				<th>Group Authorize Code</th>
-				<th>Flag Commissioner</th>
+				<th>Flag Commissioner *</th>
 				<th>Mother Name</th>
-				<th>Absenteeism Type</th>
+				<th>Absenteeism Type *</th>
 				<th>Work Pattern Code</th>
-				<th>Start Join Day</th>
-				<th>Flag Not Absent</th>
-				<th>Flag Not Finger</th>
+				<th>Start Join Day *</th>
+				<th>Flag Not Absent *</th>
+				<th>Flag Not Finger *</th>
 				<th>Tax Status</th>
 				<th>Tax Status Next Year</th>
 				<th>Tax Calculation Method</th>
-				<th>Flag Astek Death Non Accident</th>
-				<th>Flag Astek Work Accident</th>
-				<th>Flag Astek Work Accident 2</th>
-				<th>Flag Astek Work Accident 3</th>
-				<th>Flag Astek Pension Employee</th>
-				<th>Flag Astek Pension Employer</th>
-				<th>Flag Astek Health Insurance</th>
-				<th>Flag Tax By Government</th>
-				<th>Flag Pension Insurance</th>
+				<th>Flag Astek Death Non Accident *</th>
+				<th>Flag Astek Work Accident *</th>
+				<th>Flag Astek Work Accident 2 *</th>
+				<th>Flag Astek Work Accident 3 *</th>
+				<th>Flag Astek Pension Employee *</th>
+				<th>Flag Astek Pension Employer *</th>
+				<th>Flag Astek Health Insurance *</th>
+				<th>Flag Tax By Government *</th>
+				<th>Flag Pension Insurance *</th>
 				<th>Group Npwp</th>
 				<th>Group Bpjs</th>
-				<th>Flag BPJS Kesehatan</th>
+				<th>Flag BPJS Kesehatan *</th>
 				<th>BPJS Kesehatan No</th>
 				<th>BPJS Kesehatan Join Date</th>
 				<th>BPJS Kesehatan Period Start Date</th>
-				<th>Flag BPJS Tenaga Kerja</th>
+				<th>Flag BPJS Tenaga Kerja *</th>
 				<th>BPJS Tenaga Kerja No</th>
 				<th>BPJS Tenaga Kerja Join Date</th>
 				<th>BPJS Tenaga Kerja Period Start Date</th>
@@ -92,7 +92,7 @@
 				<th>Bank Percentage Salary 3</th>
 				<th>Company Bank Code 3</th>
 				<th>Currency Code 3</th>
-				<th>Flag Exclude Payroll</th>
+				<th>Flag Exclude Payroll *</th>
 				<th>Nickname</th>
 				<th>Blood Type</th>
 				<th>Passport No</th>
@@ -146,7 +146,7 @@
 				<th>Insurance Start Date</th>
 				<th>Insurance End Date</th>
 				<th>Insurance Policy No</th>
-				<th>Leave Code</th>
+				<th>Leave Code *</th>
 			</tr>
 		</thead>
 	</table>
