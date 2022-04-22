@@ -9,12 +9,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithValidation;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
 
-class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMapping
+class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -23,10 +24,8 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
 
     public function transformDate($value, $format = 'm/d/Y')
     {
-        // var_dump(Date::excelToDateTimeObject($value)->format('m/d/Y'));
         try {
             return Carbon::instance(Date::excelToDateTimeObject($value));
-            // return Date::excelToDateTimeObject($value)->format('m/d/Y');
         } catch (\ErrorException $e) {
             return Carbon::createFromFormat($format, date('m/d/Y', strtotime($value)));
         }
@@ -34,10 +33,8 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
 
     public function transformDateTime($value, $format = 'Y-m-d\TH:i:s')
     {
-        // var_dump(Date::excelToDateTimeObject($value)->format('H:i'));
         try {
             return Carbon::instance(Date::excelToDateTimeObject($value));
-            // return Date::excelToDateTimeObject($value)->format('H:i');
         } catch (\ErrorException $e) {
             return Carbon::createFromFormat($format, date("Y-m-d\TH:i:s", strtotime($value)));
         }
@@ -55,28 +52,19 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // Validator::make($rows->toArray(), [
-                // '*.0' => 'date_format:m/\d/\Y',
-                // '*.3' => 'date_format:H:i',
-                // '*.4' => 'date_format:H:i:ss|after:ovtIn',
-                // '*.9' => 'date_format:H:i:ss'
-            // ])->validate();
-
             foreach ($rows as $row) {
-                // var_dump($row[3]);
-                // var_dump($this->transformDateTime($row[9])->setDate(date("Y",strtotime($date_ovt)), date("m",strtotime($date_ovt)), date("d",strtotime($date_ovt))));
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
-                    "employeeNo" => $row[0],
-                    "absentDate" => $row[1],
-                    "absentCode" => $row[2],
-                    "ovtIn" => $row[3],
-                    "ovtOut" => $row[4],
+                    "employeeNo" => (string) $row[0],
+                    "absentDate" => date("Y-m-d\TH:i:s", strtotime($row[1])),
+                    "absentCode" => (string) $row[2],
+                    "ovtIn" => date("Y-m-d\TH:i:s", strtotime($row[3])),
+                    "ovtOut" => date("Y-m-d\TH:i:s", strtotime($row[4])),
                     "day" => $row[5],
-                    "shiftCode" => $row[6],
-                    "costCenterCode" => $row[7],
-                    "ovtCode" => $row[8],
-                    "hourOvt" => $row[9],
+                    "shiftCode" => (string) $row[6],
+                    "costCenterCode" => (string) $row[7],
+                    "ovtCode" => (string) $row[8],
+                    "hourOvt" => date("Y-m-d\TH:i:s", strtotime($row[9])),
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),
@@ -88,13 +76,14 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName')
                 ];
-                // var_dump($param);
             }
+
             $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -107,6 +96,33 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
         $this->arrResult[] = json_decode($response->getBody()->getContents());
     }
 
+    public function rules(): array
+    {
+        return [
+            '1' => 'date_format:m/d/Y',
+            '3' => 'date_format:H:i',
+            '4' => 'date_format:H:i',
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            '1.date_format' => 'Date Format Must Be (01/31/2000)',
+            '3.date_format' => 'Hour & Minute In Format Must Be (07:01)',
+            '4.date_format' => 'Hour & Minute Out Format Must Be (07:01)',
+        ];
+    }
+
+    public function customValidationAttributes()
+    {
+        return [
+            '1' => 'Date',
+            '3' => 'Hour & Minute In',
+            '4' => 'Hour & Minute Out',
+        ];
+    }
+
     public function startRow(): int
     {
         return 2;
@@ -117,21 +133,21 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithStartRow, WithMap
         return $this->arrResult;
     }
 
-    public function map($invoice): array
-    {
-        $date_ovt = date("Y-m-d\TH:i:s");
+    // public function map($invoice): array
+    // {
+    //     $date_ovt = date("Y-m-d\TH:i:s");
         
-        return [
-            (string) $invoice[0],
-            $this->transformDate($invoice[1]),
-            (string) $invoice[2],
-            $this->transformDateTime($invoice[3]),
-            $this->transformDateTime($invoice[4]),
-            (string) $invoice[5],
-            (string) $invoice[6],
-            (string) $invoice[7],
-            (string) $invoice[8],
-            $this->transformDateTime($invoice[9])
-        ];
-    }
+    //     return [
+    //         (string) $invoice[0],
+    //         $this->transformDate($invoice[1]),
+    //         (string) $invoice[2],
+    //         $this->transformDateTime($invoice[3]),
+    //         $this->transformDateTime($invoice[4]),
+    //         (string) $invoice[5],
+    //         (string) $invoice[6],
+    //         (string) $invoice[7],
+    //         (string) $invoice[8],
+    //         $this->transformDateTime($invoice[9])
+    //     ];
+    // }
 }

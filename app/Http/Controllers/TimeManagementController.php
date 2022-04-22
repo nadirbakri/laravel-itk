@@ -1178,12 +1178,19 @@ class TimeManagementController extends Controller
 
     public function importUpdateAbsenteeismData(Request $request)
     {
-        $file = $request->file('file_location');
-        $nama_file = rand().$file->getClientOriginalName();
-        $file->move('file_excel', $nama_file);
-        $import = new UpdateAbsenteeismDataImport;
-        Excel::import($import, public_path('file_excel/'.$nama_file));
-        File::delete('file_excel/'.$nama_file);
+        try{
+            $file = $request->file('file_location');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new UpdateAbsenteeismDataImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file));
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+        
         return $import->getArrResult();
     }
 
