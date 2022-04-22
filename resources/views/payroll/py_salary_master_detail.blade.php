@@ -276,6 +276,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrData = @json($data);
+        var table = null;
 
         $.ajax({
             type: 'GET',

@@ -376,7 +376,6 @@
                         type: "POST",
                         data: $('#login_form').serialize(),
                         success: function (response) {
-                            console.log(response);
                             if (response.status == "true") {
                                 window.location = response.message;
                             } else {

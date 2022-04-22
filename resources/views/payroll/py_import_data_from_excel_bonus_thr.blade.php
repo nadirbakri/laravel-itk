@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_import_data_from_excel.judul') }}</title>
+    <title>{{ __('payroll_import_data_from_excel_bonus_thr.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -93,208 +93,99 @@
         <div class="div-title">
             <a href="{{ url('payroll') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('payroll_import_data_from_excel.list') }}</span>
+                <span class="title-text">{{ __('payroll_import_data_from_excel_bonus_thr.list') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="import_data_from_excel_form" method="post">
+            <form id="import_data_from_excel_bonus_thr_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-7">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="process_period">{{ __('payroll_import_data_from_excel.label_process_period') }}</label>
+                                    <label for="process_period">{{ __('payroll_import_data_from_excel_bonus_thr.label_process_period') }}</label>
                                     <input type="text" class="form-control" id="process_period" name="process_period"
-                                        placeholder="{{ __('payroll_import_data_from_excel.label_process_period') }}" readonly>
+                                        placeholder="{{ __('payroll_import_data_from_excel_bonus_thr.label_process_period') }}" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="column_a">{{ __('payroll_import_data_from_excel.label_column_a') }}</label>
+                                    <label for="column_a">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_a') }}</label>
                                     <input type="text" class="form-control" id="column_a" name="column_a"
-                                        placeholder="{{ __('payroll_import_data_from_excel.label_column_a') }}" value="Employee No" readonly>
+                                        placeholder="{{ __('payroll_import_data_from_excel_bonus_thr.label_column_a') }}" value="Employee No" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="column_b">{{ __('payroll_import_data_from_excel.label_column_b') }}</label>
+                                    <label for="column_b">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_b') }}</label>
                                     <input type="text" class="form-control" id="column_b" name="column_b"
-                                        placeholder="{{ __('payroll_import_data_from_excel.label_column_b') }}" value="Employee Name" readonly>
+                                        placeholder="{{ __('payroll_import_data_from_excel_bonus_thr.label_column_b') }}" value="Employee Name" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="column_c">{{ __('payroll_import_data_from_excel.label_column_c') }}</label>
+                                    <label for="column_c">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_c') }}</label>
                                     <select class="form-control select2" id="column_c" name="column_c">
                                         <option value="" disabled selected></option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for=""></label>
-                                    <select class="form-control select2" id="column_c2" name="column_c2" disabled></select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="column_d">{{ __('payroll_import_data_from_excel.label_column_d') }}</label>
+                                    <label for="column_d">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_d') }}</label>
                                     <select class="form-control select2" id="column_d" name="column_d">
                                         <option value="" disabled selected></option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_d2"></label>
-                                    <select class="form-control select2" id="column_d2" name="column_d2" disabled></select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="column_e">{{ __('payroll_import_data_from_excel.label_column_e') }}</label>
+                                    <label for="column_e">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_e') }}</label>
                                     <select class="form-control select2" id="column_e" name="column_e">
                                         <option value="" disabled selected></option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_e2"></label>
-                                    <select class="form-control select2" id="column_e2" name="column_e2" disabled></select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="column_f">{{ __('payroll_import_data_from_excel.label_column_f') }}</label>
+                                    <label for="column_f">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_f') }}</label>
                                     <select class="form-control select2" id="column_f" name="column_f">
                                         <option value="" disabled selected></option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_f2"></label>
-                                    <select class="form-control select2" id="column_f2" name="column_f2" disabled></select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="column_g">{{ __('payroll_import_data_from_excel.label_column_g') }}</label>
+                                    <label for="column_g">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_g') }}</label>
                                     <select class="form-control select2" id="column_g" name="column_g">
                                         <option value="" disabled selected></option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_g2"></label>
-                                    <select class="form-control select2" id="column_g2" name="column_g2" disabled></select>
-                                </div>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_h">{{ __('payroll_import_data_from_excel.label_column_h') }}</label>
-                                    <select class="form-control select2" id="column_h" name="column_h">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_h2"></label>
-                                    <select class="form-control select2" id="column_h2" name="column_h2" disabled></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_i">{{ __('payroll_import_data_from_excel.label_column_i') }}</label>
-                                    <select class="form-control select2" id="column_i" name="column_i">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_i2"></label>
-                                    <select class="form-control select2" id="column_i2" name="column_i2" disabled></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_j">{{ __('payroll_import_data_from_excel.label_column_j') }}</label>
-                                    <select class="form-control select2" id="column_j" name="column_j">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_j2"></label>
-                                    <select class="form-control select2" id="column_j2" name="column_j2" disabled></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_k">{{ __('payroll_import_data_from_excel.label_column_k') }}</label>
-                                    <select class="form-control select2" id="column_k" name="column_k">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_k2"></label>
-                                    <select class="form-control select2" id="column_k2" name="column_k2" disabled></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_l">{{ __('payroll_import_data_from_excel.label_column_l') }}</label>
-                                    <select class="form-control select2" id="column_l" name="column_l">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_l2"></label>
-                                    <select class="form-control select2" id="column_l2" name="column_l2" disabled></select>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="import_file">{{ __('payroll_import_data_from_excel.label_import_file') }}</label>
+                                    <label for="import_file">{{ __('payroll_import_data_from_excel_bonus_thr.label_import_file') }}</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="import_file" name="import_file">
-                                        <label class="custom-file-label" for="import_file">{{ __('payroll_import_data_from_excel.label_select_import_file') }}</label>
+                                        <label class="custom-file-label" for="import_file">{{ __('payroll_import_data_from_excel_bonus_thr.label_select_import_file') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -302,13 +193,13 @@
                         <div class="row">
                             <div class="col-3">
                                 <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                    <i class="fa fa-play-circle-o"></i> {{ __('payroll_import_data_from_excel.btn_process') }}
+                                    <i class="fa fa-play-circle-o"></i> {{ __('payroll_import_data_from_excel_bonus_thr.btn_process') }}
                                 </button>
                             </div>
                             <div class="col-3">
                                 <a class="btn btn-danger" href="{{ url('payroll/import_data_from_excel') }}" target="iframe_dashboard"
                                     name="btn-reset" id="btn-reset" style="width: 100%;">
-                                    <i class="fa fa-times-circle"></i> {{ __('payroll_import_data_from_excel.btn_reset') }}
+                                    <i class="fa fa-times-circle"></i> {{ __('payroll_import_data_from_excel_bonus_thr.btn_reset') }}
                                 </a>
                             </div>
                         </div>
@@ -318,10 +209,10 @@
                             <div class="col-12">
                                 <div class="form-group box">
                                     <div class="form-check">
-                                        <label for="transfer_to">{{ __('payroll_import_data_from_excel.label_transfer_to') }}</label>
+                                        <label for="transfer_to">{{ __('payroll_import_data_from_excel_bonus_thr.label_transfer_to') }}</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="salary_master" name="transfer_to" value="M" checked>
+                                        <input type="radio" id="salary_master" name="transfer_to" value="M">
                                         <label for="salary_master">Salary Master</label>
                                     </div>
                                     <div class="form-check">
@@ -333,7 +224,7 @@
                                         <label for="yearly">Yearly</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="bonus_thr" name="transfer_to" value="B">
+                                        <input type="radio" id="bonus_thr" name="transfer_to" value="B" checked>
                                         <label for="bonus_thr">Bonus / THR</label>
                                     </div>
                                 </div>
@@ -370,7 +261,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_import_data_from_excel.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_import_data_from_excel_bonus_thr.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -408,11 +299,12 @@
         $('input[type="radio"]').on('change', function () {
             if ($('#bonus_thr').is(':checked')) {
                 window.location.href = ("{{ url('payroll/import_data_from_excel_bonus_thr') }}");
+            } else {
+                window.location.href = ("{{ url('payroll/import_data_from_excel') }}");
             }
         });
 
         loadDataTransferTo();
-        loadDataCurrencyCode();
 
         function loadDataTransferTo() {
             var listTransferTo = [
@@ -437,64 +329,6 @@
                         return $search;
                     }
                 },
-            });
-        }
-
-        function loadDataCurrencyCode(){
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#column_c2, #column_d2, #column_e2, #column_f2, #column_g2, #column_h2, #column_i2, #column_j2, #column_k2, #column_l2').select2({
-                width: '100%',
-                placeholder: 'Choose Currency',
-                allowClear: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/currency/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.value,
-                                    id: item.comGenCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
             });
         }
     })

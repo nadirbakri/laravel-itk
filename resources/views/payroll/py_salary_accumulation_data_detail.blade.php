@@ -87,6 +87,12 @@
             margin-left: 0.5%;
         }
 
+        .title-text-authentication {
+            font-family: Inter;
+            font-weight: 500;
+            font-size: 2vw;
+        }
+
         .required {
             color: red;
         }
@@ -112,9 +118,9 @@
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
                 <span>New</span>
             </a>
-            <a href="javascript:void(0)" id="toolbar-edit">
+            <a href="javascript:void(0)" id="toolbar-edit" data-toggle="modal" data-target="#modal_authentication">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
-                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit" data-toggle="modal" data-target="#modal_authentication">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
@@ -169,7 +175,7 @@
                         <div class="form-group">
                             <label for="employee_name">{{ __('payroll_salary_accumulation_data.label_employee_name') }}</label>
                             <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder="{{ __('payroll_salary_accumulation_data.label_employee_name') }}">
+                                placeholder="{{ __('payroll_salary_accumulation_data.label_employee_name') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -178,7 +184,7 @@
                         <div class="form-group">
                             <label for="year">{{ __('payroll_salary_accumulation_data.label_year') }}</label>
                             <input type="text" class="form-control" id="year" name="year"
-                                placeholder="{{ __('payroll_salary_accumulation_data.label_year') }}">
+                                placeholder="{{ __('payroll_salary_accumulation_data.label_year') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -186,10 +192,11 @@
                     <table id="salary_accumulation_data_detail_table" class="table hover" style="width: 100%">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>{{ __('payroll_salary_accumulation_data.table_field_name') }}</th>
                                 <th>{{ __('payroll_salary_accumulation_data.table_description') }}</th>
-                                <th>{{ __('payroll_salary_accumulation_data.table_amount') }}</th>
+                                <th>{{ __('payroll_salary_accumulation_data.table_amount') }}
+                                    <small class="text-muted">(0 - 0,9)</small>
+                                </th>
                             </tr>
                         </thead>
                     </table>
@@ -197,7 +204,7 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
-                            style="width: 100%;">
+                            style="width: 100%;" disabled>
                             <i class="fa fa-floppy-o"></i> {{ __('payroll_salary_accumulation_data.btn_save') }}
                         </button>
                     </div>
@@ -215,38 +222,46 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-authentication text-center">
-                    <h5 class="modal-title w-100 title-text-notification-warning">{{ __('payroll_salary_accumulation_data.header_password_form') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title w-100 title-text-authentication">{{ __('payroll_salary_accumulation_data.header_password_form') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label
-                                    for="user_id">{{ __('payroll_salary_accumulation_data.label_user_id') }}</label>
-                                <input type="text" class="form-control" id="user_id" name="user_id"
-                                    placeholder={{ __('payroll_salary_accumulation_data.label_user_id') }}>
+                    <form id="authentication_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label
+                                        for="user_id">{{ __('payroll_salary_accumulation_data.label_user_id') }}</label>
+                                    <input type="text" class="form-control" id="user_id" name="user_id"
+                                        placeholder={{ __('payroll_salary_accumulation_data.label_user_id') }}>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label
-                                    for="password">{{ __('payroll_salary_accumulation_data.label_password') }}</label>
-                                <input type="text" class="form-control" id="password" name="password"
-                                    placeholder={{ __('payroll_salary_accumulation_data.label_password') }}>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="password">{{ __('payroll_salary_accumulation_data.label_password') }}</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder={{ __('payroll_salary_accumulation_data.label_password') }}>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary rounded-right" type="button" id="show_password"><i id="icon_show_password"
+                                                class="fa fa-eye" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="submit" id="btn-ok" name="btn-ok" class="btn btn-primary w-25"><i>
-                            </i> {{ __('payroll_salary_accumulation_data.btn_ok') }}</button>
-                        <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
-                            class="fa fa-times-circle"></i> {{ __('payroll_salary_accumulation_data.btn_cancel') }}</button>
-                    </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="submit" id="btn-ok" name="btn-ok" class="btn btn-primary w-25"><i>
+                                </i> {{ __('payroll_salary_accumulation_data.btn_ok') }}</button>
+                            <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                class="fa fa-times-circle"></i> {{ __('payroll_salary_accumulation_data.btn_cancel') }}</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -304,10 +319,310 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var arrData = @json($data);
+        var table = null;
+
+        $.ajax({
+            type: 'GET',
+            url: '/employee_no/req_detail/api',
+            data: {
+                'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
+            }
+        }).then(function (data) {
+            var option = $('<option/>', {
+                id: data.employeeNo,
+                title: data.fullName,
+                text: data.employeeNo
+            });
+            $("#employee_no").append(option).attr('data-alias', 'yourvalue').trigger(
+                'change');
+            $("#employee_no").trigger({
+                type: 'select2:select',
+                params: {
+                    id: data.employeeNo,
+                    text: data.employeeNo,
+                    data: data
+                }
+            });
+        });
+
+        $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
+        $('#employee_name').val((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : '');
+        $('#year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+
+        load_data_table_salary_accumulation_data_detail();
+
+        if (typeof arrData[0].grid !== 'undefined') {
+            $.each(arrData[0].grid, function(k, v) {
+                table.row.add([
+                    '<input type="text" class="form-control" name="field_name[]" id="field_name'+ k +'" value="'+ ((typeof v.fieldName !== 'undefined' && v.fieldName !== null) ? v.fieldName : '') +'" readonly>',
+                    '<input type="text" class="form-control" name="description[]" id="description'+ k +'" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
+                    '<input type="number" min=0 max=0.9 step="0.1" class="form-control" name="amount[]" id="amount'+ k +'" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'" readonly>'
+                ]).draw();
+            });
+        }
+
+        $("#show_password").on('click', function (event) {
+            event.preventDefault();
+            if ($('#password').attr("type") == "text") {
+                $('#password').attr('type', 'password');
+                $('#icon_show_password').addClass("fa-eye");
+                $('#icon_show_password').removeClass("fa-eye-slash");
+            } else if ($('#password').attr("type") == "password") {
+                $('#password').attr('type', 'text');
+                $('#icon_show_password').removeClass("fa-eye");
+                $('#icon_show_password').addClass("fa-eye-slash");
+            }
+        });
+
+        loadDataEmployeeNo();
+
+        function load_data_table_salary_accumulation_data_detail() {
+            table = $('#salary_accumulation_data_detail_table').DataTable({
+                processing: true,
+                orderCellsTop: true,
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses'
+            });
+        }
         
-        $('#toolbar-edit').on('click', function () {
-            $('#modal_authentication').show();
-        })
+        function loadDataEmployeeNo() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#employee_no').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee Name</b></div>' +
+                        '</div>';
+                    $('.select2-search').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#employee_no').select2({
+                width: '100%',
+                placeholder: 'Choose Employee',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employee_no/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.employeeNo,
+                                    id: item.employeeNo,
+                                    title: item.fullName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $("#salary_accumulation_data_form").submit();
+        });
+
+        if ($("#authentication_form").length > 0) {
+            $("#authentication_form").validate({
+                rules: {
+                    user_id: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    user_id: {
+                        required: "{{ __('payroll_salary_accumulation_data.userid_required') }}",
+                    },
+                    password: {
+                        required: "{{ __('payroll_salary_accumulation_data.password_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    jQuery(element).closest('.form-control').addClass('is-invalid');
+                    $('#show_password').addClass('danger');
+                },
+                unhighlight: function (element) {
+                    jQuery(element).closest('.form-control').removeClass('is-invalid');
+                    $('#show_password').removeClass('danger');
+                },
+                errorElement: 'label',
+                errorClass: 'text-danger',
+                errorPlacement: function (error, element) {
+                    $("#btn-ok").prop("disabled", false);
+                    $("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                    $("#btn-ok").prop("disabled", true);
+                    $("#btn-ok").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                    );
+                    
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('authentication/proses') }}",
+                        type: "POST",
+                        data: $('#authentication_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+								$("#btn-ok").prop("disabled", false);
+								$("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                $('#salary_accumulation_data_detail_table').DataTable().destroy();
+                                load_data_table_salary_accumulation_data_detail();
+                                setTimeout(function () {
+                                    $('#notification_success').modal('hide');
+                                }, 3000);
+                                $('#modal_authentication').modal('hide');
+
+                                if (typeof arrData[0].grid !== 'undefined') {
+                                    $.each(arrData[0].grid, function(k, v) {
+                                        $('#amount' + k).prop('readonly', false);
+                                    });
+                                }
+
+                                $('#btn-save').prop('disabled', false);
+                            } else {
+								$("#btn-ok").prop("disabled", false);
+								$("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response.message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-ok").prop("disabled", false);
+                            $("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+                            $('#notification').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
+
+        if ($("#salary_accumulation_data_form").length > 0) {
+            $("#salary_accumulation_data_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/salary_accumulation_data/proses') }}",
+                        type: "POST",
+                        data: $('#salary_accumulation_data_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_accumulation_data.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/salary_accumulation_data') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_accumulation_data.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_accumulation_data.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
     })
 </script>
 

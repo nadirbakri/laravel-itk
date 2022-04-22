@@ -223,12 +223,6 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/yearly_adjusment') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.yearly_adjusment') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
 							<a href="{{ url('payroll/spt_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.spt_process') }}</span>

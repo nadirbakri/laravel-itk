@@ -884,6 +884,39 @@ class DataController extends Controller
         return response()->json($arrResult->dataListSet[0]);
 	}
 
+	public function dataCurrencyCodeFullPartialLoanPaymentAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'currencyCode' => $request->currencyCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
+
 	public function dataZipCodeAPI(Request $request)
     {
     	$search = $request->search;
@@ -1958,8 +1991,8 @@ class DataController extends Controller
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->employeeNo)){
 	    				return preg_match('/' . $search . '/i', $value->employeeNo);
-	    			}else if(preg_match('/' . $search . '/i', $value->employeeName)){
-	    				return preg_match('/' . $search . '/i', $value->employeeName);
+	    			}else if(preg_match('/' . $search . '/i', $value->fullName)){
+	    				return preg_match('/' . $search . '/i', $value->fullName);
 	    			}
 	    		}
 	    	);
@@ -6260,6 +6293,39 @@ class DataController extends Controller
 	    	]);
 
 	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+	    				'employeeNo' => $request->employeeNo
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet[0]);
+	}
+
+	public function dataEmployeeNoFullPartialLoanPaymentAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',

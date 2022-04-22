@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::get('login', 'LoginController@pageLogin');
 Route::post('login/proses', 'LoginController@prosesLogin');
 Route::get('logout', 'LoginController@prosesLogout');
+Route::post('authentication/proses', 'LoginController@prosesAuthentication');
 
 /* Route Untuk Halaman Reset Password */
 Route::get('reset_password', 'ResetPasswordController@pageResetPassword');
@@ -485,6 +486,7 @@ Route::get('payroll/severance_data_entry', 'PayrollController@pageSeveranceDataE
 Route::get('payroll/salary_accumulation_data', 'PayrollController@pageSalaryAccumulationData');
 Route::get('payroll/tarif_master', 'PayrollController@pageTarifMaster');
 Route::get('payroll/import_data_from_excel', 'PayrollController@pageImportDataFromExcel');
+Route::get('payroll/import_data_from_excel_bonus_thr', 'PayrollController@pageImportDataFromExcelBonusTHR');
 Route::get('payroll/thr_data_entry', 'PayrollController@pageThrDataEntry');
 Route::get('payroll/bonus_data_entry', 'PayrollController@pageBonusDataEntry');
 Route::get('payroll/loan_master', 'PayrollController@pageLoanMaster');
@@ -507,7 +509,6 @@ Route::get('payroll/report_format', 'PayrollController@pageReportFormat');
 Route::get('payroll/multi_cost_center', 'PayrollController@pageMultiCostCenter');
 /* Payroll Process Menu */
 Route::get('payroll/year_end_process', 'PayrollController@pageYearEndProcess');
-Route::get('payroll/yearly_adjusment', 'PayrollController@pageYearlyAdjusment');
 Route::get('payroll/spt_process', 'PayrollController@pageSptProcess');
 Route::get('payroll/final_tax_process', 'PayrollController@pageFinalTaxProcess');
 Route::get('payroll/monthly_payroll_closing_process', 'PayrollController@pageMonthlyPayrollClosingProcess');
@@ -564,6 +565,7 @@ Route::get('payroll/salary_component_data/table', 'PayrollController@tableSalary
 Route::post('payroll/salary_master/proses', 'PayrollController@prosesSalaryMasterPY');
 Route::post('payroll/severance_data_entry/proses', 'PayrollController@prosesSeveranceDataEntryPY');
 Route::post('payroll/tariff_master/proses', 'PayrollController@prosesTariffMasterPY');
+Route::post('payroll/salary_accumulation_data/proses', 'PayrollController@prosesSalaryAccumulationDataPY');
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
 Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
 Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
@@ -579,6 +581,7 @@ Route::post('payroll/multi_cost_center/proses','PayrollController@prosesMultiCos
 Route::post('payroll/salary_component_data/proses', 'PayrollController@prosesSalaryComponentDataPY');
 Route::post('payroll/salary_component_data_process/proses', 'PayrollController@prosesSalaryComponentDataProcessPY');
 Route::post('payroll/reference_payroll/proses', 'PayrollController@prosesReferencePayrollPY');
+Route::post('payroll/year_end_process/proses', 'PayrollController@prosesYearEndProcessPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
@@ -722,6 +725,7 @@ Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
 Route::get('employee_no/req_detail/api', 'DataController@dataEmployeeNoReqDetailAPI');
 Route::get('employee_no_term_date/api', 'DataController@dataEmployeeNoTermDateNotNullAPI');
+Route::get('employee_no_full_partial_loan_payment/api', 'DataController@dataEmployeeNoFullPartialLoanPaymentAPI');
 Route::get('employee_no_loan_payment/api', 'DataController@dataEmployeeNoLoanPaymentAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
@@ -821,6 +825,7 @@ Route::get('employee_no/severance/api', 'DataController@dataEmployeeNoSeveranceA
 Route::get('employee_no/loan_data_entry/api', 'DataController@dataEmployeeNoLoanDataEntryAPI');
 Route::get('loan_code/loan_data_entry/api', 'DataController@dataLoanCodeLoanDataEntryAPI');
 Route::get('currency_code/loan_data_entry/api', 'DataController@dataCurrencyCodeLoanDataEntryAPI');
+Route::get('currency_code_full_partial_loan_payment/api', 'DataController@dataCurrencyCodeFullPartialLoanPaymentAPI');
 Route::get('field_name_edit_salary_component/api', 'DataController@dataEditFieldNameSalaryComponentAPI');
 Route::get('employee_no_slip_format/api', 'DataController@dataEmployeeNoSlipFormatAPI');
 Route::get('attachment_code/api', 'DataController@dataAttachmentCodeAPI');

@@ -17,6 +17,8 @@ return [
     'btn_ok' => 'OK',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',
+    'userid_required' => 'User ID Required',
+    'password_required' => 'Password Required'
 ]
 
 ?>

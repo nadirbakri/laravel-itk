@@ -76,4 +76,36 @@ class LoginController extends Controller
     	Session::flush();
     	return redirect('login');
     }
+
+	public function prosesAuthentication(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json' ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/auth',
+	    		['body' => json_encode(
+	    			[
+	    				'username' => $request->user_id,
+	    				'password' => $request->password,
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
 }

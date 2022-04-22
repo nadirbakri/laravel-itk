@@ -299,14 +299,18 @@
                     <table id="full_partial_loan_payment_detail_table" class="table hover" style="width: 100%">
                         <thead>
                             <tr>
-                                <th style="width: 15%">Date</th>
-                                <th style="width: 7%">Seq</th>
-                                <th style="width: 15%">Type</th>
-                                <th style="width: 10%">Principal</th>
-                                <th style="width: 10%">Interest</th>
-                                <th style="width: 10%">Payment</th>
-                                <th style="width: 10%">Outstanding</th>
-                                <th style="width: 18%">Paid</th>
+                                <th>Date</th>
+                                <th>Seq</th>
+                                <th>Type</th>
+                                <th>Principal</th>
+                                <th>Interest</th>
+                                <th>Payment</th>
+                                <th>Outstanding</th>
+                                <th>Paid</th>
+                                <th style="display: none; width: 0%">Employee No</th>
+                                <th style="display: none; width: 0%">Employee Name</th>
+                                <th style="display: none; width: 0%">Loan No</th>
+                                <th style="display: none; width: 0%">Rate Per Year</th>
                             </tr>
                         </thead>
                     </table>
@@ -409,8 +413,15 @@
         var paymentTable = 0;
         var principal_table = 0;
         var interest_table = 0;
+        var outstanding_table_month = 0;
+        var principal_table_month = 0;
         var outstanding_table = 0;
         var outstandingTableSeq = 0;
+
+        var employee_no_table = null;
+        var employee_name_table = null;
+        var loan_no_table = 0;
+        var rate_per_year_table = 0;
 
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
@@ -468,10 +479,119 @@
             $('#new_outstanding_amount').val("");
             $('#new_rate_per_year').val("");
             $('#new_no_of_installment_not_yet_paid').val("");
-            filter_employee_no = $('#employee_no').val();
-            filter_loan_no = $('#loan_no').val();
             $('#full_partial_loan_payment_detail_table').DataTable().destroy();
-            load_data_table_loan_payment(filter_employee_no, filter_loan_no);
+            load_data_table_loan_payment();
+
+            $('#employee_no').on('select2:select', function (e) {
+                var data = $('#employee_no').select2('data');
+                $('#employee_name').val(htmlDecode(data[0].title));
+                $('#loan_no').val(htmlDecode(data[0].description));
+
+                employee_no_table = $('#employee_no').val();
+                employee_name_table = $('#employee_name').val();
+                loan_no_table = $('#loan_no').val();
+                rate_per_year_table = $('#new_rate_per_year').val();
+
+                $.ajax({
+                    url: "{{ url('payroll/full_partial_loan_payment/data') }}",
+                    type: "GET",
+                    data: {
+                        'employeeNo': data[0].id,
+                        'loanNo': data[0].description
+                    },
+                    success: function (response) {
+                        responseGrid = response;
+                        $('#rate_per_year').val(response[0].ratePerYear);
+
+                        $('#full_partial_loan_payment_detail_table').DataTable().destroy();
+                        load_data_table_loan_payment();
+                        table.clear().draw();
+
+                        if (typeof response[0].detail !== 'undefined') {
+                            arrTable = response[0].detail;
+                            $.each(response[0].detail, function(k, v) {
+                                // if (typeof v.paymentType !== 'undefined' && v.paymentType !== null) {
+                                //     if (v.paymentType == 'S') {
+                                //         paymentType = 'Salary';
+                                //     } else if (v.paymentType == 'B') {
+                                //         paymentType = 'Bonus';
+                                //     } else if (v.paymentType == 'T') {
+                                //         paymentType = 'THR';
+                                //     } else {
+                                //         paymentType = 'Cash';
+                                //     }
+                                // }
+
+                                table.row.add([
+                                    '<input type="text" class="form-control" id="payment_date_table'+ k +'" name="payment_date_table[]" value="'+ ((typeof v.paymentDate !== 'undefined' && v.paymentDate !== null) ? moment(v.paymentDate).format('DD-MMM-YYYY') : '') +'" readonly>',
+                                    '<input type="number" class="form-control" id="seq_no_table'+ k +'" name="seq_no_table[]" value="'+ ((typeof v.paymentSeq !== 'undefined' && v.paymentSeq !== null) ? v.paymentSeq : '') +'" readonly>',
+                                    '<input type="text" class="form-control" id="payment_type_table'+ k +'" name="payment_type_table[]" value="'+ ((typeof v.paymentType !== 'undefined' && v.paymentType !== null) ? v.paymentType : '') +'" readonly>',
+                                    '<input type="number" class="form-control" id="principal_table'+ k +'" name="principal_table[]" value="'+ ((typeof v.paymentPrincipal !== 'undefined' && v.paymentPrincipal !== null) ? v.paymentPrincipal : '') +'" readonly>',
+                                    '<input type="number" class="form-control" id="interest_table'+ k +'" name="interest_table[]" value="'+ ((typeof v.paymentInterest !== 'undefined' && v.paymentInterest !== null) ? v.paymentInterest : '') +'" readonly>',
+                                    '<input type="number" class="form-control" id="payment_table'+ k +'" name="payment_table[]" data-seq = "'+ k +'" value="'+ ((typeof v.payment !== 'undefined' && v.payment !== null) ? v.payment : '') +'" readonly>',
+                                    '<input type="number" class="form-control" id="outstanding_table'+ k +'" data-seq = "'+ k +'" name="outstanding_table[]" value="'+ ((typeof v.outStandingAmount !== 'undefined' && v.outStandingAmount !== null) ? v.outStandingAmount : '') +'" readonly>',
+                                    '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>',
+                                    '<input type="text" class="form-control" id="employee_no_table'+ k +'" name="employee_no_table[]" hidden>',
+                                    '<input type="text" class="form-control" id="employee_name_table'+ k +'" name="employee_name_table[]" hidden>',
+                                    '<input type="text" class="form-control" id="loan_no_table'+ k +'" name="loan_no_table[]" hidden>',
+                                    '<input type="text" class="form-control" id="rate_per_year_table'+ k +'" name="rate_per_year_table[]" hidden>',
+                                ]).draw();
+
+                                $('#payment_type_table' + k).text(paymentType);
+                                $('#employee_no_table' + k).val(data[0].id);
+                                $('#employee_name_table' + k).val(data[0].title);
+                                $('#loan_no_table' + k).val(data[0].description);
+                                $('#rate_per_year_table' + k).val($('#new_rate_per_year').val());
+
+                                principal_table = $('#principal_table'+ k).val();
+                                interest_table = $('#interest_table' + k).val();
+
+                                paymentTable = parseFloat(principal_table) + parseFloat(interest_table);
+                                $('#payment_table' + 0).val(parseInt(0));
+                                $('#payment_table' + k).val(parseFloat(paymentTable).toFixed(2));
+
+                                if (v.flagStatus == false && typeof v.flagStatus !== 'undefined') {
+                                    arrSeqNo.push(v.paymentSeq);
+                                    arrPrincipalAmount.push(v.paymentPrincipal);
+                                    arrInterest.push(v.paymentInterest);
+                                    arrOutstandingAmount.push(v.outStandingAmount);
+                                    
+                                    $('#paid_loan_seq').val(arrSeqNo[0]);
+                                    $('#no_of_installment_not_yet_paid').val(arrSeqNo.length + 1);
+                                    $('#principal_amount_installment').val(arrPrincipalAmount[0]);
+                                    $('#interest_amount_per_installment').val(arrInterest[0]);
+                                    $('#outstanding_amount').val(arrOutstandingAmount[0]);
+
+                                    var principalAmount = parseFloat($('#principal_amount_installment').val());
+                                    var interestAmount = parseFloat($('#interest_amount_per_installment').val());
+                                    var outstandingAmount = parseFloat($('#outstanding_amount').val());
+
+                                    totalNotYetPaid = interestAmount + principalAmount + outstandingAmount;
+                                    $('#total_not_yet_paid').val(totalNotYetPaid);
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('#employee_no').on('select2:unselecting', function (e) {
+                $('#employee_name').val('');
+                $('#loan_no').val('');
+                $('#rate_per_year').val('');
+                $('#paid_loan_seq').val('');
+                $('#no_of_installment_not_yet_paid').val('');
+                $('#principal_amount_installment').val('');
+                $('#interest_amount_per_installment').val('');
+                $('#outstanding_amount').val('');
+                $('#total_not_yet_paid').val('');
+                $('#new_outstanding_amount').val('');
+                $('#new_rate_per_year').val('');
+                $('#new_no_installment_not_yet_paid').val('');
+                $('#full_partial_loan_payment_detail_table').DataTable().destroy();
+                load_data_table_loan_payment();
+                table.clear().draw();
+            });
         } 
         else {
             $('#record_function').val('Edit');
@@ -487,18 +607,24 @@
             $('#interest_amount_per_installment').prop('readonly', true);
             $('#outstanding_amount').prop('readonly', true);
             $('#total_not_yet_paid').prop('readonly', true);
-            $('#payment_amount').prop('readonly', false);
+            if (arrData[0].paymentFlag === 'F') {
+                $('#payment_amount').prop('readonly', true);
+                $('#new_rate_per_year').prop('readonly', true);
+                $('#new_no_of_installment_not_yet_paid').prop('readonly', true);
+            } else {
+                $('#payment_amount').prop('readonly', false);
+                $('#new_rate_per_year').prop('readonly', false);
+                $('#new_no_of_installment_not_yet_paid').prop('readonly', false);
+            }
             $('#other_cost').prop('readonly', false);
             $('#total_payment').prop('readonly', true);
             $('#new_outstanding_amount').prop('readonly', true);
-            $('#new_rate_per_year').prop('readonly', false);
-            $('#new_no_of_installment_not_yet_paid').prop('readonly', false);
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/req_detail/api',
+                url: '/employee_no_full_partial_loan_payment/api',
                 data: {
-                    'employeeNo': ((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : '')
+                    'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
                 }
             }).then(function (data) {
                 var option = $('<option/>', {
@@ -517,47 +643,60 @@
                     }
                 });
             });
-            $('#employee_name').val("");
+            $('#employee_name').val((typeof arrData[0].employeeName !== 'undefined') ? arrData[0].employeeName : '');
             $('#loan_no').val((typeof arrData2[0].loanNo !== 'undefined') ? arrData2[0].loanNo : '');
             $('#rate_per_year').val((typeof arrData2[0].ratePerYear !== 'undefined') ? arrData2[0].ratePerYear : '');
             $('#paid_loan_seq').val((typeof arrData[0].auditLoanSeqNo !== 'undefined') ? arrData[0].auditLoanSeqNo : '');
             $('#no_of_installment_not_yet_paid').val((typeof arrData[0].noOfInstallmentNotYetPaid !== 'undefined') ? arrData[0].noOfInstallmentNotYetPaid : '');
-            $('#payment_method').val(null).trigger('change');
-            $('#currency_code').val(null).trigger('change');
-            $('#principal_amount_installment').val("");
-            $('#interest_amount_per_installment').val("");
-            $('#outstanding_amount').val("");
-            $('#total_not_yet_paid').val("");
-            $('#payment_amount').val("");
-            $('#other_cost').val("");
-            $('#total_payment').val("");
-            $('#new_outstanding_amount').val("");
-            $('#new_rate_per_year').val("");
-            $('#new_no_of_installment_not_yet_paid').val("");
+            $('#payment_method').val((typeof arrData[0].paymentFlag !== 'undefined') ? arrData[0].paymentFlag : '').trigger('change');
+            $.ajax({
+                type: 'GET',
+                url: '/currency_code_full_partial_loan_payment/api',
+                data: {
+                    'currencyCode': ((typeof arrData[0].loanCurrencyCode !== 'undefined') ? arrData[0].loanCurrencyCode : '')
+                }
+            }).then(function (data) {
+                var option = $('<option/>', {
+                    id: data.loanCurrencyCode,
+                    title: data.loanCurrencyCode,
+                    text: data.loanCurrencyCode
+                });
+                $("#currency_code").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#currency_code").trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data.loanCurrencyCode,
+                        text: data.loanCurrencyCode,
+                        data: data
+                    }
+                });
+            });
+            $('#principal_amount_installment').val((typeof arrData[0].principalAmount !== 'undefined') ? arrData[0].principalAmount : '');
+            $('#interest_amount_per_installment').val((typeof arrData[0].interestAmount !== 'undefined') ? arrData[0].interestAmount : '');
+            $('#outstanding_amount').val((typeof arrData[0].oldOutstanding !== 'undefined') ? arrData[0].oldOutstanding : '');
+            total_not_yet_paid = parseFloat($('#principal_amount_installment').val()) + parseFloat($('#interest_amount_per_installment').val()) + parseFloat($('#outstanding_amount').val());
+            $('#total_not_yet_paid').val(total_not_yet_paid);
+            $('#payment_amount').val((typeof arrData[0].paymentAmountBeforeCost !== 'undefined') ? arrData[0].paymentAmountBeforeCost : '');
+            $('#other_cost').val((typeof arrData[0].paymentOtherCost !== 'undefined') ? arrData[0].paymentOtherCost : '');
+            $('#total_payment').val((typeof arrData[0].paymentAmount !== 'undefined') ? arrData[0].paymentAmount : '');
+            $('#new_outstanding_amount').val((typeof arrData[0].newOutstanding !== 'undefined') ? arrData[0].newOutstanding : '');
+            $('#new_rate_per_year').val((typeof arrData[0].newRatePerYear !== 'undefined') ? arrData[0].newRatePerYear : '');
+            $('#new_no_of_installment_not_yet_paid').val((typeof arrData[0].newNoOfInstallmentNotYetPaid !== 'undefined') ? arrData[0].newNoOfInstallmentNotYetPaid : '');
 
             $('#full_partial_loan_payment_detail_table').DataTable().destroy();
             load_data_table_loan_payment();
-        }
-
-        function htmlDecode(value) {
-    	    return $("<textarea/>").html(value).text();
-	    }
-
-        $('#employee_no').on('select2:select', function (e) {
-            var data = $('#employee_no').select2('data');
-            $('#employee_name').val(htmlDecode(data[0].title));
-            $('#loan_no').val(htmlDecode(data[0].description));
 
             $.ajax({
                 url: "{{ url('payroll/full_partial_loan_payment/data') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': data[0].id,
-                    'loanNo': data[0].description
+                    'employeeNo': $('#employee_no').val(),
+                    'loanNo': $('#loan_no').val(),
+                    'auditLoanSeqNo': $('#paid_loan_seq').val()
                 },
                 success: function (response) {
                     responseGrid = response;
-                    $('#rate_per_year').val(response[0].ratePerYear);
 
                     $('#full_partial_loan_payment_detail_table').DataTable().destroy();
                     load_data_table_loan_payment();
@@ -566,27 +705,31 @@
                     if (typeof response[0].detail !== 'undefined') {
                         arrTable = response[0].detail;
                         $.each(response[0].detail, function(k, v) {
-                            if (typeof v.paymentType !== 'undefined' && v.paymentType !== null) {
-                                if (v.paymentType == 'S') {
-                                    paymentType = 'Salary';
-                                } else if (v.paymentType == 'B') {
-                                    paymentType = 'Bonus';
-                                } else if (v.paymentType == 'T') {
-                                    paymentType = 'THR';
-                                } else {
-                                    paymentType = 'Cash';
-                                }
-                            }
+                            // if (typeof v.paymentType !== 'undefined' && v.paymentType !== null) {
+                            //     if (v.paymentType == 'S') {
+                            //         paymentType = 'Salary';
+                            //     } else if (v.paymentType == 'B') {
+                            //         paymentType = 'Bonus';
+                            //     } else if (v.paymentType == 'T') {
+                            //         paymentType = 'THR';
+                            //     } else {
+                            //         paymentType = 'Cash';
+                            //     }
+                            // }
 
                             table.row.add([
-                                '<input type="text" class="form-control" id="payment_date_table_table'+ k +'" name="payment_date_table_table[]" value="'+ ((typeof v.paymentDate !== 'undefined' && v.paymentDate !== null) ? moment(v.paymentDate).format('DD-MMM-YYYY') : '') +'" readonly>',
+                                '<input type="text" class="form-control" id="payment_date_table'+ k +'" name="payment_date_table[]" value="'+ ((typeof v.paymentDate !== 'undefined' && v.paymentDate !== null) ? moment(v.paymentDate).format('DD-MMM-YYYY') : '') +'" readonly>',
                                 '<input type="number" class="form-control" id="seq_no_table'+ k +'" name="seq_no_table[]" value="'+ ((typeof v.paymentSeq !== 'undefined' && v.paymentSeq !== null) ? v.paymentSeq : '') +'" readonly>',
-                                '<input type="text" class="form-control" id="payment_type_table'+ k +'" name="payment_type_table[]" value="'+ paymentType +'" readonly>',
+                                '<input type="text" class="form-control" id="payment_type_table'+ k +'" name="payment_type_table[]" value="'+ ((typeof v.paymentType !== 'undefined' && v.paymentType !== null) ? v.paymentType : '') +'" readonly>',
                                 '<input type="number" class="form-control" id="principal_table'+ k +'" name="principal_table[]" value="'+ ((typeof v.paymentPrincipal !== 'undefined' && v.paymentPrincipal !== null) ? v.paymentPrincipal : '') +'" readonly>',
                                 '<input type="number" class="form-control" id="interest_table'+ k +'" name="interest_table[]" value="'+ ((typeof v.paymentInterest !== 'undefined' && v.paymentInterest !== null) ? v.paymentInterest : '') +'" readonly>',
                                 '<input type="number" class="form-control" id="payment_table'+ k +'" name="payment_table[]" data-seq = "'+ k +'" value="'+ ((typeof v.payment !== 'undefined' && v.payment !== null) ? v.payment : '') +'" readonly>',
                                 '<input type="number" class="form-control" id="outstanding_table'+ k +'" data-seq = "'+ k +'" name="outstanding_table[]" value="'+ ((typeof v.outStandingAmount !== 'undefined' && v.outStandingAmount !== null) ? v.outStandingAmount : '') +'" readonly>',
-                                '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>'
+                                '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>',
+                                '<input type="text" class="form-control" style="width: 0%;" id="employee_no_table'+ k +'" name="employee_no_table[]" hidden>',
+                                '<input type="text" class="form-control" style="width: 0%;" id="employee_name_table'+ k +'" name="employee_name_table[]" hidden>',
+                                '<input type="text" class="form-control" style="width: 0%;" id="loan_no_table'+ k +'" name="loan_no_table[]" hidden>',
+                                '<input type="text" class="form-control" style="width: 0%;" id="rate_per_year_table'+ k +'" name="rate_per_year_table[]" hidden>',
                             ]).draw();
 
                             principal_table = $('#principal_table'+ k).val();
@@ -619,25 +762,11 @@
                     }
                 }
             });
-        });
+        }
 
-        $('#employee_no').on('select2:unselecting', function (e) {
-            $('#employee_name').val('');
-            $('#loan_no').val('');
-            $('#rate_per_year').val('');
-            $('#paid_loan_seq').val('');
-            $('#no_of_installment_not_yet_paid').val('');
-            $('#principal_amount_installment').val('');
-            $('#interest_amount_per_installment').val('');
-            $('#outstanding_amount').val('');
-            $('#total_not_yet_paid').val('');
-            $('#new_outstanding_amount').val('');
-            $('#new_rate_per_year').val('');
-            $('#new_no_installment_not_yet_paid').val('');
-            $('#full_partial_loan_payment_detail_table').DataTable().destroy();
-            load_data_table_loan_payment();
-            table.clear().draw();
-        });
+        function htmlDecode(value) {
+    	    return $("<textarea/>").html(value).text();
+	    }
 
         $.ajax({
             url: "{{ url('/time_management/period/data/detail') }}",
@@ -698,6 +827,16 @@
                 $('#new_outstanding_amount').val(newOutStandingAmount);
             }
 
+            total_not_yet_paid = parseFloat($('#total_not_yet_paid').val());
+            $('#new_outstanding_amount').val(total_not_yet_paid);
+
+            no_of_installment_not_yet_paid = parseFloat($('#no_of_installment_not_yet_paid').val());
+            $('#new_no_of_installment_not_yet_paid').val(no_of_installment_not_yet_paid - 1);
+
+            $('#new_rate_per_year').val(parseFloat($('#rate_per_year').val()));
+
+            rate_per_year_table = $('#new_rate_per_year_table').val();
+
             table.rows( function(idx, data, node) {
                 return $(data[7]).val() == "false";
             }).remove().draw();
@@ -712,6 +851,10 @@
                 d[4] = '<input type="number" class="form-control" id="interest_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="interest_table[]" value="'+ arrTable[rowIdx].paymentInterest +'" readonly>';
                 d[5] = '<input type="number" class="form-control" id="payment_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="payment_table[]" value="'+ totalPayment +'" readonly>';
                 d[6] = '<input type="number" class="form-control" id="outstanding_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="outstanding_table[]" value="'+ arrTable[rowIdx].outStandingAmount +'" readonly>';
+                d[8] = '<input type="text" class="form-control" id="employee_no_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="employee_no_table[]" value="'+ employee_no_table +'" hidden>';
+                d[9] = '<input type="text" class="form-control" id="employee_name_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="employee_name_table[]" value="'+ employee_name_table +'" hidden>';
+                d[10] = '<input type="text" class="form-control" id="loan_no_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="loan_no_table[]" value="'+ loan_no_table +'" hidden>';
+                d[11] = '<input type="text" class="form-control" id="rate_per_year_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="rate_per_year_table[]" value="'+ rate_per_year_table +'" hidden>';
 
                 this.invalidate();
             });
@@ -724,7 +867,8 @@
 
             if (payment_amount !== '') {
                 outstanding_table_month = parseFloat($('#outstanding_table' + (idx - 1)).val());
-                $('#outstanding_table' + idx).val((outstanding_table_month - payment_amount).toFixed(2));  
+                principal_table_month = parseFloat($('#principal_table'+ idx).val());
+                $('#outstanding_table' + idx).val((outstanding_table_month - principal_table_month).toFixed(2));  
             }
 
             outstanding_table_month = parseFloat($('#outstanding_table' + idx).val());
@@ -749,13 +893,17 @@
 
                 table.row.add([
                     '<input type="text" class="form-control" id="payment_date_table'+ idx +'" name="payment_date_table[]" value="'+ date +'" readonly>',
-                    '<input type="number" class="form-control" id="seq_no_table'+ idx +'" name="seq_no_table_new[]" value="'+ idx +'" readonly>',
-                    '<input type="text" class="form-control" id="payment_type_table'+ idx +'" name="payment_type_table[]" value="'+ paymentType +'" readonly>',
+                    '<input type="number" class="form-control" id="seq_no_table'+ idx +'" name="seq_no_table[]" value="'+ idx +'" readonly>',
+                    '<input type="text" class="form-control" id="payment_type_table'+ idx +'" name="payment_type_table[]" value="'+ arrTable[idx].paymentType +'" readonly>',
                     '<input type="number" class="form-control" id="principal_table'+ idx +'" name="principal_table[]" readonly>',
                     '<input type="number" class="form-control" id="interest_table'+ idx +'" name="interest_table[]" readonly>',
                     '<input type="number" class="form-control" id="payment_table'+ idx +'" name="payment_table[]" data-seq = "'+ idx +'" readonly>',
                     '<input type="number" class="form-control" id="outstanding_table'+ idx +'" data-seq = "'+ idx +'" name="outstanding_table[]" readonly>',
-                    '<input type="text" class="form-control paid-table" id="paid_table'+ idx +'" data-seq = "'+ idx +'" name="paid_table[]" value="'+ arrTable[idx].flagStatus +'" readonly>'
+                    '<input type="text" class="form-control paid-table" id="paid_table'+ idx +'" data-seq = "'+ idx +'" name="paid_table[]" value="'+ arrTable[idx].flagStatus +'" readonly>',
+                    '<input type="text" class="form-control" id="employee_no_table'+ idx +'" name="employee_no_table[]" value="'+ employee_no_table +'" hidden>',
+                    '<input type="text" class="form-control" id="employee_name_table'+ idx +'" name="employee_name_table[]" value="'+ employee_name_table +'" hidden>',
+                    '<input type="text" class="form-control" id="loan_no_table'+ idx +'" name="loan_no_table[]" value="'+ loan_no_table +'" hidden>',
+                    '<input type="text" class="form-control" id="rate_per_year_table'+ idx +'" name="rate_per_year_table[]" value="'+ rate_per_year_table +'" hidden>',
                 ]).draw();
 
                 principal_table = $('#principal_table'+ idx).val();
@@ -860,6 +1008,8 @@
                     totalPayment = payment_amount + other_cost;
                     $('#total_payment').val(totalPayment);
 
+                    rate_per_year_table = $('#new_rate_per_year').val();
+
                     table.rows(':last', {order : 'applied'}).every( function(rowIdx, tableLoop, rowLoop) {
                         var d = this.data();
 
@@ -867,6 +1017,10 @@
                         d[4] = '<input type="number" class="form-control" id="interest_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="interest_table[]" value="0" readonly>';
                         d[5] = '<input type="number" class="form-control" id="payment_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="payment_table[]" value="'+ totalPayment +'" readonly>';
                         d[6] = '<input type="number" class="form-control" id="outstanding_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="outstanding_table[]" value="0" readonly>';
+                        d[8] = '<input type="text" class="form-control" id="employee_no_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="employee_no_table[]" value="'+ employee_no_table +'" hidden>';
+                        d[9] = '<input type="text" class="form-control" id="employee_name_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="employee_name_table[]" value="'+ employee_name_table +'" hidden>';
+                        d[10] = '<input type="text" class="form-control" id="loan_no_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="loan_no_table[]" value="'+ loan_no_table +'" hidden>';
+                        d[11] = '<input type="text" class="form-control" id="rate_per_year_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="rate_per_year_table[]" value="'+ rate_per_year_table +'" hidden>';
 
                         this.invalidate();
                     });
@@ -883,8 +1037,6 @@
                 $('#payment_amount').prop('readonly', false);
                 $('#new_rate_per_year').prop('readonly', false);
                 $('#new_no_of_installment_not_yet_paid').prop('readonly', false);
-                $('#payment_amount').val("");
-                $('#total_payment').val("");
 
                 total_not_yet_paid = parseFloat($('#total_not_yet_paid').val());
                 $('#new_outstanding_amount').val(total_not_yet_paid);
@@ -893,6 +1045,8 @@
                 $('#new_no_of_installment_not_yet_paid').val(no_of_installment_not_yet_paid - 1);
 
                 $('#new_rate_per_year').val(parseFloat($('#rate_per_year').val()));
+
+                rate_per_year_table = $('#new_rate_per_year_table').val();
 
                 table.rows( function(idx, data, node) {
                     return $(data[7]).val() == "false";
@@ -908,11 +1062,21 @@
                     d[4] = '<input type="number" class="form-control" id="interest_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="interest_table[]" value="'+ arrTable[rowIdx].paymentInterest +'" readonly>';
                     d[5] = '<input type="number" class="form-control" id="payment_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="payment_table[]" value="'+ totalPayment +'" readonly>';
                     d[6] = '<input type="number" class="form-control" id="outstanding_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="outstanding_table[]" value="'+ arrTable[rowIdx].outStandingAmount +'" readonly>';
+                    d[8] = '<input type="text" class="form-control" id="employee_no_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="employee_no_table[]" value="'+ employee_no_table +'" hidden>';
+                    d[9] = '<input type="text" class="form-control" id="employee_name_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="employee_name_table[]" value="'+ employee_name_table +'" hidden>';
+                    d[10] = '<input type="text" class="form-control" id="loan_no_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="loan_no_table[]" value="'+ loan_no_table +'" hidden>';
+                    d[11] = '<input type="text" class="form-control" id="rate_per_year_table'+ rowIdx +'" data-seq = "'+ rowIdx +'" name="rate_per_year_table[]" value="'+ rate_per_year_table +'" hidden>';
 
                     this.invalidate();
                 });
 
                 table.draw();
+
+                if (payment_amount !== '') {
+                    outstanding_table_month = parseFloat($('#outstanding_table' + (idx - 1)).val());
+                    principal_table_month = parseFloat($('#principal_table'+ idx).val());
+                    $('#outstanding_table' + idx).val((outstanding_table_month - principal_table_month).toFixed(2));  
+                }
 
                 outstanding_table_month = parseFloat($('#outstanding_table' + idx).val());
                 outstandingTableSeq = parseInt($('#outstanding_table' + idx).attr('data-seq'));
@@ -937,12 +1101,16 @@
                     table.row.add([
                         '<input type="text" class="form-control" id="payment_date_table'+ idx +'" name="payment_date_table[]" value="'+ date +'" readonly>',
                         '<input type="number" class="form-control" id="seq_no_table'+ idx +'" name="seq_no_table[]" value="'+ idx +'" readonly>',
-                        '<input type="text" class="form-control" id="payment_type_table'+ idx +'" name="payment_type_table[]" value="'+ paymentType +'" readonly>',
+                        '<input type="text" class="form-control" id="payment_type_table'+ idx +'" name="payment_type_table[]" value="'+ arrTable[idx].paymentType +'" readonly>',
                         '<input type="number" class="form-control" id="principal_table'+ idx +'" name="principal_table[]" value="'+ arrTable[idx].paymentPrincipal +'" readonly>',
                         '<input type="number" class="form-control" id="interest_table'+ idx +'" name="interest_table[]" value="'+ arrTable[idx].paymentInterest +'" readonly>',
                         '<input type="number" class="form-control" id="payment_table'+ idx +'" name="payment_table[]" data-seq = "'+ idx +'" value="'+ arrTable[idx].payment +'" readonly>',
                         '<input type="number" class="form-control" id="outstanding_table'+ idx +'" data-seq = "'+ idx +'" name="outstanding_table[]" value="'+ arrTable[idx].outStandingAmount +'" readonly>',
-                        '<input type="text" class="form-control paid-table" id="paid_table'+ idx +'" data-seq = "'+ idx +'" name="paid_table[]" value="'+ arrTable[idx].flagStatus +'" readonly>'
+                        '<input type="text" class="form-control paid-table" id="paid_table'+ idx +'" data-seq = "'+ idx +'" name="paid_table[]" value="'+ arrTable[idx].flagStatus +'" readonly>',
+                        '<input type="text" class="form-control" id="employee_no_table'+ idx +'" name="employee_no_table[]" value="'+ employee_no_table +'" hidden>',
+                        '<input type="text" class="form-control" id="employee_name_table'+ idx +'" name="employee_name_table[]" value="'+ employee_name_table +'" hidden>',
+                        '<input type="text" class="form-control" id="loan_no_table'+ idx +'" name="loan_no_table[]" value="'+ loan_no_table +'" hidden>',
+                        '<input type="text" class="form-control" id="rate_per_year_table'+ idx +'" name="rate_per_year_table[]" value="'+ rate_per_year_table +'" hidden>',
                     ]).draw();
 
                     principal_table = $('#principal_table'+ idx).val();
@@ -1315,90 +1483,6 @@
                     });
                 }
             })
-        }
-
-        $("#btn-save").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-
-            $("#full_partial_loan_payment_form").submit();
-        });
-
-        if ($("#full_partial_loan_payment_form").length > 0) {
-            $("#full_partial_loan_payment_form").validate({
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_full_partial_loan_payment.btn_save") }}'
-                    );
-
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "{{ url('payroll/full_partial_loan_payment/proses') }}",
-                        type: "POST",
-                        data: $('#full_partial_loan_payment_form').serialize(),
-                        success: function (response) {
-                            console.log(response);
-                            if (response.status == "true") {
-                                $("#btn-save").prop("disabled", false);
-                                $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_full_partial_loan_payment.btn_save") }}'
-                                );
-                                
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/full_partial_loan_payment') }}";
-                                }, 3000);
-                            } else {
-                                $("#btn-save").prop("disabled", false);
-                                $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_full_partial_loan_payment.btn_save") }}'
-                                );
-
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
-                            $("#btn-save").prop("disabled", false);
-                            $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_full_partial_loan_payment.btn_save") }}'
-                            );
-
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-
-                    });
-                }
-            });
         }
     })
 </script>

@@ -229,7 +229,7 @@
         });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
+        
         function load_data_table_salary_accumulation_data() {
             table = $('#salary_accumulation_data_table').DataTable({
                 processing: true,
@@ -285,7 +285,8 @@
         $('#salary_accumulation_data_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
             $.redirect("{{ url('payroll/salary_accumulation_data/detail_data') }}", 
-            {   'employeeNo' : data.employeeNo, 
+            {   
+                'employeeNo' : data.employeeNo,
                 'periodYear' : data.periodYear
             }, 
             "GET", "iframe_dashboard");
