@@ -696,6 +696,29 @@
                     <div id="tax-calculation-data" class="collapse show">
                         <div class="card-block">
                             <div class="row">
+                                <div class="col-3"> 
+                                    <div class="form-group">
+                                        <label for="tax_calculation_method">{{ __('payroll_reference_payroll.label_tax_calculation_method') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input class="form-check-input" type="radio" id="tax_calculation_method_annualized"
+                                            name="tax_calculation_method" value="A" disabled checked>
+                                        <label
+                                            for="tax_calculation_method_annualized">{{ __('payroll_reference_payroll.label_tax_calculation_method_annualized') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input class="form-check-input" type="radio" id="tax_calculation_method_prorated"
+                                            name="tax_calculation_method" value="P" disabled>
+                                        <label
+                                            for="tax_calculation_method_prorated">{{ __('payroll_reference_payroll.label_tax_calculation_method_prorated') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-3">
                                     <div class="form-group">
                                         <br>
@@ -1440,6 +1463,12 @@
             }
             $('#work_insurance_remision_payment_percentage').val((typeof arrDataPR[0].remissionPaymentPercentage !== 'undefined') ? arrDataPR[0].remissionPaymentPercentage : '');
             pickerEndPeriod.setDate((typeof arrDataPR[0].remissionEndPeriod !== 'undefined') ? arrDataPR[0].remissionEndPeriod : '');
+            if (typeof arrDataPR[0].taxCalculationMethod !== 'undefined' && arrDataPR[0].taxCalculationMethod === 'A') {
+                $('#tax_calculation_method_annualized').prop('checked', true);
+            }
+            else {
+                $('#tax_calculation_method_prorated').prop('checked', true);
+            }
             $('#non_taxable_income_employee').val((typeof arrDataPR[0].nonTaxableIncomeEmployee !== 'undefined') ? arrDataPR[0].nonTaxableIncomeEmployee : '');
             $('#non_taxable_income_each_dependent').val((typeof arrDataPR[0].nonTaxableIncomeDependent !== 'undefined') ? arrDataPR[0].nonTaxableIncomeDependent : '');
             $('#occupational_percentage').val((typeof arrDataPR[0].occupationalPercentage !== 'undefined') ? arrDataPR[0].occupationalPercentage : '');
@@ -1638,6 +1667,8 @@
             $('#check_on_period_jamsostek').prop('disabled', false);
             $('#work_insurance_remision_payment_percentage').prop('readonly', false);
             pickerEndPeriod._input.removeAttribute("disabled");
+            $('#tax_calculation_method_annualized').prop('disabled', false);
+            $('#tax_calculation_method_prorated').prop('disabled', false);
             $('#non_taxable_income_employee').prop('readonly', false);
             $('#non_taxable_income_each_dependent').prop('readonly', false);
             $('#occupational_percentage').prop('readonly', false);
@@ -1717,6 +1748,8 @@
             $('#check_nearest_taxable_income').prop('disabled', false);
             $('#work_insurance_remision_payment_percentage').prop('readonly', false);
             pickerEndPeriod._input.removeAttribute("disabled");
+            $('#tax_calculation_method_annualized').prop('disabled', false);
+            $('#tax_calculation_method_prorated').prop('disabled', false);
             $('#non_taxable_income_employee').prop('readonly', false);
             $('#non_taxable_income_each_dependent').prop('readonly', false);
             $('#occupational_percentage').prop('readonly', false);

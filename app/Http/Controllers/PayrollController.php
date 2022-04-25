@@ -3813,6 +3813,7 @@ class PayrollController extends Controller
                 "pensionTaxableIncome5" => (float) $request->severance_payment_from5,
                 "pensionTaxRate5" => (float) $request->severance_payment_rate5,
                 "prorateMethod" => $request->prorate_method,
+                "taxCalculationMethod" => $request->tax_calculation_method,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),

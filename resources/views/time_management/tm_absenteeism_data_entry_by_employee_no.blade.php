@@ -88,10 +88,6 @@
             text-align: center;
             vertical-align: middle;
         }
-
-        thead tr th {
-            width: 100%;
-        }
     </style>
 </head>
 
@@ -175,7 +171,7 @@
                 <table id="absenteeism_data_entry_by_employee_no_table" class="table hover">
                     <thead>
                         <tr>
-                            <th rowspan="2" class="middle" style="width:300px">Absent Date</th>
+                            <th rowspan="2" class="middle">Absent Date</th>
                             <th rowspan="2" class="middle">Period</th>
                             <th rowspan="2" class="middle">Day</th>
                             <th rowspan="2" class="middle">Shift Code</th>
@@ -194,28 +190,28 @@
                             <th rowspan="2" class="middle">Grade</th>
                         </tr>
                         <tr>
-                            <th style="width: 10px">Date</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Code</th>
-                            <th>Hour</th>
-                            <th>Description</th>
-                            <th>Code</th>
-                            <th>Hour</th>
-                            <th>Description</th>
-                            <th>Code</th>
-                            <th>Before</th>
-                            <th>Start</th>
-                            <th>Finish</th>
-                            <th>Hour</th>
-                            <th>Convert</th>
-                            <th>BOT</th>
-                            <th>Description</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Before</th>
-                            <th>After</th>
+                            <th class="middle">Date</th>
+                            <th class="middle">Time</th>
+                            <th class="middle">Date</th>
+                            <th class="middle">Time</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Before</th>
+                            <th class="middle">Start</th>
+                            <th class="middle">Finish</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Convert</th>
+                            <th class="middle">BOT</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">In</th>
+                            <th class="middle">Out</th>
+                            <th class="middle">Before</th>
+                            <th class="middle">After</th>
                         </tr>
                     </thead>
                 </table>
@@ -315,7 +311,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         function initDatePicker(field='') {
-            $(field).flatpickr({
+            return $(field).flatpickr({
                 allowInput: true,
                 altFormat: "j-M-y",
                 dateFormat: "Y-m-d",
@@ -331,14 +327,14 @@
         }
 
         function initTimePicker(field='') {
-            $(field).flatpickr({
+            return $(field).flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 allowInput: true,
                 time_24hr: true,
                 defaultDate: "today",
                 altFormat: "H:i",
-                dateFormat: "H:i:ss"
+                dateFormat: "H:i"
             });
         }
 
@@ -382,9 +378,10 @@
                     'employeeNo': data[0].id
                 },
                 success: function (response) {
+                    console.log(response[0]);
                     $.each(response, function(k, v) {    
                         if (v.absentDate !== 'undefined' && v.absentDate !== null) {
-                            var absent_date = moment(v.absentDate).format('DD-MM-YYYY');
+                            var absent_date = moment(v.absentDate).format('YYYY-MM-DD');
                         }
                         else {
                             var absent_date = '';
@@ -566,10 +563,15 @@
 
                         // console.log(setDate((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
 
-                        initTimePicker('#actual_time_in' + (k+1));
+                        window["pickrActualTimeIn" + (k+1)] = initTimePicker('#actual_time_in' + (k+1));
                         initTimePicker('#actual_time_out' + (k+1));
-                        initDatePicker('#actual_date_in' + (k+1));
+                        window["pickrActualDateIn" + (k+1)] = initDatePicker('#actual_date_in' + (k+1));
                         initDatePicker('#actual_date_out' + (k+1));
+
+                        console.log(moment(v.actualDateIn).format('YYYY-MM-DD HH:mm'));
+
+                        window["pickrActualTimeIn" + (k+1)].selectedDateObj.setHours("09", "00");
+                        window["pickrActualDateIn" + (k+1)].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
 
                         $('#btn-edit').on('click', function () {
                             $('#day' + (k+1)).prop('disabled', false);
@@ -644,6 +646,42 @@
                 orderCellsTop: true,
                 paging: false,
                 "sDom": 'lrtip',
+                scrollY: 400,
+                scrollX: true,
+                aoColumns : [
+                    { "sWidth": '110px' },
+                    { "sWidth": '50px' },
+                    { "sWidth": '100px' },
+                    { "sWidth": '100px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '150px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '150px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '50px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '200px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '100px' },
+                    { "sWidth": '100px' },
+                    { "sWidth": '100px' }
+                ]
             });
         }
 
