@@ -401,7 +401,7 @@
         var arrDataTM = @json($data_tm);
         
         if (arrDataTM) {
-            var month_year = moment(arrDataTM[0].periodYear.toString() + "-" + arrDataTM[0].periodMonth.toString().padStart(2,0)).format('MMMM' + ' ' + 'YYYY');
+            var month_year = moment(arrDataTM[0].periodYear.toString() + "-" + arrDataTM[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
             $('#process_period').val(month_year);
         }
 

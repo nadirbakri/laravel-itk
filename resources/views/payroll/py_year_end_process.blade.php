@@ -232,7 +232,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        $('#notification_success').modal('hide');
+                                        "{{ url('payroll/year_end_process') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);

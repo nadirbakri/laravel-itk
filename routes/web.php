@@ -829,6 +829,7 @@ Route::get('currency_code_full_partial_loan_payment/api', 'DataController@dataCu
 Route::get('field_name_edit_salary_component/api', 'DataController@dataEditFieldNameSalaryComponentAPI');
 Route::get('employee_no_slip_format/api', 'DataController@dataEmployeeNoSlipFormatAPI');
 Route::get('attachment_code/api', 'DataController@dataAttachmentCodeAPI');
+Route::get('payment_method_full_partial_loan_payment/api', 'DataController@dataPaymentMethodFullPartialLoanPaymentAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
