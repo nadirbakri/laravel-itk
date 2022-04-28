@@ -16,14 +16,22 @@ return [
     'label_column_j' => 'Kolom J',
     'label_column_k' => 'Kolom K',
     'label_column_l' => 'Kolom L',
+    'note_column_a' => 'Kolom A : NIK',
+    'note_column_b' => 'Kolom B : Nama Karyawan',
+    'note_column_c' => 'Kolom C : B = Bonus T = THR',
+    'note_column_d' => 'Kolom D : Tanggal Proses',
+    'note_column_e' => 'Kolom E : Jumlah Bonus / THR',
+    'note_column_f' => 'Kolom F : Bulan Layanan',
+    'note_column_g' => 'Kolom G : Hasil Kinerja',
     'label_import_file' => 'Impor Berkas',
     'label_select_import_file' => 'Pilih Impor Berkas',
     'label_transfer_to' => 'Pindah Ke',
-    'val_column_a' => 'Employee No',
-    'val_column_b' => 'Employee Name',
     'btn_process' => 'Proses',
     'btn_reset' => 'Mengatur Ulang',
-    'alert_success' => 'Sukses !'
+    'btn_download_template' => 'Unduh Templat',
+    'alert_success' => 'Sukses !',
+    'import_extension' => 'File Format is XLS, XLSX, and XML Only',
+    'import_required' => 'File Impor Dibutuhkan'
 ]
 
 ?>

@@ -132,9 +132,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_c">{{ __('payroll_import_data_from_excel.label_column_c') }}</label>
-                                    <select class="form-control select2" id="column_c" name="column_c">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_c" name="column_c"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -148,9 +146,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_d">{{ __('payroll_import_data_from_excel.label_column_d') }}</label>
-                                    <select class="form-control select2" id="column_d" name="column_d">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_d" name="column_d"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -164,9 +160,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_e">{{ __('payroll_import_data_from_excel.label_column_e') }}</label>
-                                    <select class="form-control select2" id="column_e" name="column_e">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_e" name="column_e"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -180,9 +174,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_f">{{ __('payroll_import_data_from_excel.label_column_f') }}</label>
-                                    <select class="form-control select2" id="column_f" name="column_f">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_f" name="column_f"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -196,9 +188,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_g">{{ __('payroll_import_data_from_excel.label_column_g') }}</label>
-                                    <select class="form-control select2" id="column_g" name="column_g">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_g" name="column_g"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -212,9 +202,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_h">{{ __('payroll_import_data_from_excel.label_column_h') }}</label>
-                                    <select class="form-control select2" id="column_h" name="column_h">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_h" name="column_h"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -228,9 +216,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_i">{{ __('payroll_import_data_from_excel.label_column_i') }}</label>
-                                    <select class="form-control select2" id="column_i" name="column_i">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_i" name="column_i"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -244,9 +230,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_j">{{ __('payroll_import_data_from_excel.label_column_j') }}</label>
-                                    <select class="form-control select2" id="column_j" name="column_j">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_j" name="column_j"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -260,9 +244,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_k">{{ __('payroll_import_data_from_excel.label_column_k') }}</label>
-                                    <select class="form-control select2" id="column_k" name="column_k">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_k" name="column_k"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -276,9 +258,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_l">{{ __('payroll_import_data_from_excel.label_column_l') }}</label>
-                                    <select class="form-control select2" id="column_l" name="column_l">
-                                        <option value="" disabled selected></option>
-                                    </select>
+                                    <select class="form-control select2" id="column_l" name="column_l"></select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -311,6 +291,12 @@
                                     <i class="fa fa-times-circle"></i> {{ __('payroll_import_data_from_excel.btn_reset') }}
                                 </a>
                             </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template"
+                                    style="width: 100%;">
+                                    {{ __('payroll_import_data_from_excel.btn_download_template') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-5">
@@ -321,19 +307,19 @@
                                         <label for="transfer_to">{{ __('payroll_import_data_from_excel.label_transfer_to') }}</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="salary_master" name="transfer_to" value="M" checked>
+                                        <input type="radio" id="salary_master" name="transfer_to" value="PrSalaryMaster" checked>
                                         <label for="salary_master">Salary Master</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="salary_actual" name="transfer_to" value="A">
+                                        <input type="radio" id="salary_actual" name="transfer_to" value="PrSalaryActual">
                                         <label for="salary_actual">Salary Actual</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="yearly" name="transfer_to" value="Y">
+                                        <input type="radio" id="yearly" name="transfer_to" value="PrYearly">
                                         <label for="yearly">Yearly</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="bonus_thr" name="transfer_to" value="B">
+                                        <input type="radio" id="bonus_thr" name="transfer_to" value="PrBonusThr">
                                         <label for="bonus_thr">Bonus / THR</label>
                                     </div>
                                 </div>
@@ -399,46 +385,38 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrDataTM = @json($data_tm);
+        var column = null;
         
         if (arrDataTM) {
             var month_year = moment(arrDataTM[0].periodYear.toString() + "-" + arrDataTM[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
             $('#process_period').val(month_year);
         }
 
+        column = $('#salary_master').val();
+
         $('input[type="radio"]').on('change', function () {
             if ($('#bonus_thr').is(':checked')) {
                 window.location.href = ("{{ url('payroll/import_data_from_excel_bonus_thr') }}");
+            } else if ($('#salary_master').is(':checked')) {
+                column = $('#salary_master').val();
+                loadDataColumn();
+            } else if ($('#salary_actual').is(':checked')) {
+                column = $('#salary_actual').val();
+                loadDataColumn();
+            } else if ($('#yearly').is(':checked')) {
+                column = $('#yearly').val();
+                loadDataColumn();
             }
         });
 
-        loadDataTransferTo();
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            console.log(fileName);
+            $('.custom-file-label').html(fileName);
+        });
+
+        loadDataColumn();
         loadDataCurrencyCode();
-
-        function loadDataTransferTo() {
-            var listTransferTo = [
-                { id: 'M', text: 'Salary Master' },
-                { id: 'A', text: 'Salary Actual' },
-                { id: 'Y', text: 'Yearly' },
-                { id: 'B', text: 'Bonus / THR' }
-            ];
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#column_c, #column_d, #column_e, #column_f, #column_g, #column_h, #column_i, #column_j, #column_k, #column_l').select2({
-                data: listTransferTo,
-                width: '100%',
-                placeholder: 'Choose Transfer To',
-                allowClear: true,
-                language: {
-                    errorLoading: function() {
-                        return $search;
-                    },
-                    searching: function() {
-                        return $search;
-                    }
-                },
-            });
-        }
 
         function loadDataCurrencyCode(){
             function formatSelect(data) {
@@ -496,6 +474,215 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        function loadDataColumn(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#column_c, #column_d, #column_e, #column_f, #column_g, #column_h, #column_i, #column_j, #column_k, #column_l').select2({
+                width: '100%',
+                placeholder: 'Choose Column',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/column/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: {
+                        'transferTo' : column
+                    }, function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item,
+                                    id: item,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        $("#btn-process").on('click', function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $('#import_data_from_excel_form').submit();
+        });
+
+        // if ($("#import_data_from_excel_form").length > 0) {
+        //     $("#import_data_from_excel_form").validate({
+        //         rules: {
+        //             import_file: {
+        //                 extension: "xls|xlsx|xml",
+        //             },
+        //         },
+        //         messages: {
+        //             import_file: {
+        //                 extension: "{{ __('payroll_import_data_from_excel.import_extension') }}",
+        //             },
+        //         },
+        //         highlight: function (element) {
+        //             $(element).addClass('is-invalid');
+        //         },
+        //         unhighlight: function (element) {
+        //             $(element).removeClass('is-invalid');
+        //         },
+        //         errorElement: 'span',
+        //         errorPlacement: function (error, element) {
+        //             $("#btn-process").prop("disabled", false);
+        //             $("#btn-process").html(
+        //                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+        //             );
+
+        //             error.addClass('invalid-feedback');
+        //             element.closest('.form-group').append(error);
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+
+        //             var myform = document.getElementById("import_data_from_excel_form");
+        //             var formdata = new FormData(myform);
+
+        //             $.ajax({
+        //                 url: "{{ url('payroll/import_data_from_excel/import') }}",
+        //                 type: "POST",
+        //                 processData: false,
+        //                 contentType: false,
+        //                 data: formdata,
+        //                 success: function (response) {
+        //                     if (response[0].status == "true") {
+        //                         $("#btn-process").prop("disabled", false);
+        //                         $("#btn-process").html(
+        //                             '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+        //                         );
+        //                         $('#notification_success').modal('show');
+        //                         $('#message-notification-success').html(response[0]
+        //                             .message);
+        //                         setTimeout(function () {
+        //                             window.location =
+        //                                 "{{ url('payroll/import_data_from_excel') }}";
+        //                         }, 3000);
+        //                     } else {
+        //                         $("#btn-process").prop("disabled", false);
+        //                         $("#btn-process").html(
+        //                             '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+        //                         );
+        //                         $('#notification_error').modal('show');
+        //                         if (response[0].message == null || response[0].message ==
+        //                             '') {
+        //                             $('#message-notification-error').html(
+        //                                 "{{ __('login.error') }}");
+        //                         } else {
+        //                             $('#message-notification-error').html(response[0]
+        //                                 .message);
+        //                         }
+        //                     }
+        //                 },
+        //                 error: function (response) {
+        //                     $("#btn-process").prop("disabled", false);
+        //                     $("#btn-process").html(
+        //                         '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+        //                     );
+        //                     $('#notification').modal('show');
+        //                     $('#message-notification').html(response);
+        //                 }
+        //             });
+        //         }
+        //     })
+        // }
+
+        if ($("#import_data_from_excel_form").length > 0) {
+            $("#import_data_from_excel_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        },
+                        url: "{{ url('payroll/import_data_from_excel/template') }}",
+                        type: "POST",
+                        data: $('#import_data_from_excel_form').serialize(),
+                        success: function (result, status, xhr) {
+                            $("#btn-download-template").prop("disabled", false);
+                            $("#btn-download-template").html(
+                                '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
+                            );
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /"([^"]*)"/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1] :
+                                'audit_trail.xlsx');
+
+                            // The actual download
+                            var blob = new Blob([result], {
+                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            });
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
+
+                            document.body.appendChild(link);
+
+                            link.click();
+                            document.body.removeChild(link);
+                        },
+                        error: function (response) {
+                            $("#btn-download-template").prop("disabled", false);
+                            $("#btn-download-template").html(
+                                '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
         }
     })
 </script>

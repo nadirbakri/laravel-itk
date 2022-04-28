@@ -566,6 +566,9 @@ Route::post('payroll/salary_master/proses', 'PayrollController@prosesSalaryMaste
 Route::post('payroll/severance_data_entry/proses', 'PayrollController@prosesSeveranceDataEntryPY');
 Route::post('payroll/tariff_master/proses', 'PayrollController@prosesTariffMasterPY');
 Route::post('payroll/salary_accumulation_data/proses', 'PayrollController@prosesSalaryAccumulationDataPY');
+Route::post('payroll/import_data_from_excel/import', 'PayrollController@importDataFromExcelPY');
+Route::post('payroll/import_data_from_excel_bonus_thr/import', 'PayrollController@importDataFromExcelBonusTHRPY');
+Route::post('payroll/import_data_from_excel/template', 'PayrollController@templateImportDataFromExcelPY');
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
 Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
 Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
@@ -830,6 +833,7 @@ Route::get('field_name_edit_salary_component/api', 'DataController@dataEditField
 Route::get('employee_no_slip_format/api', 'DataController@dataEmployeeNoSlipFormatAPI');
 Route::get('attachment_code/api', 'DataController@dataAttachmentCodeAPI');
 Route::get('payment_method_full_partial_loan_payment/api', 'DataController@dataPaymentMethodFullPartialLoanPaymentAPI');
+Route::get('column/api', 'DataController@dataColumnAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

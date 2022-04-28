@@ -97,7 +97,7 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="import_data_from_excel_bonus_thr_form" method="post">
+            <form id="import_data_from_excel_bonus_thr_form" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-7">
@@ -112,77 +112,20 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="form-group">
-                                    <label for="column_a">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_a') }}</label>
-                                    <input type="text" class="form-control" id="column_a" name="column_a"
-                                        placeholder="{{ __('payroll_import_data_from_excel_bonus_thr.label_column_a') }}" value="Employee No" readonly>
-                                </div>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_a') }}</p>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_b') }}</p>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_c') }}</p>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_d') }}</p>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_e') }}</p>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_f') }}</p>
+                                <p>{{ __('payroll_import_data_from_excel.note_column_g') }}</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="column_b">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_b') }}</label>
-                                    <input type="text" class="form-control" id="column_b" name="column_b"
-                                        placeholder="{{ __('payroll_import_data_from_excel_bonus_thr.label_column_b') }}" value="Employee Name" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_c">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_c') }}</label>
-                                    <select class="form-control select2" id="column_c" name="column_c">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_d">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_d') }}</label>
-                                    <select class="form-control select2" id="column_d" name="column_d">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_e">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_e') }}</label>
-                                    <select class="form-control select2" id="column_e" name="column_e">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_f">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_f') }}</label>
-                                    <select class="form-control select2" id="column_f" name="column_f">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="column_g">{{ __('payroll_import_data_from_excel_bonus_thr.label_column_g') }}</label>
-                                    <select class="form-control select2" id="column_g" name="column_g">
-                                        <option value="" disabled selected></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="import_file">{{ __('payroll_import_data_from_excel_bonus_thr.label_import_file') }}</label>
+                                    <span style="color: red;">*</span>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="import_file" name="import_file">
                                         <label class="custom-file-label" for="import_file">{{ __('payroll_import_data_from_excel_bonus_thr.label_select_import_file') }}</label>
@@ -212,19 +155,19 @@
                                         <label for="transfer_to">{{ __('payroll_import_data_from_excel_bonus_thr.label_transfer_to') }}</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="salary_master" name="transfer_to" value="M">
+                                        <input type="radio" id="salary_master" name="transfer_to" value="PrSalaryMaster">
                                         <label for="salary_master">Salary Master</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="salary_actual" name="transfer_to" value="A">
+                                        <input type="radio" id="salary_actual" name="transfer_to" value="PrSalaryActual">
                                         <label for="salary_actual">Salary Actual</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="yearly" name="transfer_to" value="Y">
+                                        <input type="radio" id="yearly" name="transfer_to" value="PrYearly">
                                         <label for="yearly">Yearly</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" id="bonus_thr" name="transfer_to" value="B" checked>
+                                        <input type="radio" id="bonus_thr" name="transfer_to" value="PrBonusThr" checked>
                                         <label for="bonus_thr">Bonus / THR</label>
                                     </div>
                                 </div>
@@ -283,6 +226,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -290,6 +234,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrDataTM = @json($data_tm);
+        var column = null;
         
         if (arrDataTM) {
             var month_year = moment(arrDataTM[0].periodYear.toString() + "-" + arrDataTM[0].periodMonth.toString().padStart(2,0)).format('MMMM' + ' ' + 'YYYY');
@@ -304,32 +249,106 @@
             }
         });
 
-        loadDataTransferTo();
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
 
-        function loadDataTransferTo() {
-            var listTransferTo = [
-                { id: 'M', text: 'Salary Master' },
-                { id: 'A', text: 'Salary Actual' },
-                { id: 'Y', text: 'Yearly' },
-                { id: 'B', text: 'Bonus / THR' }
-            ];
+        $("#btn-process").on('click', function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
 
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            $('#import_data_from_excel_bonus_thr_form').submit();
+        });
 
-            $('#column_c, #column_d, #column_e, #column_f, #column_g, #column_h, #column_i, #column_j, #column_k, #column_l').select2({
-                data: listTransferTo,
-                width: '100%',
-                placeholder: 'Choose Transfer To',
-                allowClear: true,
-                language: {
-                    errorLoading: function() {
-                        return $search;
+        if ($("#import_data_from_excel_bonus_thr_form").length > 0) {
+            $("#import_data_from_excel_bonus_thr_form").validate({
+                rules: {
+                    import_file: {
+                        extension: "xls|xlsx|xml",
+                        required: true
                     },
-                    searching: function() {
-                        return $search;
-                    }
                 },
-            });
+                messages: {
+                    import_file: {
+                        extension: "{{ __('payroll_import_data_from_excel.import_extension') }}",
+                        required: "{{ __('payroll_import_data_from_excel.import_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-process").prop("disabled", false);
+                    $("#btn-process").html(
+                        '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    var myform = document.getElementById("import_data_from_excel_bonus_thr_form");
+                    var formdata = new FormData(myform);
+
+                    $.ajax({
+                        url: "{{ url('payroll/import_data_from_excel_bonus_thr/import') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            if (response[0].status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                                );
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response[0]
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/import_data_from_excel') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response[0].message == null || response[0].message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response[0]
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
         }
     })
 </script>

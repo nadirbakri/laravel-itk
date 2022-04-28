@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PayrollDataImport;
+use App\Imports\PayrollBonusTHRDataImport;
+use App\Exports\TemplatePayrollDataTemplateSheet;
+
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Validator;
 use Session;
 use App;
+use File;
 use DataTables;
 use Excel;
 
@@ -263,6 +268,11 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return view('payroll.py_year_end_process', ['data' => $arrResult->dataListSet]);
+    }
+
+    public function pageSptProcess() 
+    {
+        return view ('payroll.py_spt_process');
     }
 
     public function tableAccountPY()
@@ -3976,6 +3986,60 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function importDataFromExcelPY(Request $request)
+    {
+        try{
+            $file = $request->file('import_file');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new PayrollDataImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file));
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        return $import->getArrResult();
+    }
+
+    public function importDataFromExcelBonusTHRPY(Request $request)
+    {
+        try{
+            $file = $request->file('import_file');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new PayrollBonusTHRDataImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file));
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        return $import->getArrResult();
+    }
+
+    public function templateImportDataFromExcelPY(Request $request)
+    {
+        return Excel::download(new TemplatePayrollDataTemplateSheet(
+            $request->column_a, 
+            $request->column_b, 
+            $request->column_c, 
+            $request->column_d, 
+            $request->column_e, 
+            $request->column_f,
+            $request->column_g,
+            $request->column_h,
+            $request->column_i,
+            $request->column_j,
+            $request->column_k,
+            $request->column_l
+        ), 'Template Payroll Data.xlsx');
     }
 
     public function checkNumberReportFormatPY(Request $request)

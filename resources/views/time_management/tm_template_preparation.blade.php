@@ -275,7 +275,6 @@
             if ($('#range').is(':checked')) {
                 $('#employee_no_from').prop('disabled', false);
                 $('#employee_no_to').prop('disabled', false);
-                $()
             }
             else {
                 $('#employee_no_from').prop('disabled', true);
