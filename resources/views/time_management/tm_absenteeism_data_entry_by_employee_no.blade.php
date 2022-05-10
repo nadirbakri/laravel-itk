@@ -167,7 +167,7 @@
             </div>
         </div>
         <form id="absenteeism_data_entry_by_employee_no_table_form" method="post">
-            <div class="div-table">
+            <div class="div-table" width="100%">
                 <table id="absenteeism_data_entry_by_employee_no_table" class="table hover">
                     <thead>
                         <tr>
@@ -675,10 +675,6 @@
 
         loadDataEmployeeNo();
 
-        // function calculate_date_time() {
-            
-        // }
-
         function load_data_table_absenteeism_data_entry_by_employee_no(filter_employee_no_table = '') {
             table = $('#absenteeism_data_entry_by_employee_no_table').DataTable({
                 processing: true,
@@ -686,7 +682,8 @@
                 paging: false,
                 "sDom": 'lrtip',
                 scrollY: 400,
-                scrollX: true,
+                scrollX: 400,
+                scrollCollapse: true,
                 aoColumns : [
                     { "sWidth": '110px' },
                     { "sWidth": '50px' },

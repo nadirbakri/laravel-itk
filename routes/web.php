@@ -627,6 +627,9 @@ Route::get('payroll_loan_no/number/check', 'PayrollController@checkNumberLoanNoP
 Route::get('payroll/report_format_number/check', 'PayrollController@checkNumberReportFormatPY');
 Route::get('payroll/payroll_calculation_number/check', 'PayrollController@checkNumberPayrollCalculationPY');
 
+/* Route Untuk Menu Medical */
+Route::get('medical', 'MedicalController@pageMedical');
+
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
 Route::get('utilities/organization_chart', 'UtilitiesController@pageOrganizationStructureUtilities');
