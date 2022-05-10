@@ -626,17 +626,44 @@ class TimeManagementController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
-            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployee',
+
+            $response_tm = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
+                        "periodMonth" => (int) date("m", strtotime($request->period)),
+                        "periodYear" => (int) date("Y", strtotime($request->period)),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
                 )]
+            );
+
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
+
+            if(empty($arrResult_tm->dataListSet)){
+                $param = [ 
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNoFrom' => $request->employeeNo,
+                    'userID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')
+                ];
+            }else{
+                $param = [ 
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNoFrom' => $request->employeeNo,
+                    'absenDateFrom' => $arrResult_tm->dataListSet[0]->absenteeismStart,
+                    'absenDateTo' => $arrResult_tm->dataListSet[0]->absenteeismEnd,
+                    'userID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')
+                ];
+            }
+            
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployeedataentry',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -2005,12 +2032,12 @@ class TimeManagementController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'newEmployee' =>  isset($request->radiobtn) ? $request->radiobtn : '',
-                        'range' => isset($request->radiobtn) ? $request->radiobtn : '',
+                        'newEmployee' => ($request->employee_type[0] == "new_employee") ? true : false,
+                        'range' => ($request->employee_type[0] == "range") ? true : false,
                         'employeeNoFrom' => isset($request->employee_no_from) ? $request->employee_no_from : '',
                         'employeeNoTo' => isset($request->employee_no_to) ? $request->employee_no_to : '',
-                        'periodMonth' => $request->processing_period,
-                        'periodYear' => $request->period_year,
+                        'periodMonth' => (int) date('n', strtotime($request->processing_period)),
+                        'periodYear' => (int) date('Y', strtotime($request->processing_period)),
                         "languageCode" => App::getLocale(),
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),

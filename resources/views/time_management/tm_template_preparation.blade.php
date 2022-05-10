@@ -93,9 +93,6 @@
         <div class="div-form">
             <form id="template_preparation_form" method="post">
                 @csrf
-                {{-- @method('PUT') --}}
-                {{-- <input type="hidden" name="_method" value="PUT">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -107,7 +104,6 @@
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
-                            <input type="text" class="form-control" id="period_year" name="period_year" hidden>
                         </div>
                     </div>
                 </div>
@@ -119,22 +115,21 @@
                     </div>
                     <div class="col-4">
                         <div class="form-check">
-                            <input type="radio" id="all_employee" name="radiobtn[]" value=true checked>
+                            <input type="radio" id="all_employee" name="employee_type[]" value="all_employee" checked>
                             <label for="all_employee">{{ __('tm_template_preparation.label_all_employee') }}</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" id="new_employee" name="radiobtn[]" value=true>
+                            <input type="radio" id="new_employee" name="employee_type[]" value="new_employee">
                             <label for="new_employee">{{ __('tm_template_preparation.label_new_employee') }}</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" id="range" name="radiobtn[]" value=true>
+                            <input type="radio" id="range" name="employee_type[]" value="range">
                             <label for="range">{{ __('tm_template_preparation.label_range') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
-                    </div>
+                    <div class="col-3"></div>
                     <div class="col-3">
                         <div class="form-group">
                             <label
@@ -211,13 +206,11 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
-<script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
+<script>
+    $(document).ready(function() {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
+        var pickrPeriod = $('#processing_period').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -238,29 +231,13 @@
                 });
             }
         });
-    }
-
-</script>
-
-<script>
-    $(document).ready(function() {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        var periodMonth = moment($('#processing_period').val()).format('M');
-        var periodYear = moment($('#processing_period').val()).format('YYYY');
-        $('#processing_period').val(periodMonth);
-        $('#period_year').val(periodYear);
-
-        $('#processing_period').on('change', function(e) {
-            $('#processing_period').val(periodMonth);
-            $('#period_year').val(periodYear);
-        })
 
         $.ajax({
             url: "{{ url('/time_management/period/data/detail') }}",
             type: "GET",
-            success: function (response) {
-                // console.log(response[0].periodYear);
+            success: function(response){
+                pickrPeriod.setDate(response[0].periodYear + "-" + response[0].periodMonth + "-01");
+                // $('#processing_period').val(periodMonth);
             },
             error: function (response) {
                 $('#notification_error').modal('show');
@@ -271,8 +248,8 @@
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
 
-        $('input[type="radio"]').on('change', function () {
-            if ($('#range').is(':checked')) {
+        $('input[name="employee_type[]"]').on('change', function () {
+            if ($(this).val() == "range") {
                 $('#employee_no_from').prop('disabled', false);
                 $('#employee_no_to').prop('disabled', false);
             }
@@ -346,6 +323,15 @@
                 templateResult: formatSelect
             });
         }
+
+        $("#btn-process").on('click', function() {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $("#template_preparation_form").submit();
+        });
 
         if ($("#template_preparation_form").length > 0) {
             $("#template_preparation_form").validate({  

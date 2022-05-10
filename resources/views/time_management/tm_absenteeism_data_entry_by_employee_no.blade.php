@@ -273,17 +273,17 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initMonthPicker();
-    });
 
-    function initMonthPicker() {
-        $('#period').flatpickr({
+    $(document).ready(function () {
+        var table = null;
+
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var pickrPeriod = $('#period').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
             plugins: [
                 new monthSelectPlugin({
                     shorthand: true, //defaults to false
@@ -293,22 +293,12 @@
             ],
             onReady: function () {
                 var flatPickrInstance = this;
-                // console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings("#period-calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
         });
-    }
-</script>
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        var table = null;
-
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         function initDatePicker(field='') {
             return $(field).flatpickr({
@@ -342,6 +332,11 @@
             url: "{{ url('time_management/period/data/detail') }}",
             type: "GET",
             success: function (response) {
+                pickrPeriod.setDate(response[0].periodYear + "-" + response[0].periodMonth + "-01");
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
             }
         })
 
@@ -349,12 +344,21 @@
     	    return $("<textarea/>").html(value).text();
 	    }
 
+        function isEmpty(obj) {
+            for(var prop in obj) {
+                if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+                    return false;
+                }
+            }
+
+            return JSON.stringify(obj) === JSON.stringify({});
+        }
+
         load_data_table_absenteeism_data_entry_by_employee_no();
 
         $('#employee_no, #period').on("select2:select, change", function (e) {
             var data = $('#employee_no').select2('data');
             var data2 = $('#period').val();
-            console.log(data2);
             $('#employee_name').val(htmlDecode(data[0].title));
 
             var filter_employee_no_table = $('#employee_no').val();
@@ -375,254 +379,289 @@
                 url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': data[0].id
+                    'employeeNo': data[0].id,
+                    'period': data2
                 },
                 success: function (response) {
-                    console.log(response[0]);
-                    $.each(response, function(k, v) {    
-                        if (v.absentDate !== 'undefined' && v.absentDate !== null) {
-                            var absent_date = moment(v.absentDate).format('YYYY-MM-DD');
-                        }
-                        else {
-                            var absent_date = '';
-                        }
+                    if(!isEmpty(response)){
+                        $.each(response, function(k, v) {    
+                            if (v.absentDate !== 'undefined' && v.absentDate !== null) {
+                                var absent_date = moment(v.absentDate).format('YYYY-MM-DD');
+                            }
+                            else {
+                                var absent_date = '';
+                            }
 
-                        if (v.actualDateIn !== 'undefined' && v.actualDateIn !== null) {
-                            var actual_time_in = moment(v.actualDateIn).format('HH:mm');
-                        }
-                        else {
-                            var actual_time_in = '';
-                        }
+                            if (v.actualDateIn !== 'undefined' && v.actualDateIn !== null) {
+                                var actual_time_in = moment(v.actualDateIn).format('HH:mm');
+                            }
+                            else {
+                                var actual_time_in = '';
+                            }
 
-                        if (v.actualDateOut !== 'undefined' && v.actualDateOut !== null) {
-                            var actual_time_out = moment(v.actualDateOut).format('HH:mm');
-                        }
-                        else {
-                            var actual_time_out = '';
-                        }
+                            if (v.actualDateOut !== 'undefined' && v.actualDateOut !== null) {
+                                var actual_time_out = moment(v.actualDateOut).format('HH:mm');
+                            }
+                            else {
+                                var actual_time_out = '';
+                            }
 
-                        if (v.totalActualHour !== 'undefined' && v.totalActualHour !== null) {
-                            var total_actual_hour = moment(v.totalActualHour).format('HH:mm');
-                        }
-                        else {
-                            var total_actual_hour = '';
-                        }
+                            if (v.totalActualHour !== 'undefined' && v.totalActualHour !== null) {
+                                var total_actual_hour = moment(v.totalActualHour).format('HH:mm');
+                            }
+                            else {
+                                var total_actual_hour = '';
+                            }
 
-                        if (v.hourAbsent !== 'undefined' && v.hourAbsent !== null) {
-                            var finger_absent_hour = moment(v.hourAbsent).format('HH:mm');
-                        }
-                        else {
-                            var finger_absent_hour = '';
-                        }
+                            if (v.hourAbsent !== 'undefined' && v.hourAbsent !== null) {
+                                var finger_absent_hour = moment(v.hourAbsent).format('HH:mm');
+                            }
+                            else {
+                                var finger_absent_hour = '';
+                            }
 
-                        if (v.hourAbsent2 !== 'undefined' && v.hourAbsent2 !== null) {
-                            var absent_hour = moment(v.hourAbsent2).format('HH:mm');
-                        }
-                        else {
-                            var absent_hour = '';
-                        }
+                            if (v.hourAbsent2 !== 'undefined' && v.hourAbsent2 !== null) {
+                                var absent_hour = moment(v.hourAbsent2).format('HH:mm');
+                            }
+                            else {
+                                var absent_hour = '';
+                            }
 
-                        if (v.ovtBeforeIn !== 'undefined' && v.ovtBeforeIn !== null) {
-                            var overtime_before = moment(v.ovtBeforeIn).format('HH:mm');
-                        }
-                        else {
-                            var overtime_before = '';
-                        }
+                            if (v.ovtBeforeIn !== 'undefined' && v.ovtBeforeIn !== null) {
+                                var overtime_before = moment(v.ovtBeforeIn).format('HH:mm');
+                            }
+                            else {
+                                var overtime_before = '';
+                            }
 
-                        if (v.ovtIn !== 'undefined' && v.ovtIn !== null) {
-                            var overtime_start = moment(v.ovtIn).format('HH:mm');
-                        }
-                        else {
-                            var overtime_start = '';
-                        }
+                            if (v.ovtIn !== 'undefined' && v.ovtIn !== null) {
+                                var overtime_start = moment(v.ovtIn).format('HH:mm');
+                            }
+                            else {
+                                var overtime_start = '';
+                            }
 
-                        if (v.ovtOut !== 'undefined' && v.ovtOut !== null) {
-                            var overtime_finish = moment(v.ovtOut).format('HH:mm');
-                        }
-                        else {
-                            var overtime_finish = '';
-                        }
+                            if (v.ovtOut !== 'undefined' && v.ovtOut !== null) {
+                                var overtime_finish = moment(v.ovtOut).format('HH:mm');
+                            }
+                            else {
+                                var overtime_finish = '';
+                            }
 
-                        if (v.hourOvt !== 'undefined' && v.hourOvt !== null) {
-                            var overtime_hour = moment(v.hourOvt).format('HH:mm');
-                        }
-                        else {
-                            var overtime_hour = '';
-                        }
+                            if (v.hourOvt !== 'undefined' && v.hourOvt !== null) {
+                                var overtime_hour = moment(v.hourOvt).format('HH:mm');
+                            }
+                            else {
+                                var overtime_hour = '';
+                            }
 
-                        if (v.builtInOvt !== 'undefined' && v.builtInOvt !== null) {
-                            var overtime_bot = moment(v.builtInOvt).format('HH:mm');
-                        }
-                        else {
-                            var overtime_bot = '';
-                        }
+                            if (v.builtInOvt !== 'undefined' && v.builtInOvt !== null) {
+                                var overtime_bot = moment(v.builtInOvt).format('HH:mm');
+                            }
+                            else {
+                                var overtime_bot = '';
+                            }
 
-                        if (v.totalNormalHour !== 'undefined' && v.totalNormalHour !== null) {
-                            var total_normal_hour = moment(v.totalNormalHour).format('HH:mm');
-                        }
-                        else {
-                            var total_normal_hour = '';
-                        }
+                            if (v.totalNormalHour !== 'undefined' && v.totalNormalHour !== null) {
+                                var total_normal_hour = moment(v.totalNormalHour).format('HH:mm');
+                            }
+                            else {
+                                var total_normal_hour = '';
+                            }
 
-                        if (v.normalDateIn !== 'undefined' && v.normalDateIn !== null) {
-                            var normal_hour_in = moment(v.normalDateIn).format('HH:mm');
-                        }
-                        else {
-                            var normal_hour_in = '';
-                        }
+                            if (v.normalDateIn !== 'undefined' && v.normalDateIn !== null) {
+                                var normal_hour_in = moment(v.normalDateIn).format('HH:mm');
+                            }
+                            else {
+                                var normal_hour_in = '';
+                            }
 
-                        if (v.normalDateOut !== 'undefined' && v.normalDateOut !== null) {
-                            var normal_hour_out = moment(v.normalDateOut).format('HH:mm');
-                        }
-                        else {
-                            var normal_hour_out = '';
-                        }
+                            if (v.normalDateOut !== 'undefined' && v.normalDateOut !== null) {
+                                var normal_hour_out = moment(v.normalDateOut).format('HH:mm');
+                            }
+                            else {
+                                var normal_hour_out = '';
+                            }
 
-                        if (v.ovtBefore !== 'undefined' && v.ovtBefore !== null) {
-                            var normal_overtime_before = moment(v.ovtBefore).format('HH:mm');
-                        }
-                        else {
-                            var normal_overtime_before = '';
-                        }
+                            if (v.ovtBefore !== 'undefined' && v.ovtBefore !== null) {
+                                var normal_overtime_before = moment(v.ovtBefore).format('HH:mm');
+                            }
+                            else {
+                                var normal_overtime_before = '';
+                            }
 
-                        if (v.ovtAfter !== 'undefined' && v.ovtAfter !== null) {
-                            var normal_overtime_after = moment(v.ovtAfter).format('HH:mm');
-                        }
-                        else {
-                            var normal_overtime_after = '';
-                        }
+                            if (v.ovtAfter !== 'undefined' && v.ovtAfter !== null) {
+                                var normal_overtime_after = moment(v.ovtAfter).format('HH:mm');
+                            }
+                            else {
+                                var normal_overtime_after = '';
+                            }
 
-                        if (v.actualDateIn !== 'undefined' && v.actualDateIn !== null) {
-                            var actual_date_in = moment(v.actualDateIn).format('DD-MMM-YYYY');
-                        }
-                        else {
-                            var actual_date_in = '';
-                        }
+                            // if (v.actualDateIn !== 'undefined' && v.actualDateIn !== null) {
+                            //     var actual_date_in = moment(v.actualDateIn).format('DD-MMM-YYYY');
+                            // }
+                            // else {
+                            //     var actual_date_in = '';
+                            // }
 
-                        table.row.add([
-                            '<input type="text" class="form-control" name="absent_date[]" id="absent_date" value="'+ absent_date +'" readonly>',
-                            '<input type="text" class="form-control" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
-                            '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" disabled></select>',
-                            '<select class="form-control select2" name="shift_code[]" id="shift_code'+ (k+1) +'" disabled></select>',
-                            '<select class="form-control select2" name="cost_center_code[]" id="cost_center_code'+(k+1)+'" disabled></select>',
-                            '<div class="input-group">' +
-                                '<input type="text" class="form-control" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
-                                '<div class="input-group-prepend" id="actual_date_in_calendar">' +
-                                    '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
-                                '</div>' +
-                            '</div>',
-                            '<input type="text" class="form-control actual_time_in" name="actual_time_in[]" id="actual_time_in'+ (k+1) +'" disabled>',
-                            '<div class="input-group date">' +
-                                '<input type="text" class="form-control" id="actual_date_out'+ (k+1) +'" name="actual_date_out[]" disabled>' +  
-                                '<div class="input-group-prepend date" id="actual_date_in_calendar'+ (k+1) +'">' +
-                                    '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
-                                '</div>' +
-                            '</div>',
-                            '<input type="text" class="form-control actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" disabled>',
-                            '<input type="text" class="form-control" name="total_actual_hour[]" id="total_actual_hour'+ (k+1) +'" value="'+ total_actual_hour +'" readonly>',
-                            '<select class="form-control select2" name="finger_absent_code[]" id="finger_absent_code'+ (k+1) +'" disabled></select>',
-                            '<input type="text" class="form-control finger_absent_hour" name="finger_absent_hour[]" id="finger_absent_hour'+ (k+1) +'" value="'+ finger_absent_hour +'" readonly>',
-                            '<input type="text" class="form-control" name="finger_absent_description[]" id="finger_absent_description'+ (k+1) +'" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
-                            '<select class="form-control select2" name="absent_code[]" id="absent_code'+ (k+1) +'" disabled></select>',
-                            '<input type="text" class="form-control" name="absent_hour[]" id="absent_hour'+ (k+1) +'" value="'+ absent_hour +'" readonly>',
-                            '<input type="text" class="form-control" name="absent_description[]" id="absent_description'+ (k+1) +'" value="'+ ((typeof v.descriptionAbsent2 !== 'undefined' && v.descriptionAbsent2 !== null) ? v.descriptionAbsent2 : '') +'" readonly>',
-                            '<select class="form-control select2" name="overtime_code[]" id="overtime_code'+ (k+1) +'" disabled></select>',
-                            '<input type="text" class="form-control" name="overtime_before[]" id="overtime_before'+ (k+1) +'" value="'+ overtime_before +'" readonly>',
-                            '<input type="text" class="form-control" name="overtime_start[]" id="overtime_start'+ (k+1) +'" value="'+ overtime_start +'" readonly>',
-                            '<input type="text" class="form-control" name="overtime_finish[]" id="overtime_finish'+ (k+1) +'" value="'+ overtime_finish +'" readonly>',
-                            '<input type="text" class="form-control" name="overtime_hour[]" id="overtime_hour'+ (k+1) +'" value="'+ overtime_hour +'" readonly>',
-                            '<input type="text" class="form-control" name="overtime_convert[]" id="overtime_convert'+ (k+1) +'" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" readonly>',
-                            '<input type="text" class="form-control" name="overtime_bot[]" id="overtime_bot'+ (k+1) +'" value="'+ ((typeof v.builtInOvt !== 'undefined' && v.builtInOvt !== null) ? v.builtInOvt : '') +'" readonly>',
-                            '<input type="text" class="form-control" name="overtime_description[]" id="overtime_description'+ (k+1) +'" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" readonly>',
-                            '<input type="text" class="form-control" name="total_normal_hour[]" id="total_normal_hour'+ (k+1) +'" value="'+ total_normal_hour +'" readonly>',
-                            '<input type="text" class="form-control" name="normal_hour_in[]" id="normal_hour_in'+ (k+1) +'" value="'+ normal_hour_in +'" readonly>',
-                            '<input type="text" class="form-control" name="normal_hour_out[]" id="normal_hour_out'+ (k+1) +'" value="'+ normal_hour_out +'" readonly>',
-                            '<input type="text" class="form-control" name="normal_overtime_before[]" id="normal_overtime_before'+ (k+1) +'" value="'+ normal_overtime_before +'" readonly>',
-                            '<input type="text" class="form-control" name="normal_overtime_after[]" id="normal_overtime_after'+ (k+1) +'" value="'+ normal_overtime_after +'" readonly>',
-                            '<input type="text" class="form-control" name="position[]" id="position'+ (k+1) +'" value="'+ ((typeof v.positionCode !== 'undefined' && v.positionCode !== null) ? v.positionCode : '') +'" readonly>',
-                            '<input type="text" class="form-control" name="location[]" id="location'+ (k+1) +'" value="'+ ((typeof v.locationCode !== 'undefined' && v.locationCode !== null) ? v.locationCode : '') +'" readonly>',
-                            '<input type="text" class="form-control" name="grade[]" id="grade'+ (k+1) +'" value="'+ ((typeof v.gradeCode !== 'undefined' && v.gradeCode !== null) ? v.gradeCode : '') +'" readonly>'
-                        ]).draw();
+                            table.row.add([
+                                '<input type="text" class="form-control" name="absent_date[]" id="absent_date" value="'+ absent_date +'" readonly>',
+                                '<input type="text" class="form-control" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
+                                '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" disabled></select>',
+                                '<select class="form-control select2" name="shift_code[]" id="shift_code'+ (k+1) +'" disabled></select>',
+                                '<select class="form-control select2" name="cost_center_code[]" id="cost_center_code'+(k+1)+'" disabled></select>',
+                                '<div class="input-group">' +
+                                    '<input type="text" class="form-control" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
+                                    '<div class="input-group-prepend" id="actual_date_in_calendar">' +
+                                        '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
+                                    '</div>' +
+                                '</div>',
+                                '<input type="text" class="form-control actual_time_in" name="actual_time_in[]" id="actual_time_in'+ (k+1) +'" disabled>',
+                                '<div class="input-group date">' +
+                                    '<input type="text" class="form-control" id="actual_date_out'+ (k+1) +'" name="actual_date_out[]" disabled>' +  
+                                    '<div class="input-group-prepend date" id="actual_date_in_calendar'+ (k+1) +'">' +
+                                        '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
+                                    '</div>' +
+                                '</div>',
+                                '<input type="text" class="form-control actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" disabled>',
+                                '<input type="text" class="form-control" name="total_actual_hour[]" id="total_actual_hour'+ (k+1) +'" readonly>',
+                                '<select class="form-control select2" name="finger_absent_code[]" id="finger_absent_code'+ (k+1) +'" disabled></select>',
+                                '<input type="text" class="form-control finger_absent_hour" name="finger_absent_hour[]" id="finger_absent_hour'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="finger_absent_description[]" id="finger_absent_description'+ (k+1) +'" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
+                                '<select class="form-control select2" name="absent_code[]" id="absent_code'+ (k+1) +'" disabled></select>',
+                                '<input type="text" class="form-control" name="absent_hour[]" id="absent_hour'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="absent_description[]" id="absent_description'+ (k+1) +'" value="'+ ((typeof v.descriptionAbsent2 !== 'undefined' && v.descriptionAbsent2 !== null) ? v.descriptionAbsent2 : '') +'" readonly>',
+                                '<select class="form-control select2" name="overtime_code[]" id="overtime_code'+ (k+1) +'" disabled></select>',
+                                '<input type="text" class="form-control" name="overtime_before[]" id="overtime_before'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="overtime_start[]" id="overtime_start'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="overtime_finish[]" id="overtime_finish'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="overtime_hour[]" id="overtime_hour'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="overtime_convert[]" id="overtime_convert'+ (k+1) +'" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" readonly>',
+                                '<input type="text" class="form-control" name="overtime_bot[]" id="overtime_bot'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="overtime_description[]" id="overtime_description'+ (k+1) +'" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" readonly>',
+                                '<input type="text" class="form-control" name="total_normal_hour[]" id="total_normal_hour'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="normal_hour_in[]" id="normal_hour_in'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="normal_hour_out[]" id="normal_hour_out'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="normal_overtime_before[]" id="normal_overtime_before'+ (k+1) +'" readonly>',
+                                '<input type="text" class="form-control" name="normal_overtime_after[]" id="normal_overtime_after'+ (k+1) +'" readonly>',
+                                '<select class="form-control select2" name="position[]" id="position'+ (k+1) +'" readonly></select>',
+                                '<select class="form-control select2" name="location[]" id="location'+ (k+1) +'" readonly></select>',
+                                '<select class="form-control select2" name="grade[]" id="grade'+ (k+1) +'" readonly></select>'
+                            ]).draw();
 
-                        loadDataDay("#day" + (k+1));
-                        loadDataShiftCode("#shift_code" + (k+1));
-                        loadDataCostCenterCode("#cost_center_code" + (k+1));
-                        loadDataAbsentCode('#finger_absent_code' + (k+1));
-                        loadDataAbsentCode('#absent_code' + (k+1));
-                        loadDataAbsentCode('#absent_code' + (k+1));
-                        loadDataOvertimeCode('#overtime_code' + (k+1));
+                            loadDataDay("#day" + (k+1));
+                            loadDataShiftCode("#shift_code" + (k+1));
+                            loadDataCostCenterCode("#cost_center_code" + (k+1));
+                            loadDataAbsentCode('#finger_absent_code' + (k+1));
+                            loadDataAbsentCode('#absent_code' + (k+1));
+                            loadDataOvertimeCode('#overtime_code' + (k+1));
+                            loadDataPosition('#position' + (k+1));
+                            loadDataLocation('#location' + (k+1));
+                            loadDataGrade('#grade' + (k+1));
 
-                        loadDataDetailDayCode('#day' + (k+1), ((typeof v.day !== 'undefined' && v.day !== null) ? v.day : ''));
-                        loadDataDetailShiftCode('#shift_code' + (k+1), ((typeof v.shiftCode !== 'undefined' && v.shiftCode !== null) ? v.shiftCode : ''));
-                        loadDataDetailCostCenterCode('#cost_center_code' + (k+1), ((typeof v.costCenterCode !== 'undefined' && v.costCenterCode !== null) ? v.costCenterCode : ''));
-                        loadDataDetailOvertimeCode('#overtime_code' + (k+1), ((typeof v.ovtCode !== 'undefined' && v.ovtCode !== null) ? v.ovtCode : ''));
-                        loadDataDetailFingerAbsentCode('#finger_absent_code' + (k+1), ((typeof v.absentCode !== 'undefined' && v.absentCode !== null) ? v.absentCode : ''));
-                        loadDataDetailAbsentCode('#absent_code' + (k+1), ((typeof v.absentCode2 !== 'undefined' && v.absentCode2 !== null) ? v.absentCode2 : ''));
+                            loadDataDetailDayCode('#day' + (k+1), ((typeof v.day !== 'undefined' && v.day !== null) ? v.day : ''));
+                            loadDataDetailShiftCode('#shift_code' + (k+1), ((typeof v.shiftCode !== 'undefined' && v.shiftCode !== null) ? v.shiftCode : ''));
+                            loadDataDetailCostCenterCode('#cost_center_code' + (k+1), ((typeof v.costCenterCode !== 'undefined' && v.costCenterCode !== null) ? v.costCenterCode : ''));
+                            loadDataDetailOvertimeCode('#overtime_code' + (k+1), ((typeof v.ovtCode !== 'undefined' && v.ovtCode !== null) ? v.ovtCode : ''));
+                            loadDataDetailFingerAbsentCode('#finger_absent_code' + (k+1), ((typeof v.absentCode !== 'undefined' && v.absentCode !== null) ? v.absentCode : ''));
+                            loadDataDetailAbsentCode('#absent_code' + (k+1), ((typeof v.absentCode2 !== 'undefined' && v.absentCode2 !== null) ? v.absentCode2 : ''));
+                            loadDataDetailPosition('#position' + (k+1), ((typeof v.positionCode !== 'undefined' && v.positionCode !== null) ? v.positionCode : ''));
+                            loadDataDetailLocation('#location' + (k+1), ((typeof v.locationCode !== 'undefined' && v.locationCode !== null) ? v.locationCode : ''));
+                            loadDataDetailGrade('#grade' + (k+1), ((typeof v.gradeCode !== 'undefined' && v.gradeCode !== null) ? v.gradeCode : ''));
 
-                        // loadDataDetailActualDateIn('#actual_date_in' + (k+1), actual_date_in);
+                            // loadDataDetailActualDateIn('#actual_date_in' + (k+1), actual_date_in);
 
-                        // console.log(setDate((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
+                            // console.log(setDate((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
 
-                        window["pickrActualTimeIn" + (k+1)] = initTimePicker('#actual_time_in' + (k+1));
-                        initTimePicker('#actual_time_out' + (k+1));
-                        window["pickrActualDateIn" + (k+1)] = initDatePicker('#actual_date_in' + (k+1));
-                        initDatePicker('#actual_date_out' + (k+1));
+                            window["pickrActualDateIn" + (k+1)] = initDatePicker('#actual_date_in' + (k+1));
+                            window["pickrActualDateOut" + (k+1)] = initDatePicker('#actual_date_out' + (k+1));
 
-                        console.log(moment(v.actualDateIn).format('YYYY-MM-DD HH:mm'));
+                            window["pickrActualTimeIn" + (k+1)] = initTimePicker('#actual_time_in' + (k+1));
+                            window["pickrActualTimeOut" + (k+1)] = initTimePicker('#actual_time_out' + (k+1));
+                            window["pickrTotalActualHour" + (k+1)] = initTimePicker('#total_actual_hour' + (k+1));
+                            window["pickrFingerAbsentHour" + (k+1)] = initTimePicker('#finger_absent_hour' + (k+1));
+                            window["pickrAbsentHour" + (k+1)] = initTimePicker('#absent_hour' + (k+1));
+                            window["pickrOvertimeBefore" + (k+1)] = initTimePicker('#overtime_before' + (k+1));
+                            window["pickrOvertimeStart" + (k+1)] = initTimePicker('#overtime_start' + (k+1));
+                            window["pickrOvertimeFinish" + (k+1)] = initTimePicker('#overtime_finish' + (k+1));
+                            window["pickrOvertimeHour" + (k+1)] = initTimePicker('#overtime_hour' + (k+1));
+                            window["pickrOvertimeBot" + (k+1)] = initTimePicker('#overtime_bot' + (k+1));
+                            window["pickrTotalNormalHour" + (k+1)] = initTimePicker('#total_normal_hour' + (k+1));
+                            window["pickrNormalHourIn" + (k+1)] = initTimePicker('#normal_hour_in' + (k+1));
+                            window["pickrNormalHourOut" + (k+1)] = initTimePicker('#normal_hour_out' + (k+1));
+                            window["pickrNormalOvertimeBefore" + (k+1)] = initTimePicker('#normal_overtime_before' + (k+1));
+                            window["pickrNormalOvertimeAfter" + (k+1)] = initTimePicker('#normal_overtime_after' + (k+1));
 
-                        window["pickrActualTimeIn" + (k+1)].selectedDateObj.setHours("09", "00");
-                        window["pickrActualDateIn" + (k+1)].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
+                            // console.log(moment(v.actualDateIn).format('YYYY-MM-DD HH:mm'));
 
-                        $('#btn-edit').on('click', function () {
-                            $('#day' + (k+1)).prop('disabled', false);
-                            $('#shift_code' + (k+1)).prop('disabled', false);
-                            $('#cost_center_code' + (k+1)).prop('disabled', false);
-                            $('#actual_date_in' + (k+1)).prop('disabled', false);
-                            $('#actual_time_in'+ (k+1)).prop('disabled', false);
-                            $('#actual_date_out' + (k+1)).prop('disabled', false);
-                            $('#actual_time_out' + (k+1)).prop('disabled', false);
-                            $('#total_actual_hour' + (k+1)).prop('readonly', false);
-                            $('#finger_absent_code' + (k+1)).prop('disabled', false);
-                            $('#finger_absent_hour'+ (k+1)).prop('readonly', false);
-                            $('#finger_absent_description'+ (k+1)).prop('readonly', false);
-                            $('#absent_code'+ (k+1)).prop('disabled', false);
-                            $('#absent_hour'+ (k+1)).prop('readonly', false);
-                            $('#absent_description'+ (k+1)).prop('readonly', false);
-                            $('#overtime_code'+ (k+1)).prop('disabled', false);
-                            $('#overtime_before'+ (k+1)).prop('readonly', false);
-                            $('#overtime_start'+ (k+1)).prop('readonly', false);
-                            $('#overtime_finish'+ (k+1)).prop('readonly', false);
-                            $('#overtime_hour'+ (k+1)).prop('readonly', false);
-                            $('#overtime_convert'+ (k+1)).prop('readonly', false);
-                            $('#overtime_bot'+ (k+1)).prop('readonly', false);
-                            $('#overtime_description'+ (k+1)).prop('readonly', false);
-                            $('#position'+ (k+1)).prop('readonly', false);
-                            $('#location'+ (k+1)).prop('readonly', false);
-                            $('#grade'+ (k+1)).prop('readonly', false);
-                            $('#btn-save').prop('disabled', false);
+                            window["pickrActualDateIn" + (k+1)].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
+                            window["pickrActualDateOut" + (k+1)].setDate(((typeof v.actualDateOut !== 'undefined' && v.actualDateOut !== null) ? v.actualDateOut : ''));
+
+                            window["pickrActualTimeIn" + (k+1)].setDate(actual_time_in);
+                            window["pickrActualTimeOut" + (k+1)].setDate(actual_time_out);
+                            window["pickrTotalActualHour" + (k+1)].setDate(total_actual_hour);
+                            window["pickrFingerAbsentHour" + (k+1)].setDate(finger_absent_hour);
+                            window["pickrAbsentHour" + (k+1)].setDate(absent_hour);
+                            window["pickrOvertimeBefore" + (k+1)].setDate(overtime_before);
+                            window["pickrOvertimeStart" + (k+1)].setDate(overtime_start);
+                            window["pickrOvertimeFinish" + (k+1)].setDate(overtime_finish);
+                            window["pickrOvertimeHour" + (k+1)].setDate(overtime_hour);
+                            window["pickrOvertimeBot" + (k+1)].setDate(overtime_bot);
+                            window["pickrTotalNormalHour" + (k+1)].setDate(total_normal_hour);
+                            window["pickrNormalHourIn" + (k+1)].setDate(normal_hour_in);
+                            window["pickrNormalHourOut" + (k+1)].setDate(normal_hour_out);
+                            window["pickrNormalOvertimeBefore" + (k+1)].setDate(normal_overtime_before);
+                            window["pickrNormalOvertimeAfter" + (k+1)].setDate(normal_overtime_after);
+
+                            $('#btn-edit').on('click', function () {
+                                $('#day' + (k+1)).prop('disabled', false);
+                                $('#shift_code' + (k+1)).prop('disabled', false);
+                                $('#cost_center_code' + (k+1)).prop('disabled', false);
+                                $('#actual_date_in' + (k+1)).prop('disabled', false);
+                                $('#actual_time_in'+ (k+1)).prop('disabled', false);
+                                $('#actual_date_out' + (k+1)).prop('disabled', false);
+                                $('#actual_time_out' + (k+1)).prop('disabled', false);
+                                $('#total_actual_hour' + (k+1)).prop('readonly', false);
+                                $('#finger_absent_code' + (k+1)).prop('disabled', false);
+                                $('#finger_absent_hour'+ (k+1)).prop('readonly', false);
+                                $('#finger_absent_description'+ (k+1)).prop('readonly', false);
+                                $('#absent_code'+ (k+1)).prop('disabled', false);
+                                $('#absent_hour'+ (k+1)).prop('readonly', false);
+                                $('#absent_description'+ (k+1)).prop('readonly', false);
+                                $('#overtime_code'+ (k+1)).prop('disabled', false);
+                                $('#overtime_before'+ (k+1)).prop('readonly', false);
+                                $('#overtime_start'+ (k+1)).prop('readonly', false);
+                                $('#overtime_finish'+ (k+1)).prop('readonly', false);
+                                $('#overtime_hour'+ (k+1)).prop('readonly', false);
+                                $('#overtime_convert'+ (k+1)).prop('readonly', false);
+                                $('#overtime_bot'+ (k+1)).prop('readonly', false);
+                                $('#overtime_description'+ (k+1)).prop('readonly', false);
+                                $('#position'+ (k+1)).prop('readonly', false);
+                                $('#location'+ (k+1)).prop('readonly', false);
+                                $('#grade'+ (k+1)).prop('readonly', false);
+                                $('#btn-save').prop('disabled', false);
+                            });
+
+                            var date_time = $('actual_time_in, .actual_time_out');
+                                        
+                            date_time.on('change', function () {
+                                var actual_date_out = moment($('#actual_date_out'+(k+1)).val()).format('DD/MM/YYYY');
+                                var actual_date_in = moment($('#actual_date_in'+(k+1)).val()).format('DD/MM/YYYY');
+                                var actual_time_out = $('#actual_time_out'+(k+1)).val();
+                                var actual_time_in = $('#actual_time_in'+(k+1)).val();
+
+                                const DateIn = actual_date_in + " " + actual_time_in;
+                                const DateOut = actual_date_out + " " + actual_time_out;
+
+                                const difference = moment(DateOut, "DD/MM/YYYY HH:mm:ss").diff(moment(DateIn, "DD/MM/YYYY HH:mm:ss"));
+                                const diff = moment.utc(difference).format("HH:mm:ss");
+
+                                $('#finger_absent_hour'+(k+1)).val(diff);
+                            })
                         });
 
-                        var date_time = $('actual_time_in, .actual_time_out');
-                                    
-                        date_time.on('change', function () {
-                            var actual_date_out = moment($('#actual_date_out'+(k+1)).val()).format('DD/MM/YYYY');
-                            var actual_date_in = moment($('#actual_date_in'+(k+1)).val()).format('DD/MM/YYYY');
-                            var actual_time_out = $('#actual_time_out'+(k+1)).val();
-                            var actual_time_in = $('#actual_time_in'+(k+1)).val();
-
-                            const DateIn = actual_date_in + " " + actual_time_in;
-                            const DateOut = actual_date_out + " " + actual_time_out;
-
-                            const difference = moment(DateOut, "DD/MM/YYYY HH:mm:ss").diff(moment(DateIn, "DD/MM/YYYY HH:mm:ss"));
-                            const diff = moment.utc(difference).format("HH:mm:ss");
-
-                            $('#finger_absent_hour'+(k+1)).val(diff);
-
-                            // console.log(actual_date_in);
-                            // console.log(actual_time_in);
-                            // console.log(difference);
-                        })
-                    });
+                        table.columns.adjust();
+                    }
                 }
             })
         });
@@ -866,6 +905,63 @@
             });
         }
 
+        function loadDataDetailPosition(field = '', positionCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/position/detail/api',
+                data: {
+                    positionCode : positionCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].positionName + ')').length && positionCode !== '') {
+                    $(field).append($('<option>').val(data[0].positionCode).text(data[0].positionName));
+                }
+                $(field).val(data[0].positionCode);
+                $(field).removeClass('loading');
+            });
+        }
+
+        function loadDataDetailLocation(field = '', locationCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/location/detail/api',
+                data: {
+                    locationCode : locationCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].locationName + ')').length && locationCode !== '') {
+                    $(field).append($('<option>').val(data[0].locationCode).text(data[0].locationName));
+                }
+                $(field).val(data[0].locationCode);
+                $(field).removeClass('loading');
+            });
+        }
+
+        function loadDataDetailGrade(field = '', gradeCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/grade/detail/api',
+                data: {
+                    gradeCode : gradeCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].gradeName + ')').length && gradeCode !== '') {
+                    $(field).append($('<option>').val(data[0].gradeCode).text(data[0].gradeName));
+                }
+                $(field).val(data[0].gradeCode);
+                $(field).removeClass('loading');
+            });
+        }
+
         function loadDataDay(field = ''){
             function formatSelect(data) {
                 if (data.loading) {
@@ -1079,7 +1175,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Cost Center Code',
+                placeholder: 'Choose Absent Code',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1144,7 +1240,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Cost Center Code',
+                placeholder: 'Choose Overtime Code',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1174,6 +1270,201 @@
                                 return {
                                     text: item.description,
                                     id: item.absentCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataPosition(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.positionCode + '</div>' +
+                        '<div class="col-6">' + data.data.positionName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Position Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/position/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.positionName,
+                                    id: item.positionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLocation(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.locationCode + '</div>' +
+                        '<div class="col-6">' + data.data.locationName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Location Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/location/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.locationName,
+                                    id: item.locationCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGrade(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Grade Code</b></div>' +
+                        '<div class="col-6"><b>Grade Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.gradeCode + '</div>' +
+                        '<div class="col-6">' + data.data.gradeName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Grade Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/grade/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.gradeName,
+                                    id: item.gradeCode,
                                     data: item
                                 }
                             })
