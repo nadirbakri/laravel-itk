@@ -629,6 +629,37 @@ Route::get('payroll/payroll_calculation_number/check', 'PayrollController@checkN
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
+/* Medical Maintenance Menu */
+Route::get('medical/medical_reference', 'MedicalController@pageMedicalReference');
+Route::get('medical/claim_code', 'MedicalController@pageClaimCode');
+Route::get('medical/disease_code', 'MedicalController@pageDiseaseCode');
+Route::get('medical/insurance_code', 'MedicalController@pageInsuranceCode');
+Route::get('medical/insurance_class', 'MedicalController@pageInsuranceClass');
+
+/* Route untuk tabel Medical */
+Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
+Route::get('medical/disease_code/table', 'MedicalController@tableDiseaseCodeMD');
+Route::get('medical/insurance_code/table', 'MedicalController@tableInsuranceCodeMD');
+Route::get('medical/insurance_class/table', 'MedicalController@tableInsuranceClassMD');
+
+/*Route untuk detail Data Medical*/
+Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
+Route::get('medical/disease_code/detail_data', 'MedicalController@dataDetailDiseaseCodeMD');
+Route::get('medical/insurance_code/detail_data', 'MedicalController@dataDetailInsuranceCodeMD');
+Route::get('medical/insurance_class/detail_data', 'MedicalController@dataDetailInsuranceClass');
+
+/*Route untuk Proses Medical*/
+Route::post('medical/medical_reference/proses', 'MedicalController@prosesMedicalReferenceMD');
+Route::post('medical/claim_code/proses', 'MedicalController@prosesClaimCodeMD');
+Route::post('medical/disease_code/proses', 'MedicalController@prosesDiseaseCodeMD');
+Route::post('medical/insurance_code/proses', 'MedicalController@prosesInsuranceCodeMD');
+Route::post('medical/insurance_class/proses', 'MedicalController@prosesInsuranceClassMD');
+
+/* Route untuk status Medical */
+Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');
+Route::get('medical/disease_code/status', 'MedicalController@statusDiseaseCodeMD');
+Route::get('medical/insurance_code/status', 'MedicalController@statusInsuranceCodeMD');
+Route::get('medical/insurance_class/status', 'MedicalController@statusInsuranceClassMD');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -837,6 +868,8 @@ Route::get('employee_no_slip_format/api', 'DataController@dataEmployeeNoSlipForm
 Route::get('attachment_code/api', 'DataController@dataAttachmentCodeAPI');
 Route::get('payment_method_full_partial_loan_payment/api', 'DataController@dataPaymentMethodFullPartialLoanPaymentAPI');
 Route::get('column/api', 'DataController@dataColumnAPI');
+Route::get('medical_limit_type/api', 'DataController@dataMedicalLimitTypeAPI');
+Route::get('medical_limit_tyoe/func/api', 'DataController@dataMedicalLimitTypeFunctionAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
