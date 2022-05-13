@@ -275,6 +275,21 @@ class PayrollController extends Controller
         return view ('payroll.py_spt_process');
     }
 
+    public function pageJournalTemplate()
+    {
+        return view ('payroll.py_journal_template');
+    }
+
+    public function pageSptFormat()
+    {
+        return view ('payroll.py_spt_format');
+    }
+
+    public function pageMonthlyPayrollClosingProcess()
+    {
+        return view ('payroll.py_monthly_closing_process');
+    }
+
     public function tableAccountPY()
     {
         try {
@@ -998,6 +1013,34 @@ class PayrollController extends Controller
             }else{
                 return view('error.bad_request');
             }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableJournalTemplatePY()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prjournaltemplate/getprjournaltemplate',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse());
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1780,7 +1823,35 @@ class PayrollController extends Controller
         return view('payroll.py_salary_component_form_detail', ['data' => $data, 'func' => $request->func]);
     }
 
-    public function dataDetailReportFormatPY(Request $request)
+public function dataDetailReportFormatPY(Request $request)
+{
+    try {
+        $client = new Client([
+            'headers' => [ 'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . Session::get('token') ]
+        ]);
+
+        // var_dump($request->reportCode);
+
+        $response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
+            ['body' => json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    'reportCode' => $request->reportCode,
+                    'languageCode' => App::getLocale()
+                ]
+            )]
+        );
+    } catch (RequestException $e) {
+        var_dump($e->getResponse());
+    }
+
+    $arrResult = json_decode($response->getBody()->getContents());  
+
+    return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+}
+
+    public function dataDetailJournalTemplatePY(Request $request)
     {
         try {
             $client = new Client([
@@ -1788,24 +1859,37 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump($request->reportCode);
-
-            $response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
+            $response = $client->post(env('API_URL') . '/prjournaltemplate/getprjournaltemplate',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'reportCode' => $request->reportCode,
-                        'languageCode' => App::getLocale()
+                        'journalCode' => $request->journalCode,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_journal_template_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataPayrollCalculationPY(Request $request)
@@ -1851,6 +1935,42 @@ class PayrollController extends Controller
         $arrResult2 = json_decode($response_table->getBody()->getContents());
 
         return view('payroll.py_payroll_calculation_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailSlipFormatPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prslipformat/getslipformat',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "slipCode" => $request->slipCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
     }
 
     public function prosesSalaryMasterPY(Request $request)
@@ -3213,6 +3333,87 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesJournalTemplatePY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $param = [
+                    'recordStatus' => $request->record_status,
+                    'companyCode' => Session::get('companyCode'),
+                    'journalCode' => $request->journal_code,
+                    'fieldName' => $request->field_name,
+                    'costCenter' => $request->cost_center,
+                    'debitKredit' => $request->debit_kredit,
+                    'account' => $request->account,
+                    'description' => $request->description,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')        
+                ];
+            }
+            else {
+                $param = [
+                    'recordStatus' => $request->record_status,
+                    'companyCode' => Session::get('companyCode'),
+                    'journalCode' => $request->journal_code_hidden,
+                    'fieldName' => $request->field_name,
+                    'costCenter' => $request->cost_center,
+                    'debitKredit' => $request->debit_kredit,
+                    'account' => $request->account,
+                    'description' => $request->description,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')        
+                ];
+            }
+
+            // var_dump($param);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prjournaltemplate/insertprjournaltemplate',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/prjournaltemplate/updateprjournaltemplate',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function removeTHRBonusDataEntryPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -3495,6 +3696,88 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function removeSptFormatPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump((int) $request->column_no_hidden);
+
+            $response = $client->delete(env('API_URL') . '/prformatspt/deleteprformatspt',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'columnNo' => (int) $request->column_no_hidden,
+                        'fieldName' => $request->field_name,
+                        "label" => $request->field_label,
+                        "format" => $request->format,
+                        "changedNo" => 0,
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function dataDetailSptFormatPY(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump((int)$request->columnNo);
+
+            $response = $client->post(env('API_URL') . '/prformatspt/getprformatspt',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'columnNo' => (int) $request->columnNo
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
+    }
+
     public function statusLoanMasterPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -3643,6 +3926,57 @@ class PayrollController extends Controller
                         'companyCode' => Session::get('companyCode'),
                         'fieldName' => $request->fieldName,
                         'seqProcess' => (int) $request->seqProcess,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+            // var_dump($request->reportCode);
+            
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusJournalTemplatePY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/prjournaltemplate/updateprjournaltemplate',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'journalCode' => $request->journalCode,
+                        'fieldName' => $request->fieldName,
+                        'costCenter' => $request->costCenter,
+                        'debitKredit' => $request->debitKredit,
+                        'account' => $request->account,
+                        'description' => $request->description,
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
@@ -4040,6 +4374,327 @@ class PayrollController extends Controller
             $request->column_k,
             $request->column_l
         ), 'Template Payroll Data.xlsx');
+    }
+    public function prosesMonthlyClosingProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump((int) $request->period_month);
+
+            $response = $client->post(env('API_URL') . '/prmonthlyclosingprocess/insertprmonthlyclosing',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSptFormatPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            // var_dump(Session::get('token'));
+            // var_dump($request->record_function);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'columnNo' => (int) $request->column_no_hidden,
+                'fieldName' => $request->field_name,
+                'label' => $request->field_label,
+                "changedNo" => 0,
+                'format' => $request->format,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+
+            // var_dump($param);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prformatspt/insertprformatspt',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else if($request->record_function == 'Edit'){
+                $response = $client->post(env('API_URL') . '/prformatspt/updateprformatspt',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else{
+                $response = $client->delete(env('API_URL') . '/prformatspt/deleteprformatspt',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSlipFormatCustomPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            // var_dump(Session::get('token'));
+            // var_dump($request->slip_type_custom);
+
+            if($request->custom_label == 'label1'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'slipCode' => $request->slip_type_custom,
+                    'slipName' => $request->slip_name_custom,
+                    'fontSize' => (int) $request->font_size_custom,
+                    'formatNumber' => $request->number_format_custom,
+                    'headerCustom1' => $request->custom,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')
+                ];
+                // var_dump($param);
+            }
+
+            else if($request->custom_label == 'label2'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'slipCode' => $request->slip_type_custom,
+                    'slipName' => $request->slip_name_custom,
+                    'fontSize' => (int) $request->font_size_custom,
+                    'formatNumber' => $request->number_format_custom,
+                    'headerCustom2' => $request->custom,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')
+                ];
+            }
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else{
+                $response = $client->post(env('API_URL') . '/prslipformat/updateslipformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSlipFormatAllowancePY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            var_dump($request->record_function);
+
+            if($request->number_allowance == '1'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'slipCode' => $request->slip_type_allowance,
+                    'slipName' => $request->slip_name_allowance,
+                    'fontSize' => (int) $request->font_size_allowance,
+                    'formatNumber' => $request->number_format_allowance,
+                    'allowance1Label' => $request->field_label_allowance,
+                    'allowance1Field' => $request->field_name_allowance,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')        
+                ];
+            }
+
+            else if($request->number_allowance == '2'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'slipCode' => $request->slip_type_allowance,
+                    'slipName' => $request->slip_name_allowance,
+                    'fontSize' => (int) $request->font_size_allowance,
+                    'formatNumber' => $request->number_format_allowance,
+                    'allowance2Label' => $request->field_label_allowance,
+                    'allowance2Field' => $request->field_name_allowance,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')        
+                ];
+                // var_dump($param);
+            }
+
+            // $param = [
+            //     'companyCode' => Session::get('companyCode'),
+            //     'slipCode' => $request->slip_type_allowance,
+            //     'slipName' => $request->slip_name_allowance,
+            //     'fontSize' => (int) $request->font_size_allowance,
+            //     'formatNumber' => $request->number_format_allowance,
+            //     'allowance1Label' => $request->field_label_allowance,
+            //     'allowance2Label' => $request->allowance2,
+            //     'allowance3Label' => $request->allowance3,
+            //     'allowance4Label' => $request->allowance4,
+            //     'allowance5Label' => $request->allowance5,
+            //     'allowance6Label' => $request->allowance6,
+            //     'allowance7Label' => $request->allowance7,
+            //     'allowance8Label' => $request->allowance8,
+            //     'allowance9Label' => $request->allowance9,
+            //     'allowance10Label' => $request->allowance10,
+            //     'allowance1Field' => $request->allowance1,
+            //     'allowance2Field' => $request->allowance2,
+            //     'allowance3Field' => $request->allowance3,
+            //     'allowance4Field' => $request->allowance4,
+            //     'allowance5Field' => $request->allowance5,
+            //     'allowance6Field' => $request->allowance6,
+            //     'allowance7Field' => $request->allowance7,
+            //     'allowance8Field' => $request->allowance8,
+            //     'allowance9Field' => $request->allowance9,
+            //     'allowance10Field' => $request->allowance10,
+            //     'deduction1Label' => $request->deduction1,
+            //     'deduction2Label' => $request->deduction2,
+            //     'deduction3Label' => $request->deduction3,
+            //     'deduction4Label' => $request->deduction4,
+            //     'deduction5Label' => $request->deduction5,
+            //     'deduction6Label' => $request->deduction6,
+            //     'deduction7Label' => $request->deduction7,
+            //     'deduction8Label' => $request->deduction8,
+            //     'deduction9Label' => $request->deduction9,
+            //     'deduction10Label' => $request->deduction10,
+            //     'deduction1Field' => $request->deduction1,
+            //     'deduction2Field' => $request->deduction2,
+            //     'deduction3Field' => $request->deduction3,
+            //     'deduction4Field' => $request->deduction4,
+            //     'deduction5Field' => $request->deduction5,
+            //     'deduction6Field' => $request->deduction6,
+            //     'deduction7Field' => $request->deduction7,
+            //     'deduction8Field' => $request->deduction8,
+            //     'deduction9Field' => $request->deduction9,
+            //     'deduction10Field' => $request->deduction10,
+            //     "changedNo" => 0,
+            //     "createdDate" => date("Y-m-d\TH:i:s"),
+            //     "createdBy" => Session::get('userID'),
+            //     "changedDate" => date("Y-m-d\TH:i:s"),
+            //     "changedBy" => Session::get('userID'),
+            //     "languageCode" => App::getLocale(),
+            //     'sessionID' => 0, 
+            //     'sessionUserID' => Session::get('userID'),
+            //     'logActionUserID' => Session::get('userID'),
+            //     'logActionUsername' => Session::get('userName')        
+            // ];
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else{
+                $response = $client->post(env('API_URL') . '/prslipformat/updateslipformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function checkNumberReportFormatPY(Request $request)
