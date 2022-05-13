@@ -293,7 +293,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
         var arrData = @json($data);
-        var arrData2 = @json($data_table);
+        // var arrData2 = @json($data_table);
         var table = null;
 
         if (func == 'new') {
