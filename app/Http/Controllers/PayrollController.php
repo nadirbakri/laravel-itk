@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\PayrollDataImport;
 use App\Imports\PayrollBonusTHRDataImport;
 use App\Exports\TemplatePayrollDataTemplateSheet;
+use App\Http\Controllers\Redirect;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -66,6 +67,21 @@ class PayrollController extends Controller
                     ]
                 )]
             );
+
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+
+            if($arrResult_tm->dataListSet == null){
+                $data = [];
+            }else{
+                $data = $arrResult_tm->dataListSet;
+            }
+
+            if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
+                return redirect()->back()->with(['msg', 'Invalid Status Process']);
+            } else {
+                $arrResult_tm = json_decode($response_tm->getBody()->getContents());
+                return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -76,10 +92,6 @@ class PayrollController extends Controller
                 return view('error.bad_request');
             }
         }
-
-        $arrResult_tm = json_decode($response_tm->getBody()->getContents());
-
-        return view ('payroll.py_import_data_from_excel', ['data_tm' => $arrResult_tm->dataListSet]);
     }
 
     public function pageImportDataFromExcelBonusTHR()
@@ -113,7 +125,13 @@ class PayrollController extends Controller
 
         $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
-        return view ('payroll.py_import_data_from_excel_bonus_thr', ['data_tm' => $arrResult_tm->dataListSet]);
+        if($arrResult_tm->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult_tm->dataListSet;
+        }
+
+        return view ('payroll.py_import_data_from_excel_bonus_thr', ['data_tm' => $data]);
     }
 
     public function pageBonusFormula()
@@ -272,7 +290,70 @@ class PayrollController extends Controller
 
     public function pageSptProcess() 
     {
-        return view ('payroll.py_spt_process');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return view('payroll.py_spt_process', ['data' => $arrResult->dataListSet, "status" => "Final tax calculation not processed yet"]);
+    }
+
+    public function pageFinalTaxProcess() 
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return view('payroll.py_final_tax_process', ['data' => $arrResult->dataListSet]);
     }
 
     public function tableAccountPY()
@@ -3988,13 +4069,145 @@ class PayrollController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesSPTProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/prspt/insertprspt',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "groupNPWP" => isset($request->group_npwp) ? (bool) $request->group_npwp : false,
+                        "groupNPWPCode" => $request->npwp,
+                        "languageCode" => App::getLocale(),
+                        "changedNo" => 0,
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesFinalTaxProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response_tm = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+
+            if($arrResult_tm->dataListSet == null){
+                return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
+            } else{  
+                $response = $client->post(env('API_URL') . '/finaltaxprocess/finaltaxprocess',
+                    ['body' => json_encode(
+                        [
+                            "companyCode" => Session::get('companyCode'),
+                            "employeeNoFrom" => $request->employee_no_from,
+                            "employeeNoTo" => $request->employee_no_to,
+                            "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+                            "periodYear" => (int) $arrResult_tm->dataListSet[0]->periodYear,
+                            "languageCode" => App::getLocale(),
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userName') 
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function importDataFromExcelPY(Request $request)
     {
         try{
             $file = $request->file('import_file');
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
-            $import = new PayrollDataImport;
+            $import = new PayrollDataImport(
+                $request->process_period,
+                $request->transfer_to,
+                $request->column_a,
+                $request->column_b,
+                $request->column_c, 
+                $request->column_c2, 
+                $request->column_d, 
+                $request->column_d2, 
+                $request->column_e, 
+                $request->column_e2, 
+                $request->column_f,
+                $request->column_f2,
+                $request->column_g,
+                $request->column_g2,
+                $request->column_h,
+                $request->column_h2,
+                $request->column_i,
+                $request->column_i2,
+                $request->column_j,
+                $request->column_j2,
+                $request->column_k,
+                $request->column_k2,
+                $request->column_l,
+                $request->column_l2
+            );
             Excel::import($import, public_path('file_excel/'.$nama_file));
             File::delete('file_excel/'.$nama_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {

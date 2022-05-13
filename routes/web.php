@@ -585,6 +585,8 @@ Route::post('payroll/salary_component_data/proses', 'PayrollController@prosesSal
 Route::post('payroll/salary_component_data_process/proses', 'PayrollController@prosesSalaryComponentDataProcessPY');
 Route::post('payroll/reference_payroll/proses', 'PayrollController@prosesReferencePayrollPY');
 Route::post('payroll/year_end_process/proses', 'PayrollController@prosesYearEndProcessPY');
+Route::post('payroll/spt_process/proses', 'PayrollController@prosesSPTProcessPY');
+Route::post('payroll/final_tax_process/proses', 'PayrollController@prosesFinalTaxProcessPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');

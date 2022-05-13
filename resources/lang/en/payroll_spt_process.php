@@ -8,7 +8,8 @@ return [
     'label_by_npwp' => 'By NPWP',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'npwp_required' => 'NPWP Code Cannot Be Blank'
 ]
 
 ?>
