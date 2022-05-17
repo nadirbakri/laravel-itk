@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_spt_process.judul') }}</title>
+    <title>{{ __('payroll_final_tax_process.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,44 +107,51 @@
 
 <body>
     <div class="div-form">
-        <form id="spt_process_form" method="post">
+        <form id="final_tax_process_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_spt_process.list') }}</span>
+                        <span class="title-text">{{ __('payroll_final_tax_process.list') }}</span>
                     </a>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-6">
                         <div class="form-group">
-                            <label for="group_npwp form-check-label">{{ __('payroll_spt_process.label_group_npwp') }}</label>
+                            <label for="year">{{ __('payroll_final_tax_process.label_year') }}</label>
+                            <input type="text" class="form-control" id="year" name="year"
+                                placeholder="{{ __('payroll_final_tax_process.label_year') }}" readonly>
                         </div>
                     </div>
-                    <div class="col-4">
+                </div>
+                <div class="row">
+                    <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="all_npwp" name="group_npwp" value=true checked>
-                            <label for="all_npwp">{{ __('payroll_spt_process.label_all_npwp') }}</label>
+                            <input class="form-check-input" type="checkbox" id="range_employee_no" name="range_employee_no" value="true">
+                            <label for="range_employee_no">{{ __('payroll_final_tax_process.label_range_employee_no') }}</label>
                         </div>
-                        <div class="form-check">
-                            <input type="radio" id="by_npwp" name="group_npwp" value=true>
-                            <label for="by_npwp">{{ __('payroll_spt_process.label_by_npwp') }}</label>
-                            <select class="form-control select2" id="npwp" name="npwp" disabled></select>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="employee_no_from">{{ __('payroll_final_tax_process.label_employee_no_from') }}</label>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="employee_no_to">{{ __('payroll_final_tax_process.label_employee_no_to') }}</label>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_spt_process.btn_process') }}
+                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_final_tax_process.btn_process') }}
                         </button>
-                    </div>
-                    <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('payroll') }}" target="iframe_dashboard"
-                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('payroll_spt_process.btn_cancel') }}
-                        </a>
                     </div>
                 </div>
             </div>
@@ -176,7 +183,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_spt_process.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_final_tax_process.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -202,34 +209,40 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $('input[type="radio"]').on('change', function () {
-            if ($('#by_npwp').is(':checked')) {
-                $('#npwp').prop('disabled', false);
-            }
-            else {
-                $('#npwp').prop('disabled', true);
+        var arrData = @json($data);
+
+        $('#year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+
+        $('#range_employee_no').on('change', function () {
+            if ($('#range_employee_no').is(':checked')) {
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+            } else {
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
             }
         });
 
-        loadDataNPWP();
+        loadDataEmployeeNo('#employee_no_from');
+        loadDataEmployeeNo('#employee_no_to');
 
-        function loadDataNPWP(){
+        function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>NPWP Code</b></div>' +
-                        '<div class="col-6"><b>Pemotong Kuasa</b></div>' +
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.npwpCode + '<div>' +
-                        '<div class="col-6">' + data.data.pemotongKuasa + '<div>' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -238,10 +251,12 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#npwp').select2({
+            var $employeeNo = $(field).select2({
                 width: '100%',
-                placeholder: 'Choose NPWP',
+                placeholder: 'Choose Employee',
                 allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -251,7 +266,7 @@
                     }
                 },
                 ajax: {
-                    url: '/npwp/api',
+                    url: '/employee_no/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -265,8 +280,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.pemotongKuasa,
-                                    id: item.npwpCode,
+                                    text: item.fullName,
+                                    id: item.employeeNo,
+                                    title: item.fullName,
                                     data: item
                                 }
                             })
@@ -283,37 +299,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#spt_process_form").submit();
+            $("#final_tax_process_form").submit();
         });
 
-        if ($("#spt_process_form").length > 0) {
-            $("#spt_process_form").validate({
-                rules: {
-                    npwp: {
-                        required: true,
-                    }
-                },
-                messages: {
-                    npwp: {
-                        required: "{{ __('payroll_spt_process.npwp_required') }}",
-                    }
-                },
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-process").prop("disabled", false);
-                    $("#btn-process").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_process.btn_process") }}'
-                    );
-
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
+        if ($("#final_tax_process_form").length > 0) {
+            $("#final_tax_process_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -321,14 +311,14 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/spt_process/proses') }}",
+                        url: "{{ url('payroll/final_tax_process/proses') }}",
                         type: "POST",
-                        data: $('#spt_process_form').serialize(),
+                        data: $('#final_tax_process_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_process.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -336,12 +326,12 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/spt_process') }}";
+                                        "{{ url('payroll/final_tax_process') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_process.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -358,7 +348,7 @@
                         error: function (response) {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_process.btn_process") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
                             );
 
                             $('#notification').modal('show');
@@ -369,7 +359,6 @@
                 }
             })
         }
-        
     })
 
 </script>

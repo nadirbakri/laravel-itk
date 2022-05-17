@@ -335,7 +335,7 @@
             url: "{{ url('/time_management/time_recording_reference/table') }}",
             type: "GET",
             success: function (response) {
-                isData = Object.keys(response).length;
+                isData = Object.keys(response).length;            
                 if (Object.keys(response).length !== 0) {
                     $('#in_code').val((typeof response[0].inCode !== 'undefined') ? response[0].inCode : '');
                     $('#out_code').val((typeof response[0].outCode !== 'undefined') ? response[0].outCode : '');

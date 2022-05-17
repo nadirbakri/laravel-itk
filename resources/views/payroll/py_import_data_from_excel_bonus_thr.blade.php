@@ -140,10 +140,9 @@
                                 </button>
                             </div>
                             <div class="col-3">
-                                <a class="btn btn-danger" href="{{ url('payroll/import_data_from_excel') }}" target="iframe_dashboard"
-                                    name="btn-reset" id="btn-reset" style="width: 100%;">
+                                <button type="button" class="btn btn-danger" name="btn-reset" id="btn-reset" style="width: 100%;">
                                     <i class="fa fa-times-circle"></i> {{ __('payroll_import_data_from_excel_bonus_thr.btn_reset') }}
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -252,6 +251,11 @@
         $('input[type="file"]').change(function (e) {
             var fileName = e.target.files[0].name;
             $('.custom-file-label').html(fileName);
+        });
+
+        $('#btn-reset').on('click', function () {
+            $('#import_file').val('');
+            $('.custom-file-label').html('{{ __("payroll_import_data_from_excel.label_select_import_file") }}');
         });
 
         $("#btn-process").on('click', function () {

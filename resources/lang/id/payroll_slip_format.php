@@ -14,6 +14,7 @@ return [
     'label_employee_name' => 'Nama Karyawan',
     'label_join_date' => 'Tanggal Bergabung',
     'label_position' => 'Jabatan',
+    'label_custom' => 'Kostum',
     'label_custom1' => 'Kostum 1',
     'label_custom2' => 'Kostum 2',
     'label_select_slip_type' => 'Pilh Tipe SLip',
@@ -22,9 +23,16 @@ return [
     'label_deduction' => 'Potongan',
     'label_total_allowance' => 'Total Tunjangan',
     'label_total_deduction' => 'Total Potongan',
-    'label_take_home_pay' => 'Gaji Bersih',
+    'label_location' => 'Lokasi',
+    'label_date_time' => 'Tanggal',
+    'label_take_home_pay' => 'Pembayaran Di Rumah',
+    'label_field_name' => 'Nama Bidang',
+    'label_component' => 'Komponen',
+    'label_field_label' => 'Label',
+    'btn_add' => 'Tambah',
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'
-
 ]
 
 ?>

@@ -104,6 +104,11 @@
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
+<<<<<<< Updated upstream
+=======
+                            <input type="text" class="form-control" id="period_month" name="period_month" hidden>
+                            <input type="text" class="form-control" id="period_year" name="period_year" hidden>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -215,7 +220,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            // defaultDate: "today",
             plugins: [
                 new monthSelectPlugin({
                     shorthand: true, //defaults to false
