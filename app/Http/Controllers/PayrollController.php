@@ -275,6 +275,11 @@ class PayrollController extends Controller
         return view ('payroll.py_spt_process');
     }
 
+    public function pageSeveranceReport()
+    {
+        return view('payroll.py_severance_report');
+    }
+
     public function tableAccountPY()
     {
         try {
