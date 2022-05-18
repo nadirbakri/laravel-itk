@@ -1869,7 +1869,7 @@ class PayrollController extends Controller
                 "periodYear" => (int) $request->year,
                 "periodMonth" => (int) $request->month,
                 "statusPeriod" => $request->period,
-                "remark" => $request->remark,
+                "remark" => empty($request->remark) ? "NULL" : $request->remark,
                 "changedNo" => 0,
                 "changedBy" => Session::get('userID'),
                 "changedDate" => date("Y-m-d\TH:i:s"),

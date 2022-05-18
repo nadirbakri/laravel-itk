@@ -202,7 +202,7 @@
             $('#record_status').val("{{ isset($data[0]->recordStatus) ? $data[0]->recordStatus : '' }}");
             $('#record_function').val("Edit");
             $('#disease_code').val("{{ isset($data[0]->diseaseCode) ? $data[0]->diseaseCode : '' }}");
-            $('#desciption').val(htmlDecode("{{ isset($data[0]->desciption) ? $data[0]->desciption : '' }}"));
+            $('#description').val(htmlDecode("{{ isset($data[0]->description) ? $data[0]->description : '' }}"));
             $('#disease_code').prop('readonly', true);
         }
 

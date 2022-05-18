@@ -869,7 +869,17 @@ Route::get('attachment_code/api', 'DataController@dataAttachmentCodeAPI');
 Route::get('payment_method_full_partial_loan_payment/api', 'DataController@dataPaymentMethodFullPartialLoanPaymentAPI');
 Route::get('column/api', 'DataController@dataColumnAPI');
 Route::get('medical_limit_type/api', 'DataController@dataMedicalLimitTypeAPI');
-Route::get('medical_limit_tyoe/func/api', 'DataController@dataMedicalLimitTypeFunctionAPI');
+Route::get('medical_limit_type/func/api', 'DataController@dataMedicalLimitTypeFunctionAPI');
+Route::get('limit_eligible/api', 'DataController@dataLimitEligibleAPI');
+Route::get('limit_eligible/func/api', 'DataController@dataLimitEligibleFunctionAPI');
+Route::get('minimum_service_length/api', 'DataController@dataMinimumServiceLengthAPI');
+Route::get('minimum_service_length/func/api', 'DataController@dataMinimumServiceLengthFunctionAPI');
+Route::get('default_medical_payment_bank_type/api', 'DataController@dataDefaultMedicalPaymentBankTypeAPI');
+Route::get('default_medical_payment_bank_type/func/api', 'DataController@dataDefaultMedicalPaymentBankTypeFunctionAPI');
+Route::get('rate_type/api', 'DataController@dataRateTypeAPI');
+Route::get('rate_type/func/api', 'DataController@dataRateTypeFunctionAPI');
+Route::get('rounding_method/api', 'DataController@dataRoundingMethodAPI');
+Route::get('rounding_method/func/api', 'DataController@dataRoundingMethodFunctionAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

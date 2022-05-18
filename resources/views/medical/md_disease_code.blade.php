@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('medical_disease_code.judul') }}</title>
+	<title>{{ __('md_disease_code.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -108,7 +108,7 @@
 		<div class="div-title">
 			<a href="{{ url('medical') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('medical_disease_code.list') }}</span>
+				<span class="title-text">{{ __('md_disease_code.list') }}</span>
 			</a>
 		</div>
 
@@ -151,7 +151,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('medical_disease_code.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('md_disease_code.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>

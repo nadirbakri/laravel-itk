@@ -51,7 +51,7 @@ class MedicalController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'userID' => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
@@ -116,7 +116,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/cddisease/getcddisease',
+            $response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -251,7 +251,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_claim_code_detail', ['data' => $data]);
+        return view('medical.md_claim_code_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailDiseaseCodeMD(Request $request)
@@ -262,7 +262,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/cddisease/getcddisease',
+            $response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -292,7 +292,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_disease_code_detail', ['data' => $data]);
+        return view('medical.md_disease_code_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailInsuranceCodeMD(Request $request)
@@ -333,7 +333,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_insurance_code_detail', ['data' => $data]);
+        return view('medical.md_insurance_code_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailInsuranceClass(Request $request)
@@ -374,7 +374,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_insurance_class_detail', ['data' => $data]);
+        return view('medical.md_insurance_class_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -390,7 +390,7 @@ class MedicalController extends Controller
                 $response = $client->post(env('API_URL') . '/cdclaim/insertcdclaim',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'claimCode' => $request->claim_code,
                             'claimName' => $request->claim_name,
@@ -421,7 +421,7 @@ class MedicalController extends Controller
                 $response = $client->put(env('API_URL') . '/cdclaim/updatecdclaim',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'claimCode' => $request->claim_code,
                             'claimName' => $request->claim_name,
@@ -473,10 +473,10 @@ class MedicalController extends Controller
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/cddisease/insertcddisease',
+                $response = $client->post(env('API_URL') . '/diseasecode/insertdiseasecode',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'diseaseCode' => $request->disease_code,
                             'description' => $request->description,
@@ -496,10 +496,10 @@ class MedicalController extends Controller
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/cddisease/updatecddisease',
+                $response = $client->put(env('API_URL') . '/diseasecode/updatediseasecode',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'diseaseCode' => $request->disease_code,
                             'description' => $request->description,
@@ -511,6 +511,7 @@ class MedicalController extends Controller
                             "changedBy" => Session::get('userID'),
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
+                            "sessionCompanyCode" => Session::get('companyCode'),
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
                         ]
@@ -546,7 +547,7 @@ class MedicalController extends Controller
                 $response = $client->post(env('API_URL') . '/cdinsurance/insertcdinsurance',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceCode' => $request->insurance_code,
                             'insuranceDescription' => $request->insurance_description,
@@ -569,7 +570,7 @@ class MedicalController extends Controller
                 $response = $client->put(env('API_URL') . '/cdinsurance/updatecdinsurance',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceCode' => $request->insurance_code,
                             'insuranceDescription' => $request->insurance_description,
@@ -616,7 +617,7 @@ class MedicalController extends Controller
                 $response = $client->post(env('API_URL') . '/cdinsuranceclass/insertcdinsuranceclass',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceClassCode' => $request->insurance_code,
                             'insuranceClassDescription' => $request->insurance_description,
@@ -640,7 +641,7 @@ class MedicalController extends Controller
                 $response = $client->put(env('API_URL') . '/cdinsuranceclass/updatecdinsuranceclass',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceClassCode' => $request->insurance_code,
                             'insuranceClassDescription' => $request->insurance_description,
@@ -729,7 +730,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/cddisease/updatecddisease',
+            $response = $client->put(env('API_URL') . '/diseasecode/updatediseasecode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -743,6 +744,7 @@ class MedicalController extends Controller
                         "languageCode" => App::getLocale(),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
+                        "sessionCompanyCode" => Session::get('companyCode'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
