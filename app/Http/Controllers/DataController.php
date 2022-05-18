@@ -6950,6 +6950,7 @@ class DataController extends Controller
 	    				return preg_match('/' . $search . '/i', $value->value);
 					}
 				}
+			);
 	    }
 
 		return response()->json($data);
