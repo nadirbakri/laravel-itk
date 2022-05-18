@@ -6951,7 +6951,7 @@ class DataController extends Controller
 	    	);
 	    }
 
-        return response()->json($data);
+        return response()->json($cost_center);
 	}
 
 	public function dataLimitEligibleFunctionAPI(Request $request)
@@ -7189,8 +7189,6 @@ class DataController extends Controller
 	    }
 
         return response()->json($data);
-	}
-        return response()->json($cost_center);
 	}
 
 }
