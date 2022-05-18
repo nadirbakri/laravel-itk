@@ -560,6 +560,7 @@ Route::get('payroll/report_format/table', 'PayrollController@tableReportFormatPY
 Route::get('payroll/payroll_calculation/table', 'PayrollController@tablePayrollCalculationPY');
 Route::get('payroll/payroll_calculation_detail/table', 'PayrollController@tablePayrollCalculationDetailPY');
 Route::get('payroll/salary_component_data/table', 'PayrollController@tableSalaryComponentFormPY');
+Route::get('payroll/journal_template/table', 'PayrollController@tableJournalTemplatePY');
 
 /*Route untuk Proses Payroll*/
 Route::post('payroll/salary_master/proses', 'PayrollController@prosesSalaryMasterPY');
@@ -585,6 +586,13 @@ Route::post('payroll/salary_component_data/proses', 'PayrollController@prosesSal
 Route::post('payroll/salary_component_data_process/proses', 'PayrollController@prosesSalaryComponentDataProcessPY');
 Route::post('payroll/reference_payroll/proses', 'PayrollController@prosesReferencePayrollPY');
 Route::post('payroll/year_end_process/proses', 'PayrollController@prosesYearEndProcessPY');
+Route::post('payroll/spt_process/proses', 'PayrollController@prosesSPTProcessPY');
+Route::post('payroll/final_tax_process/proses', 'PayrollController@prosesFinalTaxProcessPY');
+Route::post('payroll/journal_template/proses', 'PayrollController@prosesJournalTemplatePY');
+Route::post('payroll/spt_format/proses', 'PayrollController@prosesSptFormatPY');
+Route::post('payroll/slip_format/custom/proses', 'PayrollController@prosesSlipFormatCustomPY');
+Route::post('payroll/slip_format/allowance/proses', 'PayrollController@prosesSlipFormatAllowancePY');
+Route::post('payroll/monthly_closing_process/proses', 'PayrollController@prosesMonthlyClosingProcessPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
@@ -593,6 +601,7 @@ Route::get('payroll/thr_formula/remove', 'PayrollController@removeTHRFormulaPY')
 Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormulaPY');
 Route::get('payroll/payroll_calculation/remove', 'PayrollController@removePayrollCalculationPY');
 Route::get('payroll/multi_cost_center/remove', 'PayrollController@removeMultiCostCenterPY');
+Route::get('payroll/spt_format/remove', 'PayrollController@removeSptFormatPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
@@ -613,14 +622,17 @@ Route::get('payroll/report_format/detail_data', 'PayrollController@dataDetailRep
 Route::get('payroll/payroll_calculation/detail', 'PayrollController@dataPayrollCalculationPY');
 Route::get('payroll/salary_component_data/detail_data', 'PayrollController@dataDetailSalaryComponentDataPY');
 Route::get('payroll/reference_payroll/data_detail', 'PayrollController@dataDetailReferencePayroll');
-
 Route::get('payroll/full_partial_loan_payment/data', 'PayrollController@dataFullPartialLoanPaymentPY');
+Route::get('payroll/journal_template/detail_data', 'PayrollController@dataDetailJournalTemplatePY');
+Route::get('payroll/spt_format/detail_data', 'PayrollController@dataDetailSptFormatPY');
+Route::get('payroll/slip_format/detail_data', 'PayrollController@dataDetailSlipFormatPY');
 
 /* Route untuk status Payroll */
 Route::get('payroll/loan_master/status', 'PayrollController@statusLoanMasterPY');
 Route::get('payroll/account/status', 'PayrollController@statusAccountPY');
 Route::get('payroll/report_format/status', 'PayrollController@statusReportFormatPY');
 Route::get('payroll/payroll_calculation/status', 'PayrollController@statusPayrollCalculationPY');
+Route::get('payroll/journal_template/status', 'PayrollController@statusJournalTemplatePY');
 
 /* Route untuk number checker Payroll */
 Route::get('payroll_loan_no/number/check', 'PayrollController@checkNumberLoanNoPY');
@@ -880,6 +892,9 @@ Route::get('rate_type/api', 'DataController@dataRateTypeAPI');
 Route::get('rate_type/func/api', 'DataController@dataRateTypeFunctionAPI');
 Route::get('rounding_method/api', 'DataController@dataRoundingMethodAPI');
 Route::get('rounding_method/func/api', 'DataController@dataRoundingMethodFunctionAPI');
+Route::get('medical_limit_type/func/api', 'DataController@dataMedicalLimitTypeFunctionAPI');
+Route::get('account/api', 'DataController@dataAccountAPI');
+Route::get('account_edit/api', 'DataController@dataEditAccountAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

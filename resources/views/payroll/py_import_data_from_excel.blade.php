@@ -138,7 +138,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for=""></label>
-                                    <select class="form-control select2" id="column_c2" name="column_c2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_c2" name="column_c2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -146,13 +146,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_d">{{ __('payroll_import_data_from_excel.label_column_d') }}</label>
-                                    <select class="form-control select2" id="column_d" name="column_d"></select>
+                                    <select class="form-control select2 " id="column_d" name="column_d"></select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_d2"></label>
-                                    <select class="form-control select2" id="column_d2" name="column_d2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_d2" name="column_d2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_e2"></label>
-                                    <select class="form-control select2" id="column_e2" name="column_e2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_e2" name="column_e2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_f2"></label>
-                                    <select class="form-control select2" id="column_f2" name="column_f2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_f2" name="column_f2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +194,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_g2"></label>
-                                    <select class="form-control select2" id="column_g2" name="column_g2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_g2" name="column_g2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_h2"></label>
-                                    <select class="form-control select2" id="column_h2" name="column_h2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_h2" name="column_h2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_i2"></label>
-                                    <select class="form-control select2" id="column_i2" name="column_i2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_i2" name="column_i2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +236,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_j2"></label>
-                                    <select class="form-control select2" id="column_j2" name="column_j2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_j2" name="column_j2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_k2"></label>
-                                    <select class="form-control select2" id="column_k2" name="column_k2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_k2" name="column_k2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +264,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_l2"></label>
-                                    <select class="form-control select2" id="column_l2" name="column_l2" disabled></select>
+                                    <select class="form-control select2 currency_code" id="column_l2" name="column_l2" disabled></select>
                                 </div>
                             </div>
                         </div>
@@ -272,6 +272,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="import_file">{{ __('payroll_import_data_from_excel.label_import_file') }}</label>
+                                    <span style="color: red;">*</span>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="import_file" name="import_file">
                                         <label class="custom-file-label" for="import_file">{{ __('payroll_import_data_from_excel.label_select_import_file') }}</label>
@@ -280,21 +281,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
                                     <i class="fa fa-play-circle-o"></i> {{ __('payroll_import_data_from_excel.btn_process') }}
                                 </button>
                             </div>
-                            <div class="col-3">
-                                <a class="btn btn-danger" href="{{ url('payroll/import_data_from_excel') }}" target="iframe_dashboard"
-                                    name="btn-reset" id="btn-reset" style="width: 100%;">
+                            <div class="col-4">
+                                <button type="button" class="btn btn-danger" name="btn-reset" id="btn-reset" style="width: 100%;">
                                     <i class="fa fa-times-circle"></i> {{ __('payroll_import_data_from_excel.btn_reset') }}
-                                </a>
+                                </button>
                             </div>
-                            <div class="col-3">
-                                <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template"
-                                    style="width: 100%;">
-                                    {{ __('payroll_import_data_from_excel.btn_download_template') }}
+                            <div class="col-4">
+                                <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template">
+                                    <i class="fa fa-print"></i> {{ __('payroll_import_data_from_excel.btn_download_template') }}
                                 </button>
                             </div>
                         </div>
@@ -378,6 +377,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -386,6 +386,9 @@
 
         var arrDataTM = @json($data_tm);
         var column = null;
+        var url = null;
+        var data = null;
+        var success = null;
         
         if (arrDataTM) {
             var month_year = moment(arrDataTM[0].periodYear.toString() + "-" + arrDataTM[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
@@ -393,26 +396,38 @@
         }
 
         column = $('#salary_master').val();
+        $('.currency_code').prop('disabled', false);
 
         $('input[type="radio"]').on('change', function () {
             if ($('#bonus_thr').is(':checked')) {
                 window.location.href = ("{{ url('payroll/import_data_from_excel_bonus_thr') }}");
             } else if ($('#salary_master').is(':checked')) {
+                $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
                 column = $('#salary_master').val();
                 loadDataColumn();
+                $('.currency_code').prop('disabled', false);
             } else if ($('#salary_actual').is(':checked')) {
+                $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
                 column = $('#salary_actual').val();
                 loadDataColumn();
+                $('.currency_code').prop('disabled', true);
             } else if ($('#yearly').is(':checked')) {
+                $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
                 column = $('#yearly').val();
                 loadDataColumn();
+                $('.currency_code').prop('disabled', true);
             }
         });
 
-        $('input[type="file"]').change(function (e) {
+        $('input[name="import_file"]').change(function (e) {
             var fileName = e.target.files[0].name;
-            console.log(fileName);
             $('.custom-file-label').html(fileName);
+        });
+
+        $('#btn-reset').on('click', function () {
+            $('#column_c, #column_c2, #column_d, #column_d2, #column_e, #column_e2, #column_f, #column_f2, #column_g, #column_g2, column_h, column_h2, #column_i, #column_i2, #column_j, #column_j2, #column_k, #column_k2, #column_l, #column_l2').val(null).trigger('change');
+            $('#import_file').val('');
+            $('.custom-file-label').html('{{ __("payroll_import_data_from_excel.label_select_import_file") }}');
         });
 
         loadDataColumn();
@@ -539,6 +554,7 @@
         }
 
         $("#btn-process").on('click', function () {
+            url = "{{ url('payroll/import_data_from_excel/import') }}";
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -547,135 +563,142 @@
             $('#import_data_from_excel_form').submit();
         });
 
-        // if ($("#import_data_from_excel_form").length > 0) {
-        //     $("#import_data_from_excel_form").validate({
-        //         rules: {
-        //             import_file: {
-        //                 extension: "xls|xlsx|xml",
-        //             },
-        //         },
-        //         messages: {
-        //             import_file: {
-        //                 extension: "{{ __('payroll_import_data_from_excel.import_extension') }}",
-        //             },
-        //         },
-        //         highlight: function (element) {
-        //             $(element).addClass('is-invalid');
-        //         },
-        //         unhighlight: function (element) {
-        //             $(element).removeClass('is-invalid');
-        //         },
-        //         errorElement: 'span',
-        //         errorPlacement: function (error, element) {
-        //             $("#btn-process").prop("disabled", false);
-        //             $("#btn-process").html(
-        //                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
-        //             );
+        $("#btn-download-template").on('click', function () {
+            url = "{{ url('payroll/import_data_from_excel/template') }}";
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
 
-        //             error.addClass('invalid-feedback');
-        //             element.closest('.form-group').append(error);
-        //         },
-        //         submitHandler: function (form) {
-        //             $.ajaxSetup({
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
+            var myform = document.getElementById("import_data_from_excel_form");
+            data = new FormData(myform);
 
-        //             var myform = document.getElementById("import_data_from_excel_form");
-        //             var formdata = new FormData(myform);
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: url,
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (result, status, xhr) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
+                    );
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'audit_trail.xlsx');
 
-        //             $.ajax({
-        //                 url: "{{ url('payroll/import_data_from_excel/import') }}",
-        //                 type: "POST",
-        //                 processData: false,
-        //                 contentType: false,
-        //                 data: formdata,
-        //                 success: function (response) {
-        //                     if (response[0].status == "true") {
-        //                         $("#btn-process").prop("disabled", false);
-        //                         $("#btn-process").html(
-        //                             '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
-        //                         );
-        //                         $('#notification_success').modal('show');
-        //                         $('#message-notification-success').html(response[0]
-        //                             .message);
-        //                         setTimeout(function () {
-        //                             window.location =
-        //                                 "{{ url('payroll/import_data_from_excel') }}";
-        //                         }, 3000);
-        //                     } else {
-        //                         $("#btn-process").prop("disabled", false);
-        //                         $("#btn-process").html(
-        //                             '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
-        //                         );
-        //                         $('#notification_error').modal('show');
-        //                         if (response[0].message == null || response[0].message ==
-        //                             '') {
-        //                             $('#message-notification-error').html(
-        //                                 "{{ __('login.error') }}");
-        //                         } else {
-        //                             $('#message-notification-error').html(response[0]
-        //                                 .message);
-        //                         }
-        //                     }
-        //                 },
-        //                 error: function (response) {
-        //                     $("#btn-process").prop("disabled", false);
-        //                     $("#btn-process").html(
-        //                         '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
-        //                     );
-        //                     $('#notification').modal('show');
-        //                     $('#message-notification').html(response);
-        //                 }
-        //             });
-        //         }
-        //     })
-        // }
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
+                    );
+                    $('#notification').modal('show');
+                    $('#message-notification').html(response);
+                }
+            });
+        });
 
         if ($("#import_data_from_excel_form").length > 0) {
             $("#import_data_from_excel_form").validate({
+                rules: {
+                    import_file: {
+                        required: true,
+                        extension: "xls|xlsx|xml"
+                    }
+                },
+                messages: {
+                    import_file: {
+                        required: "{{ __('payroll_import_data_from_excel.import_required') }}",
+                        extension: "{{ __('payroll_import_data_from_excel.import_extension') }}"
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-process").prop("disabled", false);
+                    $("#btn-process").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+
+                    var myform = document.getElementById("import_data_from_excel_form");
+                    data = new FormData(myform);
+
                     $.ajax({
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('payroll/import_data_from_excel/template') }}",
+                        url: url,
                         type: "POST",
-                        data: $('#import_data_from_excel_form').serialize(),
-                        success: function (result, status, xhr) {
-                            $("#btn-download-template").prop("disabled", false);
-                            $("#btn-download-template").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
-                            );
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
-
-                            document.body.appendChild(link);
-
-                            link.click();
-                            document.body.removeChild(link);
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        success: function (response) {
+                            if (response[0].status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                                );
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response[0]
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('personel/import_data_from_excel') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response[0].message == null || response[0].message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response[0]
+                                        .message);
+                                }
+                            }
                         },
                         error: function (response) {
-                            $("#btn-download-template").prop("disabled", false);
-                            $("#btn-download-template").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

@@ -1703,6 +1703,8 @@ class TimeManagementController extends Controller
                 "languageCode" => App::getLocale()             
             ];
 
+            // var_dump($param);
+
             for($i=0; $i<25; $i++){
                 $param['payroll'. ($i+1)] = isset($request->{'check_payroll' . ($i+1)}) ? (bool) $request->{'check_payroll' . ($i+1)} : false;
             }

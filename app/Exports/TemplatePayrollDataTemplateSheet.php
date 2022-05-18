@@ -24,6 +24,7 @@ class TemplatePayrollDataTemplateSheet implements FromView, WithTitle, ShouldAut
         $this->columnK = $columnK;
         $this->columnL = $columnL;
     }
+    
     public function view(): View
     {
         return view('payroll.py_import_template_payroll_data_template_sheet', [

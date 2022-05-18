@@ -84,20 +84,20 @@
                                 for="slip_type">{{ __('payroll_slip_format.label_slip_type') }}</label>
                                 <select class="form-control select2" id="slip_type" name="slip_type">
                                 <option value="" disabled selected>{{ __('payroll_slip_format.label_select_slip_type') }}</option>
-                                <option value="Salary">Salary</option>
-                                <option value="THR">THR</option>
-                                <option value="Bonus">Bonus</option>
                             </select>
-                        </div>
+                        </div>                        
+                        <input type="text" class="form-control" id="slip_name" name="slip_name" hidden>
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <br>
                             <label
                                 for="format">{{ __('payroll_slip_format.label_format') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <br>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="up_down"
                                     name="format" value="up_down">
@@ -108,6 +108,7 @@
                     </div> 
                     <div class="col-2">
                         <div class="form-group">
+                            <br>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="left_right"
                                     name="format" value="left_right">
@@ -120,9 +121,9 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label for="font_size">{{ __('payroll_report_format.label_font_size') }}</label>
+                            <label for="font_size">{{ __('payroll_slip_format.label_font_size') }}</label>
                             <input type="number" min="0" class="form-control" id="font_size" name="font_size"
-                                placeholder="{{ __('payroll_report_format.label_font_size') }}">
+                                placeholder="{{ __('payroll_slip_format.label_font_size') }}">
                         </div>
                     </div>
                     <div class="col-4">
@@ -131,8 +132,6 @@
                                 for="number_format">{{ __('payroll_slip_format.label_number_format') }}</label>
                                 <select class="form-control select2" id="number_format" name="number_format">
                                 <option value="" disabled selected>{{ __('payroll_slip_format.label_select_number_format') }}</option>
-                                <option value="##0.00">#,##0.00</option>
-                                <option value="#,##0">#,##0</option>
                             </select>
                         </div>
                     </div>
@@ -164,11 +163,14 @@
                     </div>
                     <div class="col-1-5">
                         <div class="form-group">
-                            <label for="custom1" id="label_custom1">{{ __('payroll_slip_format.label_custom1') }}</label>
+                            <label type="button" for="custom1" id="label_custom1" name="label_custom1"
+                            data-toggle="modal" style="width: 100%;" data-target="#modal_custom"
+                            >{{ __('payroll_slip_format.label_custom1') }}</label>
                         </div>
+                        <input type="text" class="form-control" id="header_custom_1" name="header_custom_1" hidden>
                     </div>
                     <div class="col-2">
-                        <input id="custom1" name="custom1" class="no-border">
+                        <input id="custom1" name="custom1" class="no-border" readonly>
                     </div>
                 </div>
                 <div class="row">
@@ -196,17 +198,21 @@
                     </div>
                     <div class="col-1-5">
                         <div class="form-group">
-                            <label for="custom2" id="label_custom2">{{ __('payroll_slip_format.label_custom2') }}</label>
+                            <label type="button" for="custom2" id="label_custom2" name="label_custom2"
+                            data-toggle="modal" style="width: 100%;" data-target="#modal_custom"
+                            >{{ __('payroll_slip_format.label_custom2') }}</label>
                         </div>
+                        <input type="text" class="form-control" id="header_custom_2" name="header_custom_2" hidden>
                     </div>
                     <div class="col-2">
-                        <input id="custom2" name="custom2" class="no-border">
+                        <input id="custom2" name="custom2" class="no-border" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance1">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button"for="allowance" class="allowance" id="allowance1" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -216,31 +222,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction1">{{ __('payroll_slip_format.label_deduction') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label>IDR</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label class="number"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance2">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction1" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -250,31 +240,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction2">{{ __('payroll_slip_format.label_deduction') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <label>IDR</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance3">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance2" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -284,14 +258,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction3">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction2" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -301,14 +276,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance4">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance3" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -318,14 +294,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction4">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction3" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -335,14 +312,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance5">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance4" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -352,14 +330,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction5">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction4" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -369,14 +348,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance6">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance5" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -386,14 +366,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction6">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction5" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -403,14 +384,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance7">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance6" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -420,14 +402,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction7">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction6" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -437,14 +420,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance8">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance7" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -454,14 +438,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction8">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction7" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -471,14 +456,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance9">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance8" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -488,14 +474,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction9">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction8" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -505,14 +492,51 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="allowance" class="allowance" id="allowance10">{{ __('payroll_slip_format.label_allowance') }}</label>
+                            <label type="button" for="allowance" class="allowance" id="allowance9" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number">999.999.999,99</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label type="button" for="deduction" class="deduction" id="deduction9" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label>IDR</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="number">999.999.999,99</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label type="button" for="allowance" class="allowance" id="allowance10" data-toggle="modal"
+                            data-target="#modal_allowance">{{ __('payroll_slip_format.label_allowance') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -522,14 +546,15 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number head-title-text"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="deduction" class="deduction" id="deduction10">{{ __('payroll_slip_format.label_deduction') }}</label>
+                            <label type="button" for="deduction" class="deduction" id="deduction10" data-toggle="modal"
+                            data-target="#modal_deduction">{{ __('payroll_slip_format.label_deduction') }}</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -539,7 +564,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                 </div>
@@ -556,7 +581,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group head-title-text">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
                         </div>
                     </div>
                     <div class="col-1">
@@ -573,11 +598,223 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <label class="number"></label>
+                            <label class="number">999.999.999,99</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="location" class="location" id="location">{{ __('payroll_slip_format.label_location') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="datetime" class="datetime" id="datetime">{{ __('payroll_slip_format.label_date_time') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="employee_name_ttd" class="employee_name_ttd" id="employee_name_ttd">{{ __('payroll_slip_format.label_employee_name') }}</label>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_custom" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('payroll_slip_format.label_custom') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="custom_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="custom">{{ __('payroll_slip_format.label_custom') }}</label>
+                                    <select class="form-control select2" id="custom" name="custom">
+                                        <option value="" disabled selected>{{ __('payroll_slip_format.label_select_code') }}</option>
+                                    </select>
+                                </div>
+                                <input type="text" class="form-control" id="custom_label" name="custom_label" hidden>
+                                <input type="text" class="form-control" id="slip_type_custom" name="slip_type_custom" hidden>
+                                <input type="text" class="form-control" id="slip_name_custom" name="slip_name_custom" hidden>
+                                <input type="text" class="form-control" id="font_size_custom" name="font_size_custom" hidden>
+                                <input type="text" class="form-control" id="number_format_custom" name="number_format_custom" hidden>
+                                <input type="text" class="form-control" id="record_function" name="record_function" hidden>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" id="btn-save-custom" class="btn btn-primary w-25"><i 
+                                    class="fa fa-floppy-o"></i> {{ __('payroll_slip_format.btn_save') }}</button>
+                            <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                    class="fa fa-times-circle"></i> {{ __('payroll_slip_format.btn_cancel') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_allowance" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('payroll_slip_format.label_allowance') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="allowance_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="field_name_allowance">{{ __('payroll_slip_format.label_field_name') }}</label>
+                                    <textarea class="form-control" id="field_name_allowance" name="field_name_allowance" rows="3"></textarea>
+                                </div>
+                                <input type="text" class="form-control" id="slip_type_allowance" name="slip_type_allowance" hidden>
+                                <input type="text" class="form-control" id="slip_name_allowance" name="slip_name_allowance" hidden>
+                                <input type="text" class="form-control" id="font_size_allowance" name="font_size_allowance" hidden>
+                                <input type="text" class="form-control" id="number_format_allowance" name="number_format_allowance" hidden>
+                                <!-- <input type="text" class="form-control" id="record_function" name="record_function" hidden> -->
+                                <input type="text" class="form-control" id="number_allowance" name="number_allowance" hidden>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="component_allowance">{{ __('payroll_slip_format.label_component') }}</label>
+                                    <select class="form-control select2" id="component_allowance" name="component_allowance"></select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <br>
+                                    <button type="button" class="btn btn-primary" name="btn-add-allowance" id="btn-add-allowance">
+                                        {{ __('payroll_slip_format.btn_add') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="field_label_allowance">{{ __('payroll_slip_format.label_field_label') }}</label>
+                                    <input class="form-control" id="field_label_allowance" name="field_label_allowance"
+                                    placeholder="{{ __('payroll_slip_format.label_field_label') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" id="btn-save-allowance" class="btn btn-primary w-25"><i 
+                                    class="fa fa-floppy-o"></i> {{ __('payroll_slip_format.btn_save') }}</button>
+                            <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                    class="fa fa-times-circle"></i> {{ __('payroll_slip_format.btn_cancel') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_deduction" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('payroll_slip_format.label_deduction') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="allowance_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="field_name_deduction">{{ __('payroll_slip_format.label_field_name') }}</label>
+                                    <textarea class="form-control" id="field_name_deduction" name="field_name_deduction" rows="3"></textarea>
+                                </div>
+                                <input type="text" class="form-control" id="slip_type_deduction" name="slip_type_deduction" hidden>
+                                <input type="text" class="form-control" id="slip_name_deduction" name="slip_name_deduction" hidden>
+                                <input type="text" class="form-control" id="font_size_deduction" name="font_size_deduction" hidden>
+                                <input type="text" class="form-control" id="number_format_deduction" name="number_format_deduction" hidden>
+                                <!-- <input type="text" class="form-control" id="record_function" name="record_function" hidden> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="component_deduction">{{ __('payroll_slip_format.label_component') }}</label>
+                                    <select class="form-control select2" id="component_deduction" name="component_deduction"></select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <br>
+                                    <button type="button" class="btn btn-primary" name="btn-add-deduction" id="btn-add-deduction">
+                                        {{ __('payroll_slip_format.btn_add') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="field_label_deduction">{{ __('payroll_slip_format.label_field_label') }}</label>
+                                    <input class="form-control" id="field_label_deduction" name="field_label_deduction"
+                                    placeholder="{{ __('payroll_slip_format.label_field_label') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" id="btn-save-deduction" class="btn btn-primary w-25"><i 
+                                    class="fa fa-floppy-o"></i> {{ __('payroll_slip_format.btn_save') }}</button>
+                            <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                    class="fa fa-times-circle"></i> {{ __('payroll_slip_format.btn_cancel') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('payroll_report_format.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
@@ -613,348 +850,227 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var table = null;
+        var slipType = null;
 
-        loadDataEmployeeNo();
-
-        function loadDataEmployeeNo() {
-            $('#employee_no').val({
-                width: '100%',
-                allowClear: true,
-                // tags: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/employee_no_slip_format/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    id: item.employeeNo,
-                                    title: item.fullName,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
-            type: "GET",
-            success: function (response) {
-                $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= response.data[0].levelFormat; i++) {
-                    $('#div-level').append(
-                        '<div class="col-6">' +
-                        '<div class="form-group">' +
-                        '<label for="level' + i + '">' + response.data_level[i - 1]
-                        .levelDescription + '</label>' +
-                        '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]" multiple="multiple"></select>' +
-                        '</div></div>'
-                    );
-
-                    loadDataLevelCode('#level' + i, i);
-                    loadDataFirstLastAllLevel('#level' + i, i);
-                }
-            },
-            error: function (response) {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
-            }
-        });
-
-        loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
-        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
-        loadDataFirstLastAllGroupAuthorize('#group_authorize_from', 'First');
-        loadDataFirstLastAllGroupAuthorize('#group_authorize_to', 'Last');
-        loadDataFirstLastAllPosition();
-        loadDataFirstLastAllLocation();
-        loadDataFirstLastAllRanking();
-
-        load_data_absent_code();
-
-        // $('select').on('select2:opening select2:closing', function( event ) {
-        //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
-        //     $searchfield.prop('disabled', true);
-        // });
-
-        // $('#employee_no_from').on('select2:open', function (e) {
-        //     html = '<div class="row header-select">' +
-        //     '<div class="col-6"><b>Employee No</b></div>' +
-        //     '<div class="col-6"><b>Employee Name</b></div>' +
-        //     '</div>';
-        //     $('.select2-search').append(html);
-        // });
-
-        // loadDataFirstLastAllLocation();
-
-        // loadDataFirstLastAllLocation();
-
-        $('#detail_absenteeism_report_table thead tr').clone(true).appendTo('#detail_absenteeism_report_table thead');
-        $('#detail_absenteeism_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
-            var title = $(this).text();
-            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
-    
-            $('input', this).on('keyup change', function () {
-                if (table.column(i + 1).search() !== this.value) {
-                    table
-                        .column(i + 1)
-                        .search(this.value)
-                        .draw();
-                }
-            } );
-        });
-
-        function load_data_absent_code() {
-            table = $('#detail_absenteeism_report_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: "{{ url('time_management/absent_code/table') }}",
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type, row) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox" name="check_absent_code[' + $("<div />").text(row.absentCode).html() + ']" value="1">' : ''
-                        }
-                    },
-                    {data: 'absentCode', name: 'absentCode',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="absentCode[' + $("<div />").text(row.absentCode).html() + ']" value="' +
-                                $('<div />').text(row.absentCode).html() + '">' + 
-                                $('<div />').text(row.absentCode).html();
-                        }},
-                    {data: 'description', name: 'description',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="description[' + $("<div />").text(row.description).html() + ']" value="' +
-                                $('<div />').text(row.description).html() + '">' + 
-                                $('<div />').text(row.description).html();
-                        }},
-                    {data: 'deductLeave', name: 'deductLeave',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="deductLeave[' + $("<div />").text(row.deductLeave).html() + ']" value="' +
-                                $('<div />').text(row.deductLeave).html() + '">' + 
-                                $('<div />').text(row.deductLeave).html();
-                        }},
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
-        }
-
-        $('input[name="absent_code"]').on('change', function () {
-            $('input[name="' + this.name + '"]').not(this).prop('checked', false);
-            var rows = table.rows({ 'search': 'applied' }).nodes();
-            var data = table.rows({ 'search': 'applied' }).data().toArray();
-            var result = [];
-            if ($('#all_absent_code').is(':checked')) {
-                table.rows().select();
-                $('.chk-select', rows).prop('checked', true);
+        $('#slip_type, input[name="format"]').on('change', function () {
+            slipType = $('#slip_type').val();
+            if ($('#up_down').is(':checked')) {
+                $('#slip_name').val(slipType + '_UD');
             }
             else {
-                data = [];
-                table.rows().deselect();
-                $('.chk-select', rows).prop('checked', false);
+                $('#slip_name').val(slipType + '_LR');
             }
-
-            $.each(data, function(key, value) {
-                result.push(value.absentCode + " - " + value.description);
-            });
-
-            var textarea = document.getElementById("selected_absent_code");
-            textarea.value = result.join("\n");
-        });
-
-        $('#detail_absenteeism_report_table tbody').on('click', '.chk-select', function () {     
-            var data = table.rows('.selected').data().toArray();
-            var data2 = table.row(this.closest('tr')).data();
-            var result = [];
-            
-            if(!this.checked){
-                data = data.filter(obj => obj.absentCode !== data2.absentCode);
-                var all = $('#all_absent_code').get(0);
-                var selection = $('#selection_absent_code').get(0);
-                if(all && all.checked && ('checked' in all)){
-                    all.checked = false;
-                    selection.checked = true;
-                }
-            } else  {
-                data.push(data2);
-                var selection = $('#selection_absent_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
-                    selection.checked = false;
-                }
-            }
-
-            $.each(data, function(key, value) {
-                result.push(value.absentCode + " - " + value.description);
-            });
-
-            var textarea = document.getElementById("selected_absent_code");
-            textarea.value = result.join("\n");
-        });
-
-        // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){
-        //     if(this.checked){
-        //         console.log("okay");
-        //     //    $('input=[type="checkbox"]:checked.not(:first)').each(function (){
-        //     //        selectvalue += table.row($(this).closest("tr")).data()[1]+" ";
-        //     //    });
-        //     }
-        // });
-
-        $('#detail_absenteeism_report_table tbody').on('change', '.chk-select', function(){
-            if(!this.checked){
-                var all = $('#all_absent_code').get(0);
-                var selection = $('#selection_absent_code').get(0);
-                if(all && all.checked && ('checked' in all)){
-                    all.checked = false;
-                    selection.checked = true;
-                }
-            } else  {
-                var selection = $('#selection_absent_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
-                    selection.checked = false;
-                }
-            }
-        });
-
-      
-        $('#select').focus(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').click(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
-
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/func/api',
+                url: '/payroll/slip_format/detail_data',
                 data: {
-                    'func': func
+                    'slipCode': $('#slip_type').val()
+                },
+                success: function (response) {                    
+                    if (response.recordsTotal > 0) {
+                        $("#record_function").val("Edit");
+                    }
+                    else {
+                        $("#record_function").val("New");
+                    }
                 }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
-                    data.fullName);
-                $(field).append($newOption).trigger('change');
+            });
+            console.log($('#record_function').val());
+        });
+
+        $('#label_custom1').on('click', function () {
+            $('#custom').on('change', function () {
+                var custom = $('#custom').val();
+                $('#header_custom_1').val(custom);
+                // console.log($('#header_custom_1').val());
+            });
+            $('#custom_label').val('label1');
+            $('#slip_type_custom').val($('#slip_type').val());
+            $('#slip_name_custom').val($('#slip_name').val());
+            $('#font_size_custom').val($('#font_size').val());
+            $('#number_format_custom').val($('#number_format').val());
+            // console.log($('#font_size_custom').val());
+        });
+
+        $('#label_custom2').on('click', function () {
+            $('#custom').on('change', function () {
+                var custom = $('#custom').val();
+                $('#header_custom_2').val(custom);
+            });
+            $('#custom_label').val('label2');
+            $('#slip_type_custom').val($('#slip_type').val());
+            $('#slip_name_custom').val($('#slip_name').val());
+            $('#font_size_custom').val($('#font_size').val());
+            $('#number_format_custom').val($('#number_format').val());
+        });
+
+        $('#allowance1').on('click', function () {
+            $('#number_allowance').val('1');
+            $('#field_label_allowance').val('allowance1');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
+        });
+        $('#allowance2').on('click', function () {
+            $('#number_allowance').val('2');
+            $('#field_label_allowance').val('allowance2');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
+        });
+        $('#allowance3').on('click', function () {
+            $('#field_label_allowance').val('allowance3');
+        });
+        $('#allowance4').on('click', function () {
+            $('#field_label_allowance').val('allowance4');
+        });
+        $('#allowance5').on('click', function () {
+            $('#field_label_allowance').val('allowance5');
+        });
+        $('#allowance6').on('click', function () {
+            $('#field_label_allowance').val('allowance6');
+        });
+        $('#allowance7').on('click', function () {
+            $('#field_label_allowance').val('allowance7');
+        });
+        $('#allowance8').on('click', function () {
+            $('#field_label_allowance').val('allowance8');
+        });
+        $('#allowance9').on('click', function () {
+            $('#field_label_allowance').val('allowance9');
+        });
+        $('#allowance10').on('click', function () {
+            $('#field_label_allowance').val('allowance10');
+        });
+
+        $('#deduction1').on('click', function () {
+            $('#field_label_deduction').val('deduction1');
+        });
+        $('#deduction2').on('click', function () {
+            $('#field_label_deduction').val('deduction2');
+        });
+        $('#deduction3').on('click', function () {
+            $('#field_label_deduction').val('deduction3');
+        });
+        $('#deduction4').on('click', function () {
+            $('#field_label_deduction').val('deduction4');
+        });
+        $('#deduction5').on('click', function () {
+            $('#field_label_deduction').val('deduction5');
+        });
+        $('#deduction6').on('click', function () {
+            $('#field_label_deduction').val('deduction6');
+        });
+        $('#deduction7').on('click', function () {
+            $('#field_label_deduction').val('deduction7');
+        });
+        $('#deduction8').on('click', function () {
+            $('#field_label_deduction').val('deduction8');
+        });
+        $('#deduction9').on('click', function () {
+            $('#field_label_deduction').val('deduction9');
+        });
+        $('#deduction10').on('click', function () {
+            $('#field_label_deduction').val('deduction10');
+        });
+
+        loadDataFormat();
+        loadDataSlipType();
+        loadDataCustom();
+        loadDataComponent();
+
+        function loadDataSlipType() {
+            var listSlipType = [
+                {id:"Salary", text:"Salary"},
+                {id:"THR", text:"THR"},
+                {id:"Bonus", text:"Bonus"}
+            ];
+
+            $('#slip_type').select2({
+                data : listSlipType,
+                width : '100%',
+                placeholder : "Choose Slip Type",
+                allowClear : true
             });
         }
 
-        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/group_authorize/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
-                    .text(data.groupAuthorizeDesc);
-                $(field).append($newOption).trigger('change');
+        function loadDataFormat() {
+            var listFormat = [
+                {id:"#,##0", text:"#,##0"},
+                {id:"#,##0.00", text:"#,##0.00"}
+            ];
+
+            $('#number_format').select2({
+                data : listFormat,
+                width : '100%',
+                placeholder : "Choose Number Format",
+                allowClear : true
             });
         }
 
-        function loadDataFirstLastAllPosition() {
-            $('#position').addClass('spinner-border');
+        var employee = $('employee_no').val();
 
-            $.ajax({
-                type: 'GET',
-                url: '/position/func/api',
-            }).then(function (data) {
-                if (!$('#position').find('option:contains(' + data.positionName + ')').length) {
-                    $('#position').append($('<option>').val(data.positionCode).text(data.positionName));
+        $.ajax({
+            type: 'GET',
+            url: '/employee_no_slip_format/api',
+            data: {
+                'employeeNo': employee
+            }
+        }).then(function (data) {
+            // console.log(data);
+            var option = $('<option/>', {
+                id: data[0].costCenterCode,
+                title: data[0].costCenterDescription,
+                text: data[0].costCenterCode
+            });
+            $("#cost_center").append(option).attr('data-alias', 'yourvalue').trigger(
+                'change');
+            $("#cost_center").trigger({
+                type: 'select2:select',
+                params: {
+                    id: data[0].costCenterCode,
+                    text: data[0].costCenterCode,
+                    data: data[0]
                 }
-                $('#position').val(data.positionCode);
-                $('#position').removeClass('loading');
+            });
+        });
+
+        function loadDataCustom() {
+            var listFormat = [
+                {id:"RankingCode", text:"Ranking Code"},
+                {id:"GradeCode", text:"Grade Code"},
+                {id:"GroupCode", text:"Group Code"},
+                {id:"WorkNatureCode", text:"Work Nature Code"},
+                {id:"LocationCode", text:"Location Code"}
+            ];
+
+            $('#custom').select2({
+                data : listFormat,
+                width : '100%',
+                placeholder : "Choose Number Format",
+                allowClear : true
             });
         }
 
-        function loadDataFirstLastAllLocation() {
-            $.ajax({
-                type: 'GET',
-                url: '/location/func/api',
-            }).then(function (data) {
-                if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
-                    $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
-                }
-                $('#location').val(data.locationCode);
+        $('#component_allowance').on('change', function () {
+            var component_allowance = $('#component_allowance').val();
+            $('#btn-add-allowance').on('click', function () {
+                $('#field_name_allowance').val(component_allowance);
             });
-        }
+        });
 
-        function loadDataFirstLastAllRanking() {
-            $.ajax({
-                type: 'GET',
-                url: '/ranking/func/api',
-            }).then(function (data) {
-                if (!$('#ranking').find('option:contains(' + data.rankingName + ')').length) {
-                    $('#ranking').append($('<option>').val(data.rankingCode).text(data.rankingName));
-                }
-                $('#ranking').val(data.rankingCode);
+        $('#component_deduction').on('change', function () {
+            var component_deduction = $('#component_deduction').val();
+            $('#btn-add-deduction').on('click', function () {
+                $('#field_name_deduction').val(component_deduction);
             });
-        }
+        });
 
-        function loadDataFirstLastAllLevel(field = '', levelType = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/level/func/api',
-                data: {
-                    'levelType': levelType
-                }
-            }).then(function (data) {
-                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
-                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
-                }
-                $(field).val(data.levelCode);
-            });
-        }
-
-        function loadDataGroupAuthorize(field = '') {
+        function loadDataComponent() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -962,46 +1078,33 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '<div class="col-6"><b>Field Name</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
-                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '<div class="col-6">' + data.data.fieldName + '</div>' +
+                        '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
-
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Group Authorize Code</b></div>' +
-            //             '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $(field).select2({
+            $('#component_allowance, #component_deduction').select2({
                 width: '100%',
-                placeholder: 'Choose Group Authorize',
+                placeholder: 'Choose Field Name',
                 allowClear: true,
                 language: {
-                    errorLoading: function () {
+                    errorLoading: function() {
                         return $search;
                     },
-                    searching: function () {
+                    searching: function() {
                         return $search;
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: '/field_name_salary_component/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1015,8 +1118,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.groupAuthorizeDesc,
-                                    id: item.groupAuthorizeCode,
+                                    text: item.fieldName,
+                                    id: item.fieldName,
+                                    title: item.description,
                                     data: item
                                 }
                             })
@@ -1028,315 +1132,16 @@
             });
         }
 
-        function loadDataPositionCode() {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Position Code</b></div>' +
-                        '<div class="col-6"><b>Position Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.positionCode + '</div>' +
-                        '<div class="col-6">' + data.data.positionName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            // var headerIsAppend = false;
-            // $('#position').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Position Code</b></div>' +
-            //             '<div class="col-6"><b>Position Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#position').select2({
-                width: '100%',
-                placeholder: 'Choose Position',
-                allowClear: true,
-                multiple: true,
-                tags: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/position/all/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.positionName,
-                                    id: item.positionCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataLocationCode() {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Location Code</b></div>' +
-                        '<div class="col-6"><b>Location Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.locationCode + '</div>' +
-                        '<div class="col-6">' + data.data.locationName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            // var headerIsAppend = false;
-            // $('#location').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Location Code</b></div>' +
-            //             '<div class="col-6"><b>Location Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#location').select2({
-                width: '100%',
-                placeholder: 'Choose Location',
-                allowClear: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/location/all/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.locationName,
-                                    id: item.locationCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataRankingCode() {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Ranking Code</b></div>' +
-                        '<div class="col-6"><b>Ranking Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
-                        '<div class="col-6">' + data.data.rankingName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            // var headerIsAppend = false;
-            // $('#ranking').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Ranking Code</b></div>' +
-            //             '<div class="col-6"><b>Ranking Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#ranking').select2({
-                width: '100%',
-                placeholder: 'Choose Ranking',
-                allowClear: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/ranking/all/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.rankingName,
-                                    id: item.rankingCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataLevelCode(field = '', levelType = '') {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Level Code</b></div>' +
-                        '<div class="col-6"><b>Level Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.levelCode + '</div>' +
-                        '<div class="col-6">' + data.data.levelName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Level Code</b></div>' +
-            //             '<div class="col-6"><b>Level Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $(field).select2({
-                width: '100%',
-                placeholder: 'Choose Level',
-                allowClear: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/level/all/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term,
-                            'levelType': levelType
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.levelName,
-                                    id: item.levelCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        $("#btn-print-data").click(function () {
+        $("#btn-save-custom").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#slip_format_form").submit();
+            $("#custom_form").submit();
         });
 
-        if ($("#slip_format_form").length > 0) {
-            $("#slip_format_form").validate({
+        if ($("#custom_form").length > 0) {
+            $("#custom_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -1344,51 +1149,120 @@
                         }
                     });
                     $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('time_management/detail_absenteeism_report/print') }}",
+                        url: "{{ url('payroll/slip_format/custom/proses') }}",
                         type: "POST",
-                        data: $('#slip_format_form').serialize(),
-                        success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_slip_format.btn_print") }}'
-                            );
+                        data: $('#custom_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-custom").prop("disabled", false);
+                                $("#btn-save-custom").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/slip_format') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save-custom").prop("disabled", false);
+                                $("#btn-save-custom").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                                );
 
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
-
-                            document.body.appendChild(link);
-
-                            link.click();
-                            document.body.removeChild(link);
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
                         },
                         error: function (response) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_slip_format.btn_print") }}'
+                            $("#btn-save-custom").prop("disabled", false);
+                            $("#btn-save-custom").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
                             );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            });
+        }
+
+        $("#btn-save-allowance").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#allowance_form").submit();
+        });
+
+        if ($("#allowance_form").length > 0) {
+            $("#allowance_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/slip_format/allowance/proses') }}",
+                        type: "POST",
+                        data: $('#allowance_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-allowance").prop("disabled", false);
+                                $("#btn-save-allowance").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/slip_format') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save-allowance").prop("disabled", false);
+                                $("#btn-save-allowance").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-allowance").prop("disabled", false);
+                            $("#btn-save-allowance").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                            );
+
                             $('#notification').modal('show');
                             $('#message-notification').html(response);
                         }
                     });
                 }
-            })
+            });
         }
     });
-
 </script>
 
 </html>

@@ -6809,54 +6809,7 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
-	public function dataMedicalLimitTypeFunctionAPI(Request $request)
-    {
-    	try {
-	    	$client = new Client([
-	    		'headers' => [ 'Content-Type' => 'application/json',
-	    						'Authorization' => 'Bearer ' . Session::get('token') ]
-	    	]);
-
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
-	    		['body' => json_encode(
-	    			[
-	    				'companyCode' => Session::get('companyCode'),
-						'variable' => 'MedicalLimitType_',
-						'comGenCode' => $request->limitType,
-						'languageCode' => App::getLocale()
-	    			]
-	    		)]
-	    	);
-	    } catch (RequestException $e) {
-	    	$response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-	    }
-
-	    $arrResult = json_decode($response->getBody()->getContents());
-
-		if($search == ''){
-	    	$data = $arrResult->dataListSet;
-	    }else{
-	    	$data = array_filter(
-	    		$arrResult->dataListSet,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->value)){
-	    				return preg_match('/' . $search . '/i', $value->value);
-	    			}
-	    		}
-	    	);
-	    }
-
-        return response()->json($data);
-	}
-
-	public function dataLimitEligibleAPI(Request $request)
+	public function dataAccountAPI(Request $request)
     {
 		$search = $request->search;
 		
@@ -6866,12 +6819,107 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
+	    		['body' => json_encode(
+	    			[
+						'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$cost_center = $arrResult->dataListSet;
+	    }else{
+	    	$cost_center = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->costCenterCode)){
+	    				return preg_match('/' . $search . '/i', $value->costCenterCode);
+	    			}else if(preg_match('/' . $search . '/i', $value->costCenterDescription)){
+	    				return preg_match('/' . $search . '/i', $value->costCenterDescription);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataLimitEligibleAPI(Request $request)
+	{
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'LimitEligible_',
 	    				'companyCode' => Session::get('companyCode'),
-						'languageCode' => App::getLocale()
+						'languageCode' => App::getLocale(),
+					]
+				)]
+			);
+		} catch (RequestException $e) {
+			$response = $e->getResponse();
+			if($response->getStatusCode() == 401){
+				return view('error.login');
+			}else if($response->getStatusCode() == 404){
+				return view('error.not_found');
+			}else{
+				return view('error.bad_request');
+			}
+		}
+
+		$arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    	$cost_center = $arrResult->dataListSet;
+	    }
+
+		return response()->json($data);
+	}
+	
+	public function dataEditAccountAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+	    	
+	    	$response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
+	    		['body' => json_encode(
+	    			[
+						'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+						'accountNo' => $request->accountNo
 	    			]
 	    		)]
 	    	);
@@ -6891,11 +6939,13 @@ class DataController extends Controller
 		if($search == ''){
 	    	$data = $arrResult->dataListSet;
 	    }else{
-	    	$data = array_filter(
+	    	$cost_center = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->value)){
-	    				return preg_match('/' . $search . '/i', $value->value);
+	    			if(preg_match('/' . $search . '/i', $value->costCenterCode)){
+	    				return preg_match('/' . $search . '/i', $value->costCenterCode);
+	    			}else if(preg_match('/' . $search . '/i', $value->costCenterDescription)){
+	    				return preg_match('/' . $search . '/i', $value->costCenterDescription);
 	    			}
 	    		}
 	    	);
@@ -7140,4 +7190,7 @@ class DataController extends Controller
 
         return response()->json($data);
 	}
+        return response()->json($cost_center);
+	}
+
 }

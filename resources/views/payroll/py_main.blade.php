@@ -14,6 +14,16 @@
 			margin: auto;
 			margin-top: 1%;
 		}
+		.modal-header-notification-error {
+            border-bottom: 1px solid #eee;
+            background-color: #f44336;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
 	</style>
 </head>
 <body>
@@ -410,6 +420,23 @@
 			</div>
 		</div>
 	</div>
+	@if(Session::has('msg'))
+	<div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ Session::get('msg') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+	@endif
     
 </body>
 
