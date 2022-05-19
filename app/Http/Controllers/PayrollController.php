@@ -376,6 +376,10 @@ class PayrollController extends Controller
         return view('payroll.py_severance_report');
     }
 
+    public function pageJournalReport(){
+        return view('payroll.py_journal_report');
+    }
+
     public function tableAccountPY()
     {
         try {
@@ -5089,5 +5093,98 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         return response()->json($number);
+    }
+
+    public function printSeveranceReportPayroll(Request $request){
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'reportType' => isset($request->report_type)
+            ];
+    
+            if(!empty($request->payment_date_from) || !empty($request->payment_date_to)){
+                $param['paymentDateFrom'] = $request->payment_date_from;
+                $param['paymentDateTo'] = $request->payment_date_to;
+            }
+    
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+    
+            if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+                $param['groupAuthorizedFrom'] = $request->group_authorized_from;
+                $param['groupAuthorizedTo'] = $request->group_authorized_to;
+            }
+    
+            $reponse = $client->post(env('API_URL').'/PrPensionSeverance/gePrensionSeverance',[
+                'body' => json_encode($param)
+            ]);
+        } catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+    }
+
+    public function printJournalReportPayroll(Request $request){
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'journalPeriod' => $request->journal_period,
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+                $param['groupAuthorizeFrom'] = $request->group_authorized_from;
+                $param['groupAuthorizeTo'] = $request->group_authorized_to;
+            }
+            var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/PrJournalReport/JournalReport', [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return view('personel.personel_export_employee_skill_report', [
+                'data' => []
+            ]);
+        }else{
+            return view('personel.personel_export_employee_skill_report', [
+                'data' => $arrResult->dataListSet
+            ]); 
+        }
     }
 }

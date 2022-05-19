@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_severance_report.judul') }}</title>
+    <title>{{ __('payroll_journal_report.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,92 +107,38 @@
 
 <body>
     <div class="div-form">
-        <form id="severance_report_form" method="post">
+        <form id="journal_report_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_severance_report.list') }}</span>
+                        <span class="title-text">{{ __('payroll_journal_report.list') }}</span>
                     </a>
                 </div>
 
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="report_type form-check-label">{{ __('payroll_severance_report.label_report_type') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="report" name="report_type" value="report" checked>
-                            <label for="report">{{ __('payroll_severance_report.label_report') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="slip" name="report_type" value="slip">
-                            <label for="slip">{{ __('payroll_severance_report.label_slip') }}</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="payment_date_from form-check-label">{{ __('payroll_severance_report.label_payment_date') }}</label>
+                            <label for="journal_period form-check-label">{{ __('payroll_journal_report.label_journal_period') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="payment_date_from" name="payment_date_from"
-                                placeholder="{{ __('payroll_severance_report.label_payment_date') }}">
+                            <input type="text" class="form-control" id="journal_period" name="journal_period"
+                                placeholder="{{ __('payroll_journal_report.label_journal_period') }}">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="payment_date_from_calendar"><span class="fa fa-calendar"></span></span>
+                                <span class="input-group-text" id="journal_period_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="payment_date_from_hidden" name="payment_date_from_hidden" hidden>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="payment_date_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="payment_date_to" name="payment_date_to"
-                                placeholder="{{ __('payroll_severance_report.label_payment_date') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="payment_date_to_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="payment_date_to_hidden" name="payment_date_to_hidden" hidden>
+                        <input type="text" class="form-control" id="journal_period_hidden" name="journal_period_hidden" hidden>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="employee_no_from form-check-label">{{ __('payroll_severance_report.label_employee_no') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="employee_no_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="group_authorized_from form-check-label">{{ __('payroll_severance_report.label_group_authorized') }}</label>
+                            <label for="group_authorized_from form-check-label">{{ __('payroll_journal_report.label_group_authorized') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -200,7 +146,7 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="group_authorized_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
+                            <label for="group_authorized_to form-check-label">{{ __('payroll_journal_report.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -212,12 +158,12 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-preview" id="btn-preview" style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_severance_report.btn_preview') }}
+                            <i class="fa fa-eye"></i> {{ __('payroll_journal_report.btn_preview') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-send-to" id="btn-send-to" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_severance_report.btn_send_to') }}
+                            <i class="fa fa-print"></i> {{ __('payroll_journal_report.btn_send_to') }}
                         </button>
                     </div>
                 </div>
@@ -250,7 +196,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_severance_report.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_journal_report.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -279,41 +225,20 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        let pickerPaymentDateFrom = $('#payment_date_from').flatpickr({
+        let pickerPaymentDateFrom = $('#journal_period').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "M Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#payment_date_from_calendar").click(function () {
+                $flatPickrInput.siblings("#journal_period_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
         });
-
-        let pickerPaymentDateTo = $('#payment_date_to').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#payment_date_to_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
-
-        loadDataEmployeeNo('#employee_no_from');
-        loadDataEmployeeNo('#employee_no_to');
-
-        loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
-        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
                
         loadDataGroupAuthorized('#group_authorized_from');
         loadDataGroupAuthorized('#group_authorized_to');
@@ -340,84 +265,6 @@
             $('.header-select').remove();
         });
 
-        function loadDataEmployeeNo(field = '') {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
-                        '<div class="col-6">' + data.data.fullName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            var $employeeNo = $(field).select2({
-                width: '100%',
-                placeholder: 'Choose Employee',
-                allowClear: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/employee_no/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.fullName,
-                                    id: item.employeeNo,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/employee_no/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
-                    data.fullName);
-                $(field).append($newOption).trigger('change');
-            });
-        }
-        
         function loadDataGroupAuthorized(field = ''){
             function formatSelect(data) {
                 if (data.loading) {
@@ -501,11 +348,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $('#severance_report_form').submit();
+            $('#journal_report_form').submit();
         });
 
-        if($('#severance_report_form').length > 0){
-            $('#severance_report_form').validate({
+        if($('#journal_report_form').length > 0){
+            $('#journal_report_form').validate({
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
@@ -516,25 +363,24 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('payroll/severance_report/print') }}",
+                        url: "{{ url('payroll/journal_report/print') }}",
                         type: "POST",
-                        data: $('#severance_report_form').serialize(),
+                        data: $('#journal_report_form').serialize(),
                         success: function(result, status, xhr){
                             $('#btn-send-to').prop("disabled", false);
                             $("#btn-send-to").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
+                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
                             );
 
                             var disposition = xhr.getResponseHeader('content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
                             var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
+                            // The actual download
                             var blob = new Blob([result], {
-                                type: 'application/pdf'
+                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                             });
                             var link = document.createElement('a');
-                            const url = URL.createObjectURL(blob);
-                            link.href = window.open(url, "_blank");
                             link.href = window.URL.createObjectURL(blob);
                             link.download = filename;
 
@@ -546,7 +392,7 @@
                         error: function(response){
                             $('#btn-send-to').prop("disabled", false);
                             $('#btn-send-to').html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
+                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);

@@ -639,6 +639,10 @@ Route::get('payroll_loan_no/number/check', 'PayrollController@checkNumberLoanNoP
 Route::get('payroll/report_format_number/check', 'PayrollController@checkNumberReportFormatPY');
 Route::get('payroll/payroll_calculation_number/check', 'PayrollController@checkNumberPayrollCalculationPY');
 
+/* Route untuk print payroll */
+Route::post('payroll/severance_report/print', 'PayrollController@printSeveranceReportPayroll');
+Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
+
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
 /* Medical Maintenance Menu */
