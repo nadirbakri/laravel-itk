@@ -892,7 +892,6 @@ Route::get('rate_type/api', 'DataController@dataRateTypeAPI');
 Route::get('rate_type/func/api', 'DataController@dataRateTypeFunctionAPI');
 Route::get('rounding_method/api', 'DataController@dataRoundingMethodAPI');
 Route::get('rounding_method/func/api', 'DataController@dataRoundingMethodFunctionAPI');
-Route::get('medical_limit_type/func/api', 'DataController@dataMedicalLimitTypeFunctionAPI');
 Route::get('account/api', 'DataController@dataAccountAPI');
 Route::get('account_edit/api', 'DataController@dataEditAccountAPI');
 

@@ -278,6 +278,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
 
         if (func == 'new') {
@@ -339,27 +340,12 @@
                 type: 'GET',
                 url: '/medical_limit_type/func/api',
                 data: {
-                    'limitType': "{{ isset($data[0]->paymentFromRemainingLimit) ? $data[0]->paymentFromRemainingLimit : '' }}"
+                    'limitType' : "{{ isset($data[0]->companyMedicalLimitType) ? $data[0]->companyMedicalLimitType : '' }}"
                 }
-            }).then(function (data) {
-                // var option = new Option(data.positionCode, data.positionCode, true, true);
-                var option = $('<option/>', {
-                    id: data[0].comGenCode,
-                    title: data[0].value,
-                    text: data[0].value
-                });
-                $("#limit_type").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
-                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
-                $("#limit_type").trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data[0].comGenCode,
-                        text: data[0].value,
-                        data: data[0]
-                    }
-                });
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .comGenCode).text(data2[0].value);
+                $("#limit_type").append($newOption).trigger('change');
             });
             $('#payment').val("{{ isset($data[0]->paymentFromRemainingLimit) ? $data[0]->paymentFromRemainingLimit : '' }}");
             $('#claim_code').prop('readonly', true);

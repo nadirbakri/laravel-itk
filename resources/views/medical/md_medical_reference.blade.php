@@ -10,6 +10,7 @@
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 	<link rel="stylesheet" href="{{ asset('css/medical_detail.css') }}">
@@ -69,32 +70,32 @@
             <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
                 <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
-                <span>{{ __('tm_reference_time_management.label_back') }}</span>
+                <span>{{ __('md_medical_reference.label_back') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
-                <span>{{ __('tm_reference_time_management.label_next') }}</span>
+                <span>{{ __('md_medical_reference.label_next') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
-                <span>{{ __('tm_reference_time_management.label_new') }}</span>
+                <span>{{ __('md_medical_reference.label_new') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
-                <span>{{ __('tm_reference_time_management.label_edit') }}</span>
+                <span>{{ __('md_medical_reference.label_edit') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
-                <span>{{ __('tm_reference_time_management.btn_save') }}</span>
+                <span>{{ __('md_medical_reference.btn_save') }}</span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
-                <span>{{ __('tm_reference_time_management.label_list') }}</span>
+                <span>{{ __('md_medical_reference.label_list') }}</span>
             </a>
         </div>
         <div class="div-title">
@@ -112,9 +113,10 @@
                             <label for="processing_period">{{ __('md_medical_reference.label_processing_period') }}</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="processing_period" name="processing_period"
-                                    placeholder="{{ __('md_medical_reference.label_processing_period') }}" disabled>
+                                    placeholder="{{ __('md_medical_reference.label_processing_period') }}">
                             </div>
                         </div>
+                        <input type="hidden" class="form-control" id="record_function" name="record_function">
                     </div>
                 </div>
                 <div class="row">
@@ -179,13 +181,13 @@
                             <label for="last_transaction_date_for_process_payroll">{{ __('md_medical_reference.label_last_transaction_date_for_process_payroll') }}</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="last_transaction_date_for_process_payroll" name="last_transaction_date_for_process_payroll"
-                                    placeholder="{{ __('md_medical_reference.label_last_transaction_date_for_process_payroll') }}" disabled>
+                                    placeholder="{{ __('md_medical_reference.label_last_transaction_date_for_process_payroll') }}">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <label
                                 for="proportional_limit_for_new_employee">{{ __('md_medical_reference.label_proportional_limit_for_new_employee') }}</label>
@@ -213,7 +215,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-6">
                         <div class="form-group">
                             <h5
                                 for="maximum_expired_receipt">{{ __('md_medical_reference.label_maximum_expired_receipt') }}</h5>
@@ -230,6 +232,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="for_company_days">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="for_company_days"
                                     name="for_company" value="D" disabled>
@@ -240,6 +243,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="for_company_months">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="for_company_months"
                                     name="for_company" value="M" disabled> 
@@ -250,6 +254,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="for_company_year">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="for_company_year"
                                     name="for_company" value="Y" disabled> 
@@ -269,6 +274,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="for_insurance_days">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="for_insurance_days"
                                     name="for_insurance" value="D" disabled>
@@ -279,6 +285,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="for_insurance_months">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="for_insurance_months"
                                     name="for_insurance" value="M" disabled> 
@@ -289,6 +296,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="for_insurance_year">&nbsp;</label>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="for_insurance_year"
                                     name="for_insurance" value="Y" disabled> 
@@ -317,7 +325,6 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="check_contract_employee">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_contract_employee"
                                     name="check_contract_employee" value="true" disabled>
@@ -380,7 +387,7 @@
                             <label for="insurance_period_from">{{ __('md_medical_reference.label_insurance_period') }}</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="insurance_period_from" name="insurance_period_from"
-                                    placeholder="{{ __('md_medical_reference.label_insurance_period_from') }}" disabled>
+                                    placeholder="{{ __('md_medical_reference.label_insurance_period_from') }}">
                             </div>
                         </div>
                     </div>
@@ -395,7 +402,7 @@
                             <label for="insurance_period_to">&nbsp;</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="insurance_period_to" name="insurance_period_to"
-                                    placeholder="{{ __('md_medical_reference.label_insurance_period_to') }}" disabled>
+                                    placeholder="{{ __('md_medical_reference.label_insurance_period_to') }}">
                             </div>
                         </div>
                     </div>
@@ -411,7 +418,6 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="check_transfer_salary_from_payroll">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_transfer_salary_from_payroll"
                                     name="check_transfer_salary_from_payroll" value="true" disabled>
@@ -582,6 +588,11 @@
             }
         });
 
+        pickrProcessPeriod._input.setAttribute('disabled', 'disalbed');
+        pickerLastTransactionDate._input.setAttribute('disabled', 'disalbed');
+        pickerInsurancePeriodFrom._input.setAttribute('disabled', 'disalbed');
+        pickerInsurancePeriodTo._input.setAttribute('disabled', 'disalbed');
+
         for (var i = 1; i <= 12; i++){
             $('#period_start_month').append($('<option/>').val(i).text(i));
         }
@@ -651,6 +662,7 @@
                     .comGenCode).text(data2[0].value);
                 $("#default_medical_payment_bank_type").append($newOption).trigger('change');
             });
+            pickerLastTransactionDate.setDate(arrData[0].lastConfirmDate);
             if (typeof arrData[0].flagProportionalLimitForNewEmployee !== 'undefined') {
                 if(arrData[0].flagProportionalLimitForNewEmployee) {
                     $('#proportional_limit_for_new_employee_yes').prop('checked', true).trigger('change');
@@ -708,22 +720,22 @@
                 type: 'GET',
                 url: '/rate_type/func/api',
                 data: {
-                    'rateType': ((typeof arrData[0].transactionRateTypeCode !== 'undefined') ? arrData[0].transactionRateTypeCode : '')
+                    'transactionRateTypeCode': arrData[0].transactionRateTypeCode
                 }
             }).then(function (data) {
                 var option = $('<option/>', {
-                    id: data.currencyCode,
-                    title: data.description,
-                    text: data.currencyCode
+                    id: data[0].comGenCode,
+                    title: data[0].value,
+                    text: data[0].comGenCode
                 });
                 $("#transaction_rate_type_code").append(option).attr('data-alias', 'yourvalue').trigger(
                     'change');
                 $("#transaction_rate_type_code").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.currencyCode,
-                        text: data.currencyCode,
-                        data: data
+                        id: data[0].comGenCode,
+                        text: data[0].comGenCode,
+                        data: data[0]
                     }
                 });
             });
@@ -742,14 +754,12 @@
             $("#toolbar-new").hide();
             $("#toolbar-edit").show();
         } else {
-            $('#processing_period').val("");
             $('#limit_by').val(null).trigger('change');
             $('#eligible_by').val(null).trigger('change');
-            $('#period_start_month').val("");
+            $('#period_start_month').val("1").trigger('change');
             $('#check_default_multiple_month_for_payment_plan').prop('checked', false).trigger('change');
             $('#minimum_service_length_by').val(null).trigger('change');
             $('#default_medical_payment_bank_type').val(null).trigger('change');
-            $('#last_transaction_date_for_process_payroll').val("");
             $('#proportional_limit_for_new_employee_yes').prop('checked', true).trigger('change');
             $('#for_company_length').val("");
             $('#for_company_days').prop('checked', true).trigger('change');
@@ -760,8 +770,6 @@
             $('#check_contract_employee').prop('checked', false).trigger('change');
             $('#join_insurance_yes').prop('checked', true).trigger('change');
             $('#insurance_policy_no').val("");
-            $('#insurance_period_from').val("");
-            $('#insurance_period_to').val("");
             $('#check_transfer_salary_from_payroll').prop('checked', false).trigger('change');
             $('#transaction_rate_type_code').val(null).trigger('change');
             $('#rounding_method_code').val(null).trigger('change');
@@ -952,8 +960,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.currencyCode + '</div>' +
-                        '<div class="col-6">' + data.data.description + '</div>' +
+                        '<div class="col-6">' + data.data.comGenCode + '</div>' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -1002,8 +1010,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.currencyCode,
-                                    id: item.currencyCode,
+                                    text: item.comGenCode,
+                                    title: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })
@@ -1088,14 +1097,12 @@
 
         $("#toolbar-new").on('click', function() {
             $('#record_function').val("New");
-            $('#processing_period').val("");
             $('#limit_by').val(null).trigger('change');
             $('#eligible_by').val(null).trigger('change');
-            $('#period_start_month').val("");
+            $('#period_start_month').val("1").trigger('change');
             $('#check_default_multiple_month_for_payment_plan').prop('checked', false).trigger('change');
             $('#minimum_service_length_by').val(null).trigger('change');
             $('#default_medical_payment_bank_type').val(null).trigger('change');
-            $('#last_transaction_date_for_process_payroll').val("");
             $('#proportional_limit_for_new_employee_yes').prop('checked', true).trigger('change');
             $('#for_company_length').val("");
             $('#for_company_days').prop('checked', true).trigger('change');
@@ -1106,20 +1113,20 @@
             $('#check_contract_employee').prop('checked', false).trigger('change');
             $('#join_insurance_yes').prop('checked', true).trigger('change');
             $('#insurance_policy_no').val("");
-            $('#insurance_period_from').val("");
-            $('#insurance_period_to').val("");
             $('#check_transfer_salary_from_payroll').prop('checked', false).trigger('change');
             $('#transaction_rate_type_code').val(null).trigger('change');
             $('#rounding_method_code').val(null).trigger('change');
             $('#rounding_method_decimal').val("");
-            $('#processing_period').prop('disabled', false);
+            pickrProcessPeriod._input.removeAttribute('disabled');
+            pickerLastTransactionDate._input.removeAttribute('disabled');
+            pickerInsurancePeriodFrom._input.removeAttribute('disabled');
+            pickerInsurancePeriodTo._input.removeAttribute('disabled');
             $('#limit_by').prop('disabled', false);
             $('#period_start_month').prop('disabled', false);
             $('#eligible_by').prop('disabled', false);
             $('#check_default_multiple_month_for_payment_plan').prop('disabled', false).trigger('change');
             $('#minimum_service_length_by').prop('disabled', false);
             $('#default_medical_payment_bank_type').prop('disabled', false);
-            $('#last_transaction_date_for_process_payroll').prop('disabled', false);
             $('#proportional_limit_for_new_employee_yes').prop('disabled', false).trigger('change');
             $('#proportional_limit_for_new_employee_no').prop('disabled', false).trigger('change');
             $('#for_company_length').prop('disabled', false);
@@ -1136,8 +1143,6 @@
             $('#join_insurance_yes').prop('disabled', false).trigger('change');
             $('#join_insurance_no').prop('disabled', false).trigger('change');
             $('#insurance_policy_no').prop('disabled', false);
-            $('#insurance_period_from').prop('disabled', false);
-            $('#insurance_period_to').prop('disabled', false);
             $('#check_transfer_salary_from_payroll').prop('disabled', false).trigger('change');
             $('#transaction_rate_type_code').prop('disabled', false);
             $('#rounding_method_code').prop('disabled', false);
@@ -1147,14 +1152,16 @@
 
         $("#toolbar-edit").on('click', function() {
             $('#record_function').val("Edit");
-            $('#processing_period').prop('disabled', false);
+            pickrProcessPeriod._input.removeAttribute('disabled');
+            pickerLastTransactionDate._input.removeAttribute('disabled');
+            pickerInsurancePeriodFrom._input.removeAttribute('disabled');
+            pickerInsurancePeriodTo._input.removeAttribute('disabled');
             $('#limit_by').prop('disabled', false);
             $('#period_start_month').prop('disabled', false);
             $('#eligible_by').prop('disabled', false);
             $('#check_default_multiple_month_for_payment_plan').prop('disabled', false).trigger('change');
             $('#minimum_service_length_by').prop('disabled', false);
             $('#default_medical_payment_bank_type').prop('disabled', false);
-            $('#last_transaction_date_for_process_payroll').prop('disabled', false);
             $('#proportional_limit_for_new_employee_yes').prop('disabled', false).trigger('change');
             $('#proportional_limit_for_new_employee_no').prop('disabled', false).trigger('change');
             $('#for_company_length').prop('disabled', false);
@@ -1171,8 +1178,6 @@
             $('#join_insurance_yes').prop('disabled', false).trigger('change');
             $('#join_insurance_no').prop('disabled', false).trigger('change');
             $('#insurance_policy_no').prop('disabled', false);
-            $('#insurance_period_from').prop('disabled', false);
-            $('#insurance_period_to').prop('disabled', false);
             $('#check_transfer_salary_from_payroll').prop('disabled', false).trigger('change');
             $('#transaction_rate_type_code').prop('disabled', false);
             $('#rounding_method_code').prop('disabled', false);

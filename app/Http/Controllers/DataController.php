@@ -6809,6 +6809,55 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
+	public function dataMedicalLimitTypeFunctionAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'variable' => 'MedicalLimitType_',
+						'comGenCode' => $request->limitType,
+						'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
 	public function dataAccountAPI(Request $request)
     {
 		$search = $request->search;
@@ -6958,6 +7007,8 @@ class DataController extends Controller
 
 	public function dataLimitEligibleFunctionAPI(Request $request)
     {
+		$search = $request->search;
+
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
@@ -7053,6 +7104,8 @@ class DataController extends Controller
 
 	public function dataMinimumServiceLengthFunctionAPI(Request $request)
     {
+		$search = $request->search;
+
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
@@ -7148,6 +7201,8 @@ class DataController extends Controller
 
 	public function dataDefaultMedicalPaymentBankTypeFunctionAPI(Request $request)
     {
+		$search = $request->search;
+
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
@@ -7159,7 +7214,7 @@ class DataController extends Controller
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'DefaultMedicalPaymentBankType_',
-						'comGenCode' => $request->minServiceLengthBy,
+						'comGenCode' => $request->defaultMedicalPaymentBankType,
 						'languageCode' => App::getLocale()
 	    			]
 	    		)]
@@ -7193,4 +7248,197 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
+	public function dataRateTypeAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+						'variable' => 'RateType_',
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataRateTypeFunctionAPI(Request $request)
+    {
+		$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'variable' => 'RateType_',
+						'comGenCode' => $request->transactionRateTypeCode,
+						'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataRoundingMethodAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+						'variable' => 'RoundingMethod_',
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataRoundingMethodFunctionAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'variable' => 'RoundingMethod_',
+						'comGenCode' => $request->roundingMethod,
+						'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
 }

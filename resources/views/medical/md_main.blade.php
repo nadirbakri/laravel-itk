@@ -136,7 +136,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="div-head-data">
+					<!-- <div class="div-head-data">
 						<span class="head-title-text">{{ __('medical.method_by_insurance') }}</span>
 					</div>
 					<div class="row div-child-data">
@@ -164,7 +164,7 @@
 								<span class="child-title-text">{{ __('medical.treatment_eligibility') }}</span>
 							</a>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
