@@ -199,12 +199,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <label
                                             for="remark">{{ __('payroll_salary_master.label_remark') }}</label>
                                         <input type="text" class="form-control" id="remark" name="remark"
-                                            placeholder={{ __('payroll_salary_master.label_remark') }}>
+                                            placeholder="{{ __('payroll_salary_master.label_remark') }}">
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +318,7 @@
                 table.row.add([
                     '<input type="text" class="form-control" name="field_name[]" id="field_name" value="'+ ((typeof v.fieldName !== 'undefined' && v.fieldName !== null) ? v.fieldName : '') +'" readonly>',
                     '<input type="text" class="form-control" name="description[]" id="description" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
-                    '<input type="text" class="form-control" name="fixed_component[]" id="fixed_component" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null && v.fieldType !== 'T' || v.fieldType !== 'P') ? 'Yes' : 'No') +'" readonly>',
+                    '<input type="text" class="form-control" name="fixed_component[]" id="fixed_component" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null) ? (v.fieldType == 'T' || v.fieldType == 'P' ? 'Yes' : 'No') : '') +'" readonly>',
                     '<input type="text" class="form-control" name="currency_code[]" id="currency_code" value="'+ ((typeof v.currencyCode !== 'undefined' && v.currencyCode !== null) ? v.currencyCode : '') +'" readonly>',
                     '<input type="number" min=0 max=0.9 step="0.1" class="form-control" name="amount[]" id="amount" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'">',
                     '<input type="text" class="form-control" name="field_type[]" id="field_type" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null) ? v.fieldType : '') +'" hidden>',
@@ -345,8 +345,8 @@
             table = $('#salary_master_detail_table').DataTable({
                 processing: true,
                 orderCellsTop: true,
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                paging: false,
+                "sDom": 'lrtip'
             });
         }
 
@@ -471,7 +471,13 @@
                                 $("#btn-save-remark").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save") }}'
                                 );
+
+                                $("#btn-save-no-remark").prop("disabled", false);
+                                $("#btn-save-no-remark").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save_no_remark") }}'
+                                );
                                 
+                                $('#modal_warning_salary_master').modal('hide');
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
@@ -483,6 +489,11 @@
                                 $("#btn-save-remark").prop("disabled", false);
                                 $("#btn-save-remark").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save") }}'
+                                );
+
+                                $("#btn-save-no-remark").prop("disabled", false);
+                                $("#btn-save-no-remark").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save_no_remark") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -502,75 +513,6 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-
-                    });
-                }
-            })
-        }
-
-        if ($("#salary_master_form").length > 0) {
-            $("#salary_master_form").validate({
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-save-no-remark").prop("disabled", false);
-                    $("#btn-save-no-remark").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save_no_remark") }}'
-                    );
-
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "{{ url('payroll/salary_master/proses') }}",
-                        type: "POST",
-                        data: $('#salary_master_form').serialize(),
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $("#btn-save-no-remark").prop("disabled", false);
-                                $("#btn-save-no-remark").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save_no_remark") }}'
-                                );
-                                
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/salary_master') }}";
-                                }, 3000);
-                            } else {
-                                $("#btn-save-no-remark").prop("disabled", false);
-                                $("#btn-save-no-remark").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save_no_remark") }}'
-                                );
-
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
                             $("#btn-save-no-remark").prop("disabled", false);
                             $("#btn-save-no-remark").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_master.btn_save_no_remark") }}'

@@ -51,7 +51,7 @@ class MedicalController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'userID' => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
@@ -81,7 +81,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/cdclaim/getcdclaim',
+            $response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -116,7 +116,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/cddisease/getcddisease',
+            $response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -221,7 +221,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/cdclaim/getcdclaim',
+            $response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -251,7 +251,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_claim_code_detail', ['data' => $data]);
+        return view('medical.md_claim_code_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailDiseaseCodeMD(Request $request)
@@ -262,7 +262,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/cddisease/getcddisease',
+            $response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -292,7 +292,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_disease_code_detail', ['data' => $data]);
+        return view('medical.md_disease_code_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailInsuranceCodeMD(Request $request)
@@ -333,7 +333,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_insurance_code_detail', ['data' => $data]);
+        return view('medical.md_insurance_code_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function dataDetailInsuranceClass(Request $request)
@@ -374,7 +374,7 @@ class MedicalController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('medical.md_insurance_class_detail', ['data' => $data]);
+        return view('medical.md_insurance_class_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -387,19 +387,19 @@ class MedicalController extends Controller
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/cdclaim/insertcdclaim',
+                $response = $client->post(env('API_URL') . '/claimcode/insertclaimcode',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'claimCode' => $request->claim_code,
                             'claimName' => $request->claim_name,
-                            'flagDisease' => isset($request->include_disease) ? (bool) $request->include_disease : false,
-                            'flagPayroll' => isset($request->process_to_payroll) ? (bool) $request->process_to_payroll : false,
-                            "flagMustHaveFamily" => isset($request->must_have_family) ? (bool) $request->must_have_family : false,
-                            "flagAllowClaimForFamily" => isset($request->allow_claim_to_family) ? (bool) $request->allow_claim_to_family : false,
-                            "flagAllowClaimForCompany" => isset($request->allow_claim_to_company) ? (bool) $request->allow_claim_to_company : false,
-                            "flagAllowClaimForInsurance" => isset($request->allow_claim_to_insurance) ? (bool) $request->allow_claim_to_insurance : false,
+                            'flagDisease' => isset($request->check_include_disease) ? (bool) $request->check_include_disease : false,
+                            'flagPayroll' => isset($request->check_process_to_payroll) ? (bool) $request->check_process_to_payroll : false,
+                            "flagMustHaveFamily" => isset($request->check_must_have_family) ? (bool) $request->check_must_have_family : false,
+                            "flagAllowClaimForFamily" => isset($request->check_allow_claim_to_family) ? (bool) $request->check_allow_claim_to_family : false,
+                            "flagAllowClaimForCompany" => isset($request->check_allow_claim_to_company) ? (bool) $request->check_allow_claim_to_company : false,
+                            "flagAllowClaimForInsurance" => isset($request->check_allow_claim_to_insurance) ? (bool) $request->check_allow_claim_to_insurance : false,
                             "companyMedicalLimitType" => $request->limit_type,
                             "paymentFromRemainingLimit" => (int) $request->payment,
                             "changedNo" => 0,
@@ -409,6 +409,7 @@ class MedicalController extends Controller
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "languageCode" => App::getLocale(),
                             "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
@@ -418,19 +419,19 @@ class MedicalController extends Controller
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/cdclaim/updatecdclaim',
+                $response = $client->put(env('API_URL') . '/claimcode/updateclaimcode',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'claimCode' => $request->claim_code,
                             'claimName' => $request->claim_name,
-                            'flagDisease' => isset($request->include_disease) ? (bool) $request->include_disease : false,
-                            'flagPayroll' => isset($request->process_to_payroll) ? (bool) $request->process_to_payroll : false,
-                            "flagMustHaveFamily" => isset($request->must_have_family) ? (bool) $request->must_have_family : false,
-                            "flagAllowClaimForFamily" => isset($request->allow_claim_to_family) ? (bool) $request->allow_claim_to_family : false,
-                            "flagAllowClaimForCompany" => isset($request->allow_claim_to_company) ? (bool) $request->allow_claim_to_company : false,
-                            "flagAllowClaimForInsurance" => isset($request->allow_claim_to_insurance) ? (bool) $request->allow_claim_to_insurance : false,
+                            'flagDisease' => isset($request->check_include_disease) ? (bool) $request->check_include_disease : false,
+                            'flagPayroll' => isset($request->check_process_to_payroll) ? (bool) $request->check_process_to_payroll : false,
+                            "flagMustHaveFamily" => isset($request->check_must_have_family) ? (bool) $request->check_must_have_family : false,
+                            "flagAllowClaimForFamily" => isset($request->check_allow_claim_to_family) ? (bool) $request->check_allow_claim_to_family : false,
+                            "flagAllowClaimForCompany" => isset($request->check_allow_claim_to_company) ? (bool) $request->check_allow_claim_to_company : false,
+                            "flagAllowClaimForInsurance" => isset($request->check_allow_claim_to_insurance) ? (bool) $request->check_allow_claim_to_insurance : false,
                             "companyMedicalLimitType" => $request->limit_type,
                             "paymentFromRemainingLimit" => (int) $request->payment,
                             "changedNo" => 0,
@@ -440,6 +441,7 @@ class MedicalController extends Controller
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
                             "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
@@ -473,10 +475,10 @@ class MedicalController extends Controller
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/cddisease/insertcddisease',
+                $response = $client->post(env('API_URL') . '/diseasecode/insertdiseasecode',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'diseaseCode' => $request->disease_code,
                             'description' => $request->description,
@@ -496,10 +498,10 @@ class MedicalController extends Controller
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/cddisease/updatecddisease',
+                $response = $client->put(env('API_URL') . '/diseasecode/updatediseasecode',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'diseaseCode' => $request->disease_code,
                             'description' => $request->description,
@@ -511,6 +513,7 @@ class MedicalController extends Controller
                             "changedBy" => Session::get('userID'),
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
+                            "sessionCompanyCode" => Session::get('companyCode'),
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
                         ]
@@ -546,7 +549,7 @@ class MedicalController extends Controller
                 $response = $client->post(env('API_URL') . '/cdinsurance/insertcdinsurance',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceCode' => $request->insurance_code,
                             'insuranceDescription' => $request->insurance_description,
@@ -569,7 +572,7 @@ class MedicalController extends Controller
                 $response = $client->put(env('API_URL') . '/cdinsurance/updatecdinsurance',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceCode' => $request->insurance_code,
                             'insuranceDescription' => $request->insurance_description,
@@ -616,7 +619,7 @@ class MedicalController extends Controller
                 $response = $client->post(env('API_URL') . '/cdinsuranceclass/insertcdinsuranceclass',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceClassCode' => $request->insurance_code,
                             'insuranceClassDescription' => $request->insurance_description,
@@ -640,7 +643,7 @@ class MedicalController extends Controller
                 $response = $client->put(env('API_URL') . '/cdinsuranceclass/updatecdinsuranceclass',
                     ['body' => json_encode(
                         [
-                            'recordStatus' => $record_status,
+                            'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'insuranceClassCode' => $request->insurance_code,
                             'insuranceClassDescription' => $request->insurance_description,
@@ -675,6 +678,161 @@ class MedicalController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesMedicalReferenceMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'processingPeriod' => $request->processing_period,
+            //         'limitBy' => $request->limit_by,
+            //         'eligibleBy' => $request->eligible_by,
+            //         'minServiceLengthBy' => $request->minimum_service_length_by,
+            //         'flagInsurance' => ($request->join_insurance == "true") ? (bool) $request->join_insurance : false,
+            //         'policyNo' => $request->insurance_policy_no,
+            //         'insurancePeriodStart' => $request->insurance_period_from,
+            //         'insurancePeriodEnd' => $request->insurance_period_to,
+            //         'flagProportionalLimitForNewEmployee' => ($request->proportional_limit_for_new_employee == "true") ? (bool) $request->proportional_limit_for_new_employee : false,
+            //         'maxDependents' => (int) $request->maximum_dependents,
+            //         'expiredReceiptPeriodTypeCompany' => $request->for_company,
+            //         'expiredReceiptPeriodLengthCompany' => (int) $request->for_company_length,
+            //         'expiredReceiptPeriodTypeInsurance' => $request->for_insurance,
+            //         'expiredReceiptPeriodLengthInsurance' => (int) $request->for_insurance_length,
+            //         'flagTransferSalaryFromPayroll' => isset($request->check_transfer_salary_from_payroll) ? (bool) $request->check_transfer_salary_from_payroll : false,
+            //         'transactionRateTypeCode' => $request->transaction_rate_type_code,
+            //         'roundingMethod' => $request->rounding_method_code,
+            //         'roundingDecimal' => (int) $request->rounding_method_decimal,
+            //         'periodStartMonth' => (int) $request->period_start_month,
+            //         'defaultPaymentPlanForMultipleMonth' => isset($request->check_default_multiple_month_for_payment_plan) ? (bool) $request->check_default_multiple_month_for_payment_plan : false,
+            //         'lastConfirmDate' => $request->last_transaction_date_for_process_payroll,
+            //         'childMaxAge' => (int) $request->maximum_child_age,
+            //         'defaultMedicalPaymentBankType' => $request->default_medical_payment_bank_type,
+            //         'flagContractEmployee' => isset($request->check_contract_employee) ? (bool) $request->check_contract_employee : false,
+            //         "changedNo" => 0,
+            //         "changedBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "languageCode" => App::getLocale(),
+            //         "sessionID" => 0,
+            //         "sessionCompanyCode" => Session::get('companyCode'),
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID')
+            //     ]
+            //     ));
+
+            if ($request->record_function === 'New') {
+                $response = $client->post(env('API_URL') . '/referencemedical/insertreferencemedical',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'processingPeriod' => $request->processing_period,
+                            'limitBy' => $request->limit_by,
+                            'eligibleBy' => $request->eligible_by,
+                            'minServiceLengthBy' => $request->minimum_service_length_by,
+                            'flagInsurance' => ($request->join_insurance == "true") ? (bool) $request->join_insurance : false,
+                            'policyNo' => $request->insurance_policy_no,
+                            'insurancePeriodStart' => $request->insurance_period_from,
+                            'insurancePeriodEnd' => $request->insurance_period_to,
+                            'flagProportionalLimitForNewEmployee' => ($request->proportional_limit_for_new_employee == "true") ? (bool) $request->proportional_limit_for_new_employee : false,
+                            'maxDependents' => (int) $request->maximum_dependents,
+                            'expiredReceiptPeriodTypeCompany' => $request->for_company,
+                            'expiredReceiptPeriodLengthCompany' => (int) $request->for_company_length,
+                            'expiredReceiptPeriodTypeInsurance' => $request->for_insurance,
+                            'expiredReceiptPeriodLengthInsurance' => (int) $request->for_insurance_length,
+                            'flagTransferSalaryFromPayroll' => isset($request->check_transfer_salary_from_payroll) ? (bool) $request->check_transfer_salary_from_payroll : false,
+                            'transactionRateTypeCode' => $request->transaction_rate_type_code,
+                            'roundingMethod' => $request->rounding_method_code,
+                            'roundingDecimal' => (int) $request->rounding_method_decimal,
+                            'periodStartMonth' => (int) $request->period_start_month,
+                            'defaultPaymentPlanForMultipleMonth' => isset($request->check_default_multiple_month_for_payment_plan) ? (bool) $request->check_default_multiple_month_for_payment_plan : false,
+                            'lastConfirmDate' => $request->last_transaction_date_for_process_payroll,
+                            'childMaxAge' => (int) $request->maximum_child_age,
+                            'defaultMedicalPaymentBankType' => $request->default_medical_payment_bank_type,
+                            'flagContractEmployee' => isset($request->check_contract_employee) ? (bool) $request->check_contract_employee : false,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+            else {
+                $response = $client->put(env('API_URL') . '/referencemedical/updatereferencemedical',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'processingPeriod' => $request->processing_period,
+                            'limitBy' => $request->limit_by,
+                            'eligibleBy' => $request->eligible_by,
+                            'minServiceLengthBy' => $request->minimum_service_length_by,
+                            'flagInsurance' => ($request->join_insurance == "true") ? (bool) $request->join_insurance : false,
+                            'policyNo' => $request->insurance_policy_no,
+                            'insurancePeriodStart' => $request->insurance_period_from,
+                            'insurancePeriodEnd' => $request->insurance_period_to,
+                            'flagProportionalLimitForNewEmployee' => ($request->proportional_limit_for_new_employee == "true") ? (bool) $request->proportional_limit_for_new_employee : false,
+                            'maxDependents' => (int) $request->maximum_dependents,
+                            'expiredReceiptPeriodTypeCompany' => $request->for_company,
+                            'expiredReceiptPeriodLengthCompany' => (int) $request->for_company_length,
+                            'expiredReceiptPeriodTypeInsurance' => $request->for_insurance,
+                            'expiredReceiptPeriodLengthInsurance' => (int) $request->for_insurance_length,
+                            'flagTransferSalaryFromPayroll' => isset($request->check_transfer_salary_from_payroll) ? (bool) $request->check_transfer_salary_from_payroll : false,
+                            'transactionRateTypeCode' => $request->transaction_rate_type_code,
+                            'roundingMethod' => $request->rounding_method_code,
+                            'roundingDecimal' => (int) $request->rounding_method_decimal,
+                            'periodStartMonth' => (int) $request->period_start_month,
+                            'defaultPaymentPlanForMultipleMonth' => isset($request->check_default_multiple_month_for_payment_plan) ? (bool) $request->check_default_multiple_month_for_payment_plan : false,
+                            'lastConfirmDate' => $request->last_transaction_date_for_process_payroll,
+                            'childMaxAge' => (int) $request->maximum_child_age,
+                            'defaultMedicalPaymentBankType' => $request->default_medical_payment_bank_type,
+                            'flagContractEmployee' => isset($request->check_contract_employee) ? (bool) $request->check_contract_employee : false,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function statusClaimCodeMD(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -684,7 +842,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/cdclaim/updatecdclaim',
+            $response = $client->put(env('API_URL') . '/claimcode/updateclaimcode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -696,7 +854,8 @@ class MedicalController extends Controller
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'sessionID' => 0, 
+                        'sessionID' => 0,
+                        "sessionCompanyCode" => Session::get('companyCode'),
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -729,7 +888,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/cddisease/updatecddisease',
+            $response = $client->put(env('API_URL') . '/diseasecode/updatediseasecode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -743,6 +902,7 @@ class MedicalController extends Controller
                         "languageCode" => App::getLocale(),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
+                        "sessionCompanyCode" => Session::get('companyCode'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
