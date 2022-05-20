@@ -285,7 +285,13 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('payroll.py_year_end_process', ['data' => $arrResult->dataListSet]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_year_end_process', ['data' => $data]);
     }
 
     public function pageSptProcess() 
@@ -319,7 +325,13 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('payroll.py_spt_process', ['data' => $arrResult->dataListSet, "status" => "Final tax calculation not processed yet"]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_spt_process', ['data' => $data, "status" => "Final tax calculation not processed yet"]);
     }
 
     public function pageFinalTaxProcess() 
@@ -353,7 +365,13 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return view('payroll.py_final_tax_process', ['data' => $arrResult->dataListSet]);
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_final_tax_process', ['data' => $data]);
     }
 
     public function pageJournalTemplate()
@@ -376,8 +394,129 @@ class PayrollController extends Controller
         return view('payroll.py_severance_report');
     }
 
-    public function pageJournalReport(){
+    public function pageJournalReport()
+    {
         return view('payroll.py_journal_report');
+    }
+     
+    public function pageSalaryCalculationProcess()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_salary_calculation_process', ['data' => $data]);
+    }
+
+    public function pageTaxCalculationProcess()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_tax_calculation_process', ['data' => $data]);
+    }
+
+    public function pageAbsenteeismOvertimeCalculationProcess()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_absenteeism_overtime_calculation_process', ['data' => $data]);
     }
 
     public function tableAccountPY()
@@ -4903,6 +5042,103 @@ public function dataDetailReportFormatPY(Request $request)
                     ['body' => json_encode($param)]
                 );
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesSalaryCalculationProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/salarycalculation/updatesalarycalculation',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "employeeNoFrom" => $request->employee_no_from,
+                        "employeeNoTo" => $request->employee_no_to,
+                        "periodMonth" => $request->process_period_month_hidden,
+                        "periodYear" => $request->process_period_year_hidden,
+                        "loanPaymentProcess" => isset($request->loan_payment_process) ? (bool) $request->loan_payment_process : false,
+                        "retroactiveProcess" => isset($request->retroactive_process) ? (bool) $request->retroactive_process : false,
+                        "retroactive" => $request->retroactive,
+                        "includeProbationPerod" => isset($request->include_probation_period) ? (bool) $request->include_probation_period : false,
+                        "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive) ? (bool) $request->include_jamsostek_retroactive : false,
+                        "range" => isset($request->range) ? (bool) $request->range : false,
+                        "languageCode" => App::getLocale(),
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesAbsenteeismOvertimeCalculationProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/absenteeismcalculationprocess/inserttmfixedcomponent',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => $request->process_period_month_hidden,
+                        "periodYear" => $request->process_period_year,
+                        "employeeNoFrom" => $request->employee_no_from,
+                        "employeeNoTo" => $request->employee_no_to,
+                        "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+                        "languageCode" => App::getLocale(),
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){

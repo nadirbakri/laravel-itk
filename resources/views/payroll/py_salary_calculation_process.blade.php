@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_final_tax_process.judul') }}</title>
+    <title>{{ __('payroll_salary_calculation_process.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,42 +107,95 @@
 
 <body>
     <div class="div-form">
-        <form id="final_tax_process_form" method="post">
+        <form id="salary_calculation_process_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_final_tax_process.list') }}</span>
+                        <span class="title-text">{{ __('payroll_salary_calculation_process.list') }}</span>
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="year">{{ __('payroll_final_tax_process.label_year') }}</label>
-                            <input type="text" class="form-control" id="year" name="year"
-                                placeholder="{{ __('payroll_final_tax_process.label_year') }}" readonly>
+                            <label for="process_period">{{ __('payroll_salary_calculation_process.label_process_period') }}</label>
+                                <input type="text" class="form-control" id="process_period" name="process_period"
+                                    placeholder="{{ __('payroll_salary_calculation_process.label_process_period') }}" readonly>
+                        </div>
+                        <input type="hidden" class="form-control" id="process_period_month_hidden" name="process_period_month_hidden">
+                        <input type="hidden" class="form-control" id="process_period_year_hidden" name="process_period_year_hidden">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="loan_payment_process" name="loan_payment_process" value="true">
+                            <label for="process_period">{{ __('payroll_salary_calculation_process.label_loan_payment_process') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="range_employee_no" name="range_employee_no" value="true">
-                            <label for="range_employee_no">{{ __('payroll_final_tax_process.label_range_employee_no') }}</label>
+                            <input class="form-check-input" type="checkbox" id="retroactive_process" name="retroactive_process" value="true">
+                            <label for="retroactive_process">{{ __('payroll_salary_calculation_process.label_retroactive_process') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 retroactive" hidden>
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('payroll_final_tax_process.label_employee_no_from') }}</label>
+                                for="retroactive">{{ __('payroll_salary_calculation_process.label_retroactive') }}</label>
+                            <select class="form-control select2" id="retroactive" name="retroactive"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row include_probation_period" hidden>
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="include_probation_period" name="include_probation_period" value="true">
+                            <label for="include_probation_period">{{ __('payroll_salary_calculation_process.label_include_probation_period') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row include_jamsostek_retroactive" hidden>
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="include_jamsostek_retroactive" name="include_jamsostek_retroactive" value="true">
+                            <label for="include_jamsostek_retroactive">{{ __('payroll_salary_calculation_process.label_include_jamsostek_retroactive') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rounded_jamsostek_amount" name="rounded_jamsostek_amount" value="true">
+                            <label for="rounded_jamsostek_amount">{{ __('payroll_salary_calculation_process.label_rounded_jamsostek_amount') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="range" name="range" value="true">
+                            <label for="range">{{ __('payroll_salary_calculation_process.label_range') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="employee_no_from">{{ __('payroll_salary_calculation_process.label_employee_no_from') }}</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_to">{{ __('payroll_final_tax_process.label_employee_no_to') }}</label>
+                                for="employee_no_to">{{ __('payroll_salary_calculation_process.label_employee_no_to') }}</label>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
                         </div>
                     </div>
@@ -150,8 +203,14 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_final_tax_process.btn_process') }}
+                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_salary_calculation_process.btn_process') }}
                         </button>
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-primary" href="{{ url('payroll') }}" target="iframe_dashboard"
+                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                            <i class="fa fa-times-circle"></i> {{ __('payroll_salary_calculation_process.btn_cancel') }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -183,10 +242,21 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_final_tax_process.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_salary_calculation_process.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
                 </div>
             </div>
@@ -209,17 +279,30 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrData = @json($data);
 
         if (arrData) {
-            $('#year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+            var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
+            $('#process_period').val(month_year);
         }
 
-        $('#range_employee_no').on('change', function () {
-            if ($('#range_employee_no').is(':checked')) {
+        $('#retroactive_process').on('change', function () {
+            if ($('#retroactive_process').is(':checked')) {
+                $('.retroactive').prop('hidden', false);
+                $('.include_probation_period').prop('hidden', false);
+                $('.include_jamsostek_retroactive').prop('hidden', false);
+            } else {
+                $('.retroactive').prop('hidden', true);
+                $('.include_probation_period').prop('hidden', true);
+                $('.include_jamsostek_retroactive').prop('hidden', true);
+            }
+        });
+
+        $('#range').on('change', function () {
+            if ($('#range').is(':checked')) {
                 $('#employee_no_from').prop('disabled', false);
                 $('#employee_no_to').prop('disabled', false);
             } else {
@@ -228,8 +311,56 @@
             }
         });
 
+        loadDataRetroactive();
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+
+        function loadDataRetroactive() {
+            var listRetroactive = [
+                { id: '0', text: '0' },
+                { id: '1', text: '1' },
+                { id: '2', text: '2' },
+                { id: '3', text: '3' },
+                { id: '4', text: '4' },
+                { id: '5', text: '5' },
+                { id: '6', text: '6' },
+                { id: '7', text: '7' },
+                { id: '8', text: '8' },
+                { id: '9', text: '9' },
+                { id: '10', text: '10' },
+                { id: '11', text: '11' },
+                { id: '12', text: '12' },
+                { id: '13', text: '13' },
+                { id: '14', text: '14' },
+                { id: '15', text: '15' },
+                { id: '16', text: '16' },
+                { id: '17', text: '17' },
+                { id: '18', text: '18' },
+                { id: '19', text: '19' },
+                { id: '20', text: '20' },
+                { id: '21', text: '21' },
+                { id: '22', text: '22' },
+                { id: '23', text: '23' },
+                { id: '24', text: '24' }
+            ];
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#retroactive').select2({
+                data: listRetroactive,
+                width: '100%',
+                placeholder: 'Choose Retroactive',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
+            });
+        }
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
@@ -301,11 +432,12 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#final_tax_process_form").submit();
+            $('#notification_loading').modal('show');
+            $("#salary_calculation_process_form").submit();
         });
 
-        if ($("#final_tax_process_form").length > 0) {
-            $("#final_tax_process_form").validate({
+        if ($("#salary_calculation_process_form").length > 0) {
+            $("#salary_calculation_process_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -313,29 +445,29 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/final_tax_process/proses') }}",
+                        url: "{{ url('payroll/salary_calculation_process/proses') }}",
                         type: "POST",
-                        data: $('#final_tax_process_form').serialize(),
+                        data: $('#salary_calculation_process_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_calculation_process.btn_process") }}'
                                 );
-                                
+                                $('#notification_loading').modal('hide');
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/final_tax_process') }}";
+                                        "{{ url('payroll/salary_calculation_process') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_calculation_process.btn_process") }}'
                                 );
-
+                                $('#notification_loading').modal('hide');
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
@@ -348,9 +480,10 @@
                             }
                         },
                         error: function (response) {
+                            $('#notification_loading').modal('hide');
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_calculation_process.btn_process") }}'
                             );
 
                             $('#notification').modal('show');
@@ -362,7 +495,6 @@
             })
         }
     })
-
 </script>
 
 </html>

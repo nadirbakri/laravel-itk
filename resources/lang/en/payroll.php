@@ -50,11 +50,10 @@ return [
     'monthly_payroll_closing_process' => 'Monthly Payroll Closing Process',
     'monthly_system_closing' => 'Monthly System Closing',
     'transfer_data_to_bank' => 'Transfer Data To Bank',
-    'overtime_calculation_process' => 'Overtime Calculation Process',
     'journal_process' => 'Journal Process',
-    'process_salary_calculation' => 'Process Salary Calculation',
+    'salary_calculation_process' => 'Salary Calculation Process',
     'tax_calculation_process' => 'Tax Calculation Process',
-    'absenteeism_calculation_process' => 'Absenteeism Calculation Process',
+    'absenteeism_overtime_calculation_process' => 'Absenteeism & Overtime Calculation Process',
 
     'report' => 'Payroll Report',
     'dumtk' => 'DUMTK',

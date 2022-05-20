@@ -212,6 +212,17 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -263,6 +274,8 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+
+            $('#notification_loading').modal('show');
 
             $('#import_data_from_excel_bonus_thr_form').submit();
         });
@@ -319,6 +332,7 @@
                                 $("#btn-process").html(
                                     '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
                                 );
+                                $('#notification_loading').modal('hide');
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response[0]
                                     .message);
@@ -331,6 +345,7 @@
                                 $("#btn-process").html(
                                     '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
                                 );
+                                $('#notification_loading').modal('hide');
                                 $('#notification_error').modal('show');
                                 if (response[0].message == null || response[0].message ==
                                     '') {
@@ -343,6 +358,7 @@
                             }
                         },
                         error: function (response) {
+                            $('#notification_loading').modal('hide');
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
                                 '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
