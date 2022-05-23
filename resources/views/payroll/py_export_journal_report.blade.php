@@ -33,13 +33,10 @@
 	</style>
 </head>
 <body>
-    <table>
-        <tbody>
-            <tr>{{ $value[0]->headerA }}</tr>
-            <tr>{{ $value[0]->headerC }}</tr>            
-        </tbody>
-    </table>
-	<table>
+    @foreach($data as $key => $value)
+    <h1 style="text-align:left">{{ $value->headerA }}</h1>
+    <h2 style="text-align:left">FOR : {{ $value->headerC }}</h2>
+	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
                 <th>Account No</th>
@@ -52,15 +49,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($data as $value[0]->excelColumns)
+            @foreach($value->excelColumns as $dataTables)
             <tr>
-                <td>{{ $data->AccountNo }}</td>
-                <td>{{ $data->NameOfAccount }}</td>
-                <td>{{ $data->CostCenter }}</td>
-                <td>{{ $data->CostCenterName }}</td>
-                <td>{{ $data->Description }}</td>
-                <td>{{ $data->Debit }}</td>
-                <td>{{ $data->Credit }}</td>
+                <td>{{ $dataTables->accountNo }}</td>
+                <td>{{ $dataTables->nameOfAccount }}</td>
+                <td>{{ $dataTables->costCenter }}</td>
+                <td>{{ $dataTables->costCenterName }}</td>
+                <td>{{ $dataTables->description }}</td>
+                <td>{{ $dataTables->debit }}</td>
+                <td>{{ $dataTables->credit }}</td>
             </tr>
             @endforeach
             <tr>
@@ -68,10 +65,36 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{{ $value[0]->totalDebit }}</td>
-                <td>{{ $value[0]->totalKredit }}</td>
+                <td></td>
+                <td>{{ $value->totalDebit }}</td>
+                <td>{{ $value->totalKredit }}</td>
             </tr>
         </tbody>
     </table>
+    @endforeach
+
+    <script type="text/php">
+    if (isset($pdf)) {
+        $pdf->page_script('
+            $text = sprintf(_("Page %d/%d"),  $PAGE_NUM, $PAGE_COUNT);
+            // Uncomment the following line if you use a Laravel-based i18n
+            //$text = __("Page :pageNum/:pageCount", ["pageNum" => $PAGE_NUM, "pageCount" => $PAGE_COUNT]);
+            $font = null;
+            $size = 9;
+            $color = array(0,0,0);
+            $word_space = 0.5;  //  default
+            $char_space = 0.5;  //  default
+            $angle = 0.5;   //  default
+
+            // Compute text width to center correctly
+            $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
+
+            $x = ($pdf->get_width() - $textWidth) / 2;
+            $y = $pdf->get_height() - 35;
+
+            $pdf->text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        '); // End of page_script
+    }
+    </script>
 </body>
 </html>

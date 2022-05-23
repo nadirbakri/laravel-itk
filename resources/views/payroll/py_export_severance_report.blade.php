@@ -21,9 +21,12 @@
 		.table_detail td{
 			border:1px solid #000;
 			text-align:center;
+            padding:4px;
 		}
 		.table_detail th{
 			border:1px solid #000;
+            padding:4px;
+            background-color:#84c2e0;
 		}
 		.table_detail{
 			border-collapse:collapse;
@@ -33,6 +36,72 @@
 	</style>
 </head>
 <body>
-	
+    @foreach($data as $key => $value)
+    <h3>{{ $value[0]->companyName }}</h3>
+    <h4>{{ $value[0]->address }}</h4>
+    <br/>
+    <h3 style="text-align:center">Severance Report</h3>
+    <table style="width=100%" class="table table-bordered table-hover responsive table_detail">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Employee No</th>
+                <th>Employee Name</th>
+                <th>Join Date</th>
+                <th>TerminationDate</th>
+                <th>Amount</th>
+                <th>Gratuty Pay</th>
+                <th>Leave Balance</th>
+                <th>Rest Leave Payment</th>
+                <th>Adjusment</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($value[1]->employeeColumn as $dataTable)
+            <tr>
+                <td>{{$dataTable->columnD}}</td>
+                <td>{{$dataTable->columnE}}</td>
+                <td>{{$dataTable->columnF}}</td>
+                <td>{{$dataTable->columnG}}</td>
+                <td>{{$dataTable->columnH}}</td>
+                <td>{{$dataTable->columnI}}</td>
+                <td>{{$dataTable->columnJ}}</td>
+                <td>{{$dataTable->columnK}}</td>
+                <td>{{$dataTable->columnL}}</td>
+                <td>{{$dataTable->columnM}}</td>
+                <td>{{$dataTable->columnN}}</td>
+            </tr>
+            @endforeach
+            <tr>
+                <td colspan="10"></td>
+                <td>{{$value[1]->columnO}}</td>
+            </tr>
+        </tbody>
+    </table>
+    @endforeach
+    <script type="text/php">
+    if (isset($pdf)) {
+        $pdf->page_script('
+            $text = sprintf(_("Page %d/%d"),  $PAGE_NUM, $PAGE_COUNT);
+            // Uncomment the following line if you use a Laravel-based i18n
+            //$text = __("Page :pageNum/:pageCount", ["pageNum" => $PAGE_NUM, "pageCount" => $PAGE_COUNT]);
+            $font = null;
+            $size = 9;
+            $color = array(0,0,0);
+            $word_space = 0.5;  //  default
+            $char_space = 0.5;  //  default
+            $angle = 0.5;   //  default
+
+            // Compute text width to center correctly
+            $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
+
+            $x = ($pdf->get_width() - $textWidth) / 2;
+            $y = $pdf->get_height() - 35;
+
+            $pdf->text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        '); // End of page_script
+    }
+    </script>
 </body>
 </html>

@@ -211,12 +211,12 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-preview" id="btn-preview" style="width: 100%;">
+                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
                             <i class="fa fa-eye"></i> {{ __('payroll_severance_report.btn_preview') }}
                         </button>
                     </div>
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-send-to" id="btn-send-to" style="width: 100%;">
+                        <button class="btn btn-primary" name="btn-send-to" id="btn-send-to" value="send-to" style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('payroll_severance_report.btn_send_to') }}
                         </button>
                     </div>
@@ -496,11 +496,22 @@
             });
         }
 
+        var clicked = "";
         $('#btn-send-to').click(function (){
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+            clicked = "DOWNLOAD";
+            $('#severance_report_form').submit();
+        });
+
+        $('#btn-preview').click(function (){
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "PREVIEW";
             $('#severance_report_form').submit();
         });
 
@@ -525,6 +536,11 @@
                                 '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
                             );
 
+                            $('#btn-preview').prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-eye"></i> {{ __("payroll_severance_report.btn_preview") }}'
+                            );
+
                             var disposition = xhr.getResponseHeader('content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
                             var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
@@ -532,21 +548,38 @@
                             var blob = new Blob([result], {
                                 type: 'application/pdf'
                             });
-                            var link = document.createElement('a');
-                            const url = URL.createObjectURL(blob);
-                            link.href = window.open(url, "_blank");
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                            
+                            if(clicked == "DOWNLOAD"){
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = filename;
+                                
+                                document.body.appendChild(link);
 
-                            document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
 
-                            link.click();
-                            document.body.removeChild(link);
+                                clicked = "";
+                            }
+                            else{
+                                var link = document.createElement('a');
+                                const url = URL.createObjectURL(blob);
+                                link.href = window.open(url, "_blank");
+
+                                document.body.appendChild(link);
+                                document.body.removeChild(link);
+
+                                clicked = "";
+                            }
                         },
                         error: function(response){
                             $('#btn-send-to').prop("disabled", false);
                             $('#btn-send-to').html(
                                 '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
+                            );
+                            $('#btn-preview').prop("disabled", false);
+                            $('#btn-preview').html(
+                                '<i class="fa fa-eye"></i> {{ __("payroll_severance_report.btn_preview") }}'
                             );
                             $('#notification').modal('show');
                             $('#message-notification').html(response);
