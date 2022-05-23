@@ -267,12 +267,12 @@
 								<span class="child-title-text">{{ __('payroll.transfer_data_to_bank') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						{{-- <div class="col col-3">
 							<a href="{{ url('payroll/overtime_calculation_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.overtime_calculation_process') }}</span>
 							</a>
-						</div>
+						</div> --}}
 						<div class="col col-3">
 							<a href="{{ url('payroll/journal_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
@@ -280,9 +280,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/process_salary_calculation') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/salary_calculation_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.process_salary_calculation') }}</span>
+								<span class="child-title-text">{{ __('payroll.salary_calculation_process') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -292,9 +292,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/absenteeism_calculation_process') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/absenteeism_overtime_calculation_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.absenteeism_calculation_process') }}</span>
+								<span class="child-title-text">{{ __('payroll.absenteeism_overtime_calculation_process') }}</span>
 							</a>
 						</div>
 					</div>

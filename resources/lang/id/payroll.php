@@ -51,11 +51,10 @@ return [
     'monthly_payroll_closing_process' => 'Proses Penutupan Penggajian Bulanan',
     'monthly_system_closing' => 'Penutupan Sistem Bulanan',
     'transfer_data_to_bank' => 'Transfer Data Ke Bank',
-    'overtime_calculation_process' => 'Proses Perhitungan Lembur',
     'journal_process' => 'Proses Jurnal',
-    'process_salary_calculation' => 'Proses Perhitungan Gaji',
+    'salary_calculation_process' => 'Proses Perhitungan Gaji',
     'tax_calculation_process' => 'Proses Perhitungan Pajak',
-    'absenteeism_calculation_process' => 'Proses Perhitungan Absen',
+    'absenteeism_calculation_process' => 'Proses Perhitungan Absen & Lembur',
 
     'report' => 'Laporan Penggajian',
     'dumtk' => 'DUMTK',

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_journal_report.judul') }}</title>
+    <title>{{ __('payroll_tax_calculation_process.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,64 +107,85 @@
 
 <body>
     <div class="div-form">
-        <form id="journal_report_form" method="post">
+        <form id="tax_calculation_process_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_journal_report.list') }}</span>
+                        <span class="title-text">{{ __('payroll_tax_calculation_process.list') }}</span>
                     </a>
                 </div>
-
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-6">
                         <div class="form-group">
-                            <label for="journal_period form-check-label">{{ __('payroll_journal_report.label_journal_period') }}</label>
+                            <label for="process_period">{{ __('payroll_tax_calculation_process.label_process_period') }}</label>
+                                <input type="text" class="form-control" id="process_period" name="process_period"
+                                    placeholder="{{ __('payroll_tax_calculation_process.label_process_period') }}" readonly>
                         </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="journal_period" name="journal_period"
-                                placeholder="{{ __('payroll_journal_report.label_journal_period') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="journal_period_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="journal_period_hidden" name="journal_period_hidden" hidden>
+                        <input type="hidden" class="form-control" id="process_period_month_hidden" name="process_period_month_hidden">
+                        <input type="hidden" class="form-control" id="process_period_year_hidden" name="process_period_year_hidden">
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-3">
-                        <div class="form-group">
-                            <label for="group_authorized_from form-check-label">{{ __('payroll_journal_report.label_group_authorized') }}</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="loan_payment_process" name="loan_payment_process" value="true">
+                            <label for="process_period">{{ __('payroll_tax_calculation_process.label_loan_payment_process') }}</label>
                         </div>
-                    </div>
-                    <div class="col-2">
-                        <select class="form-control select2" id="group_authorized_from" name="group_authorized_from"></select>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="group_authorized_to form-check-label">{{ __('payroll_journal_report.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <select class="form-control select2" id="group_authorized_to" name="group_authorized_to"></select>
                     </div>
                 </div>
-
-                <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_journal_report.btn_preview') }}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="recalculate_thr_tax" name="recalculate_thr_tax" value="true">
+                            <label for="recalculate_thr_tax">{{ __('payroll_tax_calculation_process.label_recalculate_thr_tax') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="recalculate_bonus_tax" name="recalculate_bonus_tax" value="true">
+                            <label for="recalculate_bonus_tax">{{ __('payroll_tax_calculation_process.label_recalculate_bonus_tax') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="range" name="range" value="true">
+                            <label for="range">{{ __('payroll_tax_calculation_process.label_range') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="employee_no_from">{{ __('payroll_tax_calculation_process.label_employee_no_from') }}</label>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="employee_no_to">{{ __('payroll_tax_calculation_process.label_employee_no_to') }}</label>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_tax_calculation_process.btn_process') }}
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-send-to" id="btn-send-to" value="send-to" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_journal_report.btn_send_to') }}
-                        </button>
+                        <a class="btn btn-primary" href="{{ url('payroll') }}" target="iframe_dashboard"
+                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                            <i class="fa fa-times-circle"></i> {{ __('payroll_tax_calculation_process.btn_cancel') }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -196,10 +217,21 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_journal_report.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_tax_calculation_process.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
                 </div>
             </div>
@@ -225,47 +257,27 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        let pickerPaymentDateFrom = $('#journal_period').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "M Y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#journal_period_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
+        var arrData = @json($data);
+
+        if (arrData) {
+            var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
+            $('#process_period').val(month_year);
+        }
+
+        $('#range').on('change', function () {
+            if ($('#range').is(':checked')) {
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+            } else {
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
             }
         });
-               
-        loadDataGroupAuthorized('#group_authorized_from');
-        loadDataGroupAuthorized('#group_authorized_to');
 
-        loadDataFirstLastGroupAuthorized('#group_authorized_from', 'First');
-        loadDataFirstLastGroupAuthorized('#group_authorized_to', 'Last');
+        loadDataEmployeeNo('#employee_no_from');
+        loadDataEmployeeNo('#employee_no_to');
 
-        $('#select').focus(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').click(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
-
-        function loadDataGroupAuthorized(field = ''){
+        function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -277,8 +289,8 @@
                         '<div class="col-6"><b>Full Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
-                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -287,9 +299,9 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            var $authorizedCode = $(field).select2({
+            var $employeeNo = $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Authorized Code',
+                placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -302,7 +314,7 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: '/employee_no/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -316,8 +328,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.groupAuthorizeDesc,
-                                    id: item.groupAuthorizeCode,
+                                    text: item.fullName,
+                                    id: item.employeeNo,
+                                    title: item.fullName,
                                     data: item
                                 }
                             })
@@ -329,124 +342,70 @@
             });
         }
 
-        function loadDataFirstLastGroupAuthorized(field = '', func = ''){
-            $.ajax({
-                type: 'GET',
-                url: '/group_authorize/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode).text(
-                    data.groupAuthorizeDesc);
-                $(field).append($newOption).trigger('change');
-            });
-        }
-
-        var clicked = "";
-        $('#btn-send-to').click(function (){
+        $("#btn-process").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            clicked = "DOWNLOAD";
-            $('#journal_report_form').submit();
+            $("#tax_calculation_process_form").submit();
         });
 
-        $('#btn-preview').click(function (){
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "PREVIEW";
-            $('#journal_report_form').submit();
-        });
-
-        if($('#journal_report_form').length > 0){
-            $('#journal_report_form').validate({
-                submitHandler: function(form){
+        if ($("#tax_calculation_process_form").length > 0) {
+            $("#tax_calculation_process_form").validate({
+                submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
                     $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('payroll/journal_report/print') }}",
+                        url: "{{ url('payroll/tax_calculation_process/proses') }}",
                         type: "POST",
-                        data: $('#journal_report_form').serialize(),
-                        success: function(result, status, xhr){
-                            $('#btn-send-to').prop("disabled", false);
-                            $("#btn-send-to").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
-                            );
-
-                            $('#btn-preview').prop("disabled", false);
-                            $("#btn-preview").html(
-                                '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
-                            );
-
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/pdf'
-                            });
-
-                            // var link = document.createElement('a');
-                            // const url = URL.createObjectURL(blob);
-                            // link.href = window.open(url, "_blank");
-                            // link.href = window.URL.createObjectURL(blob);
-                            // link.download = filename;
-
-                            if(clicked == "DOWNLOAD"){
-                                var link = document.createElement('a');
-                                link.href = window.URL.createObjectURL(blob);
-                                link.download = filename;
-                                
-                                document.body.appendChild(link);
-
-                                link.click();
-                                document.body.removeChild(link);
-
-                                clicked = "";
-                            }
-                            else{
-                                var link = document.createElement('a');
-                                const url = URL.createObjectURL(blob);
-                                link.href = window.open(url, "_blank");
-
-                                document.body.appendChild(link);
-                                document.body.removeChild(link);
-
-                                clicked = "";
+                        data: $('#tax_calculation_process_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_tax_calculation_process.btn_process") }}'
+                                );
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/tax_calculation_process') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_tax_calculation_process.btn_process") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
                             }
                         },
-                        error: function(response){
-                            $('#btn-send-to').prop("disabled", false);
-                            $('#btn-send-to').html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_tax_calculation_process.btn_process") }}'
                             );
-                            $('#btn-preview').prop("disabled", false);
-                            $('#btn-preview').html(
-                                '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
-                            );
+
                             $('#notification').modal('show');
                             $('#message-notification').html(response);
                         }
+
                     });
                 }
             })
         }
-
-    });
-
+    })
 </script>
 
 </html>
