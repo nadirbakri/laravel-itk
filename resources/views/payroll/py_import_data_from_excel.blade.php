@@ -84,7 +84,6 @@
             border: 1px solid #004883;
             padding: 5px;
         }
-
     </style>
 </head>
 
@@ -364,6 +363,17 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -560,6 +570,8 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
 
+            $('#notification_loading').modal('show');
+
             $('#import_data_from_excel_form').submit();
         });
 
@@ -639,6 +651,7 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
+                    $('#notification_loading').modal('hide');
                     $("#btn-process").prop("disabled", false);
                     $("#btn-process").html(
                         '<i class="fa fa-floppy-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
@@ -658,9 +671,6 @@
                     data = new FormData(myform);
 
                     $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
                         url: url,
                         type: "POST",
                         processData: false,
@@ -672,18 +682,20 @@
                                 $("#btn-process").html(
                                     '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
                                 );
+                                $('#notification_loading').modal('hide');
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response[0]
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/import_data_from_excel') }}";
+                                        "{{ url('payroll/import_data_from_excel') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
                                     '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
                                 );
+                                $('#notification_loading').modal('hide');
                                 $('#notification_error').modal('show');
                                 if (response[0].message == null || response[0].message ==
                                     '') {
@@ -696,6 +708,7 @@
                             }
                         },
                         error: function (response) {
+                            $('#notification_loading').modal('hide');
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
                                 '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'

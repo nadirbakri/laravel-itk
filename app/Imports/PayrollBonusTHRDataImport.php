@@ -45,6 +45,7 @@ class PayrollBonusTHRDataImport implements ToCollection, WithValidation, WithSta
             foreach ($rows as $row) {
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
+                    "token" => Session::get('token'),
                     "columnA" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                     "columnB" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
                     "columnC" => (!is_null($row[2]) && $row[2] != "NULL") ? strval($row[2]) : null,

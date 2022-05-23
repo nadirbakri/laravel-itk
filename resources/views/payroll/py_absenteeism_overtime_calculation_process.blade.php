@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_final_tax_process.judul') }}</title>
+    <title>{{ __('payroll_absenteeism_overtime_calculation_process.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,42 +107,59 @@
 
 <body>
     <div class="div-form">
-        <form id="final_tax_process_form" method="post">
+        <form id="absenteeism_overtime_calculation_process_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_final_tax_process.list') }}</span>
+                        <span class="title-text">{{ __('payroll_absenteeism_overtime_calculation_process.list') }}</span>
                     </a>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="year">{{ __('payroll_final_tax_process.label_year') }}</label>
-                            <input type="text" class="form-control" id="year" name="year"
-                                placeholder="{{ __('payroll_final_tax_process.label_year') }}" readonly>
+                            <label for="process_period">{{ __('payroll_absenteeism_overtime_calculation_process.label_process_period') }}</label>
+                                <input type="text" class="form-control" id="process_period_month" name="process_period_month"
+                                    placeholder="{{ __('payroll_absenteeism_overtime_calculation_process.label_process_period_month') }}" readonly>
                         </div>
+                        <input type="hidden" class="form-control" id="process_period_month_hidden" name="process_period_month_hidden">
+                    </div>
+                    <div class="col-0.5">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <p style="font-size: 1.5rem;"><b>/</b></p>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="number" class="form-control" id="process_period_year" name="process_period_year"
+                                placeholder="{{ __('payroll_absenteeism_overtime_calculation_process.label_process_period_year') }}" readonly>
+                        </div>
+                        <input type="text" class="form-control" id="record_function" name="record_function" hidden>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="range_employee_no" name="range_employee_no" value="true">
-                            <label for="range_employee_no">{{ __('payroll_final_tax_process.label_range_employee_no') }}</label>
+                            <label for="range_employee_no">{{ __('payroll_absenteeism_overtime_calculation_process.label_range_employee_no') }}</label>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('payroll_final_tax_process.label_employee_no_from') }}</label>
+                                for="employee_no_from">{{ __('payroll_absenteeism_overtime_calculation_process.label_employee_no_from') }}</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="employee_no_to">{{ __('payroll_final_tax_process.label_employee_no_to') }}</label>
+                                for="employee_no_to">{{ __('payroll_absenteeism_overtime_calculation_process.label_employee_no_to') }}</label>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
                         </div>
                     </div>
@@ -150,8 +167,14 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_final_tax_process.btn_process') }}
+                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_absenteeism_overtime_calculation_process.btn_process') }}
                         </button>
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-primary" href="{{ url('payroll') }}" target="iframe_dashboard"
+                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                            <i class="fa fa-times-circle"></i> {{ __('payroll_absenteeism_overtime_calculation_process.btn_cancel') }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -183,10 +206,21 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_final_tax_process.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_absenteeism_overtime_calculation_process.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
                 </div>
             </div>
@@ -215,7 +249,9 @@
         var arrData = @json($data);
 
         if (arrData) {
-            $('#year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+            $('#process_period_month').val(moment(arrData[0].periodMonth.toString()).format('MMMM'));
+            $('#process_period_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
+            $('#process_period_year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         }
 
         $('#range_employee_no').on('change', function () {
@@ -301,11 +337,12 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#final_tax_process_form").submit();
+            $('#notification_loading').modal('show');
+            $("#absenteeism_overtime_calculation_process_form").submit();
         });
 
-        if ($("#final_tax_process_form").length > 0) {
-            $("#final_tax_process_form").validate({
+        if ($("#absenteeism_overtime_calculation_process_form").length > 0) {
+            $("#absenteeism_overtime_calculation_process_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -313,29 +350,29 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('payroll/final_tax_process/proses') }}",
+                        url: "{{ url('payroll/absenteeism_overtime_calculation_process/proses') }}",
                         type: "POST",
-                        data: $('#final_tax_process_form').serialize(),
+                        data: $('#absenteeism_overtime_calculation_process_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_absenteeism_overtime_calculation_process.btn_process") }}'
                                 );
-                                
+                                $('#notification_loading').modal('hide');
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/final_tax_process') }}";
+                                        "{{ url('payroll/absenteeism_overtime_calculation_process') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_absenteeism_overtime_calculation_process.btn_process") }}'
                                 );
-
+                                $('#notification_loading').modal('hide');
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
@@ -348,9 +385,10 @@
                             }
                         },
                         error: function (response) {
+                            $('#notification_loading').modal('hide');
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_final_tax_process.btn_process") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_absenteeism_overtime_calculation_process.btn_process") }}'
                             );
 
                             $('#notification').modal('show');
@@ -362,7 +400,6 @@
             })
         }
     })
-
 </script>
 
 </html>
