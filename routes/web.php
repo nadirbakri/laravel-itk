@@ -312,6 +312,7 @@ Route::post('personel/competency/reference/proses', 'PersonelController@prosesCo
 Route::post('personel/competency/skill/proses', 'PersonelController@prosesCompetencySkillPersonel');
 Route::post('personel/competency/project_experience/proses', 'PersonelController@prosesCompetencyProjectExperiencePersonel');
 Route::post('personel/competency/training_list/proses', 'PersonelController@prosesCompetencyTrainingListPersonel');
+Route::post('personel/employee_approval/proses', 'PersonelController@prosesEmployeeApprovalPersonel');
 Route::post('personel/bank/proses', 'PersonelController@prosesBankPersonel');
 Route::post('personel/company_bank/proses', 'PersonelController@prosesCompanyBankPersonel');
 Route::post('personel/group/proses', 'PersonelController@prosesGroupPersonel');

@@ -14,5 +14,6 @@ return [
 
     'judul' => 'Halaman Persetujuan Pegawai',
     'list' => 'Daftar Menu Personel',
+    'alert_success' => 'Sukses!'
 
 ];
