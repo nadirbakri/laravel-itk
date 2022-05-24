@@ -5269,6 +5269,44 @@ class DataController extends Controller
         return response()->json($bpjs);
 	}
 
+	public function dataBPJSFunctionAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
+	}
+
 	public function dataBPJSPersonalDataAPI(Request $request)
     {
 

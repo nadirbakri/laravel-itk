@@ -523,6 +523,46 @@ class PayrollController extends Controller
         return view ('payroll.py_absenteeism_overtime_calculation_process', ['data' => $data]);
     }
 
+    public function pageDUMTK() 
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_dumtk', ['data' => $data]);
+    }
+
     public function tableAccountPY()
     {
         try {
@@ -4568,7 +4608,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
-                        "groupNPWP" => isset($request->group_npwp) ? (bool) $request->group_npwp : false,
+                        "groupNPWP" => filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN),
                         "groupNPWPCode" => $request->npwp,
                         "languageCode" => App::getLocale(),
                         "changedNo" => 0,
@@ -5126,8 +5166,8 @@ public function dataDetailReportFormatPY(Request $request)
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
-                        "periodMonth" => $request->process_period_month_hidden,
-                        "periodYear" => $request->process_period_year,
+                        "periodMonth" => (int) $request->process_period_month_hidden,
+                        "periodYear" => (int) $request->process_period_year,
                         "employeeNoFrom" => $request->employee_no_from,
                         "employeeNoTo" => $request->employee_no_to,
                         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
@@ -5480,5 +5520,90 @@ public function dataDetailReportFormatPY(Request $request)
     public function printJournalReportPayrollExcel(Request $request){
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
         return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
+    }
+    
+    public function printDUMTKPayroll(Request $request){
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "asOfPeriod" => $request->as_of_period,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $paramGetCompany = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+    
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedCodeFrom'] = $request->group_authorized_code_from;
+                $param['groupAuthorizedCodeTo'] = $request->group_authorized_code_to;
+            }
+
+            if(!empty($request->bpjs_group_from) || !empty($request->bpjs_group_to)){
+                $param['bpjsGroupFrom'] = $request->bpjs_group_from;
+                $param['bpjsGroupTo'] = $request->bpjs_group_to;
+            }
+
+            // var_dump(json_encode($param));
+            // var_dump(json_encode($paramGetCompany));
+
+            $response = $client->post(env('API_URL').'/dumtkreport/getdumtkreport', [
+                'body' => json_encode($param)
+            ]);
+
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
+                'body' => json_encode($paramGetCompany)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+
+        if ($arrResult->dataListSet[0] !== null || $arrCompany->dataListSet[0] !== null)
+        {
+            $arraySend[] = $arrCompany->dataListSet[0];
+            $arraySend[] = $arrResult->dataListSet[0];
+        } else {
+            $arraySend[] = [];
+        }
+
+        $paramSend[] = (object) $param;
+
+        // var_dump($arraySend);
+        // var_dump($paramSend);
+
+        if($arrResult->dataListSet[0] == null){
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('DUMTK Report.pdf');
+        }else{
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => [$arraySend], 'data2' => [$paramSend]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('DUMTK Report.pdf');
+        }
     }
 }

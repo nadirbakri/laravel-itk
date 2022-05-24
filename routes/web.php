@@ -520,7 +520,7 @@ Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCa
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
 Route::get('payroll/absenteeism_overtime_calculation_process', 'PayrollController@pageAbsenteeismOvertimeCalculationProcess');
 /* Payroll Report Menu */
-Route::get('payroll/dumtk', 'PayrollController@pageDumtk');
+Route::get('payroll/dumtk', 'PayrollController@pageDUMTK');
 Route::get('payroll/monthly_jamsostek_report', 'PayrollController@pageMonthlyJamsostekReport');
 Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSippOnline');
 Route::get('payroll/loan_report', 'PayrollController@pageLoanReport');
@@ -594,6 +594,7 @@ Route::post('payroll/slip_format/custom/proses', 'PayrollController@prosesSlipFo
 Route::post('payroll/slip_format/allowance/proses', 'PayrollController@prosesSlipFormatAllowancePY');
 Route::post('payroll/monthly_closing_process/proses', 'PayrollController@prosesMonthlyClosingProcessPY');
 Route::post('payroll/salary_calculation_process/proses', 'PayrollController@prosesSalaryCalculationProcessPY');
+Route::post('payroll/tax_calculation_process/proses', 'PayrollController@prosesTaxCalculationProcessPY');
 Route::post('payroll/absenteeism_overtime_calculation_process/proses', 'PayrollController@prosesAbsenteeismOvertimeCalculationProcessPY');
 
 /*Route untuk remove Payroll*/
@@ -642,6 +643,7 @@ Route::get('payroll/report_format_number/check', 'PayrollController@checkNumberR
 Route::get('payroll/payroll_calculation_number/check', 'PayrollController@checkNumberPayrollCalculationPY');
 
 /* Route untuk print payroll */
+Route::post('payroll/dumtk/print', 'PayrollController@printDUMTKPayroll');
 Route::post('payroll/severance_report/print', 'PayrollController@printSeveranceReportPayroll');
 Route::post('payroll/severance_report/print/excel', 'PayrollController@printSeveranceReportPayrollExcel');
 Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
@@ -849,6 +851,7 @@ Route::get('mutation/type/api', 'DataController@dataMutationTypeAPI');
 Route::get('npwp/api', 'DataController@dataNPWPAPI');
 Route::get('npwp/personal_data/api', 'DataController@dataNPWPPersonalDataAPI');
 Route::get('bpjs/api', 'DataController@dataBPJSAPI');
+Route::get('bpjs/func/api', 'DataController@dataBPJSFunctionAPI');
 Route::get('bpjs/personal_data/api', 'DataController@dataBPJSPersonalDataAPI');
 Route::get('cost_center/api', 'DataController@dataCostCenterAPI');
 Route::get('cost_center/func/api', 'DataController@dataCostCenterFunctionAPI');
