@@ -39,14 +39,14 @@
 				<td>{{ $value->fullName }}</td>
                 <td>{{ $value->gender }}</td>
 				@if ($report_type=='terminate')
-					<td>{{ $value->joindate }}</td>
-					<td>{{ $value->terminationDate }}</td>
+					<td>{{ date('Y-m-d H:i:s.v', strtotime($value->joindate)) }}</td>
+					<td>{{ date('Y-m-d H:i:s.v', strtotime($value->terminationDate)) }}</td>
 				@elseif ($report_type=='probation') 
-					<td>{{ $value->joindate }}</td>
-					<td>{{ $value->probationEndDate }}</td>
+					<td>{{ date('Y-m-d H:i:s.v', strtotime($value->joindate)) }}</td>
+					<td>{{ date('Y-m-d H:i:s.v', strtotime($value->probationEndDate)) }}</td>
 				@else
-					<td>{{ $value->contractStartDate }}</td>
-					<td>{{ $value->contractEndDate }}</td>
+					<td>{{ date('Y-m-d H:i:s.v', strtotime($value->contractStartDate)) }}</td>
+					<td>{{ date('Y-m-d H:i:s.v', strtotime($value->contractEndDate)) }}</td>
 				@endif
                 <td>{{ $value->ranking }}</td>
                 <td>{{ $value->position }}</td>

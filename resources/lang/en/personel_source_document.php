@@ -18,6 +18,8 @@ return [
     'label_record_status' => 'Record Status',
     'label_letter_type' => 'Letter Type',
     'label_letter_file' => 'Letter File',
+    'label_language_id' => 'Language',
+    'label_select_language_id' => 'Choose Language',
     'label_detail_field' => 'Detail Field',
     'label_seq_no' => 'Seq No',
     'label_position_code' => 'Position Code',

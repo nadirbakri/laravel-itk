@@ -1141,6 +1141,57 @@
             });
         }
 
+        $('#job_history_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#job_history_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#work_experience_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#work_experience_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#free_format_field_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#free_format_field_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         $('#photo_profile').change(function (e) {
             var fileExtension = ['jpeg', 'jpg', 'png'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {

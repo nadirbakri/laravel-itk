@@ -18,6 +18,8 @@ return [
     'label_record_status' => 'Status Data',
     'label_letter_type' => 'Tipe Surat',
     'label_letter_file' => 'File Surat',
+    'label_language_id' => 'Bahasa',
+    'label_select_language_id' => 'Pilih Bahasa',
     'label_detail_field' => 'Detail Field',
     'label_seq_no' => 'No Urut',
     'label_position_code' => 'Kode Jabatan',

@@ -348,6 +348,7 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
+                            console.log(response);
                             if (response[0].status == "true") {
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(

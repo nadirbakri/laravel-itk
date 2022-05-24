@@ -100,7 +100,7 @@ class EmployeeListExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump($param['levelMaster']);
+            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/employeelistreport/getemployeelist',
                 ['body' => json_encode($param)]

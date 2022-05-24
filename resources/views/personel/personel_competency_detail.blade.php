@@ -650,7 +650,7 @@
                         </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" id="btn-save-organization" class="btn btn-primary w-25"><i
+                    <button type="button" id="btn-save-organization" class="btn btn-primary w-25"><i
                             class="fa fa-floppy-o"></i>
                         {{ __('personel_competency.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
@@ -1121,7 +1121,7 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1134,7 +1134,31 @@
     });
 
     function initDatePicker() {
-        $('.input-group input').flatpickr({
+        // $('.input-group input').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: "today",
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings(".input-group-prepend").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     },
+        //     onChange: function(selectedDates, dateStr, instance) {
+        //         // console.log(dateStr);
+        //         if (!/Invalid|NaN/.test(new Date(value))) {
+        //             return new Date(value) > new Date($(params).val());
+        //         }
+
+        //         // return isNaN(value) && isNaN($(params).val()) 
+        //         //     || (Number(value) > Number($(params).val()));
+        //     },
+        // });
+
+        $('#organization_start_date').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -1147,6 +1171,42 @@
                     flatPickrInstance.toggle();
                 });
             }
+        });
+
+        $('#organization_end_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            },
+            onChange: function(selectedDates, dateStr, instance) {
+                // console.log(new Date(dateStr) > new Date($('#organization_start_date').val()));
+                // if (!/Invalid|NaN/.test(new Date(dateStr))) {
+                //     return new Date(dateStr) > new Date($('#organization_start_date').val());
+                // }
+
+                // return isNaN(dateStr) && isNaN($('#organization_start_date').val()) 
+                //     || (Number(dateStr) > Number($('#organization_start_date').val()));
+
+                jQuery.validator.addMethod("greaterThan", 
+                function(value, element, params) {
+                    if (!/Invalid|NaN/.test(new Date(dateStr))) {
+                        return new Date(dateStr) > new Date($('#organization_start_date').val());
+                    }
+
+                    return isNaN(dateStr) && isNaN($('#organization_start_date').val()) 
+                        || (Number(dateStr) > Number($('#organization_start_date').val()));
+                },'Must be greater than {0}.');
+
+                $("#myform").validate().element("#organization_end_date");
+            },
         });
 
         $('.input-group #graduate_year').flatpickr({
@@ -1760,6 +1820,125 @@
             });
         }
 
+        $('#formal_education_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#formal_education_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#language_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#language_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#organization_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#organization_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#reference_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#reference_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#skill_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#skill_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#project_experience_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#project_experience_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#training_list_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#training_list_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         $('#photo_profile').change(function (e) {
             var fileExtension = ['jpeg', 'jpg', 'png'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
@@ -2184,7 +2363,7 @@
 
         $("#btn-remove-training-list").on('click', function () {
             var data = table.rows('.selected').data().toArray();
-            console.log(data);
+            
             if (data.length > 0) {
                 $.ajax({
                     url: "{{ url('personel/competency/training_list/remove') }}",
@@ -2634,6 +2813,17 @@
             $("#training_list_form").submit();
         });
 
+        jQuery.validator.addMethod("greaterThan", 
+            function(value, element, params) {
+
+                if (!/Invalid|NaN/.test(new Date(value))) {
+                    return new Date(value) > new Date($(params).val());
+                }
+
+                return isNaN(value) && isNaN($(params).val()) 
+                    || (Number(value) > Number($(params).val())); 
+            },'Must be greater than {0}.');
+
         if ($("#employee_profile_form").length > 0) {
             $("#employee_profile_form").validate({
                 rules: {
@@ -2960,6 +3150,7 @@
                         required: true,
                     },
                     organization_end_date: {
+                        greaterThan: "#organization_start_date",
                         required: true,
                     },
                 },
@@ -2978,6 +3169,7 @@
                     },
                     organization_end_date: {
                         required: "{{ __('personel_competency.end_date_required') }}",
+                        greaterThan: "A",
                     },
                 },
                 highlight: function (element) {

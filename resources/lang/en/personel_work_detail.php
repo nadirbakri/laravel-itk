@@ -26,7 +26,7 @@ return [
     'free_format_field_tab' => 'Free Format Field',
     'title_modal_job_history' => 'Add Job History Data',
     'title_modal_work_experience' => 'Add Work Experience Data',
-    'title_modal_free_format_field' => 'Add Fre Format Field Data',
+    'title_modal_free_format_field' => 'Add Free Format Field Data',
     'label_seq_no' => 'Seq No',
     'label_company' => 'Company',
     'label_start_date' => 'Start Date',

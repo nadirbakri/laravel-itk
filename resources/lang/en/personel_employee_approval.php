@@ -14,5 +14,6 @@ return [
 
     'judul' => 'Employee Approval Page',
     'list' => 'Personnel Menu List',
+    'alert_success' => 'Success!'
 
 ];
