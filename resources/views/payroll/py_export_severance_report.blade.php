@@ -41,6 +41,8 @@
     <h4>{{ $value[0]->address }}</h4>
     <br/>
     <h3 style="text-align:center">Severance Report</h3>
+    <p style="text-align:center">Payment Period : {{ $value[1]->paymentDateFrom }} to {{ $value[1]->paymentDateTo }}</p>
+    <br><br>
     <table style="width=100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>

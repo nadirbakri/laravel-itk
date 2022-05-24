@@ -144,6 +144,9 @@
 			</tr>
 		</thead>
 	</table>
+	@if($key != array_key_last($data))
+		<div class="page_break"></div>
+	@endif
 	@endforeach
 	<script type="text/php">
     if (isset($pdf)) {

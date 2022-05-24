@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Imports\PayrollDataImport;
 use App\Imports\PayrollBonusTHRDataImport;
 use App\Exports\TemplatePayrollDataTemplateSheet;
+use App\Exports\SeveranceReportExcel;
+use App\Exports\JournalReportExcel;
 use App\Http\Controllers\Redirect;
 
 use Illuminate\Http\Request;
@@ -5369,7 +5371,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['groupAuthorizedCodeTo'] = intval($request->group_authorized_to);
             }
 
-            // var_dump(json_encode($param));
+            //  var_dump(json_encode($param));
 
             if($request->report_type == "report"){
                 $response = $client->post(env('API_URL').'/PrSeveranceSlipReport/getSeveranceReport',[
@@ -5398,7 +5400,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
-        //var_dump($arrResult->dataListSet[0]);
+        // var_dump($arrResult->dataListSet);
         
         $arraySend[] = $arrCompany->dataListSet[0];
         $arraySend[] = $arrResult->dataListSet[0];
@@ -5418,10 +5420,14 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => [$arraySend]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
                 return $pdf->stream('Severance Report.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
                 return $pdf->stream('Severance Slip.pdf');
             }
         }
+    }
+
+    public function printSeveranceReportPayrollExcel(Request $request){
+        return Excel::download(new SeveranceReportExcel($request->payment_date_from, $request->payment_date_to, $request->employee_no_from, $request->employee_no_to, intval($request->group_authorized_from), intval($request->group_authorized_to)), 'Severance Report.xlsx');
     }
 
     public function printJournalReportPayroll(Request $request){
@@ -5469,5 +5475,10 @@ public function dataDetailReportFormatPY(Request $request)
             $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Journal Report.pdf');
         }
+    }
+
+    public function printJournalReportPayrollExcel(Request $request){
+        // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
+        return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
     }
 }

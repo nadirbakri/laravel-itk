@@ -161,10 +161,16 @@
                             <i class="fa fa-eye"></i> {{ __('payroll_journal_report.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3">
-                        <button class="btn btn-primary" name="btn-send-to" id="btn-send-to" value="send-to" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_journal_report.btn_send_to') }}
-                        </button>
+                    <div class="col-3 desc" id="send-to-report">
+                        <div class="dropdown">
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('payroll_severance_report.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -344,12 +350,21 @@
         }
 
         var clicked = "";
-        $('#btn-send-to').click(function (){
-            $(this).prop("disabled", true);
-            $(this).html(
+        $('#send-to-pdf').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            clicked = "DOWNLOAD";
+            clicked = "DOWNLOAD_PDF";
+            $('#journal_report_form').submit();
+        });
+
+        $('#send-to-xls').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_XLS";
             $('#journal_report_form').submit();
         });
 
@@ -370,77 +385,118 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('payroll/journal_report/print') }}",
-                        type: "POST",
-                        data: $('#journal_report_form').serialize(),
-                        success: function(result, status, xhr){
-                            $('#btn-send-to').prop("disabled", false);
-                            $("#btn-send-to").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
-                            );
-
-                            $('#btn-preview').prop("disabled", false);
-                            $("#btn-preview").html(
-                                '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
-                            );
-
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/pdf'
-                            });
-
-                            // var link = document.createElement('a');
-                            // const url = URL.createObjectURL(blob);
-                            // link.href = window.open(url, "_blank");
-                            // link.href = window.URL.createObjectURL(blob);
-                            // link.download = filename;
-
-                            if(clicked == "DOWNLOAD"){
-                                var link = document.createElement('a');
-                                link.href = window.URL.createObjectURL(blob);
-                                link.download = filename;
+                    if(clicked=="DOWNLOAD_XLS"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/journal_report/print/excel') }}",
+                            type: "POST",
+                            data: $('#journal_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                                );
                                 
-                                document.body.appendChild(link);
+                                if(clicked == "DOWNLOAD_XLS"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
-                                link.click();
-                                document.body.removeChild(link);
+                                    var blob = new Blob([result], {
+                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                    });
 
-                                clicked = "";
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                                );
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
                             }
-                            else{
-                                var link = document.createElement('a');
-                                const url = URL.createObjectURL(blob);
-                                link.href = window.open(url, "_blank");
+                        });
+                    }
+                    else{
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/journal_report/print') }}",
+                            type: "POST",
+                            data: $('#journal_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                                );
 
-                                document.body.appendChild(link);
-                                document.body.removeChild(link);
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
+                                );
 
-                                clicked = "";
+                                var disposition = xhr.getResponseHeader(
+                                    'content-disposition');
+                                var matches = /"([^"]*)"/.exec(disposition);
+                                var filename = (matches != null && matches[1] ? matches[1] :
+                                    'audit_trail.xlsx');
+
+                                // The actual download
+                                var blob = new Blob([result], {
+                                    type: 'application/pdf'
+                                });
+
+                                if(clicked == "DOWNLOAD_PDF"){
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                                else{
+                                    var link = document.createElement('a');
+                                    const url = URL.createObjectURL(blob);
+                                    link.href = window.open(url, "_blank");
+
+                                    document.body.appendChild(link);
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
+                                );
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
                             }
-                        },
-                        error: function(response){
-                            $('#btn-send-to').prop("disabled", false);
-                            $('#btn-send-to').html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
-                            );
-                            $('#btn-preview').prop("disabled", false);
-                            $('#btn-preview').html(
-                                '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
-                            );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-                    });
+                        });
+                    }
                 }
             })
         }
