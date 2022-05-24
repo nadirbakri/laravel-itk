@@ -644,9 +644,8 @@
                                 
                                 $('#notification_success_field_list').modal('show');
                                 $('#field_list_table').DataTable().destroy();
-                                load_table_field_list(
-                                    "{{ isset($data[0]->freeFormatCode) ? $data[0]->freeFormatCode : '' }}"
-                                );
+                                var freeFormatCode = $('#free_format_code').val();
+                                load_table_field_list(freeFormatCode);
                                 $('#modal_add_field_list').modal('hide');
                                 $('#message-notification-success-field-list').html(
                                     response.message);

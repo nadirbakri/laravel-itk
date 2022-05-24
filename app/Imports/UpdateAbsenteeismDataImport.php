@@ -78,6 +78,8 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithS
                 ];
             }
 
+            // var_dump(json_encode($param));
+
             $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]
             );

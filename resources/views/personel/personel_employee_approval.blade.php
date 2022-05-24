@@ -272,6 +272,23 @@
         });
     }
 
+    $('#employee_approval_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        var $row = $(this).closest('tr');
+
+        if(this.checked){
+            $row.addClass('selected');
+        } else {
+            $row.removeClass('selected');
+        }
+
+        // Prevent click event from propagating to parent
+        e.stopPropagation();
+    });
+
+    $('#employee_approval_table').on('click', 'tr td:first-child', function(e){
+        $(this).parent().find('input[type="checkbox"]').trigger('click');
+    });
+
     $('#notification_success').on('hide.bs.modal', function () {
         window.location = "{{ url('personel/employee_approval') }}";
     })

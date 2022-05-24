@@ -102,7 +102,7 @@
                         <div class="form-group">
                             <label for="period">{{ __('tm_input_balance_leave.period') }}</label>
                             <input type="text" class="form-control" id="period" name="period"
-                                placeholder={{ __('tm_input_balance_leave.period') }} disabled>
+                                placeholder="{{ __('tm_input_balance_leave.period') }}" disabled>
                         </div>
                     </div>
                 </div>

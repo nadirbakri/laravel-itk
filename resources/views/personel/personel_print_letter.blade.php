@@ -252,6 +252,23 @@
             });
         }
 
+        $('#list_letter_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#list_letter_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         $("#btn-list-data").on('click', function () {
             $('#list_letter_table').DataTable().destroy();
             load_table_list_detail();

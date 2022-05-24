@@ -8144,7 +8144,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/freeformatfield/insertgmfreeformatdetail',
+                $response = $client->post(env('API_URL') . '/freeformatfield/insertgmfreeformatfield',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
