@@ -644,6 +644,7 @@ Route::get('payroll/payroll_calculation_number/check', 'PayrollController@checkN
 
 /* Route untuk print payroll */
 Route::post('payroll/dumtk/print', 'PayrollController@printDUMTKPayroll');
+Route::post('payroll/dumtk/print/excel', 'PayrollController@printDUMTKPayrollExcel');
 Route::post('payroll/severance_report/print', 'PayrollController@printSeveranceReportPayroll');
 Route::post('payroll/severance_report/print/excel', 'PayrollController@printSeveranceReportPayrollExcel');
 Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
