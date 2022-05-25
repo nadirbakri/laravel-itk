@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-check">
-                            <input type="radio" id="all_npwp" name="group_npwp" value=true checked>
+                            <input type="radio" id="all_npwp" name="group_npwp" value=false checked>
                             <label for="all_npwp">{{ __('payroll_spt_process.label_all_npwp') }}</label>
                         </div>
                         <div class="form-check">

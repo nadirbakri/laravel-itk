@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'judul' => 'DUMTK Report Form',
+    'list' => 'DUMTK Report Form',
+    'label_as_of_period' => 'As Of Period',
+    'label_employee_no' => 'Employee No',
+    'label_to' => 'To',
+    'label_group_authorized_code' => 'Group Authorized Code',
+    'label_bpjs_group' => 'BPJS Group',
+    'header_no' => 'No',
+    'header_bpjs_no' => 'BPJS No',
+    'header_bpjs_joining_date' => 'BPJS Joining Date',
+    'header_full_name' => 'Full Name',
+    'header_birth_date' => 'Birth Date',
+    'header_employee_no' => 'Employee No',
+    'header_gender' => 'Gender',
+    'header_january' => 'January',
+    'header_february' => 'February',
+    'header_march' => 'March',
+    'header_april' => 'April',
+    'header_may' => 'May',
+    'header_june' => 'June',
+    'header_july' => 'July',
+    'header_august' => 'August',
+    'header_september' => 'September',
+    'header_october' => 'October',
+    'header_november' => 'November',
+    'header_december' => 'December',
+    'grand_total' => 'Grand Total',
+    'report_parameter' => 'Report Parameter',
+    'total_printed' => 'Total Printed',
+    'date_now' => 'Date Now',
+    'hour_now' => 'Hour Now',
+    'btn_preview' => 'Preview',
+    'btn_send_to' => 'Send To',
+    'alert_success' => 'Success !'
+]
+
+?>

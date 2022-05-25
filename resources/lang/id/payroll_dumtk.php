@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'judul' => 'Form Laporan DUMTK',
+    'list' => 'Form Laporan DUMTK',
+    'label_as_of_period' => 'Per Periode',
+    'label_employee_no' => 'NIK',
+    'label_to' => 'To',
+    'label_group_authorized_code' => 'Group Otorisasi',
+    'label_bpjs_group' => 'Group BPJS',
+    'header_no' => 'No',
+    'header_bpjs_no' => 'BPJS No',
+    'header_bpjs_joining_date' => 'Tanggal Ikut BPJS',
+    'header_full_name' => 'Nama Lengkap',
+    'header_birth_date' => 'Tanggal Lahir',
+    'header_employee_no' => 'NIK',
+    'header_gender' => 'Jenis Kelamin',
+    'header_january' => 'Januari',
+    'header_february' => 'Februari',
+    'header_march' => 'Maret',
+    'header_april' => 'April',
+    'header_may' => 'Mei',
+    'header_june' => 'Juni',
+    'header_july' => 'Juli',
+    'header_august' => 'Agustus',
+    'header_september' => 'September',
+    'header_october' => 'Oktober',
+    'header_november' => 'November',
+    'header_december' => 'Desember',
+    'grand_total' => 'Total Keseluruhan',
+    'report_parameter' => 'Parameter Laporan',
+    'total_printed' => 'Total Dicetak',
+    'date_now' => 'Tanggal',
+    'hour_now' => 'Jam',
+    'btn_preview' => 'Pratinjau',
+    'btn_send_to' => 'Kirim Ke',
+    'alert_success' => 'Sukses !'
+]
+
+?>
