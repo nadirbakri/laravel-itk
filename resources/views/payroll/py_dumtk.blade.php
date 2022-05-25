@@ -195,10 +195,21 @@
                             <i class="fa fa-eye"></i> {{ __('payroll_dumtk.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-send-to" id="btn-send-to" style="width: 100%;">
+                    <div class="col-3 desc" id="send-to-slip" style="display: none;">
+                        <button class="btn btn-primary" id="btn-send" style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('payroll_dumtk.btn_send_to') }}
                         </button>
+                    </div>
+                    <div class="col-3">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" name="btn-send-to" id="btn-send-to" style="width: 100%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('payroll_dumtk.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -549,12 +560,30 @@
             });
         }
 
-        $('#btn-send-to').click(function (){
-            $(this).prop("disabled", true);
-            $(this).html(
+        $('#btn-send').click(function (){
+            $("#btn-send").prop("disabled", true);
+            $("#btn-send").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            clicked = "DOWNLOAD";
+            clicked = "DOWNLOAD_PDF";
+            $('#dumtk_form').submit();
+        });
+
+        $('#send-to-pdf').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+            $('#dumtk_form').submit();
+        });
+
+        $('#send-to-xls').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_XLS";
             $('#dumtk_form').submit();
         });
 
@@ -575,77 +604,133 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('payroll/dumtk/print') }}",
-                        type: "POST",
-                        data: $('#dumtk_form').serialize(),
-                        success: function(result, status, xhr){
-                            $('#btn-send-to').prop("disabled", false);
-                            $("#btn-send-to").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
-                            );
-
-                            $('#btn-preview').prop("disabled", false);
-                            $("#btn-preview").html(
-                                '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
-                            );
-
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/pdf'
-                            });
-
-                            // var link = document.createElement('a');
-                            // const url = URL.createObjectURL(blob);
-                            // link.href = window.open(url, "_blank");
-                            // link.href = window.URL.createObjectURL(blob);
-                            // link.download = filename;
-
-                            if(clicked == "DOWNLOAD"){
-                                var link = document.createElement('a');
-                                link.href = window.URL.createObjectURL(blob);
-                                link.download = filename;
+                    if(clicked=="DOWNLOAD_XLS"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/dumtk/print/excel') }}",
+                            type: "POST",
+                            data: $('#dumtk_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send').prop("disabled", false);
+                                $("#btn-send").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
+                                );
                                 
-                                document.body.appendChild(link);
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_XLS"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
-                                link.click();
-                                document.body.removeChild(link);
+                                    var blob = new Blob([result], {
+                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                    });
 
-                                clicked = "";
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                );
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
                             }
-                            else{
-                                var link = document.createElement('a');
-                                const url = URL.createObjectURL(blob);
-                                link.href = window.open(url, "_blank");
+                        });
+                    }
+                    else
+                    {
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/dumtk/print') }}",
+                            type: "POST",
+                            data: $('#dumtk_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                );
 
-                                document.body.appendChild(link);
-                                document.body.removeChild(link);
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_dumtk.btn_preview") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_PDF"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
-                                clicked = "";
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                                else if(clicked == "PREVIEW"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    const url = URL.createObjectURL(blob);
+                                    link.href = window.open(url, "_blank");
+
+                                    document.body.appendChild(link);
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send').prop("disabled", false);
+                                $('#btn-send').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                );
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_dumtk.btn_preview") }}'
+                                );
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
                             }
-                        },
-                        error: function(response){
-                            $('#btn-send-to').prop("disabled", false);
-                            $('#btn-send-to').html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
-                            );
-                            $('#btn-preview').prop("disabled", false);
-                            $('#btn-preview').html(
-                                '<i class="fa fa-eye"></i> {{ __("payroll_journal_report.btn_preview") }}'
-                            );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
-                        }
-                    });
+                        });
+                    }
                 }
             })
         }
