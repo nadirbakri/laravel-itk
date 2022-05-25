@@ -398,6 +398,10 @@ class PayrollController extends Controller
         return view('payroll.py_severance_report');
     }
 
+    public function pagePaymentSlip(){
+        return view('payroll.py_payment_slip');
+    }
+
     public function pageJournalReport()
     {
         return view('payroll.py_journal_report');
@@ -5520,6 +5524,66 @@ public function dataDetailReportFormatPY(Request $request)
     public function printJournalReportPayrollExcel(Request $request){
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
         return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
+    }
+
+    public function printPaymentSlipPayroll(Request $request){
+        try{
+            // var_dump($request->all());
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->slip_type)){
+                $param['slipType'] = $request->slip_type;
+            }
+
+            if(!empty($request->period)){
+                $param['periode'] = $request->period;
+            }
+
+            if(!empty($request->format)){
+                $param['format'] = $request->format_type;
+            }
+
+            if(!empty($request->print_date)){
+                $param['printDate'] = $request->printDate;
+            }
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->sort_by) || !empty($request->level)){
+                $param['level'] = $request->level;
+                $param['sortByEmployee'] = $request->sort_by == "by_employee_no" ? true : false;
+                $param['sortByLevel'] = $request->sort_by == "by_level" ? true : false;
+            }
+
+            if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+                $param['groupAuthorizedFrom'] = $request->group_authorized_from;
+                $param['groupAuthorizedTo'] = $request->group_authorized_to;
+            }
+
+            var_dump($request->all());
+        }catch(Exception $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
     }
     
     public function printDUMTKPayroll(Request $request){

@@ -648,6 +648,7 @@ Route::post('payroll/severance_report/print', 'PayrollController@printSeveranceR
 Route::post('payroll/severance_report/print/excel', 'PayrollController@printSeveranceReportPayrollExcel');
 Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
 Route::post('payroll/journal_report/print/excel', 'PayrollController@printJournalReportPayrollExcel');
+Route::post('payroll/payment_slip/print', 'PayrollController@printPaymentSlipPayroll');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
