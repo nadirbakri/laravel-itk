@@ -5212,6 +5212,21 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            var_dump(json_encode(
+                [
+                    'recordStatus' => $request->func,
+                    'companyCode' => Session::get('companyCode'),
+                    'freeFormatCode' => $request->freeFormatCode,
+                    'freeFormatFieldType' => $request->freeFormatFieldType,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => App::getLocale()
+                ]
+                ));
+
             $response = $client->put(env('API_URL') . '/freeformatfield/updategmfreeformatfield',
                 ['body' => json_encode(
                     [

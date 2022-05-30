@@ -657,18 +657,28 @@ Route::get('medical/claim_code', 'MedicalController@pageClaimCode');
 Route::get('medical/disease_code', 'MedicalController@pageDiseaseCode');
 Route::get('medical/insurance_code', 'MedicalController@pageInsuranceCode');
 Route::get('medical/insurance_class', 'MedicalController@pageInsuranceClass');
+Route::get('medical/input_limit', 'MedicalController@pageInputLimit');
+Route::get('medical/input_personnel_limit', 'MedicalController@pageInputPersonnelLimit');
+Route::get('medical/input_personnel_limit_all_employee', 'MedicalController@pageInputPersonnelLimitAllEmployee');
+Route::get('medical/treatment_eligibility', 'MedicalController@pageTreatmentEligibility');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
 Route::get('medical/disease_code/table', 'MedicalController@tableDiseaseCodeMD');
 Route::get('medical/insurance_code/table', 'MedicalController@tableInsuranceCodeMD');
 Route::get('medical/insurance_class/table', 'MedicalController@tableInsuranceClassMD');
+Route::get('medical/input_limit/table', 'MedicalController@tableInputLimitMD');
+Route::get('medical/input_personnel_limit/table', 'MedicalController@tableInputPersonnelLimitMD');
+Route::get('medical/treatment_eligibility/table', 'MedicalController@tableTreatmentEligibilityMD');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
 Route::get('medical/disease_code/detail_data', 'MedicalController@dataDetailDiseaseCodeMD');
 Route::get('medical/insurance_code/detail_data', 'MedicalController@dataDetailInsuranceCodeMD');
 Route::get('medical/insurance_class/detail_data', 'MedicalController@dataDetailInsuranceClass');
+Route::get('medical/input_limit/detail_data', 'MedicalController@dataDetailInputLimit');
+Route::get('medical/input_personnel_limit/detail_data', 'MedicalController@dataDetailInputPersonnelLimit');
+Route::get('medical/treatment_eligibility/detail_data', 'MedicalController@dataDetailTreatmentEligibility');
 
 /*Route untuk Proses Medical*/
 Route::post('medical/medical_reference/proses', 'MedicalController@prosesMedicalReferenceMD');
@@ -676,12 +686,19 @@ Route::post('medical/claim_code/proses', 'MedicalController@prosesClaimCodeMD');
 Route::post('medical/disease_code/proses', 'MedicalController@prosesDiseaseCodeMD');
 Route::post('medical/insurance_code/proses', 'MedicalController@prosesInsuranceCodeMD');
 Route::post('medical/insurance_class/proses', 'MedicalController@prosesInsuranceClassMD');
+Route::post('medical/input_limit/proses', 'MedicalController@prosesInputLimitMD');
+Route::post('medical/input_personnel_limit/proses', 'MedicalController@prosesInputPersonnelLimitMD');
+Route::post('medical/input_personnel_limit_all_employee/proses', 'MedicalController@prosesInputPersonnelLimitAllEmployeeMD');
+Route::post('medical/treatment_eligibility/proses', 'MedicalController@prosesTreatmentEligibilityMD');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');
 Route::get('medical/disease_code/status', 'MedicalController@statusDiseaseCodeMD');
 Route::get('medical/insurance_code/status', 'MedicalController@statusInsuranceCodeMD');
 Route::get('medical/insurance_class/status', 'MedicalController@statusInsuranceClassMD');
+Route::get('medical/input_limit/status', 'MedicalController@statusInputLimitMD');
+Route::get('medical/input_personnel_limit/status', 'MedicalController@statusInputPersonnelLimitMD');
+Route::get('medical/treatment_eligibility/status', 'MedicalController@statusTreatmentEligibilityMD');
 
 /* Route Untuk Menu Utilities */
 Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
@@ -905,6 +922,8 @@ Route::get('rounding_method/api', 'DataController@dataRoundingMethodAPI');
 Route::get('rounding_method/func/api', 'DataController@dataRoundingMethodFunctionAPI');
 Route::get('account/api', 'DataController@dataAccountAPI');
 Route::get('account_edit/api', 'DataController@dataEditAccountAPI');
+Route::get('claim_code/api', 'DataController@dataClaimCodeAPI');
+Route::get('claim_code/func/api', 'DataController@dataClaimCodeFunctionAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
