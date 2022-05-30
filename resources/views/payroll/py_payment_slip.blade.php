@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{{ __('payroll_severance_report.judul') }}</title>
+<title>{{ __('payroll_payment_slip.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -102,37 +102,74 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
+
+        .cb_size{
+            height:25px;
+            width:25px;
+        }
     </style>
 </head>
-
 <body>
     <div class="div-form">
-        <form id="severance_report_form" method="post">
+        <form id="payment_slip_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_severance_report.list') }}</span>
+                        <span class="title-text">{{ __('payroll_payment_slip.list') }}</span>
                     </a>
                 </div>
 
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="report_type form-check-label">{{ __('payroll_severance_report.label_report_type') }}</label>
+                            <label for="slip_type form-check-label">{{ __('payroll_payment_slip.label_slip_type') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <select name="slip_type" id="slip_type" class="form-control select2">
+                            <option value="salary">{{ __('payroll_payment_slip.label_slip') }}</option>
+                            <option value="thr">{{ __('payroll_payment_slip.label_thr') }}</option>
+                            <option value="bonus">{{ __('payroll_payment_slip.label_bonus') }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="period form-check-label">{{ __('payroll_payment_slip.label_period') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="period" name="period"
+                                placeholder="{{ __('payroll_payment_slip.label_period') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="period_calendar"><span class="fa fa-calendar"></span></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" id="period_hidden" name="period_hidden" hidden>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="format_type form-check-label">{{ __('payroll_payment_slip.label_format') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="report" name="report_type" value="report" checked>
-                            <label for="report">{{ __('payroll_severance_report.label_report') }}</label>
+                            <input type="radio" id="landscape" name="format_type" value="landscape" checked>
+                            <label for="landscape">{{ __('payroll_payment_slip.label_landscape') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="slip" name="report_type" value="slip">
-                            <label for="slip">{{ __('payroll_severance_report.label_slip') }}</label>
+                            <input type="radio" id="portrait" name="format_type" value="portrait">
+                            <label for="portrait">{{ __('payroll_payment_slip.label_portrait') }}</label>
                         </div>
                     </div>
                 </div>
@@ -140,40 +177,25 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="payment_date_from form-check-label">{{ __('payroll_severance_report.label_payment_date') }}</label>
+                            <label for="print_date form-check-label">{{ __('payroll_payment_slip.label_print_date') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="payment_date_from" name="payment_date_from"
-                                placeholder="{{ __('payroll_severance_report.label_payment_date') }}">
+                            <input type="text" class="form-control" id="print_date" name="print_date"
+                                placeholder="{{ __('payroll_payment_slip.label_print_date') }}">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="payment_date_from_calendar"><span class="fa fa-calendar"></span></span>
+                                <span class="input-group-text" id="print_date_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="payment_date_from_hidden" name="payment_date_from_hidden" hidden>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="payment_date_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="payment_date_to" name="payment_date_to"
-                                placeholder="{{ __('payroll_severance_report.label_payment_date') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="payment_date_to_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="payment_date_to_hidden" name="payment_date_to_hidden" hidden>
+                        <input type="text" class="form-control" id="print_date_hidden" name="print_date_hidden" hidden>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="employee_no_from form-check-label">{{ __('payroll_severance_report.label_employee_no') }}</label>
+                            <label for="employee_no_from form-check-label">{{ __('payroll_payment_slip.label_employee_no') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -181,7 +203,7 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="employee_no_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
+                            <label for="employee_no_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -192,7 +214,30 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="group_authorized_from form-check-label">{{ __('payroll_severance_report.label_group_authorized') }}</label>
+                            <label for="sort_by form-check-label">{{ __('payroll_payment_slip.label_sort_by') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="by_employee_no" name="sort_by" value="by_employee_no" checked>
+                            <label for="by_employee_no">{{ __('payroll_payment_slip.label_employee_no') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="by_level" name="sort_by" value="by_level">
+                            <label for="by_level">{{ __('payroll_payment_slip.label_level') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2 desc" id="choose_level_by_level" style="display:none;">
+                        <select class="form-control select2" id="level" name="level"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="group_authorized_from form-check-label">{{ __('payroll_payment_slip.label_group_authorize_code') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -200,7 +245,7 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="group_authorized_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
+                            <label for="group_authorized_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -208,70 +253,34 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="display_logo">{{ __('payroll_payment_slip.label_display_company_code') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <input class="cb_size" type="checkbox" id="display_logo" name="display_logo">
+                    </div>
+                </div>
+
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_severance_report.btn_preview') }}
+                        <button class="btn btn-primary" id="btn-preview"style="width: 100%;">
+                            <i class="fa fa-eye"></i> {{ __('payroll_payment_slip.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3 desc" id="send-to-slip" style="display: none;">
-                        <button class="btn btn-primary" id="btn-send" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_severance_report.btn_send_to') }}
+                    <div class="col-3">
+                        <button class="btn btn-primary" id="btn-send-to" style="width: 100%;">
+                            <i class="fa fa-print"></i> {{ __('payroll_payment_slip.btn_send_to') }}
                         </button>
-                    </div>
-                    <div class="col-3 desc" id="send-to-report">
-                        <div class="dropdown">
-                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-print"></i> {{ __('payroll_severance_report.btn_send_to') }}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
-                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="modal fade" role="dialog" id="notification_error">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-header-notification-error">
-                    <h5 class="modal-title">Error!</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <span id="message-notification-error">{{ $errors->first() }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" id="notification_success">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-header-notification-success">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="div-title-notification">
-                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_severance_report.alert_success') }}</span>
-                    </div>
-                    <div class="div-title-notification">
-                        <span id="message-notification-success"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -289,15 +298,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $("input[name$='report_type']").click(function(){
+        $("input[name$='sort_by']").click(function(){
             var value=$(this).val();
             $("div.desc").hide();
-            $("#send-to-" + value).show();
-        });
+            $("#choose_level_" + value).show();
+        })
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        let pickerPaymentDateFrom = $('#payment_date_from').flatpickr({
+        let pickerPeriod = $('#period').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -306,13 +315,13 @@
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#payment_date_from_calendar").click(function () {
+                $flatPickrInput.siblings("#period_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
         });
 
-        let pickerPaymentDateTo = $('#payment_date_to').flatpickr({
+        let pickerPaymentDateTo = $('#print_date').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -321,7 +330,7 @@
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#payment_date_to_calendar").click(function () {
+                $flatPickrInput.siblings("#print_date_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
@@ -338,6 +347,9 @@
 
         loadDataFirstLastGroupAuthorized('#group_authorized_from', 'First');
         loadDataFirstLastGroupAuthorized('#group_authorized_to', 'Last');
+
+        loadDataLevel('#level');
+        loadDataFirstLastLevel('#level', 'First');
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -444,8 +456,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorized Code</b></div>' +
-                        '<div class="col-6"><b>Description</b></div>' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
                         '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
@@ -514,33 +526,92 @@
             });
         }
 
+        function loadDataLevel(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Ranking Code</b></div>' +
+                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
+                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $rankingCode = $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Ranking Code',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/ranking/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.rankingCode,
+                                    id: item.rankingName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastLevel(field = '', func = ''){
+            $.ajax({
+                type: 'GET',
+                url: '/ranking/func/api',
+                data: {
+                    'func': func
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.rankingCode).text(
+                    data.rankingName);
+                $(field).append($newOption).trigger('change');
+            });
+        }
+
         var clicked = "";
-
-        $('#btn-send').click(function (){
-            $("#btn-send").prop("disabled", true);
-            $("#btn-send").html(
+        $('#btn-send-to').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#severance_report_form').submit();
-        });
-
-        $('#send-to-pdf').click(function (){
-            $("#btn-send-to-report").prop("disabled", true);
-            $("#btn-send-to-report").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "DOWNLOAD_PDF";
-            $('#severance_report_form').submit();
-        });
-
-        $('#send-to-xls').click(function (){
-            $("#btn-send-to-report").prop("disabled", true);
-            $("#btn-send-to-report").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "DOWNLOAD_XLS";
-            $('#severance_report_form').submit();
+            $('#payment_slip_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -549,148 +620,83 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
-            $('#severance_report_form').submit();
+            $('#payment_slip_form').submit();
         });
 
-        if($('#severance_report_form').length > 0){
-            $('#severance_report_form').validate({
+        if($('#payment_slip_form').length > 0){
+            $('#payment_slip_form').validate({
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    if(clicked=="DOWNLOAD_XLS"){
-                        $.ajax({
-                            xhrFields: {
-                                responseType: 'blob',
-                            },
-                            url: "{{ url('payroll/severance_report/print/excel') }}",
-                            type: "POST",
-                            data: $('#severance_report_form').serialize(),
-                            success: function(result, status, xhr){
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
-                                
-                                if(clicked == "DOWNLOAD_XLS"){
-                                    var disposition = xhr.getResponseHeader('content-disposition');
-                                    var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+                    $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        },
+                        url: "{{ url('payroll/payment_slip/print') }}",
+                        type: "POST",
+                        data: $('#payment_slip_form').serialize(),
+                        success: function(result, status, xhr){
+                            $('#btn-send-to').prop("disabled", false);
+                            $("#btn-send-to").html(
+                                '<i class="fa fa-print"></i> {{ __("payroll_payment_slip.btn_send_to") }}'
+                            );
+                            $('#btn-preview').prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
+                            );
 
-                                    var blob = new Blob([result], {
-                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                                    });
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /"([^"]*)"/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1] :
+                                'audit_trail.xlsx');
 
-                                    var link = document.createElement('a');
-                                    link.href = window.URL.createObjectURL(blob);
-                                    link.download = filename;
+                            // The actual download
+                            var blob = new Blob([result], {
+                                type: 'application/pdf'
+                            });
+
+                            if(clicked == "DOWNLOAD_PDF"){
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = filename;
                                     
-                                    document.body.appendChild(link);
+                                document.body.appendChild(link);
 
-                                    link.click();
-                                    document.body.removeChild(link);
+                                link.click();
+                                document.body.removeChild(link);
 
-                                    clicked = "";
-                                }
-                            },
-                            error: function(response){
-                                $('#btn-send-to').prop("disabled", false);
-                                $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+                                clicked = "";
                             }
-                        });
-                    }
-                    else
-                    {
-                        $.ajax({
-                            xhrFields: {
-                                responseType: 'blob',
-                            },
-                            url: "{{ url('payroll/severance_report/print') }}",
-                            type: "POST",
-                            data: $('#severance_report_form').serialize(),
-                            success: function(result, status, xhr){
-                                $('#btn-send').prop("disabled", false);
-                                $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
+                            else{
+                                var link = document.createElement('a');
+                                const url = URL.createObjectURL(blob);
+                                link.href = window.open(url, "_blank");
 
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
-
-                                $('#btn-preview').prop("disabled", false);
-                                $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_severance_report.btn_preview") }}'
-                                );
-                                
-                                if(clicked == "DOWNLOAD_PDF"){
-                                    var disposition = xhr.getResponseHeader('content-disposition');
-                                    var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
-
-                                    var blob = new Blob([result], {
-                                        type: 'application/pdf'
-                                    });
-
-                                    var link = document.createElement('a');
-                                    link.href = window.URL.createObjectURL(blob);
-                                    link.download = filename;
-                                    
-                                    document.body.appendChild(link);
-
-                                    link.click();
-                                    document.body.removeChild(link);
-
-                                    clicked = "";
-                                }
-                                else if(clicked == "PREVIEW"){
-                                    var disposition = xhr.getResponseHeader('content-disposition');
-                                    var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
-
-                                    var blob = new Blob([result], {
-                                        type: 'application/pdf'
-                                    });
-
-                                    var link = document.createElement('a');
-                                    const url = URL.createObjectURL(blob);
-                                    link.href = window.open(url, "_blank");
-
-                                    document.body.appendChild(link);
-                                    document.body.removeChild(link);
-
-                                    clicked = "";
-                                }
-                            },
-                            error: function(response){
-                                $('#btn-send').prop("disabled", false);
-                                $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $('#btn-send-to-report').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
-                                $('#btn-preview').prop("disabled", false);
-                                $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_severance_report.btn_preview") }}'
-                                );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+                                document.body.appendChild(link);
+                                document.body.removeChild(link);
+                                clicked = "";
                             }
-                        });
-                    }
+                        },
+                        error: function(response){
+                            $('#btn-send-to').prop("disabled", false);
+                            $('#btn-send-to').html(
+                                '<i class="fa fa-print"></i> {{ __("payroll_payment_slip.btn_send_to") }}'
+                            );
+                            $('#btn-preview').prop("disabled", false);
+                            $('#btn-preview').html(
+                                '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
                 }
             })
         }
-
     });
 
 </script>

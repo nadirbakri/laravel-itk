@@ -7,6 +7,7 @@ use App\Imports\PayrollBonusTHRDataImport;
 use App\Exports\TemplatePayrollDataTemplateSheet;
 use App\Exports\SeveranceReportExcel;
 use App\Exports\JournalReportExcel;
+use App\Exports\DUMTKReportExport;
 use App\Http\Controllers\Redirect;
 
 use Illuminate\Http\Request;
@@ -396,6 +397,10 @@ class PayrollController extends Controller
     public function pageSeveranceReport()
     {
         return view('payroll.py_severance_report');
+    }
+
+    public function pagePaymentSlip(){
+        return view('payroll.py_payment_slip');
     }
 
     public function pageJournalReport()
@@ -5111,17 +5116,17 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/salarycalculation/updatesalarycalculation',
+            $response = $client->put(env('API_URL') . '/salarycalculation/updatesalarycalculation',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
                         "employeeNoFrom" => $request->employee_no_from,
                         "employeeNoTo" => $request->employee_no_to,
-                        "periodMonth" => $request->process_period_month_hidden,
-                        "periodYear" => $request->process_period_year_hidden,
+                        "periodMonth" => (int) $request->process_period_month_hidden,
+                        "periodYear" => (int) $request->process_period_year_hidden,
                         "loanPaymentProcess" => isset($request->loan_payment_process) ? (bool) $request->loan_payment_process : false,
                         "retroactiveProcess" => isset($request->retroactive_process) ? (bool) $request->retroactive_process : false,
-                        "retroactive" => $request->retroactive,
+                        "retroactive" => (int) $request->retroactive,
                         "includeProbationPerod" => isset($request->include_probation_period) ? (bool) $request->include_probation_period : false,
                         "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive) ? (bool) $request->include_jamsostek_retroactive : false,
                         "range" => isset($request->range) ? (bool) $request->range : false,
@@ -5521,6 +5526,66 @@ public function dataDetailReportFormatPY(Request $request)
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
         return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
     }
+
+    public function printPaymentSlipPayroll(Request $request){
+        try{
+            // var_dump($request->all());
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->slip_type)){
+                $param['slipType'] = $request->slip_type;
+            }
+
+            if(!empty($request->period)){
+                $param['periode'] = $request->period;
+            }
+
+            if(!empty($request->format)){
+                $param['format'] = $request->format_type;
+            }
+
+            if(!empty($request->print_date)){
+                $param['printDate'] = $request->printDate;
+            }
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->sort_by) || !empty($request->level)){
+                $param['level'] = $request->level;
+                $param['sortByEmployee'] = $request->sort_by == "by_employee_no" ? true : false;
+                $param['sortByLevel'] = $request->sort_by == "by_level" ? true : false;
+            }
+
+            if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+                $param['groupAuthorizedFrom'] = $request->group_authorized_from;
+                $param['groupAuthorizedTo'] = $request->group_authorized_to;
+            }
+
+            var_dump($request->all());
+        }catch(Exception $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+    }
     
     public function printDUMTKPayroll(Request $request){
         try{
@@ -5561,9 +5626,6 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['bpjsGroupTo'] = $request->bpjs_group_to;
             }
 
-            // var_dump(json_encode($param));
-            // var_dump(json_encode($paramGetCompany));
-
             $response = $client->post(env('API_URL').'/dumtkreport/getdumtkreport', [
                 'body' => json_encode($param)
             ]);
@@ -5595,15 +5657,25 @@ public function dataDetailReportFormatPY(Request $request)
 
         $paramSend[] = (object) $param;
 
-        // var_dump($arraySend);
-        // var_dump($paramSend);
-
         if($arrResult->dataListSet[0] == null){
             $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('DUMTK Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => [$arraySend], 'data2' => [$paramSend]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => $arraySend, 'data2' => $paramSend])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('DUMTK Report.pdf');
         }
+    }
+
+    public function printDUMTKPayrollExcel(Request $request){
+        return Excel::download(new DUMTKReportExport(
+            $request->as_of_period,
+            $request->employee_no_from, 
+            $request->employee_no_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            $request->bpjs_group_from,
+            $request->bpjs_group_to), 
+            'DUMTK Report Form.xlsx'
+        );
     }
 }
