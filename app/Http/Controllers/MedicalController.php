@@ -73,6 +73,26 @@ class MedicalController extends Controller
         return view('medical.md_medical_reference', ['data' => $arrResult->dataListSet]);
     }
 
+    public function pageInputLimit() 
+    {
+        return view ('medical.md_input_limit');
+    }
+
+    public function pageInputPersonnelLimit() 
+    {
+        return view ('medical.md_input_personnel_limit');
+    }
+
+    public function pageInputPersonnelLimitAllEmployee() 
+    {
+        return view ('medical.md_input_personnel_limit_all_employee');
+    }
+
+    public function pageTreatmentEligibility() 
+    {
+        return view ('medical.md_treatment_eligibility');
+    }
+
     public function tableClaimCodeMD()
     {
         try {
@@ -187,6 +207,111 @@ class MedicalController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/cdinsuranceclass/getcdinsuranceclass',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+    
+    public function tableInputLimitMD()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mdcompanyinputlimit/getmdcompanyinputlimit',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableInputPersonnelLimitMD()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/inputpersonnellimit/getlimitpersonnel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableTreatmentEligibilityMD()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mdcompanyeligibility/getmdcompanyeligibility',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -375,6 +500,48 @@ class MedicalController extends Controller
         }
 
         return view('medical.md_insurance_class_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
+    public function dataDetailInputPersonnelLimit(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/inputpersonnellimit/getlimitpersonnel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'claimCode' => $request->claimCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('medical.md_input_personnel_limit_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -833,6 +1000,110 @@ class MedicalController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesInputPersonnelLimitMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+
+            if ($request->record_function === 'New') {
+                if($request->input_type == "one"){
+                    $response = $client->post(env('API_URL') . '/inputpersonnellimit/insertpersonnellimit',
+                        ['body' => json_encode(
+                            [
+                                'recordStatus' => "A",
+                                'companyCode' => Session::get('companyCode'),
+                                'employeeNo' => $request->employee_no_det,
+                                'claimCode' => $request->claim_code_det,
+                                'expiredDate' => $request->expired_date,
+                                'maxLimitPerYear' => (int) $request->max_limit_per_year,
+                                'maxLimitPerClaim' => (int) $request->max_limit_per_claim,
+                                'maxLimitPerMonth' => (int) $request->max_limit_per_month,
+                                "changedNo" => 0,
+                                "changedBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "languageCode" => App::getLocale(),
+                                "sessionID" => 0,
+                                "sessionUserID" => Session::get('userID'),
+                                "sessionCompanyCode" => Session::get('companyCode'),
+                                "logActionUserID" => Session::get('userID'),
+                                "logActionUsername" => Session::get('userID')
+                            ]
+                        )]
+                    );
+                }else{
+                    $response = $client->post(env('API_URL') . '/inputpersonnellimit/insertpersonnellimitforallemployee',
+                        ['body' => json_encode(
+                            [
+                                'recordStatus' => "A",
+                                'companyCode' => Session::get('companyCode'),
+                                'processDate' => $request->process_date,
+                                'claimCode' => $request->claim_code_det,
+                                'expiredDate' => $request->expired_date,
+                                'maxLimitPerYear' => (int) $request->max_limit_per_year,
+                                'maxLimitPerClaim' => (int) $request->max_limit_per_claim,
+                                'maxLimitPerMonth' => (int) $request->max_limit_per_month,
+                                "changedNo" => 0,
+                                "changedBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "languageCode" => App::getLocale(),
+                                "sessionID" => 0,
+                                "sessionUserID" => Session::get('userID'),
+                                "sessionCompanyCode" => Session::get('companyCode'),
+                                "logActionUserID" => Session::get('userID'),
+                                "logActionUsername" => Session::get('userID')
+                            ]
+                        )]
+                    );
+                }
+            } else {
+                $response = $client->put(env('API_URL') . '/inputpersonnellimit/updatepersonnellimit',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employee_no_det,
+                            'claimCode' => $request->claim_code_det,
+                            'expiredDate' => $request->expired_date,
+                            'maxLimitPerYear' => (int) $request->max_limit_per_year,
+                            'maxLimitPerClaim' => (int) $request->max_limit_per_claim,
+                            'maxLimitPerMonth' => (int) $request->max_limit_per_month,
+                            "changedNo" => 0,
+                            "languageCode" => App::getLocale(),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "sessionCompanyCode" => Session::get('companyCode'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function statusClaimCodeMD(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -993,6 +1264,52 @@ class MedicalController extends Controller
                         "languageCode" => App::getLocale(),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+            
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function statusInputPersonnelLimitMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/inputpersonnellimit/updatepersonnellimit',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'claimCode' => $request->claimCode,
+                        'expiredDate' => $request->expiredDate,
+                        "changedNo" => 0,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'sessionCompanyCode' => Session::get('companyCode'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]

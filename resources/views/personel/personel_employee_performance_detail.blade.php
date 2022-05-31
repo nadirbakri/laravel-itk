@@ -969,7 +969,7 @@
             });
         }
 
-        $('#award_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        $('#award_data_table, #sanction_data_table, #evaluation_data_table').on('click', ' tbody input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
             if(this.checked){
@@ -982,59 +982,10 @@
             e.stopPropagation();
         });
 
-        $('#award_data_table').on('click', 'tr td:first-child', function(e){
+        $('#award_data_table, #sanction_data_table, #evaluation_data_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');
-        });
 
-        $('#sanction_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
-            var $row = $(this).closest('tr');
-
-            if(this.checked){
-                $row.addClass('selected');
-            } else {
-                $row.removeClass('selected');
-            }
-
-            // Prevent click event from propagating to parent
             e.stopPropagation();
-        });
-
-        $('#sanction_data_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('input[type="checkbox"]').trigger('click');
-        });
-
-        $('#evaluation_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
-            var $row = $(this).closest('tr');
-
-            if(this.checked){
-                $row.addClass('selected');
-            } else {
-                $row.removeClass('selected');
-            }
-
-            // Prevent click event from propagating to parent
-            e.stopPropagation();
-        });
-
-        $('#evaluation_data_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('input[type="checkbox"]').trigger('click');
-        });
-
-        $('#evaluation_form_code_table tbody').on('click', 'input[type="checkbox"]', function(e){
-            var $row = $(this).closest('tr');
-
-            if(this.checked){
-                $row.addClass('selected');
-            } else {
-                $row.removeClass('selected');
-            }
-
-            // Prevent click event from propagating to parent
-            e.stopPropagation();
-        });
-
-        $('#evaluation_form_code_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
 
         $('#photo_profile').change(function (e) {

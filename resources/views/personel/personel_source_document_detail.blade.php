@@ -810,6 +810,12 @@
                     var letter_type = $('#letter_type').val();
 
                     if (letter_type === "") {
+                        $("#btn-save-detail-document").prop("disabled",
+                            false);
+                        $("#btn-save-detail-document").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_source_document.btn_save") }}'
+                        );
+                        
                         $('#notification_error').modal('show');
                         $('#message-notification-error').html("Letter Type Must Be Filled");
                     } else {
