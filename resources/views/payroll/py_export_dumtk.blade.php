@@ -40,7 +40,8 @@
         /* header { position: fixed; left: 0px; top: -90px; right: 0px; height: 150px; text-align: center; } */
         body { margin: 0; padding: 0;}
         footer { position: absolute; left: 25px; bottom: -85px; right: 0px; height: 150px; }
-        table tr td { page-break-inside:avoid }
+        table { page-break-inside:auto }
+        tr{page-break-inside:avoid; page-break-after:auto }
         thead { display:table-header-group; }
         tfoot { display:table-footer-group; }
 	</style>

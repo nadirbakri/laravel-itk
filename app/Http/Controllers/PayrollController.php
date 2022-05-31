@@ -5537,7 +5537,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
-                'languageID' =>App::getLocale(),
+                'languageCode' =>App::getLocale(),
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID')
             ];
@@ -5550,12 +5550,12 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['periode'] = $request->period;
             }
 
-            if(!empty($request->format)){
+            if(!empty($request->format_type)){
                 $param['format'] = $request->format_type;
             }
 
             if(!empty($request->print_date)){
-                $param['printDate'] = $request->printDate;
+                $param['printDate'] = $request->print_date;
             }
 
             if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
@@ -5570,11 +5570,21 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
-                $param['groupAuthorizedFrom'] = $request->group_authorized_from;
-                $param['groupAuthorizedTo'] = $request->group_authorized_to;
+                $param['groupAuthorizedFrom'] = intval($request->group_authorized_from);
+                $param['groupAuthorizedTo'] = intval($request->group_authorized_to);
             }
 
-            var_dump($request->all());
+            if(isset($request->display_logo)){
+                $param['displayCompanyLogo'] = $request->display_logo == "0" ? false : true;
+            }
+
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/PrPaymentSlipReport/GetPaymentSlipReport', [
+                'body' => json_encode($param)
+            ]);
+
+            // var_dump($request->all());
         }catch(Exception $e){
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5583,6 +5593,28 @@ public function dataDetailReportFormatPY(Request $request)
                 return view('error.not_found');
             }else{
                 return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            if($request->format == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream('Payment Slip.pdf');
+            }else{
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream('Payment Slip.pdf');
+            }
+        }else{
+            if($request->format == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [$arrResult->dataListSet]])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream('Payment Slip.pdf');
+            }else{
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [$arrResult->dataListSet]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream('Payment Slip.pdf');
             }
         }
     }

@@ -129,9 +129,9 @@
                     </div>
                     <div class="col-2">
                         <select name="slip_type" id="slip_type" class="form-control select2">
-                            <option value="salary">{{ __('payroll_payment_slip.label_slip') }}</option>
-                            <option value="thr">{{ __('payroll_payment_slip.label_thr') }}</option>
-                            <option value="bonus">{{ __('payroll_payment_slip.label_bonus') }}</option>
+                            <option value="Salary">{{ __('payroll_payment_slip.label_slip') }}</option>
+                            <option value="THR">{{ __('payroll_payment_slip.label_thr') }}</option>
+                            <option value="Bonus">{{ __('payroll_payment_slip.label_bonus') }}</option>
                         </select>
                     </div>
                 </div>
@@ -162,13 +162,13 @@
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="landscape" name="format_type" value="landscape" checked>
+                            <input type="radio" id="landscape" name="format_type" value="LR" checked>
                             <label for="landscape">{{ __('payroll_payment_slip.label_landscape') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="portrait" name="format_type" value="portrait">
+                            <input type="radio" id="portrait" name="format_type" value="UD">
                             <label for="portrait">{{ __('payroll_payment_slip.label_portrait') }}</label>
                         </div>
                     </div>
@@ -260,7 +260,8 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <input class="cb_size" type="checkbox" id="display_logo" name="display_logo">
+                        <input class="form-control" type="hidden" name="display_logo" value="0">
+                        <input class="cb_size form-control" type="checkbox" id="display_logo" name="display_logo" value="1">
                     </div>
                 </div>
 
@@ -534,12 +535,12 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Ranking Code</b></div>' +
-                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
-                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '<div class="col-6">' + data.data.levelType + '</div>' +
+                        '<div class="col-6">' + data.data.levelName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -548,9 +549,9 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            var $rankingCode = $(field).select2({
+            var $levelCode = $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Ranking Code',
+                placeholder: 'Choose Level Code',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -563,7 +564,7 @@
                     }
                 },
                 ajax: {
-                    url: '/ranking/api',
+                    url: '/level/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -577,8 +578,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.rankingCode,
-                                    id: item.rankingName,
+                                    text: item.levelName,
+                                    id: item.levelType,
                                     data: item
                                 }
                             })
@@ -593,13 +594,13 @@
         function loadDataFirstLastLevel(field = '', func = ''){
             $.ajax({
                 type: 'GET',
-                url: '/ranking/func/api',
+                url: '/level/func/api',
                 data: {
                     'func': func
                 }
             }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.rankingCode).text(
-                    data.rankingName);
+                var $newOption = $("<option selected='selected'></option>").val(data.levelType).text(
+                    data.levelName);
                 $(field).append($newOption).trigger('change');
             });
         }

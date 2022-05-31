@@ -18,6 +18,9 @@ return [
     'label_level' => 'Level',
     'label_group_authorize_code' => 'Group Authorize Code',
     'label_display_company_code' => 'Display Company Code',
+    'label_allowance' => 'Allowance',
+    'label_deduction' => 'Deduction',
+    'label_curr' => 'IDR',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'
