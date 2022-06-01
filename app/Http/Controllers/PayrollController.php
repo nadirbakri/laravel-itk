@@ -8,6 +8,8 @@ use App\Exports\TemplatePayrollDataTemplateSheet;
 use App\Exports\SeveranceReportExcel;
 use App\Exports\JournalReportExcel;
 use App\Exports\DUMTKReportExport;
+use App\Exports\SalaryHistoricalReportExport;
+use App\Exports\CSVESPTReportFormExport;
 use App\Http\Controllers\Redirect;
 
 use Illuminate\Http\Request;
@@ -566,6 +568,51 @@ class PayrollController extends Controller
         }
 
         return view ('payroll.py_dumtk', ['data' => $data]);
+    }
+
+    public function pageSalaryHistoricalReport() 
+    {
+        return view ('payroll.py_salary_historical_report');
+    }
+
+    public function pageCSVESPTReportForm() 
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_csv_espt_report_form', ['data' => $data]);
     }
 
     public function tableAccountPY()
@@ -5708,6 +5755,88 @@ public function dataDetailReportFormatPY(Request $request)
             $request->bpjs_group_from,
             $request->bpjs_group_to), 
             'DUMTK Report Form.xlsx'
+        );
+    }
+
+    public function printSalaryHistoricalReportPayroll(Request $request){
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+    
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizedTo'] = (int) $request->group_authorized_code_to;
+            }
+
+            $response = $client->post(env('API_URL').'/prsalaryhistoricalreport/getprsalaryhistoricalreport', [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if ($arrResult->dataListSet[0] !== null)
+        {
+            $arraySend[] = $arrResult->dataListSet[0];
+        } else {
+            $arraySend[] = [];
+        }
+
+        if($arrResult->dataListSet[0] == null){
+            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Salary Historical Report.pdf');
+        }else{
+            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Salary Historical Report.pdf');
+        }
+    }
+
+    public function printSalaryHistoricalReportPayrollExcel(Request $request){
+        return Excel::download(new SalaryHistoricalReportExport(
+            $request->employee_no_from, 
+            $request->employee_no_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to), 
+            'Salary Historical Report.xlsx'
+        );
+    }
+
+    public function printCSVESPTReportFormPayrollExcel(Request $request){
+        return Excel::download(new CSVESPTReportFormExport(
+            $request->format, 
+            $request->period_month,
+            $request->period_year,
+            $request->rectification,
+            $request->npwp_group,
+            $request->print_date,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to), 
+            'CSVEsptMasa.xlsx'
         );
     }
 }

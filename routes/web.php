@@ -533,7 +533,7 @@ Route::get('payroll/periodical_report', 'PayrollController@pagePeriodicalReport'
 Route::get('payroll/payment_slip', 'PayrollController@pagePaymentSlip');
 Route::get('payroll/severance_report', 'PayrollController@pageSeveranceReport');
 Route::get('payroll/salary_historical_report', 'PayrollController@pageSalaryHistoricalReport');
-Route::get('payroll/csv_e-spt_report_form', 'PayrollController@pageCsvE-SptReportForm');
+Route::get('payroll/csv_e-spt_report_form', 'PayrollController@pageCSVESPTReportForm');
 Route::get('payroll/spt_pph_1721a1', 'PayrollController@pageSptPph1721a1');
 Route::get('payroll/annual_report', 'PayrollController@pageAnnualReport');
 Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1Report');
@@ -650,6 +650,9 @@ Route::post('payroll/severance_report/print/excel', 'PayrollController@printSeve
 Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
 Route::post('payroll/journal_report/print/excel', 'PayrollController@printJournalReportPayrollExcel');
 Route::post('payroll/payment_slip/print', 'PayrollController@printPaymentSlipPayroll');
+Route::post('payroll/salary_historical_report/print', 'PayrollController@printSalaryHistoricalReportPayroll');
+Route::post('payroll/salary_historical_report/print/excel', 'PayrollController@printSalaryHistoricalReportPayrollExcel');
+Route::post('payroll/csv_espt_report_form/print/excel', 'PayrollController@printCSVESPTReportFormPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');

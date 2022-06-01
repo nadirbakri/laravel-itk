@@ -5173,6 +5173,8 @@ class DataController extends Controller
 	    				return preg_match('/' . $search . '/i', $value->npwpCode);
 	    			} else if(preg_match('/' . $search . '/i', $value->pemotongKuasa)){
 	    				return preg_match('/' . $search . '/i', $value->pemotongKuasa);
+					} else if(preg_match('/' . $search . '/i', $value->companyName)){
+	    				return preg_match('/' . $search . '/i', $value->companyName);
 					}
 	    		}
 	    	);
@@ -5183,8 +5185,6 @@ class DataController extends Controller
 
 	public function dataNPWPPersonalDataAPI(Request $request)
     {
-
-		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
 	    		'headers' => [ 'Content-Type' => 'application/json',
@@ -5212,7 +5212,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->npwpCode) {
+		if ($request->npwpCode = '') {
 			return response()->json([]);
 		}
 		else {
@@ -5338,7 +5338,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->bpjsCode) {
+		if ($request->bpjsCode = '') {
 			return response()->json([]);
 		}
 		else {

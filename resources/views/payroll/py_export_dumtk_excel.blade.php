@@ -50,7 +50,7 @@
     <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th rowspan="2" style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_no') }}</th>
+                <th rowspan="2" style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_no') }}</th>
                 <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_bpjs_no') }}</th>
                 <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_employee_no') }}</th>
                 <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_gender') }}</th>
@@ -68,7 +68,7 @@
                 <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_december') }}</th>
             </tr>
             <tr>
-                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_bpjs_joining_date') }}</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_bpjs_joining_date') }}</th>
                 <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_full_name') }}</th>
                 <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_birth_date') }}</th>
             </tr>
@@ -101,6 +101,30 @@
             @endforeach
             <tr>
                 <td colspan="16" style="background-color: yellow; text-align:center; border:1px solid #000;">{{ __('payroll_dumtk.grand_total') }} : {{ $data[1]->grandTotal }}</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td colspan="2" style="font-weight: bold;">{{ __('payroll_dumtk.report_parameter') }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ __('payroll_dumtk.label_employee_no') }} : </td>
+                <td>{{ $data2[0]->employeeNoFrom }} {{ __('payroll_dumtk.label_to') }} {{ $data2[0]->employeeNoTo }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ __('payroll_dumtk.total_printed') }} : </td>
+                <td>{{ count($data[1]->employeeDetail) }} Record{s}</td>
+            </tr>
+            <tr>
+                <?php
+                    $timestamp = time();
+                    $dt = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+                    $dt->setTimestamp($timestamp);
+                    echo '<td colspan="2" style="border-top: 2px solid #000">' . __('payroll_dumtk.date_now') . ' :' .'</td>';
+                    echo '<td style="border-top: 2px solid #000">' . 'Server Date : ' . $dt->format('d/m/Y') .'</td>';
+                    echo '<td style="border-top: 2px solid #000"></td>';
+                    echo '<td colspan="2" style="border-top: 2px solid #000">' . __('payroll_dumtk.hour_now') . ' :' .'</td>';
+                    echo '<td style="border-top: 2px solid #000">' . 'Server Hour : ' . $dt->format('H:i:s A') .'</td>';
+                ?>
             </tr>
         </tbody>
     </table>

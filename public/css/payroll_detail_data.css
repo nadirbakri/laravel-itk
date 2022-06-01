@@ -295,13 +295,13 @@ tr.shown td.details-control {
 	box-sizing: border-box;
 	display: block;
 	position: absolute;
-	width: 64px;
-	height: 64px;
+	width: 58px;
+	height: 58px;
 	margin: 8px;
-	border: 8px solid #cef;
+	border: 6px solid #004883;
 	border-radius: 50%;
 	animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-	border-color: rgb(192, 224, 240) transparent transparent transparent;
+	border-color: #004883 transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
 	animation-delay: -0.45s;

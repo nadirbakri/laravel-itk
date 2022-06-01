@@ -102,6 +102,28 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
+
+        .overlay {
+            background: #e9e9e9;  
+            display: none;       
+            position: fixed;   
+            top: 0;                  
+            right: 0;               
+            bottom: 0;
+            left: 0;
+            opacity: 0.5;
+        }
+
+        .div-loading {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -251,15 +273,9 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="div-title-notification">
-                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                    </div>
-                </div>
-            </div>
+    <div class="overlay" id="notification_loading">
+        <div class="div-loading">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>
     </div>
 </body>
@@ -287,6 +303,9 @@
         if (arrData) {
             var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
             $('#process_period').val(month_year);
+
+            $('#process_period_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
+            $('#process_period_year_hidden').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         }
 
         $('#retroactive_process').on('change', function () {
@@ -432,7 +451,7 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $('#notification_loading').modal('show');
+            $('#notification_loading').show();
             $("#salary_calculation_process_form").submit();
         });
 
@@ -454,7 +473,8 @@
                                 $("#btn-process").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_calculation_process.btn_process") }}'
                                 );
-                                $('#notification_loading').modal('hide');
+                                // $('#div-loading').hide();
+                                $('#notification_loading').hide();
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
@@ -467,7 +487,7 @@
                                 $("#btn-process").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_calculation_process.btn_process") }}'
                                 );
-                                $('#notification_loading').modal('hide');
+                                $('#notification_loading').hide();
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
@@ -480,7 +500,7 @@
                             }
                         },
                         error: function (response) {
-                            $('#notification_loading').modal('hide');
+                            $('#notification_loading').hide();
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_calculation_process.btn_process") }}'
