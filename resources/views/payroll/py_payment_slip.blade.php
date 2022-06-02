@@ -162,13 +162,13 @@
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="landscape" name="format_type" value="LR" checked>
+                            <input type="radio" id="landscape" name="format_type" value="landscape" checked>
                             <label for="landscape">{{ __('payroll_payment_slip.label_landscape') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="portrait" name="format_type" value="UD">
+                            <input type="radio" id="portrait" name="format_type" value="portrait">
                             <label for="portrait">{{ __('payroll_payment_slip.label_portrait') }}</label>
                         </div>
                     </div>

@@ -5584,7 +5584,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'body' => json_encode($param)
             ]);
 
-            // var_dump($request->all());
+            // var_dump($request->format_type);
         }catch(Exception $e){
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5598,22 +5598,26 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet[0]->slipName);
 
         if($arrResult->dataListSet == null){
-            if($request->format == "portrait"){
+            if($request->format_type == "portrait"){
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                 return $pdf->stream('Payment Slip.pdf');
             }else{
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                 return $pdf->stream('Payment Slip.pdf');
             }
         }else{
-            if($request->format == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [$arrResult->dataListSet]])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            if($request->format_type == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true, 'adminPassword' => "Intikom11"]);
+                $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                 return $pdf->stream('Payment Slip.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [$arrResult->dataListSet]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true, 'adminPassword' => "Intikom11"]);
+                $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                 return $pdf->stream('Payment Slip.pdf');
             }
         }
