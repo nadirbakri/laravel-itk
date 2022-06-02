@@ -13,14 +13,13 @@
 	<style type="text/css">
 		* { box-sizing: border-box; }
 		body{
+            margin: 0;
+            padding: 0;
 			margin-left: 30px;
 			margin-right: 30px;
 			margin-bottom: 25px;
 			margin-top: 25px;
 		}
-        table {
-            /* page-break-inside: avoid !important; */
-        }
 		.table_detail td{
 			border:1px solid #000;
 			text-align:center;
@@ -34,11 +33,8 @@
 			border-collapse:collapse;
 		}
 
-		.page_break { page-break-before: always; }
-
         @page { margin-bottom: 150px; size: auto; }
         /* header { position: fixed; left: 0px; top: -90px; right: 0px; height: 150px; text-align: center; } */
-        body { margin: 0; padding: 0;}
         footer { position: absolute; left: 25px; bottom: -85px; right: 0px; height: 150px; }
         table { page-break-inside:auto }
         tr{page-break-inside:avoid; page-break-after:auto }

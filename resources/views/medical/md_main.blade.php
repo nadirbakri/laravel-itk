@@ -112,7 +112,7 @@
 					</div>
 					<div class="row div-child-data">
 						<div class="col col-3">
-							<a href="{{ url('medical/input_limit_company') }}" target="iframe_dashboard">
+							<a href="{{ url('medical/input_limit') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-maintenance.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.input_limit') }}</span>
 							</a>
@@ -130,7 +130,7 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('medical/treatment_eligibility_company') }}" target="iframe_dashboard">
+							<a href="{{ url('medical/treatment_eligibility') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-maintenance.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.treatment_eligibility') }}</span>
 							</a>
