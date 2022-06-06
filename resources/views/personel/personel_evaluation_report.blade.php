@@ -891,7 +891,7 @@
                             var link = document.createElement('a');
                             const url = URL.createObjectURL(blob);
                             link.href = window.URL.createObjectURL(blob);
-                            link.href = window.open(url, "_blank");
+                            // link.href = window.open(url, "_blank");
                             link.download = filename;
 
                             document.body.appendChild(link);
