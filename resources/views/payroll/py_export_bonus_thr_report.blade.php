@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_salary_historical_report.judul') }}</title>
+	<title>{{ __('payroll_bonus_thr_report.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -15,55 +15,66 @@
 		body{
             margin: 0;
             padding: 0;
-			margin-left: 30px;
-			margin-right: 30px;
+			margin-left: 20px;
+			margin-right: 20px;
 			margin-bottom: 25px;
 			margin-top: 25px;
 		}
 		.table_detail td{
+			border:1px solid #000;
+            padding:6px;
 			text-align:center;
-            padding: 3px;
 		}
 		.table_detail th{
-            padding:4px;
+			border:1px solid #000;
+            padding:6px;
+            background-color:#97d7f7;
 		}
 		.table_detail{
 			border-collapse:collapse;
 		}
-
-        @page { margin-bottom: 150px; size: auto; }
-        /* header { position: fixed; left: 0px; top: -90px; right: 0px; height: 150px; text-align: center; } */
-        footer { position: absolute; left: 25px; bottom: -85px; right: 0px; height: 150px; }
-        table { page-break-inside:auto }
-        tr    { page-break-inside:avoid; page-break-after:auto; margin: 4px 0 4px 0; }
-        td    { page-break-inside:avoid; page-break-after:auto }
-        thead { display:table-header-group }
 	</style>
 </head>
 <body>
-    <h3 style="text-align:center; background-color:lightblue; padding:7px">{{ __('payroll_salary_historical_report.list') }}</h3>
-    @foreach($data as $key => $dataTables)
+    <p style="text-align:left">{{ $data[0]->companyName }}</p>
+    <p style="text-align:left">{{ $data[0]->address }}</p>
+    <h3 style="text-align:center">{{ $data[1]->reportName }} Report</h3>
+    <h5 style="text-align:center">{{ __('payroll_bonus_thr_report.label_payment_period') }}<span style="display: inline-block; margin-left: 30px;"></span>{{ $data[1]->paymentPeriodFrom }} {{ __('payroll_bonus_thr_report.label_to') }} {{ $data[1]->paymentPeriodTo }}</h5>
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
-        <thead style="background-color: lightgray; padding:5px">
+        <thead>
             <tr>
-                <th>{{ __('payroll_salary_historical_report.header_no') }}</th>
-                <th>{{ $dataTables->employeeNo }} {{ $dataTables->employeeName }}</th>
-                <th>{{ $dataTables->joinDate }}</th>
-                <th>{{ $dataTables->position }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_no') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.label_employee_no') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_employee_name') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_join_date') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_currency_code') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_amount') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_service_year') }}</th>
+                <th>{{ __('payroll_bonus_thr_report.header_performance') }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($dataTables->detail as $key => $dataTable)
+            @foreach($data[1]->columnDetail as $key => $dataTable)
             <tr>
-                <td>{{ $key+1 }}</td>
-                <td>{{ $dataTable->period }}</td>
-                <td>{{ $dataTable->basicSalary }}</td>
-                <td>{{ $dataTable->remark }}</td>
+                <td>{{ $dataTable->columnD }}</td>
+                <td>{{ $dataTable->columnE }}</td>
+                <td>{{ $dataTable->columnF }}</td>
+                <td>{{ $dataTable->columnG }}</td>
+                <td>{{ $dataTable->columnH }}</td>
+                <td>{{ $dataTable->columnI }}</td>
+                <td>{{ $dataTable->columnJ }}</td>
+                <td>{{ $dataTable->columnK }}</td>
             </tr>
             @endforeach
+            <tr>
+                <td colspan="4">{{ __('payroll_bonus_thr_report.grand_total') }}</td>
+                <td>{{ $data[1]->columnL }}</td>
+                <td>{{ $data[1]->columnM }}</td>
+                <td></td>
+                <td></td>
+            </tr>
         </tbody>
     </table>
-    @endforeach
 
     <script type="text/php">
     if (isset($pdf)) {

@@ -525,9 +525,7 @@ Route::get('payroll/monthly_jamsostek_report', 'PayrollController@pageMonthlyJam
 Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSippOnline');
 Route::get('payroll/loan_report', 'PayrollController@pageLoanReport');
 Route::get('payroll/journal_report', 'PayrollController@pageJournalReport');
-Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveReport');
-Route::get('payroll/signature_list', 'PayrollController@pageSignatureList');
-Route::get('payroll/thr_report', 'PayrollController@pageThrReport');
+Route::get('payroll/bonus_thr_report', 'PayrollController@pageBonusTHRReport');
 Route::get('payroll/export_data_kepesertaan_bpjs-tk', 'PayrollController@pageExportDataKepesertaanBpjk-Tk');
 Route::get('payroll/periodical_report', 'PayrollController@pagePeriodicalReport');
 Route::get('payroll/payment_slip', 'PayrollController@pagePaymentSlip');
@@ -653,6 +651,8 @@ Route::post('payroll/payment_slip/print', 'PayrollController@printPaymentSlipPay
 Route::post('payroll/salary_historical_report/print', 'PayrollController@printSalaryHistoricalReportPayroll');
 Route::post('payroll/salary_historical_report/print/excel', 'PayrollController@printSalaryHistoricalReportPayrollExcel');
 Route::post('payroll/csv_espt_report_form/print/excel', 'PayrollController@printCSVESPTReportFormPayrollExcel');
+Route::post('payroll/bonus_thr_report/print', 'PayrollController@printBonusTHRReportPayroll');
+Route::post('payroll/bonus_thr_report/print/excel', 'PayrollController@printBonusTHRReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');

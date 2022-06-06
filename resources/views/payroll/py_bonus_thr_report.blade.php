@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_dumtk.judul') }}</title>
+    <title>{{ __('payroll_bonus_thr_report.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,7 +10,6 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
@@ -108,34 +107,72 @@
 
 <body>
     <div class="div-form">
-        <form id="dumtk_form" method="post">
+        <form id="bonus_thr_report_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
                     <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_dumtk.list') }}</span>
+                        <span class="title-text">{{ __('payroll_bonus_thr_report.list') }}</span>
                     </a>
                 </div>
+
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="form-group">
-                            <label
-                                for="as_of_period">{{ __('payroll_dumtk.label_as_of_period') }}</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="as_of_period" name="as_of_period"
-                                    placeholder="{{ __('payroll_dumtk.label_as_of_period') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>
+                            <label for="report form-check-label">{{ __('payroll_bonus_thr_report.label_report') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input type="radio" id="report" name="report" value="B" checked>
+                            <label for="bonus">{{ __('payroll_bonus_thr_report.label_bonus') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input type="radio" id="thr" name="report" value="T">
+                            <label for="thr">{{ __('payroll_bonus_thr_report.label_thr') }}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="payment_date_from form-check-label">{{ __('payroll_bonus_thr_report.label_payment_date') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="payment_date_from" name="payment_date_from"
+                                placeholder="{{ __('payroll_bonus_thr_report.label_payment_date') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="payment_date_from_calendar"><span class="fa fa-calendar"></span></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" id="payment_date_from_hidden" name="payment_date_from_hidden" hidden>
+                    </div>
+                    <div class="col-0.5">
+                        <div class="form-group">
+                            <label for="payment_date_to form-check-label">{{ __('payroll_bonus_thr_report.label_to') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="payment_date_to" name="payment_date_to"
+                                placeholder="{{ __('payroll_bonus_thr_report.label_payment_date') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="payment_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="employee_no_from form-check-label">{{ __('payroll_dumtk.label_employee_no') }}</label>
+                            <label for="employee_no_from form-check-label">{{ __('payroll_bonus_thr_report.label_employee_no') }}</label>
                             <span style="color: red">*</span>
                         </div>
                     </div>
@@ -146,7 +183,7 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="employee_no_to form-check-label">{{ __('payroll_dumtk.label_to') }}</label>
+                            <label for="employee_no_to form-check-label">{{ __('payroll_bonus_thr_report.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
@@ -155,10 +192,11 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="group_authorized_code_from form-check-label">{{ __('payroll_dumtk.label_group_authorized_code') }}</label>
+                            <label for="group_authorized_code form-check-label">{{ __('payroll_bonus_thr_report.label_group_authorized_code') }}</label>
                             <span style="color: red">*</span>
                         </div>
                     </div>
@@ -169,7 +207,7 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_dumtk.label_to') }}</label>
+                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_bonus_thr_report.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
@@ -178,44 +216,23 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <div class="form-group">
-                            <label for="bpjs_group_from form-check-label">{{ __('payroll_dumtk.label_bpjs_group') }}</label>
-                            <span style="color: red">*</span>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <select class="form-control select2" id="bpjs_group_from" name="bpjs_group_from"></select>
-                        </div>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="bpjs_group_to form-check-label">{{ __('payroll_dumtk.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <select class="form-control select2" id="bpjs_group_to" name="bpjs_group_to"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-preview" id="btn-preview" style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_dumtk.btn_preview') }}
+                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
+                            <i class="fa fa-eye"></i> {{ __('payroll_bonus_thr_report.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3 desc" id="send-to-slip" style="display: none;">
+                    {{-- <div class="col-3 desc" id="send-to-slip" style="display: none;">
                         <button class="btn btn-primary" id="btn-send" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_dumtk.btn_send_to') }}
+                            <i class="fa fa-print"></i> {{ __('payroll_bonus_thr_report.btn_send_to') }}
                         </button>
-                    </div>
-                    <div class="col-3">
+                    </div> --}}
+                    <div class="col-3 desc" id="send-to-report">
                         <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" name="btn-send-to" id="btn-send-to" style="width: 100%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-print"></i> {{ __('payroll_dumtk.btn_send_to') }}
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('payroll_bonus_thr_report.btn_send_to') }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
@@ -253,21 +270,10 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_dumtk.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_bonus_thr_report.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" id="notification_loading" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="div-title-notification">
-                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
                 </div>
             </div>
@@ -290,24 +296,17 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $(function () {
+        initDatePicker();
+    });
 
-        var clicked = "";
-
-        let pickerPeriod = $('#as_of_period').flatpickr({
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            // defaultDate: "today",
-            plugins: [
-                new monthSelectPlugin({
-                    shorthand: true, //defaults to false
-                    dateFormat: "Y-m-01", //defaults to "F Y"
-                    altFormat: "F Y", //defaults to "F Y"
-                })
-            ],
+            defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -316,68 +315,43 @@
                 });
             }
         });
+    }
+</script>
 
-        var arrData = @json($data);
-
-        if (arrData) {
-            pickerPeriod.setDate(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01");
-        }
+<script type="text/javascript">
+    $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
-        loadDataGroupAuthorize('#group_authorized_code_from');
-        loadDataGroupAuthorize('#group_authorized_code_to');
-        loadDataBPJSGroup('#bpjs_group_from');
-        loadDataBPJSGroup('#bpjs_group_to');
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
-        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
-        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
-        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
-        loadDataFirstLastAllBPJSGroup('#bpjs_group_from', 'First');
-        loadDataFirstLastAllBPJSGroup('#bpjs_group_to', 'Last');
+        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
+               
+        loadDataGroupAuthorized('#group_authorized_code_from');
+        loadDataGroupAuthorized('#group_authorized_code_to');
 
-        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/employee_no/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
-                    data.fullName);
-                $(field).append($newOption).trigger('change');
-            });
-        }
+        loadDataFirstLastGroupAuthorized('#group_authorized_code_from', 'First');
+        loadDataFirstLastGroupAuthorized('#group_authorized_code_to', 'Last');
 
-        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/group_authorize/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
-                    .text(data.groupAuthorizeDesc);
-                $(field).append($newOption).trigger('change');
-            });
-        }
+        $('#select').focus(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
 
-        function loadDataFirstLastAllBPJSGroup(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/bpjs/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.bpjsCode)
-                    .text(data.bpjsNo);
-                $(field).append($newOption).trigger('change');
-            });
-        }
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
@@ -432,7 +406,6 @@
                                 return {
                                     text: item.fullName,
                                     id: item.employeeNo,
-                                    title: item.fullName,
                                     data: item
                                 }
                             })
@@ -444,7 +417,21 @@
             });
         }
 
-        function loadDataGroupAuthorize(field = '') {
+        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: '/employee_no/func/api',
+                data: {
+                    'func': func
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
+                    data.fullName);
+                $(field).append($newOption).trigger('change');
+            });
+        }
+        
+        function loadDataGroupAuthorized(field = ''){
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -452,8 +439,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '<div class="col-6"><b>Group Authorized Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
                         '</div>' +
                         '<div class="row">' +
                         '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
@@ -466,10 +453,11 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $(field).select2({
+            var $authorizedCode = $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Group Authorize Code',
+                placeholder: 'Choose Authorized Code',
                 allowClear: true,
+                // tags: true,
                 closeOnSelect: true,
                 language: {
                     errorLoading: function () {
@@ -507,70 +495,30 @@
             });
         }
 
-        function loadDataBPJSGroup(field = ''){
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
+        function loadDataFirstLastGroupAuthorized(field = '', func = ''){
+            $.ajax({
+                type: 'GET',
+                url: '/group_authorize/func/api',
+                data: {
+                    'func': func
                 }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>BPJS Code</b></div>' +
-                        '<div class="col-6"><b>BPJS No</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.bpjsCode + '<div>' +
-                        '<div class="col-6">' + data.data.bpjsNo + '<div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $(field).select2({
-                width: '100%',
-                placeholder: 'Choose BPJS Group',
-                allowClear: true,
-                // multiple: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/bpjs/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.bpjsNo,
-                                    id: item.bpjsCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode).text(
+                    data.groupAuthorizeDesc);
+                $(field).append($newOption).trigger('change');
             });
         }
+
+        var clicked = "";
+
+        // $('#btn-send').click(function (){
+        //     $("#btn-send").prop("disabled", true);
+        //     $("#btn-send").html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+        //     clicked = "DOWNLOAD_PDF";
+        //     $('#bonus_thr_report_form').submit();
+        // });
 
         $('#send-to-pdf').click(function (){
             $("#btn-send-to").prop("disabled", true);
@@ -578,7 +526,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#dumtk_form').submit();
+            $('#bonus_thr_report_form').submit();
         });
 
         $('#send-to-xls').click(function (){
@@ -587,7 +535,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
-            $('#dumtk_form').submit();
+            $('#bonus_thr_report_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -596,11 +544,11 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
-            $('#dumtk_form').submit();
+            $('#bonus_thr_report_form').submit();
         });
 
-        if($('#dumtk_form').length > 0){
-            $('#dumtk_form').validate({
+        if($('#bonus_thr_report_form').length > 0){
+            $('#bonus_thr_report_form').validate({
                 rules: {
                     employee_no_from: {
                         required: true
@@ -613,32 +561,20 @@
                     },
                     group_authorized_code_to: {
                         required: true
-                    },
-                    bpjs_group_from: {
-                        required: true
-                    },
-                    bpjs_group_to: {
-                        required: true
                     }
                 },
                 messages: {
                     employee_no_from: {
-                        required: "{{ __('payroll_dumtk.employee_no_from_required') }}"
+                        required: "{{ __('payroll_bonus_thr_report.employee_no_from_required') }}"
                     },
                     employee_no_to: {
-                        required: "{{ __('payroll_dumtk.employee_no_to_required') }}"
+                        required: "{{ __('payroll_bonus_thr_report.employee_no_to_required') }}"
                     },
                     group_authorized_code_from: {
-                        required: "{{ __('payroll_dumtk.group_authorized_code_from_required') }}"
+                        required: "{{ __('payroll_bonus_thr_report.group_authorized_code_from_required') }}"
                     },
                     group_authorized_code_to: {
-                        required: "{{ __('payroll_dumtk.group_authorized_code_to_required') }}"
-                    },
-                    bpjs_group_from: {
-                        required: "{{ __('payroll_dumtk.bpjs_group_from_required') }}"
-                    },
-                    bpjs_group_to: {
-                        required: "{{ __('payroll_dumtk.bpjs_group_to_required') }}"
+                        required: "{{ __('payroll_bonus_thr_report.group_authorized_code_to_required') }}"
                     }
                 },
                 highlight: function (element) {
@@ -651,12 +587,12 @@
                 errorPlacement: function (error, element) {
                     $("#btn-preview").prop("disabled", false);
                     $("#btn-preview").html(
-                        '<i class="fa fa-eye"></i> {{ __("payroll_dumtk.btn_preview") }}'
+                        '<i class="fa fa-eye"></i> {{ __("payroll_bonus_thr_report.btn_preview") }}'
                     );
 
                     $("#btn-send-to").prop("disabled", false);
                     $("#btn-send-to").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_bonus_thr_report.btn_send_to") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -673,18 +609,13 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/dumtk/print/excel') }}",
+                            url: "{{ url('payroll/bonus_thr_report/print/excel') }}",
                             type: "POST",
-                            data: $('#dumtk_form').serialize(),
+                            data: $('#bonus_thr_report_form').serialize(),
                             success: function(result, status, xhr){
-                                $('#btn-send').prop("disabled", false);
-                                $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_severance_report.btn_send_to") }}'
-                                );
-                                
                                 $('#btn-send-to').prop("disabled", false);
                                 $("#btn-send-to").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_bonus_thr_report.btn_send_to") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_XLS"){
@@ -711,7 +642,7 @@
                             error: function(response){
                                 $('#btn-send-to').prop("disabled", false);
                                 $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_bonus_thr_report.btn_send_to") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);
@@ -724,18 +655,18 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/dumtk/print') }}",
+                            url: "{{ url('payroll/bonus_thr_report/print') }}",
                             type: "POST",
-                            data: $('#dumtk_form').serialize(),
+                            data: $('#bonus_thr_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send-to').prop("disabled", false);
                                 $("#btn-send-to").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_bonus_thr_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-preview').prop("disabled", false);
                                 $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_dumtk.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_bonus_thr_report.btn_preview") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_PDF"){
@@ -778,17 +709,13 @@
                                 }
                             },
                             error: function(response){
-                                $('#btn-send').prop("disabled", false);
-                                $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
-                                );
                                 $('#btn-send-to').prop("disabled", false);
                                 $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_dumtk.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_bonus_thr_report.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);
                                 $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_dumtk.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_bonus_thr_report.btn_preview") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);
