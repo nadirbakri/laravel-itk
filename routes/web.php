@@ -929,6 +929,7 @@ Route::get('account/api', 'DataController@dataAccountAPI');
 Route::get('account_edit/api', 'DataController@dataEditAccountAPI');
 Route::get('claim_code/api', 'DataController@dataClaimCodeAPI');
 Route::get('claim_code/func/api', 'DataController@dataClaimCodeFunctionAPI');
+Route::get('report_format/api', 'DataController@dataReportFormatAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

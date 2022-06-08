@@ -106,17 +106,16 @@
 </head>
 
 <body>
-    <div class="div-form">
-        <form id="bonus_thr_report_form" method="post">
-            @csrf
-            <div class="div-payroll">
-                <div class="div-title">
-                    <a href="{{ url('payroll') }}" target="iframe_dashboard">
-                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_bonus_thr_report.list') }}</span>
-                    </a>
-                </div>
-
+    <div class="div-payroll">
+        <div class="div-title">
+            <a href="{{ url('payroll') }}" target="iframe_dashboard">
+                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                <span class="title-text">{{ __('payroll_bonus_thr_report.list') }}</span>
+            </a>
+        </div>
+        <div class="div-form">
+            <form id="bonus_thr_report_form" method="post">
+                @csrf
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
@@ -172,7 +171,7 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="employee_no_from form-check-label">{{ __('payroll_bonus_thr_report.label_employee_no') }}</label>
+                            <label for="employee_no_from">{{ __('payroll_bonus_thr_report.label_employee_no') }}</label>
                             <span style="color: red">*</span>
                         </div>
                     </div>
@@ -183,7 +182,7 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="employee_no_to form-check-label">{{ __('payroll_bonus_thr_report.label_to') }}</label>
+                            <label for="employee_no_to">{{ __('payroll_bonus_thr_report.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
@@ -241,8 +240,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">

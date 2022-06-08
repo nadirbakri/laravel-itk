@@ -9754,10 +9754,59 @@ class PersonelController extends Controller
         return Excel::download(new EmployeeSkillReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Skill Report.xlsx');
     }
 
-    public function printEmployeeCardPersonel(Request $request)
-    {
-        return Excel::download(new EmployeeCardExport($request->employee_no_from, $request->employee_no_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, isset($request->family) ? (bool) $request->family : false, isset($request->training_records) ? (bool) $request->training_records : false, isset($request->formal_education) ? (bool) $request->formal_education : false, 
-        isset($request->historical_jobs) ? (bool) $request->historical_jobs : false, isset($request->language) ? (bool) $request->language : false, isset($request->work_experience) ? (bool) $request->work_experience : false, isset($request->organization) ? (bool) $request->organization : false, isset($request->award) ? (bool) $request->award : false, isset($request->project_experience) ? (bool) $request->project_experience : false, isset($request->sanction) ? (bool) $request->sanction : false), 'Employee Card Report.xlsx');
+    public function printEmployeeCardPersonel(Request $request){
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'recordStatus' => 'A',
+                'employeeNo' => '0809',
+                'companyCode' => Session::get('companyCode'),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            // if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+            //     $param['employeeNoFrom'] = $request->employee_no_from;
+            //     $param['employeeNoTo'] = $request->employee_no_to;
+            // }
+
+            $response = $client->post(env('API_URL').'/pemaster/getpemasterdetail', [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if ($arrResult->dataListSet[0] !== null)
+        {
+            $arraySend[] = $arrResult->dataListSet[0];
+        } else {
+            $arraySend[] = [];
+        }
+
+        if($arrResult->dataListSet[0] == null){
+            $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Employee Card Report.pdf');
+        }else{
+            $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Employee Card Report.pdf');
+        }
     }
 
     public function printEvaluationReportPersonel(Request $request)
