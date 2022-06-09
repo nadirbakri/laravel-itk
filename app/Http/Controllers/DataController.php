@@ -2409,7 +2409,11 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($search == ''){
-	    	$position = $arrResult->dataListSet;
+			if($request->positionCode == ''){
+				$position = '';
+			}else{
+				$position = $arrResult->dataListSet;
+			}	    	
 	    }else{
 	    	$position = array_filter(
 	    		$arrResult->dataListSet,
@@ -4060,7 +4064,12 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($search == ''){
-	    	$ranking = $arrResult->dataListSet;
+			if($request->rankingCode == ''){
+				$ranking = '';
+			}else{
+				$ranking = $arrResult->dataListSet;
+			}
+	    	
 	    }else{
 	    	$ranking = array_filter(
 	    		$arrResult->dataListSet,

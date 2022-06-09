@@ -666,6 +666,9 @@ Route::get('medical/input_limit', 'MedicalController@pageInputLimit');
 Route::get('medical/input_personnel_limit', 'MedicalController@pageInputPersonnelLimit');
 Route::get('medical/input_personnel_limit_all_employee', 'MedicalController@pageInputPersonnelLimitAllEmployee');
 Route::get('medical/treatment_eligibility', 'MedicalController@pageTreatmentEligibility');
+Route::get('medical/claim_list', 'MedicalController@pageClaimList');
+Route::get('medical/claim_transaction', 'MedicalController@pageClaimTransaction');
+Route::get('medical/claim_payment_transaction', 'MedicalController@pageClaimPaymentTransaction');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -695,6 +698,7 @@ Route::post('medical/input_limit/proses', 'MedicalController@prosesInputLimitMD'
 Route::post('medical/input_personnel_limit/proses', 'MedicalController@prosesInputPersonnelLimitMD');
 Route::post('medical/input_personnel_limit_all_employee/proses', 'MedicalController@prosesInputPersonnelLimitAllEmployeeMD');
 Route::post('medical/treatment_eligibility/proses', 'MedicalController@prosesTreatmentEligibilityMD');
+Route::post('medical/claim_list/proses', 'MedicalController@prosesClaimListMD');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');

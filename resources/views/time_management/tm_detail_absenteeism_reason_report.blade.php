@@ -400,6 +400,23 @@
             });
         }
 
+        $('#detail_absenteeism_reason_report_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#detail_absenteeism_reason_report_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         $('input[name="absent_code"]').on('change', function () {
             $('input[name="' + this.name + '"]').not(this).prop('checked', false);
             var rows = table.rows({ 'search': 'applied' }).nodes();
@@ -427,6 +444,7 @@
             var data = table.rows('.selected').data().toArray();
             var data2 = table.row(this.closest('tr')).data();
             var result = [];
+            console.log(data);
             
             if(!this.checked){
                 data = data.filter(obj => obj.absentCode !== data2.absentCode);
