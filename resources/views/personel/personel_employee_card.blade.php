@@ -760,23 +760,24 @@
                         type: "POST",
                         data: $('#employee_card_form').serialize(),
                         success: function (result, status, xhr) {
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_card.btn_print") }}'
+                            );
+                            
+                            var disposition = xhr.getResponseHeader('content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
+                            var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
-                            // The actual download
                             var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                type: 'application/pdf'
                             });
+
                             var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                            const url = URL.createObjectURL(blob);
+                            link.href = window.open(url, "_blank");
 
                             document.body.appendChild(link);
-
-                            link.click();
                             document.body.removeChild(link);
                         },
                         error: function (response) {
@@ -791,34 +792,6 @@
                 }
             })
         }
-        
-        /*var items = [{
-                $('<div class="row">' +
-                '<div class="col-6"><b>Family</b></div>' +
-                '<div class="col-6"><b>Training Records</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Formal Education</b></div>' +
-                '<div class="col-6"><b>Historical Jobs</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Language</b></div>' +
-                '<div class="col-6"><b>Work Experience</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Organization</b></div>' +
-                '<div class="col-6"><b>Award</b></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-6"><b>Project Experience</b></div>' +
-                '<div class="col-6"><b>Sanction</b></div>' +
-                '</div>'
-        }];*/
-            
-        // $('#include_list').ejDropDownList({
-        //     dataSource: items,
-        //     showCheckbox : true
-        // });
     });
 </script>
 
