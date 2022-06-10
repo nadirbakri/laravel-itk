@@ -5663,17 +5663,17 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printPaymentSlipPayroll(Request $request){
         try{
-            // var_dump($request->all());
+            // var_dump(json_encode($request->all()));
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
+                'Authorization' => 'Bearer ' . (empty(Session::get('token')) ? $request->token : Session::get('token')) ]
             ]);
 
             $param = [
-                'companyCode' => Session::get('companyCode'),
-                'languageCode' =>App::getLocale(),
+                'companyCode' => (empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode')),
+                'languageCode' => (empty(App::getLocale()) ? $request->languageCode : App::getLocale()),
                 'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => (empty(Session::get('userID')) ? $request->sessionUserID : Session::get('userID'))
             ];
 
             if(!empty($request->slip_type)){

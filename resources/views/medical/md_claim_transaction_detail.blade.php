@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('md_treatment_eligibility.judul') }}</title>
+    <title>{{ __('md_claim_transaction.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -86,18 +86,18 @@
 <body>
     <div class="div-medical">
         <div class="div-title">
-            <a href="{{ url('medical/treatment_eligibility') }}" target="iframe_dashboard">
+            <a href="{{ url('medical/claim_transaction') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('md_treatment_eligibility.list_detail') }}</span>
+                <span class="title-text">{{ __('md_claim_transaction.list_detail') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="treatment_eligibility_form" method="post">
+            <form id="claim_transaction_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="position">{{ __('md_treatment_eligibility.label_position') }}</label>
+                            <label for="position">{{ __('md_claim_transaction.label_position') }}</label>
                             <select class="form-control" id="position" name="position"
                                 placeholder="{{ __('md_treatment_eligibility.label_position') }}"> </select>
                         </div>

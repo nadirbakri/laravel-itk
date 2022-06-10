@@ -330,6 +330,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var table = null;
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         loadDataEmployeeNo('#employee_no_from');
@@ -533,7 +534,8 @@
                                 '<i class="fa fa-filter"></i> {{ __("md_claim_list.btn_filter") }}'
                             );
 
-                            $('#claim_list_table').DataTable().destroy();
+                            // $('#claim_list_table').DataTable().destroy();
+                            table.clear().draw();
                             
                             if(!isEmpty(response)){
                                 $.each(response, function(k, v) {

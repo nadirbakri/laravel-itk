@@ -1112,47 +1112,6 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'positionCode' => isset($request->position_det) ? $request->position_det : '',
-                    'rankingCode' => isset($request->ranking_det) ? $request->ranking_det : '',
-                    'serviceMonth' => (int) $request->service_month,
-                    'currencyCode' => $request->currency_code_det,
-                    'claimCode' => $request->claim_code_det,
-                    'maxLimitPerYear' => (int) $request->limit_per_year,
-                    'maxPctOfSalaryPerYear' => (int) $request->limit_per_year_salary,
-                    'additionalLimitForWife' => (int) $request->additional_for_wife,
-                    'additionalLimitForChild1' => (int) $request->additional_for_child1,
-                    'additionalLimitForChild2' => (int) $request->additional_for_child2,
-                    'additionalLimitForChild3' => (int) $request->additional_for_child3,
-                    'additionalLimitForChild4' => (int) $request->additional_for_child4,
-                    'additionalLimitForChild5' => (int) $request->additional_for_child5,
-                    'maxLimitPerClaim' => (int) $request->limit_per_claim,
-                    'maxPctOfSalaryPerClaim' => (int) $request->limit_per_claim_salary,
-                    'maxLimitPerMonthForSingleEmployee' => (int) $request->for_single_employee,
-                    'maxPctOfSalaryPerMonthForSingleEmployee' => (int) $request->for_single_employee_salary,
-                    'maxLimitPerMonthForMarriedEmployee' => (int) $request->for_married_employee,
-                    'maxPctOfSalaryPerMonthForMarriedEmployee' => (int) $request->for_married_employee_salary,
-                    'flagLimitByFrequency' => ($request->check_limit_by_frequency == "true") ? (bool) $request->check_limit_by_frequency : false,
-                    'frequencyClaim' => (int) $request->claim_frequency,
-                    'frequencyClaimPeriod' => (int) $request->claim_frequency_year,
-                    'negativeTolerancePercentage' => (int) $request->minus_percentage,
-                    'positiveTolerancePercentage' => (int) $request->plus_percentage,
-                    "changedNo" => 0,
-                    "changedBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "languageCode" => App::getLocale(),
-                    "sessionID" => 0,
-                    "sessionCompanyCode" => Session::get('companyCode'),
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
-                ]
-                ));
-
             if ($request->record_function === 'New') {
                 $response = $client->post(env('API_URL') . '/mdcompanyinputlimit/insertmdcompanyinputlimit',
                     ['body' => json_encode(
@@ -1202,6 +1161,7 @@ class MedicalController extends Controller
                 $response = $client->put(env('API_URL') . '/mdcompanyinputlimit/updatemdcompanyinputlimit',
                     ['body' => json_encode(
                         [
+                            'recordStatus' => 'A',
                             'companyCode' => Session::get('companyCode'),
                             'positionCode' => isset($request->position_det) ? $request->position_det : '',
                             'rankingCode' => isset($request->ranking_det) ? $request->ranking_det : '',

@@ -520,7 +520,7 @@
             $('#plus_percentage').val("");
             $('#position').attr("disabled", false); 
             $('#ranking').attr("disabled", false);
-            $('#service_month').prop('disabled', false);
+            $('#service_month').prop('readonly', false);
             $('#claim_code').attr("disabled", false); 
             $('#currency_code').attr("disabled", false); 
         } else if (func == 'edit') {
@@ -595,7 +595,7 @@
             $('#plus_percentage').val("{{ isset($data[0]->positiveTolerancePercentage) ? $data[0]->positiveTolerancePercentage : '' }}");
             $('#position').attr("disabled", true); 
             $('#ranking').attr("disabled", true);
-            $('#service_month').prop('disabled', true);
+            $('#service_month').prop('readonly', true);
             $('#claim_code').attr("disabled", true); 
             $('#currency_code').attr("disabled", true); 
         }

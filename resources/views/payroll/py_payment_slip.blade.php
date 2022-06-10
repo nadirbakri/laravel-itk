@@ -632,6 +632,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+                    // console.log($('#payment_slip_form').serialize());
                     $.ajax({
                         xhrFields: {
                             responseType: 'blob',
