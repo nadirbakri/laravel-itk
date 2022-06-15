@@ -124,7 +124,7 @@
 				<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
 					<div class="color-active"></div>
 					<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
-					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.png') }}" class="image-hover" alt="{{ $menu['title'] }}">
+					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
 					<span>{{ $menu['title'] }}</span>
 					<span class="tooltiptext">{{ $menu['title'] }}</span>
 				</a>

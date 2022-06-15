@@ -116,7 +116,6 @@
                         <span class="title-text">{{ __('md_claim_list.list') }}</span>
                     </a>
                 </div>
-
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">

@@ -353,6 +353,41 @@ class MedicalController extends Controller
         }
     }
 
+    public function tableClaimTransactionMD()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/claimtransaction/getclaimtransaction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function dataDetailClaimCodeMD(Request $request)
     {
         try {
@@ -688,6 +723,51 @@ class MedicalController extends Controller
         return view('medical.md_treatment_eligibility_detail', ['data' => $data, 'data_ref' => $data_ref, 'func' => $request->func]);
     }
 
+    public function dataDetailClaimTransaction(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // $response = $client->post(env('API_URL') . '/claimtransaction/getclaimtransaction',
+            //     ['body' => json_encode(
+            //         [
+            //             'companyCode' => Session::get('companyCode'),
+            //             'employeeNo' => $request->employeeNo,
+            //             'claimDate' => $request->claimDate,
+            //             'seqNo' => (int) $request->seqNo,
+            //             'userID' => Session::get('userID'),
+            //             'logActionUserID' => Session::get('userID'),
+            //             'logActionUsername' => Session::get('userName')
+            //         ]
+            //     )]
+            // );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        // $arrResult = json_decode($response->getBody()->getContents());
+        
+        // if($arrResult->dataListSet == null){
+        //     $data = [];
+        // }else{
+        //     $data = $arrResult->dataListSet;
+        // }
+        $data = [];
+
+        return view('medical.md_claim_transaction_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
     public function prosesClaimCodeMD(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -710,7 +790,6 @@ class MedicalController extends Controller
                             "flagMustHaveFamily" => isset($request->check_must_have_family) ? (bool) $request->check_must_have_family : false,
                             "flagAllowClaimForFamily" => isset($request->check_allow_claim_to_family) ? (bool) $request->check_allow_claim_to_family : false,
                             "flagAllowClaimForCompany" => isset($request->check_allow_claim_to_company) ? (bool) $request->check_allow_claim_to_company : false,
-                            "flagAllowClaimForInsurance" => isset($request->check_allow_claim_to_insurance) ? (bool) $request->check_allow_claim_to_insurance : false,
                             "companyMedicalLimitType" => $request->limit_type,
                             "paymentFromRemainingLimit" => (int) $request->payment,
                             "changedNo" => 0,
@@ -742,7 +821,6 @@ class MedicalController extends Controller
                             "flagMustHaveFamily" => isset($request->check_must_have_family) ? (bool) $request->check_must_have_family : false,
                             "flagAllowClaimForFamily" => isset($request->check_allow_claim_to_family) ? (bool) $request->check_allow_claim_to_family : false,
                             "flagAllowClaimForCompany" => isset($request->check_allow_claim_to_company) ? (bool) $request->check_allow_claim_to_company : false,
-                            "flagAllowClaimForInsurance" => isset($request->check_allow_claim_to_insurance) ? (bool) $request->check_allow_claim_to_insurance : false,
                             "companyMedicalLimitType" => $request->limit_type,
                             "paymentFromRemainingLimit" => (int) $request->payment,
                             "changedNo" => 0,
@@ -1778,5 +1856,64 @@ class MedicalController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function checkNumberClaimTransactionMedical(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->employeeNo)){
+                $response = $client->post(env('API_URL') . "/claimtransaction/getclaimtransaction",
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'claimDate' => $request->claimDate,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . $request->url,
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $number = 1;
+        }else{
+            if(isset($arrResult->dataListSet[0]->sequenceNo)){
+                $number = max(array_column($arrResult->dataListSet, 'sequenceNo')) + 1;
+            }else if(isset($arrResult->dataListSet[0]->seqNo)){
+                $number = max(array_column($arrResult->dataListSet, 'seqNo')) + 1;
+            }
+        }
+
+        return response()->json($number);
     }
 }

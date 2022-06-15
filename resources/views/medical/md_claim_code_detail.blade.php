@@ -172,17 +172,6 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label for="check_allow_claim_to_insurance">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="check_allow_claim_to_insurance"
-                                    name="check_allow_claim_to_insurance" value="true">
-                                <label
-                                    for="check_allow_claim_to_insurance">{{ __('md_claim_code.label_allow_claim_to_insurance') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
                             <label for="check_allow_claim_to_family">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_allow_claim_to_family"
@@ -289,7 +278,7 @@
             $('#check_include_disease').prop('checked', false);
             $('#check_process_to_payroll').prop('checked', false);
             $('#check_must_have_family').prop('checked', false);
-            $('#check_allow_claim_to_insurance').prop('checked', false);
+            // $('#check_allow_claim_to_insurance').prop('checked', false);
             $('#check_allow_claim_to_family').prop('checked', false);
             $('#check_allow_claim_to_company').prop('checked', false);
             $('#limit_type').val(null).trigger('change');
@@ -324,12 +313,12 @@
             }else{
                 $('#check_allow_claim_to_company').prop('checked', false);
             }
-            var allow_claim_to_insurance = "{{ isset($data[0]->flagAllowClaimForInsurance) ? $data[0]->flagAllowClaimForInsurance : '' }}";
-            if(allow_claim_to_insurance == 1) {
-                $('#check_allow_claim_to_insurance').prop('checked', true);
-            }else{
-                $('#check_allow_claim_to_insurance').prop('checked', false);
-            }
+            // var allow_claim_to_insurance = "{{ isset($data[0]->flagAllowClaimForInsurance) ? $data[0]->flagAllowClaimForInsurance : '' }}";
+            // if(allow_claim_to_insurance == 1) {
+            //     $('#check_allow_claim_to_insurance').prop('checked', true);
+            // }else{
+            //     $('#check_allow_claim_to_insurance').prop('checked', false);
+            // }
             var allow_claim_to_family = "{{ isset($data[0]->flagAllowClaimForFamily) ? $data[0]->flagAllowClaimForFamily : '' }}";
             if(allow_claim_to_family == 1) {
                 $('#check_allow_claim_to_family').prop('checked', true);

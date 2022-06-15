@@ -23,6 +23,9 @@ return [
     'label_position' => 'Jabatan',
     'label_ranking' => 'Peringkat',
     'label_location' => 'Lokasi',
+    'label_show_type' => 'Tipe Tampilan',
+    'label_input_type_show_code' => 'Tampilkan Kode',
+    'label_input_type_show_description' => 'Tampilkan Deskripsi',
     'btn_print' => 'Cetak'
 
 ];

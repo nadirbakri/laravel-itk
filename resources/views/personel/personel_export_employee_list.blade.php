@@ -22,6 +22,8 @@
 				<th>No</th>
 				<th>Employee No</th>
 				<th>Employee Name</th>
+				<th>Tax No</th>
+				<th>ID Card No</th>
 				<th>Employee Address</th>
                 <th>City</th>
                 <th>Phone No</th>
@@ -44,19 +46,21 @@
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
+				<td></td>
+				<td></td>
 				<td>{{ $value->homeAddress }}</td>
 				<td>{{ $value->cityName }}</td>
                 <td>{{ $value->homePhone }}</td>
                 <td>{{ $value->homeZIpCode }}</td>
                 <td>{{ $value->gender }}</td>
-                <td>{{ $value->birthDate }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->birthDate)) }}</td>
                 <td>{{ $value->religion }}</td>
-                <td>{{ $value->joinDate }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->joinDate)) }}</td>
                 <td>{{ $value->maritalStatus }}</td>
                 <td>{{ $value->dependent }}</td>
-                <td>{{ $value->ranking }}</td>
-                <td>{{ $value->position }}</td>
-                <td>{{ $value->location }}</td>
+                <td>{{ ($type == "code") ? $value->rankingCode : $value->ranking }}</td>
+                <td>{{ ($type == "code") ? $value->positionCode : $value->position }}</td>
+                <td>{{ ($type == "code") ? $value->locationCode : $value->location }}</td>
 			</tr>
 			@endforeach
 		</tbody>

@@ -97,75 +97,121 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="position">{{ __('md_claim_transaction.label_position') }}</label>
-                            <select class="form-control" id="position" name="position"
-                                placeholder="{{ __('md_treatment_eligibility.label_position') }}"> </select>
+                            <label for="employee_no">{{ __('md_claim_transaction.label_employee_no') }}</label>
+                            <span class="required">*</span>
+                            <select class="form-control select2" id="employee_no" name="employee_no" disabled></select>
                         </div>
-                        <input type="hidden" class="form-control" id="position_det" name="position_det">
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
+                        <input type="hidden" class="form-control" id="employee_no_det" name="employee_no_det">
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="ranking">{{ __('md_treatment_eligibility.label_ranking') }}</label>
-                            <select class="form-control" id="ranking" name="ranking"
-                                placeholder="{{ __('md_treatment_eligibility.label_ranking') }}"> </select>
-                        </div>
-                        <input type="hidden" class="form-control" id="ranking_det" name="ranking_det">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="service_month">{{ __('md_treatment_eligibility.label_service_month') }}</label>
-                            <input type="number" class="form-control" min="0" id="service_month" name="service_month"
-                                placeholder="{{ __('md_treatment_eligibility.label_service_month') }}">
+                            <label for="claim_date">{{ __('md_claim_transaction.label_claim_date') }}</label>
+                            <span class="required">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="claim_date" name="claim_date"
+                                    placeholder="{{ __('md_claim_transaction.label_claim_date') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="claim_date_calendar"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="claim_code">{{ __('md_treatment_eligibility.label_claim_code') }}</label>
+                            <label for="seq_no">{{ __('md_claim_transaction.label_seq_no') }}</label>
+                            <input type="text" class="form-control" id="seq_no" name="seq_no"
+                                placeholder="{{ __('md_claim_transaction.label_seq_no') }}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="claim_to">{{ __('md_claim_transaction.label_claim_to') }}</label>
+                            <select class="form-control" id="claim_to" name="claim_to"
+                                placeholder="{{ __('md_claim_transaction.label_claim_to') }}"> </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="receipt_date">{{ __('md_claim_transaction.label_receipt_date') }}</label>
+                            <span class="required">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="receipt_date" name="receipt_date"
+                                    placeholder="{{ __('md_claim_transaction.label_receipt_date') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="receipt_date_calendar"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="claim_for">{{ __('md_claim_transaction.label_claim_for') }}</label>
+                            <select class="form-control" id="claim_for" name="claim_for"
+                                placeholder="{{ __('md_claim_transaction.label_claim_for') }}"> </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="dependent_name">{{ __('md_claim_transaction.label_dependent_name') }}</label>
+                            <select class="form-control" id="dependent_name" name="dependent_name"
+                                placeholder="{{ __('md_claim_transaction.label_dependent_name') }}" disabled> </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="claim_currency">{{ __('md_claim_transaction.label_claim_currency') }}</label>
+                            <select class="form-control" id="claim_currency" name="claim_currency"
+                                placeholder="{{ __('md_claim_transaction.label_claim_currency') }}"> </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="claim_code">{{ __('md_claim_transaction.label_claim_code') }}</label>
                             <select class="form-control" id="claim_code" name="claim_code"
-                                placeholder="{{ __('md_treatment_eligibility.label_claim_code') }}"> </select>
-                        </div>
-                        <input type="hidden" class="form-control" id="claim_code_det" name="claim_code_det">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <h5
-                                for="eligibility">{{ __('md_treatment_eligibility.label_eligibility') }}</h5>
+                                placeholder="{{ __('md_claim_transaction.label_claim_code') }}"> </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="minimum_age">{{ __('md_treatment_eligibility.label_minimum_age') }}</label>
-                            <input type="number" class="form-control" min="0" id="minimum_age" name="minimum_age"
-                                placeholder="{{ __('md_treatment_eligibility.label_minimum_age') }}">
+                            <label for="claim_amount">{{ __('md_claim_transaction.label_claim_amount') }}</label>
+                            <input type="number" class="form-control" min="0" id="claim_amount" name="claim_amount"
+                                placeholder="{{ __('md_claim_transaction.label_claim_amount') }}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="disease_code">{{ __('md_claim_transaction.label_disease_code') }}</label>
+                            <select class="form-control" id="disease_code" name="disease_code"
+                                placeholder="{{ __('md_claim_transaction.label_disease_code') }}"> </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="claim_remarks">{{ __('md_claim_transaction.label_claim_remarks') }}</label>
+                            <input type="text" class="form-control" id="claim_remarks" name="claim_remarks"
+                                placeholder="{{ __('md_claim_transaction.label_claim_remarks') }}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="payment_for_employee">{{ __('md_treatment_eligibility.label_payment_for_employee') }}</label>
-                            <input type="number" class="form-control" min="0" max="100" id="payment_for_employee" name="payment_for_employee"
-                                placeholder="{{ __('md_treatment_eligibility.label_payment_for_employee') }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="payment_for_family">{{ __('md_treatment_eligibility.label_payment_for_family') }}</label>
-                            <input type="number" class="form-control" min="0" max="100" id="payment_for_family" name="payment_for_family"
-                                placeholder="{{ __('md_treatment_eligibility.label_payment_for_family') }}">
+                            <label for="claim_status">{{ __('md_claim_transaction.label_claim_status') }}</label>
+                            <input type="text" class="form-control" id="claim_status" name="claim_status"
+                                placeholder="{{ __('md_claim_transaction.label_claim_status') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -173,13 +219,13 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('md_treatment_eligibility.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('md_claim_transaction.btn_save') }}
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('medical/treatment_eligibility') }}" target="iframe_dashboard"
+                        <a class="btn btn-primary" href="{{ url('medical/claim_transaction') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('md_treatment_eligibility.btn_cancel') }}
+                            <i class="fa fa-times-circle"></i> {{ __('md_claim_transaction.btn_cancel') }}
                         </a>
                     </div>
                 </div>
@@ -212,7 +258,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('md_treatment_eligibility.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('md_claim_transaction.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -240,61 +286,86 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
-        var arrDataRef = @json($data_ref);
 
         if (func == 'new') {
-            if(arrDataRef[0].eligibleBy == "P"){
-                $('#position').attr("disabled", false);
-                $('#ranking').attr("disabled", true);
-            }else if(arrDataRef[0].eligibleBy == "R"){
-                $('#position').attr("disabled", true);
-                $('#ranking').attr("disabled", false);
-            }else if(arrDataRef[0].eligibleBy == "B"){
-                $('#position').attr("disabled", false);
-                $('#ranking').attr("disabled", false);
-            }else{
-                $('#position').attr("disabled", true);
-                $('#ranking').attr("disabled", true);
-            }
-            
             $('#record_function').val("New");
-            $('#position').val(null).trigger('change');
-            $('#ranking').val(null).trigger('change');
-            $('#service_month').val("0");
+            $('#employee_no').val(null).trigger('change');
+            $('#employee_no_det').val("");
+            $('#claim_date').val("");
+            $('#seq_no').val("");
+            $('#claim_to').val(null).trigger('change');
+            $('#receipt_date').val("");
+            $('#claim_for').val(null).trigger('change');
+            $('#dependent_name').val(null).trigger('change');
+            $('#claim_currency').val(null).trigger('change');
             $('#claim_code').val(null).trigger('change');
-            $('#position_det').val("");
-            $('#ranking_det').val("");
-            $('#claim_code_det').val("");
-            $('#minimum_age').val("0");
-            $('#payment_for_employee').val("0");
-            $('#payment_for_family').val("0");
-            $('#service_month').prop('readonly', false);
-            $('#claim_code').attr("disabled", false);
+            $('#claim_amount').val("0");
+            $('#disease_code').val(null).trigger('change');
+            $('#claim_remarks').val("");
+            $('#claim_status').val("N");
+            $('#claim_date').prop('readonly', false);
+            $('#seq_no').prop('readonly', false);
+            $('#employee_no').attr("disabled", false);
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
             $.ajax({
                 type: 'GET',
-                url: '/position/detail/api',
+                url: '/employee_no/req_detail/api',
                 data: {
-                    'positionCode' : "{{ isset($data[0]->positionCode) ? $data[0]->positionCode : '' }}"
+                    'employeeNo' : "{{ isset($data[0]->employeeNo) ? $data[0]->employeeNo : '' }}"
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .positionCode).text(data2[0].positionName);
-                $("#position").append($newOption).trigger('change');
-                $('#position_det').val(data2[0].positionCode);
+                    .employeeNo).text(data2[0].fullName);
+                $("#employee_no").append($newOption).trigger('change');
+                $('#employee_no_det').val(data2[0].employeeNo);
+            });
+            $('#claim_date').val("{{ isset($data[0]->claimDate) ? $data[0]->claimDate : '' }}");
+            $('#seq_no').val("{{ isset($data[0]->seqNo) ? $data[0]->seqNo : '' }}");
+            $.ajax({
+                type: 'GET',
+                url: '/claim_to/func/api',
+                data: {
+                    'claimTo' : "{{ isset($data[0]->claimTo) ? $data[0]->claimTo : '' }}"
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .comGenCode).text(data2[0].value);
+                $("#claim_to").append($newOption).trigger('change');
+            });
+            $('#receipt_date').val("{{ isset($data[0]->receiptDate) ? $data[0]->receiptDate : '' }}");
+            $.ajax({
+                type: 'GET',
+                url: '/claim_for/func/api',
+                data: {
+                    'claimFor' : "{{ isset($data[0]->claimFor) ? $data[0]->claimFor : '' }}"
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .comGenCode).text(data2[0].value);
+                $("#claim_for").append($newOption).trigger('change');
             });
             $.ajax({
                 type: 'GET',
-                url: '/ranking/detail/api',
+                url: '/dependents/func/api',
                 data: {
-                    'rankingCode' : "{{ isset($data[0]->rankingCode) ? $data[0]->rankingCode : '' }}"
+                    'dependentName' : "{{ isset($data[0]->dependentName) ? $data[0]->dependentName : '' }}"
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .rankingCode).text(data2[0].rankingName);
-                $("#ranking").append($newOption).trigger('change');
-                $('#ranking_det').val(data2[0].rankingCode);
+                    .dependentName).text(data2[0].dependentName);
+                $("#dependent_name").append($newOption).trigger('change');
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/rate_type/func/api',
+                data: {
+                    'transactionRateTypeCode' : "{{ isset($data[0]->claimCurrencyCoe) ? $data[0]->claimCurrencyCoe : '' }}"
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .comGenCode).text(data2[0].value);
+                $("#claim_currency").append($newOption).trigger('change');
             });
             $.ajax({
                 type: 'GET',
@@ -306,16 +377,24 @@
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
                     .claimCode).text(data2[0].claimCode);
                 $("#claim_code").append($newOption).trigger('change');
-                $('#claim_code_det').val(data2[0].claimCode);
             });
-            $('#service_month').val("{{ isset($data[0]->serviceMonth) ? $data[0]->serviceMonth : '' }}");
-            $('#minimum_age').val("{{ isset($data[0]->minAge) ? $data[0]->minAge : '' }}");
-            $('#payment_for_employee').val("{{ isset($data[0]->paymentPctForEmployee) ? $data[0]->paymentPctForEmployee : '' }}");
-            $('#payment_for_family').val("{{ isset($data[0]->paymentPctForFamily) ? $data[0]->paymentPctForFamily : '' }}");
-            $('#position').attr("disabled", true); 
-            $('#ranking').attr("disabled", true);
-            $('#service_month').prop('readonly', true);
-            $('#claim_code').attr("disabled", true); 
+            $('#claim_amount').val("{{ isset($data[0]->claimAmount) ? $data[0]->claimAmount : '' }}");
+            $.ajax({
+                type: 'GET',
+                url: '/disease_code/func/api',
+                data: {
+                    'diseaseCode' : "{{ isset($data[0]->diseaseCode) ? $data[0]->diseaseCode : '' }}"
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .claimCode).text(data2[0].claimCode);
+                $("#disease_code").append($newOption).trigger('change');
+            });
+            $('#claim_remarks').val("{{ isset($data[0]->claimRemarks) ? $data[0]->claimRemarks : '' }}");
+            $('#claim_status').val("{{ isset($data[0]->claimStatus) ? $data[0]->claimStatus : '' }}");
+            $('#employee_no').attr("disabled", true); 
+            $('#claim_date').prop('readonly', true);
+            $('#seq_no').prop('readonly', true);
         }
 
         function htmlDecode(value) {
@@ -323,41 +402,36 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('medical/treatment_eligibility') }}";
+            window.location = "{{ url('medical/claim_transaction') }}";
         });
 
-        $('#position').on("select2:select", function (e) {
-            var data = $('#position').select2('data');
-            $('#position_det').val(data[0].id);
+        $('#employee_no').on("select2:select", function (e) {
+            var data = $('#employee_no').select2('data');
+            $('#employee_no_det').val(data[0].id);
         });
 
-        $('#position').on("select2:unselecting", function (e) {
-            $('#position_det').val('');
+        $('#employee_no').on("select2:unselecting", function (e) {
+            $('#employee_no_det').val('');
         });
 
-        $('#ranking').on("select2:select", function (e) {
-            var data = $('#ranking').select2('data');
-            $('#ranking_det').val(data[0].id);
+        $('#claim_for').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "F"){
+                $('#dependent_name').attr("disabled", false); 
+            }else{
+                $('#dependent_name').attr("disabled", true); 
+            }
         });
 
-        $('#ranking').on("select2:unselecting", function (e) {
-            $('#ranking_det').val('');
-        });
-
-        $('#claim_code').on("select2:select", function (e) {
-            var data = $('#claim_code').select2('data');
-            $('#claim_code_det').val(data[0].id);
-        });
-
-        $('#claim_code').on("select2:unselecting", function (e) {
-            $('#claim_code_det').val('');
-        });
-
-        loadDataPositionCode();
-        loadDataRankingCode();
+        loadDataEmployeeNo();
+        loadDataClaimTo();
+        loadDataClaimFor();
+        loadDataDependentName();
+        loadDataClaimCurrency();
         loadDataClaimCode();
+        loadDataDiseaseCode();
 
-        function loadDataPositionCode() {
+        function loadDataEmployeeNo() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -365,12 +439,12 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Position Code</b></div>' +
-                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.positionCode + '</div>' +
-                        '<div class="col-6">' + data.data.positionName + '</div>' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -379,9 +453,9 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            var $employeeNo = $('#position').select2({
+            var $employeeNo = $('#employee_no').select2({
                 width: '100%',
-                placeholder: 'Choose Position',
+                placeholder: 'Choose Employee No',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -394,7 +468,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/api',
+                    url: '/employee_no/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -408,8 +482,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.positionName,
-                                    id: item.positionCode,
+                                    text: item.fullName,
+                                    id: item.employeeNo,
                                     data: item
                                 }
                             })
@@ -421,7 +495,7 @@
             });
         }
 
-        function loadDataRankingCode() {
+        function loadDataClaimTo() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -429,12 +503,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Ranking Code</b></div>' +
-                        '<div class="col-6"><b>Ranking Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
-                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '<div class="col-12">' + data.data.value + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -443,9 +512,9 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            var $employeeNo = $('#ranking').select2({
+            var $employeeNo = $('#claim_to').select2({
                 width: '100%',
-                placeholder: 'Choose Ranking',
+                placeholder: 'Choose Claim To',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -458,7 +527,7 @@
                     }
                 },
                 ajax: {
-                    url: '/ranking/api',
+                    url: '/claim_to/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -472,8 +541,190 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.rankingName,
-                                    id: item.rankingCode,
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataClaimFor() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $employeeNo = $('#claim_for').select2({
+                width: '100%',
+                placeholder: 'Choose Claim For',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/claim_for/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataDependentName() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.dependentName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $employeeNo = $('#dependent_name').select2({
+                width: '100%',
+                placeholder: 'Choose Dependent Name',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/dependents_name/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.dependentName,
+                                    id: item.dependentName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataClaimCurrency() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Currency Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.comGenCode + '</div>' +
+                        '<div class="col-6">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $claimCode = $('#claim_currency').select2({
+                width: '100%',
+                placeholder: 'Choose Claim Currency',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/rate_type/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })
@@ -549,30 +800,100 @@
             });
         }
 
+        function loadDataDiseaseCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Disease Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.diseaseCode + '</div>' +
+                        '<div class="col-6">' + data.data.description + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $claimCode = $('#disease_code').select2({
+                width: '100%',
+                placeholder: 'Choose Disease Code',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/disease_code/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.description,
+                                    id: item.diseaseCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#treatment_eligibility_form").submit();
+            $("#claim_transaction_form").submit();
         });
 
-        if ($("#treatment_eligibility_form").length > 0) {
-            $("#treatment_eligibility_form").validate({
+        if ($("#claim_transaction_form").length > 0) {
+            $("#claim_transaction_form").validate({
                 rules: {
-                    service_month: {
+                    employee_no: {
                         required: true,
                     },
-                    claim_code: {
+                    seq_no: {
+                        required: true,
+                    },
+                    claim_date: {
                         required: true,
                     },
                 },
                 messages: {
-                    service_month: {
-                        required: "{{ __('md_treatment_eligibility.service_month_required') }}",
+                    employee_no: {
+                        required: "{{ __('md_claim_transaction.employee_no_required') }}",
                     },
-                    claim_code: {
-                        required: "{{ __('md_treatment_eligibility.claim_code_required') }}",
+                    seq_no: {
+                        required: "{{ __('md_claim_transaction.seq_no_required') }}",
+                    },
+                    claim_date: {
+                        required: "{{ __('md_claim_transaction.claim_date_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -585,7 +906,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("md_treatment_eligibility.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -598,14 +919,14 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('medical/treatment_eligibility/proses') }}",
+                        url: "{{ url('medical/claim_transaction/proses') }}",
                         type: "POST",
-                        data: $('#treatment_eligibility_form').serialize(),
+                        data: $('#claim_transaction_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("md_treatment_eligibility.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -613,12 +934,12 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('medical/treatment_eligibility') }}";
+                                        "{{ url('medical/claim_transaction') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("md_treatment_eligibility.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
@@ -634,7 +955,7 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("md_treatment_eligibility.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
                             );
 
                             $('#notification').modal('show');
