@@ -9918,10 +9918,10 @@ class PersonelController extends Controller
         // var_dump($arrResult->dataListSet[0]);
 
         if($arrResult->dataListSet[0] == null){
-            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Evaluation Report.pdf');
         }else{
-            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Evaluation Report.pdf');
         }
 
