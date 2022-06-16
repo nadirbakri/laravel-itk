@@ -744,6 +744,7 @@
                     'employeeNo': data[0].id
                 },
                 success: function (response) {
+                    console.log(response);
                     $('#npwp_code_current').val(htmlDecode(response[0].mutationView.groupNPWP));
                     $('#company_code_current').val(htmlDecode(response[0].mutationView.companyCode));
                     $('#employee_no_current').val(htmlDecode(response[0].mutationView.employeeNo));

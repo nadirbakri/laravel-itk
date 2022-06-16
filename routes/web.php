@@ -352,7 +352,7 @@ Route::get('personel/competency/reference/remove', 'PersonelController@removeCom
 Route::get('personel/competency/skill/remove', 'PersonelController@removeCompetencySkillPersonel');
 Route::get('personel/competency/project_experience/remove', 'PersonelController@removeCompetencyProjectExperiencePersonel');
 Route::post('personel/competency/training_list/remove', 'PersonelController@removeCompetencyTrainingListPersonel');
-Route::get('personel/employee_attachment/remove', 'PersonelController@removeEmployeeAttachmentPersonel');
+Route::post('personel/employee_attachment/remove', 'PersonelController@removeEmployeeAttachmentPersonel');
 
 Route::get('personel/number/check', 'PersonelController@checkNumberPersonel');
 Route::get('personel_data_detail/number/check', 'PersonelController@checkNumberPersonelDataDetail');

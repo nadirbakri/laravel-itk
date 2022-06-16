@@ -278,7 +278,7 @@
             $.ajax({
                 url: "{{ url('personel/free_format_field/status') }}",
                 type: "GET",
-                data: { 'freeFormatCode' : data[0].freeFormatCode, 'freeFormatFieldType' : data[0].freeFormatFieldType, 'func' : 'A' },
+                data: { 'freeFormatCode' : data[0].freeFormatCode, 'description' : data[0].description, 'freeFormatFieldType' : data[0].freeFormatFieldType, 'func' : 'A' },
                 success: function(response) {
                     if(response.status == "true"){
                         $('#notification_success').modal('show');
@@ -314,7 +314,7 @@
             $.ajax({
                 url: "{{ url('personel/free_format_field/status') }}",
                 type: "GET",
-                data: { 'freeFormatCode' : data[0].freeFormatCode, 'freeFormatFieldType' : data[0].freeFormatFieldType, 'func' : 'D' },
+                data: { 'freeFormatCode' : data[0].freeFormatCode, 'description' : data[0].description, 'freeFormatFieldType' : data[0].freeFormatFieldType, 'func' : 'D' },
                 success: function(response) {
                     if(response.status == "true"){
                         $('#notification_success').modal('show');

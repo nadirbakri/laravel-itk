@@ -21,7 +21,7 @@ return [
     'label_description' => 'Description',
     'label_field_type' => 'Field Type',
     'label_length' => 'Length',
-    'label_list_code' => 'List Code',
+    'label_list_code' => 'List Code (Number)',
     'label_list_value' => 'List Value',
     'free_format_code_required' => 'Free Format Code is Required',
     'field_type_required' => 'Field Type is Required',

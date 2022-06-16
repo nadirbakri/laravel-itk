@@ -318,9 +318,15 @@
     $("#btn-remove").on('click', function () {
         var data = table.rows('.selected').data().toArray();
         if (data.length > 0) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
             $.ajax({
                 url: "{{ url('personel/employee_attachment/remove') }}",
-                type: "GET",
+                type: "POST",
                 data: {
                     'data': data,
                 },

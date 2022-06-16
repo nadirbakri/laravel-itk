@@ -5212,27 +5212,13 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'recordStatus' => $request->func,
-                    'companyCode' => Session::get('companyCode'),
-                    'freeFormatCode' => $request->freeFormatCode,
-                    'freeFormatFieldType' => $request->freeFormatFieldType,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => App::getLocale()
-                ]
-                ));
-
             $response = $client->put(env('API_URL') . '/freeformatfield/updategmfreeformatfield',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
                         'companyCode' => Session::get('companyCode'),
                         'freeFormatCode' => $request->freeFormatCode,
+                        'description' => $request->description,
                         'freeFormatFieldType' => $request->freeFormatFieldType,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
@@ -7738,6 +7724,28 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            var_dump(json_encode(
+                [
+                    'recordStatus' => "A",
+                    'companyCode' => Session::get('companyCode'),
+                    'letterType' => $request->letter_type,
+                    'letterReference' => (int) $request->reference,
+                    'letterDate' => $request->letter_date,
+                    'employeeNo' => $request->employee_no,
+                    "languageID" => strtoupper(App::getLocale()),
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "sessionID" => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => strtoupper(App::getLocale())
+                ]
+                ));
+
             $response = $client->post(env('API_URL') . '/printletter/createletter',
                 ['body' => json_encode(
                     [
@@ -7763,6 +7771,7 @@ class PersonelController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -8578,6 +8587,37 @@ class PersonelController extends Controller
                     'levelCode' => $value
                 ];
             }
+
+            var_dump(json_encode(
+                [
+                    'mutationType' => $request->mutation_type,
+                    'employeeNo' => $request->employee_no,
+                    'remarks' => $request->remarks,
+                    'peMaster' => [
+                        'decreeCode' => $request->decree_code_new,
+                        'decreeNo' => $request->decree_no_new,
+                        'decreeDate' => $request->decree_date_new,
+                        'workLocation' => $request->work_location_new,
+                        'gradeCode' => $request->grade_code_new,
+                        'groupCode' => $request->group_code_new,
+                        'position' => $request->position_new,
+                        'ranking' => $request->ranking_new,
+                        'workNature' => $request->nature_of_work_new,
+                        'costCenterCode' => $request->cost_center_code_new,
+                        'startDate' => $request->start_date_new,
+                        'employmentStatus' => $request->employment_status_new,
+                        'contractDateStart' => $request->contract_start_date_new,
+                        'contractDateEnd' => $request->contract_end_date_new
+                    ],
+                    "masterLevel" => $data_level,
+                    'companyCode' => Session::get('companyCode'),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => strtoupper(App::getLocale())
+                ]
+                ));
 
             $response = $client->post(env('API_URL') . '/mutation/executemutation',
                 ['body' => json_encode(
@@ -9461,8 +9501,6 @@ class PersonelController extends Controller
                 $filename = $value['companyCode'] . '_' . $value['employeeNo'] . '_' . $value['attachmentCode'] . '_' . $value['fileName'] . '.' . $mime_map[$mime_type];
                 File::delete('attachment/'.$filename);
             }
-
-            // var_dump(json_encode($data));
 
             $response = $client->delete(env('API_URL') . '/peattachment/bulkdeletepeattachment',
                 ['body' => json_encode($data)]
