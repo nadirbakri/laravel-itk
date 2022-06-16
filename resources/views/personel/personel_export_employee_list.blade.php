@@ -46,8 +46,8 @@
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
-				<td></td>
-				<td></td>
+				<td>{{ $value->ktp }}</td>
+				<td>{{ $value->npwp }}</td>
 				<td>{{ $value->homeAddress }}</td>
 				<td>{{ $value->cityName }}</td>
                 <td>{{ $value->homePhone }}</td>

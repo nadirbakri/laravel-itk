@@ -9462,6 +9462,8 @@ class PersonelController extends Controller
                 File::delete('attachment/'.$filename);
             }
 
+            // var_dump(json_encode($data));
+
             $response = $client->delete(env('API_URL') . '/peattachment/bulkdeletepeattachment',
                 ['body' => json_encode($data)]
             );
@@ -10292,6 +10294,7 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'seqNo' => (int) $request->seq_no,
                         'employeeNo' => $request->employee_no_detail,
                         'fileName' => $request->file_name,
                         'attachmentCode' => $request->attachment_code,
