@@ -48,7 +48,8 @@
                 <td rowspan="{{ $length_overtime }}">{{ $no++ }}</td>
 				<td rowspan="{{ $length_overtime }}">{{ $value->employeeNo }}</td>
 				<td rowspan="{{ $length_overtime }}">{{ $value->fullName }}</td>
-				@foreach($value->rateOvertime as $value2)
+				@foreach($value->rateOvertime as $key2 => $value2)
+					@if($key2 === array_key_first($value->rateOvertime))
 					<td>{{ date('Y-m-d',strtotime($value2->absentDate)) }}</td>
 					<td>{{ $value2->day }}</td>
 					<td>{{ $value2->statusDay }}</td>
@@ -61,8 +62,25 @@
 					<td>{{ $value2->hourOvtCvt }}</td>
 					<td>{{ $value2->rateHour }}</td>
 					<td>{{ $value2->overtimeRate }}</td>
+					</tr>
+					@else
+					<tr>
+						<td>{{ date('Y-m-d',strtotime($value2->absentDate)) }}</td>
+						<td>{{ $value2->day }}</td>
+						<td>{{ $value2->statusDay }}</td>
+						<td>{{ date('H:i',strtotime($value2->hourOvt)) }}</td>
+						<td>{{ date('H:i',strtotime($value2->totalNormalHour)) }}</td>
+						<td>{{ $value2->xfactor1 }}</td>
+						<td>{{ $value2->xfactor2 }}</td>
+						<td>{{ $value2->xfactor3 }}</td>
+						<td>{{ $value2->xfactor4 }}</td>
+						<td>{{ $value2->hourOvtCvt }}</td>
+						<td>{{ $value2->rateHour }}</td>
+						<td>{{ $value2->overtimeRate }}</td>
+					</tr>
+					@endif
+					
 				@endforeach
-			</tr>
 			@endforeach
 		</tbody>
 	</table>
