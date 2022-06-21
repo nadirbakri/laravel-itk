@@ -323,19 +323,6 @@
 
         load_data_overtime_code();
 
-        // $('select').on('select2:opening select2:closing', function( event ) {
-        //     var $searchfield = $( '#'+event.target.id ).parent().find('.select2-search__field');
-        //     $searchfield.prop('disabled', true);
-        // });
-
-        // $('#employee_no_from').on('select2:open', function (e) {
-        //     html = '<div class="row header-select">' +
-        //     '<div class="col-6"><b>Employee No</b></div>' +
-        //     '<div class="col-6"><b>Employee Name</b></div>' +
-        //     '</div>';
-        //     $('.select2-search').append(html);
-        // });
-
         $('#detail_rate_overtime_report_table thead tr').clone(true).appendTo('#detail_rate_overtime_report_table thead');
         $('#detail_rate_overtime_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
@@ -420,7 +407,6 @@
             var data2 = table.row(this.closest('tr')).data();
             var $row = $(this).closest('tr');
             var result = [];
-            console.log($('.chk-select:checked').length == $('.chk-select').length);
             
             if(!this.checked){
                 $row.removeClass('selected');
@@ -1049,6 +1035,7 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+
             $("#tm_detail_rate_overtime_report_form").submit();
         });
 

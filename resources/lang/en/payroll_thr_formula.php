@@ -16,6 +16,7 @@ return [
     'label_field_chooser' => 'Field Chooser',
     'label_preview_formula' => 'Preview Formula',
     'label_preview_condition' => 'Preview Condition',
+    'label_operator' => 'Operator',
     'btn_add' => 'Add',
     'btn_edit' => 'Edit',
     'btn_save' => 'Save',

@@ -70,6 +70,30 @@
             border-top-right-radius: 5px;
         }
 
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -98,12 +122,16 @@
                 @csrf
                 <div class="row">
                     <div class="col-8">
-                        <label>RINCIAN PENGHASILAN DAN PERHITUNGAN PPh PASAL 21 SEBAGAI BERIKUT :</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">RINCIAN PENGHASILAN DAN PERHITUNGAN PPh PASAL 21 SEBAGAI BERIKUT :</label>
+                        </div>
                     </div>
                     <div class="col-1">
                     </div>
                     <div class="col-2 center">
-                        <label>JUMLAH RUPIAH</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">JUMLAH RUPIAH</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -239,13 +267,19 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <label>8 JUMLAH PENGHASILAN BRUTO (1 S.D. 7)</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">8 JUMLAH PENGHASILAN BRUTO (1 S.D. 7)</label>
+                        </div>
                     </div>
                     <div class="col-1">
-                        <label>8.</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">8.</label>
+                        </div>
                     </div>
                     <div class="col-2 center">
-                        <label>99.999.999.999,99</label>                
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">99.999.999.999,99</label>    
+                        </div>            
                     </div>
                 </div>
                 <div class="row">
@@ -291,13 +325,19 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <label>11 JUMLAH PENGURANGAN (9 S.D. 10)</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">11 JUMLAH PENGURANGAN (9 S.D. 10)</label>
+                        </div>
                     </div>
                     <div class="col-1">
-                        <label>11.</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">11.</label>
+                        </div>
                     </div>
                     <div class="col-2 center">
-                        <label>99.999.999.999,99</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">99.999.999.999,99</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -307,13 +347,19 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <label>12 JUMLAH PENGHASILAN NETO (8-11)</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">12 JUMLAH PENGHASILAN NETO (8-11)</label>
+                        </div>
                     </div>
                     <div class="col-1">
-                        <label>12.</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">12.</label>
+                        </div>
                     </div>
                     <div class="col-2 center">
-                        <label>99.999.999.999,99</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">99.999.999.999,99</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -354,24 +400,36 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <label>15 PENGHASILAN TIDAK KENA PAJAK</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">15 PENGHASILAN TIDAK KENA PAJAK</label>
+                        </div>
                     </div>
                     <div class="col-1">
-                        <label>15.</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">15.</label>
+                        </div>
                     </div>
                     <div class="col-2 center">
-                        <label>99.999.999.999,99</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">99.999.999.999,99</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <label>16 PENGHASILAN KENA PAJAK SETAHUN/DISETAHUNKAN (14-15)</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">16 PENGHASILAN KENA PAJAK SETAHUN/DISETAHUNKAN (14-15)</label>
+                        </div>
                     </div>
                     <div class="col-1">
-                        <label>16.</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">16.</label>
+                        </div>
                     </div>
                     <div class="col-2 center">
-                        <label>99.999.999.999,99</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">99.999.999.999,99</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -430,13 +488,19 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <label>20 PPh PASAL 21 DAN PPh PASAL 26 YANG TELAH DIPOTONG DAN DILUNASI</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">20 PPh PASAL 21 DAN PPh PASAL 26 YANG TELAH DIPOTONG DAN DILUNASI</label>
+                        </div>
                     </div>
                     <div class="col-1">
-                        <label>20.</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">20.</label>
+                        </div>
                     </div>
                     <div class="col-2 center">
-                        <label>99.999.999.999,99</label>
+                        <div class="form-group">
+                            <label style="font-family:'Montserrat-Medium'">99.999.999.999,99</label>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -539,6 +603,21 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" id="notification_success">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -594,7 +673,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -629,7 +708,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -663,7 +742,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -697,7 +776,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -731,7 +810,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -765,7 +844,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -799,7 +878,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -833,7 +912,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -867,7 +946,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -901,7 +980,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -935,7 +1014,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -969,7 +1048,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -1003,7 +1082,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -1037,7 +1116,7 @@
                 },
                 success: function (response) {
                     isData = Object.keys(response).length;
-                    // console.log(response);
+                    $('#operator').val(null).trigger('change');
                     if (Object.keys(response).length !== 0) {
                         $('#record_function').val('Edit');
                         $('#field_name').val((typeof response[0].fieldName !== 'undefined') ? response[0].fieldName : '');
@@ -1166,9 +1245,16 @@
 
         $('#btn-remove').on('click', function () {
             $('#record_function').val('Remove');
+
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $("#modal_spt_format_form").submit();
         });
 
-        $("#btn-save, #btn-remove").click(function () {
+        $("#btn-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -1202,9 +1288,14 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $("#btn-save, #btn-remove").prop("disabled", false);
-                    $("#btn-save, #btn-remove").html(
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
                         '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_save") }}'
+                    );
+
+                    $("#btn-remove").prop("disabled", false);
+                    $("#btn-remove").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -1222,22 +1313,32 @@
                         data: $('#modal_spt_format_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
-                                $("#btn-save, #btn-remove").prop("disabled", false);
-                                $("#btn-save, #btn-remove").html(
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_save") }}'
                                 );
+
+                                $("#btn-remove").prop("disabled", false);
+                                $("#btn-remove").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
+                                );
                                 
+                                $('#modal_spt_format').modal('hide');
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/spt_format') }}";
+                                    $('#notification_success').modal('hide');
                                 }, 3000);
                             } else {
-                                $("#btn-save, #btn-remove").prop("disabled", false);
-                                $("#btn-save, #btn-remove").html(
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_save") }}'
+                                );
+
+                                $("#btn-remove").prop("disabled", false);
+                                $("#btn-remove").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -1252,9 +1353,14 @@
                             }
                         },
                         error: function (response) {
-                            $("#btn-save, #btn-remove").prop("disabled", false);
-                            $("#btn-save, #btn-remove").html(
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_save") }}'
+                            );
+
+                            $("#btn-remove").prop("disabled", false);
+                            $("#btn-remove").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
                             );
 
                             $('#notification').modal('show');
