@@ -14,6 +14,7 @@ return [
     'judul' => 'Daftar Medis',
     'data_entry' => 'Data Entri Medis',
     'claim_transaction' => 'Klaim Transaksi',
+    'claim_payment_transaction' => 'Klaim Pembayaran Transaksi',
     'multiple_payment_plan_transaction' => 'Transaksi Beberapa Paket Pembayaran',
     'reimbursement_recapitulation' => 'Rekapitulasi Pengembalian',
     'claim_list' => 'Daftar Klaim',

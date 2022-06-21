@@ -125,7 +125,9 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                        <div class="form-group">
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                        </div>
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
@@ -133,7 +135,9 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                        <div class="form-group">
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -144,7 +148,9 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
+                        <div class="form-group">
+                            <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
+                        </div>
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
@@ -152,7 +158,9 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
+                        <div class="form-group">
+                            <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -442,6 +450,55 @@
 
         if($('#salary_historical_report_form').length > 0){
             $('#salary_historical_report_form').validate({
+                rules: {
+                    employee_no_from: {
+                        required: true
+                    },
+                    employee_no_to: {
+                        required: true
+                    },
+                    group_authorized_code_from: {
+                        required: true
+                    },
+                    group_authorized_code_to: {
+                        required: true
+                    }
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('payroll_salary_historical_report.employee_no_from_required') }}"
+                    },
+                    employee_no_to: {
+                        required: "{{ __('payroll_salary_historical_report.employee_no_to_required') }}"
+                    },
+                    group_authorized_code_from: {
+                        required: "{{ __('payroll_salary_historical_report.group_authorized_code_from_required') }}"
+                    },
+                    group_authorized_code_to: {
+                        required: "{{ __('payroll_salary_historical_report.group_authorized_code_to_required') }}"
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-preview").prop("disabled", false);
+                    $("#btn-preview").html(
+                        '<i class="fa fa-eye"></i> {{ __("payroll_salary_historical_report.btn_preview") }}'
+                    );
+
+                    $("#btn-send-to").prop("disabled", false);
+                    $("#btn-send-to").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_historical_report.btn_send_to") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {

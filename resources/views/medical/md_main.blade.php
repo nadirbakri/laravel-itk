@@ -48,9 +48,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('medical/claim_transaction_transaction') }}" target="iframe_dashboard">
+							<a href="{{ url('medical/claim_payment_transaction') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-data.svg') }}" alt="Child medical">
-								<span class="child-title-text">{{ __('medical.claim_transaction') }}</span>
+								<span class="child-title-text">{{ __('medical.claim_payment_transaction') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -123,12 +123,12 @@
 								<span class="child-title-text">{{ __('medical.input_personnel_limit') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						<!-- <div class="col col-3">
 							<a href="{{ url('medical/input_personnel_limit_for_all_employee') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-maintenance.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.input_personnel_limit_for_all_employee') }}</span>
 							</a>
-						</div>
+						</div> -->
 						<div class="col col-3">
 							<a href="{{ url('medical/treatment_eligibility') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-maintenance.svg') }}" alt="Child medical">

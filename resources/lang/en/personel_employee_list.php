@@ -23,6 +23,9 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
+    'label_show_type' => 'Show Type',
+    'label_input_type_show_code' => 'Show Code',
+    'label_input_type_show_description' => 'Show Description',
     'btn_print' => 'Print'
 
 ];

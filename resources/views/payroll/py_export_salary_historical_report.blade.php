@@ -42,17 +42,18 @@
 </head>
 <body>
     <h3 style="text-align:center; background-color:lightblue; padding:7px">{{ __('payroll_salary_historical_report.list') }}</h3>
+    @foreach($data as $key => $dataTables)
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead style="background-color: lightgray; padding:5px">
             <tr>
                 <th>{{ __('payroll_salary_historical_report.header_no') }}</th>
-                <th>{{ $data[0]->employeeNo }} {{ $data[0]->employeeName }}</th>
-                <th>{{ $data[0]->joinDate }}</th>
-                <th>{{ $data[0]->position }}</th>
+                <th>{{ $dataTables->employeeNo }} {{ $dataTables->employeeName }}</th>
+                <th>{{ $dataTables->joinDate }}</th>
+                <th>{{ $dataTables->position }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data[0]->detail as $key => $dataTable)
+            @foreach ($dataTables->detail as $key => $dataTable)
             <tr>
                 <td>{{ $key+1 }}</td>
                 <td>{{ $dataTable->period }}</td>
@@ -62,6 +63,7 @@
             @endforeach
         </tbody>
     </table>
+    @endforeach
 
     <script type="text/php">
     if (isset($pdf)) {

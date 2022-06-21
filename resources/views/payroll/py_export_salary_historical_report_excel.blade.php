@@ -43,17 +43,18 @@
             <th colspan="4" style="text-align:center; font-weight:bold; background-color:lightblue; padding:7px"><h3>{{ __('payroll_salary_historical_report.list') }}</h3></th>
         </tr>
     </table>
+    @foreach($data as $key => $dataTables)
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th style="text-align: center; background-color:lightgray; padding:5px">{{ __('payroll_salary_historical_report.header_no') }}</th>
-                <th style="text-align: center; background-color:lightgray; padding:5px">{{ $data[0]->employeeNo }} {{ $data[0]->employeeName }}</th>
-                <th style="text-align: center; background-color:lightgray; padding:5px">{{ $data[0]->joinDate }}</th>
-                <th style="text-align: center; background-color:lightgray; padding:5px">{{ $data[0]->position }}</th>
+                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ __('payroll_salary_historical_report.header_no') }}</th>
+                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->employeeNo }} {{ $dataTables->employeeName }}</th>
+                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->joinDate }}</th>
+                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->position }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data[0]->detail as $key => $dataTable)
+            @foreach ($dataTables->detail as $key => $dataTable)
             <tr>
                 <td style="text-align: center; padding:3px">{{ $key+1 }}</td>
                 <td style="text-align: center; padding:3px">{{ $dataTable->period }}</td>
@@ -63,5 +64,6 @@
             @endforeach
         </tbody>
     </table>
+    @endforeach
 </body>
 </html>

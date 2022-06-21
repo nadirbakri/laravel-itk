@@ -194,7 +194,7 @@
                                 <div class="form-group">
                                     <label
                                         for="list_code">{{ __('personel_free_format_field.label_list_code') }}</label>
-                                    <input type="text" class="form-control" id="list_code" name="list_code"
+                                    <input type="number" min="0" class="form-control" id="list_code" name="list_code"
                                         placeholder="{{ __('personel_free_format_field.label_list_code') }}">
                                 </div>
                                 <input type="hidden" class="form-control" id="free_format_code_field_list"
@@ -345,6 +345,27 @@
             });
         });
 
+        var typingTimer;
+        var doneTypingInterval = 500;
+        var $input = $('#free_format_code');
+
+        $input.on('keyup', function () {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+
+        $input.on('keydown', function () {
+            clearTimeout(typingTimer);
+        });
+
+        function doneTyping () {
+            var ffCode = $('#free_format_code').val();
+            $('#field_list_table').DataTable().clear().destroy();
+            if(ffCode != "" && ffCode != null){
+                load_table_field_list(ffCode);   
+            }
+        }
+
         function load_table_field_list(freeFormatCode = '') {
             table = $('#field_list_table').DataTable({
                 processing: true,
@@ -408,6 +429,12 @@
 
         $("#btn-activate-field-list").on('click', function () {
             var data = table.rows('.selected').data();
+
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
             if (data.count() > 0) {
                 $.ajax({
                     url: "{{ url('personel/free_format_field/detail/status') }}",
@@ -418,6 +445,11 @@
                         'func': 'A'
                     },
                     success: function (response) {
+                        $("#btn-activate-field-list").prop("disabled", false);
+                        $("#btn-activate-field-list").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_free_format_field.btn_activate") }}'
+                        );
+
                         if (response.status == "true") {
                             $('#notification_success_field_list').modal('show');
                             $('#message-notification-success-field-list').html(response
@@ -438,6 +470,11 @@
                         }
                     },
                     error: function (response) {
+                        $("#btn-activate-field-list").prop("disabled", false);
+                        $("#btn-activate-field-list").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_free_format_field.btn_activate") }}'
+                        );
+
                         $('#notification_error').modal('show');
                         $('#message-notification-error').html(response);
                     }
@@ -450,6 +487,12 @@
 
         $("#btn-deactivate-field-list").on('click', function () {
             var data = table.rows('.selected').data();
+
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
             if (data.count() > 0) {
                 $.ajax({
                     url: "{{ url('personel/free_format_field/detail/status') }}",
@@ -460,6 +503,11 @@
                         'func': 'D'
                     },
                     success: function (response) {
+                        $("#btn-deactivate-field-list").prop("disabled", false);
+                        $("#btn-deactivate-field-list").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_free_format_field.btn_deactivate") }}'
+                        );
+
                         if (response.status == "true") {
                             $('#notification_success_field_list').modal('show');
                             $('#message-notification-success-field-list').html(response
@@ -480,6 +528,11 @@
                         }
                     },
                     error: function (response) {
+                        $("#btn-deactivate-field-list").prop("disabled", false);
+                        $("#btn-deactivate-field-list").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_free_format_field.btn_deactivate") }}'
+                        );
+
                         $('#notification_error').modal('show');
                         $('#message-notification-error').html(response);
                     }

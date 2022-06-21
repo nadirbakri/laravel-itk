@@ -4,16 +4,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Personel - Employee List Page Language Lines
+    | Personel - Employee Card Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Personel - Employee List Menggunakan Locale Bahasa Inggris. Akses di file
+    | Pengaturan Halaman Personel - Employee Card Menggunakan Locale Bahasa Inggris. Akses di file
     | personel_employee_card.blade.php
     |
     */
 
     'judul' => 'Employee Card Page',
     'list' => 'Personnel Menu List',
+    'report' => 'Employee Card Report',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
     'label_include_resign' => 'Include Resign',
@@ -42,5 +43,6 @@ return [
     'label_organization' => 'Organization',
     'label_award' => 'Award',
     'label_project_experience' => 'Project Experience',
-    'label_sanction' => 'Sanction'
+    'label_sanction' => 'Sanction',
+    'label_employee_no' => 'Employee No'
 ];

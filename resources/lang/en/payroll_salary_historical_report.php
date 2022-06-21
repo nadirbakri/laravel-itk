@@ -9,7 +9,11 @@ return [
     'header_no' => 'No',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'employee_no_from_required' => 'Employee No From Cannot Be Blank',
+    'employee_no_to_required' => 'Employee No To Cannot Be Blank',
+    'group_authorized_code_from_required' => 'Group Authorized Code From Cannot Be Blank',
+    'group_authorized_code_to_required' => 'Group Authorized Code To Cannot Be Blank'
 ]
 
 ?>

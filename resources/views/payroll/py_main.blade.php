@@ -345,21 +345,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/retroactive_report') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/bonus_thr_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.retroactive_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/signature_list') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.signature_list') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/thr_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.thr_report') }}</span>
+								<span class="child-title-text">{{ __('payroll.bonus_thr_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -420,9 +408,9 @@
 			</div>
 		</div>
 	</div>
-	@if(Session::has('msg'))
+	@if($errors->any())
 	<div class="modal fade" role="dialog" id="notification_error">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered" data-toggle="modal" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-header-notification-error">
                     <h5 class="modal-title">Error!</h5>
@@ -431,16 +419,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="message-notification-error">{{ Session::get('msg') }}</span>
+                    <span id="message-notification-error">{{$errors->first()}}</span>
                 </div>
             </div>
         </div>
     </div>
+
 	@endif
     
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		var error = "{{ $errors->any() }}";
+		if (error) {
+			$('#notification_error').modal('show');
+		}
+	})
+</script>
 
 </html>

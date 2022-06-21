@@ -415,12 +415,15 @@
             textarea.value = result.join("\n");
         });
 
-        $('#detail_rate_overtime_report_table tbody').on('click', '.chk-select', function () {     
+        $('#detail_rate_overtime_report_table tbody').on('click', '.chk-select', function (e) {     
             var data = table.rows('.selected').data().toArray();
             var data2 = table.row(this.closest('tr')).data();
+            var $row = $(this).closest('tr');
             var result = [];
+            console.log($('.chk-select:checked').length == $('.chk-select').length);
             
             if(!this.checked){
+                $row.removeClass('selected');
                 data = data.filter(obj => obj.absentCode !== data2.absentCode);
                 var all = $('#all_overtime_code').get(0);
                 var selection = $('#selection_overtime_code').get(0);
@@ -429,9 +432,12 @@
                     selection.checked = true;
                 }
             } else  {
+                $row.addClass('selected');
                 data.push(data2);
+                var all = $('#all_overtime_code').get(0);
                 var selection = $('#selection_overtime_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
+                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
+                    all.checked = true;
                     selection.checked = false;
                 }
             }
@@ -442,20 +448,19 @@
 
             var textarea = document.getElementById("selected_overtime_code");
             textarea.value = result.join("\n");
+
+            e.stopPropagation();
         });
 
-        // $('#detail_rate_overtime_report_table tbody').on("change", 'input[type="checkbox"]', function(){
-        //     if(this.checked){
-        //         console.log("okay");
-        //     //    $('input=[type="checkbox"]:checked.not(:first)').each(function (){
-        //     //        selectvalue += table.row($(this).closest("tr")).data()[1]+" ";
-        //     //    });
-        //     }
-        // });
-        
+        $('#detail_rate_overtime_report_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('.chk-select').trigger('click');
+        });
 
         $('#detail_rate_overtime_report_table tbody').on('change', '.chk-select', function(){
+            var $row = $(this).closest('tr');
+
             if(!this.checked){
+                $row.removeClass('selected');
                 var all = $('#all_overtime_code').get(0);
                 var selection = $('#selection_overtime_code').get(0);
                 if(all && all.checked && ('checked' in all)){
@@ -463,9 +468,12 @@
                     selection.checked = true;
                 }
             } else  {
+                $row.addClass('selected');
+                var all = $('#all_overtime_code').get(0);
                 var selection = $('#selection_overtime_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
+                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
                     selection.checked = false;
+                    all.checked = true;
                 }
             }
         });

@@ -10,6 +10,7 @@ use App\Exports\JournalReportExcel;
 use App\Exports\DUMTKReportExport;
 use App\Exports\SalaryHistoricalReportExport;
 use App\Exports\CSVESPTReportFormExport;
+use App\Exports\BonusTHRReportExport;
 use App\Http\Controllers\Redirect;
 
 use Illuminate\Http\Request;
@@ -84,7 +85,7 @@ class PayrollController extends Controller
             }
 
             if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
-                return redirect()->back()->with(['msg', 'Invalid Status Process']);
+                return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
             } else {
                 $arrResult_tm = json_decode($response_tm->getBody()->getContents());
                 return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
@@ -654,6 +655,51 @@ class PayrollController extends Controller
         }
 
         return view ('payroll.py_csv_espt_report_form', ['data' => $data]);
+    }
+
+    public function pageBonusTHRReport()
+    {
+        return view('payroll.py_bonus_thr_report');
+    }
+
+    public function pagePeriodicalReport()
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('payroll.py_periodical_report', ['data' => $data]);
     }
 
     public function tableAccountPY()
@@ -5617,17 +5663,17 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printPaymentSlipPayroll(Request $request){
         try{
-            // var_dump($request->all());
+            // var_dump(json_encode($request->all()));
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
+                'Authorization' => 'Bearer ' . (empty(Session::get('token')) ? $request->token : Session::get('token')) ]
             ]);
 
             $param = [
-                'companyCode' => Session::get('companyCode'),
-                'languageCode' =>App::getLocale(),
+                'companyCode' => (empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode')),
+                'languageCode' => (empty(App::getLocale()) ? $request->languageCode : App::getLocale()),
                 'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => (empty(Session::get('userID')) ? $request->sessionUserID : Session::get('userID'))
             ];
 
             if(!empty($request->slip_type)){
@@ -5884,4 +5930,95 @@ public function dataDetailReportFormatPY(Request $request)
             'CSVEsptMasa.xlsx'
         );
     }
+
+    public function printBonusTHRReportPayroll(Request $request){
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "reportType" => $request->report,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $paramGetCompany = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+    
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedCodeFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizedCodeTo'] = (int) $request->group_authorized_code_to;
+            }
+
+            if(!empty($request->payment_date_from) || !empty($request->payment_date_to)){
+                $param['paymentDateFrom'] = $request->payment_date_from;
+                $param['paymentDateTo'] = $request->payment_date_to;
+            }
+
+            $response = $client->post(env('API_URL').'/prbonusthrreport/getbonusthrreport', [
+                'body' => json_encode($param)
+            ]);
+
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
+                'body' => json_encode($paramGetCompany)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+
+        if ($arrResult->dataListSet[0] !== null)
+        {
+            $arraySend[] = $arrCompany->dataListSet[0];
+            $arraySend[] = $arrResult->dataListSet[0];
+        } else {
+            $arraySend[] = [];
+        }
+
+        if($arrResult->dataListSet[0] == null){
+            $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Bonus & THR Report.pdf');
+        }else{
+            $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Bonus & THR Report.pdf');
+        }
+    }
+
+    public function printBonusTHRReportPayrollExcel(Request $request){
+        return Excel::download(new BonusTHRReportExport(
+            $request->report, 
+            $request->payment_date_from,
+            $request->payment_date_to,
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to), 
+            'Bonus & THR Report.xlsx'
+        );
+    }
+
 }

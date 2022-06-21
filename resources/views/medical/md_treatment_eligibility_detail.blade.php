@@ -268,7 +268,7 @@
             $('#minimum_age').val("0");
             $('#payment_for_employee').val("0");
             $('#payment_for_family').val("0");
-            $('#service_month').prop('disabled', false);
+            $('#service_month').prop('readonly', false);
             $('#claim_code').attr("disabled", false);
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
@@ -314,7 +314,7 @@
             $('#payment_for_family').val("{{ isset($data[0]->paymentPctForFamily) ? $data[0]->paymentPctForFamily : '' }}");
             $('#position').attr("disabled", true); 
             $('#ranking').attr("disabled", true);
-            $('#service_month').prop('disabled', true);
+            $('#service_month').prop('readonly', true);
             $('#claim_code').attr("disabled", true); 
         }
 

@@ -21,6 +21,7 @@ return [
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'title_modal' => 'Add Attachment Data',
+    'label_seq_no' => 'Seq No',
     'label_employee_no' => 'Employee No',
     'label_employee_name' => 'Employee Name',
     'label_file_name' => 'File Name',

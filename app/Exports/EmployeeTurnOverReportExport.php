@@ -91,7 +91,7 @@ class EmployeeTurnOverReportExport implements FromView, ShouldAutoSize
                 $param['level'] = $data_level;
             }
 
-            // var_dump($param);
+            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/employeeturnover/getemployeeturnover',
                 ['body' => json_encode($param)]

@@ -108,50 +108,48 @@
                                 <textarea name="photo_employee" id="photo_employee" cols="30" rows="10" hidden></textarea>
                             </label>
                         </div>
-                        <div class="col-9 subdiv-profile">
+                        <div class="col-7 subdiv-profile">
                             <div class="row">
-                                <div class="col-auto mr-auto">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <p id="employee_name_profile" name="employee_name_profile"></p>
-                                        </div>
-                                        <div class="col-1">
-                                            <p>&emsp; | &emsp;</p>
-                                        </div>
-                                        <div class="col-4">
-                                            <p id="employee_no_profile" name="employee_no_profile"></p>
-                                        </div>
-                                    </div>
+                                <div class="col-auto">
+                                    <p id="employee_name_profile" name="employee_name_profile"></p>
                                 </div>
                                 <div class="col-auto">
-                                    <div class="row">
-                                        <button type="submit" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
-                                            style="width: 100%;">
-                                            <i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}
-                                        </button>
-                                    </div>
+                                    <p>&emsp; | &emsp;</p>
                                 </div>
+                                <div class="col-auto">
+                                    <p id="employee_no_profile" name="employee_no_profile"></p>
+                                </div> 
                             </div>
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-auto">
                                     <p class="small" id="company_name_profile" name="company_name_profile"></p>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-auto">
                                     <p class="small">&emsp; | &emsp;</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-auto">
                                     <p  class="small" id="position_name_profile" name="position_name_profile"></p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-auto">
                                     <p class="small" id="company_email_profile" name="company_email_profile"></p>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-auto">
                                     <p class="small">&emsp; | &emsp;</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-auto">
                                     <p  class="small" id="phone_number_profile" name="phone_number_profile"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 subdiv-profile">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
+                                        style="width: 100%;">
+                                        <i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -56,8 +56,8 @@
 				<td>{{ $value->positionName }}</td>
 				<td>{{ $value->rankingName }}</td>
                 <td>{{ $value->locationName }}</td>
-                <td>{{ $value->joinDate }}</td>
-                <td>{{ $value->terminationDate }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->joinDate)) }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->terminationDate)) }}</td>
                 
 			</tr>
 			@endforeach

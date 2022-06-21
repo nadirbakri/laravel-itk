@@ -4,10 +4,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Personel - Employee List Page Language Lines
+    | Personel - Employee Card Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Personel - Employee List Menggunakan Locale Bahasa Inggris. Akses di file
+    | Pengaturan Halaman Personel - Employee Card Menggunakan Locale Bahasa Inggris. Akses di file
     | personel_employee_card.blade.php
     |
     */

@@ -103,8 +103,7 @@
             <div class="row">
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-add"
-                        id="btn-add" style="width: 100%;" data-toggle="modal"
-                        data-target="#modal_add_attachment">
+                        id="btn-add" style="width: 100%;">
                         <i class="fa fa-plus"></i> {{ __('personel_employee_attachment.btn_add') }}
                     </button>
                 </div>
@@ -135,6 +134,17 @@
                 <div class="modal-body">
                     <form id="employee_attachment_form" method="post" enctype="multipart/form-data">
                         @csrf
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="seq_no">{{ __('personel_employee_attachment.label_seq_no') }}</label>
+                                    <input type="text" class="form-control" id="seq_no"
+                                        name="seq_no"
+                                        placeholder="{{ __('personel_employee_attachment.label_seq_no') }}" readonly>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -275,12 +285,48 @@
         $('#employee_no_detail').val('')
     });
 
+    $("#btn-add").on('click', function () {
+        var empNo = $('#employee_no').val();
+        console.log(empNo);
+        if(empNo == '' || empNo == null){
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('Please Choose Employee No First');
+        }else{
+            $('#modal_add_attachment').modal('show');
+        }
+    });
+
+    $('#modal_add_attachment').on('show.bs.modal', function () {
+        var empNo = $('#employee_no').val();
+        $.ajax({
+            url: "{{ url('personel/number/check') }}",
+            type: "GET",
+            data: {
+                'url': '/peattachment/getpeattachment',
+                'employeeNo': empNo
+            },
+            success: function (response) {
+                $('#seq_no').val(response);
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+    });
+
     $("#btn-remove").on('click', function () {
         var data = table.rows('.selected').data().toArray();
         if (data.length > 0) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
             $.ajax({
                 url: "{{ url('personel/employee_attachment/remove') }}",
-                type: "GET",
+                type: "POST",
                 data: {
                     'data': data,
                 },
@@ -387,7 +433,7 @@
         });
     }
 
-    $('#employee_attachment_table tbody').on('click', 'input[type="checkbox"]', function(e){
+    $('#employee_attachment_table').on('click', 'tbody input[type="checkbox"]', function(e){
         var $row = $(this).closest('tr');
 
         if(this.checked){

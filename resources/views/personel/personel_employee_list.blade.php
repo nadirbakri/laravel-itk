@@ -100,6 +100,32 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label
+                                for="input_type_show_code">{{ __('personel_employee_list.label_show_type') }}</label>
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="input_type_show_code"
+                                    name="input_type" value="code" checked>
+                                <label class="form-radio-label"
+                                    for="input_type_show_code">{{ __('personel_employee_list.label_input_type_show_code') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="input_type_show_description">&nbsp;</label>
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="input_type_show_description"
+                                    name="input_type" value="desc"> 
+                                <label class="form-radio-label"
+                                    for="input_type_show_description">{{ __('personel_employee_list.label_input_type_show_description') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
