@@ -39,6 +39,7 @@ return [
     'salary_component_data' => 'Salary Component Data',
     'report_format' => 'Report Format',
     'multi_cost_center' => 'Multi Cost Center',
+    'journal_template' => 'Journal Template',
 
     'process' => 'Payroll Process',
     'yearly_process' => 'Yearly Process',

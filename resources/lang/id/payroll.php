@@ -40,6 +40,7 @@ return [
     'journal_template' => 'Template Jurnal',
     'report_format' => 'Format Laporan',
     'multi_cost_center' => 'Pusat Biaya Multi',
+    'journal_template' => 'Template Jurnal',
 
     'process' => 'Proses Penggajian',
     'yearly_process' => 'Proses Tahunan',

@@ -6937,9 +6937,9 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 		if($search == ''){
-	    	$cost_center = $arrResult->dataListSet;
+	    	$data = $arrResult->dataListSet;
 	    }else{
-	    	$cost_center = array_filter(
+	    	$data = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->costCenterCode)){
