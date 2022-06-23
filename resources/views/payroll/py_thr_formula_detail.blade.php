@@ -371,29 +371,35 @@
                             </div>
                             <div class="row">
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
-                                        {{ __('payroll_thr_formula.btn_add_to_formula') }}
-                                    </button>
-                                </div>
-                                <div class="col-3"></div>
-                                <div class="col-6">
                                     <div class="form-group">
-                                        <label for="preview_formula">{{ __('payroll_thr_formula.label_preview_formula') }}</label>
-                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
+                                        <label for="btn-add-to-condition">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
+                                            {{ __('payroll_thr_formula.btn_add_to_condition') }}
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
-                                        {{ __('payroll_thr_formula.btn_add_to_condition') }}
-                                    </button>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="preview_condition">{{ __('payroll_thr_formula.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="btn-add-to-condition">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
+                                            {{ __('payroll_thr_formula.btn_add_to_formula') }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="preview_formula">{{ __('payroll_thr_formula.label_preview_formula') }}</label>
+                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>

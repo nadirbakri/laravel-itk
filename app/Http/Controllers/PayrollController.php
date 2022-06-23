@@ -3618,7 +3618,6 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             if($request->record_function == 'New'){
-                // var_dump($request->record_function);
                 if (isset($request->no)) {
                     foreach ($request->no as $key => $value) {
                         $data_detail [] = [
@@ -3638,15 +3637,11 @@ public function dataDetailReportFormatPY(Request $request)
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
                         ];
-                        // var_dump($request->condition[$key]);
-                        // var_dump($request->criteria[$value1]);
                     }
                 }
                 else {
                     $data_detail = null;
                 }
-
-                // var_dump($data_detail);
 
                 $param = [
                     'recordStatus' => 'A',
@@ -3665,8 +3660,6 @@ public function dataDetailReportFormatPY(Request $request)
                     "logActionUsername" => Session::get('userID')     
                 ];
                 $param['detail'] = $data_detail;
-
-                // var_dump($param);
             }
             else {
                 if (isset($request->no)) {
@@ -3688,15 +3681,11 @@ public function dataDetailReportFormatPY(Request $request)
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
                         ];
-                        // var_dump($request->condition[$key]);
-                        // var_dump($request->criteria[$value1]);
                     }
                 }
                 else {
                     $data_detail = null;
                 }
-
-                // var_dump($data_detail);
 
                 $param = [
                     'recordStatus' => 'A',
@@ -3715,9 +3704,9 @@ public function dataDetailReportFormatPY(Request $request)
                     "logActionUsername" => Session::get('userID')     
                 ];
                 $param['detail'] = $data_detail;
-
-                // var_dump($param);
             }
+
+            // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prcalculation/insertprcalculationprocess',
@@ -5677,6 +5666,10 @@ public function dataDetailReportFormatPY(Request $request)
                 'sessionUserID' => (empty(Session::get('userID')) ? $request->sessionUserID : Session::get('userID'))
             ];
 
+            if(!isset($request->mobile)){
+                $request->mobile = false;
+            }
+
             if(!empty($request->slip_type)){
                 $param['slipType'] = $request->slip_type;
             }
@@ -5739,21 +5732,37 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }else{
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }
         }else{
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }else{
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }
         }
     }

@@ -527,7 +527,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-	    				'variable' => 'AbsenteeismType_',
+	    				'variable' => 'PeMasterAbsenteeismType_',
 	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
@@ -575,7 +575,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-	    				'variable' => 'AbsenteeismType_',
+	    				'variable' => 'PeMasterAbsenteeismType_',
 						'comGenCode' => $request->absentType,
 	    				'languageCode' => App::getLocale()
 	    			]

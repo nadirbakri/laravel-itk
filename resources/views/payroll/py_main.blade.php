@@ -203,6 +203,12 @@
 								<span class="child-title-text">{{ __('payroll.multi_cost_center') }}</span>
 							</a>
 						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/journal_template') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.journal_template') }}</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
