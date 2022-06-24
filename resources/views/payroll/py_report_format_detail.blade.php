@@ -122,21 +122,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="div-table">
-                        <table id="report_format_detail_table" class="table hover">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>{{ __('payroll_report_format.label_column_no') }}</th>
-                                    <th>{{ __('payroll_report_format.label_table_name') }}</th>
-                                    <th>{{ __('payroll_report_format.label_field_name') }}</th>
-                                    <th>{{ __('payroll_report_format.label_column_header') }}</th>
-                                    <th>{{ __('payroll_report_format.label_alignment') }}</th>
-                                    <th>{{ __('payroll_report_format.label_data_format') }}</th>
-                                    <th>{{ __('payroll_report_format.label_display') }}</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <div class="col-12">
+                        <div class="div-table">
+                            <table id="report_format_detail_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{{ __('payroll_report_format.label_column_no') }}</th>
+                                        <th>{{ __('payroll_report_format.label_table_name') }}</th>
+                                        <th>{{ __('payroll_report_format.label_field_name') }}</th>
+                                        <th>{{ __('payroll_report_format.label_column_header') }}</th>
+                                        <th>{{ __('payroll_report_format.label_alignment') }}</th>
+                                        <th>{{ __('payroll_report_format.label_data_format') }}</th>
+                                        <th>{{ __('payroll_report_format.label_display') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -154,19 +156,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="div-table">
-                        <table id="report_format_condition_table" class="table hover">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>{{ __('payroll_report_format.label_seq_no') }}</th>
-                                    <th>{{ __('payroll_report_format.label_table_name') }}</th>
-                                    <th>{{ __('payroll_report_format.label_field_name') }}</th>
-                                    <th>{{ __('payroll_report_format.label_criteria') }}</th>
-                                    <th>{{ __('payroll_report_format.label_value') }}</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <div class="col-12">
+                        <div class="div-table">
+                            <table id="report_format_condition_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{{ __('payroll_report_format.label_seq_no') }}</th>
+                                        <th>{{ __('payroll_report_format.label_table_name') }}</th>
+                                        <th>{{ __('payroll_report_format.label_field_name') }}</th>
+                                        <th>{{ __('payroll_report_format.label_criteria') }}</th>
+                                        <th>{{ __('payroll_report_format.label_value') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -594,13 +598,9 @@
 
         function load_table_report_format_condition() {
             table2 = $('#report_format_condition_table').DataTable({
-                // processing: true,
-                // orderCellsTop: true,
                 data: arrayReportFormatCondition,
-
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
-
                 columns: [
                     {
                         orderable: false,
@@ -689,13 +689,10 @@
             $('#table_name_condition').on('change', function () {
                 tableName = $('#table_name_condition').val();
                 loadDataFieldName();
-
-                // console.log(tableName);
             });
 
             $('#field_name_condition').on('change', function () {
                 fieldName = $('#field_name_condition').val();
-                // console.log($('#field_name_condition').val());
             });
         });
 
@@ -775,9 +772,9 @@
                 "columnNo": $("#column_no").val() ? $("column_no").val() : "",
                 "tableName": $("#table_name_detail").val(),
                 "fieldName": $("#field_name_detail").val(),
-                "columnHeader": $("#column_header").val() ? $("column_header").val() : "",
-                "alignment": $("#alignment").val() ? $("alignment").val() : "",
-                "dataFormat": $("#data_format").val() ? $("data_format").val() : "",
+                "columnHeader": $("#column_header").val(),
+                "alignment": $("#alignment").val(),
+                "dataFormat": $("#data_format").val(),
                 "display": ($("#display").is(":checked") ? $("#display").val() : false)
             });
             // console.log($("#display").is(":checked"))
@@ -827,123 +824,38 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            // var arraypush = [];
-            // arraypush["fieldName"] = $("#field_name").val();
-            // arraypush["columnHeader"] = $("#column_header").val();
+
             arrayReportFormatCondition.push({
                 "seqNo": $("#seq_no").val(),
                 "tableName": $("#table_name_condition").val(),
                 "fieldName": $("#field_name_condition").val(),
-                "criteria": $("#criteria").val() ? $("criteria").val() : "",
-                "value": $("#value").val() ? $("value").val() : "",
+                "criteria": $("#criteria").val(),
+                "value": $("#value").val(),
             });
-
-            // console.log($("#data_format").val())
-
-            // console.log(arrayReportFormatCondition);
 
             $(this).prop("disabled", false);
             $(this).html(
                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
             );
+
             $('#modal_add_report_format_condition').modal('hide');
             
             $('#report_format_condition_table').DataTable().destroy();
             load_table_report_format_condition();
-            //$("#field_name_form").submit();
         });
 
         $('#modal_add_report_format_detail').on('show.bs.modal', function () {
-            if (func == 'new') {
-                var count = table1.rows().count();
-                $('#column_no').val(count+1);
-            }
-
-            else {
-                $.ajax({
-                    url: "{{ url('payroll/report_format_number/check') }}",
-                    type: "GET",
-                    data: {
-                        'url': '/prreportformat/getreportformatlist',
-                        'pemasterType' : 'detail',
-                        'columnNo': arrData[0].detail.columnNo
-                    },
-                    success: function (response) {
-                        var count = (table1.rows().count())+1;
-                        // console.log(response);
-
-                        if (response > 0 && count !== response) {
-                            var total = parseInt(response) + parseInt(count);
-                            $('#column_no').val(total - 1);
-                        }
-                        else if (response > 0 && count == response) {
-                            // var total = parseInt(response) + parseInt(count);
-                            $('#column_no').val(response);
-                        }
-                        else {
-                            for (var i = 0; i <= count; i++){
-                                $('#column_no').val(i);
-                                // console.log(i);
-                            }
-                        }
-                        console.log(count);
-                        // console.log(total);
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            }
+            var count = table1.rows().count();
+            $('#column_no').val(count+1);
         });
 
         $('#modal_add_report_format_condition').on('show.bs.modal', function () {
-            if (func == 'new') {
-                var count = table2.rows().count();
-                $('#seq_no').val(count+1);
-            }
-
-            else {
-                $.ajax({
-                    url: "{{ url('payroll/number/check') }}",
-                    type: "GET",
-                    data: {
-                        'url': '/prreportformat/getreportformatlist',
-                        'pemasterType' : 'condition',
-                        'seqNo': arrData[0].condition.seqNo
-                    },
-                    success: function (response) {
-                        var count = (table2.rows().count())+1;
-                        // console.log(response);
-
-                        if (response > 0 && count !== response) {
-                            var total = parseInt(response) + parseInt(count);
-                            $('#seq_no').val(total - 1);
-                        }
-                        else if (response > 0 && count == response) {
-                            // var total = parseInt(response) + parseInt(count);
-                            $('#seq_no').val(response);
-                        }
-                        else {
-                            for (var i = 0; i <= count; i++){
-                                $('#seq_no').val(i);
-                                // console.log(i);
-                            }
-                        }
-                        // console.log(count);
-                        // console.log(total);
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            }
+            var count = table2.rows().count();
+            $('#seq_no').val(count+1);
         });
 
         $("#btn-remove-report-format-detail").on('click', function() {
             var data = table1.rows('.selected').data().toArray();
-            console.log(data.length);
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     var index = arrayReportFormatDetail.findIndex(x => x.columnNo == data[i].columnNo);
@@ -951,7 +863,6 @@
                 }
                 $('#report_format_detail_table').DataTable().destroy();
                 load_table_report_format_detail();
-                //console.log(arrayfieldName);
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -960,7 +871,6 @@
 
         $("#btn-remove-report-format-condition").on('click', function() {
             var data = table2.rows('.selected').data().toArray();
-        // console.log(data.length);
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     var index = arrayReportFormatCondition.findIndex(x => x.seqNo == data[i].seqNo);
@@ -968,13 +878,11 @@
                 }
                 $('#report_format_condition_table').DataTable().destroy();
                 load_table_report_format_condition();
-                //console.log(arrayfieldName);
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
         });
-
 
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('payroll/report_format') }}";
@@ -985,6 +893,7 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+
             $("#report_format_form").submit();
         });
 

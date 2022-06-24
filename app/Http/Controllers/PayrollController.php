@@ -1307,7 +1307,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/prformulabonus/getformulabonus',
+            $response = $client->post(env('API_URL') . '/prformulabonus/getlistbonus',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2513,7 +2513,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             if (isset($request->column_no)) {
                 foreach ($request->column_no as $key => $value) {
-                    $data_detail [] = [
+                    $data_detail[] = [
                         'companyCode' => Session::get('companyCode'),
                         "reportCode" => $request->report_code,
                         "columnNo" => (int) $value,
@@ -2530,16 +2530,14 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedBy" => Session::get('userID')
                     ];
                 }
-                // var_dump($request->table_name_detail[$value]);
-                // var_dump($request->alignment[$value]);
             }
             else {
-                $data_detail [] = null;
+                $data_detail[] = null;
             }
             
             if (isset($request->seq_no)) {
                 foreach ($request->seq_no as $key => $value1) {
-                    $data_condition [] = [
+                    $data_condition[] = [
                         'companyCode' => Session::get('companyCode'),
                         "reportCode" => $request->report_code,
                         "seqNo" => (int) $value1,
@@ -2553,15 +2551,11 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID')
                     ];
-                    // var_dump($request->table_name_condition[$value1]);
-                    // var_dump($request->criteria[$value1]);
                 }
             }
             else {
                 $data_condition [] = null;
             }
-
-            // var_dump($data_detail);
 
             $param = [
                 'recordStatus' => "A",
@@ -2583,8 +2577,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            // var_dump($param);
-
+            var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prreportformat/insertreportformat',
@@ -2597,7 +2590,6 @@ public function dataDetailReportFormatPY(Request $request)
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -3705,8 +3697,6 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
                 $param['detail'] = $data_detail;
             }
-
-            // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prcalculation/insertprcalculationprocess',

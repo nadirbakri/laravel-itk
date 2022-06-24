@@ -833,7 +833,7 @@ class PersonelController extends Controller
         }else{
             foreach($arrResult->dataListSet as $value){
                 $filename = Session::get('companyCode') . '_' . $value->letterType . '.docx';
-                file_put_contents(public_path('letter_master/') . $filename, base64_decode($value->letter));
+                file_put_contents(public_path('letter_table_files/') . $filename, base64_decode($value->letter));
                 $value->letter = $filename;
             }
 
@@ -7726,28 +7726,6 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'recordStatus' => "A",
-                    'companyCode' => Session::get('companyCode'),
-                    'letterType' => $request->letter_type,
-                    'letterReference' => (int) $request->reference,
-                    'letterDate' => $request->letter_date,
-                    'employeeNo' => $request->employee_no,
-                    "languageID" => strtoupper(App::getLocale()),
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "sessionID" => 0,
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => strtoupper(App::getLocale())
-                ]
-                ));
-
             $response = $client->post(env('API_URL') . '/printletter/createletter',
                 ['body' => json_encode(
                     [
@@ -7773,7 +7751,6 @@ class PersonelController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -7870,6 +7847,24 @@ class PersonelController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'recordStatus' => $request->record_status,
+            //         'companyCode' => Session::get('companyCode'),
+            //         'formCode' => $request->form_code,
+            //         'formName' => $request->form_name,
+            //         "changedNo" => 0,
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "changedBy" => Session::get('userID'),
+            //         'userID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName'),
+            //         "languageCode" => App::getLocale()
+            //     ]
+            //     ));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/evaluationform',
