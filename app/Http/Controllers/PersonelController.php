@@ -9763,8 +9763,17 @@ class PersonelController extends Controller
 
             $param = [
                 'recordStatus' => 'A',
-                'employeeNo' => '0809',
                 'companyCode' => Session::get('companyCode'),
+                'includeResign' => isset($request->include_resign) ? (bool) $request->include_resign : false,
+                'includeFamily' => isset($request->family) ? (bool) $request->family : false,
+                'includeFormalEducation' => isset($request->formal_education) ? (bool) $request->formal_education : false,
+                'includeOrganization' => isset($request->organization) ? (bool) $request->organization : false,
+                'includeProjectExperience' => isset($request->project_experience) ? (bool) $request->project_experience : false,
+                'includeTrainingRecords' => isset($request->training_records) ? (bool) $request->training_records : false,
+                'includeHistoricalJobs' => isset($request->historical_jobs) ? (bool) $request->historical_jobs : false,
+                'includeWorkExperience' => isset($request->work_experience) ? (bool) $request->work_experience : false,
+                'includeAward' => isset($request->award) ? (bool) $request->award : false,
+                'includeSanction' => isset($request->sanction) ? (bool) $request->sanction : false,
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
@@ -9772,12 +9781,35 @@ class PersonelController extends Controller
                 "logActionUserID" => Session::get('userID')
             ];
 
-            // if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
-            //     $param['employeeNoFrom'] = $request->employee_no_from;
-            //     $param['employeeNoTo'] = $request->employee_no_to;
-            // }
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
 
-            $response = $client->post(env('API_URL').'/pemaster/getpemasterdetail', [
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = $value;
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/employeecard/getemployeecard', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
