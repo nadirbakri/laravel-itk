@@ -142,17 +142,17 @@
                     <div class="col-1">
                         <div class="form-group">
                             <br>
-                            <button class="btn btn-primary" disabled>
+                            <button type="button" class="btn btn-primary" name="btn-add" id="btn-add">
                                 {{ __('payroll_journal_template.btn_add') }}
                             </button>
                         </div>
                     </div>
                     <div class="form-group">
                         <br>
-                        <button type="button" class="btn btn-primary" name="btn-add" id="btn-add">
+                        <button type="button" class="btn btn-primary" name="btn-plus" id="btn-plus">
                             +
                         </button>
-                        <button type="button" class="btn btn-primary" name="btn-remove" id="btn-remove">
+                        <button type="button" class="btn btn-primary" name="btn-min" id="btn-min">
                             -
                         </button>
                     </div>    
@@ -330,15 +330,19 @@
             });
         }
 
-        $('#operator').on('change', function () {
+        $('#btn-add').on('click', function () {
             var operator = $('#operator').val();
-            $('#btn-add').on('click', function () {
-                $('#field_name').val('PrSalaryActual.' + operator);
-            });
+            if (typeof operator !== 'undefined' && operator !== null) {
+                $('#field_name').val($('#field_name').val() + operator);
+            }
         });
 
-        $('#btn-remove').on('click', function () {
-            $('#field_name').val('');
+        $('#btn-plus').on('click', function () {
+            $('#field_name').val($('#field_name').val() + '+');
+        });
+
+        $('#btn-min').on('click', function () {
+            $('#field_name').val($('#field_name').val() + '-');
         });
 
         loadDataDebitKredit();

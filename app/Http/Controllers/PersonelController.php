@@ -833,7 +833,7 @@ class PersonelController extends Controller
         }else{
             foreach($arrResult->dataListSet as $value){
                 $filename = Session::get('companyCode') . '_' . $value->letterType . '.docx';
-                file_put_contents(public_path('letter_master/') . $filename, base64_decode($value->letter));
+                file_put_contents(public_path('letter_table_files/') . $filename, base64_decode($value->letter));
                 $value->letter = $filename;
             }
 
@@ -5212,27 +5212,13 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'recordStatus' => $request->func,
-                    'companyCode' => Session::get('companyCode'),
-                    'freeFormatCode' => $request->freeFormatCode,
-                    'freeFormatFieldType' => $request->freeFormatFieldType,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => App::getLocale()
-                ]
-                ));
-
             $response = $client->put(env('API_URL') . '/freeformatfield/updategmfreeformatfield',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
                         'companyCode' => Session::get('companyCode'),
                         'freeFormatCode' => $request->freeFormatCode,
+                        'description' => $request->description,
                         'freeFormatFieldType' => $request->freeFormatFieldType,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
@@ -5816,6 +5802,8 @@ class PersonelController extends Controller
                 }
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
+
+            // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
@@ -7860,6 +7848,24 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // var_dump(json_encode(
+            //     [
+            //         'recordStatus' => $request->record_status,
+            //         'companyCode' => Session::get('companyCode'),
+            //         'formCode' => $request->form_code,
+            //         'formName' => $request->form_name,
+            //         "changedNo" => 0,
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "changedBy" => Session::get('userID'),
+            //         'userID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName'),
+            //         "languageCode" => App::getLocale()
+            //     ]
+            //     ));
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/evaluationform',
                     ['body' => json_encode(
@@ -8578,6 +8584,37 @@ class PersonelController extends Controller
                     'levelCode' => $value
                 ];
             }
+
+            var_dump(json_encode(
+                [
+                    'mutationType' => $request->mutation_type,
+                    'employeeNo' => $request->employee_no,
+                    'remarks' => $request->remarks,
+                    'peMaster' => [
+                        'decreeCode' => $request->decree_code_new,
+                        'decreeNo' => $request->decree_no_new,
+                        'decreeDate' => $request->decree_date_new,
+                        'workLocation' => $request->work_location_new,
+                        'gradeCode' => $request->grade_code_new,
+                        'groupCode' => $request->group_code_new,
+                        'position' => $request->position_new,
+                        'ranking' => $request->ranking_new,
+                        'workNature' => $request->nature_of_work_new,
+                        'costCenterCode' => $request->cost_center_code_new,
+                        'startDate' => $request->start_date_new,
+                        'employmentStatus' => $request->employment_status_new,
+                        'contractDateStart' => $request->contract_start_date_new,
+                        'contractDateEnd' => $request->contract_end_date_new
+                    ],
+                    "masterLevel" => $data_level,
+                    'companyCode' => Session::get('companyCode'),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => strtoupper(App::getLocale())
+                ]
+                ));
 
             $response = $client->post(env('API_URL') . '/mutation/executemutation',
                 ['body' => json_encode(
@@ -9723,9 +9760,9 @@ class PersonelController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        // var_dump($request->period);
+        // var_dump($request->input_type);
 
-        return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+        return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->input_type, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
     }
 
     public function printEmployeeTurnOverReportPersonel(Request $request)
@@ -9950,10 +9987,10 @@ class PersonelController extends Controller
         // var_dump($arrResult->dataListSet[0]);
 
         if($arrResult->dataListSet[0] == null){
-            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Evaluation Report.pdf');
         }else{
-            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Evaluation Report.pdf');
         }
 
@@ -10324,6 +10361,7 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'seqNo' => (int) $request->seq_no,
                         'employeeNo' => $request->employee_no_detail,
                         'fileName' => $request->file_name,
                         'attachmentCode' => $request->attachment_code,

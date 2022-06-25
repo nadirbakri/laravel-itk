@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62" height="62" viewBox="0 0 62 62">
+  <defs>
+    <filter id="Rectangle_339" x="0" y="0" width="62" height="62" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_339)">
+    <g id="Rectangle_339-2" data-name="Rectangle 339" transform="translate(9 6)" fill="#074c85" stroke="#074c85" stroke-width="1">
+      <rect width="44" height="44" rx="12" stroke="none"/>
+      <rect x="0.5" y="0.5" width="43" height="43" rx="11.5" fill="none"/>
+    </g>
+  </g>
+  <g id="Icon_feather-home" data-name="Icon feather-home" transform="translate(15.73 12.813)">
+    <path id="Path_52" data-name="Path 52" d="M4.5,11.466,15.385,3,26.27,11.466v13.3a2.419,2.419,0,0,1-2.419,2.419H6.919A2.419,2.419,0,0,1,4.5,24.77Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_53" data-name="Path 53" d="M13.5,30.094V18h7.257V30.094" transform="translate(-1.743 -2.906)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

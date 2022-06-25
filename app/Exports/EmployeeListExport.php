@@ -13,12 +13,13 @@ use App;
 
 class EmployeeListExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $inputType, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
         $this->period = $period;
         $this->includeResign = $includeResign;
+        $this->inputType = $inputType;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
         $this->groupAuthorizeTo = $groupAuthorizeTo;
         $this->position = $position;
@@ -118,15 +119,15 @@ class EmployeeListExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // var_dump($this->inputType == "code");
 
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_employee_list', [
-                'data' => []
+                'data' => [], 'type' => $this->inputType
             ]);
         }else{
             return view('personel.personel_export_employee_list', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'type' => $this->inputType
             ]);
         }
     }

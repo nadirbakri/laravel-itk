@@ -21,7 +21,7 @@ return [
     'label_description' => 'Deskripsi',
     'label_field_type' => 'Tipe Field',
     'label_length' => 'Panjang',
-    'label_list_code' => 'Kode List',
+    'label_list_code' => 'Kode List (Angka)',
     'label_list_value' => 'Nilai List',
     'free_format_code_required' => 'Kode Field Format Harus Diisi',
     'field_type_required' => 'Tipe Field Harus Diisi',

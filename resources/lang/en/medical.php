@@ -15,7 +15,7 @@ return [
     'data_entry' => 'Medical Data Entry',
     'claim_transaction' => 'Claim Transaction',
     'multiple_payment_plan_transaction' => 'Multiple Payment Plan Transaction',
-    'claim_transaction' => 'Claim Transaction ',
+    'claim_payment_transaction' => 'Claim Payment Transaction ',
     'reimbursement_recapitulation' => 'Reimbursement Recapitulation',
     'claim_list' => 'Claim List',
     'print_claim_letter_for_insurance' => 'Print Claim Letter For Insurance',

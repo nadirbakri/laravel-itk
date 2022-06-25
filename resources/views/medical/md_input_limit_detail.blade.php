@@ -102,6 +102,7 @@
                                 placeholder="{{ __('md_input_limit.label_position') }}"> </select>
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
+                        <input type="hidden" class="form-control" id="position_det" name="position_det">
                     </div>
                 </div>
                 <div class="row">
@@ -111,6 +112,7 @@
                             <select class="form-control" id="ranking" name="ranking"
                                 placeholder="{{ __('md_input_limit.label_ranking') }}"> </select>
                         </div>
+                        <input type="hidden" class="form-control" id="ranking_det" name="ranking_det">
                     </div>
                 </div>
                 <div class="row">
@@ -129,6 +131,7 @@
                             <select class="form-control" id="claim_code" name="claim_code"
                                 placeholder="{{ __('md_input_limit.label_claim_code') }}"> </select>
                         </div>
+                        <input type="hidden" class="form-control" id="claim_code_det" name="claim_code_det">
                     </div>
                 </div>
                 <div class="row">
@@ -138,6 +141,7 @@
                             <select class="form-control" id="currency_code" name="currency_code"
                                 placeholder="{{ __('md_input_limit.label_currency_code') }}"> </select>
                         </div>
+                        <input type="hidden" class="form-control" id="currency_code_det" name="currency_code_det">
                     </div>
                 </div>
                 <div class="row">
@@ -487,10 +491,14 @@
             
             $('#record_function').val("New");
             $('#position').val(null).trigger('change');
+            $('#position_det').val("");
             $('#ranking').val(null).trigger('change');
+            $('#ranking_det').val("");
             $('#service_month').val("0");
             $('#claim_code').val(null).trigger('change');
+            $('#claim_code_det').val("");
             $('#currency_code').val(null).trigger('change');
+            $('#currency_code_det').val("");
             $('#limit_per_year').val("");
             $('#limit_per_year_salary').val("");
             $('#limit_per_claim').val("");
@@ -510,6 +518,11 @@
             $('#claim_frequency_year').val("");
             $('#minus_percentage').val("");
             $('#plus_percentage').val("");
+            $('#position').attr("disabled", false); 
+            $('#ranking').attr("disabled", false);
+            $('#service_month').prop('readonly', false);
+            $('#claim_code').attr("disabled", false); 
+            $('#currency_code').attr("disabled", false); 
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
             $.ajax({
@@ -522,6 +535,7 @@
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
                     .positionCode).text(data2[0].positionName);
                 $("#position").append($newOption).trigger('change');
+                $('#position_det').val(data2[0].positionCode);
             });
             $.ajax({
                 type: 'GET',
@@ -533,6 +547,7 @@
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
                     .rankingCode).text(data2[0].rankingName);
                 $("#ranking").append($newOption).trigger('change');
+                $('#ranking_det').val(data2[0].rankingCode);
             });
             $.ajax({
                 type: 'GET',
@@ -544,6 +559,7 @@
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
                     .claimCode).text(data2[0].claimCode);
                 $("#claim_code").append($newOption).trigger('change');
+                $('#claim_code_det').val(data2[0].claimCode);
             });
             $.ajax({
                 type: 'GET',
@@ -555,6 +571,7 @@
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
                     .comGenCode).text(data2[0].value);
                 $("#currency_code").append($newOption).trigger('change');
+                $('#currency_code_det').val(data2[0].comGenCode);
             });
             $('#service_month').val("{{ isset($data[0]->serviceMonth) ? $data[0]->serviceMonth : '' }}");
             $('#limit_per_year').val("{{ isset($data[0]->maxLimitPerYear) ? $data[0]->maxLimitPerYear : '' }}");
@@ -576,6 +593,11 @@
             $('#claim_frequency_year').val("{{ isset($data[0]->frequencyClaimPeriod) ? $data[0]->frequencyClaimPeriod : '' }}");
             $('#minus_percentage').val("{{ isset($data[0]->negativeTolerancePercentage) ? $data[0]->negativeTolerancePercentage : '' }}");
             $('#plus_percentage').val("{{ isset($data[0]->positiveTolerancePercentage) ? $data[0]->positiveTolerancePercentage : '' }}");
+            $('#position').attr("disabled", true); 
+            $('#ranking').attr("disabled", true);
+            $('#service_month').prop('readonly', true);
+            $('#claim_code').attr("disabled", true); 
+            $('#currency_code').attr("disabled", true); 
         }
 
         function htmlDecode(value) {
@@ -584,6 +606,42 @@
 
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('medical/input_limit') }}";
+        });
+
+        $('#position').on("select2:select", function (e) {
+            var data = $('#position').select2('data');
+            $('#position_det').val(data[0].id);
+        });
+
+        $('#position').on("select2:unselecting", function (e) {
+            $('#position_det').val('');
+        });
+
+        $('#ranking').on("select2:select", function (e) {
+            var data = $('#ranking').select2('data');
+            $('#ranking_det').val(data[0].id);
+        });
+
+        $('#ranking').on("select2:unselecting", function (e) {
+            $('#ranking_det').val('');
+        });
+
+        $('#claim_code').on("select2:select", function (e) {
+            var data = $('#claim_code').select2('data');
+            $('#claim_code_det').val(data[0].id);
+        });
+
+        $('#claim_code').on("select2:unselecting", function (e) {
+            $('#claim_code_det').val('');
+        });
+
+        $('#currency_code').on("select2:select", function (e) {
+            var data = $('#currency_code').select2('data');
+            $('#currency_code_det').val(data[0].id);
+        });
+
+        $('#currency_code').on("select2:unselecting", function (e) {
+            $('#currency_code_det').val('');
         });
 
         loadDataPositionCode();

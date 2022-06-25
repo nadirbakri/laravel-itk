@@ -423,12 +423,14 @@
             textarea.value = result.join("\n");
         });
 
-        $('#detail_absenteeism_reason_report_table tbody').on('click', '.chk-select', function () {     
+        $('#detail_absenteeism_reason_report_table tbody').on('click', '.chk-select', function (e) {     
             var data = table.rows('.selected').data().toArray();
             var data2 = table.row(this.closest('tr')).data();
+            var $row = $(this).closest('tr');
             var result = [];
             
             if(!this.checked){
+                $row.removeClass('selected');
                 data = data.filter(obj => obj.absentCode !== data2.absentCode);
                 var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
@@ -437,9 +439,12 @@
                     selection.checked = true;
                 }
             } else  {
+                $row.addClass('selected');
                 data.push(data2);
+                var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
+                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
+                    all.checked = true;
                     selection.checked = false;
                 }
             }
@@ -450,19 +455,19 @@
 
             var textarea = document.getElementById("selected_absent_code");
             textarea.value = result.join("\n");
+
+            e.stopPropagation();
         });
 
-        // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){
-        //     if(this.checked){
-        //         console.log("okay");
-        //     //    $('input=[type="checkbox"]:checked.not(:first)').each(function (){
-        //     //        selectvalue += table.row($(this).closest("tr")).data()[1]+" ";
-        //     //    });
-        //     }
-        // });
+        $('#detail_absenteeism_reason_report_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('.chk-select').trigger('click');
+        });
 
         $('#detail_absenteeism_reason_report_table tbody').on('change', '.chk-select', function(){
+            var $row = $(this).closest('tr');
+
             if(!this.checked){
+                $row.removeClass('selected');
                 var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
                 if(all && all.checked && ('checked' in all)){
@@ -470,8 +475,11 @@
                     selection.checked = true;
                 }
             } else  {
+                $row.addClass('selected');
+                var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
+                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
+                    all.checked = true;
                     selection.checked = false;
                 }
             }
@@ -1048,6 +1056,7 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+
             $("#tm_detail_absenteeism_reason_report_form").submit();
         });
 
@@ -1069,6 +1078,11 @@
                         type: "POST",
                         data: { 'field' : $('#tm_detail_absenteeism_reason_report_form').serialize(), 'field_name' : JSON.stringify(arrData) },
                         success: function (result, status, xhr) {
+                            $("#btn-print-data").prop("disabled", false);
+                            $("#btn-print-data").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_print") }}'
+                            );
+
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);

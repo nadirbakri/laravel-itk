@@ -1307,7 +1307,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/prformulabonus/getformulabonus',
+            $response = $client->post(env('API_URL') . '/prformulabonus/getlistbonus',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2513,7 +2513,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             if (isset($request->column_no)) {
                 foreach ($request->column_no as $key => $value) {
-                    $data_detail [] = [
+                    $data_detail[] = [
                         'companyCode' => Session::get('companyCode'),
                         "reportCode" => $request->report_code,
                         "columnNo" => (int) $value,
@@ -2530,16 +2530,14 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedBy" => Session::get('userID')
                     ];
                 }
-                // var_dump($request->table_name_detail[$value]);
-                // var_dump($request->alignment[$value]);
             }
             else {
-                $data_detail [] = null;
+                $data_detail[] = null;
             }
             
             if (isset($request->seq_no)) {
                 foreach ($request->seq_no as $key => $value1) {
-                    $data_condition [] = [
+                    $data_condition[] = [
                         'companyCode' => Session::get('companyCode'),
                         "reportCode" => $request->report_code,
                         "seqNo" => (int) $value1,
@@ -2553,15 +2551,11 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID')
                     ];
-                    // var_dump($request->table_name_condition[$value1]);
-                    // var_dump($request->criteria[$value1]);
                 }
             }
             else {
                 $data_condition [] = null;
             }
-
-            // var_dump($data_detail);
 
             $param = [
                 'recordStatus' => "A",
@@ -2583,8 +2577,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            // var_dump($param);
-
+            var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prreportformat/insertreportformat',
@@ -2597,7 +2590,6 @@ public function dataDetailReportFormatPY(Request $request)
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -3618,7 +3610,6 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             if($request->record_function == 'New'){
-                // var_dump($request->record_function);
                 if (isset($request->no)) {
                     foreach ($request->no as $key => $value) {
                         $data_detail [] = [
@@ -3638,15 +3629,11 @@ public function dataDetailReportFormatPY(Request $request)
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
                         ];
-                        // var_dump($request->condition[$key]);
-                        // var_dump($request->criteria[$value1]);
                     }
                 }
                 else {
                     $data_detail = null;
                 }
-
-                // var_dump($data_detail);
 
                 $param = [
                     'recordStatus' => 'A',
@@ -3665,8 +3652,6 @@ public function dataDetailReportFormatPY(Request $request)
                     "logActionUsername" => Session::get('userID')     
                 ];
                 $param['detail'] = $data_detail;
-
-                // var_dump($param);
             }
             else {
                 if (isset($request->no)) {
@@ -3688,15 +3673,11 @@ public function dataDetailReportFormatPY(Request $request)
                             "logActionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID')
                         ];
-                        // var_dump($request->condition[$key]);
-                        // var_dump($request->criteria[$value1]);
                     }
                 }
                 else {
                     $data_detail = null;
                 }
-
-                // var_dump($data_detail);
 
                 $param = [
                     'recordStatus' => 'A',
@@ -3715,8 +3696,6 @@ public function dataDetailReportFormatPY(Request $request)
                     "logActionUsername" => Session::get('userID')     
                 ];
                 $param['detail'] = $data_detail;
-
-                // var_dump($param);
             }
 
             if($request->record_function == 'New'){
@@ -4989,7 +4968,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            // var_dump($param);
+            // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prformatspt/insertprformatspt',
@@ -5001,13 +4980,14 @@ public function dataDetailReportFormatPY(Request $request)
                     ['body' => json_encode($param)]
                 );
             }
-            else{
+            else if($request->record_function == 'Remove'){
                 $response = $client->delete(env('API_URL') . '/prformatspt/deleteprformatspt',
-                    ['body' => json_encode($param)]
+                    ['body' => json_encode([$param])]
                 );
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -5663,18 +5643,22 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printPaymentSlipPayroll(Request $request){
         try{
-            // var_dump($request->all());
+            // var_dump(json_encode($request->all()));
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
+                'Authorization' => 'Bearer ' . (empty(Session::get('token')) ? $request->token : Session::get('token')) ]
             ]);
 
             $param = [
-                'companyCode' => Session::get('companyCode'),
-                'languageCode' =>App::getLocale(),
+                'companyCode' => (empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode')),
+                'languageCode' => (empty(App::getLocale()) ? $request->languageCode : App::getLocale()),
                 'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => (empty(Session::get('userID')) ? $request->sessionUserID : Session::get('userID'))
             ];
+
+            if(!isset($request->mobile)){
+                $request->mobile = false;
+            }
 
             if(!empty($request->slip_type)){
                 $param['slipType'] = $request->slip_type;
@@ -5736,23 +5720,39 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }
         }else{
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true, 'adminPassword' => "Intikom11"]);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true, 'adminPassword' => "Intikom11"]);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
-                return $pdf->stream('Payment Slip.pdf');
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                }else{
+                    return $pdf->stream('Payment Slip.pdf');
+                }
             }
         }
     }

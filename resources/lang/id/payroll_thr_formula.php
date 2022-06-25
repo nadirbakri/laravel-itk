@@ -16,6 +16,7 @@ return [
     'label_field_chooser' => 'Pemilih Bidang',
     'label_preview_formula' => 'Pratinjau Formula',
     'label_preview_condition' => 'Pratinjau Kondisi',
+    'label_operator' => 'Operator',
     'btn_add' => 'Tambah',
     'btn_edit' => 'Ubah',
     'btn_save' => 'Simpan',

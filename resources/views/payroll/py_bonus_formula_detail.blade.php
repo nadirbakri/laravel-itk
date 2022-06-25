@@ -158,16 +158,16 @@
                                         <label
                                             for="service_month_from">{{ __('payroll_bonus_formula.label_service_month_from') }}</label>
                                         <span class="required">*</span>
-                                        <input type="number" class="form-control" id="service_month_from" name="service_month_from"
-                                            placeholder={{ __('payroll_bonus_formula.label_service_month_from') }} readonly>
+                                        <input type="number" class="form-control" min="1" max="12" id="service_month_from" name="service_month_from"
+                                            placeholder="{{ __('payroll_bonus_formula.label_service_month_from') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="service_month_to">{{ __('payroll_bonus_formula.label_service_month_to') }}</label>
                                         <span class="required">*</span>
-                                        <input type="number" class="form-control" id="service_month_to" name="service_month_to"
-                                            placeholder={{ __('payroll_bonus_formula.label_service_month_to') }}>
+                                        <input type="number" class="form-control" min="1" max="12" id="service_month_to" name="service_month_to"
+                                            placeholder="{{ __('payroll_bonus_formula.label_service_month_to') }}">
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +188,7 @@
                                             for="table_chooser">{{ __('payroll_bonus_formula.label_table_chooser') }}</label>
                                         <span class="required">*</span>
                                         <select class="form-control select2" id="table_chooser" name="table_chooser">
-                                            <option value="" disabled selected>{{ __('payroll_bonus_formula.label_select_table_chooser') }}</option>
+                                            <option value="" selected>{{ __('payroll_bonus_formula.label_select_table_chooser') }}</option>
                                             <option value="PeMaster">PeMaster</option>
                                             <option value="TmFixedComponent">TmFixedComponent</option>
                                             <option value="PrSalaryMaster">PrSalaryMaster</option>
@@ -207,30 +207,204 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
-                                        {{ __('payroll_bonus_formula.btn_add_to_formula') }}
-                                    </button>
-                                </div>
-                                <div class="col-3"></div>
-                                <div class="col-6">
+                                <div class="col-2">
                                     <div class="form-group">
-                                        <label for="preview_formula">{{ __('payroll_bonus_formula.label_preview_formula') }}</label>
-                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
+                                        <label
+                                            for="operator">{{ __('payroll_thr_formula.label_operator') }}</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="none_operator"
+                                                name="operator" value="none">
+                                            <label class="form-radio-label"
+                                                for="none_operator">None</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="plus_operator"
+                                                name="operator" value="+">
+                                            <label class="form-radio-label"
+                                                for="plus_operator">+</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="minus_operator"
+                                                name="operator" value="-">
+                                            <label class="form-radio-label"
+                                                for="minus_operator">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="times_operator"
+                                                name="operator" value="*">
+                                            <label class="form-radio-label"
+                                                for="times_operator">*</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="divide_operator"
+                                                name="operator" value="/">
+                                            <label class="form-radio-label"
+                                                for="divide_operator">/</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="is_operator"
+                                                name="operator" value="=">
+                                            <label class="form-radio-label"
+                                                for="is_operator">=</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="not_operator"
+                                                name="operator" value="<>">
+                                            <label class="form-radio-label"
+                                                for="not_operator"><></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="less_operator"
+                                                name="operator" value="<=">
+                                            <label class="form-radio-label"
+                                                for="less_operator"><=</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="more_operator"
+                                                name="operator" value=">=">
+                                            <label class="form-radio-label"
+                                                for="more_operator">>=</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="and_operator"
+                                                name="operator" value="And">
+                                            <label class="form-radio-label"
+                                                for="and_operator">And</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="or_operator"
+                                                name="operator" value="Or">
+                                            <label class="form-radio-label"
+                                                for="or_operator">Or</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="between_operator"
+                                                name="operator" value="Between">
+                                            <label class="form-radio-label"
+                                                for="between_operator">Between</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="like_operator"
+                                                name="operator" value="Like">
+                                            <label class="form-radio-label"
+                                                for="like_operator">Like</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="true_operator"
+                                                name="operator" value="=True">
+                                            <label class="form-radio-label"
+                                                for="true_operator">True Condition</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="false_operator"
+                                                name="operator" value="=False">
+                                            <label class="form-radio-label"
+                                                for="false_operator">False Condition</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
-                                        {{ __('payroll_bonus_formula.btn_add_to_condition') }}
-                                    </button>
+                                    <div class="form-group">
+                                        <label for="btn-add-to-condition">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
+                                            {{ __('payroll_bonus_formula.btn_add_to_condition') }}
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="preview_condition">{{ __('payroll_bonus_formula.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="btn-add-to-condition">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
+                                            {{ __('payroll_bonus_formula.btn_add_to_formula') }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="preview_formula">{{ __('payroll_bonus_formula.label_preview_formula') }}</label>
+                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -356,43 +530,11 @@
             $('#service_month_from').val('');
             $('#service_month_to').val('');
             $('#performance_result').val(null).trigger('change');
+            $('#none_operator').prop('checked', true);
             $('#table_chooser').val(null).trigger('change');
             $('#field_chooser').val(null).trigger('change');
             $('#preview_formula').val('');
             $('#preview_condition').val('');
-
-            $('#table_chooser').on('change', function () {
-                tableChooser = $('#table_chooser').val();
-                loadDataFieldChooser();
-            });
-
-            $('#field_chooser').on('select2:select', function (e) {
-                fieldChooser = $('#field_chooser').val();
-            });
-            
-            $('#field_chooser').on('select2:unselecting', function (e) {
-                fieldChooser = null;
-                $('#preview_formula').val('');
-                $('#preview_condition').val('');
-            });
-
-            $('#btn-add-to-formula').on('click', function () {
-                if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                    var formula = tableChooser + '.' + fieldChooser;
-                    $('#preview_formula').val(formula);
-                } else {
-                    $('#preview_formula').val('');
-                }
-            });
-
-            $('#btn-add-to-condition').on('click', function () {
-                if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                    var formula = tableChooser + '.' + fieldChooser;
-                    $('#preview_condition').val(formula);
-                } else {
-                    $('#preview_condition').val('');
-                }
-            });
         });
 
         $("#btn-edit").on('click', function() {
@@ -403,6 +545,8 @@
                 $('#service_month_from').prop('readonly', true);
 
                 $('#record_function').val('Edit');
+                $('#table_chooser').val(null).trigger('change');
+                $('#field_chooser').val(null).trigger('change');
                 $('#service_month_from').val((data[0].serviceMonthFrom !== null) ? data[0].serviceMonthFrom : '');
                 $('#service_month_to').val((data[0].serviceMonthTo !== null) ? data[0].serviceMonthTo : '');
                 $.ajax({
@@ -428,46 +572,54 @@
                         }
                     });
                 });
-
+                $('#none_operator').prop('checked', true);
                 $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
                 $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
-
-                $('#table_chooser').on('change', function () {
-                    tableChooser = $('#table_chooser').val();
-                    loadDataFieldChooser();
-                });
-
-                $('#field_chooser').on('select2:select', function (e) {
-                    fieldChooser = $('#field_chooser').val();
-                });
-                
-                $('#field_chooser').on('select2:unselecting', function (e) {
-                    fieldChooser = null;
-                    $('#preview_formula').val('');
-                    $('#preview_condition').val('');
-                });
-
-                $('#btn-add-to-formula').on('click', function () {
-                    if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                        var formula = tableChooser + '.' + fieldChooser;
-                        $('#preview_formula').val(formula);
-                    } else {
-                        $('#preview_formula').val('');
-                    }
-                });
-
-                $('#btn-add-to-condition').on('click', function () {
-                    if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                        var formula = tableChooser + '.' + fieldChooser;
-                        $('#preview_condition').val(formula);
-                    } else {
-                        $('#preview_condition').val('');
-                    }
-                });
             }else{
-                $('#modal_add_edit_bonus_formula').modal('hide');
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $('#table_chooser').on('change', function () {
+            tableChooser = $('#table_chooser').val();
+            $('#field_chooser').val(null).trigger('change');
+            loadDataFieldChooser();
+        });
+
+        $('#field_chooser').on('select2:select', function (e) {
+            fieldChooser = $('#field_chooser').val();
+        });
+        
+        $('#field_chooser').on('select2:unselecting', function (e) {
+            fieldChooser = null;
+        });
+
+        $('#btn-add-to-formula').on('click', function () {
+            var operator = $('input[name="operator"]:checked').val();
+            if(operator == 'none'){
+                operator = '';
+            }
+
+            if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                var formula = tableChooser + '.' + fieldChooser;
+                $('#preview_formula').val($('#preview_formula').val() + ' ' + formula + ' ' + operator);
+            } else {
+                $('#preview_formula').val($('#preview_formula').val() + ' ' + operator);
+            }
+        });
+
+        $('#btn-add-to-condition').on('click', function () {
+            var operator = $('input[name="operator"]:checked').val();
+            if(operator == 'none'){
+                operator = '';
+            }
+
+            if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                var formula = tableChooser + '.' + fieldChooser;
+                $('#preview_condition').val($('#preview_condition').val() + ' ' + formula + ' ' + operator);
+            } else {
+                $('#preview_condition').val($('#preview_condition').val() + ' ' + operator);
             }
         });
 
@@ -738,12 +890,6 @@
                     performance_result: {
                         required: true,
                     },
-                    table_chooser: {
-                        required: true,
-                    },
-                    field_chooser: {
-                        required: true,
-                    }
                 },
                 messages: {
                     bonus_date: {
@@ -756,12 +902,6 @@
                         required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
                     },
                     performance_result: {
-                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
-                    },
-                    table_chooser: {
-                        required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
-                    },
-                    field_chooser: {
                         required: "{{ __('payroll_bonus_formula.field_mandatory') }}",
                     },
                 },

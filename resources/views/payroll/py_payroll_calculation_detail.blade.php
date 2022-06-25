@@ -182,6 +182,7 @@
                                         <input type="text" class="form-control" id="no" name="no"
                                             placeholder="{{ __('payroll_calculation.label_no') }}">
                                     </div>
+                                    <input type="hidden" class="form-control" id="func_detail" name="func_detail">
                                 </div>
                             </div>
                             <div class="row">
@@ -191,7 +192,7 @@
                                             for="table_chooser">{{ __('payroll_calculation.label_table_chooser') }}</label>
                                         <span class="required">*</span>
                                         <select class="form-control select2" id="table_chooser" name="table_chooser">
-                                            <option value="" disabled selected>{{ __('payroll_calculation.label_select_table_chooser') }}</option>
+                                            <option value="" selected>{{ __('payroll_calculation.label_select_table_chooser') }}</option>
                                             <option value="PeMaster">PeMaster</option>
                                             <option value="TmFixedComponent">TmFixedComponent</option>
                                             <option value="PrSalaryMaster">PrSalaryMaster</option>
@@ -210,30 +211,140 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
-                                        {{ __('payroll_calculation.btn_add_to_formula') }}
-                                    </button>
-                                </div>
-                                <div class="col-3"></div>
-                                <div class="col-6">
+                                <div class="col-2">
                                     <div class="form-group">
-                                        <label for="preview_formula">{{ __('payroll_calculation.label_preview_formula') }}</label>
-                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
+                                        <label
+                                            for="operator">{{ __('payroll_thr_formula.label_operator') }}</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="none_operator"
+                                                name="operator" value="none">
+                                            <label class="form-radio-label"
+                                                for="none_operator">None</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="plus_operator"
+                                                name="operator" value="+">
+                                            <label class="form-radio-label"
+                                                for="plus_operator">+</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="minus_operator"
+                                                name="operator" value="-">
+                                            <label class="form-radio-label"
+                                                for="minus_operator">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="times_operator"
+                                                name="operator" value="*">
+                                            <label class="form-radio-label"
+                                                for="times_operator">*</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="divide_operator"
+                                                name="operator" value="/">
+                                            <label class="form-radio-label"
+                                                for="divide_operator">/</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="and_operator"
+                                                name="operator" value="And">
+                                            <label class="form-radio-label"
+                                                for="and_operator">And</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="or_operator"
+                                                name="operator" value="Or">
+                                            <label class="form-radio-label"
+                                                for="or_operator">Or</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="true_operator"
+                                                name="operator" value="=True">
+                                            <label class="form-radio-label"
+                                                for="true_operator">True Condition</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="false_operator"
+                                                name="operator" value="=False">
+                                            <label class="form-radio-label"
+                                                for="false_operator">False Condition</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
-                                        {{ __('payroll_calculation.btn_add_to_condition') }}
-                                    </button>
+                                    <div class="form-group">
+                                        <label for="btn-add-to-condition">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-condition" id="btn-add-to-condition">
+                                            {{ __('payroll_thr_formula.btn_add_to_condition') }}
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="col-3"></div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="preview_condition">{{ __('payroll_calculation.label_preview_condition') }}</label>
+                                        <label for="preview_condition">{{ __('payroll_thr_formula.label_preview_condition') }}</label>
                                         <textarea class="form-control" id="preview_condition" name="preview_condition" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="btn-add-to-condition">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
+                                            {{ __('payroll_thr_formula.btn_add_to_formula') }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="preview_formula">{{ __('payroll_thr_formula.label_preview_formula') }}</label>
+                                        <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -334,9 +445,7 @@
             $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : '')+1);
             $('#payroll_calculation_detail_table').DataTable().destroy();
             load_table_payroll_calculation_detail();
-        }
-
-        else if (func ==='edit') {
+        }else if (func ==='edit') {
             $('#record_function').val('Edit');
             $('#field_name').prop('disabled', true);
             $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : ''));
@@ -365,8 +474,6 @@
                 });
             });
             $('#field_name_hidden').val((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '');
-            // console.log(arrData[0].fieldName);
-            // console.log(arrData[0].seqProcess);
 
             load_table_payroll_calculation_detail();
             // console.log(arrData2[0].seqNo);
@@ -386,27 +493,69 @@
 
         $('#btn-add').on('click', function () {
             $('#no').val('');
+            $('#func_detail').val('new');
             $('#table_chooser').val(null).trigger('change');
             $('#field_chooser').val(null).trigger('change');
             $('#preview_formula').val('');
             $('#preview_condition').val('');
+            $('#none_operator').prop('checked', true);
+        });
 
-            $('#table_chooser').on('change', function () {
-                tableChooser = $('#table_chooser').val();
-                loadDataFieldChooser();
-            });
+        $("#btn-edit").on('click', function() {
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                $('#modal_add_edit_payroll_calculation').modal('show');
+                $('#func_detail').val('edit');
+                $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
+                $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
+                $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
+                $('#none_operator').prop('checked', true);
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
 
-            $('#field_chooser').on('change', function () {
-                fieldChooser = $('#field_chooser').val();
-            });
+        $('#table_chooser').on('change', function () {
+            tableChooser = $('#table_chooser').val();
+            $('#field_chooser').val(null).trigger('change');
+            loadDataFieldChooser();
+        });
 
-            $('#btn-add-to-formula').on('click', function () {
-                $('#preview_formula').val(tableChooser + "." + fieldChooser);
-            });
+        $('#field_chooser').on('select2:select', function (e) {
+            fieldChooser = $('#field_chooser').val();
+        });
+        
+        $('#field_chooser').on('select2:unselecting', function (e) {
+            fieldChooser = null;
+        });
 
-            $('#btn-add-to-condition').on('click', function () {
-                $('#preview_condition').val(tableChooser + "." + fieldChooser);
-            })
+        $('#btn-add-to-formula').on('click', function () {
+            var operator = $('input[name="operator"]:checked').val();
+            if(operator == 'none'){
+                operator = '';
+            }
+
+            if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                var formula = tableChooser + '.' + fieldChooser;
+                $('#preview_formula').val($('#preview_formula').val() + ' ' + formula + ' ' + operator);
+            } else {
+                $('#preview_formula').val($('#preview_formula').val() + ' ' + operator);
+            }
+        });
+
+        $('#btn-add-to-condition').on('click', function () {
+            var operator = $('input[name="operator"]:checked').val();
+            if(operator == 'none'){
+                operator = '';
+            }
+
+            if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                var formula = tableChooser + '.' + fieldChooser;
+                $('#preview_condition').val($('#preview_condition').val() + ' ' + formula + ' ' + operator);
+            } else {
+                $('#preview_condition').val($('#preview_condition').val() + ' ' + operator);
+            }
         });
 
         loadDataFieldName();
@@ -475,38 +624,6 @@
                 templateResult: formatSelect
             });
         }
-
-        $("#btn-edit").on('click', function() {
-            var data = table.rows('.selected').data();
-            // console.log(data[0].seqNo);
-            if(data.count() > 0){
-                $('#modal_add_edit_payroll_calculation').modal('show');
-                $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
-                $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
-                $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
-
-                $('#table_chooser').on('change', function () {
-                    tableChooser = $('#table_chooser').val();
-                    loadDataFieldChooser();
-                });
-
-                $('#field_chooser').on('change', function () {
-                    fieldChooser = $('#field_chooser').val();
-                });
-
-                $('#btn-add-to-formula').on('click', function () {
-                    $('#preview_formula').val(tableChooser + "." + fieldChooser);
-                });
-
-                $('#btn-add-to-condition').on('click', function () {
-                    $('#preview_condition').val(tableChooser + "." + fieldChooser);
-                })
-            }else{
-                $('#modal_add_edit_payroll_calculation').modal('hide');
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html('No Data Selected');
-            }
-        });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -629,48 +746,57 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            arrayPayrollCalculation.push({
-                "seqNo": $("#no").val() ? $("#no").val() : "",
-                "condition": $("#preview_condition").val(),
-                "formula": $("#preview_formula").val()
-            });
-            // console.log(arrayReportFormatDetail);
+
+            var func_detail = $('#func_detail').val();
+
+            if(func_detail == "new"){
+                arrayPayrollCalculation.push({
+                    "seqNo": $("#no").val() ? $("#no").val() : "",
+                    "condition": $("#preview_condition").val(),
+                    "formula": $("#preview_formula").val()
+                });
+            }else{
+                var data = table.rows('.selected').data().toArray();
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayPayrollCalculation.findIndex(x => x.seqNo == data[i].seqNo);
+                    arrayPayrollCalculation[index] = {
+                        "seqNo": $("#no").val() ? $("#no").val() : "",
+                        "condition": $("#preview_condition").val(),
+                        "formula": $("#preview_formula").val()
+                    };
+                }
+            }
 
             $(this).prop("disabled", false);
             $(this).html(
                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_calculation.btn_save") }}'
             );
             $('#modal_add_edit_payroll_calculation').modal('hide');
-            // console.log(arrayPayrollCalculation);
             
             $('#payroll_calculation_detail_table').DataTable().destroy();
             load_table_payroll_calculation_detail();
-            //$("#field_name_form").submit();
         });
 
         $("#btn-remove").on('click', function() {
             var data = table.rows('.selected').data().toArray();
-            // console.log(data.length);
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
-                    var index = arrayPayrollCalculation.findIndex(x => x.columnNo == data[i].columnNo);
+                    var index = arrayPayrollCalculation.findIndex(x => x.seqNo == data[i].seqNo);
                     arrayPayrollCalculation.splice(index, 1);
                 }
                 $('#payroll_calculation_detail_table').DataTable().destroy();
                 load_table_payroll_calculation_detail();
-                //console.log(arrayfieldName);
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
         });
 
-        $('#btn-add').on('show.bs.modal', function () {
+        $('#modal_add_edit_payroll_calculation').on('show.bs.modal', function () {
             if (func == 'new') {
                 var count = table.rows().count();
                 $('#no').val(count+1);
             }
-
             else {
                 $.ajax({
                     url: "{{ url('payroll/payroll_calculation_number/check') }}",
@@ -681,24 +807,18 @@
                     },
                     success: function (response) {
                         var count = (table.rows().count())+1;
-                        // console.log(response);
-
                         if (response > 0 && count !== response) {
                             var total = parseInt(response) + parseInt(count);
                             $('#no').val(total - 1);
                         }
                         else if (response > 0 && count == response) {
-                            // var total = parseInt(response) + parseInt(count);
                             $('#no').val(response);
                         }
                         else {
                             for (var i = 0; i <= count; i++){
                                 $('#no').val(i);
-                                // console.log(i);
                             }
                         }
-                        // console.log(count);
-                        // console.log(total);
                     },
                     error: function (response) {
                         $('#notification_error').modal('show');
@@ -713,6 +833,7 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+
             $("#payroll_calculation_detail_form").submit();
         });
 

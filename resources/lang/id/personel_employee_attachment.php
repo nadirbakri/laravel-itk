@@ -21,6 +21,7 @@ return [
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',
     'title_modal' => 'Tambah Data Lampiran',
+    'label_seq_no' => 'No Urut',
     'label_employee_no' => 'No Karyawan',
     'label_employee_name' => 'Nama Karyawan',
     'label_file_name' => 'Nama Berkas',

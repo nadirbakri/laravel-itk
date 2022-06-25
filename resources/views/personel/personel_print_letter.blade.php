@@ -108,18 +108,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table id="list_letter_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th>Letter Code</th>
-                                <th>Letter Type</th>
-                                <th>Employee No</th>
-                                <th>Date</th>
-                                <th>Reference</th>
-                                <th>File</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="list_letter_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th>Letter Code</th>
+                                        <th>Letter Type</th>
+                                        <th>Employee No</th>
+                                        <th>Date</th>
+                                        <th>Reference</th>
+                                        <th>File</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
@@ -218,7 +222,7 @@
                 "sDom": 'lrtip',
                 'sPaginationType': 'ellipses',
                 "order": [
-                    [0, "asc"]
+                    [3, "desc"]
                 ],
                 columns: [{
                         data: 'letterCode',
@@ -244,7 +248,7 @@
                         data: 'letter',
                         name: 'letter',
                         render: function (data, type, row) {
-                            return '<a href="' + '../letter_master/' + data +
+                            return '<a href="' + '../letter_table_files/' + data +
                                 '" target="_blank">Preview</a>';
                         }
                     }
