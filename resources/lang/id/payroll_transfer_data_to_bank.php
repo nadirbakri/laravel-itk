@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'judul' => 'Transfer Data Ke Bank Form',
+    'list' => 'Transfer Data Ke Bank',
+    'list_detail' => 'Daftar Transfer Data To Bank',
+    'export_to_file' => 'Ekspor Ke File',
+    'api' => 'API',
+    'label_bank_output_file_option' => 'Opsi File Bank Output',
+    'label_bank_central_asia' => 'Bank Central Asia',
+    'label_mcm_bank_mandiri' => 'MCM Bank Mandiri',
+    'label_bot' => 'BOT',
+    'label_btpn' => 'BTPN',
+    'label_bank_ina' => 'Bank Ina',
+    'label_bank_mandiri' => 'Bank Mandiri',
+    'label_bank_ina_multi_account' => 'Bank Ina Multi Account',
+    'label_source_bank' => 'Bank Asal',
+    'label_account_number' => 'Nomor Akun',
+    'label_transfer_code' => 'Kode Transfer',
+    'label_transfer_date' => 'Tanggal Transfer',
+    'label_employee_no' => 'No Karyawan',
+    'label_to' => 'Ke',
+    'label_group_authorize_code' => 'Kode Otorisasi Grup',
+    'label_data_to_transfer' => 'Data Untuk Transfer',
+    'label_transfer_amount' => 'Jumlah Transfer',
+    'label_takehomepay_group' => 'Grup Gaji Bersih',
+    'label_salary' => 'Gaji',
+    'label_bonus' => 'Bonus',
+    'label_thr' => 'THR',
+    'label_pension' => 'Pensiun',
+    'label_severance' => 'Pesangon',
+    'label_none' => 'Tidak Ada',
+    'btn_process' => 'Proses',
+    'alert_success' => 'Sukses !'
+]
+
+?>

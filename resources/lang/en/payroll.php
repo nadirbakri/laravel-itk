@@ -51,6 +51,8 @@ return [
     'monthly_payroll_closing_process' => 'Monthly Payroll Closing Process',
     'monthly_system_closing' => 'Monthly System Closing',
     'transfer_data_to_bank' => 'Transfer Data To Bank',
+    'periodical_update_process' => 'Periodical Update Process',
+    'overtime_calculation_process' => 'Overtime Calculation Process',
     'journal_process' => 'Journal Process',
     'salary_calculation_process' => 'Salary Calculation Process',
     'tax_calculation_process' => 'Tax Calculation Process',

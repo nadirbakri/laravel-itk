@@ -1262,6 +1262,14 @@
             $("#modal_spt_format_form").submit();
         });
 
+        $("#btn-remove").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#modal_spt_format_form").submit();
+        });
+
         if ($("#modal_spt_format_form").length > 0) {
             $("#modal_spt_format_form").validate({
             rules: {
@@ -1358,6 +1366,96 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_save") }}'
                             );
 
+                            $("#btn-remove").prop("disabled", false);
+                            $("#btn-remove").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+
+                    });
+                }
+            });
+        }
+
+        if ($("#modal_spt_format_form").length > 0) {
+            $("#modal_spt_format_form").validate({
+            rules: {
+                    field_name: {
+                        required: true,
+                    },
+                    field_label: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    field_name: {
+                        required: "{{ __('payroll_spt_format.field_mandatory') }}",
+                    },
+                    field_label: {
+                        required: "{{ __('payroll_spt_format.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-remove").prop("disabled", false);
+                    $("#btn-remove").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/spt_format/proses') }}",
+                        type: "POST",
+                        data: $('#modal_spt_format_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-remove").prop("disabled", false);
+                                $("#btn-remove").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/spt_format') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-remove").prop("disabled", false);
+                                $("#btn-remove").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
                             $("#btn-remove").prop("disabled", false);
                             $("#btn-remove").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'

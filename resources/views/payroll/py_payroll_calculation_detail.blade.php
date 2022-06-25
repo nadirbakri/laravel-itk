@@ -442,10 +442,14 @@
         if (func === 'new') {
             $('#record_function').val('New');
             $('#field_name').val(null).trigger('change');
-            $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : '')+1);
+            // $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : '')+1);
+            
             $('#payroll_calculation_detail_table').DataTable().destroy();
             load_table_payroll_calculation_detail();
-        }else if (func ==='edit') {
+            // console.log(arrData[0].seqProcess);
+        }
+
+        else if (func ==='edit') {
             $('#record_function').val('Edit');
             $('#field_name').prop('disabled', true);
             $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : ''));
