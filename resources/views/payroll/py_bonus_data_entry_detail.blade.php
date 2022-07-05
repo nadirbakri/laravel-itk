@@ -291,7 +291,7 @@
             $('#performance_result').prop('disabled', false);
             $('#entry_type').on('change', function () {
                 if ($('#entry_type').val() === 'B') {
-                $('#performance_result').prop('disabled', false);
+                    $('#performance_result').prop('disabled', false);
                 }
                 else {
                     $('#performance_result').prop('disabled', true);
@@ -357,7 +357,7 @@
                 $('#performance_result').prop('disabled', true);
             }
             $('#service_month').val((typeof arrData[0].serviceMonth !== 'undefined') ? arrData[0].serviceMonth : '');
-
+            console.log(arrData[0].performanceResult);
             $.ajax({
                 type: 'GET',
                 url: '/performance_result/bonus_thr_data_entry/api',

@@ -428,17 +428,20 @@
             if ($('#bonus_thr').is(':checked')) {
                 window.location.href = ("{{ url('payroll/import_data_from_excel_bonus_thr') }}");
             } else if ($('#salary_master').is(':checked')) {
-                $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                // $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                $('#column_c2, #column_d2, #column_e2, #column_f2, #column_g2, #column_h2, #column_i2, #column_j2, #column_k2, #column_l2').val(null).trigger('change');
                 column = $('#salary_master').val();
                 loadDataColumn();
                 $('.currency_code').prop('disabled', false);
             } else if ($('#salary_actual').is(':checked')) {
-                $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                // $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                $('#column_c2, #column_d2, #column_e2, #column_f2, #column_g2, #column_h2, #column_i2, #column_j2, #column_k2, #column_l2').val(null).trigger('change');
                 column = $('#salary_actual').val();
                 loadDataColumn();
                 $('.currency_code').prop('disabled', true);
             } else if ($('#yearly').is(':checked')) {
-                $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                // $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                $('#column_c2, #column_d2, #column_e2, #column_f2, #column_g2, #column_h2, #column_i2, #column_j2, #column_k2, #column_l2').val(null).trigger('change');
                 column = $('#yearly').val();
                 loadDataColumn();
                 $('.currency_code').prop('disabled', true);

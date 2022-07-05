@@ -194,9 +194,7 @@
                             <tr>
                                 <th>{{ __('payroll_salary_accumulation_data.table_field_name') }}</th>
                                 <th>{{ __('payroll_salary_accumulation_data.table_description') }}</th>
-                                <th>{{ __('payroll_salary_accumulation_data.table_amount') }}
-                                    <small class="text-muted">(0 - 0,9)</small>
-                                </th>
+                                <th>{{ __('payroll_salary_accumulation_data.table_amount') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -236,7 +234,7 @@
                                     <label
                                         for="user_id">{{ __('payroll_salary_accumulation_data.label_user_id') }}</label>
                                     <input type="text" class="form-control" id="user_id" name="user_id"
-                                        placeholder={{ __('payroll_salary_accumulation_data.label_user_id') }}>
+                                        placeholder="{{ __('payroll_salary_accumulation_data.label_user_id') }}">
                                 </div>
                             </div>
                         </div>
@@ -246,7 +244,7 @@
                                     <label for="password">{{ __('payroll_salary_accumulation_data.label_password') }}</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="password" name="password"
-                                            placeholder={{ __('payroll_salary_accumulation_data.label_password') }}>
+                                            placeholder="{{ __('payroll_salary_accumulation_data.label_password') }}">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary rounded-right" type="button" id="show_password"><i id="icon_show_password"
                                                 class="fa fa-eye" aria-hidden="true"></i></button>
@@ -358,7 +356,7 @@
                 table.row.add([
                     '<input type="text" class="form-control" name="field_name[]" id="field_name'+ k +'" value="'+ ((typeof v.fieldName !== 'undefined' && v.fieldName !== null) ? v.fieldName : '') +'" readonly>',
                     '<input type="text" class="form-control" name="description[]" id="description'+ k +'" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
-                    '<input type="number" min=0 max=0.9 step="0.1" class="form-control" name="amount[]" id="amount'+ k +'" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'" readonly>'
+                    '<input type="number" class="form-control" name="amount[]" id="amount'+ k +'" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'" readonly>'
                 ]).draw();
             });
         }
@@ -383,7 +381,7 @@
                 processing: true,
                 orderCellsTop: true,
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                paging: false
             });
         }
         
@@ -524,14 +522,8 @@
                             if (response.status == "true") {
 								$("#btn-ok").prop("disabled", false);
 								$("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
                                 $('#salary_accumulation_data_detail_table').DataTable().destroy();
                                 load_data_table_salary_accumulation_data_detail();
-                                setTimeout(function () {
-                                    $('#notification_success').modal('hide');
-                                }, 3000);
                                 $('#modal_authentication').modal('hide');
 
                                 if (typeof arrData[0].grid !== 'undefined') {

@@ -6405,8 +6405,6 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-			// var_dump($request->value);
-
 	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
 	    		['body' => json_encode(
 	    			[
@@ -6432,7 +6430,6 @@ class DataController extends Controller
 		if ($request->value == null) {
 			return response()->json([]);
 		}
-
 		else {
 			return response()->json($arrResult->dataListSet[0]);
 		}

@@ -352,7 +352,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/import_data_from_excel') }}";
+                                        "{{ url('payroll/import_data_from_excel_bonus_thr') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);

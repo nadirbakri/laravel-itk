@@ -237,7 +237,7 @@
                     {data: 'employeeNo', name: 'employeeNo'},
                     {data: 'employeeName', name: 'employeeName'},
                     {data: 'loanNo', name: 'loanNo'},
-                    {data: 'paymentSeq', name: 'paymentSeq'},
+                    {data: 'auditLoanSeqNo', name: 'auditLoanSeqNo'},
                 ],
                 select: {
                     style:    'multi',
