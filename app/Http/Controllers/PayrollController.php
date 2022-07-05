@@ -342,6 +342,26 @@ class PayrollController extends Controller
         return view('payroll.py_spt_process', ['data' => $data, "status" => "Final tax calculation not processed yet"]);
     }
 
+    public function pageMonthlySystemClosing()
+    {
+        return view ('payroll.py_monthly_system_closing');
+    }
+
+    public function pagePeriodicalUpdateProcess()
+    {
+        return view ('payroll.py_monthly_periodical_update_process');
+    }
+
+    public function pageTransferDataToBank()
+    {
+        return view ('payroll.py_transfer_data_to_bank_menu');
+    }
+
+    public function pageTransferDataToBankExportToFile()
+    {
+        return view ('payroll.py_transfer_data_to_bank_export_to_file');
+    }
+
     public function pageFinalTaxProcess() 
     {
         try {
@@ -4898,46 +4918,6 @@ public function dataDetailReportFormatPY(Request $request)
             $request->column_l
         ), 'Template Payroll Data.xlsx');
     }
-    public function prosesMonthlyClosingProcessPY(Request $request)
-    {
-        date_default_timezone_set('Asia/Jakarta');
-        try {
-            $client = new Client([
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            // var_dump((int) $request->period_month);
-
-            $response = $client->post(env('API_URL') . '/prmonthlyclosingprocess/insertprmonthlyclosing',
-                ['body' => json_encode(
-                    [
-                        "companyCode" => Session::get('companyCode'),
-                        "periodMonth" => (int) $request->period_month,
-                        "periodYear" => (int) $request->period_year,
-                        "languageCode" => App::getLocale(),
-                        "sessionID" => 0,
-                        "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
-                    ]
-                )]
-            );
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-        }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
-    }
 
     public function prosesSptFormatPY(Request $request)
     {
@@ -5318,6 +5298,55 @@ public function dataDetailReportFormatPY(Request $request)
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesMonthlyClosingProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump((int) $request->period_month);
+            // var_dump(Session::get('token'));
+
+            $response = $client->post(env('API_URL') . '/prmonthlyclosingprocess/insertprmonthlyclosing',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->process_period_month_hidden,
+                        "periodYear" => (int) $request->process_period_year,
+                        "employeeNoFrom" => $request->employee_no_from,
+                        "employeeNoTo" => $request->employee_no_to,
+                        "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+                        "languageCode" => App::getLocale(),
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkNumberReportFormatPY(Request $request)
     {
         try {
@@ -5379,6 +5408,179 @@ public function dataDetailReportFormatPY(Request $request)
         return response()->json($number);
 
     }
+
+    public function prosesMonthlySystemClosingPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(Session::get('token'));
+
+            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesMonthlyPeriodicalUpdateProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            // var_dump(Session::get('token'));
+            // var_dump($request->period_year);
+
+            $response = $client->post(env('API_URL') . '/prmonthlyclosingprocess/insertprmonthlyclosing',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesJournalProcessPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            // var_dump(Session::get('token'));
+
+            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    // public function prosesSptFormatPY(Request $request)
+    // {
+    //     try {
+    //         $client = new Client([
+    //             'headers' => [ 'Content-Type' => 'application/json',
+    //             'Authorization' => 'Bearer ' . Session::get('token') ]
+    //         ]);
+    //         // var_dump(Session::get('token'));
+    //         // var_dump((int)$request->column_no_hidden);
+
+    //         $param = [
+    //             'companyCode' => Session::get('companyCode'),
+    //             'columnNo' => (int) $request->column_no_hidden,
+    //             'fieldName' => $request->field_name,
+    //             'label' => $request->field_label,
+    //             "changedNo" => 0,
+    //             'format' => $request->format,
+    //             "createdDate" => date("Y-m-d\TH:i:s"),
+    //             "createdBy" => Session::get('userID'),
+    //             "changedDate" => date("Y-m-d\TH:i:s"),
+    //             "changedBy" => Session::get('userID'),
+    //             "languageCode" => App::getLocale(),
+    //             'sessionID' => 0, 
+    //             'sessionUserID' => Session::get('userID'),
+    //             'logActionUserID' => Session::get('userID'),
+    //             'logActionUsername' => Session::get('userName')        
+    //         ];
+    //         // var_dump(json_encode($param));
+
+    //     // var_dump($arrResult->dataListSet[0]->{$request->pemasterType});
+
+    //     if($arrResult->dataListSet[0]->{$request->pemasterType} == null){
+    //         $number = 1;
+    //     }else{
+    //         // $dataLevel[] = $request->{'level' . ($i+1)};
+    //         if(isset($arrResult->dataListSet[0]->{$request->pemasterType}[0]->columnNo)){
+    //             $number = max(array_column($arrResult->dataListSet[0]->{$request->pemasterType}, 'columnNo')) + 1;
+    //         }else if(isset($arrResult->dataListSet[0]->{$request->pemasterType}[0]->seqNo)){
+    //             $number = max(array_column($arrResult->dataListSet[0]->{$request->pemasterType}, 'seqNo')) + 1;
+    //         }
+    //     }
+    //     return response()->json($number);
+    //     }
+    // }
 
     public function checkNumberPayrollCalculationPY(Request $request)
     {

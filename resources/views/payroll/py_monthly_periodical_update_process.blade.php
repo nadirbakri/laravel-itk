@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_monthly_system_closing.judul') }}</title>
+	<title>{{ __('payroll_monthly_periodical_update_process.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -66,7 +66,7 @@
         <div class="div-title">
 			<a href="{{ url('payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_monthly_system_closing.list') }}</span>
+				<span class="title-text">{{ __('payroll_monthly_periodical_update_process.list') }}</span>
 			</a>
 		</div>
         <div class="div-form">
@@ -75,23 +75,23 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label for="period_process">{{ __('payroll_monthly_system_closing.label_period_process') }}</label>
+                            <label for="period_process">{{ __('payroll_monthly_periodical_update_process.label_period_process') }}</label>
                             <div class="input-group month">
                                 <input type="text" class="form-control" id="period_process" name="period_process"
-                                    placeholder="{{ __('payroll_monthly_system_closing.label_period_process') }}" readonly>
+                                    placeholder="{{ __('payroll_monthly_periodical_update_process.label_period_process') }}" readonly>
                                 <div class="input-group-prepend" id="month-calendar">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
-                                <input type="text" class="form-control" id="period_month" name="period_month" hidden>
-                                <input type="text" class="form-control" id="period_year" name="period_year" hidden>
                             </div>
+                            <input type="text" class="form-control" id="period_month" name="period_month" hidden>
+                            <input type="text" class="form-control" id="period_year" name="period_year" hidden>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                            <i class="fa fa-play-circle-o"></i> {{ __('tm_update_shift_by_date.btn_process') }}
+                            <i class="fa fa-play-circle-o"></i> {{ __('payroll_monthly_periodical_update_process.btn_process') }}
                         </button>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_monthly_system_closing.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('payroll_monthly_periodical_update_process.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -159,7 +159,7 @@
                     $('#period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
                 }
                 var month_year = moment(response[0].periodYear.toString() + "-" + response[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
-                console.log(response[0].periodMonth.toString());
+                // console.log(response[0].periodMonth.toString());
                 $('#period_process').val(month_year);
             }
         });
@@ -182,14 +182,14 @@
                     });
 
                     $.ajax({
-                        url: "{{ url('payroll/monthly_system_closing/proses') }}",
+                        url: "{{ url('payroll/monthly_periodical_update_process/proses') }}",
                         type: "POST",
                         data: $('#monthly_closing_process_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_payroll_closing_process.btn_process") }}'
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_periodical_update_process.btn_process") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -202,7 +202,7 @@
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_payroll_closing_process.btn_process") }}'
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_periodical_update_process.btn_process") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -219,7 +219,7 @@
                         error: function (response) {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
-                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_payroll_closing_process.btn_process") }}'
+                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_periodical_update_process.btn_process") }}'
                             );
 
                             $('#notification').modal('show');

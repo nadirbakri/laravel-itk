@@ -52,6 +52,8 @@ return [
     'monthly_payroll_closing_process' => 'Proses Penutupan Penggajian Bulanan',
     'monthly_system_closing' => 'Penutupan Sistem Bulanan',
     'transfer_data_to_bank' => 'Transfer Data Ke Bank',
+    'periodical_update_process' => 'Proses Update Periode',
+    'overtime_calculation_process' => 'Proses Perhitungan Lembur',
     'journal_process' => 'Proses Jurnal',
     'salary_calculation_process' => 'Proses Perhitungan Gaji',
     'tax_calculation_process' => 'Proses Perhitungan Pajak',

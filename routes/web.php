@@ -515,10 +515,15 @@ Route::get('payroll/final_tax_process', 'PayrollController@pageFinalTaxProcess')
 Route::get('payroll/monthly_payroll_closing_process', 'PayrollController@pageMonthlyPayrollClosingProcess');
 Route::get('payroll/monthly_system_closing', 'PayrollController@pageMonthlySystemClosing');
 Route::get('payroll/transfer_data_to_bank', 'PayrollController@pageTransferDataToBank');
+Route::get('payroll/periodical_update_process', 'PayrollController@pagePeriodicalUpdateProcess');
+Route::get('payroll/overtime_calculation_process', 'PayrollController@pageOvertimeCalculationProcess');
 Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
 Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCalculationProcess');
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
 Route::get('payroll/absenteeism_overtime_calculation_process', 'PayrollController@pageAbsenteeismOvertimeCalculationProcess');
+Route::get('payroll/absenteeism_calculation_process', 'PayrollController@pageAbsenteeismCalculationProcess');
+Route::get('payroll/transfer_data_to_bank/export_to_file', 'PayrollController@pageTransferDataToBankExportToFile');
+Route::get('payroll/transfer_data_to_bank/api', 'PayrollController@pageTransferDataToBankApi');
 /* Payroll Report Menu */
 Route::get('payroll/dumtk', 'PayrollController@pageDUMTK');
 Route::get('payroll/monthly_jamsostek_report', 'PayrollController@pageMonthlyJamsostekReport');
@@ -594,6 +599,9 @@ Route::post('payroll/monthly_closing_process/proses', 'PayrollController@prosesM
 Route::post('payroll/salary_calculation_process/proses', 'PayrollController@prosesSalaryCalculationProcessPY');
 Route::post('payroll/tax_calculation_process/proses', 'PayrollController@prosesTaxCalculationProcessPY');
 Route::post('payroll/absenteeism_overtime_calculation_process/proses', 'PayrollController@prosesAbsenteeismOvertimeCalculationProcessPY');
+Route::post('payroll/monthly_system_closing/proses', 'PayrollController@prosesMonthlySystemClosingPY');
+Route::post('payroll/monthly_periodical_update_process/proses', 'PayrollController@prosesMonthlyPeriodicalUpdateProcessPY');
+Route::post('payroll/journal_process/proses', 'PayrollController@prosesJournalProcessPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');

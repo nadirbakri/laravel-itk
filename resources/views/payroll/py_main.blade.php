@@ -226,7 +226,6 @@
 			<div id="payroll-process" class="collapse">
 				<div class="card-block">
 					<div class="row div-child-data">
-						
 					</div>
 					<div class="div-head-data">
 						<span class="head-title-text">{{ __('payroll.yearly_process') }}</span>
@@ -273,7 +272,13 @@
 								<span class="child-title-text">{{ __('payroll.transfer_data_to_bank') }}</span>
 							</a>
 						</div>
-						{{-- <div class="col col-3">
+						<div class="col col-3">
+							<a href="{{ url('payroll/periodical_update_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.periodical_update_process') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
 							<a href="{{ url('payroll/overtime_calculation_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.overtime_calculation_process') }}</span>
