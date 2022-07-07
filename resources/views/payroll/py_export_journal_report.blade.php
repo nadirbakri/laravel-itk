@@ -24,6 +24,8 @@
 		}
 		.table_detail th{
 			border:1px solid #000;
+            padding:4px;
+            background-color:#97d7f7;
 		}
 		.table_detail{
 			border-collapse:collapse;
@@ -34,9 +36,9 @@
 </head>
 <body>
     @foreach($data as $key => $value)
-    <h1 style="text-align:left">{{ $value->headerA }}</h1>
-    <h2 style="text-align:left">FOR : {{ $value->headerC }}</h2>
-	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
+    <h3 style="text-align:left">{{ $value->headerA }}</h3>
+    <h3 style="text-align:left; padding: 0;">{{ __('payroll_journal_report.judul') }} <br> For : {{ $value->headerC }}</h3>
+	<table style="width:100%; font-size:14px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
                 <th>Account No</th>
@@ -65,7 +67,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td style="font-weight:200;">Total</td>
                 <td>{{ $value->totalDebit }}</td>
                 <td>{{ $value->totalKredit }}</td>
             </tr>

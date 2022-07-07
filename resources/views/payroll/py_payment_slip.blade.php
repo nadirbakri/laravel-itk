@@ -10,6 +10,7 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
@@ -142,7 +143,7 @@
                             <label for="period form-check-label">{{ __('payroll_payment_slip.label_period') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="period" name="period"
                                 placeholder="{{ __('payroll_payment_slip.label_period') }}">
@@ -180,7 +181,7 @@
                             <label for="print_date form-check-label">{{ __('payroll_payment_slip.label_print_date') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="print_date" name="print_date"
                                 placeholder="{{ __('payroll_payment_slip.label_print_date') }}">
@@ -198,7 +199,7 @@
                             <label for="employee_no_from form-check-label">{{ __('payroll_payment_slip.label_employee_no') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                     </div>
                     <div class="col-0.5">
@@ -206,7 +207,7 @@
                             <label for="employee_no_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                     </div>
                 </div>
@@ -240,7 +241,7 @@
                             <label for="group_authorized_from form-check-label">{{ __('payroll_payment_slip.label_group_authorize_code') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="group_authorized_from" name="group_authorized_from"></select>
                     </div>
                     <div class="col-0.5">
@@ -248,7 +249,7 @@
                             <label for="group_authorized_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="group_authorized_to" name="group_authorized_to"></select>
                     </div>
                 </div>
@@ -313,10 +314,17 @@
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#period_calendar").click(function () {
+                $flatPickrInput.siblings("period_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }

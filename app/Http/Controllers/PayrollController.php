@@ -422,13 +422,19 @@ class PayrollController extends Controller
         return view('payroll.py_severance_report');
     }
 
-    public function pagePaymentSlip(){
+    public function pagePaymentSlip()
+    {
         return view('payroll.py_payment_slip');
     }
 
     public function pageJournalReport()
     {
         return view('payroll.py_journal_report');
+    }
+
+    public function pageJournalProcess()
+    {
+        return view('payroll.py_journal_process');
     }
 
     public function pageMonthlyJamsostekReport(){
@@ -2175,6 +2181,22 @@ class PayrollController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
+                        'periodYear' => (int) $request->year,
+                        'periodMonth' => (int) $request->month,
+                        'statusPeriod' => (int) $request->period,
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+
+            $response_det = $client->post(env('API_URL') . '/prmulticost/getprmulticostdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'periodYear' => (int) $request->year,
+                        'periodMonth' => (int) $request->month,
+                        'statusPeriod' => (int) $request->period,
                         'languageCode' => App::getLocale()
                     ]
                 )]
@@ -2183,9 +2205,10 @@ class PayrollController extends Controller
             var_dump($e->getResponse());
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult_det = json_decode($response_det->getBody()->getContents());
 
-        return view('payroll.py_multi_cost_center_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('payroll.py_multi_cost_center_detail', ['data' => $arrResult->dataListSet, 'data_det' => $arrResult_det->dataListSet, 'func' => $request->func]);
     }
 
     public function dataReportFormatPY(Request $request)
@@ -2735,8 +2758,6 @@ public function dataDetailReportFormatPY(Request $request)
                         'logActionUsername' => Session::get('userName')
                     ];
                 }
-                // var_dump($request->cost_center);
-                // var_dump($request->percentage[$key]);
             }
             else {
                 $data_detail = null;
@@ -2761,15 +2782,14 @@ public function dataDetailReportFormatPY(Request $request)
             ];
             $param['detail'] = $data_detail;
 
-            // var_dump($param);
-            // var_dump($request->cost_center);
+            var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prmulticost/insertprmulticost',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/prmulticost/updateprmulticostdetail',
+                $response = $client->put(env('API_URL') . '/prmulticost/updateprmulticost',
                     ['body' => json_encode($param)]
                 );
             }
@@ -2784,8 +2804,6 @@ public function dataDetailReportFormatPY(Request $request)
                 return view('error.bad_request');
             }
         }
-
-        // var_dump($response);
 
         $arrResult = json_decode($response->getBody()->getContents());
 
@@ -4085,14 +4103,11 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
             }
 
-            // var_dump(json_encode($param));
-
             $response = $client->delete(env('API_URL') . '/prmulticost/deletemulticost',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

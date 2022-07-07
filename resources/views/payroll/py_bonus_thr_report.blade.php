@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="report" name="report" value="B" checked>
+                            <input type="radio" id="bonus" name="report" value="B" checked>
                             <label for="bonus">{{ __('payroll_bonus_thr_report.label_bonus') }}</label>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                             <label for="payment_date_from form-check-label">{{ __('payroll_bonus_thr_report.label_payment_date') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="payment_date_from" name="payment_date_from"
                                 placeholder="{{ __('payroll_bonus_thr_report.label_payment_date') }}">
@@ -157,7 +157,7 @@
                             <label for="payment_date_to form-check-label">{{ __('payroll_bonus_thr_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="payment_date_to" name="payment_date_to"
                                 placeholder="{{ __('payroll_bonus_thr_report.label_payment_date') }}">
@@ -175,7 +175,7 @@
                             <span style="color: red">*</span>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
@@ -185,7 +185,7 @@
                             <label for="employee_no_to">{{ __('payroll_bonus_thr_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
@@ -199,7 +199,7 @@
                             <span style="color: red">*</span>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
                         </div>
@@ -209,7 +209,7 @@
                             <label for="group_authorized_code_to form-check-label">{{ __('payroll_bonus_thr_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
                         </div>

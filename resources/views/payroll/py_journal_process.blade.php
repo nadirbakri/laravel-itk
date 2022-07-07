@@ -10,13 +10,13 @@
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
 	<style type="text/css">
 		.div-payroll {
-			max-width: 97%;
-			margin: auto;
-			margin-top: 1%;
-		}
+            max-width: 100%;
+            margin: auto;
+            /*margin-top: 1%;*/
+        }
         .modal-header-notification-error {
             border-bottom:1px solid #eee;
             background-color: #f44336;
@@ -62,16 +62,16 @@
 </head>
 
 <body>
-	<div class="div-payroll">
-        <div class="div-title">
-			<a href="{{ url('payroll') }}" target="iframe_dashboard">
-				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_journal_process.list') }}</span>
-			</a>
-		</div>
-        <div class="div-form">
-            <form id="monthly_closing_process_form" method="post">
-                @csrf
+    <div class="div-form">
+        <form id="monthly_closing_process_form" method="post">
+            @csrf
+            <div class="div-payroll">
+                <div class="div-title">
+                    <a href="{{ url('payroll') }}" target="iframe_dashboard">
+                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                        <span class="title-text">{{ __('payroll_journal_process.list') }}</span>
+                    </a>
+                </div>
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
@@ -95,8 +95,8 @@
                         </button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">

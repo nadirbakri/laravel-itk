@@ -19,19 +19,19 @@
     <table>
         <thead>
             <tr>
-                <th colspan="11" style="font-size:16px; font-weight:bold;">{{ $value[0]->companyName }}</th>
+                <th colspan="11" style="font-size:14px; font-weight:bold;">{{ $value[0]->companyName }}</th>
             </tr>
             <tr>
-                <th colspan="11" style="font-size:14px; font-weight:bold;">{{ $value[0]->address }}</th>
-            </tr>
-            <tr></tr>
-            <tr>
-                <th colspan="11" style="text-align:center"><h3>Severance Report</h3></th>
+                <th colspan="11" style="font-size:12px; font-weight:bold;">{{ $value[0]->address }}</th>
             </tr>
             <tr>
-                <th colspan="11" style="text-align:center"><p>Payment Period : {{ $value[1]->paymentDateFrom }} to {{ $value[1]->paymentDateTo }}</p></th>
+            <tr>
+                <th colspan="11" style="text-align:center; font-size:12px; font-weight:bold;">Severance Report</th>
             </tr>
-            <tr></tr>
+            <tr>
+                <th colspan="11" style="text-align:center; font-size:12px; font-weight:bold;">Payment Period : {{ $value[1]->paymentDateFrom }} to {{ $value[1]->paymentDateTo }}</th>
+            </tr>
+            <tr>
         </thead>
     </table>
     <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
@@ -67,7 +67,8 @@
             </tr>
             @endforeach
             <tr>
-                <td colspan="10" style="border:1px solid #000; text-align:center; padding:4px;"></td>
+                <td colspan="9" style="border:1px solid #000; text-align:center; padding:4px;"></td>
+                <td style="border-bottom:1px solid #000; border-left: none; text-align:center; padding:4px; font-weight:bold;">Total</td>
                 <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value[1]->columnO}}</td>
             </tr>
         </tbody>

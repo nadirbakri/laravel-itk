@@ -94,9 +94,9 @@
                 <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->december }}</td>
             </tr>
             <tr>
-                <td style="text-align:left; border:1px solid #000;">{{ $dataTable->bpjsJoiningDate }}</td>
+                <td style="text-align:left; border:1px solid #000;">{{ date('Y-m-d',strtotime($dataTable->bpjsJoiningDate)) }}</td>
                 <td style="text-align:left; border:1px solid #000;">{{ $dataTable->fullName }}</td>
-                <td style="text-align:left; border:1px solid #000;">{{ $dataTable->birthDate }}</td>
+                <td style="text-align:left; border:1px solid #000;">{{ date('Y-m-d',strtotime($dataTable->birthDate)) }}</td>
             </tr>
             @endforeach
             <tr>

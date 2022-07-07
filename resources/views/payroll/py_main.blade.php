@@ -283,7 +283,7 @@
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.overtime_calculation_process') }}</span>
 							</a>
-						</div> --}}
+						</div>
 						<div class="col col-3">
 							<a href="{{ url('payroll/journal_process') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">

@@ -43,7 +43,7 @@
                 <th colspan="8" style="text-align:center; font-weight:bold;"><h3>{{ $data[1]->reportName }} Report</h3></th>
             </tr>
             <tr>
-                <th colspan="8" style="text-align:center; font-weight:bold;"><pre>{{ __('payroll_bonus_thr_report.label_payment_period') }}       {{ $data[1]->paymentPeriodFrom }} {{ __('payroll_bonus_thr_report.label_to') }} {{ $data[1]->paymentPeriodTo }}</pre></th>
+                <th colspan="8" style="text-align:center; font-weight:bold;"><pre>{{ __('payroll_bonus_thr_report.label_payment_period') }}       {{ $data[1]->paymentPeriodFrom }} - {{ $data[1]->paymentPeriodTo }}</pre></th>
             </tr>
             <tr></tr>
         </thead>

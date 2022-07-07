@@ -143,7 +143,7 @@
                             <label for="payment_date_from form-check-label">{{ __('payroll_severance_report.label_payment_date') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="payment_date_from" name="payment_date_from"
                                 placeholder="{{ __('payroll_severance_report.label_payment_date') }}">
@@ -158,7 +158,7 @@
                             <label for="payment_date_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="payment_date_to" name="payment_date_to"
                                 placeholder="{{ __('payroll_severance_report.label_payment_date') }}">
@@ -176,7 +176,7 @@
                             <label for="employee_no_from form-check-label">{{ __('payroll_severance_report.label_employee_no') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                     </div>
                     <div class="col-0.5">
@@ -184,7 +184,7 @@
                             <label for="employee_no_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                             <label for="group_authorized_from form-check-label">{{ __('payroll_severance_report.label_group_authorized') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="group_authorized_from" name="group_authorized_from"></select>
                     </div>
                     <div class="col-0.5">
@@ -203,7 +203,7 @@
                             <label for="group_authorized_to form-check-label">{{ __('payroll_severance_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="group_authorized_to" name="group_authorized_to"></select>
                     </div>
                 </div>

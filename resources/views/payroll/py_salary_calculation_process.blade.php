@@ -153,7 +153,7 @@
                     <div class="col-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="loan_payment_process" name="loan_payment_process" value="true">
-                            <label for="process_period">{{ __('payroll_salary_calculation_process.label_loan_payment_process') }}</label>
+                            <label for="loan_payment_process">{{ __('payroll_salary_calculation_process.label_loan_payment_process') }}</label>
                         </div>
                     </div>
                 </div>

@@ -233,13 +233,13 @@
         }
 
         $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : null, 'year' : null, 'month' : null, 'period' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
         });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : data[0].employeeNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+                $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : data[0].employeeNo, 'year' : data[0].periodYear, 'month' : data[0].periodMonth, 'period' : data[0].statusPeriod, 'func' : 'edit' }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -261,8 +261,8 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response
                                 .message);
-                            $('#bonus_data_entry_table').DataTable().destroy();
-                            load_data_table_bonus_data_entry();
+                            $('#multi_cost_center_table').DataTable().destroy();
+                            load_data_table_multi_cost_center();
                             setTimeout(function(){ 
                                 $('#notification_success').modal('hide');
                             }, 3000);
@@ -289,7 +289,7 @@
 
         $('#multi_cost_center_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : data.employeeNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('payroll/multi_cost_center/detail') }}", { 'employeeNo' : data.employeeNo, 'year' : data.periodYear, 'month' : data.periodMonth, 'period' : data.statusPeriod, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     })
 </script>

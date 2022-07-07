@@ -35,19 +35,19 @@
 
         @page { margin-bottom: 150px; size: auto; }
         /* header { position: fixed; left: 0px; top: -90px; right: 0px; height: 150px; text-align: center; } */
-        footer { position: absolute; left: 25px; bottom: -85px; right: 0px; height: 150px; }
+        footer { position: absolute; left: 25px; bottom: -85px; right: 0px; height: 110px; }
         table { page-break-inside:auto }
-        tr{page-break-inside:avoid; page-break-after:auto }
+        tr{page-break-inside:avoid !important; page-break-after:auto }
         thead { display:table-header-group; }
         tfoot { display:table-footer-group; }
 	</style>
 </head>
 <body>
-    <p style="text-align:left">{{ $data[0]->companyName }}</p>
-    <p style="text-align:left">{{ $data[0]->address }}</p>
+    <h4 style="text-align:left">{{ $data[0]->companyName }}</h4>
+    <h4 style="text-align:left">{{ $data[0]->address }}</h4>
     <h3 style="text-align:center">{{ __('payroll_dumtk.list') }}</h3>
     <h5 style="text-align:center">{{ __('payroll_dumtk.label_as_of_period') }}<span style="display: inline-block; margin-left: 60px;"></span>{{ $data[1]->asOfPeriod }}</h5>
-	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
+	<table style="width:100%; font-size: 12px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
                 <th rowspan="2">{{ __('payroll_dumtk.header_no') }}</th>
@@ -94,9 +94,9 @@
                 <td rowspan="2">{{ $dataTable->bulan->december }}</td>
             </tr>
             <tr>
-                <td>{{ $dataTable->bpjsJoiningDate }}</td>
+                <td>{{ date('Y-m-d',strtotime($dataTable->bpjsJoiningDate)) }}</td>
                 <td>{{ $dataTable->fullName }}</td>
-                <td>{{ $dataTable->birthDate }}</td>
+                <td>{{ date('Y-m-d',strtotime($dataTable->birthDate)) }}</td>
             </tr>
             @endforeach
             <tr>
@@ -105,7 +105,7 @@
         </tbody>
     </table>
 
-    <footer>
+    <footer style="font-size:14px;">
         <br>
         <p>{{ __('payroll_dumtk.report_parameter') }}</p>
         <p>{{ __('payroll_dumtk.label_employee_no') }}<span style="display: inline-block; margin-left: 40px;"></span> : {{ $data2[0]->employeeNoFrom }} {{ __('payroll_dumtk.label_to') }} {{ $data2[0]->employeeNoTo }}</p>

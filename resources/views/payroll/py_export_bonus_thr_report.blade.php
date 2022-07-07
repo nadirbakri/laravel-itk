@@ -17,8 +17,8 @@
             padding: 0;
 			margin-left: 20px;
 			margin-right: 20px;
-			margin-bottom: 25px;
-			margin-top: 25px;
+			margin-bottom: 15px;
+			margin-top: 15px;
 		}
 		.table_detail td{
 			border:1px solid #000;
@@ -36,17 +36,17 @@
 	</style>
 </head>
 <body>
-    <p style="text-align:left">{{ $data[0]->companyName }}</p>
-    <p style="text-align:left">{{ $data[0]->address }}</p>
+    <h4 style="text-align:left">{{ $data[0]->companyName }}</h4>
+    <h4 style="text-align:left">{{ $data[0]->address }}</h4>
     <h3 style="text-align:center">{{ $data[1]->reportName }} Report</h3>
-    <h5 style="text-align:center">{{ __('payroll_bonus_thr_report.label_payment_period') }}<span style="display: inline-block; margin-left: 30px;"></span>{{ $data[1]->paymentPeriodFrom }} {{ __('payroll_bonus_thr_report.label_to') }} {{ $data[1]->paymentPeriodTo }}</h5>
-	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
+    <h5 style="text-align:center">{{ __('payroll_bonus_thr_report.label_payment_period') }}<span style="display: inline-block; margin-left: 5px;"></span>{{ $data[1]->paymentPeriodFrom }} - {{ $data[1]->paymentPeriodTo }}</h5>
+	<table style="width:100%; font-size: 11px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
                 <th>{{ __('payroll_bonus_thr_report.header_no') }}</th>
                 <th>{{ __('payroll_bonus_thr_report.label_employee_no') }}</th>
                 <th>{{ __('payroll_bonus_thr_report.header_employee_name') }}</th>
-                <th>{{ __('payroll_bonus_thr_report.header_join_date') }}</th>
+                <th width="12%">{{ __('payroll_bonus_thr_report.header_join_date') }}</th>
                 <th>{{ __('payroll_bonus_thr_report.header_currency_code') }}</th>
                 <th>{{ __('payroll_bonus_thr_report.header_amount') }}</th>
                 <th>{{ __('payroll_bonus_thr_report.header_service_year') }}</th>

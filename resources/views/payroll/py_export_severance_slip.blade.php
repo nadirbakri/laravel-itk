@@ -34,14 +34,18 @@
 		.box_judul{
 			background-color: #84c2e0;
 			text-align:center;
+			display: table;
 			border: 1px solid black;
+			height: 30px;
+			width: 100%;
+			font-weight:300;
 		}
 	</style>
 </head>
 <body>
 	@foreach($data as $key => $value)
 	<div class="box_judul">
-		<h3>FINAL PAYMENT OF EMPLOYEE</h3>
+		<p style="display: table-cell; vertical-align: middle;">FINAL PAYMENT OF EMPLOYEE</p>
 	</div>
 	<br>
 	<table>
@@ -79,39 +83,59 @@
 		</thead>
 	</table>
 	<br>
-	<p style="text-decoration:underline; text-weight: 700;">The Company will pay this amount based on Company Regulation & labour Law PP35/2021</p>
+	<p style="text-decoration:underline; font-weight: 200;">The Company will pay this amount based on Company Regulation & labour Law PP35/2021</p>
 	<br>
 	<table>
 		<thead>
 			<tr>
-				<td>Severance Pay</td>
+				<td style="font-weight: 200;">Severance Pay</td>
 				<td> : </td>
 				<td>{{ $value->severancePay }}</td>
 			</tr>
 			<tr>
-				<td>Reward for Years of Service</td>
+				<td style="font-weight: 200;">Reward for Years of Service</td>
 				<td> : </td>
 				<td>{{ $value->rewardsForYearsOfService }}</td>
 			</tr>
 			<tr>
-				<td>Sub Total</td>
-				<td> : </td>
-				<td>{{ $value->subTotal }}</td>
+				<td><br></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
-				<td>Rest of Annual Leave</td>
+				<td style="text-decoration:underline;">Sub Total</td>
 				<td> : </td>
-				<td>{{ $value->restOfAnnualLeave }}</td>
+				<td style="text-decoration:underline; font-weight: 200;">{{ $value->subTotal }}</td>
 			</tr>
 			<tr>
-				<td>Detachment Money</td>
+				<td><br></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td style="font-weight: 200;">Rest of Annual Leave</td>
+				<td> : </td>
+				<td style="text-decoration:underline;">{{ $value->restOfAnnualLeave }}</td>
+			</tr>
+			<tr>
+				<td><br></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td style="font-weight: 200;">Detachment Money</td>
 				<td> : </td>
 				<td>{{ $value->detachmentMoney }}</td>
 			</tr>
 			<tr>
-				<td>Total</td>
+				<td><br></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td style="text-decoration:underline; font-weight: 200;">Total</td>
 				<td> : </td>
-				<td>Rp. {{ $value->total }}</td>
+				<td style="text-decoration:underline; font-weight: 200;">Rp. {{ $value->total }}</td>
 			</tr>
 		</thead>
 	</table>
@@ -129,17 +153,23 @@
 			</tr>
 			<tr>
 				<td>Prepared by,</td>
-				<td>  </td>
+				<td>&nbsp;</td>
 				<td>Acknowledge by,</td>
-				<td>  </td>
+				<td>&nbsp;</td>
 				<td>Approved by,</td>
 			</tr>
-			<br><br><br><br>
+			<tr>
+				<td><br><br><br><br></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 			<tr>
 				<td>_____________</td>
-				<td>  </td>
+				<td>&nbsp;</td>
 				<td>_____________</td>
-				<td>  </td>
+				<td>&nbsp;</td>
 				<td>_____________</td>
 			</tr>
 		</thead>

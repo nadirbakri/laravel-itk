@@ -31,26 +31,22 @@
 		.table_detail{
 			border-collapse:collapse;
 		}
-
-		.page_break { page-break-before: always; }
 	</style>
 </head>
 <body>
     @foreach($data as $key => $value)
-    <h3>{{ $value[0]->companyName }}</h3>
-    <h4>{{ $value[0]->address }}</h4>
-    <br/>
+    <h3>{{ $value[0]->companyName }} <br> {{ $value[0]->address }}</h3>
     <h3 style="text-align:center">Severance Report</h3>
-    <p style="text-align:center">Payment Period : {{ $value[1]->paymentDateFrom }} to {{ $value[1]->paymentDateTo }}</p>
-    <br><br>
-    <table style="width=100%" class="table table-bordered table-hover responsive table_detail">
+    <h5 style="text-align:center">Payment Period : {{ $value[1]->paymentDateFrom }} to {{ $value[1]->paymentDateTo }}</h5>
+    <br>
+    <table style="width:100%; font-size:12px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Employee No</th>
                 <th>Employee Name</th>
-                <th>Join Date</th>
-                <th>TerminationDate</th>
+                <th width="10%">Join Date</th>
+                <th width="10%">Termination Date</th>
                 <th>Amount</th>
                 <th>Gratuty Pay</th>
                 <th>Leave Balance</th>
@@ -76,7 +72,8 @@
             </tr>
             @endforeach
             <tr>
-                <td colspan="10"></td>
+                <td colspan="9" style="border-right:none;"></td>
+                <td style="border-left:none; font-weight:200;">Total</td>
                 <td>{{$value[1]->columnO}}</td>
             </tr>
         </tbody>

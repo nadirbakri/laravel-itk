@@ -104,13 +104,12 @@
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
-                        <input type="text" class="form-control" id="employee_no_hidden" name="employee_no_hidden" hidden>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_name">{{ __('payroll_multi_cost_center.label_employee_name') }}</label>
                             <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder={{ __('payroll_multi_cost_center.label_employee_name') }} disabled>
+                                placeholder="{{ __('payroll_multi_cost_center.label_employee_name') }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -139,13 +138,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-8">
                         <table id="cost_center_table" class="table hover" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>{{ __('payroll_multi_cost_center.label_cost_center') }}</th>
-                                    <th>{{ __('payroll_multi_cost_center.label_description') }}</th>
+                                    <th width="25%">{{ __('payroll_multi_cost_center.label_cost_center') }}</th>
+                                    <th width="40%">{{ __('payroll_multi_cost_center.label_description') }}</th>
                                     <th>{{ __('payroll_multi_cost_center.label_percentage') }}</th>
                                     <th>{{ __('payroll_multi_cost_center.label_isdefault') }}</th>
                                 </tr>
@@ -236,37 +235,6 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
-
-    function initDatePicker() {
-        $('#month_year').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            plugins: [
-                new monthSelectPlugin({
-                    shorthand: true, //defaults to false
-                    dateFormat: "Y-m-01", //defaults to "F Y"
-                    altFormat: "F Y", //defaults to "F Y"
-                })
-            ],
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#month_year_hidden").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
-    }
-
-</script>
-
-<script type="text/javascript">
     $(document).ready(function () {
         let pickerMonthYear = $('#month_year').flatpickr({
             altInput: true,
@@ -293,13 +261,14 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
         var arrData = @json($data);
-        // var arrData2 = @json($data_table);
+        var arrData2 = @json($data_det);
         var table = null;
+        var data_cost_center = 0;
 
         if (func == 'new') {
             $('#record_function').val("New");
             $('#employee_no').val(null).trigger('change');
-            $('#period').val(1);
+            $('#period').val('1');
             $('#cost_center_table').DataTable().destroy();
             load_table_cost_center();
         }
@@ -309,36 +278,42 @@
             $('#period').prop('disabled', true);
             $('#month_year').prop('disabled', true);
             $('#period').val(((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : ''));
-            load_table_cost_center();
-            for (var i=0; i<arrData2.length; i++ ){
-                $.ajax({
-                    type: 'GET',
-                    url: '/cost_center/api',
-                    data: {
-                        'costCenterCode': ((typeof arrData2[i].costCenterCode !== 'undefined') ? arrData2[i].costCenterCode : '')
-                    }
-                }).then(function (data) {
-                    var option = $('<option/>', {
-                        id: data.costCenterCode,
-                        title: data.costCenterDescription,
-                        text: data.costCenterDescription
-                    });
-                    $("#cost_center"+(data_cost_center)).append(option).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#cost_center"+(data_cost_center)).trigger({
-                        type: 'select2:select',
-                        params: {
-                            id: data.costCenterCode,
-                            text: data.costCenterDescription,
-                            data: data
-                        }
-                    });
-                });
-                // console.log(arrData2[i].costCenterCode);
-            }
             $('#cost_center_table').DataTable().destroy();
             load_table_cost_center();
-            $('#percentage'+data_cost_center).val((typeof arrData2[0].percentage !== 'undefined' || arrData2[0].percentage !== null) ? arrData2[0].percentage : '');
+            for (var i = 0; i < arrData2.length; i++){
+                data_cost_center++;
+
+                table.row.add([
+                    '<input type="checkbox" class="chk-select" id="check_grid">',
+                    '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
+                    '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
+                    '<input type="number" min=0 max=100 default=0 class="form-control" id="percentage'+(data_cost_center)+'" name="percentage[]">',
+                    '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
+                ]).draw();
+
+                if ((typeof arrData2[i].isDefault !== 'undefined' || arrData2[i].isDefault !== null) && arrData2[i].isDefault == 'true') {
+                    $('.isDefault').prop('checked', true);
+                }
+                else {
+                    $('.isDefault').prop('checked', false);
+                }
+
+                loadDataDetailCostCenter("#cost_center"+(data_cost_center), "#description"+(data_cost_center), ((typeof arrData2[i].costCenterCode !== 'undefined') ? arrData2[i].costCenterCode : ''));
+
+                loadDataCostCenterCode("#cost_center"+(data_cost_center));
+
+                $('#percentage'+data_cost_center).val((typeof arrData2[i].percentage !== 'undefined' || arrData2[i].percentage !== null) ? arrData2[i].percentage : '');
+
+                $('#cost_center'+(data_cost_center)).on("select2:select", function (e) {
+                    var data = $('#cost_center'+data_cost_center).select2('data');
+                    $('#description'+(data_cost_center)).val(htmlDecode(data[0].title));
+                });
+
+                $('#cost_center'+(data_cost_center)).on("select2:unselecting", function (e) {
+                    $('#description'+(data_cost_center)).val('');
+                });
+            }
+
             $.ajax({
                 type: 'GET',
                 url: '/employee_no/req_detail/api',
@@ -362,7 +337,7 @@
                     }
                 });
             });
-            $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
+
             var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString().padStart(2,0) + "-01").format('YYYY-MM-DD');
             let pickerMonthYear = $('#month_year').flatpickr({
                 altInput: true,
@@ -379,7 +354,6 @@
                 ],
                 onReady: function () {
                     var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
                     var $flatPickrInput = $(flatPickrInstance.element);
                     $flatPickrInput.siblings("#month_year_calendar").click(function () {
                         flatPickrInstance.toggle();
@@ -388,7 +362,6 @@
             });
             pickerMonthYear._input.setAttribute("disabled", "disabled");
             pickerMonthYear.setDate(month_year);
-
         }
 
         function htmlDecode(value) {
@@ -398,7 +371,6 @@
         $('#employee_no').on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
-            // console.log(data[0].title);
         });
 
         $('#employee_no').on("select2:unselecting", function (e) {
@@ -472,22 +444,30 @@
             });
         }
 
-        function loadDataDetailCostCenter(field = '', costCenterCode = '') {
-            $(field).addClass('spinner-border');
-
+        function loadDataDetailCostCenter(field = '', field2 = '', costCenterCode = '') {
             $.ajax({
                 type: 'GET',
-                url: '/cost_center/api',
+                url: '/cost_center/func/api',
                 data: {
-                    costCenterCode : costCenterCode
+                    'costCenterCode': costCenterCode
                 }
             }).then(function (data) {
-                // console.log(data);
-                if (!$(field).find('option:contains(' + data[0].costCenterDescription + ')').length) {
-                    $(field).append($('<option>').val(data[0].costCenterCode).text(data[0].costCenterDescription));
-                }
-                $(field).val(data[0].costCenterCode);
-                $(field).removeClass('loading');
+                var option = $('<option/>', {
+                    id: data[0].costCenterCode,
+                    title: data[0].costCenterDescription,
+                    text: data[0].costCenterCode
+                });
+                $(field).append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $(field2).val(data[0].costCenterDescription);
+                $(field).trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].costCenterCode,
+                        text: data[0].costCenterCode,
+                        data: data[0]
+                    } 
+                });
             });
         }
 
@@ -540,7 +520,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.costCenterDescription,
+                                    text: item.costCenterCode,
                                     id: item.costCenterCode,
                                     title: item.costCenterDescription,
                                     data: item
@@ -571,47 +551,20 @@
             });
         }
 
-        var data_cost_center = 0;
-
         $('#btn-add-cost').on('click', function () {
-        // table.clear().draw();
-        // var data_cost_center = table.rows().count();
-            if (func == 'new') {
-                data_cost_center++;
-                table.row.add([
-                    '<input type="checkbox" class="chk-select" id="check_grid">',
-                    '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
-                    '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
-                    '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
-                    '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
-                ]).draw();
-                loadDataCostCenterCode("#cost_center"+(data_cost_center));
-                
-            }
+            data_cost_center++;
 
-            else {
-                data_cost_center++;
+            table.row.add([
+                '<input type="checkbox" class="chk-select" id="check_grid">',
+                '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
+                '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
+                '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
+                '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
+            ]).draw();
 
-                if (typeof arrData2[0].isDefault !== 'undefined' || arrData2[0].isDefault !== null && arrData2[0].isDefault == 'true') {
-                    $('.isDefault').prop('checked', true);
-                }
-                else {
-                    $('.isDefault').prop('checked', false);
-                }
-
-                table.row.add([
-                    '<input type="checkbox" class="chk-select" id="check_grid">',
-                    '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
-                    '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
-                    '<input type="number" min=0 max=100 default=0 class="form-control" id="percentage'+(data_cost_center)+'" name="percentage[]">',
-                    '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
-                ]).draw();
-                loadDataCostCenterCode("#cost_center"+(data_cost_center));
-                
-            }
+            loadDataCostCenterCode("#cost_center"+(data_cost_center));
+            
             $('#cost_center'+(data_cost_center)).on("select2:select", function (e) {
-                // console.log(data_cost_center);
-                // console.log(data[0]);
                 var data = $('#cost_center'+data_cost_center).select2('data');
                 $('#description'+(data_cost_center )).val(htmlDecode(data[0].title));
             });
@@ -643,7 +596,7 @@
 
         if ($("#multi_cost_center_form").length > 0) {
             $("#multi_cost_center_form").validate({
-            rules: {
+                rules: {
                     employee_no: {
                         required: true,
                     },

@@ -132,14 +132,14 @@
                             <label for="range_employee_no">{{ __('payroll_final_tax_process.label_range_employee_no') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <label
                                 for="employee_no_from">{{ __('payroll_final_tax_process.label_employee_no_from') }}</label>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <label
                                 for="employee_no_to">{{ __('payroll_final_tax_process.label_employee_no_to') }}</label>
@@ -239,8 +239,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '<div class="col-6"><b>Emp No</b></div>' +
+                        '<div class="col-6"><b>Fullname</b></div>' +
                         '</div>' +
                         '<div class="row">' +
                         '<div class="col-6">' + data.data.employeeNo + '</div>' +
