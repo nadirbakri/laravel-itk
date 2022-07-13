@@ -10,7 +10,8 @@ return [
     'business_trip' => 'Export Business Trip',
     'overtime' => 'Export Overtime',
     'pdf_business_trip' => 'Export PDF Business Trip',
-    'business_trip_checking' => 'Export Business Trip Checking'
+    'business_trip_checking' => 'Export Business Trip Checking',
+    'export_data' => 'Export Data'
 ]
 
 ?>
