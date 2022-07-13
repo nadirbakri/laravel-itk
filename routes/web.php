@@ -774,6 +774,10 @@ Route::get('utilities/user_security_maintenance/module/remove', 'UtilitiesContro
 /* Route Untuk Data Utilities - Organization Structure */
 Route::get('utilities/organization_chart/get/position', 'OrganizationStructureController@getDataPosition');
 
+
+/* Route Untuk Menu Report */
+Route::get('report', 'ReportController@pageReport');
+
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');
 Route::post('change_password/proses', 'ChangePasswordController@prosesChangePassword');
