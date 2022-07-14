@@ -775,17 +775,17 @@ Route::get('utilities/user_security_maintenance/module/remove', 'UtilitiesContro
 Route::get('utilities/organization_chart/get/position', 'OrganizationStructureController@getDataPosition');
 
 
-/* Route Untuk Menu Report */
-Route::get('report', 'ReportController@pageReport');
-Route::get('report/export_medical', 'ReportController@pageExportMedical');
-Route::get('report/export_reimbursement', 'ReportController@pageExportReimbursement');
-Route::get('report/export_workflow', 'ReportController@pageExportWorkflow');
-Route::get('report/export_transport', 'ReportController@pageExportTransport');
-Route::get('report/export_attendance', 'ReportController@pageExportAttendance');
-Route::get('report/export_business_trip', 'ReportController@pageExportBusinessTrip');
-Route::get('report/export_overtime', 'ReportController@pageExportOvertime');
-Route::get('report/export_pdf_business_trip', 'ReportController@pageExportPDFBusinessTrip');
-Route::get('report/export_business_trip_checking', 'ReportController@pageExportBusinessTripChecking');
+/* Route Untuk Menu Export MOB */
+Route::get('export', 'ExportController@pageExport');
+Route::get('export/export_medical', 'ExportController@pageExportMedical');
+Route::get('export/export_reimbursement', 'ExportController@pageExportReimbursement');
+Route::get('export/export_workflow', 'ExportController@pageExportWorkflow');
+Route::get('export/export_transport', 'ExportController@pageExportTransport');
+Route::get('export/export_attendance', 'ExportController@pageExportAttendance');
+Route::get('export/export_business_trip', 'ExportController@pageExportBusinessTrip');
+Route::get('export/export_overtime', 'ExportController@pageExportOvertime');
+Route::get('export/export_pdf_business_trip', 'ExportController@pageExportPDFBusinessTrip');
+Route::get('export/export_business_trip_checking', 'ExportController@pageExportBusinessTripChecking');
 
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');

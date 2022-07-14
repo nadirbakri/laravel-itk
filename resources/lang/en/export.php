@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'judul' => 'Report',
+    'judul' => 'Export',
     'medical' => 'Export Medical',
     'reimbursement' => 'Export Reimbursement',
     'workflow' => 'Export Workflow',

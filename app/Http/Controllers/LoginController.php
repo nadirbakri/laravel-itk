@@ -63,8 +63,20 @@ class LoginController extends Controller
 	    	Session::put('photo', $arrResult->dataListSet[0]->photo);
 	    	Session::put('officeLocation', $arrResult->dataListSet[0]->officeLocation);
 	    	Session::put('userType', $arrResult->dataListSet[0]->userType);
-	    	Session::put('menuList', [[ 'title' => 'Home', 'icon' => 'home.svg', 'icon-name' => 'home', 'link' => '/home' ], [ 'title' => 'Personel', 'icon' => 'personel.svg', 'icon-name' => 'personel', 'link' => '/personel' ],  [ 'title' => 'Time Management', 'icon' => 'time_management.svg', 'icon-name' => 'time_management', 'link' => '/time_management' ], [ 'title' => 'Payroll', 'icon' => 'payroll.svg', 'icon-name' => 'payroll', 'link' => '/payroll' ], [ 'title' => 'Report', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/report' ], [ 'title' => 'Medical', 'icon' => 'medical.svg', 'icon-name' => 'medical', 'link' => '/medical' ]]);
-
+	    	Session::put('menuList', [
+				[ 'title' => 'Home', 'icon' => 'home.svg', 'icon-name' => 'home', 'link' => '/home' ],
+				[ 'title' => 'Personel', 'icon' => 'personel.svg', 'icon-name' => 'personel', 'link' => '/personel' ],
+				[ 'title' => 'Time Management', 'icon' => 'time_management.svg', 'icon-name' => 'time_management', 'link' => '/time_management' ], 
+				[ 'title' => 'Payroll', 'icon' => 'payroll.svg', 'icon-name' => 'payroll', 'link' => '/payroll' ],  
+				[ 'title' => 'Report', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/report' ],  
+				[ 'title' => 'Medical', 'icon' => 'medical.svg', 'icon-name' => 'medical', 'link' => '/medical' ]]);
+			Session::put('menuListMob', [
+				[ 'title' => 'Dashboard', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/dashboard_mob' ], 
+				[ 'title' => 'Export', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/export' ], 
+				[ 'title' => 'Transaction', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/transaction' ], 
+				[ 'title' => 'Master Data', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/master_data' ], 
+				[ 'title' => 'Admin Menu', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/admin_menu' ]]);
+				
 	    	return response()->json(["status" => $arrResult->status, "message" => "/main"]);
 	    }else{
 	    	return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
