@@ -71,11 +71,11 @@ class LoginController extends Controller
 				[ 'title' => 'Report', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/report' ],  
 				[ 'title' => 'Medical', 'icon' => 'medical.svg', 'icon-name' => 'medical', 'link' => '/medical' ]]);
 			Session::put('menuListMob', [
-				[ 'title' => 'Dashboard', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/dashboard_mob' ], 
-				[ 'title' => 'Export', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/export' ], 
-				[ 'title' => 'Transaction', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/transaction' ], 
-				[ 'title' => 'Master Data', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/master_data' ], 
-				[ 'title' => 'Admin Menu', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/admin_menu' ]]);
+				[ 'title' => 'Dashboard', 'icon' => 'streammobportal-navbar-dashboard.svg', 'icon-name' => 'streammobportal-navbar-dashboard', 'link' => '/dashboard_mob' ], 
+				[ 'title' => 'Export', 'icon' => 'streammobportal-navbar-export.svg', 'icon-name' => 'streammobportal-navbar-export', 'link' => '/export' ], 
+				[ 'title' => 'Transaction', 'icon' => 'streammobportal-navbar-transaction.svg', 'icon-name' => 'streammobportal-navbar-transaction', 'link' => '/transaction' ], 
+				[ 'title' => 'Master Data', 'icon' => 'streammobportal-navbar-masterdata.svg', 'icon-name' => 'streammobportal-navbar-masterdata', 'link' => '/master_data' ], 
+				[ 'title' => 'Admin Menu', 'icon' => 'streammobportal-navbar-adminmenu.svg', 'icon-name' => 'streammobportal-navbar-adminmenu', 'link' => '/admin_menu' ]]);
 				
 	    	return response()->json(["status" => $arrResult->status, "message" => "/main"]);
 	    }else{

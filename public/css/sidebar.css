@@ -335,6 +335,27 @@ iframe {
   opacity: 1;
 }
 
+.dropdown-title-text {
+  font-family: Montserrat;
+  color: #707070;
+  font-size: 2vh;
+  font-weight: 700;
+  margin-left: 1.5%;
+  flex-basis: 90%;
+  text-decoration: none;
+}
+
+a.collapsed .div-dropdown-title .dropdown-triangle {
+	height: 2vh;
+	transform: rotate(90deg);
+	transition: transform .3s ease-in-out;
+}
+a .div-dropdown-title .dropdown-triangle {
+	height: 2vh;
+	transform: rotate(180deg);
+	transition: transform .3s ease-in-out;
+}
+
 @media (min-width: 768px) {
   #page-content-wrapper {
     min-width: 0;

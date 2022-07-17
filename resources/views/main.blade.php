@@ -6,7 +6,7 @@
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 	<style type="text/css">
 		.toogle-icon img {
@@ -119,24 +119,48 @@
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
 			</div>
-			<div class="list-group list-group-flush">
+			<!-- STYLINGNYA GUA GABISA SORRY BANGET -ILYAS -->
+			<a class="collapsed" data-toggle="collapse"  href="#web-collapse" aria-expanded="true" aria-controls="web-collapse">
+                <div class="card-header">
+                    <div class="div-dropdown-title">
+                        <span class="dropdown-title-text">WEB</span>
+                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                    </div>
+                </div>
+            </a>
+			<div id="web-collapse" class="collapse">
 				@foreach (Session::get('menuList') as $menu)
-				<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
-					<div class="color-active"></div>
-					<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
-					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
-					<span>{{ $menu['title'] }}</span>
-					<span class="tooltiptext">{{ $menu['title'] }}</span>
-				</a>
+				<div class="list-group list-group-flush">
+					<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
+						<div class="color-active"></div>
+						<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
+						<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
+						<span>{{ $menu['title'] }}</span>
+						<span class="tooltiptext">{{ $menu['title'] }}</span>
+					</a>
+				</div>
 				@endforeach
+			</div>
+			<br>
+			<a class="collapsed" data-toggle="collapse"  href="#mob-collapse" aria-expanded="true" aria-controls="mob-collapse">
+                <div class="card-header">
+                    <div class="div-dropdown-title">
+                        <span class="dropdown-title-text">MOB</span>
+                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                    </div>
+                </div>
+            </a>
+			<div class="collapse" id="mob-collapse">
 				@foreach (Session::get('menuListMob') as $menu)
-				<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
-					<div class="color-active"></div>
-					<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
-					<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
-					<span>{{ $menu['title'] }}</span>
-					<span class="tooltiptext">{{ $menu['title'] }}</span>
-				</a>
+				<div class="list-group list-group-flush">
+					<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
+						<div class="color-active"></div>
+						<img src="{{ url('/icons/mob/sidebar/' . $menu['icon']) }}" alt="Home">
+						<img src="{{ url('/icons/mob/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
+						<span>{{ $menu['title'] }}</span>
+						<span class="tooltiptext">{{ $menu['title'] }}</span>
+					</a>
+				</div>
 				@endforeach
 			</div>
 			<footer class="footer">
@@ -364,6 +388,7 @@
 			})
 		}
 	});
+
 </script>
 
 </html>

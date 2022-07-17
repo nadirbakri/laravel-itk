@@ -29,14 +29,14 @@
 <body>
     <div class="div-export">
         <div class="div-title">
-			<img src="{{ url('icons/sidebar/report.png') }}" alt="Title">
+			<img src="{{ url('icons/mob/sidebar/streammobportal-navbar-export.svg') }}" alt="Title">
 			<span class="title-text">{{ __('export.judul') }}</span>
 		</div>
         <div class="card">
             <a class="collapsed" data-toggle="collapse"  href="#export-export-data" aria-expanded="true" aria-controls="export-export-data">
                 <div class="card-header">
                     <div class="div-dropdown-title">
-                        <img class="dropdown-logo" src="{{ url('icons/sidebar/report.png') }}" alt="export">
+                        <img class="dropdown-logo" src="{{ url('icons/mob/sidebar/streammobportal-navbar-export.svg') }}" alt="export">
                         <span class="dropdown-title-text">{{__('export.export_data')}}</span>
                         <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
                     </div>
@@ -47,55 +47,55 @@
                     <div class="row div-child-data">
                         <div class="col col-3">
                             <a href="{{ url('export/export_medical') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.medical') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_reimbursement') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.reimbursement') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_workflow') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.workflow') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_transport') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.transport') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_attendance') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.attendance') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_business_trip') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.business_trip') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_overtime') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.overtime') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_pdf_business_trip') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.pdf_business_trip') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
                             <a href="{{ url('export/export_business_trip_checking') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/report/submenu-report.svg') }}" alt="Child export">
+                                <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.business_trip_checking') }}</span>
                             </a>
                         </div>
