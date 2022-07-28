@@ -73,7 +73,11 @@ return [
     'spt_report' => 'SPT Report',
     'annual_report' => 'Annual Report',
     'salary_historical_report' => 'Salary Historical Report',
-    'csv_e-spt_report_form' => 'CSV E-SPT Report Form'
+    'csv_e-spt_report_form' => 'CSV E-SPT Report Form',
+    'signature_list_report' => 'Signature List Report',
+    'retroactive_report' => 'Retroactive Report',
+    'export_sipp_online_report' => 'Export SIPP Online',
+    'export_data_kepesertaan_bpjs_tk_report' => 'Export Data Kepesertaan BPJS-TK',
 ]
 
 ?>

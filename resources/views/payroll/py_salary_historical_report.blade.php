@@ -124,7 +124,7 @@
                             <span style="color: red">*</span>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
@@ -134,7 +134,7 @@
                             <label for="employee_no_to form-check-label">{{ __('payroll_salary_historical_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
@@ -147,7 +147,7 @@
                             <span style="color: red">*</span>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
                         </div>
@@ -157,7 +157,7 @@
                             <label for="group_authorized_code_to form-check-label">{{ __('payroll_salary_historical_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
                         </div>

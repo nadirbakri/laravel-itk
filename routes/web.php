@@ -527,11 +527,9 @@ Route::get('payroll/transfer_data_to_bank/api', 'PayrollController@pageTransferD
 /* Payroll Report Menu */
 Route::get('payroll/dumtk', 'PayrollController@pageDUMTK');
 Route::get('payroll/monthly_jamsostek_report', 'PayrollController@pageMonthlyJamsostekReport');
-Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSippOnline');
 Route::get('payroll/loan_report', 'PayrollController@pageLoanReport');
 Route::get('payroll/journal_report', 'PayrollController@pageJournalReport');
 Route::get('payroll/bonus_thr_report', 'PayrollController@pageBonusTHRReport');
-Route::get('payroll/export_data_kepesertaan_bpjs-tk', 'PayrollController@pageExportDataKepesertaanBpjk-Tk');
 Route::get('payroll/periodical_report', 'PayrollController@pagePeriodicalReport');
 Route::get('payroll/payment_slip', 'PayrollController@pagePaymentSlip');
 Route::get('payroll/severance_report', 'PayrollController@pageSeveranceReport');
@@ -539,7 +537,11 @@ Route::get('payroll/salary_historical_report', 'PayrollController@pageSalaryHist
 Route::get('payroll/csv_e-spt_report_form', 'PayrollController@pageCSVESPTReportForm');
 Route::get('payroll/spt_pph_1721a1', 'PayrollController@pageSptPph1721a1');
 Route::get('payroll/annual_report', 'PayrollController@pageAnnualReport');
-Route::get('payroll/spt_pph_1721a1_report', 'PayrollController@pageSptPph1721a1Report');
+Route::get('payroll/spt_report', 'PayrollController@pageSPTReport');
+Route::get('payroll/signature_list_report', 'PayrollController@pageSignatureListReport');
+Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveReport');
+Route::get('payroll/export_data_kepesertaan_bpjs_tk_report', 'PayrollController@pageExportDataKepesertaanBPJSTKReport');
+Route::get('payroll/export_sipp_online_report', 'PayrollController@pageExportSIPPOnlineReport');
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
@@ -635,6 +637,7 @@ Route::get('payroll/full_partial_loan_payment/data', 'PayrollController@dataFull
 Route::get('payroll/journal_template/detail_data', 'PayrollController@dataDetailJournalTemplatePY');
 Route::get('payroll/spt_format/detail_data', 'PayrollController@dataDetailSptFormatPY');
 Route::get('payroll/slip_format/detail_data', 'PayrollController@dataDetailSlipFormatPY');
+Route::get('payroll/transfer_data_to_bank/detail_data', 'PayrollController@dataDetailTransferDataToBankPY');
 
 /* Route untuk status Payroll */
 Route::get('payroll/loan_master/status', 'PayrollController@statusLoanMasterPY');
@@ -661,6 +664,16 @@ Route::post('payroll/salary_historical_report/print/excel', 'PayrollController@p
 Route::post('payroll/csv_espt_report_form/print/excel', 'PayrollController@printCSVESPTReportFormPayrollExcel');
 Route::post('payroll/bonus_thr_report/print', 'PayrollController@printBonusTHRReportPayroll');
 Route::post('payroll/bonus_thr_report/print/excel', 'PayrollController@printBonusTHRReportPayrollExcel');
+Route::post('payroll/spt_pph_1721a1_report/print', 'PayrollController@printSPTPPH1721a1ReportPayroll');
+Route::post('payroll/spt_pph_1721a_report/print', 'PayrollController@printSPTPPH1721aReportPayroll');
+Route::post('payroll/signature_list_report/print', 'PayrollController@printSignatureListReportPayroll');
+Route::post('payroll/retroactive_report/print', 'PayrollController@printRetroactiveReportPayroll');
+Route::post('payroll/export_data_kepesertaan_bpjs_tk_report/print', 'PayrollController@printExportDataKepesertaanBPJSTKReportPayroll');
+Route::post('payroll/loan_report/print', 'PayrollController@printLoanReportPayroll');
+Route::post('payroll/export_data_kepesertaan_bpjs_tk_report/print/excel', 'PayrollController@printExportDataKepesertaanBPJSTKReportPayrollExcel');
+Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanReportPayrollExcel');
+Route::post('payroll/export_sipp_online_report/print', 'PayrollController@printLoanReportPayroll');
+Route::post('payroll/annual_report/print', 'PayrollController@printAnnualReportPayroll');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
@@ -917,6 +930,7 @@ Route::get('field/api', 'DataController@dataFieldAPI');
 Route::get('deduct_leave/api', 'DataController@dataDeductLeaveAPI');
 Route::get('deduct_leave/func/api', 'DataController@dataDeductLeaveFuncAPI');
 Route::get('loan_code/api', 'DataController@dataLoanCodeAPI');
+Route::get('loan_code/func/api', 'DataController@dataLoanCodeFuncAPI');
 Route::get('field_name_salary_component/api', 'DataController@dataFieldNameSalaryComponentAPI');
 Route::get('employee_no/severance/api', 'DataController@dataEmployeeNoSeveranceAPI');
 Route::get('employee_no/loan_data_entry/api', 'DataController@dataEmployeeNoLoanDataEntryAPI');
@@ -953,6 +967,7 @@ Route::get('dependents/api', 'DataController@dataDependentsAPI');
 Route::get('dependents/func/api', 'DataController@dataDependentsFunctionAPI');
 Route::get('disease_code/api', 'DataController@dataDiseaseCodeAPI');
 Route::get('disease_code/func/api', 'DataController@dataDiseaseCodeFunctionAPI');
+Route::get('report_code/api', 'DataController@dataReportCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

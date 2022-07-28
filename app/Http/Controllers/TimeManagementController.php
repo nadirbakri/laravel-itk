@@ -1200,7 +1200,15 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), 'Absenteeism & Overtime Report.xlsx');
+        if($request->report_type == 'absent'){
+            $nama_file = 'Absenteeism Report.xlsx';
+        }else if($request->report_type == 'overtime'){
+            $nama_file = 'Overtime Report.xlsx';
+        }else{
+            $nama_file = 'Absenteeism & Overtime Report.xlsx';
+        }
+
+        return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), $nama_file);
     }
 
     public function importUpdateAbsenteeismData(Request $request)

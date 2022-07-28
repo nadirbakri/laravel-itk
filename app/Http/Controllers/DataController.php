@@ -6532,6 +6532,44 @@ class DataController extends Controller
         return response()->json($loan);
 	}
 
+	public function dataLoanCodeFuncAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
+	}
+
 	public function dataFieldNameSalaryComponentAPI(Request $request)
     {
 
@@ -7852,6 +7890,54 @@ class DataController extends Controller
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->diseaseCode)){
 	    				return preg_match('/' . $search . '/i', $value->diseaseCode);
+	    			}else if(preg_match('/' . $search . '/i', $value->description)){
+	    				return preg_match('/' . $search . '/i', $value->description);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
+	}
+
+	public function dataReportCodeAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->reportCode)){
+	    				return preg_match('/' . $search . '/i', $value->reportCode);
 	    			}else if(preg_match('/' . $search . '/i', $value->description)){
 	    				return preg_match('/' . $search . '/i', $value->description);
 	    			}

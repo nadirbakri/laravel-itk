@@ -100,7 +100,7 @@ class PostponeLeaveReportExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump($param['levelMaster']);
+            var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/postponeleavereport/getpostponereportleave',
                 ['body' => json_encode($param)]

@@ -6,7 +6,7 @@ return [
     'list_detail' => 'List Transfer Data To Bank',
     'export_to_file' => 'Export To File',
     'api' => 'API',
-    'label_bank_output_file_option' => 'Bank output file option',
+    'label_bank_output_file_option' => 'Bank Output File Option',
     'label_bank_central_asia' => 'Bank Central Asia',
     'label_mcm_bank_mandiri' => 'MCM Bank Mandiri',
     'label_bot' => 'BOT',

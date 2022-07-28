@@ -15,10 +15,6 @@
 		body{
             margin: 0;
             padding: 0;
-			margin-left: 30px;
-			margin-right: 30px;
-			margin-bottom: 25px;
-			margin-top: 25px;
 		}
 		.table_detail td{
 			text-align:center;
@@ -31,7 +27,7 @@
 			border-collapse:collapse;
 		}
 
-        @page { margin-bottom: 150px; size: auto; }
+        @page { margin-left: 0px; margin-right: 0px; margin-bottom: 150px; size: auto; }
         /* header { position: fixed; left: 0px; top: -90px; right: 0px; height: 150px; text-align: center; } */
         footer { position: absolute; left: 25px; bottom: -85px; right: 0px; height: 150px; }
         table { page-break-inside:auto }
@@ -47,17 +43,20 @@
         <thead style="background-color: lightgray; padding:5px">
             <tr>
                 <th>{{ __('payroll_salary_historical_report.header_no') }}</th>
-                <th>{{ $dataTables->employeeNo }} {{ $dataTables->employeeName }}</th>
-                <th>{{ $dataTables->joinDate }}</th>
+                <th>{{ $dataTables->employeeNo }} - {{ $dataTables->employeeName }}</th>
+                <th>{{ date('m F Y', strtotime($dataTables->joinDate)) }}</th>
                 <th>{{ $dataTables->position }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($dataTables->detail as $key => $dataTable)
+            <?php
+            list($str1, $str2) = explode(' - ', $dataTable->period);
+            ?>
             <tr>
                 <td>{{ $key+1 }}</td>
-                <td>{{ $dataTable->period }}</td>
-                <td>{{ $dataTable->basicSalary }}</td>
+                <td>{{ date('M', mktime(0, 0, 0, $str1, 10)) . " - " . $str2 }}</td>
+                <td>{{ number_format($dataTable->basicSalary, 2, '.', ',') }}</td>
                 <td>{{ $dataTable->remark }}</td>
             </tr>
             @endforeach

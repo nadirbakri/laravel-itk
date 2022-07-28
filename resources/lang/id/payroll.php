@@ -74,7 +74,11 @@ return [
     'spt_report' => 'Laporan SPT',
     'annual_report' => 'Laporan Tahunan',
     'salary_historical_report' => 'Laporan Historis Gaji',
-    'csv_e-spt_report_form' => 'Formulir Laporan E-SPT CSV'
+    'csv_e-spt_report_form' => 'Formulir Laporan E-SPT CSV',
+    'signature_list_report' => 'Laporan Daftar Tanda Tangan',
+    'retroactive_report' => 'Laporan Berlaku Surut',
+    'export_sipp_online_report' => 'Export SIPP Online',
+    'export_data_kepesertaan_bpjs_tk_report' => 'Export Data Kepesertaan BPJS-TK',
 ]
 
 ?>

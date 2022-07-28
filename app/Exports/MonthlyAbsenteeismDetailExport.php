@@ -134,6 +134,8 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        var_dump($this->changeHeader);
+
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_detail', [
                 'data' => [], 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo 

@@ -236,7 +236,7 @@
                             <label for="group_authorize_code_from">{{ __('payroll_monthly_jamsostek_report.label_group_authorize_code') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="group_authorize_code_from" name="group_authorize_code_from"></select>
                     </div>
                     <div class="col-0.5">
@@ -244,7 +244,7 @@
                             <label for="group_authorize_code_to form-check-label">{{ __('payroll_monthly_jamsostek_report.label_to') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select class="form-control select2" id="group_authorize_code_to" name="group_authorize_code_to"></select>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
                             <label for="group_bpjs_code">{{ __('payroll_monthly_jamsostek_report.label_group_bpjs') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                     <select class="form-control select2" id="group_bpjs_code" name="group_bpjs_code"></select>
                     </div>
                 </div>

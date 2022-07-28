@@ -48,17 +48,20 @@
         <thead>
             <tr>
                 <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ __('payroll_salary_historical_report.header_no') }}</th>
-                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->employeeNo }} {{ $dataTables->employeeName }}</th>
-                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->joinDate }}</th>
+                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->employeeNo }} - {{ $dataTables->employeeName }}</th>
+                <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ date('m F Y', strtotime($dataTables->joinDate)) }}</th>
                 <th style="text-align: center; background-color:lightgray; padding:5px; font-weight:bold;">{{ $dataTables->position }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($dataTables->detail as $key => $dataTable)
+            <?php
+            list($str1, $str2) = explode(' - ', $dataTable->period);
+            ?>
             <tr>
                 <td style="text-align: center; padding:3px">{{ $key+1 }}</td>
-                <td style="text-align: center; padding:3px">{{ $dataTable->period }}</td>
-                <td style="text-align: center; padding:3px">{{ $dataTable->basicSalary }}</td>
+                <td style="text-align: center; padding:3px">{{ date('M', mktime(0, 0, 0, $str1, 10)) . " - " . $str2 }}</td>
+                <td style="text-align: center; padding:3px">{{ number_format($dataTable->basicSalary, 2, '.', ',') }}</td>
                 <td style="text-align: center; padding:3px">{{ $dataTable->remark }}</td>
             </tr>
             @endforeach

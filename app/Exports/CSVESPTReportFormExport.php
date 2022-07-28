@@ -13,11 +13,10 @@ use App;
 
 class CSVESPTReportFormExport implements FromView, ShouldAutoSize
 {
-    public function __construct($format, $periodMonth, $periodYear, $rectification, $npwpGroup, $printDate, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo)
+    public function __construct($format, $period, $rectification, $npwpGroup, $printDate, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo)
     {
         $this->format = $format;
-        $this->periodMonth = $periodMonth;
-        $this->periodYear = $periodYear;
+        $this->period = $period;
         $this->rectification = $rectification;
         $this->npwpGroup = $npwpGroup;
         $this->printDate = $printDate;
@@ -35,8 +34,8 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
-                'periodMonth' => (int) $this->periodMonth,
-                'periodYear' => (int) $this->periodYear,
+                'periodMonth' => (int) date('n', strtotime($this->period)),
+                'periodYear' => (int) date('Y', strtotime($this->period)),
                 'pembetulan' => (int) $this->rectification,
                 'format' => $this->format,
                 'npwpGroup' => $this->npwpGroup,
@@ -54,7 +53,7 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
                 $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
             }
 
-            var_dump(json_encode($param));
+            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL').'/exportcsvspt/getexportcsvspt', [
                 'body' => json_encode($param)
@@ -80,13 +79,33 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
         }
 
         if($arrResult->dataListSet[0] == null){
-            return view('payroll.py_export_csv_espt_report_form_excel', [
-                'data' => []
-            ]);
+            if($this->format == "periodical"){
+                return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
+                    'data' => []
+                ]);
+            }else if($this->format == "annual"){
+                return view('payroll.py_export_csv_espt_report_form_annual_excel', [
+                    'data' => []
+                ]);
+            }else if($this->format == "final"){
+                return view('payroll.py_export_csv_espt_report_form_final_excel', [
+                    'data' => []
+                ]);
+            }
         }else{
-            return view('payroll.py_export_csv_espt_report_form_excel', [
-                'data' => $arraySend
-            ]); 
+            if($this->format == "periodical"){
+                return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
+                    'data' => $arraySend
+                ]);
+            }else if($this->format == "annual"){
+                return view('payroll.py_export_csv_espt_report_form_annual_excel', [
+                    'data' => $arraySend
+                ]);
+            }else if($this->format == "final"){
+                return view('payroll.py_export_csv_espt_report_form_final_excel', [
+                    'data' => $arraySend
+                ]);
+            }
         }
     }
 }

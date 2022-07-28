@@ -19,8 +19,8 @@
 <body>
 <div class="div-payroll">
 		<div class="div-title">
-			<img src="{{ url('icons/sidebar/payroll.png') }}" alt="Title">
-			<span class="title-text">{{ __('payroll.judul') }}</span>
+			<!-- <img src="{{ url('icons/sidebar/payroll.png') }}" alt="Title"> -->
+			<span class="title-text">{{ __('payroll_transfer_data_to_bank.judul') }}</span>
 		</div>
 		<div class="card">
 			<div id="payroll-master-data">

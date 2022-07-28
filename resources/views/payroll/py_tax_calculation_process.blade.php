@@ -130,14 +130,6 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="loan_payment_process" name="loan_payment_process" value="true">
-                            <label for="process_period">{{ __('payroll_tax_calculation_process.label_loan_payment_process') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="recalculate_thr_tax" name="recalculate_thr_tax" value="true">
                             <label for="recalculate_thr_tax">{{ __('payroll_tax_calculation_process.label_recalculate_thr_tax') }}</label>
                         </div>
@@ -177,7 +169,7 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                        <button type="submit" class="btn btn-primary" name="btn-process" id="btn-process" style="width: 100%;">
                             <i class="fa fa-play-circle-o"></i> {{ __('payroll_tax_calculation_process.btn_process') }}
                         </button>
                     </div>

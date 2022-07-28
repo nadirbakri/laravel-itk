@@ -95,7 +95,7 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithE
                 }
                 $param['levelMaster'] = $data_level;
             }
-            // var_dump($param['levelMaster']);
+            // var_dump(json_encode($param));
 
             if($this->reportType == "absent"){
                 $response = $client->post(env('API_URL') . '/absentovertimereport/getabsenteeismreport',

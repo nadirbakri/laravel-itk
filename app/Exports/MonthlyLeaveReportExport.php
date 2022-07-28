@@ -103,7 +103,7 @@ class MonthlyLeaveReportExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump($param);
+            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/monthlyleavereport/getmonthlyleavereport',
                 ['body' => json_encode($param)]
@@ -122,7 +122,7 @@ class MonthlyLeaveReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult1 = json_decode($dataabsent->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // var_dump($arrResult1->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_leave_report', [

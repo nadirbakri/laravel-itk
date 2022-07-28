@@ -10,6 +10,7 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
@@ -116,48 +117,47 @@
                         <span class="title-text">{{ __('payroll_csv_espt_report_form.list') }}</span>
                     </a>
                 </div>
-
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="format">{{ __('payroll_csv_espt_report_form.label_format') }}</label>
+                            <label for="periodical">{{ __('payroll_csv_espt_report_form.label_format') }}</label>
+                            <div class="form-check">
+                                <input type="radio" id="periodical" name="format" value="periodical" checked>
+                                <label for="periodical">{{ __('payroll_csv_espt_report_form.label_periodical') }}</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="periodical" name="format" value="periodical" checked>
-                            <label for="periodical">{{ __('payroll_csv_espt_report_form.label_periodical') }}</label>
+                        <div class="form-group">
+                            <label for="annual">&nbsp;</label>
+                            <div class="form-check">
+                                <input type="radio" id="annual" name="format" value="annual">
+                                <label for="annual">{{ __('payroll_csv_espt_report_form.label_annual') }}</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="annual" name="format" value="annual">
-                            <label for="annual">{{ __('payroll_csv_espt_report_form.label_annual') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="final" name="format" value="final">
-                            <label for="final">{{ __('payroll_csv_espt_report_form.label_final') }}</label>
+                        <div class="form-group">
+                            <label for="final">&nbsp;</label>
+                            <div class="form-check">
+                                <input type="radio" id="final" name="format" value="final">
+                                <label for="final">{{ __('payroll_csv_espt_report_form.label_final') }}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="period">{{ __('payroll_csv_espt_report_form.label_period') }}</label>
-                            <select class="form-control select2" id="period_month" name="period_month"></select>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('payroll_csv_espt_report_form.label_period') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label>&nbsp;</label>
-                            <p style="font-size: 1.5rem;"><b>/</b></p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <label>&nbsp;</label>
-                        <select class="form-control select2" id="period_year" name="period_year"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -170,7 +170,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="npwp_group">{{ __('payroll_csv_espt_report_form.label_npwp_group') }}</label>
                             <span style="color: red">*</span>
@@ -179,7 +179,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="print_date">{{ __('payroll_csv_espt_report_form.label_print_date') }}</label>
                             <div class="input-group">
@@ -193,22 +193,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label for="group_authorized_code_from form-check-label">{{ __('payroll_csv_espt_report_form.label_group_authorized_code') }}</label>
+                            <label for="group_authorized_code_from form-check-label">{{ __('payroll_csv_espt_report_form.label_group_authorized_code_from') }}</label>
                             <span style="color: red">*</span>
+                            <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
-                    </div>
-                    <div class="col-0.5">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_csv_espt_report_form.label_to') }}</label>
+                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_csv_espt_report_form.label_group_authorized_code_to') }}</label>
+                            <span style="color: red">*</span>
+                            <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -273,36 +270,32 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
+    $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
+        var arrData = @json($data);
+
+        let pickerPeriod = $('#period').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            // defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
                 });
-            },
-            // onValueUpdate: function(selectedDates, dateStr, instance) {
-                
-            // }
+            }
         });
-    }
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        var arrData = @json($data);
 
         let pickerPrintDate = $('#print_date').flatpickr({
             altInput: true,
@@ -318,6 +311,10 @@
                 });
             }
         });
+
+        if (arrData) {
+            pickerPeriod.setDate(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01");
+        }
 
         var periodYear = (typeof arrData[0].periodYear !== 'undefined') ? '01-01-' + arrData[0].periodYear : null;
 
@@ -384,7 +381,6 @@
                 $(field).append($newOption).trigger('change');
             });
         }
-        
 
         function loadDataPeriodMonth() {
             var listPeriodMonth = [
@@ -432,8 +428,8 @@
                         '<div class="col-6"><b>Company Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.npwpCode + '<div>' +
-                        '<div class="col-6">' + data.data.companyName + '<div>' +
+                        '<div class="col-6">' + data.data.npwpCode + '</div>' +
+                        '<div class="col-6">' + data.data.companyName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -578,6 +574,10 @@
                     }
                 },
                 highlight: function (element) {
+                    $("#btn-export").prop("disabled", false);
+                    $("#btn-export").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
+                    );
                     $(element).addClass('is-invalid');
                 },
                 unhighlight: function (element) {
@@ -585,9 +585,9 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $("btn-export").prop("disabled", false);
-                    $("btn-export").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
+                    $("#btn-export").prop("disabled", false);
+                    $("#btn-export").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
                     );
 
                     error.addClass('invalid-feedback');

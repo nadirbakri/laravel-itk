@@ -19,19 +19,19 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th rowspan="2">No</th>
-				<th rowspan="2">Employee No</th>
-				<th rowspan="2">Employee Name</th>
+				<th rowspan="2" style="text-align:center;">No</th>
+				<th rowspan="2" style="text-align:center;">Employee No</th>
+				<th rowspan="2" style="text-align:center;">Employee Name</th>
 				@foreach($dataListAbsent as $value)
-					<th colspan="4">{{ $value->description }}</th>
+					<th colspan="4" style="text-align:center;">{{ $value->description }}</th>
 				@endforeach
 			</tr>
 			<tr>
 			@foreach($dataListAbsent as $value)
-				<th>Prev. Year</th>
-				<th>This Year</th>
-				<th>Request</th>
-				<th>Balance</th>
+				<th style="text-align:center;">Prev. Year</th>
+				<th style="text-align:center;">This Year</th>
+				<th style="text-align:center;">Request</th>
+				<th style="text-align:center;">Balance</th>
 			@endforeach
 			</tr>
 		</thead>
@@ -40,23 +40,26 @@
 			?>
 			@foreach($data as $value)
 			<tr>
-                <td>{{ $no++ }}</td>
-				<td>{{ $value->employeeNo }}</td>
-				<td>{{ $value->fullName }}</td>
-				@foreach($value->leaveList as $value2)
-					@foreach($dataListAbsent as $value3)	
+                <td style="text-align:center;">{{ $no++ }}</td>
+				<td style="text-align:center;">{{ $value->employeeNo }}</td>
+				<td style="text-align:center;">{{ $value->fullName }}</td>
+				@foreach($dataListAbsent as $value3)
+					<?php $exist = false; ?>
+					@foreach($value->leaveList as $value2)
 						@if($value2->leaveCode == $value3->absentCode)
-						<td>{{ $value2->prevYear }}</td>
-						<td>{{ $value2->thisYear }}</td>
-						<td>{{ $value2->request }}</td>
-						<td>{{ $value2->balance }}</td>
-						@else
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<?php $exist = true; ?>
+						<td style="text-align:center;">{{ $value2->prevYear }}</td>
+						<td style="text-align:center;">{{ $value2->thisYear }}</td>
+						<td style="text-align:center;">{{ $value2->request }}</td>
+						<td style="text-align:center;">{{ $value2->balance }}</td>
 						@endif
 					@endforeach
+					@if(!$exist)
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					@endif
 				@endforeach
 			</tr>
 			@endforeach

@@ -37,8 +37,8 @@
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->employeeNo }}</td>
 				<td>{{ $value->fullName }}</td>
-				<td>{{ $value->leaveDateFrom }}</td>
-				<td>{{ $value->leaveDateTo }}</td>
+				<td>{{ date('Y-m-d', strtotime($value->leaveDateFrom)) }}</td>
+				<td>{{ date('Y-m-d', strtotime($value->leaveDateTo)) }}</td>
                 <td>{{ $value->leaveRemarks }}</td>
 				
 			</tr>
