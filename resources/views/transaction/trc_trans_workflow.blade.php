@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('export_attendance.judul') }}</title>
+    <title>{{ __('trans_workflow.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
-        .div-export-attendance {
+        .div-trans-workflow {
             max-width: 100%;
             margin: auto;
             /*margin-top: 1%;*/
@@ -107,24 +107,24 @@
 
 <body>
     <div class="div-form">
-        <form id="export_attendance_form" method="post">
+        <form id="trans_workflow_form" method="post">
             @csrf
-            <div class="div-export-attendance">
+            <div class="div-trans-workflow">
                 <div class="div-title">
-                    <a href="{{ url('export') }}" target="iframe_dashboard">
+                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('export_attendance.list') }}</span>
+                        <span class="title-text">{{ __('trans_workflow.list') }}</span>
                     </a>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('export_attendance.label_claim_date') }}</label>
+                            <label for="claim_date_from form-check-label">{{ __('trans_workflow.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('export_attendance.label_claim_start') }}">
+                                placeholder="{{ __('trans_workflow.label_claim_date_start') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -133,11 +133,11 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_to form-check-label">{{ __('export_attendance.label_to') }}</label>
+                            <label for="claim_date_to form-check-label">{{ __('trans_workflow.label_claim_date_end') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                                placeholder="{{ __('export_attendance.label_claim_end') }}">
+                                placeholder="{{ __('trans_workflow.label_claim_date_end') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -149,20 +149,21 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('export_attendance.label_business_unit') }}</label>
+                            <label for="bu form-check-label">{{ __('trans_workflow.label_bu') }}</label>
                         </div>
-                        <select class="form-control select2" id="business_unit" name="business_unit"></select>
+                        <select class="form-control select2" id="bu" name="bu"></select>
                     </div>
                 </div>
 
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-export.svg') }}" alt="export"> {{ __('export_attendance.btn_export') }}
+                        <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="search"> {{ __('trans_workflow.btn_search') }}
                         </button>
                     </div>
                 </div>
+
             </div>
         </form>
     </div>
@@ -192,7 +193,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('export_attendance.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('trans_workflow.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>

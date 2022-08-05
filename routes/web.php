@@ -800,6 +800,24 @@ Route::get('export/export_overtime', 'ExportController@pageExportOvertime');
 Route::get('export/export_pdf_business_trip', 'ExportController@pageExportPDFBusinessTrip');
 Route::get('export/export_business_trip_checking', 'ExportController@pageExportBusinessTripChecking');
 
+/* Route untuk Menu Transaction MOB */
+Route::get('transaction', 'TransactionController@pageTransaction');
+Route::get('transaction/transaction_reimbursement', 'TransactionController@pageTransactionReimbursement');
+Route::get('transaction/transaction_mass_leave', 'TransactionController@pageTransactionMassLeave');
+Route::get('transaction/transaction_workflow', 'TransactionController@pageTransactionWorkflow');
+Route::get('transaction/transaction_transport', 'TransactionController@pageTransactionTransport');
+Route::get('transaction/transaction_medical_history', 'TransactionController@pageTransactionMedicalHistory');
+Route::get('transaction/transaction_attendance', 'TransactionController@pageTransactionAttendance');
+Route::get('transaction/transaction_business_trip', 'TransactionController@pageTransactionBusinessTrip');
+Route::get('transaction/transaction_overtime', 'TransactionController@pageTransactionOvertime');
+Route::get('transaction/transaction_active_document', 'TransactionController@pageTransactionActiveDocument');
+
+/* Route untuk Menu Master Data MOB */
+Route::get('master_data', 'MasterDataController@pageMasterData');
+
+/* Route untuk Menu Admin MOB */
+Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');
+
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');
 Route::post('change_password/proses', 'ChangePasswordController@prosesChangePassword');

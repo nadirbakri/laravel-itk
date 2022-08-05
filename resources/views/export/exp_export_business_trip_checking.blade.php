@@ -118,12 +118,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="claim_date_from form-check-label">{{ __('export_business_trip_checking.label_claim_date') }}</label>
                         </div>
-                    </div>
-                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
                                 placeholder="{{ __('export_business_trip_checking.label_claim_start') }}">
@@ -133,12 +131,10 @@
                         </div>
                         <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
                     </div>
-                    <div class="col-0.5">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="claim_date_to form-check-label">{{ __('export_business_trip_checking.label_to') }}</label>
                         </div>
-                    </div>
-                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
                                 placeholder="{{ __('export_business_trip_checking.label_claim_end') }}">
@@ -151,34 +147,25 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="travel_type form-check-label">{{ __('export_business_trip_checking.label_travel_type') }}</label>
                         </div>
-                    </div>
-                    <div class="col-4">
                         <select class="form-control select2" id="travel_type" name="travel_type"></select>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="business_unit form-check-label">{{ __('export_business_trip_checking.label_business_unit') }}</label>
                         </div>
-                    </div>
-                    <div class="col-4">
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="status form-check-label">{{ __('export_business_trip_checking.label_status') }}</label>
                         </div>
-                    </div>
-                    <div class="col-4">
                         <select class="form-control select2" id="status" name="status"></select>
                     </div>
                 </div>
