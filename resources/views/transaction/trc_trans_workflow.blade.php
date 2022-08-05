@@ -164,6 +164,29 @@
                     </div>
                 </div>
 
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-6">
+                        <p>{{ __('trans_workflow.list_table') }}</p>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="workflow_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Permit ID</th>
+                                <th>Business Unit</th>
+                                <th>Employee ID</th>
+                                <th>Employee Name</th>
+                                <th>Status</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
             </div>
         </form>
     </div>

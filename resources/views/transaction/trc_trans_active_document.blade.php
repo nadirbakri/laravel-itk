@@ -178,6 +178,30 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-6">
+                        <p>{{ __('trans_active_document.list_table') }}</p>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="active_document_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Ticket Number</th>
+                                <th>Employee Name</th>
+                                <th>Business Unit</th>
+                                <th>Claim Type</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
             </div>
         </form>
     </div>

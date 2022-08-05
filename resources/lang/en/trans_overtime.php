@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Overtime List',
     'list' => 'Overtime List',
+    'list_table' => 'OVERTIME LIST',
     'label_claim_date_start' => 'Claim Date - Start',
     'label_claim_date_end' => 'Claim Date - End',
     'label_processed_date' => 'Processed Date',

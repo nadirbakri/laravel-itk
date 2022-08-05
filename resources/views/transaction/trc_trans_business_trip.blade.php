@@ -196,6 +196,30 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-6">
+                        <p>{{ __('trans_business_trip.list_table') }}</p>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="business_trip_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Ticket Number</th>
+                                <th>Employee Name</th>
+                                <th>Business Unit</th>
+                                <th>Claim Type</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
             </div>
         </form>
     </div>

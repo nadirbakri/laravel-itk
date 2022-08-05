@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Reimbursement List',
     'list' => 'Reimbursement List',
+    'list_table' => 'REIMBURSEMENT LIST',
     'label_claim_date_start' => 'Claim Date - Start',
     'label_claim_date_end' => 'Claim Date - End',
     'label_processed_date' => 'Processed Date',

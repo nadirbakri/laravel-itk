@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Mass Leave',
     'list' => 'Mass Leave',
+    'list_table' => 'List of Employee',
     'label_status' => 'Status',
     'label_request_id' => 'Request ID',
     'label_leave_type' => 'Leave Type',

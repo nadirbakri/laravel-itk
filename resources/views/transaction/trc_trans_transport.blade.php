@@ -195,6 +195,30 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-6">
+                        <p>{{ __('trans_transport.list_table') }}</p>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="transport_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Request Date</th>
+                                <th>Ticket Number</th>
+                                <th>Business Unit</th>
+                                <th>Employee Name</th>
+                                <th>Status</th>
+                                <th>Claim Type</th>
+                                <th>Receipt Date</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
             </div>
         </form>
     </div>

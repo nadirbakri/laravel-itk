@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Transport List',
     'list' => 'Transport List',
+    'list_table' => 'TRANSPORT DETAIL',
     'label_claim_date_start' => 'Claim Date - Start',
     'label_claim_date_end' => 'Claim Date - End',
     'label_processed_date' => 'Processed Date',

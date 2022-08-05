@@ -212,6 +212,28 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-6">
+                        <p>{{ __('trans_mass_leave.list_table') }}</p>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="mass_leave_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Seq Number</th>
+                                <th>Req Seq Number</th>
+                                <th>User ID</th>
+                                <th>Full Name</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
             </div>
         </form>
     </div>

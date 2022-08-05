@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Business Trip List',
     'list' => 'Business Trip List',
+    'list_table' => 'BUSINESS TRIP LIST',
     'label_claim_date_start' => 'Travel Date - Start',
     'label_claim_date_end' => 'Travel Date - End',
     'label_processed_date' => 'Processed Date',

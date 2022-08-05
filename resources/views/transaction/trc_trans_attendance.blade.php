@@ -169,6 +169,29 @@
                     </div>
                 </div>
 
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-6">
+                        <p>{{ __('trans_attendance.list_table') }}</p>
+                    </div>
+                </div>
+                <div class="div-table">
+                    <table id="attendance_table" class="table hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Attendance Date</th>
+                                <th>User ID</th>
+                                <th>Fullname</th>
+                                <th>Office Location</th>
+                                <th>Attendance Time In</th>
+                                <th>Attendance Time Out</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
             </div>
         </form>
     </div>
