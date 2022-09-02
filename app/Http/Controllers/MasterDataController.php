@@ -19,4 +19,9 @@ class MasterDataController extends Controller
     public function pageMasterData(){
         return view('master_data.master_data_main');
     }
+
+    public function pageMasterDataEmployeeMaster(){
+        return view('master_data.master_data_employee_master');
+    }
+
 }

@@ -814,6 +814,7 @@ Route::get('transaction/transaction_active_document', 'TransactionController@pag
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');
+Route::get('master_data/employee_master', 'MasterDataController@pageMasterDataEmployeeMaster');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');

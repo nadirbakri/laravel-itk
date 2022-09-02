@@ -47,7 +47,7 @@
                 <div class="card-block">
                     <div class="row div-child-data">
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_reimbursement') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/employee_master') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_master') }}</span>
                             </a>
