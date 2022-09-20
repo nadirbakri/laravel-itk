@@ -538,6 +538,7 @@ Route::get('payroll/csv_e-spt_report_form', 'PayrollController@pageCSVESPTReport
 Route::get('payroll/spt_pph_1721a1', 'PayrollController@pageSptPph1721a1');
 Route::get('payroll/annual_report', 'PayrollController@pageAnnualReport');
 Route::get('payroll/spt_report', 'PayrollController@pageSPTReport');
+Route::get('payroll/spt_pph_report', 'PayrollController@pageSPTPPHReport');
 Route::get('payroll/signature_list_report', 'PayrollController@pageSignatureListReport');
 Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveReport');
 Route::get('payroll/export_data_kepesertaan_bpjs_tk_report', 'PayrollController@pageExportDataKepesertaanBPJSTKReport');
@@ -667,6 +668,7 @@ Route::post('payroll/bonus_thr_report/print/excel', 'PayrollController@printBonu
 Route::post('payroll/spt_pph_1721a1_report/print', 'PayrollController@printSPTPPH1721a1ReportPayroll');
 Route::post('payroll/spt_pph_1721a_report/print', 'PayrollController@printSPTPPH1721aReportPayroll');
 Route::post('payroll/signature_list_report/print', 'PayrollController@printSignatureListReportPayroll');
+Route::post('payroll/retroactive_report/excel/print', 'PayrollController@printRetroactiveReportPayrollExcel');
 Route::post('payroll/retroactive_report/print', 'PayrollController@printRetroactiveReportPayroll');
 Route::post('payroll/export_data_kepesertaan_bpjs_tk_report/print', 'PayrollController@printExportDataKepesertaanBPJSTKReportPayroll');
 Route::post('payroll/loan_report/print', 'PayrollController@printLoanReportPayroll');
@@ -689,7 +691,12 @@ Route::get('medical/input_personnel_limit_all_employee', 'MedicalController@page
 Route::get('medical/treatment_eligibility', 'MedicalController@pageTreatmentEligibility');
 Route::get('medical/claim_list', 'MedicalController@pageClaimList');
 Route::get('medical/claim_transaction', 'MedicalController@pageClaimTransaction');
-Route::get('medical/claim_payment_transaction', 'MedicalController@pageClaimPaymentTransaction');
+Route::get('medical/medical_facility_used_report', 'MedicalController@pageMedicalFacilityUsedReport');
+Route::get('medical/claim_payment_transaction_report_slip', 'MedicalController@pageClaimPaymentTransactionReport');
+Route::get('medical/medical_claim_report', 'MedicalController@pageMedicalClaimReport');
+Route::get('medical/remaining_medical_limit_report', 'MedicalController@pageRemainingMedicalLimitReport');
+Route::get('medical/outstanding_claim_report', 'MedicalController@pageOutstandingClaimReport');
+Route::get('medical/disease_report', 'MedicalController@pageDiseaseReport');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -844,6 +851,7 @@ Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMetho
 Route::get('absenteeism_type/api', 'DataController@dataAbsenteeismTypeAPI');
 Route::get('absenteeism_type/func/api', 'DataController@dataAbsenteeismTypeFuncAPI');
 Route::get('currency/api', 'DataController@dataCurrencyAPI');
+Route::get('currency/func/api', 'DataController@dataCurrencyFunctionAPI');
 Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
 Route::get('zip_code/personal_data/api', 'DataController@dataZipCodePersonalDataAPI');
 Route::get('district/api', 'DataController@dataDistrictAPI');
@@ -990,6 +998,7 @@ Route::get('account/api', 'DataController@dataAccountAPI');
 Route::get('account_edit/api', 'DataController@dataEditAccountAPI');
 Route::get('claim_code/api', 'DataController@dataClaimCodeAPI');
 Route::get('claim_code/func/api', 'DataController@dataClaimCodeFunctionAPI');
+Route::get('claim_code/func2/api', 'DataController@dataClaimCodeFunction2API');
 Route::get('report_format/api', 'DataController@dataReportFormatAPI');
 Route::get('claim_to/api', 'DataController@dataClaimToAPI');
 Route::get('claim_to/func/api', 'DataController@dataClaimToFunctionAPI');
@@ -999,6 +1008,7 @@ Route::get('dependents/api', 'DataController@dataDependentsAPI');
 Route::get('dependents/func/api', 'DataController@dataDependentsFunctionAPI');
 Route::get('disease_code/api', 'DataController@dataDiseaseCodeAPI');
 Route::get('disease_code/func/api', 'DataController@dataDiseaseCodeFunctionAPI');
+Route::get('disease_code/func2/api', 'DataController@dataDiseaseCodeFunction2API');
 Route::get('report_code/api', 'DataController@dataReportCodeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */

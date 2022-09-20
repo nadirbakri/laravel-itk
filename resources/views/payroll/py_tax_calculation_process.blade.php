@@ -123,8 +123,7 @@
                                 <input type="text" class="form-control" id="process_period" name="process_period"
                                     placeholder="{{ __('payroll_tax_calculation_process.label_process_period') }}" readonly>
                         </div>
-                        <input type="hidden" class="form-control" id="process_period_month_hidden" name="process_period_month_hidden">
-                        <input type="hidden" class="form-control" id="process_period_year_hidden" name="process_period_year_hidden">
+                        <input type="hidden" class="form-control" id="process_period_det" name="process_period_det">
                     </div>
                 </div>
                 <div class="row">
@@ -253,7 +252,9 @@
 
         if (arrData) {
             var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
+            var date_period = moment(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01").format('YYYY-MM-DD');
             $('#process_period').val(month_year);
+            $('#process_period_det').val(date_period);
         }
 
         $('#range').on('change', function () {

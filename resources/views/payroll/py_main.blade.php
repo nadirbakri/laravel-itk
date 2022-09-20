@@ -421,6 +421,12 @@
 							</a>
 						</div>
 						<div class="col col-3">
+							<a href="{{ url('payroll/spt_pph_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.spt_pph_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
 							<a href="{{ url('payroll/annual_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.annual_report') }}</span>

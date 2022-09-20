@@ -104,6 +104,7 @@
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
+                        <input type="hidden" class="form-control" id="employee_no_det" name="employee_no_det">
                     </div>
                     <div class="col-6">
                         <div class="form-group">
@@ -275,8 +276,8 @@
         else if (func == 'edit') {
             $('#record_function').val("Edit");
             $('#employee_no').prop('disabled', true);
-            $('#period').prop('disabled', true);
-            $('#month_year').prop('disabled', true);
+            $('#period').prop('readonly', true);
+            $('#month_year').prop('readonly', true);
             $('#period').val(((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : ''));
             $('#cost_center_table').DataTable().destroy();
             load_table_cost_center();
@@ -321,6 +322,7 @@
                     'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
                 }
             }).then(function (data) {
+                $("#employee_no_det").val(data.employeeNo);
                 var option = $('<option/>', {
                     id: data.employeeNo,
                     title: data.fullName,
@@ -370,10 +372,12 @@
 
         $('#employee_no').on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
+            $('#employee_no_det').val(data[0].id);
             $('#employee_name').val(htmlDecode(data[0].title));
         });
 
         $('#employee_no').on("select2:unselecting", function (e) {
+            $('#employee_no_det').val('');
             $('#employee_name').val('');
         });
 
@@ -406,7 +410,7 @@
                 placeholder: 'Choose Employee',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;

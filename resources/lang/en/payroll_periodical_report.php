@@ -27,6 +27,9 @@ return [
     'label_group_authorized_code' => 'Group Authorized Code',
     'label_display_line' => 'Display Line',
     'label_print_signature' => 'Print Signature',
+    'label_position' => 'Position',
+    'label_ranking' => 'Ranking',
+    'label_location' => 'Location',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'

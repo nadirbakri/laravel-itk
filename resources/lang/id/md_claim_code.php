@@ -13,8 +13,8 @@ return [
     */
 
     'judul' => 'Halaman Kode Klaim',
-    'list' => 'Daftar Menu Medis',
-    'list_detail' => 'Daftar Medis',
+    'list' => 'Daftar Menu Pengobatan',
+    'list_detail' => 'Daftar Pengobatan',
     'label_record_status' => 'Status Data',
     'label_claim_code' => 'Kode Klaim',
     'label_claim_name' => 'Nama Klaim',

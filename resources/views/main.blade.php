@@ -119,49 +119,53 @@
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
 			</div>
-			<!-- STYLINGNYA GUA GABISA SORRY BANGET -ILYAS -->
-			<a class="collapsed" data-toggle="collapse"  href="#web-collapse" aria-expanded="true" aria-controls="web-collapse">
-                <div class="card-header">
-                    <div class="div-dropdown-title">
-                        <span class="dropdown-title-text">WEB</span>
-                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-                    </div>
-                </div>
-            </a>
-			<div id="web-collapse" class="collapse">
-				@foreach (Session::get('menuList') as $menu)
-				<div class="list-group list-group-flush">
-					<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
-						<div class="color-active"></div>
-						<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
-						<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
-						<span>{{ $menu['title'] }}</span>
-						<span class="tooltiptext">{{ $menu['title'] }}</span>
-					</a>
+			<!-- <div class="card"> -->
+				<!-- STYLINGNYA GUA GABISA SORRY BANGET -ILYAS -->
+				<a class="collapsed" data-toggle="collapse"  href="#web-collapse" aria-expanded="true" aria-controls="web-collapse">
+					<div class="card-header">
+						<div class="div-dropdown-title">
+							<span class="dropdown-title-text">WEB</span>
+							<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+						</div>
+					</div>
+				</a>
+				<div id="web-collapse" class="collapse">
+					@foreach (Session::get('menuList') as $menu)
+					<div class="list-group list-group-flush">
+						<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
+							<div class="color-active"></div>
+							<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
+							<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
+							<span>{{ $menu['title'] }}</span>
+							<span class="tooltiptext">{{ $menu['title'] }}</span>
+						</a>
+					</div>
+					@endforeach
 				</div>
-				@endforeach
-			</div>
+			<!-- </div> -->
 			<br>
-			<a class="collapsed" data-toggle="collapse"  href="#mob-collapse" aria-expanded="true" aria-controls="mob-collapse">
-                <div class="card-header">
-                    <div class="div-dropdown-title">
-                        <span class="dropdown-title-text">MOB</span>
-                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-                    </div>
-                </div>
-            </a>
-			<div class="collapse" id="mob-collapse">
-				@foreach (Session::get('menuListMob') as $menu)
-				<div class="list-group list-group-flush">
-					<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
-						<div class="color-active"></div>
-						<img src="{{ url('/icons/mob/sidebar/' . $menu['icon']) }}" alt="Home">
-						<img src="{{ url('/icons/mob/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
-						<span>{{ $menu['title'] }}</span>
-						<span class="tooltiptext">{{ $menu['title'] }}</span>
-					</a>
+			<div class="card">
+				<a class="collapsed" data-toggle="collapse"  href="#mob-collapse" aria-expanded="true" aria-controls="mob-collapse">
+					<div class="card-header">
+						<div class="div-dropdown-title">
+							<span class="dropdown-title-text">MOB</span>
+							<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+						</div>
+					</div>
+				</a>
+				<div class="collapse" id="mob-collapse">
+					@foreach (Session::get('menuListMob') as $menu)
+					<div class="list-group list-group-flush">
+						<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
+							<div class="color-active"></div>
+							<img src="{{ url('/icons/mob/sidebar/' . $menu['icon']) }}" alt="Home">
+							<img src="{{ url('/icons/mob/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
+							<span>{{ $menu['title'] }}</span>
+							<span class="tooltiptext">{{ $menu['title'] }}</span>
+						</a>
+					</div>
+					@endforeach
 				</div>
-				@endforeach
 			</div>
 			<footer class="footer">
 				<div class="container">

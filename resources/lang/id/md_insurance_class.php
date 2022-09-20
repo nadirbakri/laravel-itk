@@ -13,8 +13,8 @@ return [
     */
 
     'judul' => 'Halaman Kelas Asuransi',
-    'list' => 'Daftar Menu Medis',
-    'list_detail' => 'Daftar Medis',
+    'list' => 'Daftar Menu Pengobatan',
+    'list_detail' => 'Daftar Pengobatan',
     'label_record_status' => 'Status Data',
     'label_insurance_class_code' => 'Kode Kelas Asuransi',
     'label_insurance_class_description' => 'Keterangan Kelas Asuransi',

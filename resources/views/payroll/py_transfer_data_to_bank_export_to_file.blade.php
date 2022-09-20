@@ -7,7 +7,9 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}"> -->
 	<link rel="stylesheet" href="{{ asset('css/payroll.css') }}">
+	
 	<style type="text/css">
 		.div-payroll {
 			max-width: 97%;
@@ -20,13 +22,20 @@
 			border-bottom: none; 
 			line-height: 0;
 		}
+		.div-title a {
+			text-decoration: none;
+			display: flex;
+			align-items:center;
+		}
 	</style>
 </head>
 <body>
 <div class="div-payroll">
 		<div class="div-title">
-			<!-- <img src="{{ url('icons/sidebar/payroll.png') }}" alt="Title"> -->
-			<span class="title-text">{{ __('payroll_transfer_data_to_bank.judul') }}</span>
+			<a href="{{ url('payroll') }}" target="iframe_dashboard">
+				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+				<span class="title-text">{{ __('payroll_transfer_data_to_bank.judul') }}</span>
+			</a>
 		</div>
 		<div class="card">
             <div class="div-head-data">

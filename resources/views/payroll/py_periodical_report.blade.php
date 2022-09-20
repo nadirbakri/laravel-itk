@@ -117,120 +117,14 @@
             <form id="periodical_report_form" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="report_sequence">{{ __('payroll_periodical_report.label_report_sequence') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="employee_no" name="report_sequence" value="E" checked>
-                            <label for="employee_no">{{ __('payroll_periodical_report.label_employee_no') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="level" name="report_sequence" value="L">
-                            <label for="level">{{ __('payroll_periodical_report.label_level') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="div-level">
-                    <input type="hidden" class="form-control" id="level_format" name="level_format">
-                </div>
-                <div class="row" id="row_subtotal_by_level" style="display: none">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="subtotal_by_level">{{ __('payroll_periodical_report.label_subtotal_by_level') }}</label>
-                        </div>
-                    </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="subtotal_level_1"
-                                    name="subtotal_level_1" value="true">
-                                <label
-                                    for="level_1">{{ __('payroll_periodical_report.label_level_1') }}</label>
-                            </div>
+                            <label for="report_name">{{ __('payroll_periodical_report.label_report_name') }}</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="subtotal_level_2"
-                                    name="subtotal_level_2" value="true">
-                                <label
-                                    for="level_2">{{ __('payroll_periodical_report.label_level_2') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="subtotal_level_3"
-                                    name="subtotal_level_3" value="true">
-                                <label
-                                    for="level_3">{{ __('payroll_periodical_report.label_level_3') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="subtotal_level_4"
-                                    name="subtotal_level_4" value="true">
-                                <label
-                                    for="level_4">{{ __('payroll_periodical_report.label_level_4') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="row_page_break" style="display: none">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label
-                                for="page_break">{{ __('payroll_periodical_report.label_page_break') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="page_break_level_1"
-                                    name="page_break_level_1" value="true">
-                                <label
-                                    for="level_1">{{ __('payroll_periodical_report.label_level_1') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="page_break_level_2"
-                                    name="page_break_level_2" value="true">
-                                <label
-                                    for="level_2">{{ __('payroll_periodical_report.label_level_2') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="page_break_level_3"
-                                    name="page_break_level_3" value="true">
-                                <label
-                                    for="level_3">{{ __('payroll_periodical_report.label_level_3') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="page_break_level_4"
-                                    name="page_break_level_4" value="true">
-                                <label
-                                    for="level_4">{{ __('payroll_periodical_report.label_level_4') }}</label>
-                            </div>
+                            <select class="form-control select2" id="report_name" name="report_name"></select>
                         </div>
                     </div>
                 </div>
@@ -247,19 +141,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="report_name">{{ __('payroll_periodical_report.label_report_name') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <select class="form-control select2" id="report_name" name="report_name"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="employee_no_from">{{ __('payroll_periodical_report.label_employee_no') }}</label>
                             <span style="color: red">*</span>
@@ -282,7 +164,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="period">{{ __('payroll_periodical_report.label_period') }}</label>
                         </div>
@@ -300,7 +182,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="cost_center"
@@ -339,7 +221,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="report_status">{{ __('payroll_periodical_report.label_report_status') }}</label>
                         </div>
@@ -358,7 +240,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="report_type">{{ __('payroll_periodical_report.label_report_type') }}</label>
                         </div>
@@ -377,10 +259,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="group_authorized_code">{{ __('payroll_periodical_report.label_group_authorized_code') }}</label>
-                            <span style="color: red">*</span>
+                            <label for="group_authorized_code">{{ __('payroll_periodical_report.label_group_authorized_code') }} <span style="color: red">*</span></label>
                         </div>
                     </div>
                     <div class="col-4">
@@ -421,6 +302,45 @@
                                     for="print_signature">{{ __('payroll_periodical_report.label_print_signature') }}</label>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="position form-check-label">{{ __('payroll_periodical_report.label_position') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2 select2-hidden-accessible" id="position"
+                                name="position[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="ranking form-check-label">{{ __('payroll_periodical_report.label_ranking') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="ranking" name="ranking[]"
+                                multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="div-level">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="location form-check-label">{{ __('payroll_periodical_report.label_location') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="location" name="location[]"
+                                multiple="multiple"></select>
+                        </div>
+                        <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
                 </div>
                 <!-- BUTTON -->
@@ -500,32 +420,6 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
-            type: "GET",
-            success: function (response) {
-                $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= response.data[0].levelFormat; i++) {
-                    $('#div-level').append(
-                        '<div class="col-6" style="display: none">' +
-                        '<div class="form-group">' +
-                        '<label for="level' + i + '">' + response.data_level[i - 1]
-                        .levelDescription + '</label>' +
-                        '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]" multiple="multiple"></select>' +
-                        '</div></div>'
-                    );
-
-                    loadDataLevelCode('#level' + i, i);
-                    loadDataFirstLastAllLevel('#level' + i, i);
-                }
-            },
-            error: function (response) {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
-            }
-        });
-
         let pickerPeriod = $('#period').flatpickr({
             altInput: true,
             allowInput: true,
@@ -556,19 +450,6 @@
 
         $('#row_grand_total').show();
 
-        $('input[name="report_sequence"]').on('change', function () {
-            if ($(this).val() === 'E') {
-                console.log('test');
-                $('#row_grand_total').show();
-                $('#row_subtotal_by_level').hide();
-                $('#row_page_break').hide();
-            } else {
-                $('#row_subtotal_by_level').show();
-                $('#row_page_break').show();
-                $('#row_grand_total').show();
-            }
-        });
-
         loadDataReportName();
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -583,6 +464,43 @@
 
         loadDataFirstLastGroupAuthorized('#group_authorized_code_from', 'First');
         loadDataFirstLastGroupAuthorized('#group_authorized_code_to', 'Last');
+
+        loadDataPositionCode();
+        loadDataLocationCode();
+        loadDataRankingCode();
+
+        loadDataFirstLastAllPosition();
+        loadDataFirstLastAllLocation();
+        loadDataFirstLastAllRanking();
+
+        $.ajax({
+            url: "{{ url('personel/report/level/check') }}",
+            type: "GET",
+            success: function (response) {
+                $('#level_format').val(response.data[0].levelFormat);
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level').append(
+                        '<div class="col-2">' +
+                        '<div class="form-group">'+
+                        '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '</div></div>'+
+                        '<div class="col-4">' +
+                        '<div class="form-group">' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
+
+                    loadDataLevelCode('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
+                }
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -602,21 +520,6 @@
         $('select').on('select2:close', function (e) {
             $('.header-select').remove();
         });
-
-        function loadDataFirstLastAllLevel(field = '', levelType = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/level/func/api',
-                data: {
-                    'levelType': levelType
-                }
-            }).then(function (data) {
-                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
-                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
-                }
-                $(field).val(data.levelCode);
-            });
-        }
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
@@ -643,69 +546,6 @@
                 var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode).text(
                     data.groupAuthorizeDesc);
                 $(field).append($newOption).trigger('change');
-            });
-        }
-
-        function loadDataLevelCode(field = '', levelType = '') {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Level Code</b></div>' +
-                        '<div class="col-6"><b>Level Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
-                        '<div class="col-6">' + data.data.levelCode + '</div>' +
-                        '<div class="col-6">' + data.data.levelName + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $(field).select2({
-                width: '100%',
-                placeholder: 'Choose Level',
-                allowClear: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/level/all/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term,
-                            'levelType': levelType
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.levelName,
-                                    id: item.levelCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
             });
         }
 
@@ -955,6 +795,335 @@
                                 return {
                                     text: item.groupAuthorizeDesc,
                                     id: item.groupAuthorizeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllPosition() {
+            $('#position').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/position/func/api',
+            }).then(function (data) {
+                if (!$('#position').find('option:contains(' + data.positionName + ')').length) {
+                    $('#position').append($('<option>').val(data.positionCode).text(data.positionName));
+                }
+                $('#position').val(data.positionCode);
+                $('#position').removeClass('loading');
+            });
+        }
+
+        function loadDataFirstLastAllLocation() {
+            $.ajax({
+                type: 'GET',
+                url: '/location/func/api',
+            }).then(function (data) {
+                if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
+                    $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
+                }
+                $('#location').val(data.locationCode);
+            });
+        }
+
+        function loadDataFirstLastAllRanking() {
+            $.ajax({
+                type: 'GET',
+                url: '/ranking/func/api',
+            }).then(function (data) {
+                if (!$('#ranking').find('option:contains(' + data.rankingName + ')').length) {
+                    $('#ranking').append($('<option>').val(data.rankingCode).text(data.rankingName));
+                }
+                $('#ranking').val(data.rankingCode);
+            });
+        }
+
+        function loadDataFirstLastAllLevel(field = '', levelType = '') {
+            $.ajax({
+                type: 'GET',
+                url: '/level/func/api',
+                data: {
+                    'levelType': levelType
+                }
+            }).then(function (data) {
+                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
+                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $(field).val(data.levelCode);
+            });
+        }
+
+        function loadDataPositionCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.positionCode + '</div>' +
+                        '<div class="col-6">' + data.data.positionName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            // var headerIsAppend = false;
+            // $('#position').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Position Code</b></div>' +
+            //             '<div class="col-6"><b>Position Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#position').select2({
+                width: '100%',
+                placeholder: 'Choose Position',
+                allowClear: true,
+                multiple: true,
+                tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/position/all/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.positionName,
+                                    id: item.positionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLocationCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.locationCode + '</div>' +
+                        '<div class="col-6">' + data.data.locationName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            // var headerIsAppend = false;
+            // $('#location').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Location Code</b></div>' +
+            //             '<div class="col-6"><b>Location Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#location').select2({
+                width: '100%',
+                placeholder: 'Choose Location',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/location/all/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.locationName,
+                                    id: item.locationCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataRankingCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Ranking Code</b></div>' +
+                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
+                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#ranking').select2({
+                width: '100%',
+                placeholder: 'Choose Ranking',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/ranking/all/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.rankingName,
+                                    id: item.rankingCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLevelCode(field = '', levelType = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.levelCode + '</div>' +
+                        '<div class="col-6">' + data.data.levelName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Level',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/level/all/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            'levelType': levelType
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
                                     data: item
                                 }
                             })

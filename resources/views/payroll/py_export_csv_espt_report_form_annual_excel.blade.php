@@ -86,22 +86,22 @@
         <tbody>
             @foreach ($data as $key => $value)
             <tr>
-                <td>{{ $value->masaPajak }}</td>
-                <td>{{ $value->tahunPajak }}</td>
+                <td>{{ $value->periodMonth }}</td>
+                <td>{{ $value->periodYear }}</td>
                 <td>{{ $value->pembetulan }}</td>
                 <td>{{ $value->nomorBuktiPotong }}</td>
-                <td>{{ $value->masaPerolehanAwal }}</td>
-                <td>{{ $value->masaPerolehanAkhir }}</td>
-                <td>{{ $value->npwp }}</td>
-                <td>{{ $value->nik }}</td>
-                <td>{{ $value->nama }}</td>
-                <td>{{ $value->alamat }}</td>
-                <td>{{ $value->jenisKelamin }}</td>
+                <td>{{ $value->masaAwal }}</td>
+                <td>{{ $value->masaAkhir }}</td>
+                <td>{{ $value->taxRegisteredNo }}</td>
+                <td>{{ $value->idNo }}</td>
+                <td>{{ $value->employeeName }}</td>
+                <td>{{ $value->homeAddress }}</td>
+                <td>{{ $value->gender }}</td>
                 <td>{{ $value->statusPTKP }}</td>
                 <td>{{ $value->jumlahTanggungan }}</td>
                 <td>{{ $value->namaJabatan }}</td>
                 <td>{{ $value->wpLuarNegeri }}</td>
-                <td>{{ $value->kodeNegara }}</td>
+                <td>{{ $value->nationalityCode }}</td>
                 <td>{{ $value->kodePajak }}</td>
                 <td>{{ $value->jumlah1 }}</td>
                 <td>{{ $value->jumlah2 }}</td>
@@ -123,10 +123,10 @@
                 <td>{{ $value->jumlah18 }}</td>
                 <td>{{ $value->jumlah19 }}</td>
                 <td>{{ $value->jumlah20 }}</td>
-                <td>{{ $value->statusPindah }}</td>
+                <td></td>
                 <td>{{ $value->npwpPemotong }}</td>
                 <td>{{ $value->namaPemotong }}</td>
-                <td>{{ $value->tanggalBuktiPemotong }}</td>
+                <td>{{ $value->tanggalBuktiPotong }}</td>
             </tr>
             @endforeach
         </tbody>

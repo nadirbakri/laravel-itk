@@ -72,6 +72,7 @@ return [
     'severance_report' => 'Laporan Pesangon',
     'annual' => 'Tahunan',
     'spt_report' => 'Laporan SPT',
+    'spt_pph_report' => 'Laporan SPT PPh',
     'annual_report' => 'Laporan Tahunan',
     'salary_historical_report' => 'Laporan Historis Gaji',
     'csv_e-spt_report_form' => 'Formulir Laporan E-SPT CSV',

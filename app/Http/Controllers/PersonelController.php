@@ -833,8 +833,8 @@ class PersonelController extends Controller
         }else{
             foreach($arrResult->dataListSet as $value){
                 $filename = Session::get('companyCode') . '_' . $value->letterType . '.docx';
-                file_put_contents(public_path('letter_table_files/') . $filename, base64_decode($value->letter));
-                $value->letter = $filename;
+                file_put_contents(public_path('letter_table_files/') . $filename, base64_decode($value->letter64));
+                $value->letter64 = $filename;
             }
 
             return Datatables::of($arrResult->dataListSet)->make(true);
@@ -5464,6 +5464,8 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $data_level = [];
+
             $param = [
                 'recordStatus' => $request->record_status,
                 'companyCode' => Session::get('companyCode'),
@@ -5665,6 +5667,20 @@ class PersonelController extends Controller
 
             $param['userAkses'] = $datauserAkses;
 
+            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
+                for($i = 0; $i < $request->level_format; $i++){
+                    $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "levelType" => (string) ($i + 1),
+                        "levelCode" => $request->{'level' . ($i+1)},
+                        "employeeNo" => $request->employee_no_info,
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                    ];
+                }
+                $param['peMasterLevel'] = $data_level;
+            }
+
             if(!empty($request->id_no_info) && !is_null($request->id_no_info[0])){
                 $datapeMasterInfo = [
                     'companyCode' => Session::get('companyCode'),
@@ -5810,7 +5826,6 @@ class PersonelController extends Controller
                     ['body' => json_encode($param)]
                 );
             }
-            
             else{
                 $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
                     ['body' => json_encode($param)]
@@ -8585,37 +8600,6 @@ class PersonelController extends Controller
                 ];
             }
 
-            var_dump(json_encode(
-                [
-                    'mutationType' => $request->mutation_type,
-                    'employeeNo' => $request->employee_no,
-                    'remarks' => $request->remarks,
-                    'peMaster' => [
-                        'decreeCode' => $request->decree_code_new,
-                        'decreeNo' => $request->decree_no_new,
-                        'decreeDate' => $request->decree_date_new,
-                        'workLocation' => $request->work_location_new,
-                        'gradeCode' => $request->grade_code_new,
-                        'groupCode' => $request->group_code_new,
-                        'position' => $request->position_new,
-                        'ranking' => $request->ranking_new,
-                        'workNature' => $request->nature_of_work_new,
-                        'costCenterCode' => $request->cost_center_code_new,
-                        'startDate' => $request->start_date_new,
-                        'employmentStatus' => $request->employment_status_new,
-                        'contractDateStart' => $request->contract_start_date_new,
-                        'contractDateEnd' => $request->contract_end_date_new
-                    ],
-                    "masterLevel" => $data_level,
-                    'companyCode' => Session::get('companyCode'),
-                    'sessionID' => 0,
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => strtoupper(App::getLocale())
-                ]
-                ));
-
             $response = $client->post(env('API_URL') . '/mutation/executemutation',
                 ['body' => json_encode(
                     [
@@ -9844,8 +9828,6 @@ class PersonelController extends Controller
                 $param['location'] = $data_location;
             }
 
-            var_dump(json_encode($param));
-
             $response = $client->post(env('API_URL').'/employeecard/getemployeecard', [
                 'body' => json_encode($param)
             ]);
@@ -9862,18 +9844,13 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null)
-        {
-            $arraySend[] = $arrResult->dataListSet[0];
-        } else {
-            $arraySend[] = [];
-        }
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet[0] == null){
             $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Employee Card Report.pdf');
         }else{
-            $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => $arrResult->dataListSet[0]])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Employee Card Report.pdf');
         }
     }

@@ -13,8 +13,8 @@ return [
     */
 
     'judul' => 'Halaman Kode Asuransi',
-    'list' => 'Daftar Menu Medis',
-    'list_detail' => 'Daftar Medis',
+    'list' => 'Daftar Menu Pengobatan',
+    'list_detail' => 'Daftar Pengobatan',
     'label_record_status' => 'Status Data',
     'label_insurance_code' => 'Kode Asuransi',
     'label_insurance_description' => 'Keterangan Asuransi',

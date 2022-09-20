@@ -9,6 +9,9 @@ return [
     'label_to' => 'To',
     'label_loan_repayment' => 'Loan Repayment',
     'label_loan_report' => 'Loan Report',
+    'label_position' => 'Position',
+    'label_ranking' => 'Ranking',
+    'label_location' => 'Location',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'

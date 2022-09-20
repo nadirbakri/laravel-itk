@@ -41,36 +41,36 @@
 								<span class="child-title-text">{{ __('medical.claim_transaction') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						<!-- <div class="col col-3">
 							<a href="{{ url('medical/multiple_payment_plan_transaction') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-data.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.multiple_payment_plan_transaction') }}</span>
 							</a>
-						</div>
+						</div> -->
 						<div class="col col-3">
 							<a href="{{ url('medical/claim_payment_transaction') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-data.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.claim_payment_transaction') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						<!-- <div class="col col-3">
 							<a href="{{ url('medical/reimbursement_recapitulation') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-data.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.reimbursement_recapitulation') }}</span>
 							</a>
-						</div>
+						</div> -->
 						<div class="col col-3">
 							<a href="{{ url('medical/claim_list') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-data.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.claim_list') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						<!-- <div class="col col-3">
 							<a href="{{ url('medical/print_claim_letter_for_insurance') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-data.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.print_claim_letter_for_insurance') }}</span>
 							</a>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -251,12 +251,12 @@
 								<span class="child-title-text">{{ __('medical.medical_claim_report') }}</span>
 							</a>
 						</div>
-						<div class="col col-3">
+						<!-- <div class="col col-3">
 							<a href="{{ url('medical/insurance_premium_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-report.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.insurance_premium_report') }}</span>
 							</a>
-						</div>
+						</div> -->
 						<div class="col col-3">
 							<a href="{{ url('medical/remaining_medical_limit_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-report.svg') }}" alt="Child medical">

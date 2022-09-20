@@ -21,6 +21,9 @@ return [
     'label_allowance' => 'Allowance',
     'label_deduction' => 'Deduction',
     'label_curr' => 'IDR',
+    'label_position' => 'Posisi',
+    'label_ranking' => 'Ranking',
+    'label_location' => 'Lokasi',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'

@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Validator;
 use Session;
@@ -22,6 +23,13 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
         $this->printDate = $printDate;
         $this->groupAuthorizedCodeFrom = $groupAuthorizedCodeFrom;
         $this->groupAuthorizedCodeTo = $groupAuthorizedCodeTo;
+    }
+
+    public function getCsvSettings(): array
+    {
+        return [
+            'delimiter' => ';'
+        ];
     }
 
     public function view(): View
@@ -71,13 +79,6 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null)
-        {
-            $arraySend[] = $arrResult->dataListSet[0];
-        } else {
-            $arraySend[] = [];
-        }
-
         if($arrResult->dataListSet[0] == null){
             if($this->format == "periodical"){
                 return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
@@ -95,15 +96,15 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
         }else{
             if($this->format == "periodical"){
                 return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
-                    'data' => $arraySend
+                    'data' => $arrResult->dataListSet
                 ]);
             }else if($this->format == "annual"){
                 return view('payroll.py_export_csv_espt_report_form_annual_excel', [
-                    'data' => $arraySend
+                    'data' => $arrResult->dataListSet
                 ]);
             }else if($this->format == "final"){
                 return view('payroll.py_export_csv_espt_report_form_final_excel', [
-                    'data' => $arraySend
+                    'data' => $arrResult->dataListSet
                 ]);
             }
         }

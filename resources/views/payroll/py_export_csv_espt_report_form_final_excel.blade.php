@@ -60,21 +60,21 @@
         <tbody>
             @foreach ($data as $key => $value)
             <tr>
-                <td>{{ $value->masaPajak }}</td>
-                <td>{{ $value->tahunPajak }}</td>
+                <td>{{ $value->periodMonth }}</td>
+                <td>{{ $value->periodYear }}</td>
                 <td>{{ $value->pembetulan }}</td>
                 <td>{{ $value->nomorBuktiPotong }}</td>
-                <td>{{ $value->npwp }}</td>
-                <td>{{ $value->nik }}</td>
-                <td>{{ $value->nama }}</td>
-                <td>{{ $value->alamat }}</td>
+                <td>{{ $value->taxRegisteredNo }}</td>
+                <td>{{ $value->idNo }}</td>
+                <td>{{ $value->employeeName }}</td>
+                <td>{{ $value->homeAddress }}</td>
                 <td>{{ $value->kodePajak }}</td>
                 <td>{{ $value->jumlahBruto }}</td>
                 <td>{{ $value->tarif }}</td>
-                <td>{{ $value->jumlahPph }}</td>
+                <td>{{ $value->jumlahPPH }}</td>
                 <td>{{ $value->npwpPemotong }}</td>
                 <td>{{ $value->namaPemotong }}</td>
-                <td>{{ $value->tanggalBuktiPemotong }}</td>
+                <td>{{ $value->tanggalBuktiPotong }}</td>
             </tr>
             @endforeach
         </tbody>

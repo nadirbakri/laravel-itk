@@ -983,14 +983,22 @@
                         data: 'startDate',
                         name: 'startDate',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MMM-YYYY');
+                            if(data == null || data == ''){
+                                return "";
+                            }else{
+                                return moment(data).format('DD-MMM-YYYY');
+                            }
                         }
                     },
                     {
                         data: 'endDate',
                         name: 'endDate',
                         render: function (data, type, row) {
-                            return moment(data).format('DD-MMM-YYYY');
+                            if(data == null || data == ''){
+                                return "";
+                            }else{
+                                return moment(data).format('DD-MMM-YYYY');
+                            }
                         }
                     },
                     {

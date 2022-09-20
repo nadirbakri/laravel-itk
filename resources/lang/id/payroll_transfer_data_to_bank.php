@@ -31,6 +31,7 @@ return [
     'label_severance' => 'Pesangon',
     'label_none' => 'Tidak Ada',
     'btn_process' => 'Proses',
+    'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'
 ]
 

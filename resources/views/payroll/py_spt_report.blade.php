@@ -119,44 +119,6 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="spt_type form-check-label">{{ __('payroll_spt_report.label_spt_type') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="type_pph_1721a1" name="spt_type" value="pph_1721a1" checked>
-                            <label for="type_pph_1721a1">{{ __('payroll_spt_report.label_pph_1721a1') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="type_pph_1721a" name="spt_type" value="pph_1721a">
-                            <label for="type_pph_1721a">{{ __('payroll_spt_report.label_pph_1721a') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="div_report_format">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="report_format form-check-label">{{ __('payroll_spt_report.label_format') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="format_periodical" name="report_format" value="periodical" checked>
-                            <label for="format_periodical">{{ __('payroll_spt_report.label_periodical') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="format_annual" name="report_format" value="annual">
-                            <label for="format_periodical">{{ __('payroll_spt_report.label_annual') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
                             <label for="employee_no_from form-check-label">{{ __('payroll_spt_report.label_employee_no') }}</label>
                         </div>
                     </div>
@@ -175,57 +137,33 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="period form-check-label">{{ __('payroll_spt_report.label_period') }}</label>
+                            <label for="npwp_group form-check-label">{{ __('payroll_spt_report.label_npwp_group') }}</label>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="period" name="period"
-                                    placeholder="{{ __('payroll_spt_reports.label_period') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>
-                            </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="npwp_group_all" name="npwp_group" value="all" checked>
+                            <label for="npwp_group_all">{{ __('payroll_spt_report.label_all') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="npwp_group form-check-label">{{ __('payroll_spt_report.label_npwp_group') }}</label>
+                            <label for="npwp_group form-check-label">&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-check">
+                            <input type="radio" id="npwp_group_one" name="npwp_group" value="one">
                         </div>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <select class="form-control select2" id="npwp_group" name="npwp_group"></select>
+                            <select class="form-control select2" id="npwp_group_det" name="npwp_group_det"></select>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="group_authorized_code_from form-check-label">{{ __('payroll_spt_report.label_group_authorized_code') }}</label>
-                            <span style="color: red">*</span>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
-                        </div>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_spt_report.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
@@ -233,10 +171,21 @@
                             <i class="fa fa-eye"></i> {{ __('payroll_spt_report.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3">
-                        <button class="btn btn-primary" id="btn-send-to" style="width: 100%;">
+                    <div class="col-3 desc" id="send-to-slip" style="display: none;">
+                        <button class="btn btn-primary" id="btn-send" style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('payroll_spt_report.btn_send_to') }}
                         </button>
+                    </div>
+                    <div class="col-3 desc" id="send-to-report">
+                        <div class="dropdown">
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('payroll_spt_report.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -300,15 +249,10 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
-        loadDataGroupAuthorize('#group_authorized_code_from');
-        loadDataGroupAuthorize('#group_authorized_code_to');
+        loadDataNPWPGroup();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
-        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
-        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
-
-        loadDataReport();
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -329,24 +273,16 @@
             $('.header-select').remove();
         });
 
-        $('#div_report_type').hide();
+        $('#npwp_group_det').prop('disabled', true);
 
-        $('input[type=radio][name=report_status]').change(function() {
-            if (this.value == 'annualy') {
-                $('#div_report_type').show();
+        $('input[type=radio][name=npwp_group]').change(function() {
+            if (this.value == 'all') {
+                $('#npwp_group_det').prop('disabled', true);
+            }else if(this.value == 'one'){
+                $('#npwp_group_det').prop('disabled', false);
+            }else{
+                $('#npwp_group_det').prop('disabled', true);
             }
-            else{
-                $('#div_report_type').hide();
-            }
-        });
-
-        $('#report_name').on("select2:select", function (e) {
-            var data = $('#report_name').select2('data');
-            $('#report_name_det').val(data[0].title);
-        });
-
-        $('#report_name').on("select2:unselecting", function (e) {
-            $('#report_name_det').val('');
         });
 
         function loadDataEmployeeNo(field = '') {
@@ -427,103 +363,20 @@
             });
         }
 
-        function loadDataReport() {
+        function loadDataNPWPGroup(){
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-12">' + data.data.reportCode + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var headerIsAppend = false;
-            $('#report_name').on('select2:open', function (e) {
-                if (!headerIsAppend) {
-                    html = '<div class="row">' +
-                        '<div class="col-12"><b>Report Code</b></div>' +
-                        '</div>';
-                    $('.select2-search').append(html);
-                    headerIsAppend = true;
-                }
-            });
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#report_name').select2({
-                width: '100%',
-                placeholder: 'Choose Report Code',
-                allowClear: true,
-                language: {
-                    errorLoading: function() {
-                        return $search;
-                    },
-                    searching: function() {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/report_code/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.reportCode,
-                                    id: item.reportCode,
-                                    title: item.description,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/group_authorize/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
-                    .text(data.groupAuthorizeDesc);
-                $(field).append($newOption).trigger('change');
-            });
-        }
-
-        function loadDataGroupAuthorize(field = '') {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6"><b>NPWP Code</b></div>' +
+                        '<div class="col-6"><b>Company Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
-                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '<div class="col-6">' + data.data.npwpCode + '</div>' +
+                        '<div class="col-6">' + data.data.companyName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -532,11 +385,10 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $(field).select2({
+            $('#npwp_group_det').select2({
                 width: '100%',
-                placeholder: 'Choose Group Authorize Code',
+                placeholder: 'Choose NPWP Group',
                 allowClear: true,
-                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -546,7 +398,7 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: '/npwp/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -560,8 +412,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.groupAuthorizeDesc,
-                                    id: item.groupAuthorizeCode,
+                                    text: item.npwpCode,
+                                    id: item.npwpCode,
                                     data: item
                                 }
                             })
@@ -581,7 +433,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#annual_report_form').submit();
+            $('#spt_report_form').submit();
         });
 
         $('#send-to-pdf').click(function (){
@@ -590,7 +442,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#annual_report_form').submit();
+            $('#spt_report_form').submit();
         });
 
         $('#send-to-xls').click(function (){
@@ -599,7 +451,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
-            $('#annual_report_form').submit();
+            $('#spt_report_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -608,11 +460,11 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
-            $('#annual_report_form').submit();
+            $('#spt_report_form').submit();
         });
 
-        if($('#annual_report_form').length > 0){
-            $('#annual_report_form').validate({
+        if($('#spt_report_form').length > 0){
+            $('#spt_report_form').validate({
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
@@ -624,13 +476,13 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/annual_report/print/excel') }}",
+                            url: "{{ url('payroll/spt_report/print/excel') }}",
                             type: "POST",
-                            data: $('#annual_report_form').serialize(),
+                            data: $('#spt_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_XLS"){
@@ -657,7 +509,7 @@
                             error: function(response){
                                 $('#btn-send-to').prop("disabled", false);
                                 $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);
@@ -670,23 +522,23 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/annual_report/print') }}",
+                            url: "{{ url('payroll/spt_report/print') }}",
                             type: "POST",
-                            data: $('#annual_report_form').serialize(),
+                            data: $('#spt_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send').prop("disabled", false);
                                 $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-preview').prop("disabled", false);
                                 $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_annual_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_PDF"){
@@ -731,15 +583,15 @@
                             error: function(response){
                                 $('#btn-send').prop("disabled", false);
                                 $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $('#btn-send-to-report').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);
                                 $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_annual_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);

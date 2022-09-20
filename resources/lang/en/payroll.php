@@ -71,6 +71,7 @@ return [
     'severance_report' => 'Severance Report',
     'annual' => 'Annual',
     'spt_report' => 'SPT Report',
+    'spt_pph_report' => 'SPT PPh Report',
     'annual_report' => 'Annual Report',
     'salary_historical_report' => 'Salary Historical Report',
     'csv_e-spt_report_form' => 'CSV E-SPT Report Form',

@@ -31,6 +31,7 @@ return [
     'label_severance' => 'Severance',
     'label_none' => 'None',
     'btn_process' => 'Process',
+    'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'
 ]
 

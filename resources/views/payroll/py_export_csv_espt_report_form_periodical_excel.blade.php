@@ -54,15 +54,15 @@
         <tbody>
             @foreach ($data as $key => $value)
             <tr>
-                <td>{{ $value->masaPajak }}</td>
-                <td>{{ $value->tahunPajak }}</td>
+                <td>{{ $value->periodMonth }}</td>
+                <td>{{ $value->periodYear }}</td>
                 <td>{{ $value->pembetulan }}</td>
-                <td>{{ $value->npwp }}</td>
-                <td>{{ $value->nama }}</td>
+                <td>{{ $value->taxRegisteredNo }}</td>
+                <td>{{ $value->employeeName }}</td>
                 <td>{{ $value->kodePajak }}</td>
                 <td>{{ $value->jumlahBruto }}</td>
-                <td>{{ $value->jumlahPph }}</td>
-                <td>{{ $value->kodeNegara }}</td>
+                <td>{{ $value->jumlahPPH }}</td>
+                <td>{{ $value->nationalityCode }}</td>
             </tr>
             @endforeach
         </tbody>

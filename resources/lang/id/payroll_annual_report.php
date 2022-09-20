@@ -12,6 +12,9 @@ return [
     'label_detail' => 'Detail',
     'label_annualy' => 'Tahunan',
     'label_summary' => 'Ringkasan',
+    'label_position' => 'Posisi',
+    'label_ranking' => 'Ranking',
+    'label_location' => 'Lokasi',
     'btn_preview' => 'Pratinjau',
     'btn_send_to' => 'Kirim Ke',
     'alert_success' => 'Sukses !'

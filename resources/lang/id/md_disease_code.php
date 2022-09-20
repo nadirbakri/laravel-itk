@@ -13,8 +13,8 @@ return [
     */
 
     'judul' => 'Halaman Kode Penyakit',
-    'list' => 'Daftar Menu Medis',
-    'list_detail' => 'Daftar Medis',
+    'list' => 'Daftar Menu Pengobatan',
+    'list_detail' => 'Daftar Pengobatan',
     'label_record_status' => 'Status Data',
     'label_disease_code' => 'Kode Penyakit',
     'label_description' => 'Keterangan',

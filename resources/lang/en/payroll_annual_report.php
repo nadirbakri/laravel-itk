@@ -12,6 +12,9 @@ return [
     'label_detail' => 'Detail',
     'label_annualy' => 'Annualy',
     'label_summary' => 'Summary',
+    'label_position' => 'Position',
+    'label_ranking' => 'Ranking',
+    'label_location' => 'Location',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'

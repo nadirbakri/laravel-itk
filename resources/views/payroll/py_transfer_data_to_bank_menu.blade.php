@@ -14,13 +14,21 @@
 			margin: auto;
 			margin-top: 1%;
 		}
+		.div-title a {
+			text-decoration: none;
+			display: flex;
+			align-items:center;
+		}
 	</style>
 </head>
 <body>
 <div class="div-payroll">
 		<div class="div-title">
 			<!-- <img src="{{ url('icons/sidebar/payroll.png') }}" alt="Title"> -->
-			<span class="title-text">{{ __('payroll_transfer_data_to_bank.judul') }}</span>
+			<a href="{{ url('payroll/transfer_data_to_bank') }}" target="iframe_dashboard">
+				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+				<span class="title-text">{{ __('payroll_transfer_data_to_bank.judul') }}</span>
+			</a>
 		</div>
 		<div class="card">
 			<div id="payroll-master-data">

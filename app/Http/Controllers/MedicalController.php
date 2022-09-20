@@ -108,6 +108,37 @@ class MedicalController extends Controller
         return view ('medical.md_claim_payment_transaction');
     }
 
+    public function pageMedicalFacilityUsedReport()
+    {
+        return view('medical.md_medical_facility_used_report');
+    }
+
+    public function pageClaimPaymentTransactionReport()
+    {
+        return view('medical.md_claim_payment_transaction_report');
+    }
+
+    public function pageMedicalClaimReport()
+    {
+        return view('medical.md_medical_claim_report');
+    }
+
+    public function pageRemainingMedicalLimitReport()
+    {
+        return view('medical.md_remaining_medical_limit_report');
+    }
+
+    public function pageOutstandingClaimReport()
+    {
+        return view('medical.md_outstanding_claim_report');
+    }
+
+    public function pageDiseaseReport()
+    {
+        return view('medical.md_disease_report');
+    }
+    
+
     public function tableClaimCodeMD()
     {
         try {

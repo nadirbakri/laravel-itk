@@ -312,11 +312,11 @@
             }
         });
 
-        if (arrData) {
-            pickerPeriod.setDate(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01");
-        }
-
         var periodYear = (typeof arrData[0].periodYear !== 'undefined') ? '01-01-' + arrData[0].periodYear : null;
+
+        if (arrData) {
+            pickerPeriod.setDate(arrData[0].periodYear + "-" + moment(arrData[0].periodMonth).format('MM') + "-01");
+        }
 
         var prevYear = moment(periodYear).subtract(5, 'years');
         var nextYear = moment(periodYear).add(5, 'years');
@@ -613,13 +613,13 @@
                             );
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
+                            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
+                                'audit_trail.csv');
 
                             // The actual download
                             var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                type: 'text/csv'
                             });
                             var link = document.createElement('a');
                             link.href = window.URL.createObjectURL(blob);

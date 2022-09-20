@@ -851,6 +851,47 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
+	public function dataCurrencyFunctionAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'Currency_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
+	}
+
 	public function dataCurrencyCodeLoanDataEntryAPI(Request $request)
     {
     	try {
@@ -7621,6 +7662,45 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
+	public function dataClaimCodeFunction2API(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
+	}
+
 	public function dataReportFormatAPI(Request $request)
     {
 		$search = $request->search;
@@ -7898,6 +7978,43 @@ class DataController extends Controller
 	    }
 
         return response()->json($data);
+	}
+
+	public function dataDiseaseCodeFunction2API(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
 	}
 
 	public function dataReportCodeAPI(Request $request)

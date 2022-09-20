@@ -245,8 +245,8 @@
                         name: 'letterReference'
                     },
                     {
-                        data: 'letter',
-                        name: 'letter',
+                        data: 'letter64',
+                        name: 'letter64',
                         render: function (data, type, row) {
                             return '<a href="' + '../letter_table_files/' + data +
                                 '" target="_blank">Preview</a>';
