@@ -188,6 +188,22 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="grouping_one">{{ __('payroll_journal_template.label_grouping_one') }}</label>
+                            <input type="text" class="form-control" id="grouping_one" name="grouping_one"
+                                placeholder="{{ __('payroll_journal_template.label_grouping_one') }}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="grouping_two">{{ __('payroll_journal_template.label_grouping_two') }}</label>
+                            <input type="text" class="form-control" id="grouping_two" name="grouping_two"
+                                placeholder="{{ __('payroll_journal_template.label_grouping_two') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">

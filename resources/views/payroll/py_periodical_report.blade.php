@@ -10,6 +10,7 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
@@ -228,13 +229,13 @@
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="actual" name="report_status" value="A" checked>
+                            <input type="radio" id="actual" name="report_status" value="Actual" checked>
                             <label for="actual">{{ __('payroll_periodical_report.label_actual') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="reconsiliation" name="report_status" value="L">
+                            <input type="radio" id="reconsiliation" name="report_status" value="Reconsiliation">
                             <label for="reconsiliation">{{ __('payroll_periodical_report.label_reconsiliation') }}</label>
                         </div>
                     </div>
@@ -247,13 +248,13 @@
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="detail" name="report_type" value="D" checked>
+                            <input type="radio" id="detail" name="report_type" value="Detail" checked>
                             <label for="detail">{{ __('payroll_periodical_report.label_detail') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="summary" name="report_type" value="L">
+                            <input type="radio" id="summary" name="report_type" value="Summary">
                             <label for="summary">{{ __('payroll_periodical_report.label_summary') }}</label>
                         </div>
                     </div>
@@ -462,6 +463,8 @@
         loadDataGroupAuthorized('#group_authorized_code_from');
         loadDataGroupAuthorized('#group_authorized_code_to');
 
+        loadDataFirstLastAllCostCenterCode('#cost_center_code_from', 'First');
+        loadDataFirstLastAllCostCenterCode('#cost_center_code_to', 'Last'); 
         loadDataFirstLastGroupAuthorized('#group_authorized_code_from', 'First');
         loadDataFirstLastGroupAuthorized('#group_authorized_code_to', 'Last');
 
@@ -531,6 +534,20 @@
             }).then(function (data) {
                 var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
                     data.fullName);
+                $(field).append($newOption).trigger('change');
+            });
+        }
+
+        function loadDataFirstLastAllCostCenterCode(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: '/cost_center/all/api',
+                data: {
+                    'func': func
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.costCenterCode).text(
+                    data.costCenterDescription);
                 $(field).append($newOption).trigger('change');
             });
         }
@@ -1133,6 +1150,183 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        var clicked = "";
+
+        $('#btn-send').click(function (){
+            $("#btn-send").prop("disabled", true);
+            $("#btn-send").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+            $('#periodical_report_form').submit();
+        });
+
+        $('#send-to-pdf').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+            $('#periodical_report_form').submit();
+        });
+
+        $('#send-to-xls').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_XLS";
+            $('#periodical_report_form').submit();
+        });
+
+        $('#btn-preview').click(function (){
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "PREVIEW";
+            $('#periodical_report_form').submit();
+        });
+
+        if($('#periodical_report_form').length > 0){
+            $('#periodical_report_form').validate({
+                submitHandler: function(form){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    if(clicked=="DOWNLOAD_XLS"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/periodical_report/excel/print') }}",
+                            type: "POST",
+                            data: $('#periodical_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_XLS"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                                );
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/periodical_report/print') }}",
+                            type: "POST",
+                            data: $('#periodical_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send').prop("disabled", false);
+                                $("#btn-send").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                                );
+
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                                );
+
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_periodical_report.btn_preview") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_PDF"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                                else if(clicked == "PREVIEW"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    const url = URL.createObjectURL(blob);
+                                    link.href = window.open(url, "_blank");
+
+                                    document.body.appendChild(link);
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send').prop("disabled", false);
+                                $('#btn-send').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                                );
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_periodical_report.btn_preview") }}'
+                                );
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
+                            }
+                        });
+                    }
+                }
+            })
         }
     })
 </script>

@@ -11,6 +11,7 @@ use App\Exports\DUMTKReportExport;
 use App\Exports\SalaryHistoricalReportExport;
 use App\Exports\CSVESPTReportFormExport;
 use App\Exports\RetroactiveReportExport;
+use App\Exports\PeriodicalReportExport;
 use App\Exports\BonusTHRReportExport;
 use App\Http\Controllers\Redirect;
 
@@ -2505,7 +2506,8 @@ public function dataDetailReportFormatPY(Request $request)
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        "slipCode" => $request->slipCode
+                        "slipCode" => $request->slipCode,
+                        "slipName" => $request->slipName
                     ]
                 )]
             );
@@ -2521,11 +2523,12 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            return response()->json('');
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet[0]);
         }
     }
 
@@ -3714,6 +3717,44 @@ public function dataDetailReportFormatPY(Request $request)
                     $paramDetail[] = null;
                 }
 
+                var_dump(json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNo" => $request->employee_no_hidden,
+                        "employeeName" => $request->employee_name,
+                        "loanNo" => (int) $request->loan_no,
+                        "auditLoanSeqNo" => (int) $request->paid_loan_seq,
+                        "paymentFlag" => $request->payment_method,
+                        "ratePerYear" => (float) $request->rate_per_year,
+                        "noOfInstallmentNotYetPaid" => (int) $request->no_of_installment_not_yet_paid,
+                        "currencyCode" => $request->currency_code,
+                        "periodYear" => (int) $request->period_year,
+                        "periodMonth" => (int) $request->period_month,
+                        "statusPeriod" => $request->status_period,
+                        "principalAmount" => (float) $request->principal_amount_installment,
+                        "interestAmount" => (float) $request->interest_amount_per_installment,
+                        "outstandingAmount" => (float) $request->outstanding_amount,
+                        "totalNotYetPaid" => (float) $request->total_not_yet_paid,
+                        "paymentAmount" => (float) $request->payment_amount,
+                        "paymentOtherCost" => (float) $request->other_cost,
+                        "totalPayment" => (float) $request->total_payment,
+                        "newOutstandingPaymentAmount" => (float) $request->new_outstanding_amount,
+                        "newRatePerYear" => (float) $request->new_rate_per_year,
+                        "newNoOfInstallmentNotYetPaid" => (int) $request->new_no_of_installment_not_yet_paid,
+                        "employeeDetail" => $paramDetail,
+                        "changeNo" => 0,
+                        "changeBy" => Session::get('userID'),
+                        "changeDate" => date("Y-m-d\TH:i:s"),
+                        "createBy" => Session::get('userID'),
+                        "createDate" => date("Y-m-d\TH:i:s"),
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                    ));
+
                 $response = $client->put(env('API_URL') . '/prloanpayment/updateprloanpayment',
                     ['body' => json_encode(
                         [
@@ -3971,6 +4012,148 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesTransferDataPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump($request->output_file);
+
+            var_dump(json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    'outputFile' => $request->output_file,
+                    'sourceBank' => $request->source_bank,
+                    'accountNo' => $request->account_number,
+                    'transferDate' => $request->transfer_date,
+                    'transferCode' => $request->transfer_code,
+                    'employeeNoFrom' => $request->employee_no_from,
+                    'employeeNoTo' => $request->employee_no_to,
+                    'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
+                    'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
+                    'transferAmount' => false,
+                    'takeHomePayGroup' => true,
+                    'salary' => false,
+                    'bonus' => false,
+                    'thr' => false,
+                    'pension' => false,
+                    'severance' => false,
+                    'one' => ($request->take_homepay_group == "one") ? true : false,
+                    'two' => ($request->take_homepay_group == "two") ? true : false,
+                    'three' => ($request->take_homepay_group == "three") ? true : false,
+                    'none' => ($request->take_homepay_group == "none") ? true : false,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')          
+                ]));
+
+            if($request->data_to_transfer == 'transfer_amount'){
+                $response = $client->post(env('API_URL') . '/prtransferbank/transferamountprocess',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'outputFile' => $request->output_file,
+                            'sourceBank' => $request->source_bank,
+                            'accountNo' => $request->account_number,
+                            'transferDate' => $request->transfer_date,
+                            'transferCode' => $request->transfer_code,
+                            'employeeNoFrom' => $request->employee_no_from,
+                            'employeeNoTo' => $request->employee_no_to,
+                            'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
+                            'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
+                            'transferAmount' => true,
+                            'takeHomePayGroup' => false,
+                            'salary' => isset($request->check_transfer_amount_salary) ? (bool) $request->check_transfer_amount_salary : false,
+                            'bonus' => isset($request->check_transfer_amount_bonus) ? (bool) $request->check_transfer_amount_bonus : false,
+                            'thr' => isset($request->check_transfer_amount_thr) ? (bool) $request->check_transfer_amount_thr : false,
+                            'pension' => isset($request->check_transfer_amount_pension) ? (bool) $request->check_transfer_amount_pension : false,
+                            'severance' => isset($request->check_transfer_amount_severance) ? (bool) $request->check_transfer_amount_severance : false,
+                            'one' => false,
+                            'two' => false,
+                            'three' => false,
+                            'none' => false,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0, 
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')        
+                        ])
+                    ]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . '/prtransferbank/takehomepaygroupprocess',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'outputFile' => $request->output_file,
+                            'sourceBank' => $request->source_bank,
+                            'accountNo' => $request->account_number,
+                            'transferDate' => $request->transfer_date,
+                            'transferCode' => $request->transfer_code,
+                            'employeeNoFrom' => $request->employee_no_from,
+                            'employeeNoTo' => $request->employee_no_to,
+                            'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
+                            'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
+                            'transferAmount' => false,
+                            'takeHomePayGroup' => true,
+                            'salary' => false,
+                            'bonus' => false,
+                            'thr' => false,
+                            'pension' => false,
+                            'severance' => false,
+                            'one' => ($request->take_homepay_group == "one") ? true : false,
+                            'two' => ($request->take_homepay_group == "two") ? true : false,
+                            'three' => ($request->take_homepay_group == "three") ? true : false,
+                            'none' => ($request->take_homepay_group == "none") ? true : false,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0, 
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')          
+                        ])
+                    ]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
@@ -4844,22 +5027,22 @@ public function dataDetailReportFormatPY(Request $request)
 
             $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
 
-            var_dump(json_encode(
-                [
-                    "companyCode" => Session::get('companyCode'),
-                    "periodYear" => (int) $arrResult_tm->dataListSet[0]->periodYear,
-                    "languageCode" => App::getLocale(),
-                    "changedNo" => 0,
-                    "changedBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userName') 
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         "companyCode" => Session::get('companyCode'),
+            //         "periodYear" => (int) $arrResult_tm->dataListSet[0]->periodYear,
+            //         "languageCode" => App::getLocale(),
+            //         "changedNo" => 0,
+            //         "changedBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userName') 
+            //     ]
+            //     ));
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
@@ -5159,7 +5342,7 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(Session::get('token'));
             // var_dump($request->slip_type_custom);
 
-            if($request->custom_label == 'label1'){
+            if($request->custom_label == 'custom1'){
                 $param = [
                     'companyCode' => Session::get('companyCode'),
                     'slipCode' => $request->slip_type_custom,
@@ -5179,9 +5362,7 @@ public function dataDetailReportFormatPY(Request $request)
                     'logActionUsername' => Session::get('userName')
                 ];
                 // var_dump($param);
-            }
-
-            else if($request->custom_label == 'label2'){
+            } else if($request->custom_label == 'custom2'){
                 $param = [
                     'companyCode' => Session::get('companyCode'),
                     'slipCode' => $request->slip_type_custom,
@@ -5202,18 +5383,29 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
             }
 
+            $param2 = [
+                'companyCode' => Session::get('companyCode'),
+                'slipCode' => $request->slip_type_custom,
+                'slipName' => $request->slip_name_custom,
+            ];
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->post(env('API_URL') . '/prslipformat/updateslipformat',
+                $response = $client->put(env('API_URL') . '/prslipformat/updateslipformat',
                     ['body' => json_encode($param)]
                 );
             }
+
+            $response2 = $client->post(env('API_URL') . '/prslipformat/getslipformat',
+                ['body' => json_encode($param2)]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -5224,8 +5416,13 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response2->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        if($arrResult2->dataListSet == null){
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'data' => '']);
+        }else{
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'data' => $arrResult2->dataListSet[0]]);
+        }
     }
 
     public function prosesSlipFormatAllowancePY(Request $request)
@@ -5236,110 +5433,35 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            var_dump($request->record_function);
 
-            if($request->number_allowance == '1'){
-                $param = [
-                    'companyCode' => Session::get('companyCode'),
-                    'slipCode' => $request->slip_type_allowance,
-                    'slipName' => $request->slip_name_allowance,
-                    'fontSize' => (int) $request->font_size_allowance,
-                    'formatNumber' => $request->number_format_allowance,
-                    'allowance1Label' => $request->field_label_allowance,
-                    'allowance1Field' => $request->field_name_allowance,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')        
-                ];
-            }
+            $varAllowanceLabel = 'allowance' . $request->number_allowance . 'Label';
+            $varAllowanceField = 'allowance' . $request->number_allowance . 'Field';
 
-            else if($request->number_allowance == '2'){
-                $param = [
-                    'companyCode' => Session::get('companyCode'),
-                    'slipCode' => $request->slip_type_allowance,
-                    'slipName' => $request->slip_name_allowance,
-                    'fontSize' => (int) $request->font_size_allowance,
-                    'formatNumber' => $request->number_format_allowance,
-                    'allowance2Label' => $request->field_label_allowance,
-                    'allowance2Field' => $request->field_name_allowance,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')        
-                ];
-                // var_dump($param);
-            }
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'slipCode' => $request->slip_type_allowance,
+                'slipName' => $request->slip_name_allowance,
+                'fontSize' => (int) $request->font_size_allowance,
+                'formatNumber' => $request->number_format_allowance,
+                $varAllowanceLabel => $request->field_label_allowance,
+                $varAllowanceField => $request->field_name_allowance,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
 
-            // $param = [
-            //     'companyCode' => Session::get('companyCode'),
-            //     'slipCode' => $request->slip_type_allowance,
-            //     'slipName' => $request->slip_name_allowance,
-            //     'fontSize' => (int) $request->font_size_allowance,
-            //     'formatNumber' => $request->number_format_allowance,
-            //     'allowance1Label' => $request->field_label_allowance,
-            //     'allowance2Label' => $request->allowance2,
-            //     'allowance3Label' => $request->allowance3,
-            //     'allowance4Label' => $request->allowance4,
-            //     'allowance5Label' => $request->allowance5,
-            //     'allowance6Label' => $request->allowance6,
-            //     'allowance7Label' => $request->allowance7,
-            //     'allowance8Label' => $request->allowance8,
-            //     'allowance9Label' => $request->allowance9,
-            //     'allowance10Label' => $request->allowance10,
-            //     'allowance1Field' => $request->allowance1,
-            //     'allowance2Field' => $request->allowance2,
-            //     'allowance3Field' => $request->allowance3,
-            //     'allowance4Field' => $request->allowance4,
-            //     'allowance5Field' => $request->allowance5,
-            //     'allowance6Field' => $request->allowance6,
-            //     'allowance7Field' => $request->allowance7,
-            //     'allowance8Field' => $request->allowance8,
-            //     'allowance9Field' => $request->allowance9,
-            //     'allowance10Field' => $request->allowance10,
-            //     'deduction1Label' => $request->deduction1,
-            //     'deduction2Label' => $request->deduction2,
-            //     'deduction3Label' => $request->deduction3,
-            //     'deduction4Label' => $request->deduction4,
-            //     'deduction5Label' => $request->deduction5,
-            //     'deduction6Label' => $request->deduction6,
-            //     'deduction7Label' => $request->deduction7,
-            //     'deduction8Label' => $request->deduction8,
-            //     'deduction9Label' => $request->deduction9,
-            //     'deduction10Label' => $request->deduction10,
-            //     'deduction1Field' => $request->deduction1,
-            //     'deduction2Field' => $request->deduction2,
-            //     'deduction3Field' => $request->deduction3,
-            //     'deduction4Field' => $request->deduction4,
-            //     'deduction5Field' => $request->deduction5,
-            //     'deduction6Field' => $request->deduction6,
-            //     'deduction7Field' => $request->deduction7,
-            //     'deduction8Field' => $request->deduction8,
-            //     'deduction9Field' => $request->deduction9,
-            //     'deduction10Field' => $request->deduction10,
-            //     "changedNo" => 0,
-            //     "createdDate" => date("Y-m-d\TH:i:s"),
-            //     "createdBy" => Session::get('userID'),
-            //     "changedDate" => date("Y-m-d\TH:i:s"),
-            //     "changedBy" => Session::get('userID'),
-            //     "languageCode" => App::getLocale(),
-            //     'sessionID' => 0, 
-            //     'sessionUserID' => Session::get('userID'),
-            //     'logActionUserID' => Session::get('userID'),
-            //     'logActionUsername' => Session::get('userName')        
-            // ];
+            $param2 = [
+                'companyCode' => Session::get('companyCode'),
+                'slipCode' => $request->slip_type_allowance,
+                'slipName' => $request->slip_name_allowance,
+            ];
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
@@ -5347,10 +5469,90 @@ public function dataDetailReportFormatPY(Request $request)
                 );
             }
             else{
-                $response = $client->post(env('API_URL') . '/prslipformat/updateslipformat',
+                $response = $client->put(env('API_URL') . '/prslipformat/updateslipformat',
                     ['body' => json_encode($param)]
                 );
             }
+
+            $response2 = $client->post(env('API_URL') . '/prslipformat/getslipformat',
+                ['body' => json_encode($param2)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response2->getBody()->getContents());
+
+        if($arrResult2->dataListSet == null){
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'data' => '']);
+        }else{
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'data' => $arrResult2->dataListSet[0]]);
+        }
+    }
+
+    public function prosesSlipFormatDeductionPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $varDeductionLabel = 'deduction' . $request->number_deduction . 'Label';
+            $varDeductionField = 'deduction' . $request->number_deduction . 'Field';
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'slipCode' => $request->slip_type_deduction,
+                'slipName' => $request->slip_name_deduction,
+                'fontSize' => (int) $request->font_size_deduction,
+                'formatNumber' => $request->number_format_deduction,
+                '{$varDeductionLabel}' => $request->field_label_deduction,
+                '{$varDeductionField}' => $request->field_name_deduction,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')        
+            ];
+
+            $param2 = [
+                'companyCode' => Session::get('companyCode'),
+                'slipCode' => $request->slip_type_deduction,
+                'slipName' => $request->slip_name_deduction,
+            ];
+
+            // var_dump(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else{
+                $response = $client->put(env('API_URL') . '/prslipformat/updateslipformat',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+            $response2 = $client->post(env('API_URL') . '/prslipformat/getslipformat',
+                ['body' => json_encode($param2)]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5363,8 +5565,13 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response2->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        if($arrResult2->dataListSet == null){
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'data' => '']);
+        }else{
+            return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message, 'data' => $arrResult2->dataListSet[0]]);
+        }
     }
 
     public function prosesSalaryCalculationProcessPY(Request $request)
@@ -5752,10 +5959,6 @@ public function dataDetailReportFormatPY(Request $request)
                         "employeeNoFrom" => $request->employee_no_from,
                         "employeeNoTo" => $request->employee_no_to,
                         "languageCode" => App::getLocale(),
-                        "changedBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "createdDate" => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
@@ -6160,7 +6363,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet == null);
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
@@ -6715,6 +6918,36 @@ public function dataDetailReportFormatPY(Request $request)
             $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Retroactive Report.pdf');
         }
+    }
+
+    public function printPeriodicalReportPayrollExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new PeriodicalReportExport(
+            $request->report_name, 
+            isset($request->grand_total) ? (bool) $request->grand_total : false,
+            $request->employee_no_from,
+            $request->employee_no_to, 
+            $request->period, 
+            $request->cost_center_code_from, 
+            $request->cost_center_code_to, 
+            isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
+            $request->report_status, 
+            $request->report_type, 
+            $request->group_authorized_code_from, 
+            $request->group_authorized_code_to, 
+            isset($request->display_line) ? (bool) $request->display_line : false,
+            isset($request->print_signature) ? (bool) $request->print_signature : false,
+            $request->position, 
+            $request->ranking,
+            $request->location,
+            $dataLevel), 
+            'Periodical Report.xlsx'
+        );
     }
 
 }

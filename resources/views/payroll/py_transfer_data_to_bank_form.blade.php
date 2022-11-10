@@ -112,7 +112,7 @@
 
 <body>
     <div class="div-form">
-        <form id="spt_report_form" method="post">
+        <form id="transfer_data_form" method="post">
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
@@ -130,6 +130,7 @@
                     <div class="col-6">
                         <select class="form-control select2" id="source_bank" name="source_bank"></select>
                     </div>
+                    <input type="hidden" class="form-control" id="output_file" name="output_file" value="{{ $bankType }}">
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -244,7 +245,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="form-check">
-                                    <input type="radio" id="take_homepay_group_one" name="take_homepay_group" value="1" disabled>
+                                    <input type="radio" id="take_homepay_group_one" name="take_homepay_group" value="one" disabled>
                                     <label for="take_homepay_group_one">1</label>
                                 </div>
                             </div>
@@ -260,7 +261,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="form-check">
-                                    <input type="radio" id="take_homepay_group_two" name="take_homepay_group" value="2" disabled>
+                                    <input type="radio" id="take_homepay_group_two" name="take_homepay_group" value="two" disabled>
                                     <label for="take_homepay_group_two">2</label>
                                 </div>
                             </div>
@@ -276,7 +277,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="form-check">
-                                    <input type="radio" id="take_homepay_group_three" name="take_homepay_group" value="3" disabled>
+                                    <input type="radio" id="take_homepay_group_three" name="take_homepay_group" value="three" disabled>
                                     <label for="take_homepay_group_three">3</label>
                                 </div>
                             </div>
@@ -312,7 +313,7 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                        <button type="button" class="btn btn-process" name="btn-process" id="btn-process">
                             <i class="fa fa-play-circle-o"></i> {{ __('payroll_transfer_data_to_bank.btn_process') }}
                         </button>
                     </div>
@@ -463,6 +464,7 @@
 
         $('#source_bank').on("select2:select", function (e) {
             var data = $('#source_bank').select2('data');
+            // console.log(data);
             $('#account_number').val(data[0].data.accountNo);
             $('#transfer_code').val(data[0].data.description);
         });
@@ -760,179 +762,68 @@
             });
         }
 
-        var clicked = "";
-
-        $('#btn-send').click(function (){
-            $("#btn-send").prop("disabled", true);
-            $("#btn-send").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "DOWNLOAD_PDF";
-            $('#annual_report_form').submit();
-        });
-
-        $('#send-to-pdf').click(function (){
-            $("#btn-send-to-report").prop("disabled", true);
-            $("#btn-send-to-report").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "DOWNLOAD_PDF";
-            $('#annual_report_form').submit();
-        });
-
-        $('#send-to-xls').click(function (){
-            $("#btn-send-to-report").prop("disabled", true);
-            $("#btn-send-to-report").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "DOWNLOAD_XLS";
-            $('#annual_report_form').submit();
-        });
-
-        $('#btn-preview').click(function (){
+        $("#btn-process").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            clicked = "PREVIEW";
-            $('#annual_report_form').submit();
+            $("#transfer_data_form").submit();
         });
 
-        if($('#annual_report_form').length > 0){
-            $('#annual_report_form').validate({
-                submitHandler: function(form){
+        if ($("#transfer_data_form").length > 0) {
+            $("#transfer_data_form").validate({
+                submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    if(clicked=="DOWNLOAD_XLS"){
-                        $.ajax({
-                            xhrFields: {
-                                responseType: 'blob',
-                            },
-                            url: "{{ url('payroll/annual_report/print/excel') }}",
-                            type: "POST",
-                            data: $('#annual_report_form').serialize(),
-                            success: function(result, status, xhr){
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                    $.ajax({
+                        url: "{{ url('payroll/transfer_data/proses') }}",
+                        type: "POST",
+                        data: $('#transfer_data_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
                                 );
                                 
-                                if(clicked == "DOWNLOAD_XLS"){
-                                    var disposition = xhr.getResponseHeader('content-disposition');
-                                    var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
-
-                                    var blob = new Blob([result], {
-                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                                    });
-
-                                    var link = document.createElement('a');
-                                    link.href = window.URL.createObjectURL(blob);
-                                    link.download = filename;
-                                    
-                                    document.body.appendChild(link);
-
-                                    link.click();
-                                    document.body.removeChild(link);
-
-                                    clicked = "";
-                                }
-                            },
-                            error: function(response){
-                                $('#btn-send-to').prop("disabled", false);
-                                $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                $setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/transfer_data_to_bank/export_to_file') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
                                 );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
                             }
-                        });
-                    }
-                    else
-                    {
-                        $.ajax({
-                            xhrFields: {
-                                responseType: 'blob',
-                            },
-                            url: "{{ url('payroll/annual_report/print') }}",
-                            type: "POST",
-                            data: $('#annual_report_form').serialize(),
-                            success: function(result, status, xhr){
-                                $('#btn-send').prop("disabled", false);
-                                $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
-                                );
+                        },
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
+                            );
 
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
-                                );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
 
-                                $('#btn-preview').prop("disabled", false);
-                                $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_annual_report.btn_preview") }}'
-                                );
-                                
-                                if(clicked == "DOWNLOAD_PDF"){
-                                    var disposition = xhr.getResponseHeader('content-disposition');
-                                    var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
-
-                                    var blob = new Blob([result], {
-                                        type: 'application/pdf'
-                                    });
-
-                                    var link = document.createElement('a');
-                                    link.href = window.URL.createObjectURL(blob);
-                                    link.download = filename;
-                                    
-                                    document.body.appendChild(link);
-
-                                    link.click();
-                                    document.body.removeChild(link);
-
-                                    clicked = "";
-                                }
-                                else if(clicked == "PREVIEW"){
-                                    var disposition = xhr.getResponseHeader('content-disposition');
-                                    var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
-
-                                    var blob = new Blob([result], {
-                                        type: 'application/pdf'
-                                    });
-
-                                    var link = document.createElement('a');
-                                    const url = URL.createObjectURL(blob);
-                                    link.href = window.open(url, "_blank");
-
-                                    document.body.appendChild(link);
-                                    document.body.removeChild(link);
-
-                                    clicked = "";
-                                }
-                            },
-                            error: function(response){
-                                $('#btn-send').prop("disabled", false);
-                                $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
-                                );
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $('#btn-send-to-report').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_annual_report.btn_send_to") }}'
-                                );
-                                $('#btn-preview').prop("disabled", false);
-                                $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_annual_report.btn_preview") }}'
-                                );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
-                            }
-                        });
-                    }
+                    });
                 }
             })
         }

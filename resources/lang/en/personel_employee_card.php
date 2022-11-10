@@ -35,6 +35,7 @@ return [
     'label_select_sanction' => 'Sanction',
     'btn_print' => 'Print',
     'label_family' => 'Family',
+    'label_skill' => 'Skill',
     'label_training_records' => 'Training Records',
     'label_formal_education' => 'Formal Education',
     'label_historical_jobs' => 'Historical Jobs',

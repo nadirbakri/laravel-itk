@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
-        .div-payroll_slip_format {
+        .div-payroll {
             max-width: 100%;
             margin: auto;
             /*margin-top: 1%;*/
@@ -59,6 +59,41 @@
             border-top-right-radius: 5px;
         }
 
+        .modal-header-notification-success {
+            border-bottom: 1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -67,7 +102,7 @@
 </head>
 
 <body>
-    <div class="div-payroll_slip_format">
+    <div class="div-payroll">
         <div class="div-title">
             <a href="{{ url('payroll') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
@@ -100,7 +135,7 @@
                             <br>
                             <div class="form-radio">
                                 <input class="form-radio-input" type="radio" id="up_down"
-                                    name="format" value="up_down">
+                                    name="format" value="up_down" checked>
                                 <label class="form-radio-label"
                                     for="format">{{ __('payroll_slip_format.label_up_down') }}</label>
                             </div>
@@ -144,7 +179,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <input id="employee_no" name="employee_no" class="no-border">
+                            <label for="employee_no">X----------------X</label>
                         </div>
                     </div>
                     <div class="col-0-5">
@@ -156,7 +191,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <input id="join_date" name="join_date" class="no-border" readonly>
+                            <label for="join_date">X----------------X</label>
                         </div>
                     </div>
                     <div class="col-0-5">
@@ -170,7 +205,9 @@
                         <input type="text" class="form-control" id="header_custom_1" name="header_custom_1" hidden>
                     </div>
                     <div class="col-2">
-                        <input id="custom1" name="custom1" class="no-border" readonly>
+                        <div class="form-group">
+                            <label for="label_custom1">X----------------X</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -180,7 +217,9 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <input id="employee_name" name="employee_name" class="no-border" readonly>
+                        <div class="form-group">
+                            <label for="employee_name">X----------------X</label>
+                        </div>
                     </div>
                     <div class="col-0-5">
                     </div>
@@ -191,7 +230,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <input id="position" name="position" class="no-border" readonly>
+                            <label for="position">X----------------X</label>
                         </div>
                     </div>
                     <div class="col-0-5">
@@ -205,7 +244,9 @@
                         <input type="text" class="form-control" id="header_custom_2" name="header_custom_2" hidden>
                     </div>
                     <div class="col-2">
-                        <input id="custom2" name="custom2" class="no-border" readonly>
+                        <div class="form-group">
+                            <label for="label_custom2">X----------------X</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -757,6 +798,7 @@
                                 <input type="text" class="form-control" id="font_size_deduction" name="font_size_deduction" hidden>
                                 <input type="text" class="form-control" id="number_format_deduction" name="number_format_deduction" hidden>
                                 <!-- <input type="text" class="form-control" id="record_function" name="record_function" hidden> -->
+                                <input type="text" class="form-control" id="number_deduction" name="number_deduction" hidden>
                             </div>
                         </div>
                         <div class="row">
@@ -854,6 +896,14 @@
         var table = null;
         var slipType = null;
 
+        function isEmpty(obj) {
+            return Object.keys(obj).length === 0;
+        }
+
+        $('#notification').on('hidden.bs.modal', function () {
+            $('#notification').modal('hide');
+        })
+
         $('#slip_type, input[name="format"]').on('change', function () {
             slipType = $('#slip_type').val();
             if ($('#up_down').is(':checked')) {
@@ -866,18 +916,63 @@
                 type: 'GET',
                 url: '/payroll/slip_format/detail_data',
                 data: {
-                    'slipCode': $('#slip_type').val()
+                    'slipCode': $('#slip_type').val(),
+                    'slipName': $('#slip_name').val()
                 },
-                success: function (response) {                    
-                    if (response.recordsTotal > 0) {
+                success: function (response) {            
+                    if (!isEmpty(response)) {
                         $("#record_function").val("Edit");
+                        $("#label_custom1").html(response.headerCustom1 == null ? "{{ __('payroll_slip_format.label_custom1') }}" : response.headerCustom1);
+                        $("#label_custom2").html(response.headerCustom2 == null ? "{{ __('payroll_slip_format.label_custom2') }}" : response.headerCustom2);
+                        $("#allowance1").html(response.allowance1Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance1Field);
+                        $("#allowance2").html(response.allowance2Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance2Field);
+                        $("#allowance3").html(response.allowance3Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance3Field);
+                        $("#allowance4").html(response.allowance4Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance4Field);
+                        $("#allowance5").html(response.allowance5Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance5Field);
+                        $("#allowance6").html(response.allowance6Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance6Field);
+                        $("#allowance7").html(response.allowance7Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance7Field);
+                        $("#allowance8").html(response.allowance8Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance8Field);
+                        $("#allowance9").html(response.allowance9Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance9Field);
+                        $("#allowance10").html(response.allowance10Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.allowance10Field);
+                        $("#deduction1").html(response.deduction1Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction1Field);
+                        $("#deduction2").html(response.deduction2Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction2Field);
+                        $("#deduction3").html(response.deduction3Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction3Field);
+                        $("#deduction4").html(response.deduction4Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction4Field);
+                        $("#deduction5").html(response.deduction5Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction5Field);
+                        $("#deduction6").html(response.deduction6Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction6Field);
+                        $("#deduction7").html(response.deduction7Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction7Field);
+                        $("#deduction8").html(response.deduction8Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction8Field);
+                        $("#deduction9").html(response.deduction9Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction9Field);
+                        $("#deduction10").html(response.deduction10Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.deduction10Field);
                     }
                     else {
                         $("#record_function").val("New");
+                        $("#label_custom1").html("{{ __('payroll_slip_format.label_custom1') }}");
+                        $("#label_custom2").html("{{ __('payroll_slip_format.label_custom2') }}");
+                        $("#allowance1").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance2").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance3").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance4").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance5").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance6").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance7").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance8").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance9").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#allowance10").html("{{ __('payroll_slip_format.label_allowance') }}");
+                        $("#deduction1").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction2").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction3").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction4").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction5").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction6").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction7").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction8").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction9").html("{{ __('payroll_slip_format.label_deduction') }}");
+                        $("#deduction10").html("{{ __('payroll_slip_format.label_deduction') }}");
                     }
                 }
             });
-            console.log($('#record_function').val());
+            // console.log($('#record_function').val());
         });
 
         $('#label_custom1').on('click', function () {
@@ -886,12 +981,11 @@
                 $('#header_custom_1').val(custom);
                 // console.log($('#header_custom_1').val());
             });
-            $('#custom_label').val('label1');
+            $('#custom_label').val('custom1');
             $('#slip_type_custom').val($('#slip_type').val());
             $('#slip_name_custom').val($('#slip_name').val());
             $('#font_size_custom').val($('#font_size').val());
             $('#number_format_custom').val($('#number_format').val());
-            // console.log($('#font_size_custom').val());
         });
 
         $('#label_custom2').on('click', function () {
@@ -899,7 +993,7 @@
                 var custom = $('#custom').val();
                 $('#header_custom_2').val(custom);
             });
-            $('#custom_label').val('label2');
+            $('#custom_label').val('custom2');
             $('#slip_type_custom').val($('#slip_type').val());
             $('#slip_name_custom').val($('#slip_name').val());
             $('#font_size_custom').val($('#font_size').val());
@@ -923,59 +1017,149 @@
             $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance3').on('click', function () {
+            $('#number_allowance').val('3');
             $('#field_label_allowance').val('allowance3');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance4').on('click', function () {
+            $('#number_allowance').val('4');
             $('#field_label_allowance').val('allowance4');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance5').on('click', function () {
+            $('#number_allowance').val('5');
             $('#field_label_allowance').val('allowance5');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance6').on('click', function () {
+            $('#number_allowance').val('6');
             $('#field_label_allowance').val('allowance6');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance7').on('click', function () {
+            $('#number_allowance').val('7');
             $('#field_label_allowance').val('allowance7');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance8').on('click', function () {
+            $('#number_allowance').val('8');
             $('#field_label_allowance').val('allowance8');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance9').on('click', function () {
+            $('#number_allowance').val('9');
             $('#field_label_allowance').val('allowance9');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
         $('#allowance10').on('click', function () {
+            $('#number_allowance').val('10');
             $('#field_label_allowance').val('allowance10');
+            $('#slip_type_allowance').val($('#slip_type').val());
+            $('#slip_name_allowance').val($('#slip_name').val());
+            $('#font_size_allowance').val($('#font_size').val());
+            $('#number_format_allowance').val($('#number_format').val());
         });
 
         $('#deduction1').on('click', function () {
+            $('#number_deduction').val('1');
             $('#field_label_deduction').val('deduction1');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction2').on('click', function () {
+            $('#number_deduction').val('2');
             $('#field_label_deduction').val('deduction2');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction3').on('click', function () {
+            $('#number_deduction').val('3');
             $('#field_label_deduction').val('deduction3');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction4').on('click', function () {
+            $('#number_deduction').val('4');
             $('#field_label_deduction').val('deduction4');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction5').on('click', function () {
+            $('#number_deduction').val('5');
             $('#field_label_deduction').val('deduction5');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction6').on('click', function () {
+            $('#number_deduction').val('6');
             $('#field_label_deduction').val('deduction6');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction7').on('click', function () {
+            $('#number_deduction').val('7');
             $('#field_label_deduction').val('deduction7');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction8').on('click', function () {
+            $('#number_deduction').val('8');
             $('#field_label_deduction').val('deduction8');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction9').on('click', function () {
+            $('#number_deduction').val('9');
             $('#field_label_deduction').val('deduction9');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
         $('#deduction10').on('click', function () {
+            $('#number_deduction').val('10');
             $('#field_label_deduction').val('deduction10');
+            $('#slip_type_deduction').val($('#slip_type').val());
+            $('#slip_name_deduction').val($('#slip_name').val());
+            $('#font_size_deduction').val($('#font_size').val());
+            $('#number_format_deduction').val($('#number_format').val());
         });
 
         loadDataFormat();
@@ -1162,10 +1346,59 @@
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/slip_format') }}";
-                                }, 3000);
+                                
+                                $('#modal_custom').modal('hide');
+                                
+                                if (!isEmpty(response.data)) {
+                                    $("#record_function").val("Edit");
+                                    $("#label_custom1").html(response.data.headerCustom1 == null ? "{{ __('payroll_slip_format.label_custom1') }}" : response.data.headerCustom1);
+                                    $("#label_custom2").html(response.data.headerCustom2 == null ? "{{ __('payroll_slip_format.label_custom2') }}" : response.data.headerCustom2);
+                                    $("#allowance1").html(response.data.allowance1Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance1Field);
+                                    $("#allowance2").html(response.data.allowance2Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance2Field);
+                                    $("#allowance3").html(response.data.allowance3Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance3Field);
+                                    $("#allowance4").html(response.data.allowance4Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance4Field);
+                                    $("#allowance5").html(response.data.allowance5Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance5Field);
+                                    $("#allowance6").html(response.data.allowance6Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance6Field);
+                                    $("#allowance7").html(response.data.allowance7Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance7Field);
+                                    $("#allowance8").html(response.data.allowance8Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance8Field);
+                                    $("#allowance9").html(response.data.allowance9Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance9Field);
+                                    $("#allowance10").html(response.data.allowance10Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance10Field);
+                                    $("#deduction1").html(response.data.deduction1Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction1Field);
+                                    $("#deduction2").html(response.data.deduction2Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction2Field);
+                                    $("#deduction3").html(response.data.deduction3Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction3Field);
+                                    $("#deduction4").html(response.data.deduction4Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction4Field);
+                                    $("#deduction5").html(response.data.deduction5Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction5Field);
+                                    $("#deduction6").html(response.data.deduction6Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction6Field);
+                                    $("#deduction7").html(response.data.deduction7Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction7Field);
+                                    $("#deduction8").html(response.data.deduction8Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction8Field);
+                                    $("#deduction9").html(response.data.deduction9Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction9Field);
+                                    $("#deduction10").html(response.data.deduction10Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction10Field);
+                                }
+                                else {
+                                    $("#record_function").val("New");
+                                    $("#label_custom1").html("{{ __('payroll_slip_format.label_custom1') }}");
+                                    $("#label_custom2").html("{{ __('payroll_slip_format.label_custom2') }}");
+                                    $("#allowance1").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance2").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance3").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance4").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance5").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance6").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance7").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance8").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance9").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance10").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#deduction1").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction2").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction3").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction4").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction5").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction6").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction7").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction8").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction9").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction10").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                }
                             } else {
                                 $("#btn-save-custom").prop("disabled", false);
                                 $("#btn-save-custom").html(
@@ -1228,10 +1461,59 @@
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/slip_format') }}";
-                                }, 3000);
+
+                                $('#modal_allowance').modal('hide');
+                                
+                                if (!isEmpty(response.data)) {
+                                    $("#record_function").val("Edit");
+                                    $("#label_custom1").html(response.data.headerCustom1 == null ? "{{ __('payroll_slip_format.label_custom1') }}" : response.data.headerCustom1);
+                                    $("#label_custom2").html(response.data.headerCustom2 == null ? "{{ __('payroll_slip_format.label_custom2') }}" : response.data.headerCustom2);
+                                    $("#allowance1").html(response.data.allowance1Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance1Field);
+                                    $("#allowance2").html(response.data.allowance2Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance2Field);
+                                    $("#allowance3").html(response.data.allowance3Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance3Field);
+                                    $("#allowance4").html(response.data.allowance4Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance4Field);
+                                    $("#allowance5").html(response.data.allowance5Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance5Field);
+                                    $("#allowance6").html(response.data.allowance6Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance6Field);
+                                    $("#allowance7").html(response.data.allowance7Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance7Field);
+                                    $("#allowance8").html(response.data.allowance8Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance8Field);
+                                    $("#allowance9").html(response.data.allowance9Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance9Field);
+                                    $("#allowance10").html(response.data.allowance10Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance10Field);
+                                    $("#deduction1").html(response.data.deduction1Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction1Field);
+                                    $("#deduction2").html(response.data.deduction2Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction2Field);
+                                    $("#deduction3").html(response.data.deduction3Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction3Field);
+                                    $("#deduction4").html(response.data.deduction4Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction4Field);
+                                    $("#deduction5").html(response.data.deduction5Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction5Field);
+                                    $("#deduction6").html(response.data.deduction6Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction6Field);
+                                    $("#deduction7").html(response.data.deduction7Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction7Field);
+                                    $("#deduction8").html(response.data.deduction8Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction8Field);
+                                    $("#deduction9").html(response.data.deduction9Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction9Field);
+                                    $("#deduction10").html(response.data.deduction10Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction10Field);
+                                }
+                                else {
+                                    $("#record_function").val("New");
+                                    $("#label_custom1").html("{{ __('payroll_slip_format.label_custom1') }}");
+                                    $("#label_custom2").html("{{ __('payroll_slip_format.label_custom2') }}");
+                                    $("#allowance1").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance2").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance3").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance4").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance5").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance6").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance7").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance8").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance9").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance10").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#deduction1").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction2").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction3").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction4").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction5").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction6").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction7").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction8").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction9").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction10").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                }
                             } else {
                                 $("#btn-save-allowance").prop("disabled", false);
                                 $("#btn-save-allowance").html(
@@ -1252,6 +1534,120 @@
                         error: function (response) {
                             $("#btn-save-allowance").prop("disabled", false);
                             $("#btn-save-allowance").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            });
+        }
+
+        $("#btn-save-deduction").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#deduction_form").submit();
+        });
+
+        if ($("#deduction_form").length > 0) {
+            $("#deduction_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/slip_format/deduction/proses') }}",
+                        type: "POST",
+                        data: $('#deduction_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-deduction").prop("disabled", false);
+                                $("#btn-save-deduction").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+
+                                $('#modal_deduction').modal('hide');
+                                
+                                if (!isEmpty(response.data)) {
+                                    $("#record_function").val("Edit");
+                                    $("#label_custom1").html(response.data.headerCustom1 == null ? "{{ __('payroll_slip_format.label_custom1') }}" : response.data.headerCustom1);
+                                    $("#label_custom2").html(response.data.headerCustom2 == null ? "{{ __('payroll_slip_format.label_custom2') }}" : response.data.headerCustom2);
+                                    $("#allowance1").html(response.data.allowance1Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance1Field);
+                                    $("#allowance2").html(response.data.allowance2Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance2Field);
+                                    $("#allowance3").html(response.data.allowance3Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance3Field);
+                                    $("#allowance4").html(response.data.allowance4Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance4Field);
+                                    $("#allowance5").html(response.data.allowance5Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance5Field);
+                                    $("#allowance6").html(response.data.allowance6Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance6Field);
+                                    $("#allowance7").html(response.data.allowance7Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance7Field);
+                                    $("#allowance8").html(response.data.allowance8Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance8Field);
+                                    $("#allowance9").html(response.data.allowance9Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance9Field);
+                                    $("#allowance10").html(response.data.allowance10Field == null ? "{{ __('payroll_slip_format.label_allowance') }}" : response.data.allowance10Field);
+                                    $("#deduction1").html(response.data.deduction1Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction1Field);
+                                    $("#deduction2").html(response.data.deduction2Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction2Field);
+                                    $("#deduction3").html(response.data.deduction3Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction3Field);
+                                    $("#deduction4").html(response.data.deduction4Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction4Field);
+                                    $("#deduction5").html(response.data.deduction5Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction5Field);
+                                    $("#deduction6").html(response.data.deduction6Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction6Field);
+                                    $("#deduction7").html(response.data.deduction7Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction7Field);
+                                    $("#deduction8").html(response.data.deduction8Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction8Field);
+                                    $("#deduction9").html(response.data.deduction9Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction9Field);
+                                    $("#deduction10").html(response.data.deduction10Field == null ? "{{ __('payroll_slip_format.label_deduction') }}" : response.data.deduction10Field);
+                                }
+                                else {
+                                    $("#record_function").val("New");
+                                    $("#label_custom1").html("{{ __('payroll_slip_format.label_custom1') }}");
+                                    $("#label_custom2").html("{{ __('payroll_slip_format.label_custom2') }}");
+                                    $("#allowance1").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance2").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance3").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance4").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance5").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance6").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance7").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance8").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance9").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#allowance10").html("{{ __('payroll_slip_format.label_allowance') }}");
+                                    $("#deduction1").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction2").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction3").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction4").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction5").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction6").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction7").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction8").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction9").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                    $("#deduction10").html("{{ __('payroll_slip_format.label_deduction') }}");
+                                }
+                            } else {
+                                $("#btn-save-deduction").prop("disabled", false);
+                                $("#btn-save-deduction").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-deduction").prop("disabled", false);
+                            $("#btn-save-deduction").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
                             );
 

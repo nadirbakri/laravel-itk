@@ -212,8 +212,14 @@
                 }
             },
             {data: 'employeeNo', name: 'employeeNo'},
-            {data: 'employeeName', name: 'employeeName'},
-            {data: 'claimDate', name: 'claimDate'},
+            {data: 'fullName', name: 'fullName'},
+            {
+                data: 'claimDate', 
+                name: 'claimDate',
+                render: function (data, type, row) {
+                    return moment(data).format('DD-MMM-YYYY');
+                }
+            },
             {data: 'seqNo', name: 'seqNo'}
         ],
         select: {
@@ -244,8 +250,14 @@
                     }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
-                {data: 'employeeName', name: 'employeeName'},
-                {data: 'claimDate', name: 'claimDate'},
+                {data: 'fullName', name: 'fullName'},
+                {
+                    data: 'claimDate', 
+                    name: 'claimDate',
+                    render: function (data, type, row) {
+                        return moment(data).format('DD-MMM-YYYY');
+                    }
+                },
                 {data: 'seqNo', name: 'seqNo'}
             ],
             select: {

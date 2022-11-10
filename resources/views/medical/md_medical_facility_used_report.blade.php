@@ -192,13 +192,13 @@
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="claim_to_company" name="claim_to" value="company" checked>
+                            <input type="radio" id="claim_to_company" name="claim_to" value="C" checked>
                             <label for="claim_to_company">{{ __('md_medical_facility_used_report.label_company') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="claim_to_insurance" name="claim_to" value="insurance">
+                            <input type="radio" id="claim_to_insurance" name="claim_to" value="I">
                             <label for="claim_to_insurance">{{ __('md_medical_facility_used_report.label_insurance') }}</label>
                         </div>
                     </div>
@@ -254,8 +254,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="group_authorized_code_from form-check-label">{{ __('md_medical_facility_used_report.label_group_authorized_code') }}</label>
-                            <span style="color: red">*</span>
+                            <label for="group_authorized_code_from form-check-label">{{ __('md_medical_facility_used_report.label_group_authorized_code') }} <span style="color: red">*</span></label>
                         </div>
                     </div>
                     <div class="col-4">
@@ -1171,7 +1170,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#spt_report_form').submit();
+            $('#medical_facility_used_report_form').submit();
         });
 
         $('#send-to-pdf').click(function (){
@@ -1180,7 +1179,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#spt_report_form').submit();
+            $('#medical_facility_used_report_form').submit();
         });
 
         $('#send-to-xls').click(function (){
@@ -1189,7 +1188,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
-            $('#spt_report_form').submit();
+            $('#medical_facility_used_report_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -1198,11 +1197,11 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
-            $('#spt_report_form').submit();
+            $('#medical_facility_used_report_form').submit();
         });
 
-        if($('#spt_report_form').length > 0){
-            $('#spt_report_form').validate({
+        if($('#medical_facility_used_report_form').length > 0){
+            $('#medical_facility_used_report_form').validate({
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
@@ -1214,13 +1213,13 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/spt_report/print/excel') }}",
+                            url: "{{ url('medical/medical_facility_used_report/print/excel') }}",
                             type: "POST",
-                            data: $('#spt_report_form').serialize(),
+                            data: $('#medical_facility_used_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_medical_facility_used_report.btn_send_to") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_XLS"){
@@ -1247,7 +1246,7 @@
                             error: function(response){
                                 $('#btn-send-to').prop("disabled", false);
                                 $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_medical_facility_used_report.btn_send_to") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);
@@ -1260,23 +1259,23 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/spt_report/print') }}",
+                            url: "{{ url('medical/medical_facility_used_report/print') }}",
                             type: "POST",
-                            data: $('#spt_report_form').serialize(),
+                            data: $('#medical_facility_used_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send').prop("disabled", false);
                                 $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_medical_facility_used_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_medical_facility_used_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-preview').prop("disabled", false);
                                 $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("md_medical_facility_used_report.btn_preview") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_PDF"){
@@ -1321,15 +1320,15 @@
                             error: function(response){
                                 $('#btn-send').prop("disabled", false);
                                 $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_medical_facility_used_report.btn_send_to") }}'
                                 );
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $('#btn-send-to-report').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_medical_facility_used_report.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);
                                 $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("md_medical_facility_used_report.btn_preview") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);

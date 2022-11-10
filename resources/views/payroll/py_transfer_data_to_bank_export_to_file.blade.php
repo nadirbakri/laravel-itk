@@ -102,7 +102,6 @@
     $(document).ready(function () {
 		$(".bank").on('click', function() {
             var data = $(this).data("bank");
-			console.log(data);
 			$.redirect("{{ url('payroll/transfer_data_to_bank/detail_data') }}", 
 			{ 
 				'bankType' : data 

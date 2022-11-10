@@ -1037,7 +1037,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#spt_report_form').submit();
+            $('#disease_report_form').submit();
         });
 
         $('#send-to-pdf').click(function (){
@@ -1046,7 +1046,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#spt_report_form').submit();
+            $('#disease_report_form').submit();
         });
 
         $('#send-to-xls').click(function (){
@@ -1055,7 +1055,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
-            $('#spt_report_form').submit();
+            $('#disease_report_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -1064,11 +1064,11 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
-            $('#spt_report_form').submit();
+            $('#disease_report_form').submit();
         });
 
-        if($('#spt_report_form').length > 0){
-            $('#spt_report_form').validate({
+        if($('#disease_report_form').length > 0){
+            $('#disease_report_form').validate({
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
@@ -1080,13 +1080,13 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/spt_report/print/excel') }}",
+                            url: "{{ url('medical/disease_report/print/excel') }}",
                             type: "POST",
-                            data: $('#spt_report_form').serialize(),
+                            data: $('#disease_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_disease_report.btn_send_to") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_XLS"){
@@ -1113,7 +1113,7 @@
                             error: function(response){
                                 $('#btn-send-to').prop("disabled", false);
                                 $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_disease_report.btn_send_to") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);
@@ -1126,23 +1126,23 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/spt_report/print') }}",
+                            url: "{{ url('medical/disease_report/print') }}",
                             type: "POST",
-                            data: $('#spt_report_form').serialize(),
+                            data: $('#disease_report_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send').prop("disabled", false);
                                 $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_disease_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_disease_report.btn_send_to") }}'
                                 );
 
                                 $('#btn-preview').prop("disabled", false);
                                 $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("md_disease_report.btn_preview") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_PDF"){
@@ -1187,15 +1187,15 @@
                             error: function(response){
                                 $('#btn-send').prop("disabled", false);
                                 $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_disease_report.btn_send_to") }}'
                                 );
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $('#btn-send-to-report').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_disease_report.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);
                                 $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("md_disease_report.btn_preview") }}'
                                 );
                                 $('#notification').modal('show');
                                 $('#message-notification').html(response);

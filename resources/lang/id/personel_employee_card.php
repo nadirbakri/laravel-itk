@@ -34,6 +34,7 @@ return [
     'label_select_sanction' => 'Sanksi',
     'btn_print' => 'Cetak',
     'label_family' => 'Keluarga',
+    'label_skill' => 'Kemampuan',
     'label_training_records' => 'Catatan Pelatihan',
     'label_formal_education' => 'Pendidikan Formal',
     'label_historical_jobs' => 'Sejarah Pekerjaan',
