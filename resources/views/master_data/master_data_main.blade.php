@@ -46,50 +46,50 @@
             <div id="master_data-master_data-data" class="collapse">
                 <div class="card-block">
                     <div class="row div-child-data">
-                        <div class="col col-3">
+                        <!-- <div class="col col-3">
                             <a href="{{ url('master_data/employee_master') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_master') }}</span>
                             </a>
-                        </div>
+                        </div> -->
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_medical') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/employee_group') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_workflow') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/employee_group_detail') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group_detail') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_transport') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/employee_group_reimbursement') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group_reimbursement') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_pdf_business_trip') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/employee_group_reimbursement_detail') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group_reimbursement_detail') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_attendance') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/holiday_calender') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.holiday_calendar') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_business_trip') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/bussines_trip') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group_business_trip') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/master_data_overtime') }}" target="iframe_dashboard">
+                            <a href="{{ url('master_data/bussines_trip_detail') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group_business_trip_detail') }}</span>
                             </a>

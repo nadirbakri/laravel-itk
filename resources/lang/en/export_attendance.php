@@ -13,7 +13,8 @@ return [
     'label_slip' => 'Slip',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'employee_status' => 'Employee Status'
 ]
 
 ?>

@@ -15,7 +15,8 @@ return [
     'btn_save' => 'Save',
     'btn_list' => 'List',
     'btn_remove' => 'Remove',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'button1' => 'List'
 ]
 
 ?>

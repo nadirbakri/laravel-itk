@@ -69,12 +69,12 @@
                                 <span class="child-title-text">{{ __('export.transport') }}</span>
                             </a>
                         </div>
-                        <div class="col col-3">
+                        {{-- <div class="col col-3">
                             <a href="{{ url('export/export_attendance') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">
                                 <span class="child-title-text">{{ __('export.attendance') }}</span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="col col-3">
                             <a href="{{ url('export/export_business_trip') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-export.svg') }}" alt="Child export">

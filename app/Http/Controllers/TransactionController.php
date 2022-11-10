@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -54,5 +55,197 @@ class TransactionController extends Controller
 
     public function pageTransactionActiveDocument(){
         return view('transaction.trc_trans_active_document');
+    }
+
+    // public function tableInputTransactionTransport(Request $request)
+    // {
+    //     try {
+    //         $client = new Client([
+    //             'headers' => [ 'Content-Type' => 'application/json',
+    //             'Authorization' => 'Bearer ' . Session::get('token') ]
+    //         ]);
+
+    //         $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
+    //             ['body' => json_encode(
+    //                 [
+    //                     // 'companyCode' => Session::get('companyCode'),
+    //                     // 'employeeNo' => $request->employeeNo,
+    //                     // 'logActionUserID' => Session::get('userID'),
+    //                     // 'logActionUsername' => Session::get('userName'),
+    //                     'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+    //                     'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+    //                     'processDate' => $request->processDate, 
+    //                     'type' =>  $request->transportType,
+    //                     'businessUnit'=> $request->businessUnit,
+    //                     'directSuperiorID'=> $request->directSuperiorID,
+    //                     'companyCode' => Session::get('companyCode'), 
+    //                     'languageCode' => App::getLocale(), 
+    //                     'sessionID' => 0, 
+    //                     'sessionUserID' => Session::get('userID'),
+    //                 ]
+    //             )]
+    //         );
+    //     } catch (RequestException $e) {
+    //         $response = $e->getResponse();
+    //         if($response->getStatusCode() == 401){
+    //             return view('error.login');
+    //         }else if($response->getStatusCode() == 404){
+    //             return view('error.not_found');
+    //         }else{
+    //             return view('error.bad_request');
+    //         }
+    //     }
+
+    //     $arrResult = json_decode($response->getBody()->getContents());
+    //     // var_dump($arrResult->dataListSet);
+
+    //     if($arrResult->dataListSet == null){
+    //         return Datatables::of([])->make(true);
+    //     }else{
+    //         return Datatables::of($arrResult->dataListSet)->make(true);
+    //     }
+    // }
+    
+    public function tableDetailTransactionMedical(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementdetaillistall',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        'employeeNo'=> $request->employeeNo,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+    
+    public function tableDetailTransport(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        'processDate'=> Carbon::parse($request->processDate)->format('Y-d-m'),
+                        'type' =>  $request->transportType,
+                        'businessUnit'=> $request->businessUnit,
+                        'directSuperiorID'=> $request->directSuperiorID,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                    )]
+                );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+   
+    public function tableDetailTransactionList(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
     }
 }

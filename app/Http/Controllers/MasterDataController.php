@@ -24,4 +24,32 @@ class MasterDataController extends Controller
         return view('master_data.master_data_employee_master');
     }
 
+    public function pageMasterDataEmployeeGroup(){
+        return view('master_data.master_data_employee_group');
+    }
+
+    public function pageMasterDataEmployeeGroupDetail(){
+        return view('master_data.master_data_employee_group_detail');
+    }
+   
+    public function pageMasterDataEmployeeGroupReimbursement(){
+        return view('master_data.master_data_employee_group_reimbursement');
+    }
+    
+    public function pageMasterDataHolidayCalender(){
+        return view('master_data.master_data_holiday_calender');
+    }
+    
+    public function pageMasterDataBussinesTrip(){
+        return view('master_data.master_data_bussines_trip');
+    }
+    
+    public function pageMasterDataBussinesTripDetail(){
+        return view('master_data.master_data_bussines_trip_detail');
+    }
+  
+    public function pageMasterDataEmployeeGroupReimbursementDetail(){
+        return view('master_data.master_data_reimbursement_detail');
+    }
+
 }

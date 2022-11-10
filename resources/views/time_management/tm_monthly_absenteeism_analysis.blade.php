@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>{{ __('tm_monthly_absenteeism_analysis.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -337,6 +336,7 @@
             });
         }
 
+// buat ALL
         function loadDataFirstLastAllLocation() {
             $.ajax({
                 type: 'GET',

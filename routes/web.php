@@ -712,6 +712,11 @@ Route::get('medical/input_personnel_limit/table', 'MedicalController@tableInputP
 Route::get('medical/treatment_eligibility/table', 'MedicalController@tableTreatmentEligibilityMD');
 Route::get('medical/claim_transaction/table', 'MedicalController@tableClaimTransactionMD');
 
+/* Route untuk Detail Tabel Transaction */
+Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
+Route::get('trans/medical_history/table', 'TransactionController@tableDetailTransactionMedical');
+Route::get('trans/transport/table', 'TransactionController@tableDetailTransport');
+
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
 Route::get('medical/disease_code/detail_data', 'MedicalController@dataDetailDiseaseCodeMD');
@@ -818,6 +823,20 @@ Route::get('export/export_overtime', 'ExportController@pageExportOvertime');
 Route::get('export/export_pdf_business_trip', 'ExportController@pageExportPDFBusinessTrip');
 Route::get('export/export_business_trip_checking', 'ExportController@pageExportBusinessTripChecking');
 
+
+Route::post('export/export_workflow/print', 'ExportController@printExportWorkflow');
+Route::post('export/export_medical/print', 'ExportController@printExportMedical');
+Route::post('export/export_reimbursement/print', 'ExportController@printExportReimbursement');
+Route::post('export/export_transport/print', 'ExportController@printExportTransport');
+Route::post('export/export_overtime/print', 'ExportController@printExportOvertime');
+Route::post('export/export_businesstrip/print', 'ExportController@printExportBusinessTrip');
+Route::post('export/export_businesstrip_pdf/print', 'ExportController@printExportBusinessTripPDF');
+Route::post('export/business_trip_checking/print', 'ExportController@printExportBusinessTripChecking');
+// Route::post('export/export_attendance/print', 'ExportController@printAttendanceExport');
+
+/* Route Untuk Proses Menu Export MOB */
+Route::post('export/company_working_calendar/proses','ExportController@prosesCompanyWorkingCalendar');
+
 /* Route untuk Menu Transaction MOB */
 Route::get('transaction', 'TransactionController@pageTransaction');
 Route::get('transaction/transaction_reimbursement', 'TransactionController@pageTransactionReimbursement');
@@ -833,9 +852,21 @@ Route::get('transaction/transaction_active_document', 'TransactionController@pag
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');
 Route::get('master_data/employee_master', 'MasterDataController@pageMasterDataEmployeeMaster');
+Route::get('master_data/employee_group', 'MasterDataController@pageMasterDataEmployeeGroup');
+Route::get('master_data/employee_group_detail', 'MasterDataController@pageMasterDataEmployeeGroupDetail');
+Route::get('master_data/employee_group_reimbursement', 'MasterDataController@pageMasterDataEmployeeGroupReimbursement');
+Route::get('master_data/employee_group_reimbursement_detail', 'MasterDataController@pageMasterDataEmployeeGroupReimbursementDetail');
+Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataHolidayCalender');
+Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
+Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');
+Route::get('admin_menu/user_master', 'AdminMenuController@pageAdminMenuUserMaster');
+Route::get('admin_menu/user_group', 'AdminMenuController@pageAdminMenuUserGroup');
+Route::get('admin_menu/menu_master', 'AdminMenuController@pageAdminMenuMaster');
+Route::get('admin_menu/checkin_list', 'AdminMenuController@pageAdminMenuCheckinList');
+Route::get('admin_menu/news_master', 'AdminMenuController@pageAdminMenuNewsMaster');
 
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');
@@ -847,7 +878,7 @@ Route::post('change_language/proses', 'LanguagesController@prosesChangeLanguage'
 /* Route Untuk Set Languange */
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguagesController@switchLang']);
 
-/* Route Untuk Dropdown From API */
+/* Route Untuk Dropdown Form API */
 Route::get('gender/api', 'DataController@dataGenderAPI');
 Route::get('blood/api', 'DataController@dataBloodAPI');
 Route::get('marital_status/api', 'DataController@dataMaritalStatusAPI');
@@ -878,7 +909,28 @@ Route::get('religion/api', 'DataController@dataReligionAPI');
 Route::get('religion/all/api', 'DataController@dataReligionAllAPI');
 Route::get('religion/func/api', 'DataController@dataReligionFunctionAPI');
 Route::get('religion_code/api', 'DataController@dataReligionCodeAPI');
+Route::get('reimbursement_type/api', 'DataController@dataReimbursementTypeAPI');
+Route::get('reimbursement_type/export/api', 'DataController@dataReimbursementTypeExportAPI');
+// buat bikin select ALL     
+Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI');
+Route::get('reimbursement_type/all/api', 'DataController@dataReimbursementTypeAllAPI');
+Route::get('reimbursement_type/func/api', 'DataController@dataReimbursementTypeFunctionAPI');
+Route::get('reimbursement_type_medical/all/api', 'DataController@dataReimbursementTypeMedicalFunctionAPI');
+Route::get('travel_type/all/api', 'DataController@dataTravelTypeAllAPI');
+// diatas buat bikin select ALL
+Route::get('reimbursement_type/transport/api', 'DataController@dataReimbursementTypeTransportAPI');
+Route::get('reimbursement_type/transport/all/api', 'DataController@dataReimbursementTypeTransportAllAPI');
+Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementTypeOvertimeAPI');
+Route::get('business_unit/function/api', 'DataController@dataBusinessUnitFunctionAPI');
+Route::get('travel_type/api', 'DataController@dataTravelTypeAPI');
+Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementOvertimeAPI');
+Route::get('workflow/api', 'DataController@dataWorkFlowAPI');
 Route::get('status/api', 'DataController@dataStatusAPI');
+Route::get('status/func/api', 'DataController@dataStatusFunctionAPI');
+Route::get('status_trans/api', 'DataController@dataStatusTransactionAPI');
+Route::get('leave_type/api', 'DataController@dataLeaveTypeAPI');
+Route::get('leave_type/func/api', 'DataController@dataLeaveTypeFunctionAPI');
+Route::get('submit_type/api', 'DataController@dataSubmitTypeAPI');
 Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
 Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
 Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
@@ -1024,6 +1076,10 @@ Route::get('disease_code/api', 'DataController@dataDiseaseCodeAPI');
 Route::get('disease_code/func/api', 'DataController@dataDiseaseCodeFunctionAPI');
 Route::get('disease_code/func2/api', 'DataController@dataDiseaseCodeFunction2API');
 Route::get('report_code/api', 'DataController@dataReportCodeAPI');
+Route::get('employee_company_code/api', 'DataController@dataEmployeeCompanyCodeAPI');
+Route::get('employee/status/api', 'DataController@dataEmployeeStatusAPI');
+Route::get('office_location/api', 'DataController@dataOfficeLocationAPI');
+Route::get('sasa', 'DataController@dataBusinessUnitAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

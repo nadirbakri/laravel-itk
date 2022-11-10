@@ -277,6 +277,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- ini -->
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="religion_info">{{ __('personel_personal_data.label_religion') }}</label>
@@ -3983,7 +3984,7 @@
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
         }
-
+// ini
         loadDataBirthPlace();
         loadDataGender();
         loadDataBloodType();
