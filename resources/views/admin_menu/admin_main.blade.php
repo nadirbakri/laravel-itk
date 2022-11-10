@@ -46,32 +46,32 @@
             <div id="admin_menu-admin_menu-data" class="collapse">
                 <div class="card-block">
                     <div class="row div-child-data">
-                        <div class="col col-3">
-                            <a href="{{ url('admin_menu/admin_menu_reimbursement') }}" target="iframe_dashboard">
+                        <!-- <div class="col col-3">
+                            <a href="{{ url('admin_menu/user_master') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-adminmenu.svg') }}" alt="Child admin_menu">
                                 <span class="child-title-text">{{ __('admin_menu.user_master') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('admin_menu/admin_menu_medical') }}" target="iframe_dashboard">
+                            <a href="{{ url('admin_menu/user_group') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-adminmenu.svg') }}" alt="Child admin_menu">
                                 <span class="child-title-text">{{ __('admin_menu.user_group') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('admin_menu/admin_menu_workflow') }}" target="iframe_dashboard">
+                            <a href="{{ url('admin_menu/menu_master') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-adminmenu.svg') }}" alt="Child admin_menu">
                                 <span class="child-title-text">{{ __('admin_menu.menu_master') }}</span>
                             </a>
-                        </div>
+                        </div> -->
                         <div class="col col-3">
-                            <a href="{{ url('admin_menu/admin_menu_transport') }}" target="iframe_dashboard">
+                            <a href="{{ url('admin_menu/checkin_list') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-adminmenu.svg') }}" alt="Child admin_menu">
                                 <span class="child-title-text">{{ __('admin_menu.check_in_list') }}</span>
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('admin_menu/admin_menu_pdf_business_trip') }}" target="iframe_dashboard">
+                            <a href="{{ url('admin_menu/news_master') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-adminmenu.svg') }}" alt="Child admin_menu">
                                 <span class="child-title-text">{{ __('admin_menu.news_aster') }}</span>
                             </a>
@@ -98,7 +98,6 @@
             </div>
         </div>
     </div>
-
 	@endif
 </body>
 

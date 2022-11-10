@@ -161,6 +161,7 @@
             </div>
         </form>
     </div>
+    {{-- ini buat bikin pop up nya --}}
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf

@@ -153,6 +153,12 @@
                         </div>
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="employee_status form-check-label">{{ __('export_attendance.employee_status') }}</label>
+                        </div>
+                        <select class="form-control select2" id="employee_status" name="employee_status"></select>
+                    </div>
                 </div>
 
                 <!-- BUTTON -->
@@ -216,5 +222,275 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        initDatePicker();
+    });
+
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+loadDataBusinessUnit();
+loadDataFirstLastAllBusinessUnit();
+loadDataEmployeeStatus();
+loadDataFirstLastAllEmployeeStatus();
+
+    $.get("{{ url('level/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
+            });
+        });
+   
+        $.get("{{ url('employee/status/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                $('#employee_status').append("<option value=" + v.variable + ">" + v.value +
+                    "</option>");
+            });
+        });
+
+        $('#select').focus(function (event) {
+                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+                $searchfield.prop('disabled', true);
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
+
+        function loadDataBusinessUnit(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.levelName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#business_unit').select2({
+                width: '100%',
+                placeholder: 'Choose Business Unit',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/level/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+        function loadDataFirstLastAllBusinessUnit () {
+            $('#business_unit').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/level/func/api',
+            }).then(function (data) {
+                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
+                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $('#business_unit').val(data.levelCode);
+                $('#business_unit').removeClass('loading');
+            });
+        }
+        // $("#btn-preview").click(function () {
+        //     $(this).prop("disabled", true);
+        //     $(this).html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+        //     $("#export_attendance_form").submit();
+        // });
+
+        // if ($("#export_attendance_form").length > 0) {
+        //     $("#export_attendance_form").validate({
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+        //             $.ajax({
+        //                 xhrFields: {
+        //                     responseType: 'blob',
+        //                 },
+        //                 url: "{{ url('export/export_attendance/print') }}",
+        //                 type: "POST",
+        //                 data: $('#export_attendance_form').serialize(),
+        //                 success: function (result, status, xhr) {
+        //                     $("#btn-preview").prop("disabled", false);
+        //                     $("#btn-preview").html(
+        //                         '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+        //                     );
+        //                     var disposition = xhr.getResponseHeader(
+        //                         'content-disposition');
+        //                     var matches = /"([^"]*)"/.exec(disposition);
+        //                     var filename = (matches != null && matches[1] ? matches[1] :
+        //                         'audit_trail.xlsx');
+
+        //                     // The actual download
+        //                     var blob = new Blob([result], {
+        //                         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        //                     });
+        //                     var link = document.createElement('a');
+        //                     link.href = window.URL.createObjectURL(blob);
+        //                     link.download = filename;
+
+        //                     document.body.appendChild(link);
+
+        //                     link.click();
+        //                     document.body.removeChild(link);
+        //                 },
+        //                 error: function (response) {
+        //                     $("#btn-preview").prop("disabled", false);
+        //                     $("#btn-preview").html(
+        //                         '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+        //                     );
+        //                     $('#notification').modal('show');
+        //                     $('#message-notification').html(response);
+        //                 }
+        //             });
+        //         }
+        //     })
+        // }
+        function loadDataEmployeeStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#employee_status').select2({
+                width: '100%',
+                placeholder: 'Choose Employee Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/employee/status/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.variable,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllEmployeeStatus() {
+            $('#employee_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/employee/status/all/api',
+            }).then(function (data) {
+                if (!$('#employee_status').find('option:contains(' + data.value + ')').length) {
+                    $('#employee_status').append($('<option>').val(data.comGenCode).text(data.value));
+                }
+                $('#employee_status').val(data.comGenCode);
+                $('#employee_status').removeClass('loading');
+            });
+        }
+</script>
 
 </html>

@@ -117,7 +117,33 @@
                     </a>
                 </div>
 
-                <div class="row">
+                <div class="col-5">
+                    <div class="form-group">
+                        <label for="claim_date_from form-check-label">{{ __('trans_transport.label_claim_date_start') }}</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
+                            placeholder="{{ __('trans_transport.label_claim_date_start') }}">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
+                </div>
+                <div class="col-5">
+                    <div class="form-group">
+                        <label for="claim_date_to form-check-label">{{ __('trans_transport.label_claim_date_end') }}</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
+                            placeholder="{{ __('trans_transport.label_claim_date_end') }}">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
+                </div>
+                {{-- <div class="row">
                     <div class="col-5">
                         <div class="form-group">
                             <label for="year form-check-label">{{ __('trans_medical.label_year') }}</label>
@@ -131,14 +157,14 @@
                         </div>
                         <input type="text" class="form-control" id="year_hidden" name="year_hidden" hidden>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="user_id form-check-label">{{ __('trans_medical.label_user_id') }}</label>
+                            <label for="employee_no form-check-label">Employee No</label>
                         </div>
-                        <input type="text" class="form-control" id="user_id" name="user_id">
+                        <input type="text" class="form-control" id="employee_no" name="employee_no">
                     </div>
                 </div>
 
@@ -232,5 +258,116 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
+    
+<script type="text/javascript">
+    $(function () {
+        initDatePicker();
+    });
 
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+    function load_data_medical_history(claim_date_from, claim_date_to,employee_no) {
+            table = $('#medical_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('trans/medical_history/table') }}",
+                    data: {
+                        'startDate': claim_date_from,
+                        'endDate': claim_date_to,
+                        'employeeNo' : employee_no
+                    }
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {data: 'reimbursementEntity.requestDate', name: 'requestDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    },
+                    {data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
+                    {data: 'reimbursementEntity.businessUnit', name: 'businessUnit'},
+                    {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
+                    // {
+                    //     data: 'leaveBalanceBeforeExpiredDate', 
+                    //     name: 'leaveBalanceBeforeExpiredDate',
+                    //     render: function (data, type, row) {
+                    //         return moment(data).format('DD-MMM-YYYY');
+                    //     }
+                    // }
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+
+            $("#btn-search").prop("disabled", true);
+            $("#btn-search").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
+            );
+       
+
+            $("#btn-search").prop("disabled", false);
+            $("#btn-search").html(
+                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+            );
+        }
+
+        $("#trans_medical_form").submit((e)=>{
+            e.preventDefault();
+
+            var claim_date_from = $("#claim_date_from").val();
+            var claim_date_to = $("#claim_date_to").val();
+            var employee_no = $("#employee_no").val();
+
+            // $("#btn-search").prop("disabled", true);
+            // $("#btn-search").html(
+            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            // );
+
+            $('#medical_table').DataTable().destroy();
+            load_data_medical_history(claim_date_from, claim_date_to,employee_no);
+    })
+
+
+</script>
 </html>

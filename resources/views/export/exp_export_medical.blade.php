@@ -151,7 +151,7 @@
                         <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('export_medical.label_reimbursement_type') }}</label>
                         </div>
-                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type"></select>
+                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
@@ -221,6 +221,301 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        initDatePicker();
+    });
+
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+
+loadDataExportReimbrusement();
+loadDataFirstLastAllReimbursement();
+loadDataBusinessUnit();
+loadDataFirstLastAllBusinessUnit();
+// loadDataFirstLastAllReimbursmentType();
+
+    $.get("{{ url('reimbursement_type/func/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+                    "</option>");
+            });
+        });
+
+    $.get("{{ url('level/api') }}", function (data) {      
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
+            });
+        });
+
+        $('#select').focus(function (event) {
+                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+                $searchfield.prop('disabled', true);
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
+
+        
+        function loadDataExportReimbrusement(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#reimbursement_type').select2({
+                width: '100%',
+                placeholder: 'Choose Reimbursement Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/reimbursement_type/func/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllReimbursement () {
+            $('#reimbursement_type').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/reimbursement_type_medical/all/api',
+            }).then(function (data) {
+                if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
+                    $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
+                }
+                $('#reimbursement_type').val(data.comGenCode);
+                $('#reimbursement_type').removeClass('loading');
+            });
+        }
+
+
+        // buat ALL
+        // function loadDataFirstLastAllReimbursement() {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/reimbursement_type/all/api',
+        //     }).then(function (data) {
+        //         if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length)
+        //         $('#reimbursement_type').val(data.value);
+        //     });
+        // }
+
+
+        function loadDataBusinessUnit(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.levelName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#business_unit').select2({
+                width: '100%',
+                placeholder: 'Choose Business Unit',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/level/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term, 'levelType' : '1' 
+
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllBusinessUnit () {
+            $('#business_unit').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/level/func/api',
+            }).then(function (data) {
+                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
+                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $('#business_unit').val(data.levelCode);
+                $('#business_unit').removeClass('loading');
+            });
+        }
+
+        $("#btn-preview").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#export_medical_form").submit();
+        });
+
+        if ($("#export_medical_form").length > 0) {
+            $("#export_medical_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        },
+                        url: "{{ url('export/export_medical/print') }}",
+                        type: "POST",
+                        data: $('#export_medical_form').serialize(),
+                        success: function (result, status, xhr) {
+                            $("#btn-preview").prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                            );
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /"([^"]*)"/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1] :
+                                'audit_trail.xlsx');
+
+                            // The actual download
+                            var blob = new Blob([result], {
+                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            });
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
+
+                            document.body.appendChild(link);
+
+                            link.click();
+                            document.body.removeChild(link);
+                        },
+                        error: function (response) {
+                            $("#btn-preview").prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
+       
+        }
+</script>
+
 
 </html>
