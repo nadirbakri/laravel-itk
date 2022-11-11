@@ -20,15 +20,24 @@
 		<thead>
 			<tr>
 				<th>No</th>
+				<th>Employee Name</th>
+				<th>Request Date</th>
 				<th>Status</th>
-				<th>Nama</th>
-				<th>Employee No</th>
-				<th>receipt Date</th>
-				<th>Type</th>
-                <th>Project Name</th>
+				<th>Ticket Number</th>
+				<th>Claim Type</th>
+                {{-- <th>Receipt Date</th> --}}
+                <th>Company Customer</th>
+                <th>Remarks</th>
                 <th>Start Location</th>
-                <th>Ende Location</th>
-                <th>customer Name</th>
+                <th>End Location</th>
+                {{-- <th>Destination</th> --}}
+                <th>Total Request (Rp)</th>
+                <th>Total per Employee (Rp)</th>
+                <th>No Rekening</th>
+                <th>Total Approve HRD (Rp)</th>
+                <th>Paid Remarks (Rp)</th>
+                <th>Parking</th>
+                <th>Toll</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,16 +45,23 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>{{ $value->transportEntity->status}}</td>
-				<td>{{ $value->transportEntity->userID }}</td>
-				<td>{{ $value->transportEntity->employeeNo }}</td>
+				<td>{{ $value->transportEntity->fullnameRequester}}</td>
 				<td>{{ \Carbon\Carbon::parse($value->transportEntity->receiptDate)->format('Y-m-d') }}</td>
-				<td>{{ $value->transportEntity->businessUnit }}</td>
+				<td>{{ $value->transportEntity->status }}</td>
+				<td>{{ $value->transportEntity->ticketNo }}</td>
 				<td>{{ $value->transportEntity->type }}</td>
-				<td>{{ $value->transportEntity->projectName}}</td>
+				<td>{{ $value->transportEntity->customerName}}</td>
+				<td>{{ $value->transportEntity->remarks}}</td>
 				<td>{{ $value->transportEntity->startLocation}}</td>
 				<td>{{ $value->transportEntity->endLocation}}</td>
-				<td>{{ $value->transportEntity->customerName}}</td>
+				<td>{{ $value->transportEntity->totalAmount}}</td>
+				<td></td>
+				<td></td>
+				<td>{{ $value->transportEntity->paidAmount}}</td>
+				<td>{{ $value->transportEntity->paidRemarks}}</td>
+				<td>{{ $value->transportEntity->amountToll}}</td>
+				<td>{{ $value->transportEntity->amountParkir}}</td>
+				{{-- <td>{{ \Carbon\Carbon::parse($value->transportEntity->receiptDate)->format('Y-m-d') }}</td> --}}
 			</tr>
 			@endforeach
 		</tbody>

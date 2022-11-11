@@ -229,13 +229,15 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Request Date</th>
-                                <th>Ticket Number</th>
-                                <th>Business Unit</th>
                                 <th>Employee Name</th>
+                                <th>Request Date</th>
                                 <th>Status</th>
                                 <th>Claim Type</th>
-                                <th>Receipt Date</th>
+                                <th>Company Customer</th>
+                                <th>Start Location</th>
+                                <th>End Location</th>
+                                {{-- <th>End Location</th> --}}
+                                
                             </tr>
                         </thead>
                         
@@ -654,14 +656,17 @@ loadDataAllTransport();
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
+                    {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
                     {data: 'transportEntity.receiptDate', name: 'receiptDate', 
                             render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
                     },
-                    {data: 'transportEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'transportEntity.projectName', name: 'projectName'},
+                    {data: 'transportEntity.status', name: 'status'},
+                    {data: 'transportEntity.type', name: 'type'},
                     {data: 'transportEntity.customerName', name: 'customerName'},
+                    {data: 'transportEntity.startLocation', name: 'startLocation'},
+                    {data: 'transportEntity.endLocation', name: 'endLocation'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',

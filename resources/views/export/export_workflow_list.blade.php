@@ -42,11 +42,11 @@
 				<td>{{ $value->permitEntity->employeeNo }}</td>
 				<td>{{ $value->permitEntity->fullnameRequester }}</td>
 				<td></td>
-				<td>{{ $value->permitEntity->permitDateTo }}</td>
 				<td>{{ $value->permitEntity->permitDateFrom }}</td>
-				<td>{{ $value->permitEntity->permitHourTo}}</td>
+				<td>{{ $value->permitEntity->permitDateTo }}</td>
 				<td>{{ $value->permitEntity->permitHourFrom}}</td>
-				{{-- <td>{{ $value->permitEntity->businessUnit }}</td> --}}
+				<td>{{ $value->permitEntity->permitHourTo}}</td>
+				<td></td>
 				<td>{{ $value->permitEntity->status}}</td>
 				<td></td>
 				<td></td>

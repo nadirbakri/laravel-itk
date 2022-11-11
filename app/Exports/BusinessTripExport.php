@@ -13,11 +13,11 @@ use App;
 
 class BusinessTripExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimdateFrom, $claimdateTo,$travelAdvances,$businessunit,$dataLevel)
+    public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel)
     {
         $this->claimdateFrom = $claimdateFrom;
         $this->claimdateTo = $claimdateTo;
-        $this->travelAdvances = $travelAdvances;
+        // $this->travelAdvances = $travelAdvances;
         $this->businessUnit = $businessunit;
         $this->dataLevel = $dataLevel;
     }
@@ -32,12 +32,12 @@ class BusinessTripExport implements FromView, ShouldAutoSize
             $param = [ 
                 'startDate' => $this->claimdateFrom,
                 'endDate' => $this->claimdateTo,
+                'type' => 'REQUEST',
+                'exportMenu' => true,
+                'businessUnit' =>$this->businessUnit,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
-                'exportMenu' => true,
-                'type' => 'REQUEST',
-                'businessUnit' =>$this->businessUnit,
                 'sessionUserID' => Session::get('userID')
             ];
 
@@ -70,11 +70,11 @@ class BusinessTripExport implements FromView, ShouldAutoSize
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return view('export.exp_businesstrip_list', [
+            return view('export.exp_businesstriprequest_list', [
                 'data' => []
             ]);
         }else{
-            return view('export.exp_businesstrip_list', [
+            return view('export.exp_businesstriprequest_list', [
                 'data' => $arrResult->dataListSet
             ]);
         }
