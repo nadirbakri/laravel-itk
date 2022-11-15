@@ -661,6 +661,8 @@ class TimeManagementController extends Controller
                     'logActionUsername' => Session::get('userName')
                 ];
             }
+
+            // var_dump(json_encode($param));
             
             $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployeedataentry',
                 ['body' => json_encode($param)]
