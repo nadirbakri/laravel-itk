@@ -29,6 +29,9 @@
                 <th>Overtime Hour From</th>
                 <th>Overtime Hour To</th>
                 <th>Overtime Remarks</th>
+                <th>Project Name</th>
+                <th>Customer Name</th>
+                {{-- <th>Customer Name</th> --}}
                 <th>Status</th>
 			</tr>
 		</thead>
@@ -47,6 +50,8 @@
 				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('Y-m-d')}}</td>
 				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('Y-m-d')}}</td>
 				<td>{{ $value->overtimeEntity->overtimeRemarks}}</td>
+				<td>{{ $value->overtimeEntity->projectName}}</td>
+				<td>{{ $value->overtimeEntity->customerName}}</td>
 				<td>{{ $value->overtimeEntity->status}}</td>
 			</tr>
 			@endforeach

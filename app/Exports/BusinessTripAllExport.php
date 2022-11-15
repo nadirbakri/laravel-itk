@@ -11,7 +11,7 @@ use Validator;
 use Session;
 use App;
 
-class BusinessTripSeattleExport implements FromView, ShouldAutoSize
+class BusinessTripAllExport implements FromView, ShouldAutoSize
 {
     public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel)
     {
@@ -36,7 +36,7 @@ class BusinessTripSeattleExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'exportMenu' => true,
-                'type' => 'SETTLEMENT',
+                'type' => 'ALL',
                 'businessUnit' =>$this->businessUnit,
                 'sessionUserID' => Session::get('userID')
             ];
@@ -70,11 +70,11 @@ class BusinessTripSeattleExport implements FromView, ShouldAutoSize
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return view('export.exp_businesstripsettlement_list', [
+            return view('export.exp_businesstripall_list', [
                 'data' => []
             ]);
         }else{
-            return view('export.exp_businesstripsettlement_list', [
+            return view('export.exp_businesstripall_list', [
                 'data' => $arrResult->dataListSet
             ]);
         }

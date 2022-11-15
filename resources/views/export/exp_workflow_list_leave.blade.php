@@ -20,15 +20,15 @@
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>Nama</th>
 				<th>Employee Number</th>
-				<th>Ticket Number</th>
-				{{-- <th>Business Unit</th> --}}
-				<th>Leave ID</th>
-				<th>Leave Date</th>
-                <th>Leave Duration</th>
+				<th>Employee Name</th>
+				<th>Leave Type</th>
                 <th>Leave Time</th>
-                <th>Status</th>
+                <th>Leave Start</th>
+				<th>Leave End</th>
+				<th>Leave Duration</th>
+				<th>Approve Date</th>
+				<th>Description</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,15 +36,16 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>{{ $value->leaveEntity->leaveName}}</td>
 				<td>{{ $value->leaveEntity->employeeNo }}</td>
-				<td>{{ $value->leaveEntity->ticketNo }}</td>
-				<td>{{ $value->leaveEntity->leaveID }}</td>
+				<td>{{ $value->leaveEntity->fullnameRequester}}</td>
+				<td>{{ $value->leaveEntity->leaveName }}</td>
+				<td>{{ $value->leaveEntity->leaveTime }}</td>
 				{{-- <td>{{\Carbon\Carbon::parse($value->leaveEntity->leaveDate)->format('Y-m-d')}}</td> --}}
-				<td>{{ $value->leaveEntity->leaveDate }}</td>
+				<td>{{ $value->leaveEntity->leaveDateFrom }}</td>
+				<td>{{ $value->leaveEntity->leaveDateTo }}</td>
 				<td>{{ $value->leaveEntity->leaveDuration }}</td>
-				<td>{{ $value->leaveEntity->leaveTime}}</td>
-				<td>{{ $value->leaveEntity->status}}</td>
+				<td></td>
+				<td></td>
 				{{-- <td>{{ $value->leaveEntity->permitHourTo}}</td>
 				<td>{{ $value->leaveEntity->customerName}}</td> --}}
 			</tr>
