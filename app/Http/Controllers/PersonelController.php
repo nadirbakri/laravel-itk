@@ -9783,10 +9783,10 @@ class PersonelController extends Controller
             ]);
 
             $param = [
-                'recordStatus' => 'A',
                 'companyCode' => Session::get('companyCode'),
                 'includeResign' => isset($request->include_resign) ? (bool) $request->include_resign : false,
                 'includeFamily' => isset($request->family) ? (bool) $request->family : false,
+                'includeSkill' => isset($request->skill) ? (bool) $request->skill : false,
                 'includeFormalEducation' => isset($request->formal_education) ? (bool) $request->formal_education : false,
                 'includeOrganization' => isset($request->organization) ? (bool) $request->organization : false,
                 'includeProjectExperience' => isset($request->project_experience) ? (bool) $request->project_experience : false,
@@ -9795,7 +9795,7 @@ class PersonelController extends Controller
                 'includeWorkExperience' => isset($request->work_experience) ? (bool) $request->work_experience : false,
                 'includeAward' => isset($request->award) ? (bool) $request->award : false,
                 'includeSanction' => isset($request->sanction) ? (bool) $request->sanction : false,
-                "languageCode" => App::getLocale(),
+                "languageID" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUsername" => Session::get('userName'),
@@ -9828,11 +9828,14 @@ class PersonelController extends Controller
                 $param['location'] = $data_location;
             }
 
+            // var_dump(json_encode($param));
+
             $response = $client->post(env('API_URL').'/employeecard/getemployeecard', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -9850,7 +9853,7 @@ class PersonelController extends Controller
             $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Employee Card Report.pdf');
         }else{
-            $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => $arrResult->dataListSet[0]])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Employee Card Report.pdf');
         }
     }

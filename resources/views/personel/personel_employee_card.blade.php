@@ -147,6 +147,17 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
+                                    <label for="skill">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="skill"
+                                            name="skill" value="true" disabled>
+                                        <label class="form-check-label"
+                                            for="skill">{{ __('personel_employee_card.label_skill') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
                                     <label for="training_records">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="training_records"
@@ -712,6 +723,7 @@
         $("#include_list").on('change', function () {
             if ($(this).is(':checked')) {
                 $("#family").prop('disabled', false);
+                $("#skill").prop('disabled', false);
                 $("#training_records").prop('disabled', false);
                 $("#formal_education").prop('disabled', false);
                 $("#historical_jobs").prop('disabled', false);
@@ -724,6 +736,7 @@
             }
             else {
                 $("#family").prop('disabled', true);
+                $("#skill").prop('disabled', true);
                 $("#training_records").prop('disabled', true);
                 $("#formal_education").prop('disabled', true);
                 $("#historical_jobs").prop('disabled', true);

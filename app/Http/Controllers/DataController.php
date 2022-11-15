@@ -5538,6 +5538,44 @@ class DataController extends Controller
 		}
 	}
 
+	public function dataCostCenterAllAPI(Request $request)
+    {	
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+	    		['body' => json_encode(
+	    			[
+						'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
+	}
+
 	public function dataCalendarTypeAPI(Request $request)
 	{
 		try {
@@ -5989,6 +6027,88 @@ class DataController extends Controller
 	    }
 
         return response()->json($data);
+	}
+
+	public function dataInsuranceCodeFunction2API(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'InsuranceCode_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
+	}
+
+	public function dataInsuranceClassFunction2API(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'InsuranceClass_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($request->func == 'First'){
+	    	return response()->json($arrResult->dataListSet[0]);
+	    }else if($request->func == 'Last'){
+	    	end($arrResult->dataListSet);
+	    	$key = key($arrResult->dataListSet);
+	    	return response()->json($arrResult->dataListSet[$key]);
+	    }
 	}
 
 	public function dataComGenAPI(Request $request)
@@ -7948,6 +8068,54 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    return response()->json($arrResult->dataListSet);
+	}
+
+	public function dataDependentsAPI(Request $request)
+    {
+		$search = $request->search;
+		
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/pedependents/getpedependents',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'employeeNo' => $request->employeeNo,
+						'flagMedical' => true,
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->dependentName)){
+	    				return preg_match('/' . $search . '/i', $value->dependentName);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($data);
 	}
 
 	public function dataDiseaseCodeAPI(Request $request)

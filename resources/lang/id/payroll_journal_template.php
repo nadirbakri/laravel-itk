@@ -22,6 +22,8 @@ return [
     'label_cost_center' => 'Pusat Biaya',
     'label_cost_center_desc' => 'Deskripsi Pusat Biaya',
     'label_account_desc' => 'Deskripsi Akun',
+    'label_grouping_one' => 'Grouping 1',
+    'label_grouping_two' => 'Grouping 2',
     'btn_save' => 'Simpan',
     'btn_add' => 'Tambah',
     'btn_cancel' => 'Batalkan',

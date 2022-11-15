@@ -287,14 +287,42 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
 
+        let claimDate = $('#claim_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#claim_date_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let receiptDate = $('#receipt_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#receipt_date_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         if (func == 'new') {
             $('#record_function').val("New");
             $('#employee_no').val(null).trigger('change');
             $('#employee_no_det').val("");
-            $('#claim_date').val("");
             $('#seq_no').val("");
             $('#claim_to').val(null).trigger('change');
-            $('#receipt_date').val("");
             $('#claim_for').val(null).trigger('change');
             $('#dependent_name').val(null).trigger('change');
             $('#claim_currency').val(null).trigger('change');
@@ -303,7 +331,7 @@
             $('#disease_code').val(null).trigger('change');
             $('#claim_remarks').val("");
             $('#claim_status').val("N");
-            $('#claim_date').prop('readonly', false);
+            claimDate._input.removeAttribute('readonly');
             $('#seq_no').prop('readonly', false);
             $('#employee_no').attr("disabled", false);
         } else if (func == 'edit') {
@@ -315,12 +343,13 @@
                     'employeeNo' : "{{ isset($data[0]->employeeNo) ? $data[0]->employeeNo : '' }}"
                 }
             }).then(function (data2) {
-                var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .employeeNo).text(data2[0].fullName);
+                var $newOption = $("<option selected='selected'></option>").val(data2
+                    .employeeNo).text(data2.fullName);
                 $("#employee_no").append($newOption).trigger('change');
-                $('#employee_no_det').val(data2[0].employeeNo);
+                $('#employee_no_det').val(data2.employeeNo);
+                loadDataDependentName(data2.employeeNo);
             });
-            $('#claim_date').val("{{ isset($data[0]->claimDate) ? $data[0]->claimDate : '' }}");
+            claimDate.setDate("{{ isset($data[0]->claimDate) ? $data[0]->claimDate : '' }}");
             $('#seq_no').val("{{ isset($data[0]->seqNo) ? $data[0]->seqNo : '' }}");
             $.ajax({
                 type: 'GET',
@@ -333,7 +362,7 @@
                     .comGenCode).text(data2[0].value);
                 $("#claim_to").append($newOption).trigger('change');
             });
-            $('#receipt_date').val("{{ isset($data[0]->receiptDate) ? $data[0]->receiptDate : '' }}");
+            receiptDate.setDate("{{ isset($data[0]->receiptDate) ? $data[0]->receiptDate : '' }}");
             $.ajax({
                 type: 'GET',
                 url: '/claim_for/func/api',
@@ -349,6 +378,7 @@
                 type: 'GET',
                 url: '/dependents/func/api',
                 data: {
+                    'employeeNo' : "{{ isset($data[0]->employeeNo) ? $data[0]->employeeNo : '' }}",
                     'dependentName' : "{{ isset($data[0]->dependentName) ? $data[0]->dependentName : '' }}"
                 }
             }).then(function (data2) {
@@ -387,13 +417,13 @@
                 }
             }).then(function (data2) {
                 var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                    .claimCode).text(data2[0].claimCode);
+                    .diseaseCode).text(data2[0].diseaseCode);
                 $("#disease_code").append($newOption).trigger('change');
             });
             $('#claim_remarks').val("{{ isset($data[0]->claimRemarks) ? $data[0]->claimRemarks : '' }}");
             $('#claim_status').val("{{ isset($data[0]->claimStatus) ? $data[0]->claimStatus : '' }}");
             $('#employee_no').attr("disabled", true); 
-            $('#claim_date').prop('readonly', true);
+            claimDate._input.setAttribute("readonly", "readonly");
             $('#seq_no').prop('readonly', true);
         }
 
@@ -408,10 +438,14 @@
         $('#employee_no').on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_no_det').val(data[0].id);
+            loadDataDependentName(data[0].id);
         });
 
         $('#employee_no').on("select2:unselecting", function (e) {
             $('#employee_no_det').val('');
+            // loadDataDependentName();
+            $("#dependent_name").select2("destroy").select2();
+            // $('#dependent_name').val(null).trigger('change');
         });
 
         $('#claim_for').on("change", function (e) {
@@ -426,7 +460,6 @@
         loadDataEmployeeNo();
         loadDataClaimTo();
         loadDataClaimFor();
-        loadDataDependentName();
         loadDataClaimCurrency();
         loadDataClaimCode();
         loadDataDiseaseCode();
@@ -613,7 +646,7 @@
             });
         }
 
-        function loadDataDependentName() {
+        function loadDataDependentName(empId = null) {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -645,14 +678,15 @@
                     }
                 },
                 ajax: {
-                    url: '/dependents_name/api',
+                    url: '/dependents/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            employeeNo: empId
                         };
                     },
                     processResults: function (data) {

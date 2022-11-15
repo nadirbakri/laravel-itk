@@ -598,6 +598,7 @@ Route::post('payroll/journal_template/proses', 'PayrollController@prosesJournalT
 Route::post('payroll/spt_format/proses', 'PayrollController@prosesSptFormatPY');
 Route::post('payroll/slip_format/custom/proses', 'PayrollController@prosesSlipFormatCustomPY');
 Route::post('payroll/slip_format/allowance/proses', 'PayrollController@prosesSlipFormatAllowancePY');
+Route::post('payroll/slip_format/deduction/proses', 'PayrollController@prosesSlipFormatDeductionPY');
 Route::post('payroll/monthly_closing_process/proses', 'PayrollController@prosesMonthlyClosingProcessPY');
 Route::post('payroll/salary_calculation_process/proses', 'PayrollController@prosesSalaryCalculationProcessPY');
 Route::post('payroll/tax_calculation_process/proses', 'PayrollController@prosesTaxCalculationProcessPY');
@@ -605,6 +606,7 @@ Route::post('payroll/absenteeism_overtime_calculation_process/proses', 'PayrollC
 Route::post('payroll/monthly_system_closing/proses', 'PayrollController@prosesMonthlySystemClosingPY');
 Route::post('payroll/monthly_periodical_update_process/proses', 'PayrollController@prosesMonthlyPeriodicalUpdateProcessPY');
 Route::post('payroll/journal_process/proses', 'PayrollController@prosesJournalProcessPY');
+Route::post('payroll/transfer_data/proses', 'PayrollController@prosesTransferDataPY');
 
 /*Route untuk remove Payroll*/
 Route::get('payroll/thr_bonus_data_entry/remove', 'PayrollController@removeTHRBonusDataEntryPY');
@@ -676,6 +678,7 @@ Route::post('payroll/export_data_kepesertaan_bpjs_tk_report/print/excel', 'Payro
 Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanReportPayrollExcel');
 Route::post('payroll/export_sipp_online_report/print', 'PayrollController@printLoanReportPayroll');
 Route::post('payroll/annual_report/print', 'PayrollController@printAnnualReportPayroll');
+Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPeriodicalReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
@@ -691,6 +694,7 @@ Route::get('medical/input_personnel_limit_all_employee', 'MedicalController@page
 Route::get('medical/treatment_eligibility', 'MedicalController@pageTreatmentEligibility');
 Route::get('medical/claim_list', 'MedicalController@pageClaimList');
 Route::get('medical/claim_transaction', 'MedicalController@pageClaimTransaction');
+Route::get('medical/claim_payment_transaction', 'MedicalController@pageClaimPaymentTransaction');
 Route::get('medical/medical_facility_used_report', 'MedicalController@pageMedicalFacilityUsedReport');
 Route::get('medical/claim_payment_transaction_report_slip', 'MedicalController@pageClaimPaymentTransactionReport');
 Route::get('medical/medical_claim_report', 'MedicalController@pageMedicalClaimReport');
@@ -738,6 +742,13 @@ Route::post('medical/input_personnel_limit_all_employee/proses', 'MedicalControl
 Route::post('medical/treatment_eligibility/proses', 'MedicalController@prosesTreatmentEligibilityMD');
 Route::post('medical/claim_list/proses', 'MedicalController@prosesClaimListMD');
 Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTransactionMD');
+
+Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');
+Route::post('medical/claim_report/print/excel', 'MedicalController@printClaimReportExcel');
+Route::post('medical/remaining_medical_limit_report/print/excel', 'MedicalController@printRemainingMedicalLimitReportExcel');
+Route::post('medical/disease_report/print/excel', 'MedicalController@printDiseaseReportExcel');
+Route::post('medical/claim_payment_transaction_report_slip/print/excel', 'MedicalController@printClaimPaymentTransactionReportSlipExcel');
+Route::post('medical/outstanding_claim_report/print/excel', 'MedicalController@printOutstandingClaimReportExcel');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');
@@ -1000,6 +1011,7 @@ Route::get('bpjs/func/api', 'DataController@dataBPJSFunctionAPI');
 Route::get('bpjs/personal_data/api', 'DataController@dataBPJSPersonalDataAPI');
 Route::get('cost_center/api', 'DataController@dataCostCenterAPI');
 Route::get('cost_center/func/api', 'DataController@dataCostCenterFunctionAPI');
+Route::get('cost_center/all/api', 'DataController@dataCostCenterAllAPI');
 Route::get('field_name/api', 'DataController@dataFieldNameListAPI');
 Route::get('calendar_type/api', 'DataController@dataCompanyWorkingCalendarAPI');
 Route::get('calendar_type/edit/api', 'DataController@dataCalendarTypeAPI');
@@ -1013,6 +1025,8 @@ Route::get('day_code/api', 'DataController@dataDayCodeAPI');
 Route::get('day_code/func/api', 'DataController@dataDayCodeFunctionAPI');
 Route::get('insurance_class/api', 'DataController@dataInsuranceClassAPI');
 Route::get('insurance_code/api', 'DataController@dataInsuranceCodeAPI');
+Route::get('insurance_class/func2/api', 'DataController@dataInsuranceClassFunction2API');
+Route::get('insurance_code/func2/api', 'DataController@dataInsuranceCodeFunction2API');
 Route::get('comgen/api', 'DataController@dataComGenAPI');
 Route::get('shift_master_code/api', 'DataController@dataShiftMasterCodeAPI');
 Route::get('shift_master_code/func/api', 'DataController@dataShiftMasterCodeFunctionAPI');

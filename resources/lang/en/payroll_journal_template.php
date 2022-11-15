@@ -22,6 +22,8 @@ return [
     'label_cost_center' => 'Cost Center',
     'label_cost_center_desc' => 'Cost Center Desc',
     'label_account_desc' => 'Account Desc',
+    'label_grouping_one' => 'Grouping 1',
+    'label_grouping_two' => 'Grouping 2',
     'btn_save' => 'Save',
     'btn_add' => 'Add',
     'btn_cancel' => 'Cancel',

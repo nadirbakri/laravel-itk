@@ -111,6 +111,8 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        // var_dump($arrResult->dataListSet);
+
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_analysis', [
                 'data' => []

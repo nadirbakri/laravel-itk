@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MedicalFacilityUsedReportExport;
+use App\Exports\DiseaseReportExport;
+use App\Exports\MedicalClaimReportExport;
+use App\Exports\RemainingMedicalLimitReportExport;
+use App\Exports\ClaimPaymentTransactionReportSlipExport;
+use App\Exports\OutstandingClaimReportExport;
+
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -120,7 +127,7 @@ class MedicalController extends Controller
 
     public function pageMedicalClaimReport()
     {
-        return view('medical.md_medical_claim_report');
+        return view('medical.md_claim_report');
     }
 
     public function pageRemainingMedicalLimitReport()
@@ -392,10 +399,13 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/claimtransaction/getclaimtransaction',
+            $response = $client->post(env('API_URL') . '/mdclaimtransaction/getclaimtransaction',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
@@ -762,22 +772,21 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // $response = $client->post(env('API_URL') . '/claimtransaction/getclaimtransaction',
-            //     ['body' => json_encode(
-            //         [
-            //             'companyCode' => Session::get('companyCode'),
-            //             'employeeNo' => $request->employeeNo,
-            //             'claimDate' => $request->claimDate,
-            //             'seqNo' => (int) $request->seqNo,
-            //             'userID' => Session::get('userID'),
-            //             'logActionUserID' => Session::get('userID'),
-            //             'logActionUsername' => Session::get('userName')
-            //         ]
-            //     )]
-            // );
+            $response = $client->post(env('API_URL') . '/mdclaimtransaction/getclaimtransaction',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'claimDate' => $request->claimDate,
+                        'seqNo' => (int) $request->seqNo,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -787,14 +796,13 @@ class MedicalController extends Controller
             }
         }
 
-        // $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
         
-        // if($arrResult->dataListSet == null){
-        //     $data = [];
-        // }else{
-        //     $data = $arrResult->dataListSet;
-        // }
-        $data = [];
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
 
         return view('medical.md_claim_transaction_detail', ['data' => $data, 'func' => $request->func]);
     }
@@ -1522,33 +1530,134 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/claimlist/getclaimlist',
+            $claimStatus = [];
+            if($request->check_claim_status_not_processed == "true"){
+                $claimStatus[] = 'N';
+            }
+            if($request->check_claim_status_rejected == "true"){
+                $claimStatus[] = 'R';
+            }
+            if($request->check_claim_status_accepted == "true"){
+                $claimStatus[] = 'A';
+            }
+            if($request->check_claim_status_full_paid == "true"){
+                $claimStatus[] = 'P';
+            }
+
+            $response = $client->post(env('API_URL') . '/mdclaimlist/getclaimlist',
                 ['body' => json_encode(
                     [
-                        'recordStatus' => 'A',
                         'companyCode' => Session::get('companyCode'),
                         'employeeNoFrom' => $request->employee_no_from,
                         'employeeNoTo' => $request->employee_no_to,
                         'claimDateFrom' => $request->claim_date_from,
                         'claimDateTo' => $request->claim_date_to,
-                        'flagClaimStatusNotProcessed' => ($request->check_claim_status_not_processed == "true") ? (bool) $request->check_claim_status_not_processed : false,
-                        'flagClaimStatusRejected' => ($request->check_claim_status_rejected == "true") ? (bool) $request->check_claim_status_rejected : false,
-                        'flagClaimStatusAccepted' => ($request->check_claim_status_accepted == "true") ? (bool) $request->check_claim_status_accepted : false,
-                        'flagClaimStatusFullPaid' => ($request->check_claim_status_full_paid == "true") ? (bool) $request->check_claim_status_full_paid : false,
-                        "changedNo" => 0,
-                        "changedBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        'claimStatus' => $claimStatus,
                         "languageCode" => App::getLocale(),
                         "sessionID" => 0,
-                        "sessionCompanyCode" => Session::get('companyCode'),
-                        "sessionUserID" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
+                        "sessionUserID" => Session::get('userID')
                     ]
                 )]
             );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        return response()->json($arrResult->dataListSet);
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
+    }
+
+    public function prosesClaimTransactionMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/mdclaimtransaction/insertclaimtransaction',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employee_no_det,
+                            'claimDate' => $request->claim_date,
+                            'seqNo' => (int) $request->seq_no,
+                            'receiptDate' => $request->receipt_date,
+                            'claimTo' => $request->claim_to ,
+                            'claimCode' => $request->claim_code,
+                            'claimFor' => $request->claim_for,
+                            'dependentName' => $request->dependent_name,
+                            'claimCurrencyCode' => $request->claim_currency,
+                            'claimAmount' => (int) $request->claim_amount,
+                            'diseaseCode' => $request->disease_code,
+                            'claimRemarks' => $request->claim_remarks,
+                            'claimStatus' => $request->claim_status,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/mdclaimtransaction/updateclaimtransaction',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employee_no_det,
+                            'claimDate' => $request->claim_date,
+                            'seqNo' => (int) $request->seq_no,
+                            'receiptDate' => $request->receipt_date,
+                            'claimTo' => $request->claim_to ,
+                            'claimCode' => $request->claim_code,
+                            'claimFor' => $request->claim_for,
+                            'dependentName' => $request->dependent_name,
+                            'claimCurrencyCode' => $request->claim_currency,
+                            'claimAmount' => (int) $request->claim_amount,
+                            'diseaseCode' => $request->disease_code,
+                            'claimRemarks' => $request->claim_remarks,
+                            'claimStatus' => $request->claim_status,
+                            "changedNo" => 0,
+                            "changedBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "languageCode" => App::getLocale(),
+                            "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ]
+                    )]
+                );
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             var_dump($response);
@@ -1563,7 +1672,171 @@ class MedicalController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function printMedicalFacilityUsedReportExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new MedicalFacilityUsedReportExport(
+            $request->report_type,
+            isset($request->grand_total) ? (bool) $request->grand_total : false, 
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->claim_code_from,
+            $request->claim_code_to,
+            $request->claim_to,
+            $request->period_payment_from,
+            $request->period_payment_to,
+            $request->currency_code_from,
+            $request->currency_code_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Medical Facility Used Report.xlsx'
+        );
+    }
+
+    public function printDiseaseReportExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new DiseaseReportExport(
+            $request->report_type,
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->disease_from,
+            $request->disease_to,
+            $request->period_claim_from,
+            $request->period_claim_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Disease Report.xlsx'
+        );
+    }
+
+    public function printClaimReportExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new MedicalClaimReportExport(
+            isset($request->grand_total) ? (bool) $request->grand_total : false, 
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->claim_code_from,
+            $request->claim_code_to,
+            $request->claim_date_from,
+            $request->claim_date_to,
+            $request->currency_code_from,
+            $request->currency_code_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            isset($request->sort_by_amount) ? (bool) $request->sort_by_amount : false, 
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Medical Claim Report.xlsx'
+        );
+    }
+
+    public function printRemainingMedicalLimitReportExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new RemainingMedicalLimitReportExport(
+            isset($request->grand_total) ? (bool) $request->grand_total : false, 
+            isset($request->include_resign) ? (bool) $request->include_resign : false, 
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->claim_code_from,
+            $request->claim_code_to,
+            $request->currency_code_from,
+            $request->currency_code_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Remaining Medical Limit Report.xlsx'
+        );
+    }
+
+    public function printClaimPaymentTransactionReportSlipExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new ClaimPaymentTransactionReportSlipExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->payment_date_from,
+            $request->payment_date_to,
+            $request->currency_code_from,
+            $request->currency_code_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            $request->report_type,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Claim Payment Transaction Report and Slip.xlsx'
+        );
+    }
+
+    public function printOutstandingClaimReportExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new OutstandingClaimReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            isset($request->grand_total) ? (bool) $request->grand_total : false, 
+            $request->insurance_code_from,
+            $request->insurance_code_to,
+            $request->insurance_class_from,
+            $request->insurance_class_to,
+            $request->claim_code_from,
+            $request->claim_code_to,
+            $request->claim_for,
+            $request->claim_to,
+            $request->currency_code_from,
+            $request->currency_code_to,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Outstanding Claim Report.xlsx'
+        );
     }
 
     public function statusClaimCodeMD(Request $request)

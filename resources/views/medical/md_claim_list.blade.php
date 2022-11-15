@@ -359,6 +359,23 @@
             $('.header-select').remove();
         });
 
+        $('#claim_list_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#claim_list_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_data_table_claim_list() {
             table = $('#claim_list_table').DataTable({
                 processing: true,
@@ -368,6 +385,7 @@
                 scrollY: 400,
                 scrollX: "100%",
                 scrollCollapse: true,
+                order: [[1, 'asc']],
                 aoColumns : [
                     { "sWidth": '30px' },
                     { "sWidth": '110px' },
@@ -539,8 +557,9 @@
                             if(!isEmpty(response)){
                                 $.each(response, function(k, v) {
                                     table.row.add([
+                                        '<input class="chk-select" type="checkbox">',
                                         v.employeeNo,
-                                        v.claimDate,
+                                        moment(v.claimDate).format('YYYY-MM-DD'),
                                         v.seqNo,
                                         v.claimTo,
                                         v.claimCode,
@@ -549,7 +568,7 @@
                                         v.claimCurrency,
                                         v.claimAmount,
                                         v.totalFacilityUsedInClaimCurrency,
-                                        v.totalPaymentAmountInClaimCurrency,
+                                        v.paymentCurrency,
                                         v.totalPaymentAmount,
                                         v.claimStatus
                                     ]).draw();
