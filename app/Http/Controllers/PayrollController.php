@@ -5948,6 +5948,23 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            var_dump(json_encode(
+                [
+                    "companyCode" => Session::get('companyCode'),
+                    "periodProcess" => $request->process_period,
+                    "recalculateTHRTax" => isset($request->recalculate_thr_tax) ? (bool) $request->recalculate_thr_tax : false,
+                    "recalculateBonusTax" => isset($request->recalculate_bonus_tax) ? (bool) $request->recalculate_bonus_tax : false,
+                    "range" => isset($request->range) ? (bool) $request->range : false,
+                    "employeeNoFrom" => $request->employee_no_from,
+                    "employeeNoTo" => $request->employee_no_to,
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userName') 
+                ]
+                ));
+
             $response = $client->post(env('API_URL') . '/prtaxcalculation/prtaxcalculationprocess',
                 ['body' => json_encode(
                     [

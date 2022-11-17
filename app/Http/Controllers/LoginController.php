@@ -38,6 +38,7 @@ class LoginController extends Controller
 	    	);
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
+			var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
