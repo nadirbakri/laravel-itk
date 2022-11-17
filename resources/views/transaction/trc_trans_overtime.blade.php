@@ -215,31 +215,38 @@
                     {{-- <div class="col-3">
                         <button class="btn btn-primary" name="btn-list" id="btn-list" value="preview" style="width: 100%;">
                             <img src="{{ url('icons/mob/button/button-list.svg') }}" alt="export"> {{ __('trans_medical.btn_list') }}
-                        </button>
+                        </button> class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10"
                     </div> --}}
                 </div>
 
                 <!-- TABLE -->
-                <div class="row">
-                    <div class="col-6">
-                        <p>{{ __('trans_overtime.list_table') }}</p>
+                <div class="card">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p>{{ __('trans_overtime.list_table') }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="div-table">
-                    <table id="overtime_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Request Date</th>
-                                <th>ID</th>
-                                <th>Business Unit</th>
-                                <th>Employee Name</th>
-                                <th>Status</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="overtime_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                       <th>Name</th>
+                                       <th>Ticket No</th>
+                                       <th>Employee No</th>
+                                       <th>Project Name</th>
+                                       <th>Overtime Date</th>
+                                       <th>Overtime Hour From</th>
+                                       <th>Overtime Hour To</th>
+                                       <th>Overtime Remarks</th>
+                                       <th>Costumer Name</th>
+                                       <th>Status</th>
+                                </thead>
+                            </table>
+                    </div>
+                    </div>
                 </div>
 
             </div>
@@ -328,7 +335,9 @@
 </body>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('table.display').DataTable({
+            scrollX: true,
+        });
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -369,7 +378,7 @@
 </script>
 
 <script type="text/javascript">
-    function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior) {
+    function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type) {
             table = $('#overtime_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -379,8 +388,9 @@
                     data: {
                         'startDate': claim_date_from,
                         'endDate': claim_date_to,
-                        'directSuperiorID' : direct_superior,
-                        'businessUnit' : business_unit
+                        'employeeNo' : direct_superior,
+                        'businessUnit' : business_unit,
+                        'type': reimbursement_type
 
                     }
                 },
@@ -404,9 +414,19 @@
                     //         return moment(data).format('YYYY-MM-DD');
                     //     }
                     // },
-                    {data: 'overtimeEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'overtimeEntity.businessUnit', name: 'businessUnit'},
                     {data: 'overtimeEntity.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'overtimeEntity.ticketNo', name: 'ticketNo'},
+                    {data: 'overtimeEntity.projectName', name: 'projectName'},
+                    {data: 'overtimeEntity.overtimeDate', name: 'overtimeDate', 
+                            render: function (data, type, row){
+                            return moment(data).format('YYYY-MM-DD');
+                            }
+                    },
+                    {data: 'overtimeEntity.overtimeHourFrom', name: 'overtimeHourFrom'},
+                    {data: 'overtimeEntity.overtimeHourTo', name: 'overtimeHourTo'},
+                    {data: 'overtimeEntity.overtimeRemarks', name: 'overtimeRemarks'},
+                    {data: 'overtimeEntity.customerName', name: 'customerName'},
+                    {data: 'overtimeEntity.status', name: 'status'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
@@ -441,14 +461,15 @@
             var claim_date_to = $("#claim_date_to").val();
             var direct_superior = $("#direct_superior").val();
             var business_unit = $("#business_unit").val();
-
+            var reimbursement_type = $("#reimbursement_type").val();
+           
             // $("#btn-search").prop("disabled", true);
             // $("#btn-search").html(
             //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             // );
 
             $('#overtime_table').DataTable().destroy();
-            load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior);
+            load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type);
     })
 
     $('#btn-list').click(()=> {

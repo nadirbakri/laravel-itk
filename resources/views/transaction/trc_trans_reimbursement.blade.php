@@ -24,11 +24,15 @@
         <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-        <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <link  rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js">
+        {{-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
+        {{-- <link  rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"> --}}
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
        <style type="text/css">
@@ -211,30 +215,41 @@
                 </div>
 
                 <!-- TABLE -->
-                <div class="row">
-                    <div class="col-6">
-                        <p>{{ __('trans_medical.list_table') }}</p>
-                    </div>
-                </div>
-                <div class="div-table">
-                    <table id="reimbursement_table" class="table hover">
+
+            </form>
+        </div>
+        <br>
+        <div class="card">
+            <div class="row">
+                    <p><b>{{ __('trans_medical.list_table') }}</b></p>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="reimbursement_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Request Date</th>
-                                <th>Ticket Number</th>
-                                <th>Business Unit</th>
-                                <th>Employee Name</th>
-                                <th>Status</th>
                                 <th>Receipt Date</th>
-                                <th>Total Request</th>
+                                <th>Status</th>
+                                <th>Ticket Number</th>
+                                <th>Name</th>
+                                <th>Customer Name</th>
+                                <th>Project Name</th>
+                                <th>Paid Amount</th>
+                                <th>Payment Date</th>
+                                <th>Total Paid</th>
+                                <th>Paid Remarks</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
-
             </div>
-        </form>
+        </div>
+
+
+
+    
+
     </div>
 
     <div class="div-form">
@@ -320,7 +335,7 @@
 </body>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('table.display').DataTable();
     });
 </script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -406,14 +421,20 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'reimbursementEntity.requestDate', name: 'requestDate', 
+                    {data: 'reimbursementEntity.receiptDate', name: 'receiptDate', 
                             render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
+                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementStatus'},
                     {data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'reimbursementEntity.businessUnit', name: 'businessUnit'},
                     {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'reimbursementEntity.customerName', name: 'customerName'},
+                    {data: 'reimbursementEntity.projectName', name: 'projectName'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
+                    {data: 'reimbursementEntity.paymentDate', name: 'paymentDate'},
+                    {data: 'reimbursementEntity.totalPaidMonth', name: 'totalPaidMonth'},
+                    {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',

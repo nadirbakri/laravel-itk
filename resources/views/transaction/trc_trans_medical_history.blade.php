@@ -28,10 +28,10 @@
         <link  rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js">
         <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-       <style type="text/css">
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <style type="text/css">
         .div-trans-medical {
             max-width: 100%;
             margin: auto;
@@ -209,29 +209,37 @@
                         </button>
                     </div> --}}
                 </div>
-
+<br>
                 <!-- TABLE -->
+
+                <div class="card">
+                   
                 <div class="row">
                     <div class="col-6">
-                        <p>{{ __('trans_medical.list_table') }}</p>
+                        <p><b>{{ __('trans_medical.list_table') }}</b></p>
                     </div>
                 </div>
-                <div class="div-table">
-                    <table id="medical_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Request Date</th>
-                                <th>Ticket Number</th>
-                                <th>Business Unit</th>
-                                <th>Employee Name</th>
-                                <th>Status</th>
-                                <th>Receipt Date</th>
-                                <th>Total Request</th>
-                            </tr>
-                        </thead>
-                    </table>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Receipt Date</th>
+                                    <th>Status</th>
+                                    <th>Ticket Number</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Reimbursement Remarks</th>
+                                    <th>Total Paid Month</th>
+                                    {{-- <th>Remarks</th> --}}
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
+                </div>
+                
 
             </div>
         </form>
@@ -320,7 +328,9 @@
 </body>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('table.display').DataTable({
+            scrollX: true,
+        });
     });
 </script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -385,7 +395,7 @@
                     data: {
                         'startDate': claim_date_from,
                         'endDate': claim_date_to,
-                        'directSuperiorID' : direct_superior,
+                        'employeeNo' : direct_superior,
                         'medicalType1' : reimbursement_type,
                         'businessUnit' : business_unit
 
@@ -406,14 +416,18 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'reimbursementEntity.requestDate', name: 'requestDate', 
+                    {data: 'reimbursementEntity.receiptDate', name: 'receiptDate', 
                             render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
+                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementStatus'},
                     {data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'reimbursementEntity.businessUnit', name: 'businessUnit'},
                     {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'reimbursementEntity.medicalType1', name: 'medicalType1'},
+                    {data: 'reimbursementEntity.reimbursementRemarks', name: 'reimbursementRemarks'},
+                    {data: 'reimbursementEntity.totalPaidMonth', name: 'totalPaidMonth'},
+                    // {data: 'reimbursementEntity.approvalRemarks ', name: 'approvalRemarks    '},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
