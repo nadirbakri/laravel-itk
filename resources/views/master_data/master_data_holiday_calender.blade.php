@@ -14,6 +14,8 @@
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
     <link rel="stylesheet" href="{{ asset('css/data_employee_grou.css') }}"> 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
@@ -150,9 +152,14 @@
                             <label for="reimbursement_type form-check-label"><b>{{ __('holiday_calender.dateholiday') }}</b></label>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="col-4">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >                        </div>
+                            <input type="text" class="form-control" id="date-holiday" name="date-holiday" placeholder="date-holiday">
+                            {{-- <div class="input-group-prepend">
+                                <span class="input-group-text" id="date-calendar"><span class="fa fa-calendar"></span></span>
+                            </div> --}}
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -161,26 +168,69 @@
                             <label for="reimbursement_type form-check-label"><b>{{ __('holiday_calender.description') }}</b></label>
                         </div>
                     </div>
-                    <div class="">
-                        <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >                        
+                    <div class="col-4">
+                        <div class="">
+                            <div class="form-group">
+                            <input type="text" class="form-control" id="description" name="description" >                        
+                        </div>
+                        </div>
                     </div>
-                    </div>
+                   
                 </div>
               
-
+<br>
                 <!-- BUTOON -->
                 <div class="row">
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('holiday_calender.button') }}
-                    </button>     
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('holiday_calender.button1') }}
-                    </button>     
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('holiday_calender.button2') }}
-                    </button>     
+                    <div class="col">
+                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
+                        {{ __('holiday_calender.button') }}
+                        </button>     
+                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
+                        {{ __('holiday_calender.button1') }}
+                        </button>     
+                        <button class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_email_settings" type="button">
+                        {{ __('holiday_calender.button2') }}
+                        </button>     
+                    </div>
                 </div>  
+            </div>
+        </form>
+    </div>
+
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_email_settings">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">Holiday Calendar</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="example" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Holiday Date</th>
+                                    <th>Description</th>
+                                    {{-- <th>Group Name</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
             </div>
         </form>
     </div>
@@ -220,7 +270,11 @@
         </div>
     </div>
 </body>
-
+<script>
+    $(document).ready(function () {
+       $('table.display').DataTable();
+   });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -234,4 +288,75 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script type="text/javascript">
+    $(function () {
+        initDatePicker();
+    });
+
+    function initDatePicker() {
+        $('.input-group input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+</script>
+<script>
+      $('#btn-list').click(()=> {
+        $('#example').DataTable().destroy();
+        table2 = $('#example').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('master_data/holiday_calendar/table') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'date', name: 'date'},
+                {data: 'reason', name: 'reason'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
+
+    const klik = (element) => {
+        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        let fullname = $(element).parent().siblings('td').eq(1).text()
+
+        $('#date-holiday').val(employee_id)
+        $('#description').val(fullname)
+
+        $('.close').click();
+        // let division = $(element).parent().siblings('td').eq(2).text()
+        // let rankingname = $(element).parent().siblings('td').eq(3).text()
+        // alert(data1)
+    }
+</script>
 </html>

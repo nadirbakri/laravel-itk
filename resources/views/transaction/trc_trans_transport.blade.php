@@ -237,7 +237,7 @@
                                         <th>Ticket Number</th>
                                         <th>Name</th>
                                         <th>Type</th>
-                                        <th>Company Customer</th>
+                                        {{-- <th>Company Customer</th> --}}
                                         <th>Customer Name</th>
                                         <th>Start Location</th>
                                         <th>End Location</th>
@@ -674,7 +674,7 @@ loadDataAllTransport();
                     {data: 'transportEntity.ticketNo', name: 'ticketNo'},
                     {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
                     {data: 'transportEntity.type', name: 'type'},
-                    {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
+                    // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
                     {data: 'transportEntity.customerName', name: 'customerName'},
                     {data: 'transportEntity.startLocation', name: 'startLocation'},
                     {data: 'transportEntity.endLocation', name: 'endLocation'},

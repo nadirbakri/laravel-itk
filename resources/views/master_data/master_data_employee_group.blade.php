@@ -114,7 +114,7 @@
             margin-top:15px
        }
        .judul h1{
-        font-size: 35px;
+        font-size: 25px;
         margin-left: 4%;
         margin-right: 2%;
         margin-top:50px
@@ -136,7 +136,12 @@
 <body>
     <div class="div-form">
         <div class="judul">
-            <h1>{{ __('data_employee_group.judul') }}</h1>
+            <h1>
+                <a href="{{ url('master_data') }}" target="iframe_dashboard">
+                    <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                    <span class="title-text">{{ __('data_employee_group.judul') }}</span>
+                </a>
+            </h1>
             <hr>
         </div>
         <form id="trans_mass-leave_form" method="post">
@@ -177,6 +182,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-10">
                     <table id="mass_leave_table" class="table table-bordered">
@@ -187,11 +193,17 @@
                                 <th>Approval Code</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <tr>
+                                <td id="ceklis" name="ceklis"></td>
+                                <td id="group_code1" name="group_code1"></td>
+                                <td id="group_code2" name="group_code2"></td>
+                            </tr>
+                        </tbody>
                     </table>
 
-                    <button class="buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_mass_leavee" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+                    <button class="btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_mass_leavee" type="button">
+                        <i class="fa fa-plus"></i>
                     </button>
                     <button  class="buttonadd btn-danger">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -203,18 +215,21 @@
 
                 <!-- BUTOON -->
                 <div class="row">
+                    
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
                         <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
                         </button>
                     </div>   
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                                    Cancel
-                    </button>     
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                                    List
-                    </button>     
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
+                        Save
+                        </button>
+                    </div>         
                 </div>  
             </div>
         </form>
@@ -274,12 +289,13 @@
                             </button>
                         </div>
                     <div class="modal-body table-responsive">
-                        <table id="example" class="display">
+                        <table id="exampletwo" class="display">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Group Code</th>
-                                    <th>Group Name</th>
+                                    <th>Approval Level</th>
+                                    <th>Approval Code</th>
+                                    {{-- <th>Group Name</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -392,6 +408,128 @@
             
         });        
     })
+
+    const klik = (element) => {
+        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        let fullname = $(element).parent().siblings('td').eq(1).text()
+        $('#group_code').val(employee_id)
+        $('#group_name').val(fullname)
+
+        $('.close').click();
+        console.log(table2.row($(element).parent()).data());
+        // let division = $(element).parent().siblings('td').eq(2).text()
+        // let rankingname = $(element).parent().siblings('td').eq(3).text()
+        // alert(data1)
+    }
+    
+
+    // let data = ['recordStatus'];
+    // const klik = () => {
+
+    // .api=> 
+
+
+
+    // data = 
+
+    // }
+
+    $('#btn-add').click(()=> {
+        $('#exampletwo').DataTable().destroy();
+        table2 = $('#exampletwo').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('master_data/direct_approval/table') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klikk(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'lineApproval', name: 'lineApproval'},
+                {data: 'groupCode', name: 'groupCode'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
+    const klikk = (element) => {
+
+        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        let fullname = $(element).parent().siblings('td').eq(1).text()
+        $('#group_code1').text(employee_id)
+        $('#group_code2').text(fullname)
+
+        $('.close').click();
+        // let division = $(element).parent().siblings('td').eq(2).text()
+        // let rankingname = $(element).parent().siblings('td').eq(3).text()
+        // alert(data1)
+    }
+    
+    // const klik = (element) => {
+    //     let employee_id = $(element).parent().siblings('.sorting_1').text()
+
+    //     $('#direct_superior').val(employee_id)
+
+    //     $('.close').click();
+    //     // let fullname = $(element).parent().siblings('td').eq(1).text()
+    //     // let division = $(element).parent().siblings('td').eq(2).text()
+    //     // let rankingname = $(element).parent().siblings('td').eq(3).text()
+    //     // alert(data1)
+    // }
+
+    
+</script>
+{{-- <script>
+   $('#btn-add').click(()=> {
+        $('#exampletwo').DataTable().destroy();
+        table2 = $('#exampletwo').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('master_data/listadd/table') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'groupCode', name: 'groupCode'},
+                {data: 'groupName', name: 'groupName'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
     
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
@@ -417,5 +555,8 @@
     //     // let rankingname = $(element).parent().siblings('td').eq(3).text()
     //     // alert(data1)
     // }
-</script>
+
+    
+</script> --}}
+
 </html>
