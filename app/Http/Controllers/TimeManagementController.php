@@ -683,6 +683,44 @@ class TimeManagementController extends Controller
         return response()->json($arrResult->dataListSet);
     }
 
+    public function tableAbsenteeismDataEntryByDateTM(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [ 
+                'companyCode' => Session::get('companyCode'),
+                'absenDateFrom' => $request->absenteeismDate,
+                'absenDateTo' => $request->absenteeismDate,
+                'userID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
+            ];
+
+            // var_dump(json_encode($param));
+            
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployeedataentry',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
+    }
+
     public function dataDetailRankingPersonel(Request $request)
     {
         try {
@@ -738,6 +776,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2203,6 +2242,95 @@ class TimeManagementController extends Controller
                         'logActionUsername' => Session::get('userName'),
                     ]
                 )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesAbsenteeismDataEntryByEmployeeNoTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // $values = array();
+            // parse_str($request->data[0], $values);
+
+            // $data = urldecode();
+
+            // var_dump($values);
+            
+            foreach($request->absent_date as $key => $value){
+                // $key = 0;
+                // var_dump($key);
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => isset($request->employee_no_table[$key]) ? $request->employee_no_table[$key] : null,
+                    'absentDate' => isset($request->absent_date[$key]) ? $request->absent_date[$key] : null,
+                    'seqNo' => isset($request->seq_no[$key]) ? (int) $request->seq_no[$key] : null,
+                    'day' => isset($request->day[$key]) ? $request->day[$key] : null,
+                    'shiftCode' => isset($request->shift_code[$key]) ? $request->shift_code[$key] : null,
+                    'actualDateIn' => isset($request->actual_date_in[$key]) ? $request->actual_date_in[$key] : null,
+                    'actualDateOut' => isset($request->actual_date_out[$key]) ? $request->actual_date_out[$key] : null,
+                    'totalActualHour' => isset($request->total_actual_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_actual_hour[$key] : null,
+                    'absentCode' => isset($request->finger_absent_code[$key]) ? $request->finger_absent_code[$key] : null,
+                    'hourAbsent' => isset($request->finger_absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->finger_absent_hour[$key] : null,
+                    'descriptionAbsent' => isset($request->finger_absent_description[$key]) ? $request->finger_absent_description[$key] : null,
+                    'absentCode2' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
+                    'hourAbsent2' => isset($request->absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->absent_hour[$key] : null,
+                    'descriptionAbsent2' => isset($request->absent_hour[$key]) ? $request->absent_hour[$key] : null,
+                    'absentCode3' => null,
+                    'hourAbsent3' => null,
+                    'descriptionAbsent3' => null,
+                    'ovtCode' => isset($request->overtime_code[$key]) ? $request->overtime_code[$key] : null,
+                    'ovtBeforeIn' => isset($request->overtime_before[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_before[$key] : null,
+                    'ovtIn' => isset($request->employee_noovertime_start_table[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_start[$key] : null,
+                    'ovtOut' => isset($request->overtime_finish[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_finish[$key] : null,
+                    'hourOvt' => isset($request->overtime_hour[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_hour[$key] : null,
+                    'buildInOvt' => isset($request->overtime_bot[$key]) ? $request->overtime_bot[$key] : null,
+                    'hourOvtCvt' => isset($request->overtime_convert[$key]) ? (int) $request->overtime_convert[$key] : null,
+                    'descriptionOvt' => isset($request->overtime_description[$key]) ? $request->overtime_description[$key] : null,
+                    'normalDateIn' => isset($request->normal_hour_in[$key]) ? $request->absent_date[$key] . "T" . $request->normal_hour_in[$key] : null,
+                    'normalDateOut' => isset($request->normal_hour_out[$key]) ? $request->absent_date[$key] . "T" . $request->normal_hour_out[$key] : null,
+                    'totalNormalHour' => isset($request->total_normal_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_normal_hour[$key] : null,
+                    'ovtBefore' => isset($request->normal_overtime_before[$key]) ? $request->absent_date[$key] . "T" . $request->normal_overtime_before[$key] : null,
+                    'ovtAfter' => isset($request->normal_overtime_after[$key]) ? $request->absent_date[$key] . "T" . $request->normal_overtime_after[$key] : null,
+                    'costCenterCode' => isset($request->cost_center_code[$key]) ? $request->cost_center_code[$key] : null,
+                    'locationCode' => isset($request->location[$key]) ? $request->location[$key] : null,
+                    'positionCode' => isset($request->position[$key]) ? $request->position[$key] : null,
+                    'gradeCode' => isset($request->grade[$key]) ? $request->grade[$key] : null,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),  
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }
+
+            var_dump(json_encode($param));
+
+            $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();

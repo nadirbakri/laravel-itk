@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Laporan Tahunan',
     'list' => 'Laporan Tahunan',
+    'label_year' => 'Tahun',
     'label_report_name' => 'Nama Laporan',
     'label_report_status' => 'Status Laporan',
     'label_report_type' => 'Tipe Laporan',

@@ -88,10 +88,6 @@
             text-align: center;
             vertical-align: middle;
         }
-
-        thead tr th {
-            width: 100%;
-        }
     </style>
 </head>
 
@@ -138,12 +134,12 @@
             </div>
         </div>
         <form id="absenteeism_data_entry_by_date_table_form" method="post">
-            <div class="div-table">
+            <div class="div-table" width="100%">
                 <table id="absenteeism_data_entry_by_date_table" class="table hover">
                     <thead>
                         <tr>
                             <th colspan="2" class="middle">Employee Data</th>
-                            <th rowspan="2" class="middle" style="width: 50%">Absent Date</th>
+                            <th rowspan="2" class="middle">Absent Date</th>
                             <th rowspan="2" class="middle">Period</th>
                             <th rowspan="2" class="middle">Day</th>
                             <th rowspan="2" class="middle">Shift Code</th>
@@ -162,30 +158,30 @@
                             <th rowspan="2" class="middle">Grade</th>
                         </tr>
                         <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Code</th>
-                            <th>Hour</th>
-                            <th>Description</th>
-                            <th>Code</th>
-                            <th>Hour</th>
-                            <th>Description</th>
-                            <th>Code</th>
-                            <th>Before</th>
-                            <th>Start</th>
-                            <th>Finish</th>
-                            <th>Hour</th>
-                            <th>Convert</th>
-                            <th>BOT</th>
-                            <th>Description</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Before</th>
-                            <th>After</th>
+                            <th class="middle">No</th>
+                            <th class="middle">Name</th>
+                            <th class="middle">Date</th>
+                            <th class="middle">Time</th>
+                            <th class="middle">Date</th>
+                            <th class="middle">Time</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Before</th>
+                            <th class="middle">Start</th>
+                            <th class="middle">Finish</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Convert</th>
+                            <th class="middle">BOT</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">In</th>
+                            <th class="middle">Out</th>
+                            <th class="middle">Before</th>
+                            <th class="middle">After</th>
                         </tr>
                     </thead>
                 </table>
@@ -278,16 +274,13 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         function initDatePicker(field='') {
-            $(field).flatpickr({
-                // altInput: true,
-                // clickOpens: false,
+            return flatpickr(field, {
                 allowInput: true,
                 altFormat: "j-M-y",
                 dateFormat: "Y-m-d",
                 defaultDate: "today",
                 onReady: function () {
                     var flatPickrInstance = this;
-                    // console.log(flatPickrInstance);
                     var $flatPickrInput = $(flatPickrInstance.element);
                     $flatPickrInput.siblings(".date").click(function () {
                         flatPickrInstance.toggle();
@@ -297,17 +290,14 @@
         }
 
         function initTimePicker(field='') {
-            $(field).flatpickr({
+            return flatpickr(field, {
                 enableTime: true,
                 noCalendar: true,
-                // altInput: true,
-                // clickOpens: false,
-                // static: true,
                 allowInput: true,
                 time_24hr: true,
                 defaultDate: "today",
                 altFormat: "H:i",
-                dateFormat: "H:i:ss"
+                dateFormat: "H:i"
             });
         }
 
@@ -315,13 +305,29 @@
     	    return $("<textarea/>").html(value).text();
 	    }
 
+        function isEmpty(obj) {
+            for(var prop in obj) {
+                if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+                    return false;
+                }
+            }
+
+            return JSON.stringify(obj) === JSON.stringify({});
+        }
+
         initDatePicker('#absenteeism_date');
 
         load_data_table_absenteeism_data_entry_by_date();
 
-        $('#employee_no').on("select2:select", function (e) {
+        load_data();
+
+        $('#absenteeism_date').on("change", function (e) {
+            load_data();
+        });
+
+        function load_data(){
             var data = $('#absenteeism_date').val();
-            console.log(data);
+            // console.log(data);
 
             table.clear().draw();
 
@@ -329,12 +335,15 @@
                 url: "{{ url('time_management/absenteeism_data_entry_by_date/table') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': data[0].id
+                    'absenteeismDate': data
                 },
                 success: function (response) {
+                    // console.log(response);
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {    
                             table.row.add([
+                                '<input type="text" class="form-control employee_no" name="employee_no[]" id="employee_no" value="'+ ((typeof v.employeeNo !== 'undefined' && v.employeeNo !== null) ? v.employeeNo : '') +'" readonly>',
+                                '<input type="text" class="form-control employee_name" name="employee_name[]" id="employee_name" value="'+ ((typeof v.fullName !== 'undefined' && v.fullName !== null) ? v.fullName : '') +'" readonly>',
                                 '<input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
                                 '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
                                 '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" disabled></select>',
@@ -382,7 +391,7 @@
 
                         table.draw();
                         // table.columns.adjust().responsive.recalc();
-                        // table.columns.adjust().draw();
+                        table.columns.adjust().draw();
 
                         loadDataDay(".select_day");
                         loadDataShiftCode(".select_shift_code");
@@ -431,8 +440,42 @@
 
                         $.each(response, function(k, v) {
                             // console.log($('#day' + (k+1)).find("option[value='" + v.day + "']").length);
-                            // var newOption = new Option("Normal", v.day, true, true);
-                            // $('#day' + (k+1)).append(newOption).trigger('change');
+                            if(v.day != null && v.dayName != null){
+                                var newOptionDay = new Option(v.dayName, v.day, true, true);
+                                $('#day' + (k+1)).append(newOptionDay).trigger('change');
+                            }
+                            if(v.shiftCode != null && v.shiftName != null){
+                                var newOptionShift = new Option(v.shiftName, v.shiftCode, true, true);
+                                $('#shift_code' + (k+1)).append(newOptionShift).trigger('change');
+                            }
+                            if(v.costCenterCode != null && v.costCenterDescription != null){
+                                var newOptionCostCenter = new Option(v.costCenterDescription, v.costCenterCode, true, true);
+                                $('#cost_center_code' + (k+1)).append(newOptionCostCenter).trigger('change');
+                            }
+                            if(v.ovtCode != null && v.ovtDescription != null){
+                                var newOptionOvertime = new Option(v.ovtDescription, v.ovtCode, true, true);
+                                $('#overtime_code' + (k+1)).append(newOptionOvertime).trigger('change');
+                            }
+                            if(v.absentCode != null && v.absentCodeDescription != null){
+                                var newOptionFinger = new Option(v.absentCodeDescription, v.absentCode, true, true);
+                                $('#finger_absent_code' + (k+1)).append(newOptionFinger).trigger('change');
+                            }
+                            if(v.absentCode2 != null && v.absentCode2Description != null){
+                                var newOptionAbsent = new Option(v.absentCode2Description, v.absentCode2, true, true);
+                                $('#absent_code' + (k+1)).append(newOptionAbsent).trigger('change');
+                            }
+                            if(v.positionCode != null && v.positionName != null){
+                                var newOptionPosition = new Option(v.positionName, v.positionCode, true, true);
+                                $('#position' + (k+1)).append(newOptionPosition).trigger('change');
+                            }
+                            if(v.locationCode != null && v.locationName != null){
+                                var newOptionLocation = new Option(v.locationName, v.locationCode, true, true);
+                                $('#location' + (k+1)).append(newOptionLocation).trigger('change');
+                            }
+                            if(v.gradeCode != null && v.gradeName != null){
+                                var newOptionGrade = new Option(v.gradeName, v.gradeCode, true, true);
+                                $('#grade' + (k+1)).append(newOptionGrade).trigger('change');
+                            }
                             // loadDataDetailDayCode('#day' + (k+1), ((typeof v.day !== 'undefined' && v.day !== null) ? v.day : ''));
                             // loadDataDetailShiftCode('#shift_code' + (k+1), ((typeof v.shiftCode !== 'undefined' && v.shiftCode !== null) ? v.shiftCode : ''));
                             // loadDataDetailCostCenterCode('#cost_center_code' + (k+1), ((typeof v.costCenterCode !== 'undefined' && v.costCenterCode !== null) ? v.costCenterCode : ''));
@@ -464,6 +507,35 @@
                     }
                 }
             })
+        }
+
+        $('#btn-edit').on('click', function () {
+            $('.select_day').prop('disabled', false);
+            $('.select_shift_code').prop('disabled', false);
+            $('.select_cost_center_code').prop('disabled', false);
+            $('.actual_date_in').prop('disabled', false);
+            $('.actual_time_in').prop('disabled', false);
+            $('.actual_date_out').prop('disabled', false);
+            $('.actual_time_out').prop('disabled', false);
+            $('.total_actual_hour').prop('readonly', false);
+            $('.select_finger_absent_code').prop('disabled', false);
+            $('.finger_absent_hour').prop('readonly', false);
+            $('.finger_absent_description').prop('readonly', false);
+            $('.select_absent_code').prop('disabled', false);
+            $('.absent_hour').prop('readonly', false);
+            $('.absent_description').prop('readonly', false);
+            $('.select_overtime_code').prop('disabled', false);
+            $('.overtime_before').prop('readonly', false);
+            $('.overtime_start').prop('readonly', false);
+            $('.overtime_finish').prop('readonly', false);
+            $('.overtime_hour').prop('readonly', false);
+            $('.overtime_convert').prop('readonly', false);
+            $('.overtime_bot').prop('readonly', false);
+            $('.overtime_description').prop('readonly', false);
+            $('.select_position').prop('disabled', false);
+            $('.select_location').prop('disabled', false);
+            $('.select_grade').prop('disabled', false);
+            $('#btn-save').prop('disabled', false);
         });
 
         function load_data_table_absenteeism_data_entry_by_date(filter_employee_no_table = '') {
@@ -476,6 +548,8 @@
                 scrollX: 400,
                 scrollCollapse: true,
                 aoColumns : [
+                    { "sWidth": '110px' },
+                    { "sWidth": '110px' },
                     { "sWidth": '110px' },
                     { "sWidth": '50px' },
                     { "sWidth": '100px' },
@@ -512,66 +586,6 @@
                 drawCallback: function(settings){
                     // loadDataDay(".select_day");
                 },
-            });
-        }
-
-        function loadDataEmployeeNo() {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#employee_no').select2({
-                width: '100%',
-                placeholder: 'Choose Employee',
-                allowClear: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: '/employee_no/api',
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.employeeNo,
-                                    id: item.employeeNo,
-                                    title: item.fullName,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
             });
         }
 
@@ -692,6 +706,63 @@
                     $(field).append($('<option>').val(data[0].absentCode).text(data[0].description));
                 }
                 $(field).val(data[0].absentCode);
+                $(field).removeClass('loading');
+            });
+        }
+
+        function loadDataDetailPosition(field = '', positionCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/position/detail/api',
+                data: {
+                    positionCode : positionCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].positionName + ')').length && positionCode !== '') {
+                    $(field).append($('<option>').val(data[0].positionCode).text(data[0].positionName));
+                }
+                $(field).val(data[0].positionCode);
+                $(field).removeClass('loading');
+            });
+        }
+
+        function loadDataDetailLocation(field = '', locationCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/location/detail/api',
+                data: {
+                    locationCode : locationCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].locationName + ')').length && locationCode !== '') {
+                    $(field).append($('<option>').val(data[0].locationCode).text(data[0].locationName));
+                }
+                $(field).val(data[0].locationCode);
+                $(field).removeClass('loading');
+            });
+        }
+
+        function loadDataDetailGrade(field = '', gradeCode = '') {
+            $(field).addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/grade/detail/api',
+                data: {
+                    gradeCode : gradeCode
+                }
+            }).then(function (data) {
+                // console.log(data);
+                if (!$(field).find('option:contains(' + data[0].gradeName + ')').length && gradeCode !== '') {
+                    $(field).append($('<option>').val(data[0].gradeCode).text(data[0].gradeName));
+                }
+                $(field).val(data[0].gradeCode);
                 $(field).removeClass('loading');
             });
         }
@@ -909,7 +980,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Cost Center Code',
+                placeholder: 'Choose Absent Code',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -974,7 +1045,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Cost Center Code',
+                placeholder: 'Choose Overtime Code',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1004,6 +1075,201 @@
                                 return {
                                     text: item.description,
                                     id: item.absentCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataPosition(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.positionCode + '</div>' +
+                        '<div class="col-6">' + data.data.positionName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Position Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/position/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.positionName,
+                                    id: item.positionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLocation(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.locationCode + '</div>' +
+                        '<div class="col-6">' + data.data.locationName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Location Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/location/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.locationName,
+                                    id: item.locationCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGrade(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Grade Code</b></div>' +
+                        '<div class="col-6"><b>Grade Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.gradeCode + '</div>' +
+                        '<div class="col-6">' + data.data.gradeName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Grade Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/grade/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.gradeName,
+                                    id: item.gradeCode,
                                     data: item
                                 }
                             })

@@ -11,24 +11,18 @@ use Validator;
 use Session;
 use App;
 
-class PeriodicalReportExport implements FromView, ShouldAutoSize
+class AnnualReportExcel implements FromView, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel)
+    public function __construct($year, $reportName, $reportStatus, $reportType, $employeeNoFrom, $employeeNoTo, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $position, $ranking, $location, $dataLevel)
     {
+        $this->year = $year;
         $this->reportName = $reportName;
-        $this->grandTotal = $grandTotal;
-        $this->employeeNoFrom = $employeeNoFrom;
-        $this->employeeNoTo = $employeeNoTo;
-        $this->period = $period;
-        $this->costCenterCodeFrom = $costCenterCodeFrom;
-        $this->costCenterCodeTo = $costCenterCodeTo;
-        $this->multiCostCenter = $multiCostCenter;
         $this->reportStatus = $reportStatus;
         $this->reportType = $reportType;
+        $this->employeeNoFrom = $employeeNoFrom;
+        $this->employeeNoTo = $employeeNoTo;
         $this->groupAuthorizedCodeFrom = $groupAuthorizedCodeFrom;
         $this->groupAuthorizedCodeTo = $groupAuthorizedCodeTo;
-        $this->displayLine = $displayLine;
-        $this->printSignature = $printSignature;
         $this->position = $position;
         $this->ranking = $ranking;
         $this->location = $location;
@@ -45,17 +39,11 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
+                "year" => (int) $this->year,
                 "reportCode" => $this->reportName,
-                "employeeNoFrom" => $this->employeeNoFrom,
-                "employeeNoTo" => $this->employeeNoTo,
-                "period" => $this->period,
-                "statusPeriod" => 0,
-                "multiCostCenter" => $this->multiCostCenter,
-                "reportStatus" => $this->reportStatus,
                 "reportType" => $this->reportType,
-                "displayLine" => $this->displayLine,
-                "printSignature" => $this->printSignature,
-                "languageCode" => App::getLocale(),
+                "reportStatus" => $this->reportStatus,
+                "languageID" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUsername" => Session::get('userName'),
@@ -69,52 +57,33 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 'sessionUserID' => Session::get('userID')
             ];
 
-            $paramGetFormat = [
-                'companyCode' => Session::get('companyCode'),
-                'reportCode' => $this->reportName,
-                'languageCode' =>App::getLocale(),
-                'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
-            ];
-
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
                 $param['employeeNoFrom'] = $this->employeeNoFrom;
                 $param['employeeNoTo'] = $this->employeeNoTo;
             }
 
-            if(!empty($this->costCenterCodeFrom) || !empty($this->costCenterCodeTo)){
-                $param['costCenterFrom'] = $this->costCenterCodeFrom;
-                $param['costCenterTo'] = $this->costCenterCodeTo;
-            }
-
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
+            if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
+                $param['groupAuthorizeFrom'] = $this->groupAuthorizedCodeFrom;
+                $param['groupAuthorizeTo'] = $this->groupAuthorizedCodeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
                 foreach($this->position as $value){
-                    $data_position[] = [
-                        'positionCode' => $value
-                    ];
+                    $data_position[] = $value;
                 }
                 $param['position'] = $data_position;
             }
 
             if(!empty($this->location) && !is_null($this->location[0])){
                 foreach($this->location as $value){
-                    $data_location[] = [
-                        'locationCode' => $value
-                    ];
+                    $data_location[] = $value;
                 }
                 $param['location'] = $data_location;
             }
 
             if(!empty($this->ranking) && !is_null($this->ranking[0])){
                 foreach($this->ranking as $value){
-                    $data_ranking[] = [
-                        'rankingCode' => $value
-                    ];
+                    $data_ranking[] = $value;
                 }
                 $param['ranking'] = $data_ranking;
             }
@@ -123,31 +92,24 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 foreach($this->dataLevel as $key => $value){
                     $data_level_detail = [];
                     foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = [
-                            'levelCode' => $value2
-                        ];
+                        $data_level_detail[] = $value2;
                     }
                     $data_level[] = [
-                        "companyCode" => Session::get('companyCode'),
                         "levelType" => (string) ($key + 1),
-                        "level" => $data_level_detail
+                        "levelCode" => $data_level_detail
                     ];
                 }
-                $param['levelMaster'] = $data_level;
+                $param['levelFilterList'] = $data_level;
             }
 
-
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/prretroactivereport/getretroactivereport', [
+
+            $response = $client->post(env('API_URL').'/annualreport/getannualreport', [
                 'body' => json_encode($param)
             ]);
 
             $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
-            ]);
-
-            $responseGetFormat = $client->post(env('API_URL').'/prreportformat/getreportformatlist', [
-                'body' => json_encode($paramGetFormat)
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
@@ -162,17 +124,16 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
-        $arrFormat = json_decode($responseGetFormat->getBody()->getContents());
 
-        // var_dump($arrFormat->dataListSet);
+        var_dump($arrResult->dataListSet);
 
         // if($arrResult->dataListSet[0] == null){
-        //     return view('payroll.py_export_periodical_report_excel', [
-        //         'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_format' => $arrFormat->dataListSet, 'data_period' => $this->period
+        //     return view('payroll.py_export_annual_report_excel', [
+        //         'data' => [], 'data_company' => $arrCompany->dataListSet
         //     ]);
         // }else{
-        //     return view('payroll.py_export_periodical_report_excel', [
-        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_format' => $arrFormat->dataListSet, 'data_period' => $this->period
+        //     return view('payroll.py_export_annual_report_excel', [
+        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
         //     ]); 
         // }
     }

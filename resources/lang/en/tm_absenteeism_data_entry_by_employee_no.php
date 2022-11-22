@@ -9,7 +9,8 @@ return [
     'label_position' => 'Position',
     'label_period' => 'Period',
     'btn_edit' => 'Edit',
-    'btn_save' => 'Save'
+    'btn_save' => 'Save',
+    'alert_success' => 'Success'
 ]
 
 ?>

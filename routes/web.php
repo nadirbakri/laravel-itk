@@ -17,6 +17,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return '<h1>Cache facade value cleared</h1>';
+});
+
+Route::get('/clear-config', function() {
+    $exitCode = Artisan::call('config:clear');
+    return '<h1>Config facade value cleared</h1>';
+});
+
+Route::get('/cache-config', function() {
+    $exitCode = Artisan::call('config:cache');
+    return '<h1>Config facade value cached</h1>';
+});
+
 
 /* Route Untuk Halaman Login */
 Route::get('login', 'LoginController@pageLogin');
@@ -415,6 +430,7 @@ Route::get('time_management/time_recording_reference/table', 'TimeManagementCont
 Route::get('time_management/overtime_code/table', 'TimeManagementController@tableOvertimeCodeTM');
 Route::get('time_management/shift_master_code/table', 'TimeManagementController@tableShiftMasterCodeTM');
 Route::get('time_management/absenteeism_data_entry_by_employee_no/table', 'TimeManagementController@tableAbsenteeismDataEntryByEmployeeNoTM');
+Route::get('time_management/absenteeism_data_entry_by_date/table', 'TimeManagementController@tableAbsenteeismDataEntryByDateTM');
 Route::get('time_management/reference_time_management/table', 'TimeManagementController@tableReferenceTimeManagementTM');
 
 /* Route untuk data detail Time Management */
@@ -440,6 +456,8 @@ Route::post('time_management/time_recording_reference/proses', 'TimeManagementCo
 Route::post('time_management/template_preparation/proses', 'TimeManagementController@prosesTemplatePreparationTM');
 Route::post('time_management/reference_time_management/proses', 'TimeManagementController@prosesReferenceTimeManagementTM');
 Route::post('time_management/reference_time_management/detail/proses', 'TimeManagementController@prosesReferenceTimeManagementDetailTM');
+Route::post('time_management/absenteeism_data_entry_by_employee_no/proses', 'TimeManagementController@prosesAbsenteeismDataEntryByEmployeeNoTM');
+Route::post('time_management/absenteeism_data_entry_by_date/proses', 'TimeManagementController@prosesAbsenteeismDataEntryByDateTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
@@ -616,6 +634,7 @@ Route::get('payroll/bonus_formula/remove', 'PayrollController@removeBonusFormula
 Route::get('payroll/payroll_calculation/remove', 'PayrollController@removePayrollCalculationPY');
 Route::get('payroll/multi_cost_center/remove', 'PayrollController@removeMultiCostCenterPY');
 Route::get('payroll/spt_format/remove', 'PayrollController@removeSptFormatPY');
+Route::get('payroll/loan_payment/remove', 'PayrollController@removeLoanPaymentPY');
 
 /*Route untuk detail Data Payroll*/
 Route::get('payroll/account/detail', 'PayrollController@dataAccountPY');
@@ -678,6 +697,7 @@ Route::post('payroll/export_data_kepesertaan_bpjs_tk_report/print/excel', 'Payro
 Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanReportPayrollExcel');
 Route::post('payroll/export_sipp_online_report/print', 'PayrollController@printLoanReportPayroll');
 Route::post('payroll/annual_report/print', 'PayrollController@printAnnualReportPayroll');
+Route::post('payroll/annual_report/print/excel', 'PayrollController@printAnnualReportPayrollExcel');
 Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPeriodicalReportPayrollExcel');
 
 /* Route Untuk Menu Medical */

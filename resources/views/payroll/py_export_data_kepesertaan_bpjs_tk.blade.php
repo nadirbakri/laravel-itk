@@ -120,25 +120,6 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="loan_type_from form-check-label">{{ __('payroll_export_data_kepesertaan_bpjs_tk.label_loan_type') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="loan_type_from" name="loan_type_from"></select>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="loan_type_to form-check-label">{{ __('payroll_export_data_kepesertaan_bpjs_tk.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="loan_type_to" name="loan_type_to"></select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
                             <label for="employee_no_from form-check-label">{{ __('payroll_export_data_kepesertaan_bpjs_tk.label_employee_no') }}</label>
                         </div>
                     </div>
@@ -154,26 +135,7 @@
                         <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="report_type form-check-label">{{ __('payroll_export_data_kepesertaan_bpjs_tk.label_report_type') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="loan_repayment" name="report_type" value="loan_repayment" checked>
-                            <label for="loan_repayment">{{ __('payroll_export_data_kepesertaan_bpjs_tk.label_loan_repayment') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="loan_report" name="report_type" value="loan_report">
-                            <label for="loan_report">{{ __('payroll_export_data_kepesertaan_bpjs_tk.label_loan_report') }}</label>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
