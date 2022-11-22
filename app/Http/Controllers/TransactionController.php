@@ -136,7 +136,7 @@ class TransactionController extends Controller
                         // 'logActionUsername' => Session::get('userName'),
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                        'directSuperiorID'=> $request->directSuperiorID,
+                        'employeeNo'=> $request->employeeNo,
                         'medicalType1'=> $request->medicalType1,
                         'businessUnit' => $request->businessUnit,
                         // 'exportMenu' => false,
@@ -229,7 +229,7 @@ class TransactionController extends Controller
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
         }
 
     }else if ($request->reimbursement_type == "TTB"){
@@ -289,8 +289,9 @@ class TransactionController extends Controller
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
         }
+
 
     }else{
          try {
@@ -345,12 +346,12 @@ class TransactionController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
-
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
         }
+
     }
 }
 
@@ -365,14 +366,14 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'businessUnit' => $request->businessUnit,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'businessUnit' => $request->businessUnit,
+            //             'employeeNo'=> $request->employeeNo,
+            //             'exportMenu' => false,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
             $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
@@ -381,7 +382,8 @@ class TransactionController extends Controller
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'businessUnit' => $request->businessUnit,
-                        'directSuperiorID'=> $request->directSuperiorID,
+                        'employeeNo'=> $request->employeeNo,
+                        'type' => "TOT",
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
@@ -410,6 +412,119 @@ class TransactionController extends Controller
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
+ 
+    public function tableDetailWorkflow(Request $request)
+    {
+        if($request->workflow_type == "ER"){
+            try {
+                $client = new Client([
+                    'headers' => [ 'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . Session::get('token') ]
+                ]);
+    
+                // var_dump(json_encode(
+                //     [
+                //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                //             'employeeNo'=> $request->employeeNo,
+                //             'businessUnit' => $request->businessUnit,
+                //             'workflowType' => "ER",
+                //             'companyCode' => Session::get('companyCode'), 
+                //             'languageCode' => App::getLocale(), 
+                //             'sessionID' => 0, 
+                //             'sessionUserID' => Session::get('userID'),
+                //     ]
+                //     ));
+                $response = $client->post(env('API_URL') . '/tmpermit/getpermitdetaillist',
+                    ['body' => json_encode(
+                        [
+                            'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                            'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                            'employeeNo'=> $request->employeeNo,
+                            'businessUnit' => $request->businessUnit,
+                            'workflowType' => "ER",
+                            'companyCode' => Session::get('companyCode'), 
+                            'languageCode' => App::getLocale(), 
+                            'sessionID' => 0, 
+                            'sessionUserID' => Session::get('userID'),
+                        ]
+                    )]
+                );
+            } catch (RequestException $e) {
+                $response = $e->getResponse();
+                if($response->getStatusCode() == 401){
+                    return view('error.login');
+                }else if($response->getStatusCode() == 404){
+                    return view('error.not_found');
+                }else{
+                    return view('error.bad_request');
+                }
+            }
+    
+            $arrResult = json_decode($response->getBody()->getContents());
+            // var_dump($arrResult->dataListSet);
+    
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }else{
+            try {
+                $client = new Client([
+                    'headers' => [ 'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . Session::get('token') ]
+                ]);
+    
+                // var_dump(json_encode(
+                //     [
+                //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                //         'employeeNo'=> $request->employeeNo,
+                //         'businessUnit' => $request->businessUnit,
+                //         'workflowType' => "EW",
+                //         'companyCode' => Session::get('companyCode'), 
+                //         'languageCode' => App::getLocale(), 
+                //         'sessionID' => 0, 
+                //         'sessionUserID' => Session::get('userID'),
+                //     ]
+                //     ));
+                $response = $client->post(env('API_URL') . '/tmleave/getleavedetaillist',
+                    ['body' => json_encode(
+                        [
+                            'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                            'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                            'employeeNo'=> $request->employeeNo,
+                            'businessUnit' => $request->businessUnit,
+                            'workflowType' => "EW",
+                            'companyCode' => Session::get('companyCode'), 
+                            'languageCode' => App::getLocale(), 
+                            'sessionID' => 0, 
+                            'sessionUserID' => Session::get('userID'),
+                        ]
+                    )]
+                );
+            } catch (RequestException $e) {
+                $response = $e->getResponse();
+                if($response->getStatusCode() == 401){
+                    return view('error.login');
+                }else if($response->getStatusCode() == 404){
+                    return view('error.not_found');
+                }else{
+                    return view('error.bad_request');
+                }
+            }
+    
+            $arrResult = json_decode($response->getBody()->getContents());
+            // var_dump($arrResult->dataListSet);
+    
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }
+    }
     public function tableDetailReimbursement(Request $request)
     {
         try {
@@ -418,20 +533,20 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                    'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                    'employeeNo'=> $request->employeeNo,
-                    'medicalType1'=> $request->medicalType1,
-                    'businessUnit' => $request->businessUnit,
-                    'exportMenu' => false,
-                    'companyCode' => Session::get('companyCode'), 
-                    'languageCode' => App::getLocale(), 
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'employeeNo'=> $request->employeeNo,
+            //             'reimbursementType'=> $request->reimbursementType,
+            //             'businessUnit' => $request->businessUnit,
+            //             'exportMenu' => false,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID')
+            //     ]
+            //     ));
             $response = $client->post(env('API_URL') . '/tmreimbursement/getreimbursementdetaillistall',
                 ['body' => json_encode(
                     [
@@ -441,14 +556,14 @@ class TransactionController extends Controller
                         // 'logActionUsername' => Session::get('userName'),
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                        'employeeNo'=> $request->directSuperiorID,
-                        'reimbursementType'=> $request->medicalType1,
+                        'employeeNo'=> $request->employeeNo,
+                        'reimbursementType'=> $request->reimbursementType,
                         'businessUnit' => $request->businessUnit,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 
-                        'sessionUserID' => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID')
                     ]
                 )]
             );
@@ -483,16 +598,17 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //         'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         'processDate'=> Carbon::parse($request->processDate)->format('Y-d-m'),
-            //         'type' =>  $request->transportType,
-            //         'businessUnit'=> $request->businessUnit,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'exportMenu' =>false,
+            //             'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+            //             'type' =>  $request->type,
+            //             'businessUnit'=> $request->businessUnit,
+            //             'employeeNo'=> $request->employeeNo,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
 

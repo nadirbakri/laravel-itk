@@ -14,6 +14,8 @@
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
     <link rel="stylesheet" href="{{ asset('css/data_employee_grou.css') }}"> 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
@@ -152,7 +154,8 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >                        </div>
+                        <input type="text" class="form-control" id="group_code" name="group_code" >                        
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -163,7 +166,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >                        
+                        <input type="text" class="form-control" id="group_name" name="group_name" >                        
                     </div>
                     </div>
                 </div>
@@ -185,7 +188,8 @@
                             </tr>
                         </thead>
                     </table>
-                    <button class="buttonadd">
+
+                    <button class="buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_mass_leavee" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
                     </button>
@@ -199,9 +203,12 @@
 
                 <!-- BUTOON -->
                 <div class="row">
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                                    Save
-                    </button>     
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
+                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        </button>
+                    </div>   
                     <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
                                     Cancel
                     </button>     
@@ -212,6 +219,85 @@
             </div>
         </form>
     </div>
+
+{{-- modal btn-list --}}
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_mass_leave">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">List User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="example" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Group Code</th>
+                                    <th>Group Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+            </div>
+        </form>
+    </div>
+
+
+    {{-- modal btn-add --}}
+
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_mass_leavee">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">List User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="example" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Group Code</th>
+                                    <th>Group Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+            </div>
+        </form>
+    </div>
+
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -248,6 +334,15 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function () {
+        $('table.display').DataTable();
+    });
+    
+    // $('#btn-add').click(e=>{
+    //     e.prefentDefault()
+    // })
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -262,4 +357,65 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script>
+   $('#btn-list').click(()=> {
+        $('#example').DataTable().destroy();
+        table2 = $('#example').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('master_data/list/table') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'groupCode', name: 'groupCode'},
+                {data: 'groupName', name: 'groupName'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
+    
+    const klik = (element) => {
+        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        let fullname = $(element).parent().siblings('td').eq(1).text()
+
+        $('#group_code').val(employee_id)
+        $('#group_name').val(fullname)
+
+        $('.close').click();
+        // let division = $(element).parent().siblings('td').eq(2).text()
+        // let rankingname = $(element).parent().siblings('td').eq(3).text()
+        // alert(data1)
+    }
+    
+    // const klik = (element) => {
+    //     let employee_id = $(element).parent().siblings('.sorting_1').text()
+
+    //     $('#direct_superior').val(employee_id)
+
+    //     $('.close').click();
+    //     // let fullname = $(element).parent().siblings('td').eq(1).text()
+    //     // let division = $(element).parent().siblings('td').eq(2).text()
+    //     // let rankingname = $(element).parent().siblings('td').eq(3).text()
+    //     // alert(data1)
+    // }
+</script>
 </html>

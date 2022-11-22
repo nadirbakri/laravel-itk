@@ -214,26 +214,33 @@
                 </div>
 
                 <!-- TABLE -->
-                <div class="row">
-                    <div class="col-6">
-                        <p>{{ __('trans_business_trip.list_table') }}</p>
+                <div class="card">
+                    <div class="row">
+                        <div class="col-6">
+                            <p><b>{{ __('trans_business_trip.list_table') }}</b></p>
+                        </div>
                     </div>
-                </div>
-                <div class="div-table">
-                    <table id="business_trip_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th>Ticket Number</th>
-                                <th>Employee Name</th>
-                                <th>Business Unit</th>
-                                <th>Claim Type</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="business_trip_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Ticket Number</th>
+                                        <th>Name</th>
+                                        <th>Customer Name</th>
+                                        <th>Status</th>
+                                        <th>Destination</th>
+                                        <th>Customer Name</th>
+                                        <th>Project Name</th>
+                                        <th>Total Request</th>
+                                        <th>Total Paid</th>
+                                        <th>Tujuan</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -253,7 +260,7 @@
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        <table id="table_id" class="display">
+                        <table id="example" class="display">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -323,7 +330,9 @@
 </body>
 <script>
     $(document).ready( function () {
-        $('#table_id').DataTable();
+        $('table.display').DataTable({
+            scrollX: true,
+        });
     } );
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -400,9 +409,15 @@
                     //         return moment(data).format('YYYY-MM-DD');
                     //     }
                     // },
-                    {data: 'responseBusinessTrip.ticketNo', name: 'ticketNo'},
-                    {data: 'responseBusinessTrip.businessUnit', name: 'businessUnit'},
-                    {data: 'responseBusinessTrip.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'ticketNo', name: 'ticketNo'},
+                    {data: 'fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'customerName', name: 'customerName'},
+                    {data: 'status', name: 'status'},
+                    {data: 'destination', name: 'destination'},
+                    {data: 'customerName', name: 'customerName'},
+                    {data: 'projectName', name: 'projectName'},
+                    {data: 'totalClaimAmount', name: 'totalClaimAmount'},
+                    {data: 'purpose', name: 'purpose'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
@@ -449,8 +464,8 @@
     })
 
    $('#btn-list').click(()=> {
-        $('#table_id').DataTable().destroy();
-        table2 = $('#table_id').DataTable({
+        $('#example').DataTable().destroy();
+        table2 = $('#example').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,

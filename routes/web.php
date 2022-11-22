@@ -739,6 +739,7 @@ Route::get('trans/transport/table', 'TransactionController@tableDetailTransport'
 Route::get('trans/reimbursement/table', 'TransactionController@tableDetailReimbursement');
 Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
+Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
@@ -882,6 +883,7 @@ Route::get('master_data/employee_group_reimbursement_detail', 'MasterDataControl
 Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataHolidayCalender');
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
+Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');

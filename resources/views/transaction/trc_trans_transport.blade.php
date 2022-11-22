@@ -217,32 +217,38 @@
                         </button>
                     </div>
                 </div>
-
+<br>
                 <!-- TABLE -->
-                <div class="row">
-                    <div class="col-6">
-                        <p>{{ __('trans_transport.list_table') }}</p>
+                <div class="card">
+                   
+                    <div class="row">
+                        <div class="col-6">
+                            <p><b>Transport List</b></p>
+                        </div>
                     </div>
-                </div>
-                <div class="div-table">
-                    <table id="transport_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Employee Name</th>
-                                <th>Request Date</th>
-                                <th>Status</th>
-                                <th>Claim Type</th>
-                                <th>Company Customer</th>
-                                <th>Start Location</th>
-                                <th>End Location</th>
-                                {{-- <th>End Location</th> --}}
-                                
-                            </tr>
-                        </thead>
-                        
-                    </table>
-                </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="transport_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Receipt Date</th>
+                                        <th>Status</th>
+                                        <th>Ticket Number</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Company Customer</th>
+                                        <th>Customer Name</th>
+                                        <th>Start Location</th>
+                                        <th>End Location</th>
+                                        {{-- <th>Remarks</th> --}}
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                    
 
             </div>
         </form>
@@ -331,7 +337,10 @@
 </body>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('table.display').DataTable({
+
+            scrollX: true,
+        });
     });
 </script>
 
@@ -656,14 +665,16 @@ loadDataAllTransport();
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
                     {data: 'transportEntity.receiptDate', name: 'receiptDate', 
                             render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
                     },
                     {data: 'transportEntity.status', name: 'status'},
+                    {data: 'transportEntity.ticketNo', name: 'ticketNo'},
+                    {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
                     {data: 'transportEntity.type', name: 'type'},
+                    {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
                     {data: 'transportEntity.customerName', name: 'customerName'},
                     {data: 'transportEntity.startLocation', name: 'startLocation'},
                     {data: 'transportEntity.endLocation', name: 'endLocation'},

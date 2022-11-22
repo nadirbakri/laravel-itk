@@ -67,3 +67,18 @@
 	</table>
 </body>
 </html>
+
+{data: 'reimbursementEntity.receiptDate', name: 'receiptDate', 
+render: function (data, type, row) {
+return moment(data).format('YYYY-MM-DD');
+}
+},
+{data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementStatus'},
+{data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
+{data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
+{data: 'reimbursementEntity.customerName', name: 'customerName'},
+{data: 'reimbursementEntity.projectName', name: 'projectName'},
+{data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
+{data: 'reimbursementEntity.paymentDate', name: 'paymentDate'},
+{data: 'reimbursementEntity.totalPaidMonth', name: 'totalPaidMonth'},
+{data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
