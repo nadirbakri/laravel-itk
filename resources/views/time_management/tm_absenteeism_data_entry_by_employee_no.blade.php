@@ -332,6 +332,7 @@
             url: "{{ url('time_management/period/data/detail') }}",
             type: "GET",
             success: function (response) {
+                // console.log(response);
                 pickrPeriod.setDate(response[0].periodYear + "-" + response[0].periodMonth + "-01");
             },
             error: function (response) {
@@ -357,6 +358,10 @@
         load_data_table_absenteeism_data_entry_by_employee_no();
 
         $('#employee_no, #period').on("select2:select, change", function (e) {
+            load_data();
+        });
+
+        function load_data(){
             var data = $('#employee_no').select2('data');
             var data2 = $('#period').val();
             $('#employee_name').val(htmlDecode(data[0].title));
@@ -378,7 +383,7 @@
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {    
                             table.row.add([
-                                '<input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
+                                '<input type="hidden" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ data[0].id +'"><input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
                                 '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
                                 '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" disabled></select>',
                                 '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" disabled></select>',
@@ -425,11 +430,11 @@
 
                         table.draw();
                         // table.columns.adjust().responsive.recalc();
-                        $($.fn.dataTable.tables({ visible: true, api: true })).DataTable()
-                                .columns.adjust()
-                                .responsive.recalc();
-                        });
-                        // table.columns.adjust().draw();
+                        // $($.fn.dataTable.tables({ visible: true, api: true })).DataTable()
+                        //         .columns.adjust()
+                        //         .responsive.recalc();
+                        // });
+                        table.columns.adjust().draw();
 
                         loadDataDay(".select_day");
                         loadDataShiftCode(".select_shift_code");
@@ -478,8 +483,42 @@
 
                         $.each(response, function(k, v) {
                             // console.log($('#day' + (k+1)).find("option[value='" + v.day + "']").length);
-                            // var newOption = new Option("Normal", v.day, true, true);
-                            // $('#day' + (k+1)).append(newOption).trigger('change');
+                            if(v.day != null && v.dayName != null){
+                                var newOptionDay = new Option(v.dayName, v.day, true, true);
+                                $('#day' + (k+1)).append(newOptionDay).trigger('change');
+                            }
+                            if(v.shiftCode != null && v.shiftName != null){
+                                var newOptionShift = new Option(v.shiftName, v.shiftCode, true, true);
+                                $('#shift_code' + (k+1)).append(newOptionShift).trigger('change');
+                            }
+                            if(v.costCenterCode != null && v.costCenterDescription != null){
+                                var newOptionCostCenter = new Option(v.costCenterDescription, v.costCenterCode, true, true);
+                                $('#cost_center_code' + (k+1)).append(newOptionCostCenter).trigger('change');
+                            }
+                            if(v.ovtCode != null && v.ovtDescription != null){
+                                var newOptionOvertime = new Option(v.ovtDescription, v.ovtCode, true, true);
+                                $('#overtime_code' + (k+1)).append(newOptionOvertime).trigger('change');
+                            }
+                            if(v.absentCode != null && v.absentCodeDescription != null){
+                                var newOptionFinger = new Option(v.absentCodeDescription, v.absentCode, true, true);
+                                $('#finger_absent_code' + (k+1)).append(newOptionFinger).trigger('change');
+                            }
+                            if(v.absentCode2 != null && v.absentCode2Description != null){
+                                var newOptionAbsent = new Option(v.absentCode2Description, v.absentCode2, true, true);
+                                $('#absent_code' + (k+1)).append(newOptionAbsent).trigger('change');
+                            }
+                            if(v.positionCode != null && v.positionName != null){
+                                var newOptionPosition = new Option(v.positionName, v.positionCode, true, true);
+                                $('#position' + (k+1)).append(newOptionPosition).trigger('change');
+                            }
+                            if(v.locationCode != null && v.locationName != null){
+                                var newOptionLocation = new Option(v.locationName, v.locationCode, true, true);
+                                $('#location' + (k+1)).append(newOptionLocation).trigger('change');
+                            }
+                            if(v.gradeCode != null && v.gradeName != null){
+                                var newOptionGrade = new Option(v.gradeName, v.gradeCode, true, true);
+                                $('#grade' + (k+1)).append(newOptionGrade).trigger('change');
+                            }
                             // loadDataDetailDayCode('#day' + (k+1), ((typeof v.day !== 'undefined' && v.day !== null) ? v.day : ''));
                             // loadDataDetailShiftCode('#shift_code' + (k+1), ((typeof v.shiftCode !== 'undefined' && v.shiftCode !== null) ? v.shiftCode : ''));
                             // loadDataDetailCostCenterCode('#cost_center_code' + (k+1), ((typeof v.costCenterCode !== 'undefined' && v.costCenterCode !== null) ? v.costCenterCode : ''));
@@ -511,7 +550,7 @@
                     }
                 }
             })
-        });
+        }
 
         $('#btn-edit').on('click', function () {
             $('.select_day').prop('disabled', false);
@@ -1350,6 +1389,77 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#absenteeism_data_entry_by_employee_no_table_form").submit();
+        });
+
+        if ($("#absenteeism_data_entry_by_employee_no_table_form").length > 0) {
+            $("#absenteeism_data_entry_by_employee_no_table_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    // var arrData = [];
+                    $.ajax({
+                        url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/proses') }}",
+                        type: "POST", 
+                        data: $('#absenteeism_data_entry_by_employee_no_table_form').serialize(),
+                        success: function (response) {
+                            // console.log(response.status);
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
+                                );
+
+                                $('#absenteeism_data_entry_by_employee_no_table').DataTable().destroy();
+                                load_data_table_absenteeism_data_entry_by_employee_no();
+                                load_data();
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    $('#notification_success').modal('hide');
+                                    // window.location =
+                                        // "{{ url('time_management/period_maintenance') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
         }
     })
 

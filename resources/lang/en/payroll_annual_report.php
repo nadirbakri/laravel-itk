@@ -3,6 +3,7 @@
 return [ 
     'judul' => 'Annual Report',
     'list' => 'Annual Report',
+    'label_year' => 'Year',
     'label_report_name' => 'Report Name',
     'label_report_status' => 'Report Status',
     'label_report_type' => 'Report Type',

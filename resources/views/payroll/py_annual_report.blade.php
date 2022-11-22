@@ -119,6 +119,19 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="year form-check-label">{{ __('payroll_annual_report.label_year') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="year" name="year"
+                                placeholder="{{ __('payroll_annual_report.label_year') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
                             <label for="report_name form-check-label">{{ __('payroll_annual_report.label_report_name') }}</label>
                         </div>
                     </div>
@@ -509,16 +522,16 @@
                 }
             }
 
-            var headerIsAppend = false;
-            $('#report_name').on('select2:open', function (e) {
-                if (!headerIsAppend) {
-                    html = '<div class="row">' +
-                        '<div class="col-12"><b>Report Code</b></div>' +
-                        '</div>';
-                    $('.select2-search').append(html);
-                    headerIsAppend = true;
-                }
-            });
+            // var headerIsAppend = false;
+            // $('#report_name').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-12"><b>Report Code</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 

@@ -900,8 +900,8 @@
                                         // "{{ url('time_management/period_maintenance') }}";
                                 }, 3000);
                             } else {
-                                $("#btn-save-period-maintenance").prop("disabled", false);
-                                $("#btn-save-period-maintenance").html(
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
                                 );
 

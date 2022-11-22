@@ -119,9 +119,9 @@
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
 			</div>
-			<!-- <div class="card"> -->
+			<div class="card" style="margin-bottom: 1rem;">
 				<!-- STYLINGNYA GUA GABISA SORRY BANGET -ILYAS -->
-				<a class="collapsed" data-toggle="collapse"  href="#web-collapse" aria-expanded="true" aria-controls="web-collapse">
+				<a class="collapsed" data-toggle="collapse" href="#web-collapse" aria-expanded="true" aria-controls="web-collapse">
 					<div class="card-header">
 						<div class="div-dropdown-title">
 							<span class="dropdown-title-text">WEB</span>
@@ -129,7 +129,7 @@
 						</div>
 					</div>
 				</a>
-				<div id="web-collapse" class="collapse">
+				<div id="web-collapse" class="collapse show" data-parent="#sidebar-wrapper">
 					@foreach (Session::get('menuList') as $menu)
 					<div class="list-group list-group-flush">
 						<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
@@ -142,10 +142,10 @@
 					</div>
 					@endforeach
 				</div>
-			<!-- </div> -->
-			<br>
+			</div>
+			<!-- <br> -->
 			<div class="card">
-				<a class="collapsed" data-toggle="collapse"  href="#mob-collapse" aria-expanded="true" aria-controls="mob-collapse">
+				<a class="collapsed" data-toggle="collapse" href="#mob-collapse" aria-expanded="true" aria-controls="mob-collapse">
 					<div class="card-header">
 						<div class="div-dropdown-title">
 							<span class="dropdown-title-text">MOB</span>
@@ -153,7 +153,7 @@
 						</div>
 					</div>
 				</a>
-				<div class="collapse" id="mob-collapse">
+				<div class="collapse" id="mob-collapse" data-parent="#sidebar-wrapper">
 					@foreach (Session::get('menuListMob') as $menu)
 					<div class="list-group list-group-flush">
 						<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
@@ -167,7 +167,7 @@
 					@endforeach
 				</div>
 			</div>
-			<footer class="footer">
+			<footer class="footer" id="footer">
 				<div class="container">
 					<span class="text-muted">© Copyright <br>PT Intikom Berlian Mustika <br>2021</span>
 				</div>
@@ -326,6 +326,15 @@
 			$('.color-active').removeClass('active');
 			$(this).find('.color-active').toggleClass('active');
 			$(this).toggleClass('active');
+		});
+
+		$('#web-collapse').on('shown.bs.collapse', function () {
+			console.log("Yes");
+			$("#footer").css("padding-top", "4%");
+		});
+
+		$('#web-collapse').on('hidden.bs.collapse', function () {
+			$("#footer").css("padding-top", "0");
 		});
 
 		$('#iframe_dashboard').load(function() {

@@ -82,7 +82,7 @@
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
                 <span>New</span>
             </a>
-            <a href="javascript:void(0)" id="toolbar-edit">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
@@ -107,7 +107,7 @@
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
                 <span>List</span>
             </a>
-            <a class="list-functionbar-sm" style="display: none;" href="javascript:void(0)" id="toolbar-delete">
+            <a class="list-functionbar-sm" href="javascript:void(0)" id="toolbar-delete">
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" alt="Delete">
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
@@ -237,7 +237,7 @@
                     {data: 'employeeNo', name: 'employeeNo'},
                     {data: 'employeeName', name: 'employeeName'},
                     {data: 'loanNo', name: 'loanNo'},
-                    {data: 'auditLoanSeqNo', name: 'auditLoanSeqNo'},
+                    {data: 'paymentSeq', name: 'paymentSeq'},
                 ],
                 select: {
                     style:    'multi',
@@ -249,7 +249,48 @@
             });
         }
 
-        $("#toolbar-edit").on('click', function() {
+        $("#toolbar-delete").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+
+            if (data.length > 0) {
+                $.ajax({
+                    url: "{{ url('payroll/loan_payment/remove') }}",
+                    type: "GET",
+                    data: {
+                        'data' : data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            $('#loan_payment_table').DataTable().destroy();
+                            load_data_table_loan_payment();
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#toolbar-delete").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.redirect("{{ url('payroll/loan_payment/detail_data') }}", 

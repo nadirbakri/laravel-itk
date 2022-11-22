@@ -284,6 +284,7 @@ footer {
   display: block;
   font-size: 2vh;
   transition: all 0.3s;
+  padding-top: 4%;
 }
 
 #sidebar-wrapper.active footer {

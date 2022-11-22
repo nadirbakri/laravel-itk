@@ -55,7 +55,6 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
                 "logActionUserID" => Session::get('userID')
             ];
 
-    
             if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
                 $param['groupAuthorizeCodeFrom'] = (int) $this->groupAuthorizedCodeFrom;
                 $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;

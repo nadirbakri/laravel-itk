@@ -13,6 +13,8 @@ use App\Exports\CSVESPTReportFormExport;
 use App\Exports\RetroactiveReportExport;
 use App\Exports\PeriodicalReportExport;
 use App\Exports\BonusTHRReportExport;
+use App\Exports\AnnualReportExcel;
+use App\Exports\ExportDataKepesertaanBPJSReportExport;
 use App\Http\Controllers\Redirect;
 
 use Illuminate\Http\Request;
@@ -1222,7 +1224,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
+            $response = $client->post(env('API_URL') . '/prloanpayment/getprpayment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4025,7 +4027,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump($request->output_file);
+            // var_dump($request->output_file);
 
             var_dump(json_encode(
                 [
@@ -4153,9 +4155,9 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult);
+        var_dump($arrResult->dataListSet);
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function removeTHRBonusDataEntryPY(Request $request)
@@ -4468,6 +4470,47 @@ public function dataDetailReportFormatPY(Request $request)
                         "logActionUsername" => Session::get('userID')
                     ]
                 )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeLoanPaymentPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            $param = [];
+
+            foreach($request->data as $value){
+                $param[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'loanNo' => $value['loanNo'],
+                    'paymentSeq' => $value['paymentSeq'],
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }
+
+            $response = $client->delete(env('API_URL') . '/prloanpayment/deleteprpayment',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -5026,23 +5069,6 @@ public function dataDetailReportFormatPY(Request $request)
             );
 
             $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
-
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "periodYear" => (int) $arrResult_tm->dataListSet[0]->periodYear,
-            //         "languageCode" => App::getLocale(),
-            //         "changedNo" => 0,
-            //         "changedBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
@@ -5909,20 +5935,20 @@ public function dataDetailReportFormatPY(Request $request)
                 ]
             ));
 
-            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
-                ['body' => json_encode(
-                    [
-                        "companyCode" => Session::get('companyCode'),
-                        "periodMonth" => (int) $request->period_month,
-                        "periodYear" => (int) $request->period_year,
-                        "languageCode" => App::getLocale(),
-                        "sessionID" => 0,
-                        "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
-                    ]
-                )]
-            );
+            // $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+            //     ['body' => json_encode(
+            //         [
+            //             "companyCode" => Session::get('companyCode'),
+            //             "periodMonth" => (int) $request->period_month,
+            //             "periodYear" => (int) $request->period_year,
+            //             "languageCode" => App::getLocale(),
+            //             "sessionID" => 0,
+            //             "sessionUserID" => Session::get('userID'),
+            //             "logActionUsername" => Session::get('userID'),
+            //             "logActionUserID" => Session::get('userName') 
+            //         ]
+            //     )]
+            // );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5934,9 +5960,9 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());
+        // $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function prosesTaxCalculationProcessPY(Request $request)
@@ -6303,6 +6329,16 @@ public function dataDetailReportFormatPY(Request $request)
     public function printJournalReportPayrollExcel(Request $request){
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
         return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
+    }
+
+    public function printAnnualReportPayrollExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+        // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
+        return Excel::download(new AnnualReportExcel($request->year, $request->report_name, ($request->report_status == "annualy") ? true : false, ($request->report_type == "summary") ? true : false, $request->employee_no_from, $request->employee_no_to, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Annual Report.xlsx');
     }
 
     public function printPaymentSlipPayroll(Request $request){
@@ -6806,6 +6842,24 @@ public function dataDetailReportFormatPY(Request $request)
             $request->group_authorized_code_from,
             $request->group_authorized_code_to), 
             'Bonus & THR Report.xlsx'
+        );
+    }
+
+    public function printExportDataKepesertaanBPJSTKReportPayrollExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new ExportDataKepesertaanBPJSReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->position, 
+            $request->ranking, 
+            $request->location, 
+            $dataLevel), 
+            'Export Data Kepesertaan BPJS TK Report.xlsx'
         );
     }
 
