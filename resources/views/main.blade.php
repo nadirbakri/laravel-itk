@@ -26,10 +26,12 @@
 			text-align: center;
 		}
 		.list-group-item img {
-			max-width: 17%;
+			max-width: 50%;
 			position: absolute;
-			right: 70%;
+			right: 20%;
 			margin-right: 2%;
+			margin-bottom: 10%;
+			margin-top: 10%;
 		}
 		.list-group-item span {
 			position: absolute;

@@ -14,7 +14,7 @@ class LoginController extends Controller
     public function pageLogin()
     {
     	if(Session::has('token')){
-    		return redirect('main');
+    		return redirect()->route('main');
     	}else{
     		return view('login.login');
     	}
@@ -87,7 +87,7 @@ class LoginController extends Controller
     public function prosesLogout()
     {
     	Session::flush();
-    	return redirect('login');
+    	return redirect()->route('login');
     }
 
 	public function prosesAuthentication(Request $request)

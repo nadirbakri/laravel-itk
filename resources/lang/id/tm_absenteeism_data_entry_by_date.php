@@ -5,7 +5,8 @@ return [
     'list' => 'Absensi Data Entri Berdasarkan Tanggal',
     'label_absenteeism_date' => 'Tanggal Absensi',
     'btn_edit' => 'Ubah',
-    'btn_save' => 'Simpan'
+    'btn_save' => 'Simpan',
+    'alert_success' => 'Sukses'
 ]
 
 ?>

@@ -377,7 +377,7 @@
                         data: $('#login_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
-                                window.location = response.message;
+                                window.location = "{{ url('main') }}";
                             } else {
                                 $('#notification').modal('show');
 								$("#btn_submit").prop("disabled", false);

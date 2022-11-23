@@ -6,7 +6,7 @@ return [
     'label_absenteeism_date' => 'Absenteeism Date',
     'btn_edit' => 'Edit',
     'btn_save' => 'Save',
-    'alert_success' => 'Sukses'
+    'alert_success' => 'Success'
 ]
 
 ?>

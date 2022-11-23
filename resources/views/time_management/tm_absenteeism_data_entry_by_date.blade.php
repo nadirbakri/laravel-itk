@@ -342,7 +342,7 @@
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {    
                             table.row.add([
-                                '<input type="text" class="form-control employee_no" name="employee_no[]" id="employee_no" value="'+ ((typeof v.employeeNo !== 'undefined' && v.employeeNo !== null) ? v.employeeNo : '') +'" readonly>',
+                                '<input type="text" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ ((typeof v.employeeNo !== 'undefined' && v.employeeNo !== null) ? v.employeeNo : '') +'" readonly>',
                                 '<input type="text" class="form-control employee_name" name="employee_name[]" id="employee_name" value="'+ ((typeof v.fullName !== 'undefined' && v.fullName !== null) ? v.fullName : '') +'" readonly>',
                                 '<input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
                                 '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
@@ -1279,6 +1279,77 @@
                 },
                 templateResult: formatSelect
             });
+        }
+
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#absenteeism_data_entry_by_date_table_form").submit();
+        });
+
+        if ($("#absenteeism_data_entry_by_date_table_form").length > 0) {
+            $("#absenteeism_data_entry_by_date_table_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    // var arrData = [];
+                    $.ajax({
+                        url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/proses') }}",
+                        type: "POST", 
+                        data: $('#absenteeism_data_entry_by_date_table_form').serialize(),
+                        success: function (response) {
+                            // console.log(response.status);
+                            if (response.status == "true") {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_date.btn_save") }}'
+                                );
+
+                                $('#absenteeism_data_entry_by_date_table').DataTable().destroy();
+                                load_data_table_absenteeism_data_entry_by_date();
+                                load_data();
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    $('#notification_success').modal('hide');
+                                    // window.location =
+                                        // "{{ url('time_management/period_maintenance') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_date.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-print"></i> {{ __("tm_absenteeism_data_entry_by_date.btn_save") }}'
+                            );
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
         }
     })
 
