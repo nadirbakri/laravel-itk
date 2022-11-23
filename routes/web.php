@@ -884,6 +884,11 @@ Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataH
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
+Route::get('master_data/direct_approval/table', 'MasterDataController@tableDirectApproval');
+Route::get('master_data/employee_group_detail/table', 'MasterDataController@tableEmployeeGroupDetail');
+Route::get('master_data/tambah_user/table', 'MasterDataController@tableEmployeeGroupTambahUser');
+Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHolidayCalendar');
+Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');
