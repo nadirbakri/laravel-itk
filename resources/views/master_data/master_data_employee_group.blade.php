@@ -185,7 +185,7 @@
 
                 <div class="row">
                     <div class="col-10">
-                    <table id="mass_leave_table" class="table table-bordered">
+                    <table id="exampletwo" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -202,7 +202,7 @@
                         </tbody>
                     </table>
 
-                    <button class="btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_mass_leavee" type="button">
+                    <button class="btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_group_two" type="button">
                         <i class="fa fa-plus"></i>
                     </button>
                     <button  class="buttonadd btn-danger">
@@ -220,7 +220,7 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
-                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_group">
                         <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
                         </button>
                     </div>   
@@ -239,7 +239,7 @@
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
-            <div class="modal fade" id="modal_list_mass_leave">
+            <div class="modal fade" id="modal_list_group">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -277,9 +277,9 @@
     {{-- modal btn-add --}}
 
     <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
+        <form id="payroll_calculation_detail_two_modal_form" method="post">
             @csrf
-            <div class="modal fade" id="modal_list_mass_leavee">
+            <div class="modal fade" id="modal_list_group_two">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -289,13 +289,12 @@
                             </button>
                         </div>
                     <div class="modal-body table-responsive">
-                        <table id="exampletwo" class="display">
+                        <table id="examplethree" class="display">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Approval Level</th>
-                                    <th>Approval Code</th>
-                                    {{-- <th>Group Name</th> --}}
+                                    <th>Group Code</th>
+                                    <th>Group Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -418,14 +417,8 @@
 
     function load_data_approval_table(){
         $('#exampletwo').DataTable().destroy();
-        console.log(arrApproval);
         table3 = $('#exampletwo').DataTable({
                 processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                // ajax: {
-                //     url : "{{ url('master_data/list/table') }}"             
-                // },
                 data: arrApproval,
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -460,16 +453,8 @@
         $('#group_name').val(fullname)
 
         $('.close').click();
-        // console.log(table2.row($(element).parent()).data().directApproval);
         arrApproval = table2.row($(element).parent()).data().directApproval;
-        // $('#exampletwo').DataTable().destroy();
         load_data_approval_table();
-        // console.log(arrApproval);
-
-        // table3.rows.add(table2.row($(element).parent()).data().directApproval).draw(); 
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
     }
 
     
@@ -486,13 +471,13 @@
     // }
 
     $('#btn-add').click(()=> {
-        $('#exampletwo').DataTable().destroy();
-        table2 = $('#exampletwo').DataTable({
+        $('#examplethree').DataTable().destroy();
+        table4 = $('#examplethree').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/direct_approval/table') }}"             
+                url : "{{ url('master_data/list/table') }}"
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -509,8 +494,8 @@
                         return type === 'display'? '<button type="button"  onclick="klikk(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
-                {data: 'lineApproval', name: 'lineApproval'},
                 {data: 'groupCode', name: 'groupCode'},
+                {data: 'groupName', name: 'groupName'},
             ],
             select: {
                 style:    'multi',
