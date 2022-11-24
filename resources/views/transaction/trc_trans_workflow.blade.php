@@ -105,6 +105,12 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
+        .detailstatus h5{
+            font-size: 16px;
+        }
+        .detailstatus input{
+            outline: none;
+        }
     </style>
 </head>
 
@@ -200,14 +206,20 @@
                             <table id="workflow_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th>Permit ID</th>
-                                        <th>Business Unit</th>
+                                        <th>#</th>
+                                        <th>Request Date</th>
                                         <th>Employee ID</th>
                                         <th>Employee Name</th>
+                                        {{-- <th>Permit Type</th> --}}
+                                        {{-- <th>Description</th> --}}
                                         <th>Status</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
+                                        <th>Remarks</th>
+                                        <th>Leave Duration</th>
+                                        <th>Approved By</th>
+                                        {{-- <th>Approved Date</th>
+                                        <th>Approved Remarks</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -260,6 +272,120 @@
                    </div>
 
                     
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_detail">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">Detail Reimbursement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row detailstatus">
+                                    <div class="col-3  ">
+                                        <h5>Request Date</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Receipt Date</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Ticket Number</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Status</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Business Unit</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Total Claim </h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    {{-- <div class="col-3">
+                                        <h5>Total Paid</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="totalpaid" name="totalpaid" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div> --}}
+                                    <div class="col-3">
+                                        <h5>Dependent Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+                            
+                                <br>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Status</h5>
+                                    </div>
+                                    <div class="col-5">
+                                            <select name="" id="" class="custom-select">
+                                                <option value="APPROVE">APPROVE</option>
+                                                <option value="REJECT">REJECT</option>
+                                                <option value="PAID">PAID</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Total Paid</h5>
+                                    </div>
+                                    <div class="col-5">
+                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Approval Remarks</h5>
+                                    </div>
+                                    <div class="col-5">
+                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+                                <hr>
+                                <button class="btn btn-primary btn-block" type="button">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
                 </div>
             </div>
         </form>
@@ -374,17 +500,31 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
-                    {data: 'permitEntity.requestDate', name: 'requestDate', 
+                    {data: 'permitEntity.createdDate', name: 'createdDate', 
                             render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
-                    {data: 'permitEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'permitEntity.businessUnit', name: 'businessUnit'},
-                    {data: 'permitEntity.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'permitEntity.employeeNo', name: 'employeeNo'},
+                    {data: 'permitEntity.customerName', name: 'customerName'},
+                    {data: 'permitEntity.status', name: 'status'},
+                    {data: 'permitEntity.startDate', name: 'startDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {data: 'permitEntity.endDate', name: 'endDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
+                    {data: 'permitEntity.time', name: 'permitEntity.time'},
+                    {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
+                    // {data: 'permitEntity.fullnameRequester', name: 'fullnameRequester'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
@@ -426,17 +566,30 @@
                             targets: 0, 
                             "defaultContent": '',
                             render: function(data, type) {
-                                return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                             }
                         },
-                        {data: 'leaveEntity.requestDate', name: 'requestDate', 
+                        {data: 'leaveEntity.createdDate', name: 'createdDate', 
                                 render: function (data, type, row) {
                                 return moment(data).format('YYYY-MM-DD');
                             }
                         },
-                        {data: 'leaveEntity.ticketNo', name: 'ticketNo'},
-                        {data: 'leaveEntity.businessUnit', name: 'businessUnit'},
+                        {data: 'leaveEntity.employeeNo', name: 'employeeNo'},
                         {data: 'leaveEntity.fullnameRequester', name: 'fullnameRequester'},
+                        {data: 'leaveEntity.status', name: 'status'},
+                        {data: 'leaveEntity.startDate', name: 'startDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {data: 'leaveEntity.endDate', name: 'endDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
+                    {data: 'leaveEntity.leaveDurationDepan', name: 'leaveDurationDepan'},
+                    {data: 'leaveEntity.createdBy', name: 'createdBy'},
                         // {
                         //     data: 'leaveBalanceBeforeExpiredDate', 
                         //     name: 'leaveBalanceBeforeExpiredDate',

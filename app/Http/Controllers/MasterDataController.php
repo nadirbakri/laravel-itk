@@ -73,9 +73,9 @@ class MasterDataController extends Controller
                         // 'type' =>  $request->transportType,
                         // 'businessUnit'=> $request->businessUnit,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
-                        'sessionID' => 0, 
-                        'sessionUserID' => Session::get('userID'),
+                        // 'languageCode' => App::getLocale(), 
+                        // 'sessionID' => 0, 
+                        // 'sessionUserID' => Session::get('userID'),
                     ]
                 )]
             );

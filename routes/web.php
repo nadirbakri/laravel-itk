@@ -742,6 +742,7 @@ Route::get('trans/reimbursement/table', 'TransactionController@tableDetailReimbu
 Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
 Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
+Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');

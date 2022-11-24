@@ -353,6 +353,9 @@
 <script>
     $(document).ready(function () {
         $('table.display').DataTable();
+
+        // $('#exampletwo').DataTable().destroy();
+        // load_data_approval_table();
     });
     
     // $('#btn-add').click(e=>{
@@ -374,6 +377,8 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script>
+    var table3 = null;
+    var arrApproval = [];
    $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
@@ -409,6 +414,45 @@
         });        
     })
 
+    
+
+    function load_data_approval_table(){
+        $('#exampletwo').DataTable().destroy();
+        console.log(arrApproval);
+        table3 = $('#exampletwo').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                // ajax: {
+                //     url : "{{ url('master_data/list/table') }}"             
+                // },
+                data: arrApproval,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                                }
+                    },
+                    {data: 'approvalLevel', name: 'approvalLevel'},
+                    {data: 'approvalCode', name: 'approvalCode'},
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }, 
+                
+            }); 
+        } 
+
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
         let fullname = $(element).parent().siblings('td').eq(1).text()
@@ -416,14 +460,21 @@
         $('#group_name').val(fullname)
 
         $('.close').click();
-        console.log(table2.row($(element).parent()).data());
+        // console.log(table2.row($(element).parent()).data().directApproval);
+        arrApproval = table2.row($(element).parent()).data().directApproval;
+        // $('#exampletwo').DataTable().destroy();
+        load_data_approval_table();
+        // console.log(arrApproval);
+
+        // table3.rows.add(table2.row($(element).parent()).data().directApproval).draw(); 
         // let division = $(element).parent().siblings('td').eq(2).text()
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
         // alert(data1)
     }
-    
 
-    // let data = ['recordStatus'];
+    
+  
+   
     // const klik = () => {
 
     // .api=> 
