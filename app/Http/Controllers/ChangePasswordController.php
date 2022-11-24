@@ -16,7 +16,7 @@ class ChangePasswordController extends Controller
         if(Session::has('token')){
             return view('change_password');
         }else{
-            return redirect()->name('login');
+            return redirect()->route('login');
         }
     }
 
@@ -56,7 +56,7 @@ class ChangePasswordController extends Controller
         if($arrResult->status == "true"){
             Session::flush();
 
-            return redirect()->name('main')->with('message', $arrResult->message);
+            return redirect()->route('main')->with('message', $arrResult->message);
             // return response()->json(["status" => $arrResult->status, "message" => "/login"]);
         }else{
             return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
