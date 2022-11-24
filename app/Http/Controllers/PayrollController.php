@@ -16,6 +16,8 @@ use App\Exports\BonusTHRReportExport;
 use App\Exports\AnnualReportExcel;
 use App\Exports\ExportDataKepesertaanBPJSReportExport;
 use App\Http\Controllers\Redirect;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -434,6 +436,11 @@ class PayrollController extends Controller
     public function pageJournalReport()
     {
         return view('payroll.py_journal_report');
+    }
+
+    public function pageExportSIPPOnline()
+    {
+        return view('payroll.py_export_sipp_online');
     }
 
     public function pageJournalProcess()
@@ -6341,9 +6348,131 @@ public function dataDetailReportFormatPY(Request $request)
         return Excel::download(new AnnualReportExcel($request->year, $request->report_name, ($request->report_status == "annualy") ? true : false, ($request->report_type == "summary") ? true : false, $request->employee_no_from, $request->employee_no_to, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Annual Report.xlsx');
     }
 
+    public function getPaymentSlipPayroll(Request $request){
+        if(isset($request->reqData)){
+            $reqData = $request->reqData;
+            $strDecr = openssl_decrypt($reqData, "AES-128-CBC", "AESMobileMob1234", 0, "AESMobileMob1234");
+            $data = json_decode($strDecr);
+            // var_dump(json_decode($strDecr));
+        }else{
+            $data = [];
+        }
+
+        try{
+            
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $data->token ]
+            ]);
+
+            $param = [
+                'companyCode' => $data->companyCode,
+                'languageCode' => $data->languageCode,
+                'sessionID' => 0,
+                'sessionUserID' => $data->sessionUserID
+            ];
+
+            if(!empty($data->slip_type)){
+                $param['slipType'] = $data->slip_type;
+            }
+
+            if(!empty($data->period)){
+                $param['periode'] = $data->period;
+            }
+
+            if(!empty($data->format_type)){
+                $param['format'] = $data->format_type;
+            }
+
+            if(!empty($data->print_date)){
+                $param['printDate'] = $data->print_date;
+            }
+
+            if(!empty($data->employee_no_from) || isset($data->employee_no_to)){
+                $param['employeeNoFrom'] = $data->employee_no_from;
+                $param['employeeNoTo'] = $data->employee_no_to;
+            }
+
+            if(!empty($data->sort_by) || isset($data->level)){
+                $param['level'] = $data->level;
+                $param['sortByEmployee'] = $data->sort_by == "by_employee_no" ? true : false;
+                $param['sortByLevel'] = $data->sort_by == "by_level" ? true : false;
+            }
+
+            if(!empty($data->group_authorized_from) || isset($data->group_authorized_to)){
+                $param['groupAuthorizedFrom'] = intval($data->group_authorized_from);
+                $param['groupAuthorizedTo'] = intval($data->group_authorized_to);
+            }
+
+            if(!empty($data->display_logo)){
+                $param['displayCompanyLogo'] = $data->display_logo == "0" ? false : true;
+            }
+
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/PrPaymentSlipReport/GetPaymentSlipReport', [
+                'body' => json_encode($param)
+            ]);
+
+            // var_dump($request->format_type);
+        }catch(Exception $e){
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            if($data->format_type == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                if($data->mobile){
+                    return $pdf->stream('Payment Slip.pdf');
+                }else{
+                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    return $pdf->stream('Payment Slip.pdf');
+                }
+            }else{
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                if($data->mobile){
+                    return $pdf->stream('Payment Slip.pdf');
+                }else{
+                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    return $pdf->stream('Payment Slip.pdf');
+                }
+            }
+        }else{
+            if($data->format_type == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                if($data->mobile){
+                    return $pdf->stream('Payment Slip.pdf');
+                }else{
+                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    return $pdf->stream('Payment Slip.pdf');
+                }
+            }else{
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                if($data->mobile){
+                    return $pdf->stream('Payment Slip.pdf');
+                }else{
+                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    return $pdf->stream('Payment Slip.pdf');
+                }
+            }
+        }
+    }
+
     public function printPaymentSlipPayroll(Request $request){
         try{
-            // var_dump(json_encode($request->all()));
+            
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . (isset($request->token) ? $request->token : Session::get('token')) ]
@@ -6351,12 +6480,12 @@ public function dataDetailReportFormatPY(Request $request)
 
             $param = [
                 'companyCode' => (empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode')),
-                'languageCode' => (empty(App::getLocale()) ? $request->languageCode : App::getLocale()),
+                'languageCode' => (!empty($request->languageCode) ? $request->languageCode : App::getLocale()),
                 'sessionID' => 0,
                 'sessionUserID' => (empty(Session::get('userID')) ? $request->sessionUserID : Session::get('userID'))
             ];
 
-            if(!isset($request->mobile)){
+            if(!empty($request->mobile)){
                 $request->mobile = false;
             }
 
@@ -6370,29 +6499,30 @@ public function dataDetailReportFormatPY(Request $request)
 
             if(!empty($request->format_type)){
                 $param['format'] = $request->format_type;
+                $formatType = $request->format_type;
             }
 
             if(!empty($request->print_date)){
                 $param['printDate'] = $request->print_date;
             }
 
-            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+            if(!empty($request->employee_no_from) || isset($data->employee_no_to)){
                 $param['employeeNoFrom'] = $request->employee_no_from;
                 $param['employeeNoTo'] = $request->employee_no_to;
             }
 
-            if(!empty($request->sort_by) || !empty($request->level)){
+            if(!empty($request->sort_by) || isset($data->level)){
                 $param['level'] = $request->level;
                 $param['sortByEmployee'] = $request->sort_by == "by_employee_no" ? true : false;
                 $param['sortByLevel'] = $request->sort_by == "by_level" ? true : false;
             }
 
-            if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+            if(!empty($request->group_authorized_from) || isset($data->group_authorized_to)){
                 $param['groupAuthorizedFrom'] = intval($request->group_authorized_from);
                 $param['groupAuthorizedTo'] = intval($request->group_authorized_to);
             }
 
-            if(isset($request->display_logo)){
+            if(!empty($request->display_logo)){
                 $param['displayCompanyLogo'] = $request->display_logo == "0" ? false : true;
             }
 
@@ -6405,6 +6535,7 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump($request->format_type);
         }catch(Exception $e){
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6422,7 +6553,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                    return $pdf->stream('Payment Slip.pdf');
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -6430,7 +6561,7 @@ public function dataDetailReportFormatPY(Request $request)
             }else{
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                    return $pdf->stream('Payment Slip.pdf');
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -6440,7 +6571,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                    return $pdf->stream('Payment Slip.pdf');
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -6448,7 +6579,7 @@ public function dataDetailReportFormatPY(Request $request)
             }else{
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return base64_encode($pdf->stream('Payment Slip.pdf'));
+                    return $pdf->stream('Payment Slip.pdf');
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -7019,6 +7150,46 @@ public function dataDetailReportFormatPY(Request $request)
             $dataLevel), 
             'Periodical Report.xlsx'
         );
+    }
+
+    public function printExportSIPPOnlinePayroll(Request $request){
+        // return Excel::download(new ExportSIPPOnlineExcel($request->group_bpjs_code)), 'Severance Report.xlsx');
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "bpjsGroup" => $request->group_bpjs_code,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $response = $client->post(env('API_URL').'/exportsipponline/getexportsipponline', [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet != null){
+            $file1 = Excel::raw(new ExportSIPPOnlineFile1Export($arrResult->dataListSet[0]->file1), \Maatwebsite\Excel\Excel::XLSX);
+            var_dump($file1);
+        }
     }
 
 }

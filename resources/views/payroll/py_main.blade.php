@@ -338,7 +338,7 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/export_sipp_online_report') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/export_sipp_online') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.export_sipp_online_report') }}</span>
 							</a>

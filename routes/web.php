@@ -560,7 +560,7 @@ Route::get('payroll/spt_pph_report', 'PayrollController@pageSPTPPHReport');
 Route::get('payroll/signature_list_report', 'PayrollController@pageSignatureListReport');
 Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveReport');
 Route::get('payroll/export_data_kepesertaan_bpjs_tk_report', 'PayrollController@pageExportDataKepesertaanBPJSTKReport');
-Route::get('payroll/export_sipp_online_report', 'PayrollController@pageExportSIPPOnlineReport');
+Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSIPPOnline');
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
@@ -680,6 +680,7 @@ Route::post('payroll/severance_report/print', 'PayrollController@printSeveranceR
 Route::post('payroll/severance_report/print/excel', 'PayrollController@printSeveranceReportPayrollExcel');
 Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
 Route::post('payroll/journal_report/print/excel', 'PayrollController@printJournalReportPayrollExcel');
+Route::get('payroll/payment_slip/get', 'PayrollController@getPaymentSlipPayroll');
 Route::post('payroll/payment_slip/print', 'PayrollController@printPaymentSlipPayroll');
 Route::post('payroll/salary_historical_report/print', 'PayrollController@printSalaryHistoricalReportPayroll');
 Route::post('payroll/salary_historical_report/print/excel', 'PayrollController@printSalaryHistoricalReportPayrollExcel');
@@ -699,6 +700,7 @@ Route::post('payroll/export_sipp_online_report/print', 'PayrollController@printL
 Route::post('payroll/annual_report/print', 'PayrollController@printAnnualReportPayroll');
 Route::post('payroll/annual_report/print/excel', 'PayrollController@printAnnualReportPayrollExcel');
 Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPeriodicalReportPayrollExcel');
+Route::post('payroll/export_sipp_online/print', 'PayrollController@printExportSIPPOnlinePayroll');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
