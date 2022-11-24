@@ -13,7 +13,7 @@ class HomeController extends Controller
         if(Session::has('token')){
     		return view('main');
     	}else{
-    		return redirect('login');
+    		return redirect()->name('login');
     	}
     }
 

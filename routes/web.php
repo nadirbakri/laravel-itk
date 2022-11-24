@@ -34,7 +34,7 @@ Route::get('/cache-config', function() {
 
 
 /* Route Untuk Halaman Login */
-Route::get('login', 'LoginController@pageLogin');
+Route::get('login', 'LoginController@pageLogin')->name('login');
 Route::post('login/proses', 'LoginController@prosesLogin');
 Route::get('logout', 'LoginController@prosesLogout');
 Route::post('authentication/proses', 'LoginController@prosesAuthentication');

@@ -707,6 +707,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2327,7 +2328,7 @@ class TimeManagementController extends Controller
                 ];
             }
 
-            var_dump(json_encode($param));
+            // var_dump(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]

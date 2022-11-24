@@ -9,7 +9,8 @@ return [
     'label_position' => 'Posisi',
     'label_period' => 'Periode',
     'btn_edit' => 'Ubah',
-    'btn_save' => 'Simpan'
+    'btn_save' => 'Simpan',
+    'alert_success' => 'Sukses'
 ]
 
 ?>
