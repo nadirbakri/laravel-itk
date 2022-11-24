@@ -8,7 +8,8 @@ return [
     'label_user_id' => 'User ID',
     'btn_search' => 'Search',
     'btn_list' => 'List',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'detail' => 'Detail'
 ]
 
 ?>
