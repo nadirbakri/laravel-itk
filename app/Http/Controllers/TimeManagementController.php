@@ -42,6 +42,11 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_update_absenteeism_data');
     }
 
+    public function pageUpdateAbsenteeismProcess()
+    {
+        return view ('time_management.tm_update_absenteeism_process');
+    }
+
     public function pageAbsenteeismDataEntryByEmployeeNo()
     {
         return view ('time_management.tm_absenteeism_data_entry_by_employee_no');
@@ -1891,6 +1896,63 @@ class TimeManagementController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesUpdateAbsenteeismProcessTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump(json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    "employeeNoFrom" => $request->employee_no_from,
+                    "employeeNoTo" => $request->employee_no_to,
+                    "absentDateFrom" => $request->absent_date_from,
+                    "absentDateTo" => $request->absent_date_to,
+                    'sessionID' => 0,
+                    'userID' => Session::get('userID'), 
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => App::getLocale()
+                ]
+                ));
+            
+            // $response = $client->post(env('API_URL') . '/updateabsenteeismprocess/updateabsenteeismprocess',
+            //     ['body' => json_encode(
+            //         [
+            //             'companyCode' => Session::get('companyCode'),
+            //             "employeeNoFrom" => $request->employee_no_from,
+            //             "employeeNoTo" => $request->employee_no_to,
+            //             "absentDateFrom" => $request->absent_date_from,
+            //             "absentDateTo" => $request->absent_date_to,
+            //             'sessionID' => 0,
+            //             'userID' => Session::get('userID'), 
+            //             'logActionUserID' => Session::get('userID'),
+            //             'logActionUsername' => Session::get('userName'),
+            //             "languageCode" => App::getLocale()
+            //         ]
+            //     )]
+            // );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        // $arrResult = json_decode($response->getBody()->getContents());
+
+        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function prosesShiftMasterCodeTM(Request $request)

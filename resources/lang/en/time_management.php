@@ -18,6 +18,7 @@ return [
     'time_recording' => 'Time Recording',
     'time_recording_process_form' => 'Time Recording Process Form',
     'update_absenteeism_data' => 'Update Absenteeism Data',
+    'update_absenteeism_process' => 'Update Absenteeism Process',
     'input_balance_leave' => 'Input Balance Leave',
     'leave_transaction_by_employee_no' => 'Leave Transaction By Employee No',
     'absenteeism_data_entry_by_employee_no' => 'Absenteeism Data Entry By Employee No',

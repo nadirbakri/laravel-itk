@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="group_bpjs_code">{{ __('payroll_export_sipp_online.label_group_bpjs') }}</label>
                         </div>
@@ -136,12 +136,27 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" id="btn-print" style="width:100%">
-                            <i class="fa fa-print"></i> {{ __('payroll_export_sipp_online.label_print') }}
+                            <i class="fa fa-download"></i> {{ __('payroll_export_sipp_online.label_download') }}
                         </button>
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -158,6 +173,8 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script src="{{ asset('js/Blob.js') }}"></script>
+<script src="{{ asset('js/FileSaver.js') }}"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -210,7 +227,7 @@
 
             var $authorizedCode = $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Authorized Code',
+                placeholder: 'Choose BPJS Code',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -288,30 +305,39 @@
                         url: "{{ url('payroll/export_sipp_online/print') }}",
                         type: "POST",
                         data: $('#export_sipp_online_form').serialize(),
-                        success: function (result, status, xhr) {
+                        success: function(result, status, xhr){
                             $("#btn-print").prop("disabled", false);
                             $("#btn-print").html(
                                 '<i class="fa fa-play-circle-o"></i> {{ __("payroll_export_sipp_online.btn_process") }}'
                             );
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
+                                'test.zip');
+
+                            if(matches != null){
+                                // The actual download
+                                var blob = new Blob([result], {
+                                    type: 'application/octet-stream'
+                                });
+                                // console.log(blob);
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = filename;
+                                
+                                document.body.appendChild(link);
+
+                                link.click();
+                                document.body.removeChild(link);
+
+                                clicked = "";
+                            }else{
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html("Data Not Found");
+                            }
+
                             
-                            var disposition = xhr.getResponseHeader('content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
-
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
-                            
-                            document.body.appendChild(link);
-
-                            link.click();
-                            document.body.removeChild(link);
-
-                            clicked = "";
                         },
                         error: function (response) {
                             $("#btn-print").prop("disabled", false);
@@ -319,8 +345,8 @@
                                 '<i class="fa fa-play-circle-o"></i> {{ __("payroll_export_sipp_online.btn_process") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

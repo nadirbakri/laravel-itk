@@ -798,8 +798,8 @@
                             $("#btn-print-data").html(
                                 '<i class="fa fa-print"></i> {{ __("personel_employee_card.btn_print") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

@@ -641,8 +641,8 @@
                     $("#btn-download-template").html(
                         '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel.btn_download_template") }}'
                     );
-                    $('#notification').modal('show');
-                    $('#message-notification').html(response);
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
                 }
             });
         });
@@ -731,8 +731,8 @@
                             $("#btn-process").html(
                                 '<i class="fa fa-play-circle-o"></i> {{ __("payroll_import_data_from_excel.btn_process") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

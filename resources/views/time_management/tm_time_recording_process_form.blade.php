@@ -479,8 +479,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_upload") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }
@@ -580,8 +580,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_delete") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

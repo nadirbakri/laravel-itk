@@ -959,8 +959,8 @@
                             $("#btn-print-data").html(
                                 '<i class="fa fa-print"></i> {{ __("tm_absenteeism_overtime_report.btn_print") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

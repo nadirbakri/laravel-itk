@@ -18,6 +18,7 @@ return [
     'time_recording' => 'Waktu Perekaman',
     'time_recording_process_form' => 'Formulir Proses Pencatatan Waktu',
     'update_absenteeism_data' => 'Memperbarui Data Absensi',
+    'update_absenteeism_process' => 'Memperbarui Proses Absensi',
     'input_balance_leave' => 'Masukan Saldo Cuti',
     'leave_transaction_by_employee_no' => 'Tinggalkan Transaksi Berdasarkan Nomor Karyawan',
     'absenteeism_data_entry_by_employee_no' => 'Absensi Data Entri Berdasarkan Nomor Karyawan',

@@ -124,8 +124,8 @@
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="type_pph_1721a" name="spt_type" value="pph_1721a" checked>
-                            <label for="type_pph_1721a">{{ __('payroll_spt_pph_report.label_pph_1721a') }}</label>
+                            <input type="radio" id="type_pph_1721i" name="spt_type" value="pph_1721i" checked>
+                            <label for="type_pph_1721i">{{ __('payroll_spt_pph_report.label_pph_1721i') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
@@ -348,7 +348,7 @@
         $('#div_employee_no').hide();
 
         $('input[type=radio][name=spt_type]').change(function() {
-            if (this.value == 'pph_1721a') {
+            if (this.value == 'pph_1721i') {
                 $('#div_report_format').show();
                 $('#div_employee_no').hide();
                 $('#div_period').show();
@@ -759,8 +759,8 @@
                                 $('#btn-send-to').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
                                 );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
                             }
                         });
                     }
@@ -841,8 +841,8 @@
                                 $('#btn-preview').html(
                                     '<i class="fa fa-eye"></i> {{ __("payroll_spt_pph_report.btn_preview") }}'
                                 );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
                             }
                         });
                     }

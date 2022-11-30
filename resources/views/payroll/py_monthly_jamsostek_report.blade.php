@@ -434,7 +434,7 @@
 
             var $authorizedCode = $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Authorized Code',
+                placeholder: 'Choose BPJS Code',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,

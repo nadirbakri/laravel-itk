@@ -14,7 +14,12 @@ use App\Exports\RetroactiveReportExport;
 use App\Exports\PeriodicalReportExport;
 use App\Exports\BonusTHRReportExport;
 use App\Exports\AnnualReportExcel;
+use App\Exports\LoanReportExcel;
 use App\Exports\ExportDataKepesertaanBPJSReportExport;
+use App\Exports\ExportSIPPOnlineFile1Export;
+use App\Exports\ExportSIPPOnlineFile2Export;
+use App\Exports\ExportSIPPOnlineFile3Export;
+use App\Exports\ExportSIPPOnlineFile4Export;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -29,6 +34,8 @@ use File;
 use DataTables;
 use Excel;
 use PDF;
+use Zip;
+use ZipArchive;
 use PhpParser\Node\NullableType;
 
 class PayrollController extends Controller
@@ -792,6 +799,11 @@ class PayrollController extends Controller
     public function pageAnnualReport()
     {
         return view('payroll.py_annual_report');
+    }
+
+    public function pageLoanReport()
+    {
+        return view('payroll.py_loan_report');
     }
 
     public function pageSPTReport()
@@ -4034,7 +4046,19 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump($request->output_file);
+            if($request->output_file == 'bca'){
+
+            }else if($request->output_file == 'mcm_mandiri'){
+
+            }else if($request->output_file == 'bot'){
+
+            }else if($request->output_file == 'btpn'){
+
+            }else if($request->output_file == 'ina' || $request->output_file == 'ina_ma'){
+
+            }else if($request->output_file == 'mandiri'){
+
+            }else
 
             var_dump(json_encode(
                 [
@@ -6348,12 +6372,20 @@ public function dataDetailReportFormatPY(Request $request)
         return Excel::download(new AnnualReportExcel($request->year, $request->report_name, ($request->report_status == "annualy") ? true : false, ($request->report_type == "summary") ? true : false, $request->employee_no_from, $request->employee_no_to, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Annual Report.xlsx');
     }
 
+    public function printLoanReportPayrollExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+        return Excel::download(new LoanReportExport($request->employee_no_from, $request->employee_no_to, $request->loan_type_from, $request->loan_type_to, $request->report_type, $request->loan_type_one, $request->loan_type_two, $request->loan_type_three, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Loan Report.xlsx');
+    }
+
     public function getPaymentSlipPayroll(Request $request){
         if(isset($request->reqData)){
             $reqData = $request->reqData;
             $strDecr = openssl_decrypt($reqData, "AES-128-CBC", "AESMobileMob1234", 0, "AESMobileMob1234");
             $data = json_decode($strDecr);
-            // var_dump(json_decode($strDecr));
         }else{
             $data = [];
         }
@@ -6551,17 +6583,17 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -6569,19 +6601,19 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    // $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7175,6 +7207,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -7187,8 +7220,22 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet != null){
+            unlink(public_path() . '/' . $arrResult->dataListSet[0]->filenamezip . '.zip');
             $file1 = Excel::raw(new ExportSIPPOnlineFile1Export($arrResult->dataListSet[0]->file1), \Maatwebsite\Excel\Excel::XLSX);
-            var_dump($file1);
+            $file2 = Excel::raw(new ExportSIPPOnlineFile2Export($arrResult->dataListSet[0]->file2), \Maatwebsite\Excel\Excel::XLSX);
+            $file3 = Excel::raw(new ExportSIPPOnlineFile3Export($arrResult->dataListSet[0]->file3), \Maatwebsite\Excel\Excel::XLSX);
+            $file4 = Excel::raw(new ExportSIPPOnlineFile4Export($arrResult->dataListSet[0]->file4), \Maatwebsite\Excel\Excel::XLSX);
+            $zip = Zip::create($arrResult->dataListSet[0]->filenamezip . '.zip');
+            $zip->addFromString($arrResult->dataListSet[0]->file1name . '.xlsx', $file1);
+            $zip->addFromString($arrResult->dataListSet[0]->file2name . '.xlsx', $file2);
+            $zip->addFromString($arrResult->dataListSet[0]->file3name . '.xlsx', $file3);
+            $zip->addFromString($arrResult->dataListSet[0]->file4name . '.xlsx', $file4);
+            $zip->close();
+            // $headers = array(
+            //     'Content-Type' => 'application/octet-stream',
+            // );
+            return response()->download(public_path() . '/' . $arrResult->dataListSet[0]->filenamezip . '.zip', $arrResult->dataListSet[0]->filenamezip . '.zip');
+            // return response()->json(file_get_contents($zip->getArchive()->filename));
         }
     }
 

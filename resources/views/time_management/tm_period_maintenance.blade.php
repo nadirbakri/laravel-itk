@@ -922,8 +922,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

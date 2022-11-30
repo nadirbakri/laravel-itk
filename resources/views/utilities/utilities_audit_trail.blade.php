@@ -502,8 +502,8 @@
                                 '<i class="fa fa-download"></i> {{ __("utilities_audit_trail.btn_export_to_excel") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }
