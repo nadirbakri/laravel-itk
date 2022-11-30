@@ -206,7 +206,7 @@
                             <table id="workflow_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Detail</th>
                                         <th>Request Date</th>
                                         <th>Employee ID</th>
                                         <th>Employee Name</th>
@@ -218,8 +218,9 @@
                                         <th>Remarks</th>
                                         <th>Leave Duration</th>
                                         <th>Approved By</th>
-                                        {{-- <th>Approved Date</th>
-                                        <th>Approved Remarks</th> --}}
+                                        <th>Ticket No</th>
+                                        <th>Approval Remarks</th>
+                                        {{-- {{-- <th>Approved Date</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -524,6 +525,8 @@
                     {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
                     {data: 'permitEntity.time', name: 'permitEntity.time'},
                     {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
+                    {data: 'permitEntity.ticketNo', name: 'permitEntity.ticketNo'},
+                    {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
                     // {data: 'permitEntity.fullnameRequester', name: 'fullnameRequester'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
@@ -590,6 +593,8 @@
                     {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
                     {data: 'leaveEntity.leaveDurationDepan', name: 'leaveDurationDepan'},
                     {data: 'leaveEntity.createdBy', name: 'createdBy'},
+                    {data: 'leaveEntity.ticketNo', name: 'ticketNo'},
+                    {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
                         // {
                         //     data: 'leaveBalanceBeforeExpiredDate', 
                         //     name: 'leaveBalanceBeforeExpiredDate',
@@ -686,6 +691,26 @@
         $('.close').click();
         // let fullname = $(element).parent().siblings('td').eq(1).text()
         // let division = $(element).parent().siblings('td').eq(2).text()
+        // let rankingname = $(element).parent().siblings('td').eq(3).text()
+        // alert(data1)
+    }
+   
+    const klikdetail = (element) => {
+        let request_date = $(element).parent().siblings('.sorting_1').text()
+        let ticket_number = $(element).parent().siblings('td').eq(9).text()
+        let status = $(element).parent().siblings('td').eq(3).text()
+        let approvalremarks = $(element).parent().siblings('td').eq(10).text()
+        var business_unit = $("#business_unit").val();
+
+        $('#reqdate').val(request_date)
+        $('#recdate').val(request_date)
+        $('#tiketno').val(ticket_number)
+        $('#status').val(status)
+        $('#b_unit').val(business_unit)
+        $('#approvalremarks').val(approvalremarks)
+
+        $('.close').click();
+        // let division = $(elemt).parent().siblings('td').eq(2).text()
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
         // alert(data1)
     }

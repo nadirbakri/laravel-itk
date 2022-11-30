@@ -743,6 +743,7 @@ Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
 Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
+Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
@@ -887,11 +888,15 @@ Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataH
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
+Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
+Route::get('master_data/list_email/table', 'MasterDataController@tabelDetailEmail');
 Route::get('master_data/direct_approval/table', 'MasterDataController@tableDirectApproval');
 Route::get('master_data/employee_group_detail/table', 'MasterDataController@tableEmployeeGroupDetail');
 Route::get('master_data/tambah_user/table', 'MasterDataController@tableEmployeeGroupTambahUser');
 Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHolidayCalendar');
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
+Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
+Route::post('master_data/employee_group_detail/proses', 'MasterDataController@prosesEmployeeGroupDetail');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');
@@ -900,6 +905,8 @@ Route::get('admin_menu/user_group', 'AdminMenuController@pageAdminMenuUserGroup'
 Route::get('admin_menu/menu_master', 'AdminMenuController@pageAdminMenuMaster');
 Route::get('admin_menu/checkin_list', 'AdminMenuController@pageAdminMenuCheckinList');
 Route::get('admin_menu/news_master', 'AdminMenuController@pageAdminMenuNewsMaster');
+Route::get('adm_main_menu/news_master/list', 'AdminMenuController@pageAdminNewsList');
+Route::get('admin_menu/news_master/proses', 'AdminMenuController@pageAdminMenuNews');
 
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');

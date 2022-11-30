@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('data_employee_group_detail.judul') }}</title>
+    <title>{{ __('data_employee_master.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -139,65 +139,68 @@
             <h1>
                 <a href="{{ url('master_data') }}" target="iframe_dashboard">
                     <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                    <span class="title-text">{{ __('data_employee_group_detail.judul') }}</span>
+                    <span class="title-text">{{ __('data_employee_group.judul') }}</span>
                 </a>
             </h1>
             <hr>
         </div>
-        <form id="trans_mass-leave_form" method="post">
+        <form id="md_employee_group" method="post">
             @csrf
             <div class="card" >
                 <div class="card-header">
-                {{ __('data_employee_group_detail.judul2') }}
+                {{ __('data_employee_group.judul2') }}
                 </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group_detail.formgroupname1') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname1') }}</b></label>
                         </div>
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control"  id="list_code" name="list_code" data-toggle="modal" data-target="#modal_list_mass_leave">                        </div>
+                        <input type="text" class="form-control" id="group_code" name="group_code" >                        
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group_detail.formgroupname2') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group_detail.judul2') }}</b></label>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-10">
-                    <table id="mass_leave_table" class="table table-bordered">
+                    <table id="exampletwo" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Employee No</th>
+                                <th>User ID</th>
                                 <th>Full Name</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td  id="group_code1" name="group_code1"></td>
+                                <td id="ceklis" name="ceklis"></td>
+                                <td id="group_code1" name="group_code1"></td>
                                 <td id="group_code2" name="group_code2"></td>
                             </tr>
                         </tbody>
                     </table>
-                    <button class="buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_mass_leavee" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+
+                    <button class="btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_group_two" type="button">
+                        <i class="fa fa-plus"></i>
                     </button>
-                    <button  class="buttonadd btn-danger">
+                    <button class="btn-danger buttonadd" name="btn-delete" id="btn-delete" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg>
                     </button>
                     </div>
                 </div> 
                 <br>
+
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -205,30 +208,30 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-10">
-                    <table id="mass_leave_table" class="table table-bordered">
+                    <table id="exampleemail" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Group ID</th>
                                 <th>Group Name</th>
-                                <th >Apa aja</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td  id="group_id" name="group_id"></td>
+                                <td id="ceklis" name="ceklis"></td>
+                                <td id="group_id" name="group_id"></td>
                                 <td id="group_name" name="group_name"></td>
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-primary buttonadd" name="btn-add2" id="btn-add2" data-toggle="modal" data-target="#modal_list_email_settings" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+
+                    <button class="btn btn-primary buttonadd" name="btn-add2" id="btn-add2" data-toggle="modal" data-target="#modal_list_group_email_setting" type="button">
+                        <i class="fa fa-plus"></i>
                     </button>
-                    <button  class="buttonadd btn-danger">
+                    <button class="btn-danger buttonadd" name="btn-delete2" id="btn-delete2" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg>
                     </button>
@@ -237,23 +240,31 @@
                 <br>
                 <!-- BUTOON -->
                 <div class="row">
-                    <div class="col">
-                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                                        Save
-                        </button>     
-                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                                        Cancel
-                        </button>     
-                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_group">
+                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        </button>
+                    </div>   
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
+                            style="width: 100%;">
+                            <i class="fa fa-floppy-o"></i> {{ __('md_claim_transaction.btn_save') }}
+                        </button>
+                    </div>        
                 </div>  
             </div>
         </form>
     </div>
 
+{{-- modal btn-list --}}
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
-            <div class="modal fade" id="modal_list_mass_leave">
+            <div class="modal fade" id="modal_list_group">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -268,85 +279,47 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Group Code</th>
-                                    <th>Employee ID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>       
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                    
-            </div>
-        </form>
-    </div>
-
-    {{-- modal tambah user --}}
-    <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_mass_leavee">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-little">Tambah User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <div class="modal-body table-responsive">
-                        <table id="exampletwo" class="display">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Employee No</th>
-                                    <th>Full Name</th>
-                                    {{-- <th>Group Name</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>       
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                    
-            </div>
-        </form>
-    </div>
-
-    {{-- modal email settings --}}
-    <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_email_settings">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-little">Email Settings</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <div class="modal-body table-responsive">
-                        <table id="emailsettings" class="display">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Group ID</th>
                                     <th>Group Name</th>
-                                    {{-- <th>Group Name</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+            </div>
+        </form>
+    </div>
+
+
+    {{-- modal btn-add --}}
+
+    <div class="div-form">
+        <form id="payroll_calculation_detail_two_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_group_two">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">List User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="examplethree" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User ID</th>
+                                    <th>Full Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -365,6 +338,44 @@
         </form>
     </div>
     
+    {{-- modal btn-add2 --}}
+    <div class="div-form">
+        <form id="payroll_calculation_detail_two_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_group_email_setting">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">List User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="modalexampleemail" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Group ID</th>
+                                    <th>Group Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+            </div>
+        </form>
+    </div>
+
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -402,10 +413,18 @@
     </div>
 </body>
 <script>
-     $(document).ready(function () {
+    $(document).ready(function () {
         $('table.display').DataTable();
+
+        // $('#exampletwo').DataTable().destroy();
+        // load_data_approval_table();
     });
+    
+    // $('#btn-add').click(e=>{
+    //     e.prefentDefault()
+    // })
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -420,14 +439,18 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script>
-     $('#list_code').click(()=> {
+    var table3 = null;
+    var table5 = null;
+    var arrApproval = [];
+    var arrEmailSettings = [];
+   $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/employee_group_detail/table') }}"             
+                url : "{{ url('master_data/list_detail/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -445,8 +468,7 @@
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
-                {data: 'employeeID', name: 'employeeID'},
-                // {data: 'employeeID', name: 'employeeID'},
+                {data: 'groupName', name: 'groupName'},
             ],
             select: {
                 style:    'multi',
@@ -456,29 +478,127 @@
         });        
     })
 
-    const klik = (element)
+    $('#btn-delete').click(()=>{
+        table3.rows('.selected').remove().draw()
+    })
+   
+    $('#btn-delete2').click(()=>{
+        table5.rows('.selected').remove().draw()
+    })
+
+    function load_data_approval_table(){
+        $('#exampletwo').DataTable().destroy();
+        table3 = $('#exampletwo').DataTable({
+                processing: true,
+                data: arrApproval,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                "order": [[ 1, "asc" ]],
+                paging: false,
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                }
+                    },
+                    {data: 'employeeNo', name: 'employeeNo',
+                    render: function (data, type, row) {
+
+                        return '<input type="hidden" class="form-control" name="employeeNo[]" value="' +
+
+                            data + '">' + data;
+
+                        }
+                    },
+                    {data: 'fullName', name: 'fullName',
+                    render: function (data, type, row) {
+
+                    return '<input type="hidden" class="form-control" name="fullName[]" value="' +
+
+                        data + '">' + data;
+
+                    }}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }, 
+                
+            }); 
+        } 
+
+        function load_data_email_table(){
+        $('#exampleemail').DataTable().destroy();
+        table5 = $('#exampleemail').DataTable({
+                processing: true,
+                data: arrEmailSettings,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                "order": [[ 1, "asc" ]],
+                paging: false,
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                }
+                    },
+                    {data: 'groupID', name: 'groupID',
+                    render: function (data, type, row) {
+
+                        return '<input type="hidden" class="form-control" name="groupID[]" value="' +
+
+                            data + '">' + data;
+
+                        }
+                    },
+                    {data: 'groupName', name: 'groupName',
+                    render: function (data, type, row) {
+
+                    return '<input type="hidden" class="form-control" name="groupName[]" value="' +
+
+                        data + '">' + data;
+
+                    }}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }, 
+                
+            }); 
+        } 
 
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
-        let fullname = $(element).parent().siblings('td').eq(1).text()
-
-        $('#list_code').val(employee_id)
-        $('#group_name').val(fullname)
+        $('#group_code').val(employee_id)
 
         $('.close').click();
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
+        arrApproval = table2.row($(element).parent()).data().member;
+        arrEmailSettings = table2.row($(element).parent()).data().emailSettings;
+        load_data_approval_table();
+        load_data_email_table();
     }
 
+    
+
     $('#btn-add').click(()=> {
-        $('#exampletwo').DataTable().destroy();
-        table2 = $('#exampletwo').DataTable({
+        $('#examplethree').DataTable().destroy();
+        table4 = $('#examplethree').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/tambah_user/table') }}"             
+                url : "{{ url('transaction/list/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -505,29 +625,29 @@
             
         });        
     })
-
     const klikk = (element) => {
+        var count = table3.data().count();
+        var appCode = $(element).parent().siblings('.sorting_1').text();
+        let fullname = $(element).parent().siblings('td').eq(1).text();
+        // console.log(appCode);
+        $('.close').click();
+        table3.row.add({
+            'no' : '<input class="chk-select" type="checkbox">',
+            'employeeNo' : appCode,
+            'fullName' : fullname
+        }).draw();
+        // arrApproval = table4.row($(element).parent()).data().directApproval;
+        // load_data_approval_table();
+    }
 
-    let employee_id = $(element).parent().siblings('.sorting_1').text()
-    let fullname = $(element).parent().siblings('td').eq(1).text()
-    $('#group_code1').text(employee_id)
-    $('#group_code2').text(fullname)
-
-    $('.close').click();
-    // let division = $(element).parent().siblings('td').eq(2).text()
-    // let rankingname = $(element).parent().siblings('td').eq(3).text()
-    // alert(data1)
-}
-</script>
-<script>
-      $('#btn-add2').click(()=> {
-        $('#emailsettings').DataTable().destroy();
-        table2 = $('#emailsettings').DataTable({
+    $('#btn-add2').click(()=> {
+        $('#modalexampleemail').DataTable().destroy();
+        tableemail = $('#modalexampleemail').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/email_settings/table') }}"             
+                url : "{{ url('master_data/list_detail/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -541,11 +661,11 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klikkk(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                        return type === 'display'? '<button type="button"  onclick="klikemail(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
-                {data: 'ccGroupCode', name: 'ccGroupCode'},
+                {data: 'groupName', name: 'groupName'},
             ],
             select: {
                 style:    'multi',
@@ -554,18 +674,88 @@
             
         });        
     })
-
-    const klikkk = (element) => {
-
-    let employee_id = $(element).parent().siblings('.sorting_1').text()
-    let fullname = $(element).parent().siblings('td').eq(1).text()
-    $('#group_id').text(employee_id)
-    $('#group_name').text(fullname)
-
-    $('.close').click();
-    // let division = $(element).parent().siblings('td').eq(2).text()
-    // let rankingname = $(element).parent().siblings('td').eq(3).text()
-    // alert(data1)
+    const klikemail = (element) => {
+        var count = table5.data().count();
+        var groupid = $(element).parent().siblings('.sorting_1').text();
+        let groupname = $(element).parent().siblings('td').eq(1).text();
+        // console.log(appCode);
+        $('.close').click();
+        table5.row.add({
+            'no' : '<input class="chk-select" type="checkbox">',
+            'groupID' : groupid,
+            'groupName' : groupname
+        }).draw();
+        // arrApproval = table4.row($(element).parent()).data().directApproval;
+        // load_data_approval_table();
     }
+     
 </script>
+<script>
+      $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#md_employee_group").submit();
+        });
+
+        if ($("#md_employee_group").length > 0) {
+                $("#md_employee_group").validate({
+                    submitHandler: function (form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "{{ url('master_data/employee_group_detail/proses') }}",
+                            type: "POST",
+                            data: $('#md_employee_group').serialize(),
+                            success: function (response) {
+                                if (response.status == "true"){
+                                    $("#btn-save").prop("disabled", false);
+                                    $("#btn-save").html(
+                                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                                    );
+                                    
+                                    $('#notification_success').modal('show');
+                                    $('#message-notification-success').html(response
+                                    .message);
+                                    setTimeout(function () {
+                                    window.location =
+                                        "{{ url('master_data/employee_group_detail') }}";
+                                    }, 3000);
+                                } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> Save'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
+                            );
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
+                        }
+                    });
+                }
+            })
+        }
+  
+
+</script>
+
 </html>

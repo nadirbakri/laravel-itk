@@ -364,20 +364,20 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                        'businessUnit' => $request->businessUnit,
-                        'employeeNo'=> $request->employeeNo,
-                        'type' => "TOT",
-                        'exportMenu' => false,
-                        'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
-                        'sessionID' => 0, 
-                        'sessionUserID' => Session::get('userID'),
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'businessUnit' => $request->businessUnit,
+            //             'employeeNo'=> $request->employeeNo,
+            //             'type' => "TOT",
+            //             'exportMenu' => false,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
+            //     ]
+            //     ));
             $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
                 ['body' => json_encode(
                     [
@@ -599,21 +599,21 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                    'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                    'exportMenu' =>false,
-                    'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
-                    'type' =>  $request->type,
-                    'businessUnit'=> $request->businessUnit,
-                    'directSuperiorID'=> $request->directSuperiorID,
-                    'companyCode' => Session::get('companyCode'), 
-                    'languageCode' => App::getLocale(), 
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'exportMenu' =>false,
+            //         'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+            //         'type' =>  $request->type,
+            //         'businessUnit'=> $request->businessUnit,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
+            //     ]
+            //     ));
 
             $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
                 ['body' => json_encode(
@@ -710,25 +710,25 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'status'=> $request->status,
-            //         'totalPaidMonth'=> $request->totalPaidMonth,
-            //         'ticketNo' => $request->ticketNo
-            //     ]
-            //     ));
+            var_dump(json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    'languageCode' => App::getLocale(), 
+                    'sessionUserID' => Session::get('userID'),
+                    'directSuperiorID'=> $request->directSuperiorID,
+                    // 'employeeNo' => $request->employeeNo,
+                    // 'logActionUserID' => Session::get('userID'),
+                    // 'logActionUsername' => Session::get('userName'),
+                    // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                    // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                    // 'processDate' => $request->processDate, 
+                    // 'type' =>  $request->transportType,
+                    // 'businessUnit'=> $request->businessUnit,
+                    'status'=> $request->status,
+                    'totalPaidMonth'=> $request->totalPaidMonth,
+                    'ticketNo' => $request->ticketNo
+                ]
+                ));
 
             $response = $client->put(env('API_URL') . '/tmreimbursement/updatereimbursementapproval',
                 ['body' => json_encode(
@@ -751,6 +751,91 @@ class TransactionController extends Controller
                         'status'=> $request->status,
                         'totalPaidMonth'=> $request->totalPaidMonth,
                         'ticketNo' => $request->ticketNo
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+   
+    public function tableUpdateTransMedical(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //             'companyCode' => Session::get('companyCode'),
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionUserID' => Session::get('userID'),
+            //             'directSuperiorID'=> $request->directSuperiorID,
+            //             // 'employeeNo' => $request->employeeNo,
+            //             // 'logActionUserID' => Session::get('userID'),
+            //             // 'logActionUsername' => Session::get('userName'),
+            //             // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //             // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //             // 'processDate' => $request->processDate, 
+            //             // 'type' =>  $request->transportType,
+            //             // 'businessUnit'=> $request->businessUnit,
+            //             'approvalRemarks'=> 'string',
+            //             'logActionUserID'=> 'string',
+            //             'logActionUsername'=> 'string',
+            //             'status'=> $request->status,
+            //             'paidAmount'=> $request->paidAmount,
+            //             'ticketNo' => $request->ticketNo
+            //     ]
+            //     ));
+
+            $response = $client->put(env('API_URL') . '/reimbursementmedical/updatereimbursementapproval',
+                ['body' => json_encode(
+                    [
+                        'status'=> $request->status,
+                        'companyCode' => Session::get('companyCode'),
+                        'ticketNo' => $request->ticketNo,
+                        'directSuperiorID'=> $request->directSuperiorID,
+                        'sessionUserID' => Session::get('userID'),
+                        'languageCode' => App::getLocale(), 
+                        'TotalPaidMonth'=> $request->TotalPaidMonth
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        // 'approvalRemarks'=> 'string',
+                        // 'logActionUserID'=> 'string',
+                        // 'logActionUsername'=> 'string',
+                        // {"status": "APPROVED",
+                        //     "companyCode": "ITK",
+                        //     "ticketNo": "2022R000001",
+                        //     "directSuperiorID": "0809",
+                        //     "sessionUserID": "edwin",
+                        //     "languageCode": "ID",
+                        //    "totalPaidMonth" : 500
+                        //     }
+                       
                     ]
                 )]
             );

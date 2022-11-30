@@ -231,7 +231,7 @@
                             <table id="transport_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        <th>Detail</th>
                                         <th>Receipt Date</th>
                                         <th>Status</th>
                                         <th>Ticket Number</th>
@@ -241,6 +241,11 @@
                                         <th>Customer Name</th>
                                         <th>Start Location</th>
                                         <th>End Location</th>
+                                        <th>Total Request</th>
+                                        <th>Total Paid</th>
+                                        <th>Remarks</th>
+                                        <th>Parking</th>
+                                        <th>Toll</th>
                                         {{-- <th>Remarks</th> --}}
                                     </tr>
                                 </thead>
@@ -299,6 +304,129 @@
             </div>
         </form>
     </div>
+
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_detail">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">Detail Transport</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row detailstatus">
+                                    <div class="col-3  ">
+                                        <h5>Request Date</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Receipt Date</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Ticket Number</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Status</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Business Unit</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Claim Type</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Employee Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="employeename" name="employeename" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Employee Number</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Total Claim</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Dependent Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                </div>
+                            
+                                <br>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Status</h5>
+                                    </div>
+                                    <div class="col-5">
+                                            <select name="" id="reimbursement_status" class="custom-select">
+                                                <option value="APPROVED">APPROVED</option>
+                                                <option value="REJECTED">REJECTED</option>
+                                                <option value="PAID">PAID</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Total Paid</h5>
+                                    </div>
+                                    <div class="col-5">
+                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
+                                    </div>
+                                </div>
+                                <hr>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -662,7 +790,7 @@ loadDataAllTransport();
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
                     {data: 'transportEntity.receiptDate', name: 'receiptDate', 
@@ -678,6 +806,11 @@ loadDataAllTransport();
                     {data: 'transportEntity.customerName', name: 'customerName'},
                     {data: 'transportEntity.startLocation', name: 'startLocation'},
                     {data: 'transportEntity.endLocation', name: 'endLocation'},
+                    {data: 'transportEntity.totalAmount', name: 'totalAmount'},
+                    {data: 'transportEntity.paidAmount', name: 'paidAmount'},
+                    {data: 'transportEntity.remarks', name: 'remarks'},
+                    {data: 'transportEntity.amountParkir', name: 'amountParkir'},
+                    {data: 'transportEntity.amountToll', name: 'amountToll'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
@@ -723,6 +856,33 @@ loadDataAllTransport();
             $('#transport_table').DataTable().destroy();
             load_data_transport(claim_date_from, claim_date_to,processed_date,transport_type, business_unit,directsuper_id);
     })
+
+    const klikdetail = (element) => {
+        let receiptDate = $(element).parent().siblings('.sorting_1').text()
+        let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
+        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
+        let projectname = $(element).parent().siblings('td').eq(5).text()
+        var directsuper_id = $("#directsuper_id").val()
+        let totalclaim = $(element).parent().siblings('td').eq(8).text()
+        let employeename = $(element).parent().siblings('td').eq(3).text()
+        let totalpaid = $(element).parent().siblings('td').eq(9).text()
+        var transport_type = $("#transport_type").val();
+        var business_unit = $("#business_unit").val();
+
+        $('#recdate').val(receiptDate)
+        $('#reqdate').val(receiptDate)
+        $('#status').val(reimbursement_status)
+        $('#tiketno').val(tikcetNo)
+        $('#b_unit').val(business_unit)
+        $('#c_type').val(transport_type)
+        $('#employeeno').val(directsuper_id)
+        $('#employeename').val(employeename)
+        $('#totalclaim').val(totalclaim)
+        $('#totalpaid').val(totalpaid)
+        // $('#direct_superior').val(employee_id)
+
+        // alert(reimbursement_type);
+    }
 
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();

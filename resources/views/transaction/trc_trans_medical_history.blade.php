@@ -123,6 +123,9 @@
         .detailstatus h5{
             font-size: 16px;
         }
+        .approve h5{
+            font-size: 18px;
+        }
         .detailstatus input{
             outline: none;
         }
@@ -240,7 +243,7 @@
                                     <th>Receipt Date</th>
                                     <th>Total Request</th>
                                     <th>Paid Remarks</th>
-                                    <th>Total Paid Month</th>
+                                    <th>Total Paid</th>
                                     {{-- <th>Remarks</th> --}}
                                 </tr>
                             </thead>
@@ -353,7 +356,7 @@
                                         <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Total Claim </h5>
+                                        <h5>Claim Type</h5>
                                     </div>
                                     <div class="col">
                                         <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -361,42 +364,56 @@
                                 </div>
 
                                 <div class="row detailstatus">
-                                    {{-- <div class="col-3">
-                                        <h5>Total Paid</h5>
+                                    <div class="col-3">
+                                        <h5>Employee Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalpaid" name="totalpaid" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div> --}}
+                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Project Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name">
+                                    </div>
+                                </div>
+                            
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Total Claim</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                    </div>
                                     <div class="col-3">
                                         <h5>Dependent Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent">
                                     </div>
                                 </div>
-                            
                                 <br>
-                                <div class="row">
+                                <div class="row approve">
                                     <div class="col-3">
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col-5">
-                                            <select name="" id="" class="custom-select">
-                                                <option value="APPROVE">APPROVE</option>
-                                                <option value="REJECT">REJECT</option>
+                                            <select name="" id="reimbursement_status" class="custom-select">
+                                                <option value="APPROVED">APPROVE</option>
+                                                <option value="REJECTED">REJECT</option>
                                                 <option value="PAID">PAID</option>
                                             </select>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row approve">
                                     <div class="col-3">
                                         <h5>Total Paid</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row approve">
                                     <div class="col-3">
                                         <h5>Approval Remarks</h5>
                                     </div>
@@ -405,7 +422,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <button class="btn btn-primary btn-block" type="button">Update</button>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
                             </div>
                         </div>
                     </div>
@@ -508,6 +525,39 @@
     }
 </script>
 
+<script>
+    $('#btn-update').click(()=>{
+        let reimbursement_status = $('#reimbursement_status').val();
+        let totalpaid = $('#totalpaid').val();
+        let ticketNo = $('#tiketno').val();
+        let direct_superior = $("#direct_superior").val();
+        // alert(totalpaid)
+        $('.close').click();
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior)
+    })
+
+    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior){
+        $.ajax({
+            url: "{{ url('trans/update_medical/table') }}",
+            type: "get",
+            data: {
+                'status': reimbursement_status,
+                'TotalPaidMonth': totalpaid,
+                'ticketNo' : ticketNo,
+                'directSuperiorID' : direct_superior
+            },
+            success: function (data) {
+                console.log('sic');
+                console.log(data);
+            }, error: function (err) {
+                console.log('err');
+                console.log(err);
+            }
+        });
+             
+    }
+</script>
+
 <script type="text/javascript">
     function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
             table = $('#medical_table').DataTable({
@@ -548,12 +598,16 @@
                     },
                     {data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
                     {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementStatus'},
-                    {data: 'reimbursementEntity.employeeNo', name: 'employeeNo'},
+                    {data: 'reimbursementEntity.directSuperiorID', name: 'directSuperiorID'},
                     {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'reimbursementEntity.receiptDate', name: 'receiptDate'},
-                    {data: 'reimbursementEntity.totalClaimMonth', name: 'totalClaimMonth'},
-                    {data: 'reimbursementEntity.totalPaidMonth', name: 'totalPaidMonth'},
+                    {data: 'reimbursementEntity.receiptDate', name: 'receiptDate',
+                            render: function (data, type, row){
+                            return moment(data).format('YYYY-MM-DD');
+                            }
+                    },
+                    {data: 'reimbursementEntity.totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
                     // {data: 'reimbursementEntity.reimbursementRemarks', name: 'reimbursementRemarks'},
                     // {data: 'reimbursementEntity.totalPaidMonth', name: 'totalPaidMonth'},
                     // {data: 'reimbursementEntity.approvalRemarks ', name: 'approvalRemarks    '},
@@ -576,7 +630,8 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
             );
-       
+
+            
 
             $("#btn-search").prop("disabled", false);
             $("#btn-search").html(
@@ -603,11 +658,13 @@
     })
     const klikdetail = (element) => {
         let requestDate = $(element).parent().siblings('.sorting_1').text()
-        let receipt_date = $(element).parent().siblings('td').eq(3).text()
+        let status = $(element).parent().siblings('td').eq(2).text()
         let tikcetNo = $(element).parent().siblings('td').eq(1).text()
-        let totalClaim = $(element).parent().siblings('td').eq(5).text()
-        let approvalremarks = $(element).parent().siblings('td').eq(6).text()
-        let totalpaid = $(element).parent().siblings('td').eq(7).text()
+        let totalClaim = $(element).parent().siblings('td').eq(6).text()
+        var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        let approvalremarks = $(element).parent().siblings('td').eq(7).text()
+        let totalpaid = $(element).parent().siblings('td').eq(8).text()
         var business_unit = $("#business_unit").val();        
         
         // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
@@ -617,10 +674,14 @@
         // var reimbursement_type = $("#reimbursement_type").val();
 
         $('#reqdate').val(requestDate)
-        $('#recdate').val(receipt_date)
+        $('#recdate').val(requestDate)
         $('#tiketno').val(tikcetNo)
+        $('#status').val(status)
         $('#b_unit').val(business_unit)
-        $('#c_type').val(totalClaim)
+        $('#employee_no').val(direct_superior)
+        $('#c_type').val(reimbursement_type)
+        $('#totalclaim').val(totalClaim)
+
         $('#approvalremarks').val(approvalremarks)
         $('#totalpaid').val(totalpaid)
         
@@ -674,7 +735,6 @@
     
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
-
         $('#direct_superior').val(employee_id)
 
         $('.close').click();

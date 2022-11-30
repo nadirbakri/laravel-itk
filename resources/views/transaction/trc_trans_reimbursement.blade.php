@@ -244,10 +244,10 @@
                                 <th>Name</th>
                                 <th>Customer Name</th>
                                 <th>Project Name</th>
-                                <th>Paid Amount</th>
                                 <th>Payment Date</th>
-                                <th>Total Paid</th>
+                                <th>Total Request</th>
                                 <th>Paid Remarks</th>
+                                <th>Total Paid</th>
                             </tr>
                         </thead>
                     </table>
@@ -384,10 +384,10 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Total Paid</h5>
+                                        <h5>Total Claim</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalpaid1" name="totalpaid1" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
                                         <h5>Dependent Name</h5>
@@ -415,7 +415,7 @@
                                         <h5>Total Paid</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <hr>
@@ -545,6 +545,7 @@
             success: function (data) {
                 console.log('sic');
                 console.log(data);
+                $('#btn-search').click();
             }, error: function (err) {
                 console.log('err');
                 console.log(err);
@@ -597,10 +598,10 @@
                     {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
                     {data: 'reimbursementEntity.customerName', name: 'customerName'},
                     {data: 'reimbursementEntity.projectName', name: 'projectName'},
-                    {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
                     {data: 'reimbursementEntity.paymentDate', name: 'paymentDate'},
-                    {data: 'reimbursementEntity.totalPaidMonth', name: 'totalPaidMonth'},
+                    {data: 'reimbursementEntity.totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
@@ -652,19 +653,20 @@
         let tikcetNo = $(element).parent().siblings('td').eq(2).text()
         let projectname = $(element).parent().siblings('td').eq(5).text()
         let employeename = $(element).parent().siblings('td').eq(3).text()
-        let totalpaid1 = $(element).parent().siblings('td').eq(6).text()
-        let totalpaid = $(element).parent().siblings('td').eq(8).text()
+        let totalclaim = $(element).parent().siblings('td').eq(7).text()
+        let totalpaid = $(element).parent().siblings('td').eq(9).text()
         var reimbursement_type = $("#reimbursement_type").val();
         var business_unit = $("#business_unit").val();
 
         $('#recdate').val(receiptDate)
+        $('#reqdate').val(receiptDate)
         $('#status').val(reimbursement_status)
         $('#tiketno').val(tikcetNo)
         $('#b_unit').val(business_unit)
         $('#c_type').val(reimbursement_type)
         $('#employeeno').val(employeename)
         $('#projectname').val(projectname)
-        $('#totalpaid1').val(totalpaid1)
+        $('#totalclaim').val(totalclaim)
         $('#totalpaid').val(totalpaid)
         // $('#direct_superior').val(employee_id)
 

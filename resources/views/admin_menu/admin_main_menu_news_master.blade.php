@@ -14,6 +14,11 @@
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
     <link rel="stylesheet" href="{{ asset('admin_main_menu_checkin_list.css') }}"> 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
@@ -128,6 +133,9 @@
         background: #dac52c;
         border-radius: 100%;
        }
+       .newscategory select{
+        width: 210px;
+       }
     </style>
 </head>
 
@@ -137,7 +145,7 @@
             <h1>{{ __('admin_main_menu_news_master.judul') }}<h1>
             <hr>
         </div>
-        <form id="trans_mass-leave_form" method="post">
+        <form id="admin_menu_news_master" method="post">
             @csrf
             <div class="card" >
                 <div class="card-header">
@@ -152,7 +160,8 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >                        </div>
+                        <input type="text" class="form-control" id="t_news" name="t_news" ></div>
+                            
                     </div>
                 </div>
                 
@@ -162,41 +171,97 @@
                             <label for="reimbursement_type form-check-label"><b>{{ __('admin_main_menu_news_master.form2') }}</b></label>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="newscategory">
+                            <select  class="form-control select2" id="n_category" name="n_category"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >
+                            <label for="reimbursement_type form-check-label"><b>Content</b></label>
+                        </div>
+                    </div>
+                    <div class="class">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" id="c_news" name="c_news"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('admin_main_menu_news_master.form3') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>Attachment</b></label>
                         </div>
                     </div>
                         <form action="aksi.php" method="post" enctype="multipart/form-data">
                             <input type="file" name="file">
 	                    </form>
                 </div>
-        </form>
-
-        <div class="row">
-            <div class="col-12">
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('admin_main_menu_news_master.save') }}                    </button>  
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('admin_main_menu_news_master.delete') }}
-                    </button>  
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('admin_main_menu_news_master.cancel') }}
-                    </button>  
-                    <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                    {{ __('admin_main_menu_news_master.list') }}
-                    </button>  
+                <div class="row">
+                    <div class="col-12"> 
+                            <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save">
+                            {{ __('admin_main_menu_news_master.save') }}                    </button>  
+                            <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
+                            {{ __('admin_main_menu_news_master.delete') }}
+                            </button>  
+                            <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
+                            {{ __('admin_main_menu_news_master.cancel') }}
+                            </button> 
+                            <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_news">
+                            {{ __('admin_main_menu_news_master.list') }}
+                            </button>  
+                    </div>
+                </div>
             </div>
-        </div>
-        
+         </form> 
     </div>
+
+    <div class="div-form">
+        <form id="payroll_calculation_detail_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_news">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">List User</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <table id="example" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>News Category</th>
+                                    <th>Description</th>
+                                    <th>Create Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {{-- <td>#</td>         --}}
+                                    <td>
+                                        
+                                    </td>        
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                   </div>
+
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -233,7 +298,11 @@
         </div>
     </div>
 </body>
-
+<script>
+    $(document).ready(function () {
+        $('table.display').DataTable();
+    });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -247,4 +316,128 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script>
+    $('#btn-list').click(()=> {
+        $('#example').DataTable().destroy();
+        table2 = $('#example').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('adm_main_menu/news_master/list') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'title', name: 'title'},
+                {data: 'category', name: 'category'},
+                {data: 'content', name: 'content'},
+                {data: 'createDate', name: 'createDate',
+                        render: function(data, row, type){
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                },
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
+
+    const klik = (element) => {
+        let title = $(element).parent().siblings('.sorting_1').text()
+        let newscategory = $(element).parent().siblings('td').eq(1).text()
+        let desc = $(element).parent().siblings('td').eq(2).text()
+
+        // alert(newscategory)
+        $('#t_news').val(title)
+        $('#c_news').val(desc)
+        $('#n_category').append($('<option>', {
+            value: newscategory,
+            text: newscategory
+        }));
+        $('.close').click();
+    }
+</script>
+<script>
+    $("#btn-save").click(function () {
+          $(this).prop("disabled", true);
+          $(this).html(
+              '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+          );
+          $("#admin_menu_news_master").submit();
+      });
+
+      if ($("#admin_menu_news_master").length > 0) {
+              $("#admin_menu_news_master").validate({
+                  submitHandler: function (form) {
+                      $.ajaxSetup({
+                          headers: {
+                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                          }
+                      });
+                      $.ajax({
+                          url: "{{ url('admin_menu/news_master/proses') }}",
+                          type: "POST",
+                          data: $('#admin_menu_news_master').serialize(),
+                          success: function (response) {
+                              if (response.status == "true"){
+                                  $("#btn-save").prop("disabled", false);
+                                  $("#btn-save").html(
+                                      '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                                  );
+                                  
+                                  $('#notification_success').modal('show');
+                                  $('#message-notification-success').html(response
+                                  .message);
+                                  setTimeout(function () {
+                                  window.location =
+                                      "{{ url('admin_menu/news_master') }}";
+                                  }, 3000);
+                              } else {
+                              $("#btn-save").prop("disabled", false);
+                              $("#btn-save").html(
+                                  '<i class="fa fa-floppy-o"></i> Save'
+                              );
+                              $('#notification_error').modal('show');
+                              if (response.message == null || response.message ==
+                                  '') {
+                                  $('#message-notification-error').html(
+                                      "{{ __('login.error') }}");
+                              } else {
+                                  $('#message-notification-error').html(response
+                                      .message);
+                              }
+                          }
+                      },
+                      error: function (response) {
+                          $("#btn-save").prop("disabled", false);
+                          $("#btn-save").html(
+                              '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
+                          );
+
+                          $('#notification').modal('show');
+                          $('#message-notification').html(response);
+                      }
+                  });
+              }
+          })
+      }
+
+
+</script>
 </html>

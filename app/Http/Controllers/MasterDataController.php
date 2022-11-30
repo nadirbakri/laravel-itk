@@ -100,6 +100,108 @@ class MasterDataController extends Controller
         }
     }
    
+    public function tabelDetailEmployeeGroup(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/gmgroup/getemployeegroupdetails',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionUserID' => Session::get('userID'),
+                        // 'sessionID' => 0, 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+   
+    public function tabelDetailEmail(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            
+
+            $response = $client->post(env('API_URL') . '/gmgroup/getemployeegroupdetails',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionUserID' => Session::get('userID'),
+                        // 'sessionID' => 0, 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+    //    var_dump($arrResult->dataListSet->emailSetting);
+    // foreach($arrResult->dataListSet as $key=>$value){
+    //     foreach($key=>$value as )
+    // }
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet[]->emailSettings)->make(true);
+        }
+    }
+   
+    
+   
     public function tableDirectApproval(Request $request)
     {
         try {
@@ -342,5 +444,122 @@ class MasterDataController extends Controller
         }
     }
 
+    public function prosesEmployeeGroup(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
+                foreach($request->approvalCode as $key=>$value){
+                    $a[] = [
+                        "approvalLevel" => (int) $request->approvalLevel[$key],
+                        "approvalCode" => $value
+                    ];
+                }
+
+                // var_dump(json_encode(
+                //     [
+                //         'companyCode' => Session::get('companyCode'),
+                //         'groupCode' => $request->group_code,
+                //         'groupName' => $request->group_name,
+                //         'directApproval' => $a,
+                //         "sessionID" => 0,
+                //         "sessionUserID" => Session::get('userID'),
+                //         "languageCode" => App::getLocale()
+                //     ]
+                //     ));
+                $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcode',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'groupCode' => $request->group_code,
+                            'groupName' => $request->group_name,
+                            'directApproval' => $a,
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+    
+    public function prosesEmployeeGroupDetail(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+                foreach($request->fullName as $key=>$value){
+                    $a[] = [
+                        "employeeNo" =>$request->employeeNo[$key],
+                        "fullName" => $value
+                    ];
+                }
+                
+                foreach($request->groupName as $key=>$value){
+                    $b[] = [
+                        "groupID" => $request->groupID[$key],
+                        "groupName" => $value
+                    ];
+                }
+
+                // var_dump(json_encode(
+                //     [
+                //         'companyCode' => Session::get('companyCode'),
+                //             'groupCode' => $request->group_code,
+                //             'groupMember' => $a,
+                //             'emailSetting' => $b,
+                //             "sessionID" => 0,
+                //             "sessionUserID" => Session::get('userID'),
+                //             "languageCode" => App::getLocale()
+                //     ]
+                //     ));
+                $response = $client->post(env('API_URL') . '/gmgroup/insertemployeegroupdetails',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'groupCode' => $request->group_code,
+                            'groupMember' => $a,
+                            'emailSetting' => $b,
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
 }
