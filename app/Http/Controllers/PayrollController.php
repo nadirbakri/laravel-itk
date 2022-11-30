@@ -6585,7 +6585,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -6593,7 +6593,7 @@ public function dataDetailReportFormatPY(Request $request)
             }else{
                 $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
@@ -6605,7 +6605,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
