@@ -6465,7 +6465,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($data->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
@@ -6473,7 +6473,7 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
@@ -6483,7 +6483,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($data->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
@@ -6491,7 +6491,7 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
@@ -6700,7 +6700,7 @@ public function dataDetailReportFormatPY(Request $request)
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
                 $pdf_url = PDF::loadFile(public_path().'/myfile.html')->save('/path-to/my_stored_file.pdf');
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -6708,7 +6708,7 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -6718,7 +6718,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -6726,7 +6726,7 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
