@@ -343,12 +343,12 @@
 								<span class="child-title-text">{{ __('payroll.export_sipp_online_report') }}</span>
 							</a>
 						</div>
-						<!-- <div class="col col-3">
+						<div class="col col-3">
 							<a href="{{ url('payroll/loan_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.loan_report') }}</span>
 							</a>
-						</div> -->
+						</div>
 						<div class="col col-3">
 							<a href="{{ url('payroll/journal_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">

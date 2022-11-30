@@ -393,6 +393,7 @@ Route::get('personel/employee_attachment/view', 'PersonelController@viewEmployee
 Route::get('time_management', 'TimeManagementController@pageTimeManagement');
 Route::get('time_management/time_recording_process_form', 'TimeManagementController@pageTimeRecordingProcessForm');
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
+Route::get('time_management/update_absenteeism_process', 'TimeManagementController@pageUpdateAbsenteeismProcess');
 Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreparation');
 Route::get('time_management/absenteeism_data_entry_by_employee_no', 'TimeManagementController@pageAbsenteeismDataEntryByEmployeeNo');
 Route::get('time_management/absenteeism_data_entry_by_date', 'TimeManagementController@pageAbsenteeismDataEntryByDate');
@@ -458,6 +459,7 @@ Route::post('time_management/reference_time_management/proses', 'TimeManagementC
 Route::post('time_management/reference_time_management/detail/proses', 'TimeManagementController@prosesReferenceTimeManagementDetailTM');
 Route::post('time_management/absenteeism_data_entry_by_employee_no/proses', 'TimeManagementController@prosesAbsenteeismDataEntryByEmployeeNoTM');
 Route::post('time_management/absenteeism_data_entry_by_date/proses', 'TimeManagementController@prosesAbsenteeismDataEntryByDateTM');
+Route::post('time_management/update_absenteeism_process/proses', 'TimeManagementController@prosesUpdateAbsenteeismProcessTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
@@ -699,6 +701,8 @@ Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanRepor
 Route::post('payroll/export_sipp_online_report/print', 'PayrollController@printLoanReportPayroll');
 Route::post('payroll/annual_report/print', 'PayrollController@printAnnualReportPayroll');
 Route::post('payroll/annual_report/print/excel', 'PayrollController@printAnnualReportPayrollExcel');
+Route::post('payroll/loan_report/print', 'PayrollController@printLoanReportPayroll');
+Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanReportPayrollExcel');
 Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPeriodicalReportPayrollExcel');
 Route::post('payroll/export_sipp_online/print', 'PayrollController@printExportSIPPOnlinePayroll');
 

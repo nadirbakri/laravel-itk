@@ -5,7 +5,7 @@ return [
     'list' => 'SPT PPh Report',
     'label_spt_type' => 'SPT Type',
     'label_pph_1721a1' => 'PPh 1721A1',
-    'label_pph_1721a' => 'PPh 1721A',
+    'label_pph_1721i' => 'PPh 1721I',
     'label_report_format' => 'Report Format',
     'label_periodical' => 'Periodical',
     'label_annual' => 'Annual',

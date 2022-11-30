@@ -1371,8 +1371,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });
@@ -1461,8 +1461,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_spt_format.btn_remove") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

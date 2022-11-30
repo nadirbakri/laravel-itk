@@ -2,19 +2,23 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromArray;
 
-class ExportSIPPOnlineFile1Export implements FromCollection
+class ExportSIPPOnlineFile1Export implements FromArray
 {
     public function __construct($file1)
     {
         $this->file1 = $file1;
     }
 
-    public function collection()
+    public function array(): array
     {
-        $array = explode('\r\n', $this->file1);
-        var_dump($array);
-        // return Invoice::all();
+        $array = explode("\r\n", $this->file1);
+        foreach($array as $key => $value){
+            $arrayTwo = explode(";", $value);
+            $array[$key] = $arrayTwo;
+        }
+        
+        return $array;
     }
 }

@@ -549,7 +549,7 @@
                         error: function (response) {
                             $("#btn-ok").prop("disabled", false);
                             $("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
-                            $('#notification').modal('show');
+                            $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }
 
@@ -607,8 +607,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_salary_accumulation_data.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

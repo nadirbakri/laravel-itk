@@ -635,8 +635,8 @@
                             $("#btn-export").html(
                                 '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

@@ -5,7 +5,7 @@ return [
     'list' => 'Laporan SPT',
     'label_spt_type' => 'Tipe SPT',
     'label_pph_1721a1' => 'PPh 1721A1',
-    'label_pph_1721a' => 'PPh 1721A',
+    'label_pph_1721i' => 'PPh 1721I',
     'label_report_format' => 'Format Laporan',
     'label_periodical' => 'Berkala',
     'label_annual' => 'Tahunan',

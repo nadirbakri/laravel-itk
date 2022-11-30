@@ -468,8 +468,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("personel_print_letter.btn_print") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

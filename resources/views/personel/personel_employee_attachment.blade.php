@@ -689,8 +689,8 @@
                         $("#btn-save").html(
                             '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_attachment.btn_save") }}'
                         );
-                        $('#notification').modal('show');
-                        $('#message-notification').html(response);
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
                     }
 
                 });

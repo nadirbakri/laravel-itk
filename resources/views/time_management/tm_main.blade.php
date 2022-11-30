@@ -51,6 +51,12 @@
 								<span class="child-title-text">{{ __('time_management.update_absenteeism_data') }}</span>
 							</a>
 						</div>
+						<div class="col col-3">
+							<a href="{{ url('time_management/update_absenteeism_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/time_management/submenu-data.svg') }}" alt="Child Time Management">
+								<span class="child-title-text">{{ __('time_management.update_absenteeism_process') }}</span>
+							</a>
+						</div>
 					</div>
 					<div class="div-head-data">
 						<span class="head-title-text">{{ __('time_management.absenteeism') }}</span>

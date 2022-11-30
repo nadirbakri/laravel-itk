@@ -1703,8 +1703,8 @@
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_reference_time_management.btn_save") }}'
                                 );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }
@@ -1860,8 +1860,8 @@
                                 '<span>{{ __("tm_reference_time_management.btn_save") }}</span>'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

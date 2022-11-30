@@ -900,8 +900,8 @@
             return Object.keys(obj).length === 0;
         }
 
-        $('#notification').on('hidden.bs.modal', function () {
-            $('#notification').modal('hide');
+        $('#notification_success').on('hidden.bs.modal', function () {
+            $('#notification_success').modal('hide');
         })
 
         $('#slip_type, input[name="format"]').on('change', function () {
@@ -1422,8 +1422,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });
@@ -1537,8 +1537,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }
@@ -1651,8 +1651,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_slip_format.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

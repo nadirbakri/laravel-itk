@@ -589,8 +589,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("tm_work_pattern.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

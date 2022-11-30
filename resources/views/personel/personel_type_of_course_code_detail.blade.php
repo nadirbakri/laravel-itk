@@ -285,8 +285,8 @@
                             $("#btn-save").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("personel_type_of_course_code.btn_save") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

@@ -17,7 +17,7 @@ return [
     'label_sort_by' => 'Sort By',
     'label_level' => 'Level',
     'label_group_authorize_code' => 'Group Authorize Code',
-    'label_display_company_code' => 'Display Company Code',
+    'label_display_company_logo' => 'Display Company Logo',
     'label_allowance' => 'Allowance',
     'label_deduction' => 'Deduction',
     'label_curr' => 'IDR',

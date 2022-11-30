@@ -843,8 +843,8 @@
                                 '<i class="fa fa-play-circle-o"></i> {{ __("tm_update_shift_by_date.btn_process") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
 
                     });

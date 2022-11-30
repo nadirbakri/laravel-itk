@@ -13,10 +13,10 @@
 	<style type="text/css">
 		* { box-sizing: border-box; }
 		body{
-			margin-left: 30px;
-			margin-right: 30px;
-			margin-bottom: 25px;
-			margin-top: 25px;
+			margin-left: 20px;
+			margin-right: 20px;
+			margin-bottom: 5px;
+			margin-top: 5px;
 		}
 		.table_detail td{
 			border:1px solid #000;
@@ -37,164 +37,169 @@
 </head>
 <body>
 	@foreach($data as $key => $value)
-	<table style="width:100%; padding:20px; border:1px solid #000;">
+	<table style="width:100%; border:1px solid #000; padding:3%;">
 		<tr>
-			<td colspan="2">{{$value->slipName}}</td>
-			<td> </td>
-			<td colspan="2" style="text-align:right;">LOGO</td>
+			@if($display_logo == "1")
+			<td colspan="2" style="text-align:left; font-size: 25px; font-weight: 700;">{{ $value->slipName }}</td>
+			<td colspan="2" style="text-align:right;"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_intikom.png'))) }}" style="width: 160px; height: 50px" alt="Logo"></td>
+			@endif
 		</tr>
 		<br>
 		<tr>
-			<td>Employee No</td>
-			<td>{{$value->employeeNo}}</td>
-			<td></td>
-			<td>Join Date</td>
-			<td>{{$value->joinDate}}</td>
+			<td width="15%" style="font-size: 15px; font-weight: 600;">Employee No</td>
+			<td width="17%" style="border-bottom: 1px dashed black;">{{ $value->employeeNo }}</td>
+			<td width="15%" style="font-size: 15px; font-weight: 600; padding-left: 10px;">Join Date</td>
+			<td width="17%" style="border-bottom: 1px dashed black;">{{ date('d F Y', strtotime($value->joinDate)) }}</td>
 		</tr>
 		<tr>
-			<td>Employee Name</td>
-			<td>{{$value->employeeName}}</td>
-			<td></td>
-			<td>Position</td>
-			<td>{{$value->position}}</td>
+			<td width="15%" style="font-size: 15px; font-weight: 600;">Employee Name</td>
+			<td width="17%" style="border-bottom: 1px dashed black;">{{ $value->employeeName }}</td>
+			<td width="15%" style="font-size: 15px; font-weight: 600; padding-left: 10px;">Position</td>
+			<td width="17%" style="border-bottom: 1px dashed black;">{{ $value->position }}</td>
 		</tr>
 		<tr>
-			<td>custom1</td>
-			<td>{{$value->custom1}}</td>
-			<td colspan="3"> </td>
+			@if($value->custom1 != null)
+			<td width="15%" style="font-size: 15px; font-weight: 600;">Custom 1</td>
+			<td width="17%" style="border-bottom: 1px dashed black;">{{ $value->custom1 }}</td>
+			@endif
+			@if($value->custom2 != null)
+			<td width="15%" style="font-size: 15px; font-weight: 600;">Custom 2</td>
+			<td width="17%" style="border-bottom: 1px dashed black;">{{ $value->custom2 }}</td>
+			@endif
 		</tr>
-		<tr>
-			<td>custom2</td>
-			<td>{{$value->custom2}}</td>
-			<td colspan="3"> </td>
-		</tr>
-		<br>
 	</table>
-	<table style="border:1px solid #000; width:100%; padding:20px;">
+	<table style="border:1px solid #000; width:100%; padding:2%;">
 		<tr>
-			<p>Allowance</p>
+			<td colspan="3" style="font-size: 20px; font-weight: 600; padding-bottom: 1%;">Allowance</td>
+		</tr>
+		<tr>
+			<td width="30%">{{ ($value->allowance1Label != null) ? $value->allowance1Label : 'Allowance 1' }}</td>
+			<td width="10%" style="text-align:center;">IDR</td>
+			<td width="20%" style="text-align:right;">{{ number_format($value->allowance1Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance2Label != null) ? $value->allowance2Label : 'Allowance 2' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance2Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance3Label != null) ? $value->allowance3Label : 'Allowance 3' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance3Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance4Label != null) ? $value->allowance4Label : 'Allowance 4' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance4Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance5Label != null) ? $value->allowance5Label : 'Allowance 5' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance5Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance6Label != null) ? $value->allowance6Label : 'Allowance 6' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance6Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance7Label != null) ? $value->allowance7Label : 'Allowance 7' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance3Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance8Label != null) ? $value->allowance8Label : 'Allowance 8' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance3Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance9Label != null) ? $value->allowance9Label : 'Allowance 9' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance9Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->allowance10Label != null) ? $value->allowance10Label : 'Allowance 10' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->allowance10Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>Total Allowance</td>
+			<td style="text-align:center; border-top: 1px solid black;">IDR</td>
+			<td style="text-align:right; border-top: 1px solid black;">{{ number_format($value->totalAllowance, 2, ',', '.') }}</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="font-size: 22px; font-weight: 600; padding-top: 0.5%; padding-bottom: 1%;">Deduction</td>
+		</tr>
+		<tr>
+			<td width="30%">{{ ($value->deduction1Label != null) ? $value->deduction1Label : 'Deduction 1' }}</td>
+			<td width="10%" style="text-align:center;">IDR</td>
+			<td width="20%" style="text-align:right;">{{ number_format($value->deduction1Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction2Label != null) ? $value->deduction2Label : 'Deduction 2' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction2Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction3Label != null) ? $value->deduction3Label : 'Deduction 3' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction3Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction4Label != null) ? $value->deduction4Label : 'Deduction 4' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction4Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction5Label != null) ? $value->deduction5Label : 'Deduction 5' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction5Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction6Label != null) ? $value->deduction6Label : 'Deduction 6' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction6Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction7Label != null) ? $value->deduction7Label : 'Deduction 7' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction7Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction8Label != null) ? $value->deduction8Label : 'Deduction 8' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction8Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction9Label != null) ? $value->deduction9Label : 'Deduction 9' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction9Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>{{ ($value->deduction10Label != null) ? $value->deduction10Label : 'Deduction 10' }}</td>
+			<td style="text-align:center;">IDR</td>
+			<td style="text-align:right;">{{ number_format($value->deduction10Field, 2, ',', '.') }}</td></tr>
+		</tr>
+		<tr>
+			<td>Total Deduction</td>
+			<td style="text-align:center; border-top: 1px solid black;">IDR</td>
+			<td style="text-align:right; border-top: 1px solid black;">{{ number_format($value->totalDeduction, 2, ',', '.') }}</td>
 		</tr>
 		<br>
-		<?php
-		if($value->allowance1Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance1Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance1Field.'</td></tr>');
-		}
-		if($value->allowance2Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance2Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance2Field.'</td></tr>');
-		}if($value->allowance3Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance3Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance3Field.'</td></tr>');
-		}if($value->allowance4Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance4Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance4Field.'</td></tr>');
-		}if($value->allowance5Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance5Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance5Field.'</td></tr>');
-		}if($value->allowance6Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance6Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance6Field.'</td></tr>');
-		}if($value->allowance7Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance7Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance7Field.'</td></tr>');
-		}if($value->allowance8Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance8Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance8Field.'</td></tr>');
-		}if($value->allowance9Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance9Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance9Field.'</td></tr>');
-		}if($value->allowance10Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->allowance10Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->allowance10Field.'</td></tr>');
-		}
-		?>
 		<tr>
-			<td colspan="2" style="text-align:left;">Total Allowance</td>
-			<td colspan="1">IDR</td>
-			<td colspan="2" style="text-align:left;">{{$value->totalAllowance}}</td>
-		</tr>
-		<br>
-		<tr>
-			<p>Deduction</p>
-		</tr>
-		<br>
-		<?php
-		if($value->deduction1Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction1Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction1Field.'</td></tr>');
-		}
-		if($value->deduction2Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction2Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction2Field.'</td></tr>');
-		}if($value->deduction3Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction3Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction3Field.'</td></tr>');
-		}if($value->deduction4Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction4Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction4Field.'</td></tr>');
-		}if($value->deduction5Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction5Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction5Field.'</td></tr>');
-		}if($value->deduction6Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction6Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction6Field.'</td></tr>');
-		}if($value->deduction7Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction7Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction7Field.'</td></tr>');
-		}if($value->deduction8Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction8Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction8Field.'</td></tr>');
-		}if($value->deduction9Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction9Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction9Field.'</td></tr>');
-		}if($value->deduction10Label != null){
-			echo('<tr><td colspan="2" style="text-align:left;">'.$value->deduction10Label.'</td>');
-			echo('<td colspan="1">IDR</td>');
-			echo('<td colspan="2" style="text-align:left;">'.$value->deduction10Field.'</td></tr>');
-		}
-		?>
-		<tr>
-			<td colspan="2" style="text-align:left;">Total Allowance</td>
-			<td colspan="1">IDR</td>
-			<td colspan="2" style="text-align:left;">{{$value->totalDeduction}}</td>
-		</tr>
-		<br><br>
-		<tr>
-			<td colspan="2" style="text-align:left;">Take Home Pay</td>
-			<td colspan="1">IDR</td>
-			<td colspan="2" style="text-align:left;">{{$value->takeHomePay}}</td>
+			<td>Take Home Pay</td>
+			<td style="text-align:center; border-bottom: 1px solid black;">IDR</td>
+			<td style="text-align:right; border-bottom: 1px solid black;">{{ number_format($value->takeHomePay, 2, ',', '.') }}</td>
 		</tr>
 		<br><br>
 		<tr>
 			<td colspan="2"> </td>
-			<td colapsn="1"> </td>
-			<td colspan="2" style="text-align:center;">{{$value->location}}, {{$value->printDate}}</td>
+			<td style="text-align:right;">{{ $value->location }}, {{ date('d F Y', strtotime($value->printDate)) }}</td>
 		</tr>
-		<br><br><br>
+		<br><br>
 		<tr>
 			<td colspan="2"> </td>
-			<td colspan="1"> </td>
-			<td colspan="2" style="text-align:center;">{{$value->employeeName}}</td>
+			<td style="text-align:right;">{{ $value->employeeName }}</td>
 		</tr>
 	</table>
 	@if($key != array_key_last($data))

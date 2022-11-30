@@ -257,7 +257,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="display_logo">{{ __('payroll_payment_slip.label_display_company_code') }}</label>
+                            <label for="display_logo">{{ __('payroll_payment_slip.label_display_company_logo') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
@@ -1048,8 +1048,8 @@
                             $('#btn-preview').html(
                                 '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

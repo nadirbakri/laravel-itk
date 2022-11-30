@@ -1326,8 +1326,8 @@
                                 '<span>{{ __("md_medical_reference.btn_save") }}</span>'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

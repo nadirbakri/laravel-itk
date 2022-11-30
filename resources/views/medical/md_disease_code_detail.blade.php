@@ -302,8 +302,8 @@
                                 '<i class="fa fa-floppy-o"></i> {{ __("md_disease_code.btn_save") }}'
                             );
 
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }

@@ -511,8 +511,8 @@
                                 $('#btn-send-to').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_spt_report.btn_send_to") }}'
                                 );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
                             }
                         });
                     }
@@ -593,8 +593,8 @@
                                 $('#btn-preview').html(
                                     '<i class="fa fa-eye"></i> {{ __("payroll_spt_report.btn_preview") }}'
                                 );
-                                $('#notification').modal('show');
-                                $('#message-notification').html(response);
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
                             }
                         });
                     }

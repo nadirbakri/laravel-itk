@@ -244,8 +244,8 @@
                     $("#btn-export").html(
                         '{{ __("personel_import_export_personal_data.btn-export") }}'
                     );
-                    $('#notification').modal('show');
-                    $('#message-notification').html(response);
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
                 }
             });
         });
@@ -297,8 +297,8 @@
                     $("#btn-download-template").html(
                         '{{ __("personel_import_export_personal_data.btn-download-template") }}'
                     );
-                    $('#notification').modal('show');
-                    $('#message-notification').html(response);
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
                 }
             });
         });
@@ -382,8 +382,8 @@
                             $("#btn-import").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
                             );
-                            $('#notification').modal('show');
-                            $('#message-notification').html(response);
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
                     });
                 }
