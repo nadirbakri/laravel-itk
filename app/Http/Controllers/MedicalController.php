@@ -145,6 +145,15 @@ class MedicalController extends Controller
         return view('medical.md_disease_report');
     }
     
+    public function pageTransferPaymentToExcelMonthly()
+    {
+        return view('medical.md_transfer_payment_to_excel_monthly');
+    }
+
+    public function pageTransferPaymentToExcelRemainingLimit()
+    {
+        return view('medical.md_transfer_payment_to_excel_remaining_limit');
+    }
 
     public function tableClaimCodeMD()
     {

@@ -43,33 +43,13 @@
 			</div>
 			<div class="row div-child-data">
 				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="bca">
+                    <a href="javascript:void(0)" class="bank" data-bank="BANK CENTRAL ASIA">
                         <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
                         <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bank_central_asia') }}</span>
                     </a>
                 </div>
 				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="mcm_mandiri">
-                        <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
-                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_mcm_bank_mandiri') }}</span>
-                    </a>
-                </div>
-				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="bot">
-                        <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
-                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bot') }}</span>
-                    </a>
-                </div>
-            </div>
-			<div class="row div-child-data">
-				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="btpn">
-                        <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
-                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_btpn') }}</span>
-                    </a>
-                </div>
-				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="ina">
+                    <a href="javascript:void(0)" class="bank" data-bank="BANK INA">
                         <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
                         <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bank_ina') }}</span>
                     </a>
@@ -77,15 +57,35 @@
             </div>
 			<div class="row div-child-data">
 				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="mandiri">
+                    <a href="javascript:void(0)" class="bank" data-bank="BTPN">
                         <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
-                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bank_mandiri') }}</span>
+                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_btpn') }}</span>
                     </a>
                 </div>
 				<div class="col col-4">
-                    <a href="javascript:void(0)" class="bank" data-bank="ina_ma">
+                    <a href="javascript:void(0)" class="bank" data-bank="BANK INA MULTI ACCOUNT">
                         <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
                         <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bank_ina_multi_account') }}</span>
+                    </a>
+                </div>
+            </div>
+			<div class="row div-child-data">
+				<div class="col col-4">
+                    <a href="javascript:void(0)" class="bank" data-bank="MCM">
+                        <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
+                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_mcm_bank_mandiri') }}</span>
+                    </a>
+                </div>
+				<!-- <div class="col col-4">
+                    <a href="javascript:void(0)" class="bank" data-bank="mandiri">
+                        <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bank_mandiri') }}</span>
+                    </a>
+                </div> -->
+				<div class="col col-4">
+                    <a href="javascript:void(0)" class="bank" data-bank="BOT">
+                        <!-- <img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll"> -->
+                        <span class="child-title-text">{{ __('payroll_transfer_data_to_bank.label_bot') }}</span>
                     </a>
                 </div>
             </div>

@@ -205,13 +205,13 @@
 					</div>
 					<div class="row div-child-data">
 						<div class="col col-3">
-							<a href="{{ url('medical/monthly') }}" target="iframe_dashboard">
+							<a href="{{ url('medical/transfer_payment_to_excel/monthly') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-process.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.monthly') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('medical/remaining_limit') }}" target="iframe_dashboard">
+							<a href="{{ url('medical/transfer_payment_to_excel/remaining_limit') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-process.svg') }}" alt="Child medical">
 								<span class="child-title-text">{{ __('medical.remaining_limit') }}</span>
 							</a>

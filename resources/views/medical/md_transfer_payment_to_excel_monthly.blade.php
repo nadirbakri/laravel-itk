@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('payroll_spt_pph_report.judul') }}</title>
+    <title>{{ __('md_transfer_payment_to_excel_monthly.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,12 +10,13 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/medical_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
-        .div-payroll {
+        .div-medical {
             max-width: 100%;
             margin: auto;
             /*margin-top: 1%;*/
@@ -107,57 +108,35 @@
 
 <body>
     <div class="div-form">
-        <form id="spt_pph_report_form" method="post">
+        <form id="transfer_payment_to_excel_form" method="post">
             @csrf
-            <div class="div-payroll">
+            <div class="div-medical">
                 <div class="div-title">
-                    <a href="{{ url('payroll') }}" target="iframe_dashboard">
+                    <a href="{{ url('medical') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_spt_pph_report.list') }}</span>
+                        <span class="title-text">{{ __('md_transfer_payment_to_excel_monthly.list') }}</span>
                     </a>
                 </div>
                 <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="spt_type form-check-label">{{ __('payroll_spt_pph_report.label_spt_type') }}</label>
-                        </div>
-                    </div>
                     <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="type_pph_1721i" name="spt_type" value="pph_1721i" checked>
-                            <label for="type_pph_1721i">{{ __('payroll_spt_pph_report.label_pph_1721i') }}</label>
+                        <div class="form-group">
+                            <label for="period">{{ __('md_transfer_payment_to_excel_monthly.label_period') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="type_pph_1721a1" name="spt_type" value="pph_1721a1">
-                            <label for="type_pph_1721a1">{{ __('payroll_spt_pph_report.label_pph_1721a1') }}</label>
+                    <div class="col-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="period" name="period"
+                                placeholder="{{ __('md_transfer_payment_to_excel_monthly.label_period') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="periodcalendar"><span class="fa fa-calendar"></span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" id="div_report_format">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="report_format form-check-label">{{ __('payroll_spt_pph_report.label_report_format') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-check">
-                            <input type="radio" id="format_periodical" name="report_format" value="periodical" checked>
-                            <label for="format_periodical">{{ __('payroll_spt_pph_report.label_periodical') }}</label>
-                        </div>
-                    </div>
+                <div class="row">
                     <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="format_annual" name="report_format" value="annual">
-                            <label for="format_annual">{{ __('payroll_spt_pph_report.label_annual') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="div_employee_no">
-                    <div class="col-3">
                         <div class="form-group">
-                            <label for="employee_no_from form-check-label">{{ __('payroll_spt_pph_report.label_employee_no') }}</label>
+                            <label for="employee_no_from form-check-label">{{ __('md_transfer_payment_to_excel_monthly.label_employee_no') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
@@ -165,83 +144,74 @@
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
-                            <label for="employee_no_to form-check-label">{{ __('payroll_spt_pph_report.label_to') }}</label>
+                            <label for="employee_no_to form-check-label">{{ __('md_transfer_payment_to_excel_monthly.label_to') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                     </div>
                 </div>
-                <div class="row" id="div_period">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="period form-check-label">{{ __('payroll_spt_pph_report.label_period') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <select class="form-control" id="period_month" name="period_month"></select>
-                                <input type="hidden" id="period_month_det" name="period_month_det">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <select class="form-control" id="period_year" name="period_year"></select>
-                                <input type="hidden" id="period_year_det" name="period_year_det">
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="npwp_group form-check-label">{{ __('payroll_spt_pph_report.label_npwp_group') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="form-group">
-                            <select class="form-control select2" id="npwp_group" name="npwp_group"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="group_authorized_code_from form-check-label">{{ __('payroll_spt_pph_report.label_group_authorized_code') }}</label>
-                            <span style="color: red">*</span>
+                            <label for="position form-check-label">{{ __('md_transfer_payment_to_excel_monthly.label_position') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
+                            <select class="form-control select2 select2-hidden-accessible" id="position"
+                                name="position[]" multiple="multiple">
+                            </select>
                         </div>
                     </div>
-                    <div class="col-0.5">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_spt_pph_report.label_to') }}</label>
+                            <label for="ranking form-check-label">{{ __('md_transfer_payment_to_excel_monthly.label_ranking') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
+                            <select class="form-control select2" id="ranking" name="ranking[]"
+                                multiple="multiple"></select>
                         </div>
                     </div>
                 </div>
-
+                <div class="row" id="div-level">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="location form-check-label">{{ __('md_transfer_payment_to_excel_monthly.label_location') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="location" name="location[]"
+                                multiple="multiple"></select>
+                        </div>
+                        <input type="hidden" class="form-control" id="level_format" name="level_format">
+                    </div>
+                </div>
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_spt_pph_report.btn_preview') }}
+                            <i class="fa fa-eye"></i> {{ __('md_transfer_payment_to_excel_monthly.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3">
-                        <button class="btn btn-primary" id="btn-send-to" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_spt_pph_report.btn_send_to') }}
+                    <div class="col-3 desc" id="send-to-slip" style="display: none;">
+                        <button class="btn btn-primary" id="btn-send" style="width: 100%;">
+                            <i class="fa fa-print"></i> {{ __('md_transfer_payment_to_excel_monthly.btn_send_to') }}
                         </button>
+                    </div>
+                    <div class="col-3 desc" id="send-to-report">
+                        <div class="dropdown">
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('md_transfer_payment_to_excel_monthly.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -273,7 +243,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_spt_pph_report.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('md_transfer_payment_to_excel_monthly.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -303,36 +273,68 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        var arrData = @json($data);
+        let period = $('#period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#period_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
-        loadDataGroupAuthorize('#group_authorized_code_from');
-        loadDataGroupAuthorize('#group_authorized_code_to');
-        loadDataNPWPGroup();
+        loadDataPositionCode();
+        loadDataLocationCode();
+        loadDataRankingCode();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
-        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
-        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
-        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
+        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
+        loadDataFirstLastAllPosition();
+        loadDataFirstLastAllLocation();
+        loadDataFirstLastAllRanking();
 
-        loadDataReport();
+        $.ajax({
+            url: "{{ url('personel/report/level/check') }}",
+            type: "GET",
+            success: function (response) {
+                $('#level_format').val(response.data[0].levelFormat);
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level').append(
+                        '<div class="col-2">' +
+                        '<div class="form-group">'+
+                        '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '</div></div>'+
+                        '<div class="col-4">' +
+                        '<div class="form-group">' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
 
-        for (var month = 1; month <= 12; month++){
-            if(month == 1){
-                $('#period_month_det').val(month);
-            }
-            $('#period_month').append($('<option/>').val(month).text(moment(month.toString()).format('MMMM')));
-        }
-
-        if (arrData) {
-            for (var i = (arrData[0].periodYear - 5); i <= arrData[0].periodYear; i++){
-                if(i == (arrData[0].periodYear - 5)){
-                    $('#period_year_det').val(i);
+                    loadDataLevelCode('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
                 }
-                $('#period_year').append($('<option/>').val(i).text(i));
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
             }
-        }
+        });
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -351,56 +353,6 @@
 
         $('select').on('select2:close', function (e) {
             $('.header-select').remove();
-        });
-
-        $('#div_employee_no').hide();
-
-        $('input[type=radio][name=spt_type]').change(function() {
-            if (this.value == 'pph_1721i') {
-                $('#div_report_format').show();
-                $('#div_employee_no').hide();
-                $('#div_period').show();
-            }else if(this.value == 'pph_1721a1'){
-                $('#div_report_format').hide();
-                $('#div_employee_no').show();
-                $('#div_period').hide();
-            }else{
-                $('#div_report_format').hide();
-                $('#div_employee_no').hide();
-                $('#div_period').hide();
-            }
-        });
-
-        $('#period_year').prop('disabled', true);
-
-        $('#period_month').change(function(){
-            $('#period_month_det').val($(this).val());
-        });
-
-        $('#period_year').change(function(){
-            $('#period_year_det').val($(this).val());
-        });
-
-        $('input[type=radio][name=report_format]').change(function() {
-            if (this.value == 'periodical') {
-                $('#period_year').prop('disabled', true);
-                $('#period_month').prop('disabled', false);
-            }else if(this.value == 'annual'){
-                $('#period_year').prop('disabled', false);
-                $('#period_month').prop('disabled', true);
-            }else{
-                $('#period_year').prop('disabled', true);
-                $('#period_month').prop('disabled', true);
-            }
-        });
-
-        $('#report_name').on("select2:select", function (e) {
-            var data = $('#report_name').select2('data');
-            $('#report_name_det').val(data[0].title);
-        });
-
-        $('#report_name').on("select2:unselecting", function (e) {
-            $('#report_name_det').val('');
         });
 
         function loadDataEmployeeNo(field = '') {
@@ -481,31 +433,173 @@
             });
         }
 
-        function loadDataNPWPGroup(){
+        function loadDataFirstLastAllPosition() {
+            $('#position').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: '/position/func/api',
+            }).then(function (data) {
+                if (!$('#position').find('option:contains(' + data.positionName + ')').length) {
+                    $('#position').append($('<option>').val(data.positionCode).text(data.positionName));
+                }
+                $('#position').val(data.positionCode);
+                $('#position').removeClass('loading');
+            });
+        }
+
+        function loadDataFirstLastAllLocation() {
+            $.ajax({
+                type: 'GET',
+                url: '/location/func/api',
+            }).then(function (data) {
+                if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
+                    $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
+                }
+                $('#location').val(data.locationCode);
+            });
+        }
+
+        function loadDataFirstLastAllRanking() {
+            $.ajax({
+                type: 'GET',
+                url: '/ranking/func/api',
+            }).then(function (data) {
+                if (!$('#ranking').find('option:contains(' + data.rankingName + ')').length) {
+                    $('#ranking').append($('<option>').val(data.rankingCode).text(data.rankingName));
+                }
+                $('#ranking').val(data.rankingCode);
+            });
+        }
+
+        function loadDataFirstLastAllLevel(field = '', levelType = '') {
+            $.ajax({
+                type: 'GET',
+                url: '/level/func/api',
+                data: {
+                    'levelType': levelType
+                }
+            }).then(function (data) {
+                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
+                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $(field).val(data.levelCode);
+            });
+        }
+
+        function loadDataPositionCode() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>NPWP Code</b></div>' +
-                        '<div class="col-6"><b>Company Name</b></div>' +
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.npwpCode + '</div>' +
-                        '<div class="col-6">' + data.data.companyName + '</div>' +
+                        '<div class="col-6">' + data.data.positionCode + '</div>' +
+                        '<div class="col-6">' + data.data.positionName + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
 
+            // var headerIsAppend = false;
+            // $('#position').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Position Code</b></div>' +
+            //             '<div class="col-6"><b>Position Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#npwp_group').select2({
+            $('#position').select2({
                 width: '100%',
-                placeholder: 'Choose NPWP Group',
+                placeholder: 'Choose Position',
+                allowClear: true,
+                multiple: true,
+                tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: '/position/all/api',
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.positionName,
+                                    id: item.positionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLocationCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.locationCode + '</div>' +
+                        '<div class="col-6">' + data.data.locationName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            // var headerIsAppend = false;
+            // $('#location').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Location Code</b></div>' +
+            //             '<div class="col-6"><b>Location Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#location').select2({
+                width: '100%',
+                placeholder: 'Choose Location',
                 allowClear: true,
                 language: {
                     errorLoading: function () {
@@ -516,7 +610,7 @@
                     }
                 },
                 ajax: {
-                    url: '/npwp/api',
+                    url: '/location/all/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -530,8 +624,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.npwpCode,
-                                    id: item.npwpCode,
+                                    text: item.locationName,
+                                    id: item.locationCode,
                                     data: item
                                 }
                             })
@@ -543,7 +637,7 @@
             });
         }
 
-        function loadDataReport() {
+        function loadDataRankingCode() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -551,40 +645,46 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-12">' + data.data.reportCode + '</div>' +
+                        '<div class="col-6"><b>Ranking Code</b></div>' +
+                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
+                        '<div class="col-6">' + data.data.rankingName + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
 
-            var headerIsAppend = false;
-            $('#report_name').on('select2:open', function (e) {
-                if (!headerIsAppend) {
-                    html = '<div class="row">' +
-                        '<div class="col-12"><b>Report Code</b></div>' +
-                        '</div>';
-                    $('.select2-search').append(html);
-                    headerIsAppend = true;
-                }
-            });
+            // var headerIsAppend = false;
+            // $('#ranking').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Ranking Code</b></div>' +
+            //             '<div class="col-6"><b>Ranking Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#report_name').select2({
+            $('#ranking').select2({
                 width: '100%',
-                placeholder: 'Choose Report Code',
+                placeholder: 'Choose Ranking',
                 allowClear: true,
                 language: {
-                    errorLoading: function() {
+                    errorLoading: function () {
                         return $search;
                     },
-                    searching: function() {
+                    searching: function () {
                         return $search;
                     }
                 },
                 ajax: {
-                    url: '/report_code/api',
+                    url: '/ranking/all/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -598,9 +698,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.reportCode,
-                                    id: item.reportCode,
-                                    title: item.description,
+                                    text: item.rankingName,
+                                    id: item.rankingCode,
                                     data: item
                                 }
                             })
@@ -612,21 +711,7 @@
             });
         }
 
-        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
-            $.ajax({
-                type: 'GET',
-                url: '/group_authorize/func/api',
-                data: {
-                    'func': func
-                }
-            }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
-                    .text(data.groupAuthorizeDesc);
-                $(field).append($newOption).trigger('change');
-            });
-        }
-
-        function loadDataGroupAuthorize(field = '') {
+        function loadDataLevelCode(field = '', levelType = '') {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -634,25 +719,36 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
                         '</div>' +
                         '<div class="row">' +
-                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
-                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '<div class="col-6">' + data.data.levelCode + '</div>' +
+                        '<div class="col-6">' + data.data.levelName + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
+
+            // var headerIsAppend = false;
+            // $(field).on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Level Code</b></div>' +
+            //             '<div class="col-6"><b>Level Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Group Authorize Code',
+                placeholder: 'Choose Level',
                 allowClear: true,
-                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -662,22 +758,23 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: '/level/all/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            'levelType': levelType
                         };
                     },
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.groupAuthorizeDesc,
-                                    id: item.groupAuthorizeCode,
+                                    text: item.levelName,
+                                    id: item.levelCode,
                                     data: item
                                 }
                             })
@@ -697,7 +794,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#spt_pph_report_form').submit();
+            $('#transfer_payment_to_excel_form').submit();
         });
 
         $('#send-to-pdf').click(function (){
@@ -706,7 +803,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#spt_pph_report_form').submit();
+            $('#transfer_payment_to_excel_form').submit();
         });
 
         $('#send-to-xls').click(function (){
@@ -715,7 +812,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
-            $('#spt_pph_report_form').submit();
+            $('#transfer_payment_to_excel_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -724,11 +821,11 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
-            $('#spt_pph_report_form').submit();
+            $('#transfer_payment_to_excel_form').submit();
         });
 
-        if($('#spt_pph_report_form').length > 0){
-            $('#spt_pph_report_form').validate({
+        if($('#transfer_payment_to_excel_form').length > 0){
+            $('#transfer_payment_to_excel_form').validate({
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
@@ -740,13 +837,13 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/spt_pph_report/print/excel') }}",
+                            url: "{{ url('medical/transfer_payment_to_excel/monthly/print/excel') }}",
                             type: "POST",
-                            data: $('#spt_pph_report_form').serialize(),
+                            data: $('#transfer_payment_to_excel_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_send_to") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_XLS"){
@@ -773,7 +870,7 @@
                             error: function(response){
                                 $('#btn-send-to').prop("disabled", false);
                                 $('#btn-send-to').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_send_to") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 $('#message-notification-error').html(response);
@@ -786,23 +883,23 @@
                             xhrFields: {
                                 responseType: 'blob',
                             },
-                            url: "{{ url('payroll/spt_pph_report/print') }}",
+                            url: "{{ url('medical/transfer_payment_to_excel/monthly/print') }}",
                             type: "POST",
-                            data: $('#spt_pph_report_form').serialize(),
+                            data: $('#transfer_payment_to_excel_form').serialize(),
                             success: function(result, status, xhr){
                                 $('#btn-send').prop("disabled", false);
                                 $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_send_to") }}'
                                 );
 
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $("#btn-send-to-report").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_send_to") }}'
                                 );
 
                                 $('#btn-preview').prop("disabled", false);
                                 $("#btn-preview").html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_pph_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_preview") }}'
                                 );
                                 
                                 if(clicked == "DOWNLOAD_PDF"){
@@ -847,15 +944,15 @@
                             error: function(response){
                                 $('#btn-send').prop("disabled", false);
                                 $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_send_to") }}'
                                 );
                                 $('#btn-send-to-report').prop("disabled", false);
                                 $('#btn-send-to-report').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_spt_pph_report.btn_send_to") }}'
+                                    '<i class="fa fa-print"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);
                                 $('#btn-preview').html(
-                                    '<i class="fa fa-eye"></i> {{ __("payroll_spt_pph_report.btn_preview") }}'
+                                    '<i class="fa fa-eye"></i> {{ __("md_transfer_payment_to_excel_monthly.btn_preview") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 $('#message-notification-error').html(response);

@@ -779,39 +779,37 @@
                         }
                     });
                     $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        },
                         url: "{{ url('payroll/transfer_data/proses') }}",
                         type: "POST",
                         data: $('#transfer_data_form').serialize(),
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $("#btn-process").prop("disabled", false);
-                                $("#btn-process").html(
-                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
-                                );
-                                
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                $setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/transfer_data_to_bank/export_to_file') }}";
-                                }, 3000);
-                            } else {
-                                $("#btn-process").prop("disabled", false);
-                                $("#btn-process").html(
-                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
-                                );
+                        success: function (result, status, xhr) {
+                            console.log(xhr.getResponseHeader(
+                                'content-disposition'));
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
+                            );
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
+                                'audit_trail.csv');
 
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
+                            // The actual download
+                            var blob = new Blob([result], {
+                                type: 'text/csv'
+                            });
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
+
+                            document.body.appendChild(link);
+
+                            link.click();
+                            document.body.removeChild(link);
                         },
                         error: function (response) {
                             $("#btn-process").prop("disabled", false);
