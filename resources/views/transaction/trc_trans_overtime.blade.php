@@ -209,7 +209,7 @@
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
-                        style="width: 100%;" data-toggle="modal" data-target="#">
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
                         <i class="fa fa-plus"></i> Upload
                         </button>
                     </div>
@@ -241,6 +241,7 @@
                                     <tr>
                                        <th>Detail</th>
                                        <th>Name</th>
+                                       <th>Status</th>
                                        <th>Ticket No</th>
                                        {{-- <th>Employee No</th> --}}
                                        <th>Project Name</th>
@@ -249,7 +250,6 @@
                                        <th>Overtime Hour To</th>
                                        <th>Overtime Remarks</th>
                                        <th>Costumer Name</th>
-                                       <th>Status</th>
                                        <th>Total Request</th>
                                        <th>Total Paid</th>
                                 </thead>
@@ -330,10 +330,10 @@
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Receipt Date</h5>
+                                        <h5>Employee No</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                 </div>
 
@@ -428,6 +428,39 @@
             </div>
         </form>
     </div>
+
+    <div class="div-form">
+        <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="modal_upload">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">Upload Paid Overtime</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <div class="card">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label for="medical_history form-check-label"><b>File Overtime</b></label>
+                                        <input type="file" name="file_overtime" id="file_overtime">
+                                    <br> <br>
+                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
 
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -547,6 +580,7 @@
                     //     }
                     // },
                     {data: 'overtimeEntity.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'overtimeEntity.status', name: 'status'},
                     {data: 'overtimeEntity.ticketNo', name: 'ticketNo'},
                     {data: 'overtimeEntity.projectName', name: 'projectName'},
                     {data: 'overtimeEntity.overtimeDate', name: 'overtimeDate', 
@@ -566,7 +600,6 @@
                 },
                     {data: 'overtimeEntity.overtimeRemarks', name: 'overtimeRemarks'},
                     {data: 'overtimeEntity.customerName', name: 'customerName'},
-                    {data: 'overtimeEntity.status', name: 'status'},
                     // {data: 'overtimeEntity.', name: ''},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
@@ -663,7 +696,7 @@
         let totalpaid = $(element).parent().siblings('td').eq(9).text()
         var reimbursement_type = $("#reimbursement_type").val();
         var business_unit = $("#business_unit").val();
-
+        var direct_superior = $("#direct_superior").val();
         // $('#recdate').val(receiptDate)
         // $('#reqdate').val(receiptDate)
         $('#tiketno').val(tikcetNo)
@@ -672,6 +705,7 @@
         $('#c_type').val(reimbursement_type)
         $('#employeename').val(name)
         $('#projectname').val(projectname)
+        $('#employeeno').val(direct_superior)
 
         // $('#totalclaim').val(totalclaim)
         // $('#totalpaid').val(totalpaid)
@@ -693,7 +727,117 @@
     }
 
 </script>
+<script>
+    $('#btn-update').click(()=>{
+        let reimbursement_status = $('#reimbursement_status').val();
+        let totalpaid = $('#totalpaid').val();
+        let ticketNo = $('#tiketno').val();
+        let direct_superior = $("#direct_superior").val();
 
+        $('.close').click();
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior)
+    })
+
+    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior){
+        $.ajax({
+            url: "{{ url('trans/update_overtime/table') }}",
+            type: "get",
+            data: {
+                'status': reimbursement_status,
+                'paidAmount': totalpaid,
+                'ticketNo' : ticketNo,
+                'employeeNo' : direct_superior
+            },
+            success: function (data) {
+                console.log('sic');
+                console.log(data);
+                $('#btn-search').click();
+            }, error: function (err) {
+                console.log('err');
+                console.log(err);
+            }
+        });
+             
+    }
+</script>
+<script>
+    $("#btn-process").click(function () {
+           $(this).prop("disabled", true);
+           $(this).html(
+               '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+           );
+           $("#upload_paid_overtime_form").submit();
+       });
+
+       $('#notification_success').on('hide.bs.modal', function () {
+           window.location = "{{ url('transaction/transaction_medical_history') }}";
+       });
+
+       if ($("#upload_paid_overtime_form").length > 0) {
+           $("#upload_paid_overtime_form").validate({
+               submitHandler: function (form) {
+                   $.ajaxSetup({
+                       headers: {
+                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                       }
+                   });
+                   var myForm = document.getElementById('upload_paid_overtime_form');
+                   var formdata = new FormData(myForm);
+                   
+                   $.ajax({
+                       url: "{{ url('transaction/update_overtime/import') }}",
+                       type: "POST",
+                       processData: false,
+                       contentType: false,
+                       data: formdata,
+                       success: function (response) {
+                           if (response[0].status == "true") {
+                               $("#btn-process").prop("disabled", false);
+                               $("#btn-process").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_success').modal('show');
+                               $('#message-notification-success').html(response[0]
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_overtime') }}";
+                               }, 3000);
+                           } else {
+                               $("#btn-process").prop("disabled", false);
+                               $("#btn-process").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+
+                               $('#notification_error').modal('show');
+                               if (response[0].message == null || response[0].message ==
+                                   '') {
+                                   $('#message-notification-error').html(
+                                       "{{ __('login.error') }}");
+                               } else {
+                                   $('#message-notification-error').html(response[0]
+                                       .message);
+                               }
+                           }
+                       },
+                       error: function (response) {
+                           $("#btn-process").prop("disabled", false);
+                           $("#btn-process").html(
+                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                               'Update'
+                           );
+
+                           $('#notification_error').modal('show');
+                           $('#message-notification-error').html(response);
+                       }
+                   });
+               }
+           })
+       }
+</script>
 <script type="text/javascript">
 
     loadDataExportOvertime();

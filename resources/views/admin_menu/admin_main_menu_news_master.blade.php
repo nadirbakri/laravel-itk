@@ -198,14 +198,21 @@
                             <input type="file" name="file">
 	                    </form>
                 </div>
+                    <div class="row">
+                        <div class="col-2">
+                           
+                        </div>
+                            <img src="" alt="" id="photo" name="photo" style="width:200px" >
+                    </div>
+           
                 <div class="row">
                     <div class="col-12"> 
                             <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save">
                             {{ __('admin_main_menu_news_master.save') }}                    </button>  
-                            <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
+                            <button class="btn btn-primary" type="submit" name="btn-delete" id="btn-delete">
                             {{ __('admin_main_menu_news_master.delete') }}
                             </button>  
-                            <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
+                            <button class="btn btn-primary" onClick="window.location.reload();"  value="preview">
                             {{ __('admin_main_menu_news_master.cancel') }}
                             </button> 
                             <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_news">
@@ -236,7 +243,7 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>News Category</th>
-                                    <th>Description</th>
+                                    {{-- <th>Description</th> --}}
                                     <th>Create Date</th>
                                 </tr>
                             </thead>
@@ -248,7 +255,7 @@
                                     </td>        
                                     <td></td>        
                                     <td></td>        
-                                    <td></td>        
+                                    {{-- <td></td>         --}}
                                     <td></td>        
                                 </tr>
                             </tbody>
@@ -343,7 +350,7 @@
                 },
                 {data: 'title', name: 'title'},
                 {data: 'category', name: 'category'},
-                {data: 'content', name: 'content'},
+                // {data: 'content', name: 'content'},
                 {data: 'createDate', name: 'createDate',
                         render: function(data, row, type){
                             return moment(data).format('YYYY-MM-DD');
@@ -365,11 +372,12 @@
 
         // alert(newscategory)
         $('#t_news').val(title)
-        $('#c_news').val(desc)
+        $('#c_news').val(table2.row($(element).parent()).data().content)
         $('#n_category').append($('<option>', {
             value: newscategory,
             text: newscategory
         }));
+        $('#photo').attr('src', 'data:image/png;base64,' + table2.row($(element).parent()).data().photo);
         $('.close').click();
     }
 </script>
@@ -398,7 +406,7 @@
                               if (response.status == "true"){
                                   $("#btn-save").prop("disabled", false);
                                   $("#btn-save").html(
-                                      '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                                      'Save'
                                   );
                                   
                                   $('#notification_success').modal('show');
@@ -411,7 +419,7 @@
                               } else {
                               $("#btn-save").prop("disabled", false);
                               $("#btn-save").html(
-                                  '<i class="fa fa-floppy-o"></i> Save'
+                                  ' Save'
                               );
                               $('#notification_error').modal('show');
                               if (response.message == null || response.message ==
@@ -427,7 +435,7 @@
                       error: function (response) {
                           $("#btn-save").prop("disabled", false);
                           $("#btn-save").html(
-                              '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
+                              '{{ __("md_claim_transaction.btn_save") }}'
                           );
 
                           $('#notification').modal('show');
@@ -438,6 +446,57 @@
           })
       }
 
+// Delete Button
+      
+    $("#btn-delete").on('click', function () {
 
+            if ($("#admin_menu_news_master").length> 0) {
+                $.ajax({
+                    url: "{{ url('admin_menu/news_master/remove') }}",
+                          type: "GET",
+                          data: $('#admin_menu_news_master').serialize(),
+                          success: function (response) {
+                              if (response.status == "true"){
+                                  $("#btn-Delete").prop("disabled", false);
+                                  $("#btn-Delete").html(
+                                      'Delete'
+                                  );
+                                  
+                                  $('#notification_success').modal('show');
+                                  $('#message-notification-success').html(response
+                                  .message);
+                                  setTimeout(function () {
+                                  window.location =
+                                      "{{ url('admin_menu/news_master') }}";
+                                  }, 3000);
+                              } else {
+                              $("#btn-Delete").prop("disabled", false);
+                              $("#btn-Delete").html(
+                                  '<i class="fa fa-floppy-o"></i> Delete'
+                              );
+                              $('#notification_error').modal('show');
+                              if (response.message == null || response.message ==
+                                  '') {
+                                  $('#message-notification-error').html(
+                                      "{{ __('login.error') }}");
+                              } else {
+                                  $('#message-notification-error').html(response
+                                      .message);
+                              }
+                        }
+                    },
+                    error: function (response) {
+                          $("#btn-delete").prop("disabled", false);
+                          $("#btn-delete").html(
+                              '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
+                          );
+
+                          $('#notification').modal('show');
+                          $('#message-notification').html(response);
+                      }
+                });
+            } 
+        })
+    
 </script>
 </html>

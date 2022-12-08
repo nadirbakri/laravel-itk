@@ -205,7 +205,7 @@
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
-                        style="width: 100%;" data-toggle="modal" data-target="#">
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
                         <i class="fa fa-plus"></i> Upload
                         </button>
                     </div>
@@ -254,13 +254,9 @@
                 </div>
             </div>
         </div>
-
-
-
-    
-
     </div>
 
+    {{-- modal list --}}
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
@@ -282,7 +278,7 @@
                                     <th>Employee ID</th>
                                     <th>Full Name</th>
                                     <th>Division</th>
-                                    <th>Division</th>
+                                    <th>Ranking Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -307,6 +303,39 @@
         </form>
     </div>
     
+     {{-- modal upload --}}
+     <div class="div-form">
+        <form id="upload_paid_reimbursement_form" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="modal_upload">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">Upload Paid Reimbursement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <div class="card">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label for="reimbursement_type form-check-label"><b>File Reimbursement</b></label>
+                                        <input type="file" name="file_reimbursement" id="file_reimbursement">
+                                    <br> <br>
+                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
@@ -542,14 +571,48 @@
                 'ticketNo' : ticketNo,
                 'employeeNo' : direct_superior
             },
-            success: function (data) {
-                console.log('sic');
-                console.log(data);
-                $('#btn-search').click();
-            }, error: function (err) {
-                console.log('err');
-                console.log(err);
-            }
+            success: function (response) {
+                // console.log(response);
+                           if (response.status == "true") {
+                               $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_success').modal('show');
+                               $('#message-notification-success').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_medical_history') }}";
+                               }, 3000);
+                           } else{
+                               $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_success').modal('show');
+                               $('#message-notification-success').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_medical_history') }}";
+                               }, 3000);
+                           }
+                       },
+                error: function (response) {
+                           $("#btn-update").prop("disabled", false);
+                           $("#btn-update").html(
+                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                               'Update'
+                           );
+
+                           $('#notification_error').modal('show');
+                           $('#message-notification-error').html(response);
+                       }
         });
              
     }
@@ -598,7 +661,11 @@
                     {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
                     {data: 'reimbursementEntity.customerName', name: 'customerName'},
                     {data: 'reimbursementEntity.projectName', name: 'projectName'},
-                    {data: 'reimbursementEntity.paymentDate', name: 'paymentDate'},
+                    {data: 'reimbursementEntity.paymentDate', name: 'paymentDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                            }
+                    },
                     {data: 'reimbursementEntity.totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
                     {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
@@ -680,7 +747,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('transaction/list/table') }}"             
+            url : "{{ url('transaction/list/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -725,7 +792,6 @@
 </script>
 
 <script type="text/javascript">
-
     loadDataExportReimbrusement();
     loadDataFirstLastAllReimbursement();
     loadDataBusinessUnit();
@@ -940,5 +1006,84 @@
         table.$('tr.selected').removeClass('selected'); 
     }  
   });
-    </script>
+</script>
+
+<script>
+     $("#btn-process").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#upload_paid_reimbursement_form").submit();
+        });
+
+        $('#notification_success').on('hide.bs.modal', function () {
+            window.location = "{{ url('transaction/transaction_reimbursement') }}";
+        });
+
+        if ($("#upload_paid_reimbursement_form").length > 0) {
+            $("#upload_paid_reimbursement_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    var myForm = document.getElementById('upload_paid_reimbursement_form');
+                    var formdata = new FormData(myForm);
+                    
+                    $.ajax({
+                        url: "{{ url('transaction/update_reimbursement/import') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            if (response[0].status == "true") {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                    'Update'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response[0]
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('transaction/transaction_reimbursement') }}";
+                                }, 3000);
+                            } else if {
+                                $("#btn-process").prop("disabled", false);
+                                $("#btn-process").html(
+                                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                    'Update'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response[0].message == null || response[0].message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response[0]
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update'
+                            );
+
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
+</script>
 </html>

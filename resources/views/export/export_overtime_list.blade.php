@@ -20,8 +20,9 @@
 		<thead>
 			<tr>
 				<th>No</th>
-                <th>Name</th>
+                <th>Status</th>
 				<th>Ticket No</th>
+                <th>Name</th>
 				<th>Employee No</th>
 				{{-- <th>Business Unit</th> --}}
 				<th>Project Name</th>
@@ -31,8 +32,7 @@
                 <th>Overtime Remarks</th>
                 <th>Project Name</th>
                 <th>Customer Name</th>
-                {{-- <th>Customer Name</th> --}}
-                <th>Status</th>
+                <th>Total Paid</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,6 +40,7 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
+				<td>{{ $value->overtimeEntity->status}}</td>
 				<td>{{ $value->overtimeEntity->fullnameRequester }}</td>
 				<td>{{ $value->overtimeEntity->ticketNo }}</td>
 				{{-- <td>{{ $value->overtimeEntity->businessUnit }}</td> --}}
@@ -52,7 +53,6 @@
 				<td>{{ $value->overtimeEntity->overtimeRemarks}}</td>
 				<td>{{ $value->overtimeEntity->projectName}}</td>
 				<td>{{ $value->overtimeEntity->customerName}}</td>
-				<td>{{ $value->overtimeEntity->status}}</td>
 			</tr>
 			@endforeach
 		</tbody>

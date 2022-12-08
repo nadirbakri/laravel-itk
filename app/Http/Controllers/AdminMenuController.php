@@ -95,6 +95,12 @@ class AdminMenuController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            if($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('photo_profile'), $filename);
+                $path = public_path('photo_profile/');
+            }
                 // var_dump(json_encode(
                 //     [
                 //         'companyCode' => Session::get('companyCode'),
@@ -117,11 +123,14 @@ class AdminMenuController extends Controller
                             'title' => $request->t_news,
                             'category' => $request->n_category,
                             'content' => $request->c_news,
-                            'recordStatus' => "A"
+                            'recordStatus' => "A",
+                            'photo' => ($request->hasFile('photo')) ? base64_encode(file_get_contents($path . $filename)) : '',
                         ]
                     )]
                 );
     
+              
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
@@ -137,5 +146,49 @@ class AdminMenuController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
-    
+ 
+    public function pageNewsMasterRemove(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            if($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('photo_profile'), $filename);
+                $path = public_path('photo_profile/');
+            }
+
+            $response = $client->delete(env('API_URL') . '/news/deletenewscategory',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => "A",
+                        'companyCode' => Session::get('companyCode'),
+                        'categoryName' => $request->n_category,
+                        'languageCode' => App::getLocale(),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'title' => $request->t_news,
+                        'content' => $request->c_news,
+                        'photo' => ($request->hasFile('photo')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
 }
