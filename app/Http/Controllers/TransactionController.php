@@ -14,6 +14,9 @@ use DataTables;
 use Excel;
 use PDF;
 use PhpParser\Node\NullableType;
+use App\Imports\UpdateReimbursement;
+use App\Imports\UpdateMedical;
+use App\Imports\UpdateOvertime;
 
 class TransactionController extends Controller
 {
@@ -116,16 +119,16 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'medicalType1'=> $request->medicalType1,
-            //         'businessUnit' => $request->businessUnit,
-            //         // 'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
+            //             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'employeeNo'=> $request->employeeNo,
+            //             'medicalType1'=> $request->medicalType1,
+            //             'businessUnit' => $request->businessUnit,
+            //             // 'exportMenu' => false,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
             $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementhistoryall',
@@ -710,25 +713,28 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'languageCode' => App::getLocale(), 
-                    'sessionUserID' => Session::get('userID'),
-                    'directSuperiorID'=> $request->directSuperiorID,
-                    // 'employeeNo' => $request->employeeNo,
-                    // 'logActionUserID' => Session::get('userID'),
-                    // 'logActionUsername' => Session::get('userName'),
-                    // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                    // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                    // 'processDate' => $request->processDate, 
-                    // 'type' =>  $request->transportType,
-                    // 'businessUnit'=> $request->businessUnit,
-                    'status'=> $request->status,
-                    'totalPaidMonth'=> $request->totalPaidMonth,
-                    'ticketNo' => $request->ticketNo
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionUserID' => Session::get('userID'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         // 'employeeNo' => $request->employeeNo,
+            //         // 'logActionUserID' => Session::get('userID'),
+            //         // 'logActionUsername' => Session::get('userName'),
+            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //         // 'processDate' => $request->processDate, 
+            //         // 'type' =>  $request->transportType,
+            //         // 'businessUnit'=> $request->businessUnit,
+            //         'approvalRemarks'=> 'string',
+            //         'logActionUserID'=> 'string',
+            //         'logActionUsername'=> 'string',
+            //         'status'=> $request->status,
+            //         'totalPaidMonth'=> $request->totalPaidMonth,
+            //         'ticketNo' => $request->ticketNo
+            //     ]
+            //     ));
 
             $response = $client->put(env('API_URL') . '/tmreimbursement/updatereimbursementapproval',
                 ['body' => json_encode(
@@ -775,7 +781,7 @@ class TransactionController extends Controller
         }
     }
    
-    public function tableUpdateTransMedical(Request $request)
+    public function tableUpdateApprovalBusinesstrip(Request $request)
     {
         try {
             $client = new Client([
@@ -788,7 +794,6 @@ class TransactionController extends Controller
             //             'companyCode' => Session::get('companyCode'),
             //             'languageCode' => App::getLocale(), 
             //             'sessionUserID' => Session::get('userID'),
-            //             'directSuperiorID'=> $request->directSuperiorID,
             //             // 'employeeNo' => $request->employeeNo,
             //             // 'logActionUserID' => Session::get('userID'),
             //             // 'logActionUsername' => Session::get('userName'),
@@ -801,8 +806,149 @@ class TransactionController extends Controller
             //             'logActionUserID'=> 'string',
             //             'logActionUsername'=> 'string',
             //             'status'=> $request->status,
-            //             'paidAmount'=> $request->paidAmount,
-            //             'ticketNo' => $request->ticketNo
+            //             'paidAmount'=> $request->paidAmpunt,
+            //             'ticketNo' => $request->ticketNo,
+            //             'employeeNo'=> $request->employeeNo
+            //     ]
+            //     ));
+
+            $response = $client->put(env('API_URL') . '/businesstrip/updatebusinesstripapproval',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'languageCode' => App::getLocale(), 
+                        'sessionUserID' => Session::get('userID'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        'approvalRemarks'=> 'string',
+                        'logActionUserID'=> 'string',
+                        'logActionUsername'=> 'string',
+                        'status'=> $request->status,
+                        'paidAmount'=> $request->paidAmpunt,
+                        'ticketNo' => $request->ticketNo,
+                        'employeeNo'=> $request->employeeNo
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+   
+    public function tableUpdateOvertime(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionUserID' => Session::get('userID'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         // 'employeeNo' => $request->employeeNo,
+            //         // 'logActionUserID' => Session::get('userID'),
+            //         // 'logActionUsername' => Session::get('userName'),
+            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //         // 'processDate' => $request->processDate, 
+            //         // 'type' =>  $request->transportType,
+            //         // 'businessUnit'=> $request->businessUnit,
+            //         'approvalRemarks'=> 'string',
+            //         'logActionUserID'=> 'string',
+            //         'logActionUsername'=> 'string',
+            //         'status'=> $request->status,
+            //         'totalPaidMonth'=> $request->totalPaidMonth,
+            //         'ticketNo' => $request->ticketNo
+            //     ]
+            //     ));
+
+            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimeapproval',
+                ['body' => json_encode(
+                    [
+                        'status'=> $request->status,
+                        'ticketNo' => $request->ticketNo,
+                        'employeeNo'=> $request->employeeNo,
+                        'companyCode' => Session::get('companyCode'),
+                        'languageCode' => App::getLocale(), 
+                        'sessionUserID' => Session::get('userID'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        'approvalRemarks'=> 'string',
+                        'logActionUserID'=> 'string',
+                        'logActionUsername'=> 'string'
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+   
+    public function tableUpdateTransMedical(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'status'=> $request->status,
+            //         'companyCode' => Session::get('companyCode'),
+            //         'ticketNo' => $request->ticketNo,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'languageCode' => App::getLocale(), 
+            //         'paidAmount'=> $request->paidAmount
             //     ]
             //     ));
 
@@ -815,7 +961,7 @@ class TransactionController extends Controller
                         'directSuperiorID'=> $request->directSuperiorID,
                         'sessionUserID' => Session::get('userID'),
                         'languageCode' => App::getLocale(), 
-                        'TotalPaidMonth'=> $request->TotalPaidMonth
+                        'paidAmount'=> (int) $request->paidAmount
                         // 'employeeNo' => $request->employeeNo,
                         // 'logActionUserID' => Session::get('userID'),
                         // 'logActionUsername' => Session::get('userName'),
@@ -860,4 +1006,117 @@ class TransactionController extends Controller
         }
     }
 
+    public function tableDetailAttendance(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         'reimbursementType'=> $request->reimbursementType,
+            //         'businessUnit' => $request->businessUnit,
+            //         'exportMenu' => false,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID')
+            //     ]
+            //     ));
+            $response = $client->post(env('API_URL') . '/tmabsence/gettmabsence',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'companyCode' => Session::get('companyCode'), 
+                        'employeeNo'=> $request->employeeNo,
+                        'languageCode' => App::getLocale(), 
+                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function importUpdateReimbursement(Request $request)
+    {
+        try{
+            $file = $request->file('file_reimbursement');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new UpdateReimbursement;
+            Excel::import($import, public_path('file_excel/'.$nama_file));
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+        
+        return $import->getArrResult();
+    }
+   
+    public function importUpdateMedical(Request $request)
+    {
+        try{
+            $file = $request->file('file_medical');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new UpdateMedical;
+            Excel::import($import, public_path('file_excel/'.$nama_file));
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+        
+        return $import->getArrResult();
+    }
+   
+    public function importUpdateOvertime(Request $request)
+    {
+        try{
+            $file = $request->file('file_overtime');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new UpdateOvertime;
+            Excel::import($import, public_path('file_excel/'.$nama_file));
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+        
+        return $import->getArrResult();
+    }
 }

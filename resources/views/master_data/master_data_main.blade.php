@@ -71,12 +71,6 @@
                             </a>
                         </div>
                         <div class="col col-3">
-                            <a href="{{ url('master_data/employee_group_reimbursement_detail') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_reimbursement_detail') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
                             <a href="{{ url('master_data/holiday_calender') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.holiday_calendar') }}</span>

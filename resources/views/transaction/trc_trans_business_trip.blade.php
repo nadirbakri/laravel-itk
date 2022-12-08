@@ -359,10 +359,10 @@
                                         <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Dependent Name</h5>
+                                        <h5>Type</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="type" name="type">
                                     </div>
                                 </div>
                             
@@ -372,9 +372,9 @@
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col-5">
-                                            <select name="" id="" class="custom-select">
-                                                <option value="APPROVE">APPROVE</option>
-                                                <option value="REJECT">REJECT</option>
+                                            <select name="" id="reimbursement_status" class="custom-select">
+                                                <option value="APPROVED">APPROVE</option>
+                                                <option value="REJECTED">REJECT</option>
                                                 <option value="PAID">PAID</option>
                                             </select>
                                     </div>
@@ -396,7 +396,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <button class="btn btn-primary btn-block" type="button">Update</button>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
                             </div>
                         </div>
                     </div>
@@ -530,6 +530,7 @@
                     {data: 'destination', name: 'destination'},
                     {data: 'customerName', name: 'customerName'},
                     {data: 'projectName', name: 'projectName'},
+                    {data: 'projectName', name: 'projectName'},
                     {data: 'totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'purpose', name: 'purpose'},
                     // {
@@ -621,12 +622,14 @@
         let totalclaim = $(element).parent().siblings('td').eq(8).text()
         var business_unit = $("#business_unit").val();
         var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
 
         $('#tiketno').val(ticket_number)
         $('#status').val(status)
         $('#b_unit').val(business_unit)
         $('#employeeno').val(direct_superior)
         $('#c_type').val(totalclaim)
+        $('#type').val(reimbursement_type)
     }
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
@@ -840,6 +843,39 @@ $.get("{{ url('level/api') }}", function (data) {
 
 </script>
 
+<script>
+    $('#btn-update').click(()=>{
+        let reimbursement_status = $('#reimbursement_status').val();
+        let totalpaid = $('#totalpaid').val();
+        let ticketNo = $('#tiketno').val();
+        let direct_superior = $("#direct_superior").val();
+
+        $('.close').click();
+        update_data_approval_businesstrip(reimbursement_status,totalpaid,ticketNo,direct_superior)
+    })
+
+    function update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo,direct_superior){
+        $.ajax({
+            url: "{{ url('trans/update_approvalbusinesstrip/table') }}",
+            type: "get",
+            data: {
+                'status': reimbursement_status,
+                'paidAmount': totalpaid,
+                'ticketNo' : ticketNo,
+                'employeeNo' : direct_superior
+            },
+            success: function (data) {
+                console.log('sic');
+                console.log(data);
+                $('#btn-search').click();
+            }, error: function (err) {
+                console.log('err');
+                console.log(err);
+            }
+        });
+             
+    }
+</script>
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> --}}
 </html>

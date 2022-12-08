@@ -30,19 +30,21 @@ class ReimbursementExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [ 
-                'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
-                'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
-                'endDate' => $this->claimDateTo,
-                'companyCode' => Session::get('companyCode'), 
-                'languageCode' => App::getLocale(), 
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'reimbursementType' => $this->reimbursementType,
-                'businessUnit'=> $this->businessUnit,
-                'exportMenu' => true,
-            ];
-
+        //    var_dump(json_encode(
+        //     [
+        //             'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
+        //             'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
+        //             // 'endDate' => $this->claimDateTo,
+        //             'reimbursementType' => $this->reimbursementType,
+        //             'businessUnit'=> $this->businessUnit,
+        //             'exportMenu' => true,
+        //             'companyCode' => Session::get('companyCode'), 
+        //             'languageCode' => App::getLocale(), 
+        //             'sessionID' => 0, 
+        //             'sessionUserID' => Session::get('userID'),
+        //     ]
+        //     ));
+            
             // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
             //     $param['permitDateFrom'] = $this->permitDateFrom;
             //     $param['permitDateTo'] = $this->permitDateTo;
@@ -54,7 +56,20 @@ class ReimbursementExport implements FromView, ShouldAutoSize
             // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/tmreimbursement/getreimbursementdetaillistall',
-                ['body' => json_encode($param)]
+                ['body' => json_encode(
+                    [
+                            'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
+                            'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
+                            // 'endDate' => $this->claimDateTo,
+                            'reimbursementType' => $this->reimbursementType,
+                            'businessUnit'=> $this->businessUnit,
+                            'exportMenu' => true,
+                            'companyCode' => Session::get('companyCode'), 
+                            'languageCode' => App::getLocale(), 
+                            'sessionID' => 0, 
+                            'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();

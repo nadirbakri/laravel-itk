@@ -201,7 +201,7 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-search" type="submit" id="btn-search" value="preview" style="width: 100%;">
+                        <button class="btn btn-primary" type="button" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
                             <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_transport.btn_search') }}
                         </button>
                     </div>

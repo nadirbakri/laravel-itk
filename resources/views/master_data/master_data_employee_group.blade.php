@@ -212,7 +212,45 @@
                     </div>
                 </div> 
                 <br>
+                
+{{-- nambah ini --}}
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group_detail.formgroupname3') }}</b></label>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-10">
+                    <table id="exampleemail" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Group ID</th>
+                                <th>Group Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="ceklis" name="ceklis"></td>
+                                <td id="group_id" name="group_id"></td>
+                                <td id="group_name" name="group_name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-primary buttonadd" name="btn-add2" id="btn-add2" data-toggle="modal" data-target="#modal_list_group_email_setting" type="button">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button class="btn-danger buttonadd" name="btn-delete2" id="btn-delete2" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg>
+                    </button>
+                    </div>
+                </div> 
+                <br>
                 <!-- BUTOON -->
                 <div class="row">
                     <div class="col-3">
@@ -310,6 +348,43 @@
         </form>
     </div>
 
+     {{-- modal btn-add2 --}}
+     <div class="div-form">
+        <form id="payroll_calculation_detail_two_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_group_email_setting">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">List User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="modalexampleemail" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Group ID</th>
+                                    <th>Group Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+            </div>
+        </form>
+    </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -374,7 +449,9 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script>
     var table3 = null;
+    var table5 = null;
     var arrApproval = [];
+    var arrEmailSettings = [];
    $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
@@ -412,6 +489,9 @@
 
     $('#btn-delete').click(()=>{
         table3.rows('.selected').remove().draw()
+    })
+    $('#btn-delete2').click(()=>{
+        table5.rows('.selected').remove().draw()
     })
 
     function load_data_approval_table(){
@@ -469,6 +549,8 @@
         $('.close').click();
         arrApproval = table2.row($(element).parent()).data().directApproval;
         load_data_approval_table();
+        arrEmailSettings = table2.row($(element).parent()).data().emailSettings;
+        load_data_email_table();
     }
 
     
@@ -522,6 +604,104 @@
     }
      
 </script>
+<script>
+ $('#btn-add2').click(()=> {
+        $('#modalexampleemail').DataTable().destroy();
+        tableemail = $('#modalexampleemail').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('master_data/list/table') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klikemail(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'groupCode', name: 'groupCode'},
+                {data: 'groupName', name: 'groupName'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
+
+    function load_data_email_table(){
+        $('#exampleemail').DataTable().destroy();
+        table5 = $('#exampleemail').DataTable({
+                processing: true,
+                data: arrEmailSettings,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                "order": [[ 1, "asc" ]],
+                paging: false,
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                }
+                    },
+                    {data: 'groupID', name: 'groupID',
+                    render: function (data, type, row) {
+
+                        return '<input type="hidden" class="form-control" name="groupID[]" value="' +
+
+                            data + '">' + data;
+
+                        }
+                    },
+                    {data: 'groupName', name: 'groupName',
+                    render: function (data, type, row) {
+
+                    return '<input type="hidden" class="form-control" name="groupName[]" value="' +
+
+                        data + '">' + data;
+
+                    }}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }, 
+                
+            }); 
+        } 
+    const klikemail = (element) => {
+        var count = table5.data().count();
+        var groupid = $(element).parent().siblings('.sorting_1').text();
+        let groupname = $(element).parent().siblings('td').eq(1).text();
+        // console.log(appCode);
+        $('.close').click();
+        table5.row.add({
+            'no' : '<input class="chk-select" type="checkbox">',
+            'groupID' : groupid,
+            'groupName' : groupname
+        }).draw();
+        // arrApproval = table4.row($(element).parent()).data().directApproval;
+        // load_data_approval_table();
+    }
+     
+</script>
+
 <script>
       $("#btn-save").click(function () {
             $(this).prop("disabled", true);

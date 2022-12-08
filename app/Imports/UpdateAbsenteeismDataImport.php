@@ -85,7 +85,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithS
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

@@ -64,7 +64,7 @@
 				<td><b>0</b></td>
 				<td>#</td>
 				<td></td>
-				<td>{{ $value->reimbursementEntity->totalPaidMonth}}</td>
+				<td>{{ $value->reimbursementEntity->paidAmount}}</td>
 				<td>{{ $value->reimbursementEntity->approvalRemarks}}</td>
 				{{-- <td>{{ $value->reimbursementEntity->paymentDate}}</td> --}}
 				

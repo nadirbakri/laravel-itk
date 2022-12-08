@@ -4,7 +4,7 @@ return [
     'judul' => 'Master Data',
     'employee_master' => 'Employee Master',
     'employee_group' => 'Employee Group',
-    'employee_group_detail' => 'Employee Group Detail',
+    'employee_group_detail' => 'Employee Group Member',
     'employee_group_reimbursement' => 'Employee Group Reimbursement',
     'employee_group_reimbursement_detail' => 'Employee Group Reimbursement Detail',
     'holiday_calendar' => 'Holiday Calendar',
