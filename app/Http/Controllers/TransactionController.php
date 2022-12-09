@@ -940,18 +940,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'status'=> $request->status,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'ticketNo' => $request->ticketNo,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'languageCode' => App::getLocale(), 
-            //         'paidAmount'=> $request->paidAmount
-            //     ]
-            //     ));
-
             $response = $client->put(env('API_URL') . '/reimbursementmedical/updatereimbursementapproval',
                 ['body' => json_encode(
                     [
@@ -962,25 +950,6 @@ class TransactionController extends Controller
                         'sessionUserID' => Session::get('userID'),
                         'languageCode' => App::getLocale(), 
                         'paidAmount'=> (int) $request->paidAmount
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
-                        // 'approvalRemarks'=> 'string',
-                        // 'logActionUserID'=> 'string',
-                        // 'logActionUsername'=> 'string',
-                        // {"status": "APPROVED",
-                        //     "companyCode": "ITK",
-                        //     "ticketNo": "2022R000001",
-                        //     "directSuperiorID": "0809",
-                        //     "sessionUserID": "edwin",
-                        //     "languageCode": "ID",
-                        //    "totalPaidMonth" : 500
-                        //     }
                        
                     ]
                 )]
@@ -999,11 +968,13 @@ class TransactionController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
-        }
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
     }
 
     public function tableDetailAttendance(Request $request)

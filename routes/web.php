@@ -705,6 +705,8 @@ Route::post('payroll/loan_report/print', 'PayrollController@printLoanReportPayro
 Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanReportPayrollExcel');
 Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPeriodicalReportPayrollExcel');
 Route::post('payroll/export_sipp_online/print', 'PayrollController@printExportSIPPOnlinePayroll');
+Route::post('payroll/spt_pph_report/print', 'PayrollController@printSPTPPHReportPayroll');
+Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPHReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');
@@ -727,6 +729,8 @@ Route::get('medical/medical_claim_report', 'MedicalController@pageMedicalClaimRe
 Route::get('medical/remaining_medical_limit_report', 'MedicalController@pageRemainingMedicalLimitReport');
 Route::get('medical/outstanding_claim_report', 'MedicalController@pageOutstandingClaimReport');
 Route::get('medical/disease_report', 'MedicalController@pageDiseaseReport');
+Route::get('medical/transfer_payment_to_excel/monthly', 'MedicalController@pageTransferPaymentToExcelMonthly');
+Route::get('medical/transfer_payment_to_excel/remaining_limit', 'MedicalController@pageTransferPaymentToExcelRemainingLimit');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -785,6 +789,8 @@ Route::post('medical/remaining_medical_limit_report/print/excel', 'MedicalContro
 Route::post('medical/disease_report/print/excel', 'MedicalController@printDiseaseReportExcel');
 Route::post('medical/claim_payment_transaction_report_slip/print/excel', 'MedicalController@printClaimPaymentTransactionReportSlipExcel');
 Route::post('medical/outstanding_claim_report/print/excel', 'MedicalController@printOutstandingClaimReportExcel');
+Route::post('medical/transfer_payment_to_excel/monthly/print/excel', 'MedicalController@printTransferPaymentToExcelMonthlyExcel');
+Route::post('medical/transfer_payment_to_excel/remaining_limit/print/excel', 'MedicalController@printTransferPaymentToExcelRemainingLimitExcel');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');

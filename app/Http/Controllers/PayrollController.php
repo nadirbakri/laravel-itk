@@ -20,6 +20,10 @@ use App\Exports\ExportSIPPOnlineFile1Export;
 use App\Exports\ExportSIPPOnlineFile2Export;
 use App\Exports\ExportSIPPOnlineFile3Export;
 use App\Exports\ExportSIPPOnlineFile4Export;
+use App\Exports\CSVTransferBankMCMExport;
+use App\Exports\CSVTransferBankBOTExport;
+use App\Exports\CSVTransferBankBTPNExport;
+use App\Exports\CSVTransferBankINAExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -37,6 +41,7 @@ use PDF;
 use Zip;
 use ZipArchive;
 use PhpParser\Node\NullableType;
+use Illuminate\Support\Facades\Storage;
 
 class PayrollController extends Controller
 {
@@ -4046,132 +4051,43 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if($request->output_file == 'bca'){
-
-            }else if($request->output_file == 'mcm_mandiri'){
-
-            }else if($request->output_file == 'bot'){
-
-            }else if($request->output_file == 'btpn'){
-
-            }else if($request->output_file == 'ina' || $request->output_file == 'ina_ma'){
-
-            }else if($request->output_file == 'mandiri'){
-
-            }else
-
-            var_dump(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'outputFile' => $request->output_file,
-                    'sourceBank' => $request->source_bank,
-                    'accountNo' => $request->account_number,
-                    'transferDate' => $request->transfer_date,
-                    'transferCode' => $request->transfer_code,
-                    'employeeNoFrom' => $request->employee_no_from,
-                    'employeeNoTo' => $request->employee_no_to,
-                    'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
-                    'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
-                    'transferAmount' => false,
-                    'takeHomePayGroup' => true,
-                    'salary' => false,
-                    'bonus' => false,
-                    'thr' => false,
-                    'pension' => false,
-                    'severance' => false,
-                    'one' => ($request->take_homepay_group == "one") ? true : false,
-                    'two' => ($request->take_homepay_group == "two") ? true : false,
-                    'three' => ($request->take_homepay_group == "three") ? true : false,
-                    'none' => ($request->take_homepay_group == "none") ? true : false,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')          
-                ]));
-
-            if($request->data_to_transfer == 'transfer_amount'){
-                $response = $client->post(env('API_URL') . '/prtransferbank/transferamountprocess',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'outputFile' => $request->output_file,
-                            'sourceBank' => $request->source_bank,
-                            'accountNo' => $request->account_number,
-                            'transferDate' => $request->transfer_date,
-                            'transferCode' => $request->transfer_code,
-                            'employeeNoFrom' => $request->employee_no_from,
-                            'employeeNoTo' => $request->employee_no_to,
-                            'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
-                            'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
-                            'transferAmount' => true,
-                            'takeHomePayGroup' => false,
-                            'salary' => isset($request->check_transfer_amount_salary) ? (bool) $request->check_transfer_amount_salary : false,
-                            'bonus' => isset($request->check_transfer_amount_bonus) ? (bool) $request->check_transfer_amount_bonus : false,
-                            'thr' => isset($request->check_transfer_amount_thr) ? (bool) $request->check_transfer_amount_thr : false,
-                            'pension' => isset($request->check_transfer_amount_pension) ? (bool) $request->check_transfer_amount_pension : false,
-                            'severance' => isset($request->check_transfer_amount_severance) ? (bool) $request->check_transfer_amount_severance : false,
-                            'one' => false,
-                            'two' => false,
-                            'three' => false,
-                            'none' => false,
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0, 
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')        
-                        ])
-                    ]
-                );
-            }else{
-                $response = $client->post(env('API_URL') . '/prtransferbank/takehomepaygroupprocess',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'outputFile' => $request->output_file,
-                            'sourceBank' => $request->source_bank,
-                            'accountNo' => $request->account_number,
-                            'transferDate' => $request->transfer_date,
-                            'transferCode' => $request->transfer_code,
-                            'employeeNoFrom' => $request->employee_no_from,
-                            'employeeNoTo' => $request->employee_no_to,
-                            'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
-                            'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
-                            'transferAmount' => false,
-                            'takeHomePayGroup' => true,
-                            'salary' => false,
-                            'bonus' => false,
-                            'thr' => false,
-                            'pension' => false,
-                            'severance' => false,
-                            'one' => ($request->take_homepay_group == "one") ? true : false,
-                            'two' => ($request->take_homepay_group == "two") ? true : false,
-                            'three' => ($request->take_homepay_group == "three") ? true : false,
-                            'none' => ($request->take_homepay_group == "none") ? true : false,
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0, 
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')          
-                        ])
-                    ]
-                );
-            }
+            $response = $client->post(env('API_URL') . '/prtransferbank/transferamountprocess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'outputFile' => $request->output_file,
+                        'sourceBank' => $request->source_bank,
+                        'accountNo' => $request->account_number,
+                        'transferDate' => $request->transfer_date,
+                        'transferCode' => $request->transfer_code,
+                        'employeeNoFrom' => $request->employee_no_from,
+                        'employeeNoTo' => $request->employee_no_to,
+                        'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
+                        'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
+                        'transferAmount' => ($request->data_to_transfer == 'transfer_amount') ? true : false,
+                        'takeHomePayGroup' => ($request->data_to_transfer == 'take_homepay_group') ? true : false,
+                        'salary' => isset($request->check_transfer_amount_salary) ? (bool) $request->check_transfer_amount_salary : false,
+                        'bonus' => isset($request->check_transfer_amount_bonus) ? (bool) $request->check_transfer_amount_bonus : false,
+                        'thr' => isset($request->check_transfer_amount_thr) ? (bool) $request->check_transfer_amount_thr : false,
+                        'pension' => isset($request->check_transfer_amount_pension) ? (bool) $request->check_transfer_amount_pension : false,
+                        'severance' => isset($request->check_transfer_amount_severance) ? (bool) $request->check_transfer_amount_severance : false,
+                        'one' => ($request->take_homepay_group == "one") ? true : false,
+                        'two' => ($request->take_homepay_group == "two") ? true : false,
+                        'three' => ($request->take_homepay_group == "three") ? true : false,
+                        'none' => ($request->take_homepay_group == "none") ? true : false,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')        
+                    ])
+                ]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             var_dump($response);
@@ -4186,9 +4102,25 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
 
-        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        if($arrResult->dataListSet != null){
+            if($request->output_file == 'BANK CENTRAL ASIA'){
+                $fullPath = storage_path('app/');
+                array_map('unlink', glob( "$fullPath*.txt"));
+                $arrDataBCA = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                Storage::put($arrResult->dataListSet[0]->namaFile, $arrResult->dataListSet[0]->transferBank);
+                return Storage::download($arrResult->dataListSet[0]->namaFile);
+            }else if($request->output_file == 'MCM'){
+                return Excel::download(new CSVTransferBankMCMExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+            }else if($request->output_file == 'BOT'){
+                return Excel::download(new CSVTransferBankBOTExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+            }else if($request->output_file == 'BTPN'){
+                return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+            }else if($request->output_file == 'BANK INA' || $request->output_file == 'BANK INA MULTI ACCOUNT'){
+                return Excel::download(new CSVTransferBankINAExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+            }
+        }
     }
 
     public function removeTHRBonusDataEntryPY(Request $request)
@@ -6733,6 +6665,87 @@ public function dataDetailReportFormatPY(Request $request)
                     $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
+            }
+        }
+    }
+
+    public function printSPTPPHReportPayroll(Request $request){
+        try{
+            
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'languageCode' => App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            if($request->spt_type == 'pph_1721i'){
+                $param['format'] = $request->report_format;
+                $param['periodMonth'] = (int) $request->period_month_det;
+                $param['periodYear'] = (int) $request->period_year_det;
+                $param['groupNPWP'] = $request->npwp_group;
+                $param['groupAuthorizationCodeFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizationCodeTo'] = (int) $request->group_authorized_code_to;
+
+                // var_dump(json_encode($param));
+
+                $response = $client->post(env('API_URL').'/SPTPPH1721AReport/getannualreportspt', [
+                    'body' => json_encode($param)
+                ]);
+            }else{
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+                $param['npwpCode'] = $request->npwp_group;
+                $param['groupAuthorizeFrom'] = $request->group_authorized_code_from;
+                $param['groupAuthorizeTo'] = $request->group_authorized_code_to;
+
+                // var_dump(json_encode($param));
+
+                $response = $client->post(env('API_URL').'/reportsptpph1721a1/getreportsptpph1721a1', [
+                    'body' => json_encode($param)
+                ]);
+            }
+
+            // var_dump(json_encode($param));
+
+        }catch(Exception $e){
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            if($request->spt_type == 'pph_1721i'){
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721i', ['data' => [], 'type' => $request->report_format])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                return $pdf->stream('SPT PPh 1721I.pdf');
+            }else{
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721a1', ['data' => [], 'type' => $request->report_format])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                return $pdf->stream('SPT PPh 1721A1.pdf');
+            }
+        }else{
+            if($request->spt_type == 'pph_1721i'){
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721i', ['data' => $arrResult->dataListSet, 'type' => $request->report_format])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                return $pdf->stream('SPT PPh 1721I.pdf');
+            }else{
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721a1', ['data' => $arrResult->dataListSet, 'type' => $request->report_format])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                return $pdf->stream('SPT PPh 1721A1.pdf');
             }
         }
     }
