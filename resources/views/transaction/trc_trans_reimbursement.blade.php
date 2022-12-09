@@ -2,19 +2,6 @@
 <html>
 <head>
     <title>{{ __('trans_reimbursement.judul') }}</title>
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-    <style type="text/css"> --}}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,17 +11,18 @@
         <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-        {{-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
-        {{-- <link  rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"> --}}
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+        
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script> --}}
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
        <style type="text/css">
         .div-trans-medical {
             max-width: 100%;
@@ -227,35 +215,38 @@
             </form>
         </div>
         <br>
-        <div class="card">
-            <div class="row">
-                    <p><b>{{ __('trans_medical.list_table') }}</b></p>
-            </div>
-            <div class="row">
-                <div class="table-responsive">
-                    <table id="reimbursement_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
-                        <thead>
-                            <tr>
-                                <th>Detail</th>
-                                <th>Receipt Date</th>
-                                <th>Status</th>
-                                <th>Ticket Number</th>
-                                {{-- <th>Bussines Unit</th> --}}
-                                <th>Name</th>
-                                <th>Customer Name</th>
-                                <th>Project Name</th>
-                                <th>Payment Date</th>
-                                <th>Total Request</th>
-                                <th>Paid Remarks</th>
-                                <th>Total Paid</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+    </div>
+    <div class="card">
+        <div class="row">
+                <p><b>{{ __('trans_medical.list_table') }}</b></p>
+        </div>
+        <div class="row">
+            <tr id="filter_global">
+                <td>Global search</td>
+                <td><input type="text" class="global_filter" id="global_filter"></td>
+            </tr>
+            <div id="tabelini" class="table-responsive">
+                <table id="reimbursement_table" class="reimbursement table-striped table-hover dt-responsive  nowrap" cellspacing="10">
+                    <thead>
+                        <tr>
+                            <th>Detail</th>
+                            <th>Receipt Date</th>
+                            <th>Status</th>
+                            <th>Ticket Number</th>
+                            {{-- <th>Bussines Unit</th> --}}
+                            <th>Name</th>
+                            <th>Customer Name</th>
+                            <th>Project Name</th>
+                            <th>Payment Date</th>
+                            <th>Total Request</th>
+                            <th>Paid Remarks</th>
+                            <th>Total Paid</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
-
     {{-- modal list --}}
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
@@ -495,26 +486,18 @@
     </div>
 </body>
 <script>
+ function filterGlobal() {
+    $('#reimbursement_table')
+        .DataTable()
+        .search($('#global_filter').val())
+        .draw();
+}
+</script>
+<script>
     $(document).ready(function () {
         $('table.display').DataTable();
     });
 </script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
-<script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
-     --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -548,6 +531,7 @@
             }
         });
     }
+
 </script>
 
 <script>
@@ -617,9 +601,15 @@
              
     }
 </script>
-
 <script type="text/javascript">
+    $(document).ready(function () {
+    $('#reimbursement_table').DataTable();
+ 
+    $('input.global_filter').on('keyup click', function () {
+        filterGlobal();
+    });
     function load_data_reimbursement(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
+        $('#reimbursement_table').DataTable().destroy();
             table = $('#reimbursement_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -683,17 +673,17 @@
                 }
             });
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            // $("#btn-search").prop("disabled", true);
+            // $("#btn-search").html(
+            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
-            );
+            // );
        
 
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
+            // $("#btn-search").prop("disabled", false);
+            // $("#btn-search").html(
+            //     "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+            // );
         }
 
         $("#trans_reimbursement_form").submit((e)=>{
@@ -710,7 +700,7 @@
             //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             // );
 
-            $('#reimbursement_table').DataTable().destroy();
+            // $('#reimbursement_table').DataTable().destroy();
             load_data_reimbursement(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
     })
 
@@ -739,7 +729,7 @@
 
         // alert(reimbursement_type);
     }
-
+});
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
@@ -776,8 +766,7 @@
             
         });        
     })
-    
-    const klik = (element) => {
+   const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
 
         $('#direct_superior').val(employee_id)
@@ -788,9 +777,7 @@
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
         // alert(data1)
     }
-
 </script>
-
 <script type="text/javascript">
     loadDataExportReimbrusement();
     loadDataFirstLastAllReimbursement();

@@ -580,50 +580,15 @@
                 'ticketNo' : ticketNo,
                 'directSuperiorID' : direct_superior
             },
-            success: function (response) {
-                // console.log(response);
-                           if (response.status == "true") {
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_medical_history') }}";
-                               }, 3000);
-                           } else (response.status == "false") {
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_medical_history') }}";
-                               }, 3000);
-                           }
-                       },
-                error: function (response) {
-                           $("#btn-update").prop("disabled", false);
-                           $("#btn-update").html(
-                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                               'Update'
-                           );
-
-                           $('#notification_error').modal('show');
-                           $('#message-notification-error').html(response);
-                       }
+            success: function (data) {
+                console.log('sic');
+                console.log(data);
+                $('#btn-search').click();
+            }, error: function (err) {
+                console.log('err');
+                console.log(err);
+            }
         });
-             
     }
 </script>
 
