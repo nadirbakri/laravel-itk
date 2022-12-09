@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>{{ __('trans_medical.judul') }}</title>
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
@@ -11,27 +11,11 @@
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-    <style type="text/css"> --}}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-        <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
-        <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-        <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <link  rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js">
-        <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-        <style type="text/css">
+    <style type="text/css">
         .div-trans-medical {
             max-width: 100%;
             margin: auto;
@@ -501,29 +485,6 @@
         </div>
     </div>
 </body>
-<script>
-    $(document).ready(function () {
-        $('table.display').DataTable({
-            scrollX: true,
-        });
-    });
-</script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
-<script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
-     --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -537,6 +498,15 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('table.display').DataTable({
+            scrollX: true
+        });
+    });
+</script>
+
 <script type="text/javascript">
     $(function () {
         initDatePicker();
@@ -581,143 +551,50 @@
                 'directSuperiorID' : direct_superior
             },
             success: function (response) {
-                // console.log(response);
-                           if (response.status == "true") {
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_medical_history') }}";
-                               }, 3000);
-                           } else (response.status == "false") {
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_medical_history') }}";
-                               }, 3000);
-                           }
-                       },
+                // console.log(response.status);
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_medical_history') }}";
+                    }, 3000);
+                } else {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_medical_history') }}";
+                    }, 3000);
+                }
+            },
                 error: function (response) {
-                           $("#btn-update").prop("disabled", false);
-                           $("#btn-update").html(
-                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                               'Update'
-                           );
+                $("#btn-update").prop("disabled", false);
+                $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
 
-                           $('#notification_error').modal('show');
-                           $('#message-notification-error').html(response);
-                       }
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
         });
              
     }
-</script>
-
-<script>
-    $("#btn-process").click(function () {
-           $(this).prop("disabled", true);
-           $(this).html(
-               '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-           );
-           $("#upload_paid_medical_form").submit();
-       });
-
-       $('#notification_success').on('hide.bs.modal', function () {
-           window.location = "{{ url('transaction/transaction_medical_history') }}";
-       });
-
-       if ($("#upload_paid_medical_form").length > 0) {
-           $("#upload_paid_medical_form").validate({
-               submitHandler: function (form) {
-                   $.ajaxSetup({
-                       headers: {
-                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                       }
-                   });
-                   var myForm = document.getElementById('upload_paid_medical_form');
-                   var formdata = new FormData(myForm);
-                   
-                   $.ajax({
-                       url: "{{ url('transaction/update_medical/import') }}",
-                       type: "POST",
-                       processData: false,
-                       contentType: false,
-                       data: formdata,
-                       success: function (response) {
-                           if (response[0].status == "true") {
-                               $("#btn-process").prop("disabled", false);
-                               $("#btn-process").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response[0]
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_medical_history') }}";
-                               }, 3000);
-                           } else if (response[0].status == "false"){
-                                 $("#btn-process").prop("disabled", false);
-                               $("#btn-process").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response[0]
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_medical_history') }}";
-                               }, 3000);
-                           }else {
-                               $("#btn-process").prop("disabled", false);
-                               $("#btn-process").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-
-                               $('#notification_error').modal('show');
-                               if (response[0].message == null || response[0].message ==
-                                   '') {
-                                   $('#message-notification-error').html(
-                                       "{{ __('login.error') }}");
-                               } else {
-                                   $('#message-notification-error').html(response[0]
-                                       .message);
-                               }
-                           }
-                       },
-                       error: function (response) {
-                           $("#btn-process").prop("disabled", false);
-                           $("#btn-process").html(
-                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                               'Update'
-                           );
-
-                           $('#notification_error').modal('show');
-                           $('#message-notification-error').html(response);
-                       }
-                   });
-               }
-           })
-       }
 </script>
 <script type="text/javascript">
     function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {

@@ -8,6 +8,8 @@ use App\Exports\MedicalClaimReportExport;
 use App\Exports\RemainingMedicalLimitReportExport;
 use App\Exports\ClaimPaymentTransactionReportSlipExport;
 use App\Exports\OutstandingClaimReportExport;
+use App\Exports\TransferPaymentToExcelMonthlyExport;
+use App\Exports\TransferPaymentToExcelRemainingLimitExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -1845,6 +1847,45 @@ class MedicalController extends Controller
             $request->location,
             $dataLevel),
             'Outstanding Claim Report.xlsx'
+        );
+    }
+
+    public function printTransferPaymentToExcelMonthlyExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new TransferPaymentToExcelMonthlyExport(
+            $request->period,
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Transfer Payment To Excel Monthly.xlsx'
+        );
+    }
+
+    public function printTransferPaymentToExcelRemainingLimitExcel(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new TransferPaymentToExcelRemainingLimitExport(
+            $request->period,
+            $request->claim_code_from,
+            $request->claim_code_to,
+            isset($request->include_resign) ? (bool) $request->include_resign : false, 
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
+            'Transfer Payment To Excel Remaining Limit.xlsx'
         );
     }
 
