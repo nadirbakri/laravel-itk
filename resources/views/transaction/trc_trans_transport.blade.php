@@ -781,7 +781,7 @@ loadDataAllTransport();
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
-                "sDom": 'lrtip',
+                "sDom": 'lfrtip',
                 'sPaginationType': 'ellipses',
                 "order": [[ 1, "asc" ]],
                 columns: [

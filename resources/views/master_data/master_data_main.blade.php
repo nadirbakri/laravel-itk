@@ -82,12 +82,12 @@
                                 <span class="child-title-text">{{ __('master_data.employee_group_business_trip') }}</span>
                             </a>
                         </div>
-                        <div class="col col-3">
+                        {{-- <div class="col col-3">
                             <a href="{{ url('master_data/bussines_trip_detail') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
                                 <span class="child-title-text">{{ __('master_data.employee_group_business_trip_detail') }}</span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

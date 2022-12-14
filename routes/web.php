@@ -906,6 +906,7 @@ Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBuss
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
+Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
 Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
 Route::get('master_data/list_email/table', 'MasterDataController@tabelDetailEmail');
 Route::get('master_data/direct_approval/table', 'MasterDataController@tableDirectApproval');
@@ -915,6 +916,8 @@ Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHoli
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
 Route::post('master_data/employee_reimbursement/proses', 'MasterDataController@prosesEmployeeReimbursement');
+Route::post('master_data/holiday_calendar/proses', 'MasterDataController@prosesEmployeeHolidayCalendar');
+Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@prosesEmployeeBusinessTrip');
 Route::post('master_data/employee_group_detail/proses', 'MasterDataController@prosesEmployeeGroupDetail');
 
 /* Route untuk Menu Admin MOB */

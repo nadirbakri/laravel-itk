@@ -124,7 +124,7 @@ class TransactionController extends Controller
             //             'employeeNo'=> $request->employeeNo,
             //             'medicalType1'=> $request->medicalType1,
             //             'businessUnit' => $request->businessUnit,
-            //             // 'exportMenu' => false,
+            //             'exportMenu' => false,
             //             'companyCode' => Session::get('companyCode'), 
             //             'languageCode' => App::getLocale(), 
             //             'sessionID' => 0, 
@@ -143,7 +143,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'medicalType1'=> $request->medicalType1,
                         'businessUnit' => $request->businessUnit,
-                        // 'exportMenu' => false,
+                        'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 
@@ -175,7 +175,7 @@ class TransactionController extends Controller
     public function tableDetailBusinesstrip(Request $request)
     {
     
-        if ($request->reimbursement_type == "TTA"){
+        if ($request->type == "TTA"){
             try {
                 $client = new Client([
                     'headers' => [ 'Content-Type' => 'application/json',
@@ -236,7 +236,7 @@ class TransactionController extends Controller
             return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
         }
 
-    }else if ($request->reimbursement_type == "TTB"){
+    }else if ($request->type == "TTB"){
         try {
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -369,16 +369,16 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //             'businessUnit' => $request->businessUnit,
-            //             'employeeNo'=> $request->employeeNo,
-            //             'type' => "TOT",
-            //             'exportMenu' => false,
-            //             'companyCode' => Session::get('companyCode'), 
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionID' => 0, 
-            //             'sessionUserID' => Session::get('userID'),
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'businessUnit' => $request->businessUnit,
+            //         'employeeNo'=> $request->employeeNo,
+            //         'type' => "TOT",
+            //         'exportMenu' => false,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
             $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
@@ -716,23 +716,23 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
-            //         'status'=> $request->status,
-            //         'totalPaidMonth'=> $request->totalPaidMonth,
-            //         'ticketNo' => $request->ticketNo
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionUserID' => Session::get('userID'),
+            //             'employeeNo'=> $request->employeeNo,
+            //             // 'employeeNo' => $request->employeeNo,
+            //             // 'logActionUserID' => Session::get('userID'),
+            //             // 'logActionUsername' => Session::get('userName'),
+            //             // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //             // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //             // 'processDate' => $request->processDate, 
+            //             // 'type' =>  $request->transportType,
+            //             // 'businessUnit'=> $request->businessUnit,
+            //             'approvalRemarks'=> 'string',
+            //             'logActionUserID'=> 'string',
+            //             'logActionUsername'=> 'string',
+            //             'status'=> $request->status,
+            //             'paidAmount'=> (int) $request->paidAmount,
+            //             'ticketNo' => $request->ticketNo
             //     ]
             //     ));
 
@@ -755,7 +755,7 @@ class TransactionController extends Controller
                         'logActionUserID'=> 'string',
                         'logActionUsername'=> 'string',
                         'status'=> $request->status,
-                        'totalPaidMonth'=> $request->totalPaidMonth,
+                        'paidAmount'=> (int) $request->paidAmount,
                         'ticketNo' => $request->ticketNo
                     ]
                 )]
@@ -773,12 +773,12 @@ class TransactionController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
-
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
-        }
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
     }
    
     public function tableUpdateApprovalBusinesstrip(Request $request)
@@ -849,12 +849,13 @@ class TransactionController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
 
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
-        }
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
     }
    
     public function tableUpdateOvertime(Request $request)
@@ -867,24 +868,13 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
+                   
             //         'status'=> $request->status,
-            //         'totalPaidMonth'=> $request->totalPaidMonth,
-            //         'ticketNo' => $request->ticketNo
+            //         'companyCode' => Session::get('companyCode'),
+            //         'ticketNo' => $request->ticketNo,
+            //         'employeeNo'=> $request->employeeNo,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'languageCode' => App::getLocale(), 
             //     ]
             //     ));
 
@@ -892,11 +882,19 @@ class TransactionController extends Controller
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
+                        'companyCode' => Session::get('companyCode'),
                         'ticketNo' => $request->ticketNo,
                         'employeeNo'=> $request->employeeNo,
-                        'companyCode' => Session::get('companyCode'),
-                        'languageCode' => App::getLocale(), 
                         'sessionUserID' => Session::get('userID'),
+                        'languageCode' => App::getLocale(), 
+                        // 'paidAmount'=> (int) $request->paidAmount
+
+                        // 'status'=> $request->status,
+                        // 'ticketNo' => $request->ticketNo,
+                        // 'employeeNo'=> $request->employeeNo,
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'languageCode' => App::getLocale(), 
+                        // 'sessionUserID' => Session::get('userID'),
                         // 'employeeNo' => $request->employeeNo,
                         // 'logActionUserID' => Session::get('userID'),
                         // 'logActionUsername' => Session::get('userName'),
@@ -905,9 +903,9 @@ class TransactionController extends Controller
                         // 'processDate' => $request->processDate, 
                         // 'type' =>  $request->transportType,
                         // 'businessUnit'=> $request->businessUnit,
-                        'approvalRemarks'=> 'string',
-                        'logActionUserID'=> 'string',
-                        'logActionUsername'=> 'string'
+                        // 'approvalRemarks'=> 'string',
+                        // 'logActionUserID'=> 'string',
+                        // 'logActionUsername'=> 'string'
                     ]
                 )]
             );
@@ -924,12 +922,8 @@ class TransactionController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
 
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
-        }
     }
    
     public function tableUpdateTransMedical(Request $request)
@@ -940,6 +934,18 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            //  var_dump(json_encode(
+            //     [
+            //         'status'=> $request->status,
+            //         'companyCode' => Session::get('companyCode'),
+            //         'ticketNo' => $request->ticketNo,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'languageCode' => App::getLocale(), 
+            //         'paidAmount'=> (int) $request->paidAmount
+                   
+            //     ]
+            //     ));
             $response = $client->put(env('API_URL') . '/reimbursementmedical/updatereimbursementapproval',
                 ['body' => json_encode(
                     [
@@ -1038,9 +1044,9 @@ class TransactionController extends Controller
     }
 
     public function importUpdateReimbursement(Request $request)
-    {
+    {     
         try{
-            $file = $request->file('file_reimbursement');
+            $file = $request->file('file_overtime');
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
             $import = new UpdateReimbursement;

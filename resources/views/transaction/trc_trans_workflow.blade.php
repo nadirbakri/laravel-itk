@@ -353,7 +353,7 @@
                                 </div>
                             
                                 <br>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-3">
                                         <h5>Status</h5>
                                     </div>
@@ -364,8 +364,8 @@
                                                 <option value="PAID">PAID</option>
                                             </select>
                                     </div>
-                                </div>
-                                <div class="row">
+                                </div> --}}
+                                {{-- <div class="row">
                                     <div class="col-3">
                                         <h5>Total Paid</h5>
                                     </div>
@@ -380,9 +380,9 @@
                                     <div class="col-5">
                                         <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <hr>
-                                <button class="btn btn-primary btn-block" type="button">Update</button>
+                                {{-- <button class="btn btn-primary btn-block" type="button">Update</button> --}}
                             </div>
                         </div>
                     </div>
@@ -492,7 +492,7 @@
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
-                "sDom": 'lrtip',
+                "sDom": 'lfrtip',
                 'sPaginationType': 'ellipses',
                 "order": [[ 1, "asc" ]],
                 columns: [
@@ -505,22 +505,34 @@
                         }
                     },
                     {data: 'permitEntity.createdDate', name: 'createdDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
+                                render: function (data, type, row) {
+                                if (data == null){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
+                            }
                     },
                     {data: 'permitEntity.employeeNo', name: 'employeeNo'},
                     {data: 'permitEntity.customerName', name: 'customerName'},
                     {data: 'permitEntity.status', name: 'status'},
                     {data: 'permitEntity.startDate', name: 'startDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
+                                render: function (data, type, row) {
+                                if (data == null){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
+                            }
                     },
                     {data: 'permitEntity.endDate', name: 'endDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
+                                render: function (data, type, row) {
+                                if (data == null){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
+                            }
                     },
                     {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
                     {data: 'permitEntity.time', name: 'permitEntity.time'},
@@ -560,7 +572,7 @@
                     error: function(jqXHR, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                     },
-                    "sDom": 'lrtip',
+                    "sDom": 'lfrtip',
                     'sPaginationType': 'ellipses',
                     "order": [[ 1, "asc" ]],
                     columns: [
@@ -574,7 +586,11 @@
                         },
                         {data: 'leaveEntity.createdDate', name: 'createdDate', 
                                 render: function (data, type, row) {
-                                return moment(data).format('YYYY-MM-DD');
+                                if (data == null){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
                             }
                         },
                         {data: 'leaveEntity.employeeNo', name: 'employeeNo'},
@@ -582,13 +598,21 @@
                         {data: 'leaveEntity.status', name: 'status'},
                         {data: 'leaveEntity.startDate', name: 'startDate', 
                             render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
+                                if (data == null){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
+                            }
                     },
                     {data: 'leaveEntity.endDate', name: 'endDate', 
                             render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
+                                if (data == null){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
+                            }
                     },
                     {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
                     {data: 'leaveEntity.leaveDurationDepan', name: 'leaveDurationDepan'},
