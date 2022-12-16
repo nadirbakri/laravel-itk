@@ -15,7 +15,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
 
-class UpdateReimbursement implements ToCollection, WithStartRow
+class UpdateBusinessTrip implements ToCollection, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -65,7 +65,7 @@ class UpdateReimbursement implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/tmreimbursement/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

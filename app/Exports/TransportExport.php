@@ -32,8 +32,8 @@ class TransportExport implements FromView, ShouldAutoSize
             ]);
 
             $param = [ 
-                'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-d-m'),
-                'endDate' => Carbon::parse($this->claimDateTo)->format('Y-d-m'),
+                'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
+                'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 

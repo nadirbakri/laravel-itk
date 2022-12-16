@@ -752,13 +752,16 @@ Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
 Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
+Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 
 Route::post('transaction/update_reimbursement/import', 'TransactionController@importUpdateReimbursement');
+Route::post('transaction/update_transport/import', 'TransactionController@importUpdateTransport');
 Route::post('transaction/update_medical/import', 'TransactionController@importUpdateMedical');
 Route::post('transaction/update_overtime/import', 'TransactionController@importUpdateOvertime');
+Route::post('transaction/update_businesstrip/import', 'TransactionController@importUpdateBusinesstrip');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');

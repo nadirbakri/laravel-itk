@@ -250,8 +250,8 @@
                                        <th>Overtime Hour To</th>
                                        <th>Overtime Remarks</th>
                                        <th>Costumer Name</th>
-                                       <th>Total Request</th>
-                                       <th>Total Paid</th>
+                                       {{-- <th>Total Request</th>
+                                       <th>Total Paid</th> --}}
                                 </thead>
                             </table>
                     </div>
@@ -694,8 +694,8 @@
         
         let totalclaim = $(element).parent().siblings('td').eq(7).text()
         let totalpaid = $(element).parent().siblings('td').eq(9).text()
-        // var reimbursement_type = $("#reimbursement_type").val(1);
-        // var business_unit = $("#business_unit").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        var business_unit = $("#business_unit").val();
         var direct_superior = $("#direct_superior").val();
         // $('#recdate').val(receiptDate)
         // $('#reqdate').val(receiptDate)

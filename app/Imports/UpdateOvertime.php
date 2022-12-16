@@ -65,7 +65,7 @@ class UpdateOvertime implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/reimbursementmedical/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimemultipleapproval',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

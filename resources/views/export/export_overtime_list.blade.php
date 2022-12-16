@@ -41,8 +41,8 @@
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->overtimeEntity->status}}</td>
-				<td>{{ $value->overtimeEntity->fullnameRequester }}</td>
 				<td>{{ $value->overtimeEntity->ticketNo }}</td>
+				<td>{{ $value->overtimeEntity->fullnameRequester }}</td>
 				{{-- <td>{{ $value->overtimeEntity->businessUnit }}</td> --}}
 				<td>{{ $value->overtimeEntity->employeeNo}}</td>
 				<td>{{ $value->overtimeEntity->projectName}}</td>
