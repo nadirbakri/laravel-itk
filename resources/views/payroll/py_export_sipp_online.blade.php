@@ -240,7 +240,7 @@
                     }
                 },
                 ajax: {
-                    url: '/bpjs/api',
+                    url: "{{ url('/bpjs/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -270,7 +270,7 @@
         function loadDataFirstLastGroupBPJS(field = '', func = ''){
             $.ajax({
                 type: 'GET',
-                url: '/bpjs/func/api',
+                url: "{{ url('/bpjs/func/api') }}",
                 data: {
                     'func': func
                 }

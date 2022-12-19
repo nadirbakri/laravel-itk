@@ -303,7 +303,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/employee_no/loan_data_entry/api',
+            url: "{{ url('/employee_no/loan_data_entry/api') }}",
             data: {
                 'employeeNo': (typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''
             }
@@ -341,7 +341,7 @@
         pickerPaymentDate.setDate(((typeof arrData[0].paymentDate !== 'undefined') ? arrData[0].paymentDate : ''));
         $.ajax({
                 type: 'GET',
-                url: '/currency_code/loan_data_entry/api',
+                url: "{{ url('/currency_code/loan_data_entry/api') }}",
                 data: {
                     'currencyCode': (typeof arrData2[0].currencyCode !== 'undefined') ? arrData2[0].currencyCode : ''
                 }
@@ -419,7 +419,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -477,7 +477,7 @@
                     }
                 },
                 ajax: {
-                    url: '/currency/api',
+                    url: "{{ url('/currency/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

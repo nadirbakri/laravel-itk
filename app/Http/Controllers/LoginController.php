@@ -36,6 +36,24 @@ class LoginController extends Controller
 	    			]
 	    		)]
 	    	);
+
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			$client2 = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $arrResult->dataListSet[0]->token ]
+            ]);
+
+			$response2 = $client2->post(env('API_URL') . '/module/getmodule',
+	    		['body' => json_encode(
+	    			[
+						'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
 			var_dump($response);
@@ -48,7 +66,15 @@ class LoginController extends Controller
             }
 	    }
 
-	    $arrResult = json_decode($response->getBody()->getContents());
+	    $arrResult2 = json_decode($response2->getBody()->getContents());
+
+		// var_dump($arrResult2);
+
+		if(!isset($arrResult2->dataListSet) || $arrResult2->dataListSet == '' || $arrResult2->dataListSet == null){
+			$menuList = [];
+		}else{
+			$menuList = $arrResult2->dataListSet;
+		}
 
 	    if($arrResult->status == "true"){
 	    	Session::flush();
@@ -64,13 +90,52 @@ class LoginController extends Controller
 	    	Session::put('photo', $arrResult->dataListSet[0]->photo);
 	    	Session::put('officeLocation', $arrResult->dataListSet[0]->officeLocation);
 	    	Session::put('userType', $arrResult->dataListSet[0]->userType);
-	    	Session::put('menuList', [
-				[ 'title' => 'Home', 'icon' => 'home.svg', 'icon-name' => 'home', 'link' => '/home' ],
-				[ 'title' => 'Personel', 'icon' => 'personel.svg', 'icon-name' => 'personel', 'link' => '/personel' ],
-				[ 'title' => 'Time Management', 'icon' => 'time_management.svg', 'icon-name' => 'time_management', 'link' => '/time_management' ], 
-				[ 'title' => 'Payroll', 'icon' => 'payroll.svg', 'icon-name' => 'payroll', 'link' => '/payroll' ],  
-				[ 'title' => 'Report', 'icon' => 'report.svg', 'icon-name' => 'report', 'link' => '/report' ],  
-				[ 'title' => 'Medical', 'icon' => 'medical.svg', 'icon-name' => 'medical', 'link' => '/medical' ]]);
+			Session::put('groupAccessID', $arrResult->dataListSet[0]->groupAccessID);
+
+			foreach($menuList as $key => $value){
+				if($value->moduleID == 'HOME'){
+					$value->{"icon"} = 'home.svg';
+					$value->{"icon_name"} = 'home';
+					$value->{"link"} = '/home';
+				}
+				if($value->moduleID == 'MD'){
+					$value->{"icon"} = 'medical.svg';
+					$value->{"icon_name"} = 'medical';
+					$value->{"link"} = '/medical';
+				}
+				if($value->moduleID == 'PE'){
+					$value->{"icon"} = 'personel.svg';
+					$value->{"icon_name"} = 'personel';
+					$value->{"link"} = '/personnel';
+				}
+				if($value->moduleID == 'PY'){
+					$value->{"icon"} = 'payroll.svg';
+					$value->{"icon_name"} = 'payroll';
+					$value->{"link"} = '/payroll';
+				}
+				if($value->moduleID == 'REP'){
+					$value->{"icon"} = 'report.svg';
+					$value->{"icon_name"} = 'report';
+					$value->{"link"} = '/report';
+				}
+				if($value->moduleID == 'TM'){
+					$value->{"icon"} = 'time_management.svg';
+					$value->{"icon_name"} = 'time_management';
+					$value->{"link"} = '/time_management';
+				}
+				if($value->moduleID == 'UTI'){
+					unset($menuList[$key]);
+				}
+			}
+
+			Session::put('menuList', $menuList);
+	    	// Session::put('menuList', [
+			// 	[ 'moduleName' => 'Home', 'icon' => 'home.svg', 'icon_name' => 'home', 'link' => '/home' ],
+			// 	[ 'moduleName' => 'Personel', 'icon' => 'personel.svg', 'icon_name' => 'personel', 'link' => '/personel' ],
+			// 	[ 'moduleName' => 'Time Management', 'icon' => 'time_management.svg', 'icon_name' => 'time_management', 'link' => '/time_management' ], 
+			// 	[ 'moduleName' => 'Payroll', 'icon' => 'payroll.svg', 'icon_name' => 'payroll', 'link' => '/payroll' ],  
+			// 	[ 'moduleName' => 'Report', 'icon' => 'report.svg', 'icon_name' => 'report', 'link' => '/report' ],  
+			// 	[ 'moduleName' => 'Medical', 'icon' => 'medical.svg', 'icon_name' => 'medical', 'link' => '/medical' ]]);
 			Session::put('menuListMob', [
 				[ 'title' => 'Dashboard', 'icon' => 'streammobportal-navbar-dashboard.svg', 'icon-name' => 'streammobportal-navbar-dashboard', 'link' => '/dashboard_mob' ], 
 				[ 'title' => 'Export', 'icon' => 'streammobportal-navbar-export.svg', 'icon-name' => 'streammobportal-navbar-export', 'link' => '/export' ], 

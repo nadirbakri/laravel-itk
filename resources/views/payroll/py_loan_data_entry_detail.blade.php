@@ -588,7 +588,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/loan_data_entry/api',
+                url: "{{ url('/employee_no/loan_data_entry/api') }}",
                 data: {
                     'employeeNo': (typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''
                 }
@@ -614,7 +614,7 @@
             $('#loan_no').val(((typeof arrData[0].loanNo !== 'undefined') ? arrData[0].loanNo : ''));
             $.ajax({
                 type: 'GET',
-                url: '/loan_code/loan_data_entry/api',
+                url: "{{ url('/loan_code/loan_data_entry/api') }}",
                 data: {
                     'loanCode': (typeof arrData[0].loanCode !== 'undefined') ? arrData[0].loanCode : ''
                 }
@@ -644,7 +644,7 @@
             pickerFirstPaymentDate.setDate(((typeof arrData[0].firstPaymentDate !== 'undefined') ? arrData[0].firstPaymentDate : ''));
             $.ajax({
                 type: 'GET',
-                url: '/currency_code/loan_data_entry/api',
+                url: "{{ url('/currency_code/loan_data_entry/api') }}",
                 data: {
                     'currencyCode': (typeof arrData[0].currencyCode !== 'undefined') ? arrData[0].currencyCode : ''
                 }
@@ -1381,7 +1381,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1452,7 +1452,7 @@
                     }
                 },
                 ajax: {
-                    url: '/loan_code/api',
+                    url: "{{ url('/loan_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1511,7 +1511,7 @@
                     }
                 },
                 ajax: {
-                    url: '/currency/api',
+                    url: "{{ url('/currency/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

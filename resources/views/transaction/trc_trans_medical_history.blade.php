@@ -934,7 +934,7 @@
                         }
                     },
                     ajax: {
-                        url: '/reimbursement_type/func/api',
+                        url: "{{ url('/reimbursement_type/func/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",
@@ -966,7 +966,7 @@
     
                 $.ajax({
                     type: 'GET',
-                    url: '/reimbursement_type_medical/all/api',
+                    url: "{{ url('/reimbursement_type_medical/all/api') }}",
                 }).then(function (data) {
                     if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
                         $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
@@ -981,7 +981,7 @@
             // function loadDataFirstLastAllReimbursement() {
             //     $.ajax({
             //         type: 'GET',
-            //         url: '/reimbursement_type/all/api',
+            //         url: "{{ url('/reimbursement_type/all/api') }}",
             //     }).then(function (data) {
             //         if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length)
             //         $('#reimbursement_type').val(data.value);
@@ -1022,7 +1022,7 @@
                         }
                     },
                     ajax: {
-                        url: '/level/api',
+                        url: "{{ url('/level/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",
@@ -1055,7 +1055,7 @@
     
                 $.ajax({
                     type: 'GET',
-                    url: '/level/func/api',
+                    url: "{{ url('/level/func/api') }}",
                 }).then(function (data) {
                     if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                         $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));

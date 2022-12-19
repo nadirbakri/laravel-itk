@@ -340,7 +340,7 @@
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/func/api',
+                url: "{{ url('/employee_no/func/api') }}",
                 data: {
                     'func': func
                 }
@@ -354,9 +354,10 @@
         function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/group_authorize/func/api',
+                url: "{{ url('/group_authorize/func/api') }}",
                 data: {
-                    'func': func
+                    'func': func,
+                    'module': 'PY'
                 }
             }).then(function (data) {
                 var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
@@ -368,7 +369,7 @@
         function loadDataFirstLastAllBPJSGroup(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/bpjs/func/api',
+                url: "{{ url('/bpjs/func/api') }}",
                 data: {
                     'func': func
                 }
@@ -416,7 +417,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -480,14 +481,15 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: "{{ url('/group_authorize/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            module: 'PY'
                         };
                     },
                     processResults: function (data) {
@@ -545,7 +547,7 @@
                     }
                 },
                 ajax: {
-                    url: '/bpjs/api',
+                    url: "{{ url('/bpjs/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

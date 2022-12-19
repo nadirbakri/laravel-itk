@@ -885,7 +885,7 @@
             $('#period_status').val(((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : ''));
             $.ajax({
                 type: 'GET',
-                url: '/process_status/detail/api',
+                url: "{{ url('/process_status/detail/api') }}",
                 data: {
                     'processStatus' : arrData[0].statusProcess
                 }
@@ -903,7 +903,7 @@
             }
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].noTimeInCode
                 }
@@ -914,7 +914,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].noTimeOutCode
                 }
@@ -925,7 +925,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].lateCode
                 }
@@ -936,7 +936,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].earlybackCode
                 }
@@ -947,7 +947,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].noTimeInEarlybackCode
                 }
@@ -958,7 +958,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].lateEarlybackCode
                 }
@@ -969,7 +969,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].lateNoTimeOutCode
                 }
@@ -980,7 +980,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].unpaidLeaveCode
                 }
@@ -991,7 +991,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].absentCode
                 }
@@ -1002,7 +1002,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     'absentCode' : arrData[0].overtimeCode
                 }
@@ -1124,7 +1124,7 @@
                     }
                 },
                 ajax: {
-                    url: '/process_status/api',
+                    url: "{{ url('/process_status/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1196,7 +1196,7 @@
                     }
                 },
                 ajax: {
-                    url: '/absent_code/api',
+                    url: "{{ url('/absent_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1403,7 +1403,7 @@
                     }
                 },
                 ajax: {
-                    url: '/deduct_day/api',
+                    url: "{{ url('/deduct_day/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

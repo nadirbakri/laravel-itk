@@ -318,7 +318,7 @@ loadDataFirstLastAllEmployeeStatus();
                     }
                 },
                 ajax: {
-                    url: '/level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -349,7 +349,7 @@ loadDataFirstLastAllEmployeeStatus();
 
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -450,7 +450,7 @@ loadDataFirstLastAllEmployeeStatus();
                     }
                 },
                 ajax: {
-                    url: '/employee/status/api',
+                    url: "{{ url('/employee/status/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -482,7 +482,7 @@ loadDataFirstLastAllEmployeeStatus();
 
             $.ajax({
                 type: 'GET',
-                url: '/employee/status/all/api',
+                url: "{{ url('/employee/status/all/api') }}",
             }).then(function (data) {
                 if (!$('#employee_status').find('option:contains(' + data.value + ')').length) {
                     $('#employee_status').append($('<option>').val(data.comGenCode).text(data.value));

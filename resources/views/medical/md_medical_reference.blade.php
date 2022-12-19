@@ -612,7 +612,7 @@
             pickrProcessPeriod.setDate(arrData[0].processingPeriod);
             $.ajax({
                 type: 'GET',
-                url: '/limit_eligible/func/api',
+                url: "{{ url('/limit_eligible/func/api') }}",
                 data: {
                     'limitEligible' : arrData[0].limitBy
                 }
@@ -623,7 +623,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/limit_eligible/func/api',
+                url: "{{ url('/limit_eligible/func/api') }}",
                 data: {
                     'limitEligible' : arrData[0].eligibleBy
                 }
@@ -642,7 +642,7 @@
             }
             $.ajax({
                 type: 'GET',
-                url: '/minimum_service_length/func/api',
+                url: "{{ url('/minimum_service_length/func/api') }}",
                 data: {
                     'minServiceLengthBy' : arrData[0].minServiceLengthBy
                 }
@@ -653,7 +653,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/default_medical_payment_bank_type/func/api',
+                url: "{{ url('/default_medical_payment_bank_type/func/api') }}",
                 data: {
                     'defaultMedicalPaymentBankType' : arrData[0].defaultMedicalPaymentBankType
                 }
@@ -718,7 +718,7 @@
             }
             $.ajax({
                 type: 'GET',
-                url: '/rate_type/func/api',
+                url: "{{ url('/rate_type/func/api') }}",
                 data: {
                     'transactionRateTypeCode': arrData[0].transactionRateTypeCode
                 }
@@ -741,7 +741,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/rounding_method/func/api',
+                url: "{{ url('/rounding_method/func/api') }}",
                 data: {
                     'roundingMethod' : arrData[0].roundingMethod
                 }
@@ -809,7 +809,7 @@
                     }
                 },
                 ajax: {
-                    url: '/limit_eligible/api',
+                    url: "{{ url('/limit_eligible/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -867,7 +867,7 @@
                     }
                 },
                 ajax: {
-                    url: '/minimum_service_length/api',
+                    url: "{{ url('/minimum_service_length/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -925,7 +925,7 @@
                     }
                 },
                 ajax: {
-                    url: '/default_medical_payment_bank_type/api',
+                    url: "{{ url('/default_medical_payment_bank_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -996,7 +996,7 @@
                     }
                 },
                 ajax: {
-                    url: '/rate_type/api',
+                    url: "{{ url('/rate_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1055,7 +1055,7 @@
                     }
                 },
                 ajax: {
-                    url: '/rounding_method/api',
+                    url: "{{ url('/rounding_method/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

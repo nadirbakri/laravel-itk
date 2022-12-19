@@ -327,7 +327,7 @@
             }
             $.ajax({
                 type: 'GET',
-                url: '/medical_limit_type/func/api',
+                url: "{{ url('/medical_limit_type/func/api') }}",
                 data: {
                     'limitType' : "{{ isset($data[0]->companyMedicalLimitType) ? $data[0]->companyMedicalLimitType : '' }}"
                 }
@@ -386,7 +386,7 @@
                     }
                 },
                 ajax: {
-                    url: '/medical_limit_type/api',
+                    url: "{{ url('/medical_limit_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

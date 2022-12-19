@@ -667,7 +667,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field/api',
+                    url: "{{ url('/field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

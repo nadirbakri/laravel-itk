@@ -456,7 +456,7 @@
             $('#sequence').val(((typeof arrData[0].seqProcess !== 'undefined') ? arrData[0].seqProcess : ''));
             $.ajax({
                 type: 'GET',
-                url: '/field_name_edit_salary_component/api',
+                url: "{{ url('/field_name_edit_salary_component/api') }}",
                 data: {
                     'fieldName': ((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '')
                 }
@@ -602,7 +602,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field_name_salary_component/api',
+                    url: "{{ url('/field_name_salary_component/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -717,7 +717,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field/api',
+                    url: "{{ url('/field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

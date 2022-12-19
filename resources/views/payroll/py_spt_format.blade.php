@@ -1201,7 +1201,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field_name_salary_component/api',
+                    url: "{{ url('/field_name_salary_component/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

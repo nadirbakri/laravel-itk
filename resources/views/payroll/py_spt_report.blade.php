@@ -322,7 +322,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -352,7 +352,7 @@
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/func/api',
+                url: "{{ url('/employee_no/func/api') }}",
                 data: {
                     'func': func
                 }
@@ -398,7 +398,7 @@
                     }
                 },
                 ajax: {
-                    url: '/npwp/api',
+                    url: "{{ url('/npwp/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

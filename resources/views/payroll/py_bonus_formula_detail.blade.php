@@ -551,7 +551,7 @@
                 $('#service_month_to').val((data[0].serviceMonthTo !== null) ? data[0].serviceMonthTo : '');
                 $.ajax({
                     type: 'GET',
-                    url: '/performance_result/bonus_thr_data_entry/api',
+                    url: "{{ url('/performance_result/bonus_thr_data_entry/api') }}",
                     data: {
                         'value': ((typeof data[0].performanceResult !== null) ? data[0].performanceResult : '')
                     }
@@ -632,7 +632,7 @@
         //     $('#service_month_to').val((typeof arrData[0].serviceMonthTo !== 'undefined') ? arrData[0].serviceMonthTo : '');
         //     $.ajax({
         //         type: 'GET',
-        //         url: '/performance_result/bonus_thr_data_entry/api',
+        //         url: "{{ url('/performance_result/bonus_thr_data_entry/api') }}",
         //         data: {
         //             'value': ((typeof arrData[0].performanceResult !== 'undefined') ? arrData[0].performanceResult : '')
         //         }
@@ -732,7 +732,7 @@
                     }
                 },
                 ajax: {
-                    url: '/performance_result/api',
+                    url: "{{ url('/performance_result/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -792,7 +792,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field/api',
+                    url: "{{ url('/field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

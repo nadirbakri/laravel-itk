@@ -251,7 +251,7 @@
                     }
                 },
                 ajax: {
-                    url: '/npwp/api',
+                    url: "{{ url('/npwp/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

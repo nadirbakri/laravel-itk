@@ -493,7 +493,7 @@
                     }
                 },
                 ajax: {
-                    url: '/currency/api',
+                    url: "{{ url('/currency/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -553,7 +553,7 @@
                     }
                 },
                 ajax: {
-                    url: '/column/api',
+                    url: "{{ url('/column/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

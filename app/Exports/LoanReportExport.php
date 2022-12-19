@@ -43,9 +43,9 @@ class LoanReportExport implements FromView, ShouldAutoSize
             $param = [
                 'companyCode' => Session::get('companyCode'),
                 "reportType" => $this->reportType,
-                "loanTypeOne" => $this->loanTypeOne,
-                "loanTypeTwo" => $this->loanTypeTwo,
-                "loanTypeThree" => $this->loanTypeThree,
+                // "loanTypeOne" => $this->loanTypeOne,
+                // "loanTypeTwo" => $this->loanTypeTwo,
+                // "loanTypeThree" => $this->loanTypeThree,
                 "includeResign" => $this->includeResign,
                 "languageID" => App::getLocale(),
                 "sessionID" => 0,
@@ -72,8 +72,8 @@ class LoanReportExport implements FromView, ShouldAutoSize
             }
 
             if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizedCodeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizedCodeTo;
+                $param['groupAuthorizeCodeFrom'] = $this->groupAuthorizedCodeFrom;
+                $param['groupAuthorizeCodeTo'] = $this->groupAuthorizedCodeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
@@ -108,12 +108,12 @@ class LoanReportExport implements FromView, ShouldAutoSize
                         "levelCode" => $data_level_detail
                     ];
                 }
-                $param['levelFilterList'] = $data_level;
+                $param['levelMaster'] = $data_level;
             }
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/prloanreport/getloanreport', [
+            $response = $client->post(env('API_URL').'/prloanreport/prloanreport', [
                 'body' => json_encode($param)
             ]);
 
@@ -134,16 +134,52 @@ class LoanReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
 
-        // if($arrResult->dataListSet[0] == null){
-        //     return view('payroll.py_export_annual_report_excel', [
-        //         'data' => [], 'data_company' => $arrCompany->dataListSet
-        //     ]);
-        // }else{
-        //     return view('payroll.py_export_annual_report_excel', [
-        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
-        //     ]); 
-        // }
+        if($arrResult->dataListSet[0] == null){
+            if($this->reportType == "L"){
+                return view('payroll.py_export_loan_report_loan_report_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "P"){
+                return view('payroll.py_export_loan_report_loan_payment_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "D"){
+                return view('payroll.py_export_loan_report_detail_report_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "C"){
+                return view('payroll.py_export_loan_report_loan_schedule_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "S"){
+                return view('payroll.py_export_loan_report_summary_report_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                ]);
+            }
+        }else{
+            if($this->reportType == "L"){
+                return view('payroll.py_export_loan_report_loan_report_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "P"){
+                return view('payroll.py_export_loan_report_loan_payment_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "D"){
+                return view('payroll.py_export_loan_report_detail_report_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "C"){
+                return view('payroll.py_export_loan_report_loan_schedule_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                ]);
+            }else if($this->reportType == "S"){
+                return view('payroll.py_export_loan_report_summary_report_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                ]);
+            }
+        }
     }
 }

@@ -35,8 +35,11 @@ class TransferPaymentToExcelRemainingLimitExport implements FromView, ShouldAuto
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
-                'period' => $this->period,
+                'periode' => $this->period,
+                'reportType' => 'R',
                 'includeResign' => $this->includeResign,
+                'employeeNoFrom' => null,
+                'employeeNoTo' => null,
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUsername" => Session::get('userName'),
@@ -84,7 +87,7 @@ class TransferPaymentToExcelRemainingLimitExport implements FromView, ShouldAuto
             }
 
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/bpjs/getbpjslist', [
+            $response = $client->post(env('API_URL').'/MdTfPayment/MedicalTransferToExcell', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

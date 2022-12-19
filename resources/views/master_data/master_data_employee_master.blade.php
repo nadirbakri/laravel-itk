@@ -491,7 +491,7 @@ loadDataOfficeLocation();
                     }
                 },
                 ajax: {
-                    url: '/employee_company_code/api',
+                    url: "{{ url('/employee_company_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -551,7 +551,7 @@ loadDataOfficeLocation();
                     }
                 },
                 ajax: {
-                    url: '/office_location/api',
+                    url: "{{ url('/office_location/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

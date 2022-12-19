@@ -914,7 +914,7 @@
             }
             $.ajax({
                 type: 'GET',
-                url: '/payroll/slip_format/detail_data',
+                url: "{{ url('/payroll/slip_format/detail_data') }}",
                 data: {
                     'slipCode': $('#slip_type').val(),
                     'slipName': $('#slip_name').val()
@@ -1200,7 +1200,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/employee_no_slip_format/api',
+            url: "{{ url('/employee_no_slip_format/api') }}",
             data: {
                 'employeeNo': employee
             }
@@ -1288,7 +1288,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field_name_salary_component/api',
+                    url: "{{ url('/field_name_salary_component/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

@@ -2882,7 +2882,7 @@
             
             $.ajax({
                 type: 'GET',
-                url: '/city/personal_data/api',
+                url: "{{ url('/city/personal_data/api') }}",
                 data: {
                     'birthPlace': ((typeof arrData2[0].birthPlace !== 'undefined') ? arrData2[0].birthPlace : '')
                 }
@@ -2909,7 +2909,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/comgen/api',
+                url: "{{ url('/comgen/api') }}",
                 data: {
                     'gender': ((typeof arrData2[0].gender !== 'undefined') ? arrData2[0].gender : ''),
                     'maritalStatus': ((typeof arrData2[0].maritalStatus !== 'undefined') ? arrData2[0].maritalStatus : ''),
@@ -3167,7 +3167,7 @@
                 //Tab Info
                 $.ajax({
                     type: 'GET',
-                    url: '/comgen/api',
+                    url: "{{ url('/comgen/api') }}",
                     data: {
                         'bloodType': ((typeof arrData2[0].peMasterInfo.bloodType !== 'undefined') ? arrData2[0].peMasterInfo.bloodType : ''),
                         'drivingLicenseMobilType': ((typeof arrData2[0].peMasterInfo.drivingLicenseMobilType !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilType : ''),
@@ -3208,7 +3208,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/city/personal_data/api',
+                    url: "{{ url('/city/personal_data/api') }}",
                     data: {
                         'drivingLicenseMobilNoPlaceRegistration': ((typeof arrData2[0].peMasterInfo.drivingLicenseMobilNoPlaceRegistration !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilNoPlaceRegistration : ''),
                         'drivingLicenseMotorNoPlaceRegistration': ((typeof arrData2[0].peMasterInfo.drivingLicenseMotorNoPlaceRegistration !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMotorNoPlaceRegistration : ''),
@@ -3315,7 +3315,7 @@
                 // console.log(arrData2[0].peMasterInfo.homeZipCode);
                 $.ajax({
                     type: 'GET',
-                    url: '/zip_code/personal_data/api',
+                    url: "{{ url('/zip_code/personal_data/api') }}",
                     data: {
                         'homeZipCode': ((typeof arrData2[0].peMasterInfo.homeZipCode !== 'undefined') ? arrData2[0].peMasterInfo.homeZipCode : ''),
                         'otherZipCode': ((typeof arrData2[0].peMasterInfo.otherZipCode !== 'undefined') ? arrData2[0].peMasterInfo.otherZipCode : ''),
@@ -3578,7 +3578,7 @@
             //Tab Absenteeism & Payroll
             $.ajax({
                 type: 'GET',
-                url: '/work_pattern/personal_data/api',
+                url: "{{ url('/work_pattern/personal_data/api') }}",
                 data: {
                     'workPatternCode': ((typeof arrData2[0].workPatternCode !== 'undefined') ? arrData2[0].workPatternCode : '')
                 }
@@ -3621,7 +3621,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/npwp/personal_data/api',
+                url: "{{ url('/npwp/personal_data/api') }}",
                 data: {
                     'npwpCode': ((typeof arrData2[0].groupNpwp !== 'undefined') ? arrData2[0].groupNpwp : '')
                 }
@@ -3646,7 +3646,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/bpjs/personal_data/api',
+                url: "{{ url('/bpjs/personal_data/api') }}",
                 data: {
                     'bpjsCode': ((typeof arrData2[0].groupBpjs !== 'undefined') ? arrData2[0].groupBpjs : ''),
                 }
@@ -3678,7 +3678,7 @@
             
             $.ajax({
                 type: 'GET',
-                url: '/group_authorize/personal_data/api',
+                url: "{{ url('/group_authorize/personal_data/api') }}",
                 data: {
                     'groupAuthorizeCode': ((typeof arrData2[0].groupAuthorizeCode !== 'undefined') ? arrData2[0].groupAuthorizeCode : ''),
                 }
@@ -3766,7 +3766,7 @@
             // console.log(arrData2[0].companyBankCode1);
             $.ajax({
                 type: 'GET',
-                url: '/company_bank_code/personal_data/api',
+                url: "{{ url('/company_bank_code/personal_data/api') }}",
                 data: {
                     'companyBankCode1': ((typeof arrData2[0].companyBankCode1 !== 'undefined') ? arrData2[0].companyBankCode1 : ''),
                     'companyBankCode2': ((typeof arrData2[0].companyBankCode2 !== 'undefined') ? arrData2[0].companyBankCode2 : ''),
@@ -3827,7 +3827,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_bank_code/personal_data/api',
+                url: "{{ url('/employee_bank_code/personal_data/api') }}",
                 data: {
                     'employeeBankCode1': ((typeof arrData2[0].employeeBankCode1 !== 'undefined') ? arrData2[0].employeeBankCode1 : ''),
                     'employeeBankCode2': ((typeof arrData2[0].employeeBankCode2 !== 'undefined') ? arrData2[0].employeeBankCode2 : ''),
@@ -3934,7 +3934,7 @@
             if (arrData2[0].peMasterInsurance !== null) {
                 $.ajax({
                     type: 'GET',
-                    url: '/comgen/api',
+                    url: "{{ url('/comgen/api') }}",
                     data: {
                         'insuranceCode': ((typeof arrData2[0].peMasterInsurance.insuranceCode !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceCode : ''),
                         'insuranceClassCode': ((typeof arrData2[0].peMasterInsurance.insuranceClassCode !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceClassCode : ''),
@@ -4247,7 +4247,7 @@
         function loadDataFirstLastAllLevel(field = '', levelType = '') {
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
                 data: {
                     'levelType': levelType
                 }
@@ -4294,7 +4294,7 @@
                     }
                 },
                 ajax: {
-                    url: '/level/all/api',
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4356,7 +4356,7 @@
                     }
                 },
                 ajax: {
-                    url: '/city/api',
+                    url: "{{ url('/city/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4418,7 +4418,7 @@
                     }
                 },
                 ajax: {
-                    url: '/gender/api',
+                    url: "{{ url('/gender/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4479,7 +4479,7 @@
                     }
                 },
                 ajax: {
-                    url: '/blood/api',
+                    url: "{{ url('/blood/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4540,7 +4540,7 @@
                     }
                 },
                 ajax: {
-                    url: '/marital_status/api',
+                    url: "{{ url('/marital_status/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4600,7 +4600,7 @@
                     }
                 },
                 ajax: {
-                    url: '/religion/api',
+                    url: "{{ url('/religion/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4661,7 +4661,7 @@
                     }
                 },
                 ajax: {
-                    url: '/nationality/api',
+                    url: "{{ url('/nationality/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4721,7 +4721,7 @@
                     }
                 },
                 ajax: {
-                    url: '/driving_license_car_type/api',
+                    url: "{{ url('/driving_license_car_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4781,7 +4781,7 @@
                     }
                 },
                 ajax: {
-                    url: '/city/api',
+                    url: "{{ url('/city/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4841,7 +4841,7 @@
                     }
                 },
                 ajax: {
-                    url: '/city/api',
+                    url: "{{ url('/city/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4902,7 +4902,7 @@
                     }
                 },
                 ajax: {
-                    url: '/city/api',
+                    url: "{{ url('/city/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -4963,7 +4963,7 @@
                     }
                 },
                 ajax: {
-                    url: '/zip_code/api',
+                    url: "{{ url('/zip_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5024,7 +5024,7 @@
                     }
                 },
                 ajax: {
-                    url: '/district/api',
+                    url: "{{ url('/district/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5085,7 +5085,7 @@
                     }
                 },
                 ajax: {
-                    url: '/subdistrict/api',
+                    url: "{{ url('/subdistrict/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5145,7 +5145,7 @@
                     }
                 },
                 ajax: {
-                    url: '/relation/api',
+                    url: "{{ url('/relation/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5205,7 +5205,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employment/status/api',
+                    url: "{{ url('/employment/status/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5265,7 +5265,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employment/type/api',
+                    url: "{{ url('/employment/type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5337,7 +5337,7 @@
                     }
                 },
                 ajax: {
-                    url: '/termination_code/api',
+                    url: "{{ url('/termination_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5397,7 +5397,7 @@
                     }
                 },
                 ajax: {
-                    url: '/benefits/api',
+                    url: "{{ url('/benefits/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5457,7 +5457,7 @@
                     }
                 },
                 ajax: {
-                    url: '/absenteeism_type/api',
+                    url: "{{ url('/absenteeism_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5517,7 +5517,7 @@
                     }
                 },
                 ajax: {
-                    url: '/work_pattern_code/api',
+                    url: "{{ url('/work_pattern_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5578,7 +5578,7 @@
                     }
                 },
                 ajax: {
-                    url: '/tax_status/api',
+                    url: "{{ url('/tax_status/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5638,7 +5638,7 @@
                     }
                 },
                 ajax: {
-                    url: '/tax_office/api',
+                    url: "{{ url('/tax_office/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5698,7 +5698,7 @@
                     }
                 },
                 ajax: {
-                    url: '/tax_calculation_method/api',
+                    url: "{{ url('/tax_calculation_method/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5763,7 +5763,7 @@
                     }
                 },
                 ajax: {
-                    url: '/npwp/api',
+                    url: "{{ url('/npwp/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5828,7 +5828,7 @@
                     }
                 },
                 ajax: {
-                    url: '/bpjs/api',
+                    url: "{{ url('/bpjs/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5891,7 +5891,7 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: "{{ url('/group_authorize/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -5960,7 +5960,7 @@
                     }
                 },
                 ajax: {
-                    url: '/company_bank_code/api',
+                    url: "{{ url('/company_bank_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -6027,7 +6027,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_bank_code/api',
+                    url: "{{ url('/employee_bank_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -6089,7 +6089,7 @@
                     }
                 },
                 ajax: {
-                    url: '/currency/api',
+                    url: "{{ url('/currency/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -6149,7 +6149,7 @@
                     }
                 },
                 ajax: {
-                    url: '/insurance_code/api',
+                    url: "{{ url('/insurance_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -6209,7 +6209,7 @@
                     }
                 },
                 ajax: {
-                    url: '/insurance_class/api',
+                    url: "{{ url('/insurance_class/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

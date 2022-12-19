@@ -32,25 +32,33 @@
 			<img src="{{ url('icons/sidebar/payroll.png') }}" alt="Title">
 			<span class="title-text">{{ __('payroll.judul') }}</span>
 		</div>
-		<div class="card">
-			<a class="collapsed" data-toggle="collapse" href="#payroll-master-data" aria-expanded="true" aria-controls="payroll-master-data">
-				<div class="card-header">
-					<div class="div-dropdown-title">
-						<img class="dropdown-logo" src="{{ url('/icons/payroll/payroll-master-data.svg') }}" alt="payroll">
-						<span class="dropdown-title-text">{{ __('payroll.data_entry') }}</span>
-						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+		@if($dataMenu != null || $dataMenu != '')
+		@foreach($dataMenu as $key => $value)
+			<div class="card">
+				@if(strpos($value->menuName, 'Data Entry') !== false)
+				<a class="collapsed" data-toggle="collapse" href="#payroll-master-data" aria-expanded="true" aria-controls="payroll-master-data">
+					<div class="card-header">
+						<div class="div-dropdown-title">
+							<img class="dropdown-logo" src="{{ url('/icons/payroll/payroll-master-data.svg') }}" alt="payroll">
+							<span class="dropdown-title-text">{{ $value->menuName }}</span>
+							<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+						</div>
+					</div>
+				</a>
+				<div id="payroll-master-data" class="collapse">
+					<div class="card-block">
+						<div class="row div-child-data">
+						</div>
 					</div>
 				</div>
-			</a>
-			<div id="payroll-master-data" class="collapse">
-				<div class="card-block">
-					<div class="row div-child-data">
-						<div class="col col-3">
-							<a href="{{ url('payroll/salary_master') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.salary_master') }}</span>
-							</a>
-						</div>
+				@continue
+				@endif
+				<div class="col col-3">
+					<a href="{{ url($value->pageURL) }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+						<span class="child-title-text">{{ $value->menuName }}</span>
+					</a>
+				</div>		
 						<div class="col col-3">
 							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
@@ -436,6 +444,8 @@
 				</div>
 			</div>
 		</div>
+		@endforeach
+		@endif
 	</div>
 	@if($errors->any())
 	<div class="modal fade" role="dialog" id="notification_error">

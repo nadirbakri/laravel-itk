@@ -434,7 +434,7 @@
         // function loadDataFirstLastAllLocation() {
         //     $.ajax({
         //         type: 'GET',
-        //         url: '/location/func/api',
+        //         url: "{{ url('/location/func/api') }}",
         //     }).then(function (data) {
         //         if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
         //             $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
@@ -479,7 +479,7 @@
                     }
                 },
                 ajax: {
-                    url: '/location/all/api',
+                    url: "{{ url('/location/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -542,7 +542,7 @@
                     }
                 },
                 ajax: {
-                    url: '/calendar_type/api',
+                    url: "{{ url('/calendar_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -588,7 +588,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/process_status/detail/api',
+                    url: "{{ url('/process_status/detail/api') }}",
                     data: {
                         'locationCode' : data[0].locationCode
                     }
@@ -600,7 +600,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/calendar_type/edit/api',
+                    url: "{{ url('/calendar_type/edit/api') }}",
                     data: {
                         'flagType' : data[0].flagType
                     }

@@ -2211,6 +2211,20 @@ class DataController extends Controller
 	    			]
 	    		)]
 	    	);
+
+			if(isset($request->module)){
+				$response2 = $client->post(env('API_URL') . '/user/getuseraccessview',
+					['body' => json_encode(
+						[
+							'companyCode' => Session::get('companyCode'),
+							'userID' => Session::get('userID'),
+							'moduleID' => $request->module,
+							'logActionUserID' => Session::get('userID'),
+							'logActionUsername' => Session::get('userName')
+						]
+					)]
+				);
+			}
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2223,6 +2237,14 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if(isset($request->module)){
+			$arrResult2 = json_decode($response2->getBody()->getContents());
+
+			if($arrResult2->dataListSet != null || $arrResult2->dataListSet != ''){
+				$arrResult->dataListSet = array_filter($arrResult->dataListSet, fn($n) => $n->groupAuthorizeCode <= $arrResult2->dataListSet[0]->groupAuthorizeCode);
+			}
+		}
 
 	    if($search == ''){
 	    	$groupAuthorize = $arrResult->dataListSet;
@@ -2258,6 +2280,20 @@ class DataController extends Controller
 	    			]
 	    		)]
 	    	);
+
+			if(isset($request->module)){
+				$response2 = $client->post(env('API_URL') . '/user/getuseraccessview',
+					['body' => json_encode(
+						[
+							'companyCode' => Session::get('companyCode'),
+							'userID' => Session::get('userID'),
+							'moduleID' => $request->module,
+							'logActionUserID' => Session::get('userID'),
+							'logActionUsername' => Session::get('userName')
+						]
+					)]
+				);
+			}
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2270,6 +2306,14 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if(isset($request->module)){
+			$arrResult2 = json_decode($response2->getBody()->getContents());
+
+			if($arrResult2->dataListSet != null || $arrResult2->dataListSet != ''){
+				$arrResult->dataListSet = array_filter($arrResult->dataListSet, fn($n) => $n->groupAuthorizeCode <= $arrResult2->dataListSet[0]->groupAuthorizeCode);
+			}
+		}
 
 	    if($request->func == 'First'){
 	    	return response()->json($arrResult->dataListSet[0]);

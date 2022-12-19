@@ -34,11 +34,14 @@ class TransferPaymentToExcelMonthlyExport implements FromView, ShouldAutoSize
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
-                'period' => $this->period,
+                'periode' => $this->period,
+                'reportType' => 'E',
+                'includeResign' => true,
+                'claimCodeFrom' => null,
+                'claimCodeTo' => null,
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userName'),
-                "logActionUserID" => Session::get('userID')
+                "languageID" => App::getLocale()
             ];
 
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
@@ -82,7 +85,7 @@ class TransferPaymentToExcelMonthlyExport implements FromView, ShouldAutoSize
             }
 
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/bpjs/getbpjslist', [
+            $response = $client->post(env('API_URL').'/MdTfPayment/MedicalTransferToExcell', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

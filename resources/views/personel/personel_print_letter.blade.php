@@ -321,7 +321,7 @@
                     }
                 },
                 ajax: {
-                    url: '/letter_type/api',
+                    url: "{{ url('/letter_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -391,7 +391,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
