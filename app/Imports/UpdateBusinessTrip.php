@@ -15,7 +15,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
 
-class UpdateOvertime implements ToCollection, WithStartRow
+class UpdateBusinessTrip implements ToCollection, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -57,15 +57,15 @@ class UpdateOvertime implements ToCollection, WithStartRow
                     "sessionUserID" => Session::get('userID'),
                     "languageCode" => App::getLocale(),
                     "changedBy" => Session::get('userID'),
-                    "status" => $row[1],
-                    "ticketNo" => $row[2],
+                    "status" => $row[2],
+                    "ticketNo" => $row[3],
                     "paidAmount" => $row[12]
                 ];
             }
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimemultipleapproval',
+            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

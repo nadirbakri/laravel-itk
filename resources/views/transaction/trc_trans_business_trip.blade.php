@@ -201,8 +201,9 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-upload" id="btn-upload" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-upload.svg') }}" alt="export"> {{ __('trans_business_trip.btn_upload') }}
+                        <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
+                        <i class="fa fa-plus"></i> Upload
                         </button>
                     </div>
                     <div class="col-3">
@@ -397,6 +398,38 @@
                                 </div>
                                 <hr>
                                 <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {{-- modal upload excel --}}
+    <div class="div-form">
+        <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="modal fade" id="modal_upload">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                   <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">Upload Paid Business Trip</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <div class="card">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label for="medical_history form-check-label"><b>File Business Trip</b></label>
+                                        <input type="file" name="file_overtime" id="file_overtime">
+                                    <br> <br>
+                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                                        Upload
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -643,7 +676,84 @@
         // alert(data1)
     }
 </script>
-
+<script>
+    $("#btn-process").click(function () {
+        $(this).prop("disabled", true);
+        $(this).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        $("#upload_paid_overtime_form").submit();
+    });
+    
+    $('#notification_success').on('hide.bs.modal', function () {
+        window.location = "{{ url('transaction/transaction_business_trip') }}";
+    });
+    
+    if ($("#upload_paid_overtime_form").length > 0) {
+        $("#upload_paid_overtime_form").validate({
+            submitHandler: function (form) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var myForm = document.getElementById('upload_paid_overtime_form');
+                var formdata = new FormData(myForm);
+                
+                $.ajax({
+                    url: "{{ url('transaction/update_businesstrip/import') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    success: function (response) {
+                        if (response[0].status == "true") {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update'
+                            );
+                            
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response[0]
+                                .message);
+                            setTimeout(function () {
+                                window.location =
+                                    "{{ url('transaction/transaction_business_trip') }}";
+                            }, 3000);
+                        } else {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update'
+                            );
+    
+                            $('#notification_error').modal('show');
+                            if (response[0].message == null || response[0].message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response[0]
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $("#btn-process").prop("disabled", false);
+                        $("#btn-process").html(
+                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                            'Update'
+                        );
+    
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        })
+    }
+    </script>
 <script type="text/javascript">
 
 loadDataBusinessUnit();
@@ -864,14 +974,48 @@ $.get("{{ url('level/api') }}", function (data) {
                 'ticketNo' : ticketNo,
                 'employeeNo' : direct_superior
             },
-            success: function (data) {
-                console.log('sic');
-                console.log(data);
-                $('#btn-search').click();
-            }, error: function (err) {
-                console.log('err');
-                console.log(err);
-            }
+            success: function (response) {
+                // console.log(response);
+                           if (response.status == "true") {
+                               $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_success').modal('show');
+                               $('#message-notification-success').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_business_trip') }}";
+                               }, 3000);
+                           } else{
+                               $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_success').modal('show');
+                               $('#message-notification-success').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_business_trip') }}";
+                               }, 3000);
+                           }
+                       },
+                           error: function (response) {
+                           $("#btn-update").prop("disabled", false);
+                           $("#btn-update").html(
+                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                               'Update'
+                           );
+
+                           $('#notification_error').modal('show');
+                           $('#message-notification-error').html(response);
+                       }
         });
              
     }

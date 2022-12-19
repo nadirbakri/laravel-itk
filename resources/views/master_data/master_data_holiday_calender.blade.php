@@ -139,7 +139,7 @@
             <h1>{{ __('holiday_calender.judul') }}</h1>
             <hr>
         </div>
-        <form id="trans_mass-leave_form" method="post">
+        <form id="holiday_calender_form" method="post">
             @csrf
             <div class="card" >
                 <div class="card-header">
@@ -154,7 +154,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="date-holiday" name="date-holiday" placeholder="date-holiday">
+                            <input type="text" class="form-control" id="date_holiday" name="date_holiday" placeholder="date-holiday">
                             {{-- <div class="input-group-prepend">
                                 <span class="input-group-text" id="date-calendar"><span class="fa fa-calendar"></span></span>
                             </div> --}}
@@ -171,7 +171,7 @@
                     <div class="col-4">
                         <div class="">
                             <div class="form-group">
-                            <input type="text" class="form-control" id="description" name="description" >                        
+                            <input type="text" class="form-control" id="description_date" name="description_date" >                        
                         </div>
                         </div>
                     </div>
@@ -185,8 +185,8 @@
                         <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
                         {{ __('holiday_calender.button') }}
                         </button>     
-                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                        {{ __('holiday_calender.button1') }}
+                        <button type="button" class="btn btn-primary" onClick="window.location.reload();"  value="preview">
+                            {{ __('admin_main_menu_news_master.cancel') }}
                         </button>     
                         <button class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_email_settings" type="button">
                         {{ __('holiday_calender.button2') }}
@@ -335,8 +335,12 @@
                         return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
-                {data: 'date', name: 'date'},
-                {data: 'reason', name: 'reason'},
+                {data: 'calendar', name: 'calendar',
+                        render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                },
+                {data: 'description', name: 'description'},
             ],
             select: {
                 style:    'multi',
@@ -350,13 +354,80 @@
         let employee_id = $(element).parent().siblings('.sorting_1').text()
         let fullname = $(element).parent().siblings('td').eq(1).text()
 
-        $('#date-holiday').val(employee_id)
-        $('#description').val(fullname)
+        $('#date_holiday').val(employee_id)
+        $('#description_date').val(fullname)
 
         $('.close').click();
         // let division = $(element).parent().siblings('td').eq(2).text()
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
         // alert(data1)
     }
+</script>
+<script>
+    $("#btn-save").click(function () {
+          $(this).prop("disabled", true);
+          $(this).html(
+              '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+          );
+          $("#holiday_calender_form").submit();
+      });
+
+      if ($("#holiday_calender_form").length > 0) {
+              $("#holiday_calender_form").validate({
+                  submitHandler: function (form) {
+                      $.ajaxSetup({
+                          headers: {
+                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                          }
+                      });
+                      $.ajax({
+                          url: "{{ url('master_data/holiday_calendar/proses') }}",
+                          type: "POST",
+                          data: $('#holiday_calender_form').serialize(),
+                          success: function (response) {
+                              if (response.status == "true"){
+                                  $("#btn-save").prop("disabled", false);
+                                  $("#btn-save").html(
+                                      '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                                  );
+                                  
+                                  $('#notification_success').modal('show');
+                                  $('#message-notification-success').html(response
+                                  .message);
+                                  setTimeout(function () {
+                                  window.location =
+                                      "{{ url('master_data/holiday_calender') }}";
+                                  }, 3000);
+                              } else {
+                              $("#btn-save").prop("disabled", false);
+                              $("#btn-save").html(
+                                  '<i class="fa fa-floppy-o"></i> Save'
+                              );
+                              $('#notification_error').modal('show');
+                              if (response.message == null || response.message ==
+                                  '') {
+                                  $('#message-notification-error').html(
+                                      "{{ __('login.error') }}");
+                              } else {
+                                  $('#message-notification-error').html(response
+                                      .message);
+                              }
+                          }
+                      },
+                      error: function (response) {
+                          $("#btn-save").prop("disabled", false);
+                          $("#btn-save").html(
+                              '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
+                          );
+
+                          $('#notification').modal('show');
+                          $('#message-notification').html(response);
+                      }
+                  });
+              }
+          })
+      }
+
+
 </script>
 </html>

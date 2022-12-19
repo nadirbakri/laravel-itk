@@ -191,6 +191,7 @@
                                 <th>#</th>
                                 <th>Approval Level</th>
                                 <th>Approval Code</th>
+                                <th>Limit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,6 +199,7 @@
                                 <td id="ceklis" name="ceklis"></td>
                                 <td id="group_code1" name="group_code1"></td>
                                 <td id="group_code2" name="group_code2"></td>
+                                <td id="total_limit" name="total_limit"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -330,6 +332,7 @@
                                     <th>#</th>
                                     <th>Group Code</th>
                                     <th>Group Name</th>
+                                    {{-- <th>Limit</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -337,6 +340,7 @@
                                     <td></td>        
                                     <td></td>        
                                     <td></td>       
+                                    {{-- <td></td>        --}}
                                 </tr>
                             </tbody>
                         </table>
@@ -526,10 +530,20 @@
                     {data: 'approvalCode', name: 'approvalCode',
                     render: function (data, type, row) {
 
-                    return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
+                        return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
 
-                        data + '">' + data;
+                            data + '">' + data;
 
+                        }
+                    },
+                    {data: 'limit', name: 'limit',
+                    render: function (data, type, row) {
+                        if(typeof data !== 'undefined'){
+                            return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="' + data 
+                            + '">';
+                        }else{
+                            return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="0">';
+                        }
                     }}
                 ],
                 select: {
@@ -580,7 +594,8 @@
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
-                {data: 'groupName', name: 'groupName'},
+                {data: 'groupName', name: 'groupName'}
+                // {data: 'limit', name: 'limit'}
             ],
             select: {
                 style:    'multi',
@@ -592,7 +607,7 @@
     const klikk = (element) => {
         var count = table3.data().count();
         var appCode = $(element).parent().siblings('.sorting_1').text();
-        // console.log(appCode);
+       
         $('.close').click();
         table3.row.add({
             'no' : '<input class="chk-select" type="checkbox">',
@@ -612,7 +627,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list_reimbursement/table') }}"             
+                url : "{{ url('master_data/list/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);

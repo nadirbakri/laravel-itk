@@ -753,13 +753,17 @@ Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
 Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
+Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
+Route::post('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 
 Route::post('transaction/update_reimbursement/import', 'TransactionController@importUpdateReimbursement');
+Route::post('transaction/update_transport/import', 'TransactionController@importUpdateTransport');
 Route::post('transaction/update_medical/import', 'TransactionController@importUpdateMedical');
 Route::post('transaction/update_overtime/import', 'TransactionController@importUpdateOvertime');
+Route::post('transaction/update_businesstrip/import', 'TransactionController@importUpdateBusinesstrip');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
@@ -907,6 +911,7 @@ Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBuss
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
+Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
 Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
 Route::get('master_data/list_email/table', 'MasterDataController@tabelDetailEmail');
 Route::get('master_data/direct_approval/table', 'MasterDataController@tableDirectApproval');
@@ -916,6 +921,8 @@ Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHoli
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
 Route::post('master_data/employee_reimbursement/proses', 'MasterDataController@prosesEmployeeReimbursement');
+Route::post('master_data/holiday_calendar/proses', 'MasterDataController@prosesEmployeeHolidayCalendar');
+Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@prosesEmployeeBusinessTrip');
 Route::post('master_data/employee_group_detail/proses', 'MasterDataController@prosesEmployeeGroupDetail');
 
 /* Route untuk Menu Admin MOB */

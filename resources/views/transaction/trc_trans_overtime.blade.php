@@ -250,8 +250,8 @@
                                        <th>Overtime Hour To</th>
                                        <th>Overtime Remarks</th>
                                        <th>Costumer Name</th>
-                                       <th>Total Request</th>
-                                       <th>Total Paid</th>
+                                       {{-- <th>Total Request</th>
+                                       <th>Total Paid</th> --}}
                                 </thead>
                             </table>
                     </div>
@@ -562,7 +562,7 @@
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
-                "sDom": 'lrtip',
+                "sDom": 'lfrtip',
                 'sPaginationType': 'ellipses',
                 "order": [[ 1, "asc" ]],
                 columns: [
@@ -685,8 +685,8 @@
     
     const klikdetail = (element) => {
         let name = $(element).parent().siblings('.sorting_1').text()
-        let reimbursement_status = $(element).parent().siblings('td').eq(8).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(1).text()
+        let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
+        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
         var business_unit = $("#business_unit").val();
         var reimbursement_type = $("#reimbursement_type").val();
         let employeename = $(element).parent().siblings('td').eq(8).text()
@@ -748,14 +748,48 @@
                 'ticketNo' : ticketNo,
                 'employeeNo' : direct_superior
             },
-            success: function (data) {
-                console.log('sic');
-                console.log(data);
-                $('#btn-search').click();
-            }, error: function (err) {
-                console.log('err');
-                console.log(err);
-            }
+            success: function (response) {
+                // console.log(response);
+                           if (response.status == "true") {
+                               $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_success').modal('show');
+                               $('#message-notification-success').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_overtime') }}";
+                               }, 3000);
+                           } else{
+                               $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_error').modal('show');
+                               $('#message-notification-error').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_overtime') }}";
+                               }, 3000);
+                           }
+                       },
+                          error: function (response) {
+                           $("#btn-update").prop("disabled", false);
+                           $("#btn-update").html(
+                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                               'Update'
+                           );
+
+                           $('#notification_error').modal('show');
+                           $('#message-notification-error').html(response);
+                       }
         });
              
     }
@@ -770,7 +804,7 @@
        });
 
        $('#notification_success').on('hide.bs.modal', function () {
-           window.location = "{{ url('transaction/transaction_medical_history') }}";
+           window.location = "{{ url('transaction/transaction_overtime') }}";
        });
 
        if ($("#upload_paid_overtime_form").length > 0) {
