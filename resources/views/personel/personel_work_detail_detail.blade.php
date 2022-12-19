@@ -1252,7 +1252,7 @@
 
                     $.ajax({
                         type: 'GET',
-                        url: '/level/detail/api',
+                        url: "{{ url('/level/detail/api') }}",
                         data: {
                             'levelType': v.levelType,
                             'levelCode': v.levelCode
@@ -1267,7 +1267,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/company/detail/api',
+                    url: "{{ url('/company/detail/api') }}",
                     data: {
                         'companyCode': data[0].historyCompanyCode
                     }
@@ -1279,7 +1279,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/company/detail/api',
+                    url: "{{ url('/company/detail/api') }}",
                     data: {
                         'companyCode': data[0].approvedBy
                     }
@@ -1291,7 +1291,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/position/detail/api',
+                    url: "{{ url('/position/detail/api') }}",
                     data: {
                         'positionCode': data[0].positionCode
                     }
@@ -1303,7 +1303,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/ranking/detail/api',
+                    url: "{{ url('/ranking/detail/api') }}",
                     data: {
                         'rankingCode': data[0].rankingCode
                     }
@@ -1315,7 +1315,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/grade/detail/api',
+                    url: "{{ url('/grade/detail/api') }}",
                     data: {
                         'gradeCode': data[0].gradeCode
                     }
@@ -1327,7 +1327,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/location/detail/api',
+                    url: "{{ url('/location/detail/api') }}",
                     data: {
                         'locationCode': data[0].locationCode
                     }
@@ -1339,7 +1339,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/group/detail/api',
+                    url: "{{ url('/group/detail/api') }}",
                     data: {
                         'groupCode': data[0].groupCode
                     }
@@ -1351,7 +1351,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/nature_of_work/detail/api',
+                    url: "{{ url('/nature_of_work/detail/api') }}",
                     data: {
                         'workNatureCode': data[0].workNatureCode
                     }
@@ -1561,7 +1561,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/api',
+                    url: "{{ url('/position/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1631,7 +1631,7 @@
                     }
                 },
                 ajax: {
-                    url: '/ranking/api',
+                    url: "{{ url('/ranking/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1701,7 +1701,7 @@
                     }
                 },
                 ajax: {
-                    url: '/grade/api',
+                    url: "{{ url('/grade/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1771,7 +1771,7 @@
                     }
                 },
                 ajax: {
-                    url: '/location/api',
+                    url: "{{ url('/location/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1841,7 +1841,7 @@
                     }
                 },
                 ajax: {
-                    url: '/group/api',
+                    url: "{{ url('/group/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1911,7 +1911,7 @@
                     }
                 },
                 ajax: {
-                    url: '/nature_of_work/api',
+                    url: "{{ url('/nature_of_work/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1981,7 +1981,7 @@
                     }
                 },
                 ajax: {
-                    url: '/company/api',
+                    url: "{{ url('/company/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2051,7 +2051,7 @@
                     }
                 },
                 ajax: {
-                    url: '/free_format_field/api',
+                    url: "{{ url('/free_format_field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2122,7 +2122,7 @@
                     }
                 },
                 ajax: {
-                    url: '/free_format_field/detail/api',
+                    url: "{{ url('/free_format_field/detail/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2193,7 +2193,7 @@
                     }
                 },
                 ajax: {
-                    url: '/level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

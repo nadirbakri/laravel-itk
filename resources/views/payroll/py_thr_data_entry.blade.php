@@ -355,7 +355,7 @@
                     }
                 },
                 ajax: {
-                    url: '/religion_code/api',
+                    url: "{{ url('/religion_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

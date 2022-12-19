@@ -788,7 +788,7 @@
                     }
                 },
                 ajax: {
-                    url: '/group_user_access/api',
+                    url: "{{ url('/group_user_access/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -859,7 +859,7 @@
                     }
                 },
                 ajax: {
-                    url: '/module/api',
+                    url: "{{ url('/module/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

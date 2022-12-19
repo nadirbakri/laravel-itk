@@ -141,16 +141,16 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <input type="radio" id="form2" name="jamsostek_report_type" value="Formulir2">
+                            <input type="radio" id="form2" name="jamsostek_report_type" value="formulir2">
                             <label for="form2">{{ __('payroll_monthly_jamsostek_report.label_formulir_2') }}</label>
                             <br>
-                            <input type="radio" id="form1a" name="jamsostek_report_type" value="Formulir1a">
+                            <input type="radio" id="form1a" name="jamsostek_report_type" value="formulir1a">
                             <label for="form1a">{{ __('payroll_monthly_jamsostek_report.label_formulir_1a') }}</label>
                             <br>
-                            <input type="radio" id="form1b" name="jamsostek_report_type" value="Formulir1b">
+                            <input type="radio" id="form1b" name="jamsostek_report_type" value="formulir1b">
                             <label for="form1b">{{ __('payroll_monthly_jamsostek_report.label_formulir_1b') }}</label>
                             <br>
-                            <input type="radio" id="form2a" name="jamsostek_report_type" value="Formulir2a">
+                            <input type="radio" id="form2a" name="jamsostek_report_type" value="formulir2a">
                             <label for="form2a">{{ __('payroll_monthly_jamsostek_report.label_formulir_2a') }}</label>
                         </div>
                     </div>
@@ -178,55 +178,55 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="JKK">{{ __('payroll_monthly_jamsostek_report.label_JKK') }}</label>
+                            <label for="jkk">{{ __('payroll_monthly_jamsostek_report.label_JKK') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" id="JKK" name="JKK">
+                        <input type="text" class="form-control" id="jkk" name="jkk">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="JHT">{{ __('payroll_monthly_jamsostek_report.label_JHT') }}</label>
+                            <label for="jht">{{ __('payroll_monthly_jamsostek_report.label_JHT') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" id="JHT" name="JHT">
+                        <input type="text" class="form-control" id="jht" name="jht">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="JK">{{ __('payroll_monthly_jamsostek_report.label_JK') }}</label>
+                            <label for="jk">{{ __('payroll_monthly_jamsostek_report.label_JK') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" id="JK" name="JK">
+                        <input type="text" class="form-control" id="jk" name="jk">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="JP">{{ __('payroll_monthly_jamsostek_report.label_JP') }}</label>
+                            <label for="jp">{{ __('payroll_monthly_jamsostek_report.label_JP') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" id="JP" name="JP">
+                        <input type="text" class="form-control" id="jp" name="jp">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="JDI">{{ __('payroll_monthly_jamsostek_report.label_JDI') }}</label>
+                            <label for="jdi">{{ __('payroll_monthly_jamsostek_report.label_JDI') }}</label>
                         </div>
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" id="JDI" name="JDI">
+                        <input type="text" class="form-control" id="jdi" name="jdi">
                     </div>
                 </div>
 
@@ -369,14 +369,15 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: "{{ url('/group_authorize/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            module: 'PY'
                         };
                     },
                     processResults: function (data) {
@@ -399,9 +400,10 @@
         function loadDataFirstLastGroupAuthorized(field = '', func = ''){
             $.ajax({
                 type: 'GET',
-                url: '/group_authorize/func/api',
+                url: "{{ url('/group_authorize/func/api') }}",
                 data: {
-                    'func': func
+                    'func': func,
+                    'module': 'PY'
                 }
             }).then(function (data) {
                 var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode).text(
@@ -447,7 +449,7 @@
                     }
                 },
                 ajax: {
-                    url: '/bpjs/api',
+                    url: "{{ url('/bpjs/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -477,7 +479,7 @@
         function loadDataFirstLastGroupBPJS(field = '', func = ''){
             $.ajax({
                 type: 'GET',
-                url: '/bpjs/func/api',
+                url: "{{ url('/bpjs/func/api') }}",
                 data: {
                     'func': func
                 }

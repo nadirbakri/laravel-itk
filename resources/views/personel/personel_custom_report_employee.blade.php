@@ -300,7 +300,7 @@
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/func/api',
+                url: "{{ url('/employee_no/func/api') }}",
                 data: {
                     'func': func
                 }
@@ -314,9 +314,10 @@
         function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/group_authorize/func/api',
+                url: "{{ url('/group_authorize/func/api') }}",
                 data: {
-                    'func': func
+                    'func': func,
+                    'module': 'PE'
                 }
             }).then(function (data) {
                 var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
@@ -362,7 +363,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -394,7 +395,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employment_status/func/api',
+                url: "{{ url('/employment_status/func/api') }}",
             }).then(function (data) {
                 if (!$('#employment_status').find('option:contains(' + data.value + ')').length) {
                     $('#employment_status').append($('<option>').val(data.comGenCode).text(data.value));
@@ -452,14 +453,15 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: "{{ url('/group_authorize/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            module: 'PE'
                         };
                     },
                     processResults: function (data) {
@@ -516,7 +518,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employment_status/all/api',
+                    url: "{{ url('/employment_status/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -582,7 +584,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field_name/api',
+                    url: "{{ url('/field_name/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

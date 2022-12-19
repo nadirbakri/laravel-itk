@@ -1363,7 +1363,7 @@
             $('#payroll_payment_period').val((typeof arrDataTM[0].statusPeriod !== 'undefined') ? arrDataTM[0].statusPeriod : '');
             $.ajax({
                 type: 'GET',
-                url: '/process_status/detail/api',
+                url: "{{ url('/process_status/detail/api') }}",
                 data: {
                     'processStatus': ((typeof arrDataTM[0].statusProcess !== 'undefined') ? arrDataTM[0].statusProcess : '')
                 }
@@ -1919,7 +1919,7 @@
                     }
                 },
                 ajax: {
-                    url: '/process_status/api',
+                    url: "{{ url('/process_status/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

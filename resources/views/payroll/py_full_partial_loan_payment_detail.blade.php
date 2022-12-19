@@ -624,7 +624,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_no_full_partial_loan_payment/api',
+                url: "{{ url('/employee_no_full_partial_loan_payment/api') }}",
                 data: {
                     'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
                 }
@@ -654,7 +654,7 @@
             $('#payment_method').val((typeof arrData[0].paymentFlag !== 'undefined') ? arrData[0].paymentFlag : '').select2();
             // $.ajax({
             //     type: 'GET',
-            //     url: '/payment_method_full_partial_loan_payment/api',
+            //     url: "{{ url('/payment_method_full_partial_loan_payment/api') }}",
             //     data: {
             //         'paymentFlag': ((typeof arrData[0].paymentFlag !== 'undefined') ? arrData[0].paymentFlag : '')
             //     }
@@ -678,7 +678,7 @@
             // });
             $.ajax({
                 type: 'GET',
-                url: '/currency_code_full_partial_loan_payment/api',
+                url: "{{ url('/currency_code_full_partial_loan_payment/api') }}",
                 data: {
                     'currencyCode': ((typeof arrData[0].currencyCode !== 'undefined') ? arrData[0].currencyCode : '')
                 }
@@ -1258,7 +1258,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no_loan_payment/api',
+                    url: "{{ url('/employee_no_loan_payment/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1317,7 +1317,7 @@
                     }
                 },
                 ajax: {
-                    url: '/currency/api',
+                    url: "{{ url('/currency/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

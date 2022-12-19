@@ -2344,7 +2344,7 @@
                     }
                 },
                 ajax: {
-                    url: '/institution/api',
+                    url: "{{ url('/institution/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2415,7 +2415,7 @@
                     }
                 },
                 ajax: {
-                    url: '/major/api',
+                    url: "{{ url('/major/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2486,7 +2486,7 @@
                     }
                 },
                 ajax: {
-                    url: '/title/api',
+                    url: "{{ url('/title/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2557,7 +2557,7 @@
                     }
                 },
                 ajax: {
-                    url: '/city/api',
+                    url: "{{ url('/city/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -2628,7 +2628,7 @@
                     }
                 },
                 ajax: {
-                    url: '/skill/api',
+                    url: "{{ url('/skill/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

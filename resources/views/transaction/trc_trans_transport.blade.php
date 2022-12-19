@@ -587,7 +587,7 @@ loadDataAllTransport();
                     }
                 },
                 ajax: {
-                    url: '/reimbursement_type/transport/api',
+                    url: "{{ url('/reimbursement_type/transport/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -619,7 +619,7 @@ loadDataAllTransport();
 
             $.ajax({
                 type: 'GET',
-                url: '/reimbursement_type/transport/all/api',
+                url: "{{ url('/reimbursement_type/transport/all/api') }}",
             }).then(function (data) {
                 if (!$('#transport_type').find('option:contains(' + data.value + ')').length) {
                     $('#transport_type').append($('<option>').val(data.comGenCode).text(data.value));
@@ -661,7 +661,7 @@ loadDataAllTransport();
                     }
                 },
                 ajax: {
-                    url: '/level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -692,7 +692,7 @@ loadDataAllTransport();
 
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -734,7 +734,7 @@ loadDataAllTransport();
                     }
                 },
                 ajax: {
-                    url: '/status_trans/api',
+                    url: "{{ url('/status_trans/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

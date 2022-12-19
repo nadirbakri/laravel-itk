@@ -299,7 +299,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/cost_center/func/api',
+                url: "{{ url('/cost_center/func/api') }}",
                 data: {
                     'costCenterCode': ((typeof arrData[0].costCenter !== 'undefined') ? arrData[0].costCenter : '')
                 }
@@ -323,7 +323,7 @@
             
             $.ajax({
                 type: 'GET',
-                url: '/account_edit/api',
+                url: "{{ url('/account_edit/api') }}",
                 data: {
                     'accountNo': ((typeof arrData[0].account !== 'undefined') ? arrData[0].account : '')
                 }
@@ -460,7 +460,7 @@
                     }
                 },
                 ajax: {
-                    url: '/field_name_salary_component/api',
+                    url: "{{ url('/field_name_salary_component/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -524,7 +524,7 @@
                     }
                 },
                 ajax: {
-                    url: '/cost_center/api',
+                    url: "{{ url('/cost_center/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -588,7 +588,7 @@
                     }
                 },
                 ajax: {
-                    url: '/account/api',
+                    url: "{{ url('/account/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

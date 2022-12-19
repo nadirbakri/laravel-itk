@@ -300,7 +300,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/day_code/func/api',
+                url: "{{ url('/day_code/func/api') }}",
                 data: {
                     dayCode : dayCode
                 }
@@ -319,7 +319,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/shift_code/func/api',
+                url: "{{ url('/shift_code/func/api') }}",
                 data: {
                     shiftCode : shiftCode
                 }
@@ -402,7 +402,7 @@
                     }
                 },
                 ajax: {
-                    url: '/day_code/api',
+                    url: "{{ url('/day_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -467,7 +467,7 @@
                     }
                 },
                 ajax: {
-                    url: '/shift_code/api',
+                    url: "{{ url('/shift_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

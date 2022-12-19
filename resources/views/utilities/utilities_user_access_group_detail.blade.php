@@ -438,7 +438,7 @@
                     }
                 },
                 ajax: {
-                    url: '/user/api',
+                    url: "{{ url('/user/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

@@ -321,7 +321,7 @@
             pickerExpiredDate.setDate("{{ isset($data[0]->expiredDate) ? $data[0]->expiredDate : '' }}");
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/req_detail/api',
+                url: "{{ url('/employee_no/req_detail/api') }}",
                 data: {
                     'employeeNo' : "{{ isset($data[0]->employeeNo) ? $data[0]->employeeNo : '' }}"
                 }
@@ -333,7 +333,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/claim_code/func/api',
+                url: "{{ url('/claim_code/func/api') }}",
                 data: {
                     'claimCode' : "{{ isset($data[0]->claimCode) ? $data[0]->claimCode : '' }}"
                 }
@@ -428,7 +428,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -492,7 +492,7 @@
                     }
                 },
                 ajax: {
-                    url: '/claim_code/api',
+                    url: "{{ url('/claim_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

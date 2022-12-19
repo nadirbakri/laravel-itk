@@ -191,8 +191,8 @@
                             <select class="form-control" id="user_type" name="user_type" disabled>
                                 <option value="">Choose Type</option>
                                 <option value="sa">Super Admin</option>
-                                <option value="adm">Admin</option>
-                                <option value="emp">Employee</option>
+                                <option value="admin">Admin</option>
+                                <option value="employee">Employee</option>
                             </select>
                         </div>
                     </div>
@@ -442,8 +442,8 @@
                                     <select class="form-control" id="user_type_company" name="user_type_company">
                                         <option value="">Choose Type</option>
                                         <option value="sa">Super Admin</option>
-                                        <option value="adm">Admin</option>
-                                        <option value="emp">Employee</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="employee">Employee</option>
                                     </select>
                                 </div>
                             </div>
@@ -1037,7 +1037,7 @@
                 $('#module_name_edit').val(htmlDecode(data[0].moduleName));
                 $.ajax({
                     type: 'GET',
-                    url: '/group_authorize/group/api',
+                    url: "{{ url('/group_authorize/group/api') }}",
                     data: {
                         'groupAuthorizeCode': data[0].groupAuthorizeCode
                     }
@@ -1097,7 +1097,7 @@
                     }
                 },
                 ajax: {
-                    url: '/company/api',
+                    url: "{{ url('/company/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1210,7 +1210,7 @@
                     }
                 },
                 ajax: {
-                    url: '/module/user_security_maintenance/api',
+                    url: "{{ url('/module/user_security_maintenance/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1281,7 +1281,7 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: "{{ url('/group_authorize/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

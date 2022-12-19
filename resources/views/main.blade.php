@@ -134,12 +134,12 @@
 				<div id="web-collapse" class="collapse show" data-parent="#sidebar-wrapper">
 					@foreach (Session::get('menuList') as $menu)
 					<div class="list-group list-group-flush">
-						<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
+						<a tabindex="0" role="button" data-url="{{ url($menu->link) }}" data-idd="{{ $menu->moduleID }}" class="list-group-item list-group-item-action menu">
 							<div class="color-active"></div>
-							<img src="{{ url('/icons/sidebar/' . $menu['icon']) }}" alt="Home">
-							<img src="{{ url('/icons/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
-							<span>{{ $menu['title'] }}</span>
-							<span class="tooltiptext">{{ $menu['title'] }}</span>
+							<img src="{{ url('/icons/sidebar/' . $menu->icon) }}" alt="Home">
+							<img src="{{ url('/icons/sidebar/' . $menu->icon_name . '-bg.svg') }}" class="image-hover" alt="{{ $menu->moduleName }}">
+							<span>{{ $menu->moduleName }}</span>
+							<span class="tooltiptext">{{ $menu->moduleName }}</span>
 						</a>
 					</div>
 					@endforeach
@@ -192,9 +192,9 @@
 					<span class="navbar-divide">|</span>
 					<div class="dropdown-profile">
 						@if(Session::get('photo') == NULL)
-						<img src="{{ url('/pictures/default-profile.png') }}" alt="Profile">
+						<img class="rounded-circle" src="{{ url('/pictures/default-profile.png') }}" style="width: 2.5rem;" alt="Profile">
 						@else
-						<img src="{{ url(Session::get('photo')) }}" alt="Profile">
+						<img class="rounded-circle" src="data:image/png;base64, {{ Session::get('photo') }}" style="width: 2.5rem;" alt="Profile">
 						@endif
 						<div class="dropdown-profile-content dropdown-menu">
 							<p>{{ __('main.hello') }}, {{ Session::get('userName') }}</p>
@@ -331,13 +331,24 @@
 		});
 
 		$('#web-collapse').on('shown.bs.collapse', function () {
-			console.log("Yes");
+			// console.log("Yes");
 			$("#footer").css("padding-top", "4%");
 		});
 
 		$('#web-collapse').on('hidden.bs.collapse', function () {
 			$("#footer").css("padding-top", "0");
 		});
+
+		$(".menu").on('click', function() {
+            var data = $(this).data("idd");
+			var url = $(this).data('url');
+			console.log(url);
+			$.redirect(url, 
+			{ 
+				'moduleID' : data 
+			}, 
+			"GET", "iframe_dashboard");
+        });
 
 		$('#iframe_dashboard').load(function() {
 			$.ajax({

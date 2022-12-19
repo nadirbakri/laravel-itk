@@ -296,7 +296,7 @@
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/func/api',
+                url: "{{ url('/employee_no/func/api') }}",
                 data: {
                     'func': func
                 }
@@ -310,9 +310,10 @@
         function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: '/group_authorize/func/api',
+                url: "{{ url('/group_authorize/func/api') }}",
                 data: {
-                    'func': func
+                    'func': func,
+                    'module': 'TM'
                 }
             }).then(function (data) {
                 var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
@@ -326,7 +327,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/position/func/api',
+                url: "{{ url('/position/func/api') }}",
             }).then(function (data) {
                 if (!$('#position').find('option:contains(' + data.positionName + ')').length) {
                     $('#position').append($('<option>').val(data.positionCode).text(data.positionName));
@@ -340,7 +341,7 @@
         function loadDataFirstLastAllLocation() {
             $.ajax({
                 type: 'GET',
-                url: '/location/func/api',
+                url: "{{ url('/location/func/api') }}",
             }).then(function (data) {
                 if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
                     $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
@@ -352,7 +353,7 @@
         function loadDataFirstLastAllRanking() {
             $.ajax({
                 type: 'GET',
-                url: '/ranking/func/api',
+                url: "{{ url('/ranking/func/api') }}",
             }).then(function (data) {
                 if (!$('#ranking').find('option:contains(' + data.rankingName + ')').length) {
                     $('#ranking').append($('<option>').val(data.rankingCode).text(data.rankingName));
@@ -364,7 +365,7 @@
         function loadDataFirstLastAllLevel(field = '', levelType = '') {
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
                 data: {
                     'levelType': levelType
                 }
@@ -438,7 +439,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -513,14 +514,15 @@
                     }
                 },
                 ajax: {
-                    url: '/group_authorize/api',
+                    url: "{{ url('/group_authorize/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            module: 'TM'
                         };
                     },
                     processResults: function (data) {
@@ -589,7 +591,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/all/api',
+                    url: "{{ url('/position/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -663,7 +665,7 @@
                     }
                 },
                 ajax: {
-                    url: '/location/all/api',
+                    url: "{{ url('/location/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -737,7 +739,7 @@
                     }
                 },
                 ajax: {
-                    url: '/ranking/all/api',
+                    url: "{{ url('/ranking/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -811,7 +813,7 @@
                     }
                 },
                 ajax: {
-                    url: '/level/all/api',
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

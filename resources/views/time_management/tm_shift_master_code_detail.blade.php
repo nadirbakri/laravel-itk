@@ -1566,7 +1566,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/shift_master_code/func/api',
+                url: "{{ url('/shift_master_code/func/api') }}",
                 data: {
                     'groupShift': "{{ isset($data[0]->groupShift) ? $data[0]->groupShift : '' }}"
                 }
@@ -1630,7 +1630,7 @@
                     }
                 },
                 ajax: {
-                    url: '/shift_master_code/api',
+                    url: "{{ url('/shift_master_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

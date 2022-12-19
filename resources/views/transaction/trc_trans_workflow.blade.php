@@ -782,7 +782,7 @@
                     }
                 },
                 ajax: {
-                    url: '/level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -814,7 +814,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -856,7 +856,7 @@
                         }
                     },
                     ajax: {
-                        url: '/workflow/api',
+                        url: "{{ url('/workflow/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",

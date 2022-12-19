@@ -438,7 +438,7 @@ loadDataSubmitType();
                     }
                 },
                 ajax: {
-                    url: '/leave_type/api',
+                    url: "{{ url('/leave_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -497,7 +497,7 @@ loadDataSubmitType();
                     }
                 },
                 ajax: {
-                    url: '/leave_type/func/api',
+                    url: "{{ url('/leave_type/func/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -556,7 +556,7 @@ loadDataSubmitType();
                     }
                 },
                 ajax: {
-                    url: '/submit_type/api',
+                    url: "{{ url('/submit_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

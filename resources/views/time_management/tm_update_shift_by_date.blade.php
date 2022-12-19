@@ -311,7 +311,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/position/func/api',
+                url: "{{ url('/position/func/api') }}",
             }).then(function (data) {
                 if (!$('#position').find('option:contains(' + data.positionName + ')').length) {
                     $('#position').append($('<option>').val(data.positionCode).text(data.positionName));
@@ -324,7 +324,7 @@
         function loadDataFirstLastAllLocation() {
             $.ajax({
                 type: 'GET',
-                url: '/location/func/api',
+                url: "{{ url('/location/func/api') }}",
             }).then(function (data) {
                 if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
                     $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
@@ -338,7 +338,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/religion/func/api',
+                url: "{{ url('/religion/func/api') }}",
             }).then(function (data) {
                 if (!$('#religion').find('option:contains(' + data.value + ')').length) {
                     $('#religion').append($('<option>').val(data.comGenCode).text(data.value));
@@ -351,7 +351,7 @@
         function loadDataFirstLastAllLevel(field = '', levelType = '') {
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
                 data: {
                     'levelType': levelType
                 }
@@ -425,7 +425,7 @@
                     }
                 },
                 ajax: {
-                    url: '/shift_code/api',
+                    url: "{{ url('/shift_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -501,7 +501,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/all/api',
+                    url: "{{ url('/position/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -575,7 +575,7 @@
                     }
                 },
                 ajax: {
-                    url: '/location/all/api',
+                    url: "{{ url('/location/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -639,7 +639,7 @@
                     }
                 },
                 ajax: {
-                    url: '/religion/all/api',
+                    url: "{{ url('/religion/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -713,7 +713,7 @@
                     }
                 },
                 ajax: {
-                    url: '/level/all/api',
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

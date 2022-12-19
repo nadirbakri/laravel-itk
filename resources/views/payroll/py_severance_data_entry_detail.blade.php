@@ -296,7 +296,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/severance/api',
+                url: "{{ url('/employee_no/severance/api') }}",
                 data: {
                     'employeeNo': (typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''
                 }
@@ -386,7 +386,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no_term_date/api',
+                    url: "{{ url('/employee_no_term_date/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

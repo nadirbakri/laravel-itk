@@ -209,7 +209,7 @@
                 "{{ isset($data[0]->positionName) ? $data[0]->positionName : '' }}"));
             $.ajax({
                 type: 'GET',
-                url: '/supervisor/position/api',
+                url: "{{ url('/supervisor/position/api') }}",
                 data: {
                     'supervisorCode': "{{ isset($data[0]->supervisorPositionCode) ? $data[0]->supervisorPositionCode : '' }}"
                 }
@@ -300,7 +300,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/api',
+                    url: "{{ url('/position/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

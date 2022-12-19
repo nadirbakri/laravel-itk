@@ -423,7 +423,7 @@
             $('#max_per_request').val(((typeof arrData[0].reqAdvanceDay !== 'undefined') ? arrData[0].reqAdvanceDay : ''));
             $.ajax({
                 type: 'GET',
-                url: '/absenteeism_type/func/api',
+                url: "{{ url('/absenteeism_type/func/api') }}",
                 data: {
                     'absentType': "{{ isset($data[0]->absentType) ? $data[0]->absentType : '' }}"
                 }
@@ -446,7 +446,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/deduct_leave/func/api',
+                url: "{{ url('/deduct_leave/func/api') }}",
                 data: {
                     'deductLeave': "{{ isset($data[0]->deductLeave) ? $data[0]->deductLeave : '' }}"
                 }
@@ -585,7 +585,7 @@
                     }
                 },
                 ajax: {
-                    url: '/absenteeism_type/api',
+                    url: "{{ url('/absenteeism_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -647,7 +647,7 @@
                     }
                 },
                 ajax: {
-                    url: '/deduct_leave/api',
+                    url: "{{ url('/deduct_leave/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

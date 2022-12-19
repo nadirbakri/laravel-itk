@@ -527,7 +527,7 @@
             $('#record_function').val("Edit");
             $.ajax({
                 type: 'GET',
-                url: '/position/detail/api',
+                url: "{{ url('/position/detail/api') }}",
                 data: {
                     'positionCode' : "{{ isset($data[0]->positionCode) ? $data[0]->positionCode : '' }}"
                 }
@@ -539,7 +539,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/ranking/detail/api',
+                url: "{{ url('/ranking/detail/api') }}",
                 data: {
                     'rankingCode' : "{{ isset($data[0]->rankingCode) ? $data[0]->rankingCode : '' }}"
                 }
@@ -551,7 +551,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/claim_code/func/api',
+                url: "{{ url('/claim_code/func/api') }}",
                 data: {
                     'claimCode' : "{{ isset($data[0]->claimCode) ? $data[0]->claimCode : '' }}"
                 }
@@ -563,7 +563,7 @@
             });
             $.ajax({
                 type: 'GET',
-                url: '/rate_type/func/api',
+                url: "{{ url('/rate_type/func/api') }}",
                 data: {
                     'transactionRateTypeCode' : "{{ isset($data[0]->currencyCode) ? $data[0]->currencyCode : '' }}"
                 }
@@ -686,7 +686,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/api',
+                    url: "{{ url('/position/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -750,7 +750,7 @@
                     }
                 },
                 ajax: {
-                    url: '/ranking/api',
+                    url: "{{ url('/ranking/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -814,7 +814,7 @@
                     }
                 },
                 ajax: {
-                    url: '/claim_code/api',
+                    url: "{{ url('/claim_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -878,7 +878,7 @@
                     }
                 },
                 ajax: {
-                    url: '/rate_type/api',
+                    url: "{{ url('/rate_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

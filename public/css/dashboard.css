@@ -1,14 +1,14 @@
 @font-face {
 	font-family: Montserrat;
-	src: url('/fonts/Montserrat-Bold.ttf');
+	src: url(../fonts/Montserrat-Bold.ttf);
 }
 @font-face {
 	font-family: Montserrat-Medium;
-	src: url('/fonts/Montserrat-SemiBold.ttf');
+	src: url(../fonts/Montserrat-SemiBold.ttf);
 }
 @font-face {
 	font-family: Inter;
-	src: url('/fonts/Inter-SemiBold.ttf');
+	src: url(../fonts/Inter-SemiBold.ttf);
 }
 a {
 	color: inherit;

@@ -208,7 +208,7 @@
             $('#level_name').val(htmlDecode("{{ isset($data[0]->levelName) ? $data[0]->levelName : '' }}"));
             $.ajax({
                 type: 'GET',
-                url: '/level_type/type/api',
+                url: "{{ url('/level_type/type/api') }}",
                 data: {
                     'levelType': "{{ isset($data[0]->levelType) ? $data[0]->levelType : '' }}"
                 }
@@ -297,7 +297,7 @@
                     }
                 },
                 ajax: {
-                    url: '/level_type/api',
+                    url: "{{ url('/level_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

@@ -548,7 +548,7 @@
                     }
                 },
                 ajax: {
-                    url: '/detail_field/api',
+                    url: "{{ url('/detail_field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -618,7 +618,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/api',
+                    url: "{{ url('/position/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

@@ -324,7 +324,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/employee_no/req_detail/api',
+                url: "{{ url('/employee_no/req_detail/api') }}",
                 data: {
                     'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
                 }
@@ -360,7 +360,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/performance_result/bonus_thr_data_entry/api',
+                url: "{{ url('/performance_result/bonus_thr_data_entry/api') }}",
                 data: {
                     'value': ((typeof arrData[0].performanceResult !== 'undefined') ? arrData[0].performanceResult : '')
                 }
@@ -387,7 +387,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/comgen/api',
+                url: "{{ url('/comgen/api') }}",
                 data: {
                     'currencyCode1': ((typeof arrData[0].currencyCode !== 'undefined' && arrData[0].currencyCode !== null) ? arrData[0].currencyCode : '')
                 }
@@ -496,7 +496,7 @@
                     }
                 },
                 ajax: {
-                    url: '/employee_no/api',
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -555,7 +555,7 @@
                     }
                 },
                 ajax: {
-                    url: '/performance_result/api',
+                    url: "{{ url('/performance_result/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -613,7 +613,7 @@
                     }
                 },
                 ajax: {
-                    url: '/currency/api',
+                    url: "{{ url('/currency/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

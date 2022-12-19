@@ -54,7 +54,7 @@ Route::get('home/breadcrumbs', 'HomeController@getURLBreadcrumbs');
 Route::get('calendar/event', 'DashboardController@getEventCalendar');
 
 /* Route Untuk Menu Personel */
-Route::get('personel', 'PersonelController@pagePersonelMain');
+Route::get('personnel', 'PersonelController@pagePersonelMain');
 Route::get('personel/personal_data', 'PersonelController@pagePersonalDataPersonel');
 Route::get('personel/performance', 'PersonelController@pagePerformancePersonel');
 Route::get('personel/work_detail', 'PersonelController@pageWorkDetailPersonel');
@@ -707,6 +707,7 @@ Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPer
 Route::post('payroll/export_sipp_online/print', 'PayrollController@printExportSIPPOnlinePayroll');
 Route::post('payroll/spt_pph_report/print', 'PayrollController@printSPTPPHReportPayroll');
 Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPHReportPayrollExcel');
+Route::post('payroll/monthly_jamsostek_report/print', 'PayrollController@printMonthlyJamsostekReportPayroll');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical');

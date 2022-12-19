@@ -1,18 +1,18 @@
 @font-face {
     font-family: Montserrat;
-    src: url('/fonts/Montserrat-Bold.ttf');
+    src: url(../fonts/Montserrat-Bold.ttf);
 }
 @font-face {
     font-family: Montserrat-Medium;
-    src: url('/fonts/Montserrat-SemiBold.ttf');
+    src: url(../fonts/Montserrat-SemiBold.ttf);
 }
 @font-face {
     font-family: Inter-Bold;
-    src: url('/fonts/Inter-Bold.ttf');
+    src: url(../fonts/Inter-Bold.ttf);
 }
 @font-face {
     font-family: Inter;
-    src: url('/fonts/Inter-Regular.ttf');
+    src: url(../fonts/Inter-Regular.ttf);
 }
 .show-neighbors {
   overflow: hidden;

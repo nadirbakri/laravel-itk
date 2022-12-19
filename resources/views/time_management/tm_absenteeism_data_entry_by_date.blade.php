@@ -594,7 +594,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/day_code/func/api',
+                url: "{{ url('/day_code/func/api') }}",
                 data: {
                     dayCode : dayCode
                 }
@@ -615,7 +615,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/shift_code/func/api',
+                url: "{{ url('/shift_code/func/api') }}",
                 data: {
                     shiftCode : shiftCode
                 }
@@ -636,7 +636,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/cost_center/func/api',
+                url: "{{ url('/cost_center/func/api') }}",
                 data: {
                     costCenterCode : costCenterCode
                 }
@@ -657,7 +657,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/cost_center/func/api',
+                url: "{{ url('/cost_center/func/api') }}",
                 data: {
                     costCenterCode : overtimeCode
                 }
@@ -677,7 +677,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     absentCode : fingerAbsentCode
                 }
@@ -696,7 +696,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/absent_code/func/api',
+                url: "{{ url('/absent_code/func/api') }}",
                 data: {
                     absentCode : absentCode
                 }
@@ -715,7 +715,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/position/detail/api',
+                url: "{{ url('/position/detail/api') }}",
                 data: {
                     positionCode : positionCode
                 }
@@ -734,7 +734,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/location/detail/api',
+                url: "{{ url('/location/detail/api') }}",
                 data: {
                     locationCode : locationCode
                 }
@@ -753,7 +753,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/grade/detail/api',
+                url: "{{ url('/grade/detail/api') }}",
                 data: {
                     gradeCode : gradeCode
                 }
@@ -800,7 +800,7 @@
                     }
                 },
                 ajax: {
-                    url: '/day_code/api',
+                    url: "{{ url('/day_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -864,7 +864,7 @@
                     }
                 },
                 ajax: {
-                    url: '/shift_code/api',
+                    url: "{{ url('/shift_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -929,7 +929,7 @@
                     }
                 },
                 ajax: {
-                    url: '/cost_center/api',
+                    url: "{{ url('/cost_center/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -994,7 +994,7 @@
                     }
                 },
                 ajax: {
-                    url: '/absent_code/api',
+                    url: "{{ url('/absent_code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1059,7 +1059,7 @@
                     }
                 },
                 ajax: {
-                    url: '/code/api',
+                    url: "{{ url('/code/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1124,7 +1124,7 @@
                     }
                 },
                 ajax: {
-                    url: '/position/api',
+                    url: "{{ url('/position/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1189,7 +1189,7 @@
                     }
                 },
                 ajax: {
-                    url: '/location/api',
+                    url: "{{ url('/location/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1254,7 +1254,7 @@
                     }
                 },
                 ajax: {
-                    url: '/grade/api',
+                    url: "{{ url('/grade/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

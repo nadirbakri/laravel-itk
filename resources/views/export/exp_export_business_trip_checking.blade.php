@@ -327,7 +327,7 @@ loadDataFirstLastAllBusinessUnit();
                     }
                 },
                 ajax: {
-                    url: '/travel_type/api',
+                    url: "{{ url('/travel_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -387,7 +387,7 @@ loadDataFirstLastAllBusinessUnit();
                     }
                 },
                 ajax: {
-                    url: '/level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -418,7 +418,7 @@ loadDataFirstLastAllBusinessUnit();
 
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}",
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -460,7 +460,7 @@ loadDataFirstLastAllBusinessUnit();
                     }
                 },
                 ajax: {
-                    url: '/status/func/api',
+                    url: "{{ url('/status/func/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
