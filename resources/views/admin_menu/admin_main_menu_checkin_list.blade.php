@@ -178,18 +178,17 @@
                         </div>
                     </div>
                     <div class="newscategory">
-                        <input type="text" class="form-control" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_user">
+                        <input type="text" class="form-control" name="btn_list" id="btn_list" data-toggle="modal" data-target="#modal_list_user">
                     </div>
                 </div>
            
                 <div class="row">
                     <div class="col-12">
-                            <button type="button" class="btn btn-primary" name="btn-search" id="btn-search">
-                                Search
-                            </button>  
-                            <button type="button" class="btn btn-primary" name="btn-hid" id="btn-hid" hidden>
-                                Search
-                            </button>  
+                        <div class="col-3">
+                            <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
+                                <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            </button>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -255,9 +254,9 @@
                             <th>User ID</th>
                             <th>Employee Name</th>
                             <th>Last Check In (Device)	</th>
-                            <th>Last Check In (Server)	</th>
-                            <th>Description</th>
-                            <th>Preview Location</th>
+                            {{-- <th>Last Check In (Server)	</th> --}}
+                            {{-- <th>Description</th>
+                            <th>Preview Location</th> --}}
                         </tr>
                     </thead>
                 </table>
@@ -342,7 +341,7 @@
     }
 </script>
 <script>
-    $('#btn-list').click(()=> {
+    $('#btn_list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
             processing: true,
@@ -379,14 +378,89 @@
         });        
     })
 
+     
     const klik = (element) => {
         let title = $(element).parent().siblings('.sorting_1').text()
 
         // alert(newscategory)
-        $('#btn-list').val(title)
+        $('#btn_list').val(title)
       
         $('.close').click();
     }
+</script>
+<script>
+        function load_data_checkinlist(claim_date_from, btn_list) {
+            table = $('#reimbursement_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('adm/checkinlist/table') }}",
+                    data: {
+                        'startDate': claim_date_from,
+                        'employeeNo' : btn_list
+
+                    }
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                        }
+                    },
+                    {data: 'checkInDate', name: 'checkInDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {data: 'checkOutDate', name: 'checkOutDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                            }}
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+
+            $("#btn-search").prop("disabled", true);
+            $("#btn-search").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
+            );
+
+            
+
+            $("#btn-search").prop("disabled", false);
+            $("#btn-search").html(
+                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+            );
+        }
+
+        $("#admin_menu_news_master").submit((e)=>{
+            e.preventDefault();
+
+            var claim_date_from = $("#claim_date_from").val();
+            var employeenom = $("#btn_list").val();
+            // alert(employeenom);
+            // $("#btn-search").prop("disabled", true);
+            // $("#btn-search").html(
+            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            // );
+
+            $('#reimbursement_table').DataTable().destroy();
+            load_data_checkinlist(claim_date_from, btn_list);
+    })
 </script>
 <script>
     $("#btn-save").click(function () {

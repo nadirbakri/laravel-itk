@@ -217,7 +217,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
+                        <button type="button" class="btn btn-primary" name="btn-update" id="btn-update"
                         style="width: 100%;">
                          Update Data
                         </button>
@@ -230,7 +230,7 @@
                                         <th>Ticket Number</th>
                                         <th>Employee Name</th>
                                         {{-- <th>Business Unit</th> --}}
-                                        <th id="reimburement_status" name>Status</th>
+                                        <th>Status</th>
                                         {{-- <th>Reimbursement Type</th> --}}
                                         <th>Start Date</th>
                                         <th>End Date</th>
@@ -434,8 +434,11 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type, row){
+                            // console.log(row.totalClaimAmount)
+                            let totalcamount = parseInt(row.totalClaimAmount)
                             if(row.status == 'PARTIAL APPROVED'){
-                                return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                return type === 'display'? `<input  class="chk-select" type="checkbox" value="`+totalcamount+`">` : '';
+
                             }else{
                                 return '<input disabled type="checkbox" name="check">';
                             }
@@ -444,7 +447,7 @@
                     {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
                         if(row.status == 'PARTIAL APPROVED'){
-                            return '<input type="text" class="form-control" name="totalClaimAmount[]" value="' +
+                            return '<input type="text"  class="form-control" id="jesyca" name="totalClaimAmount[]" value="' +
     
                                 data + '">';
                         }else{
@@ -469,6 +472,7 @@
                 }
             });
 
+           
             $("#btn-search").prop("disabled", true);
             $("#btn-search").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -765,15 +769,15 @@ $.get("{{ url('level/api') }}", function (data) {
 
 </script>
 <script>
-    $("#btn-upload").on('click', function(data, type, row) {
-        var data = table.row(this).data();
-        $.redirect("{{ url('trans/trans_active_document/detail_data') }}",
-        {
-            'status': row.status,
-            'paidAmount': row.paidAmount
-        }, "GET"
-        )
-    });
+   $('#business_trip_table').on('click', '.chk-select', function() {
+//    console.log("aaaa");
+    let checbox_selected = $('#business_trip_table .chk-select:checked')
+    var checkedValue = $('.chk-select:checked').val();
+    // console.log(checkedValue);
+    $('#jesyca').val(checkedValue);
+   })
+
+   
 </script>
 
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

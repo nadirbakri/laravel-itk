@@ -757,6 +757,7 @@ Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tab
 Route::post('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
+Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 
 Route::post('transaction/update_reimbursement/import', 'TransactionController@importUpdateReimbursement');
 Route::post('transaction/update_transport/import', 'TransactionController@importUpdateTransport');
