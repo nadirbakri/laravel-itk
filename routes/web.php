@@ -754,6 +754,7 @@ Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
 Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
+Route::post('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 

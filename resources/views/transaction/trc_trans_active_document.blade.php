@@ -230,7 +230,7 @@
                                         <th>Ticket Number</th>
                                         <th>Employee Name</th>
                                         {{-- <th>Business Unit</th> --}}
-                                        <th>Status</th>
+                                        <th id="reimburement_status" name>Status</th>
                                         {{-- <th>Reimbursement Type</th> --}}
                                         <th>Start Date</th>
                                         <th>End Date</th>
@@ -763,6 +763,17 @@ $.get("{{ url('level/api') }}", function (data) {
             });
         }
 
+</script>
+<script>
+    $("#btn-upload").on('click', function(data, type, row) {
+        var data = table.row(this).data();
+        $.redirect("{{ url('trans/trans_active_document/detail_data') }}",
+        {
+            'status': row.status,
+            'paidAmount': row.paidAmount
+        }, "GET"
+        )
+    });
 </script>
 
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

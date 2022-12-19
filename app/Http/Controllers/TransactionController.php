@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -913,6 +914,53 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo
                     ]
                 )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
+    }
+    public function tableUpdateListBusinesstrip(Collection $rows)
+    {
+        $param = [];
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
+            foreach ($rows as $row ){
+                $param[] = [
+                    "companyCode" => Session::get('companyCode'),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    "changedBy" => Session::get('userID'),
+                    "status" => $row[2],
+                    "ticketNo" => $row[0],
+                    "paidAmount" => $row[9]
+                ];
+            }
+            
+
+            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
