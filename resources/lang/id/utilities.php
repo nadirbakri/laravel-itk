@@ -21,6 +21,7 @@ return [
     'change_password' => 'Ganti Kata Sandi',
     'user_log' => 'Log Pengguna',
     'audit_trail' => 'Jejak Audit',
+    'change_employee_no' => 'Perubahan No Karyawan',
     // 'export_personal_data' => 'Unggah Data personal',
     'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 

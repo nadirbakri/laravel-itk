@@ -89,6 +89,14 @@
 					</a>
 				</div>
 			</div>
+			<div class="row div-child-data">
+				<div class="col col-6">
+					<a href="{{ url('utilities/change_employee_no') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.change_employee_no') }}</span>
+					</a>
+				</div>
+			</div>
 			<!-- <div class="row div-child-data">
 				<div class="col col-6">
 					<a href="{{ url('utilities/export_personal_data') }}" target="iframe_dashboard">

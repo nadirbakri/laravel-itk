@@ -111,8 +111,7 @@
 
 <body>
     <div class="div-form">
-        <form id="trans_business_trip_form" method="post">
-            @csrf
+        <form>
             <div class="div-trans-business-trip">
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
@@ -197,7 +196,7 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
+                        <button type="button" class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
                             <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_business_trip.btn_search') }}
                         </button>
                     </div>
@@ -208,7 +207,9 @@
                         </button>
                     </div>
                 </div>
-
+            </form>
+            <form id="trans_business_trip_form" method="post">
+            @csrf
                 <!-- TABLE -->
                 <div class="card">
                     <div class="row">
@@ -217,7 +218,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
+                        <button type="submit" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;">
                          Update Data
                         </button>
@@ -377,6 +378,8 @@
 </script>
 
 <script>
+    var table = null;
+    var table2 = null;
  function load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
             table = $('#business_trip_table').DataTable({
                 processing: true,
@@ -413,7 +416,19 @@
                     //         return moment(data).format('YYYY-MM-DD');
                     //     }
                     // },
-                    {data: 'ticketNo', name: 'ticketNo'},
+                    {data: 'ticketNo', name: 'ticketNo',
+                    render: function (data, type, row) {
+                        if(row.status == 'PARTIAL APPROVED'){
+                            return '<input type="hidden" class="form-control" name="ticketNo[]" value="' +
+    
+                                data + '">' + data;
+                        }else{
+                            return '<input type="hidden" class="form-control" name="ticketNo[]" value="' +
+    
+                                data + '" disabled>' + data;
+                        }
+
+                    }},
                     {data: 'fullnameRequester', name: 'fullnameRequester'},
                     // {data: 'businessUnit', name: 'businessUnit'},
                     {data: 'status', name: 'status'},
@@ -431,26 +446,25 @@
                     {data: 'totalClaimAmount', name: 'totalClaimAmount'},
                     {
                         orderable: false,
-                        targets: 0, 
                         "defaultContent": '',
                         render: function(data, type, row){
                             if(row.status == 'PARTIAL APPROVED'){
-                                return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                return '<input class="chk-select" type="checkbox" name="checkPaid[]">';
                             }else{
-                                return '<input disabled type="checkbox" name="check">';
+                                return '<input class="chk-select" type="checkbox" name="checkPaid[]" disabled>';
                             }
                         }
                     },
                     {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
                         if(row.status == 'PARTIAL APPROVED'){
-                            return '<input type="text" class="form-control" name="totalClaimAmount[]" value="' +
+                            return '<input type="text" class="form-control" name="paidAmount[]" value="' +
     
                                 data + '">';
                         }else{
-                            return '<input disabled type="text" class="form-control" name="totalClaimAmount[]" value="' +
+                            return '<input type="text" class="form-control" name="paidAmount[]" value="' +
     
-                                data + '">';
+                                data + '" disabled>';
                         }
 
                         }
@@ -462,11 +476,7 @@
                     //         return moment(data).format('DD-MMM-YYYY');
                     //     }
                     // }
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
+                ]
             });
 
             $("#btn-search").prop("disabled", true);
@@ -482,7 +492,7 @@
             );
         }
 
-        $("#trans_business_trip_form").submit((e)=>{
+        $("#btn-search").click((e)=>{
             e.preventDefault();
 
             var claim_date_from = $("#claim_date_from").val();
@@ -498,7 +508,7 @@
 
             $('#business_trip_table').DataTable().destroy();
             load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
-    })
+        })
 
    $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
@@ -563,6 +573,79 @@
         // let division = $(element).parent().siblings('td').eq(2).text()
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
         // alert(data1)
+    }
+
+    $("#btn-upload").click(function () {
+        $(this).prop("disabled", true);
+        $(this).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        $("#trans_business_trip_form").submit();
+    });
+    
+    $('#notification_success').on('hide.bs.modal', function () {
+        window.location = "{{ url('transaction/transaction_active_document') }}";
+    });
+    
+    if ($("#trans_business_trip_form").length > 0) {
+        $("#trans_business_trip_form").validate({
+            submitHandler: function (form) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                
+                $.ajax({
+                    url: "{{ url('transaction/transaction_active_document/proses') }}",
+                    type: "POST",
+                    data: $('#trans_business_trip_form').serialize(),
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $("#btn-upload").prop("disabled", false);
+                            $("#btn-upload").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update Data'
+                            );
+                            
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            setTimeout(function () {
+                                window.location =
+                                    "{{ url('transaction/transaction_active_document') }}";
+                            }, 3000);
+                        } else {
+                            $("#btn-upload").prop("disabled", false);
+                            $("#btn-upload").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update Data'
+                            );
+    
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $("#btn-upload").prop("disabled", false);
+                        $("#btn-upload").html(
+                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                            'Update Data'
+                        );
+    
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        })
     }
 </script>
 
@@ -763,17 +846,6 @@ $.get("{{ url('level/api') }}", function (data) {
             });
         }
 
-</script>
-<script>
-    $("#btn-upload").on('click', function(data, type, row) {
-        var data = table.row(this).data();
-        $.redirect("{{ url('trans/trans_active_document/detail_data') }}",
-        {
-            'status': row.status,
-            'paidAmount': row.paidAmount
-        }, "GET"
-        )
-    });
 </script>
 
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
