@@ -6786,6 +6786,8 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printMonthlyJamsostekReportPayroll(Request $request){
+        $response = null;
+
         try{
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -6793,23 +6795,23 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             $param = [
-                'companyCode' => Session::get('companyCode'),
-                'jamsostekPeriod' => $request->jamsostek_period_year . '-' . $request->jamsostek_period_month . '-01',
-                'iuranPeriod' => $request->kekurangan_kelebihan_period_year . '-' . $request->kekurangan_kelebihan_period_month . '-01',
-                'jkk' => $request->jkk,
-                'jht' => $request->jht,
-                'jk' => $request->jk,
-                'jp' => $request->jp,
-                'jk' => $request->jk,
-                'jdi' => $request->jdi,
-                'groupAuthorizeFrom' => $request->group_authorize_code_from,
-                'groupAuthorizeTo' => $request->group_authorize_code_to,
-                'groupBPJSCode' => $request->group_bpjs_code,
+                // 'companyCode' => Session::get('companyCode'),
+                // 'jamsostekPeriod' => $request->jamsostek_period_year . '-' . $request->jamsostek_period_month . '-01',
+                // 'iuranPeriod' => $request->kekurangan_kelebihan_period_year . '-' . $request->kekurangan_kelebihan_period_month . '-01',
+                // 'jkk' => $request->jkk,
+                // 'jht' => $request->jht,
+                // 'jk' => $request->jk,
+                // 'jp' => $request->jp,
+                // 'jk' => $request->jk,
+                // 'jdi' => $request->jdi,
+                // 'groupAuthorizeFrom' => $request->group_authorize_code_from,
+                // 'groupAuthorizeTo' => $request->group_authorize_code_to,
+                // 'groupBPJSCode' => $request->group_bpjs_code,
                 'languageID' => App::getLocale(),
-                'sessionID' => 0,
-                'sessionUserID' => Session::get('userID'),
-                "logActionUsername" => Session::get('userName'),
-                "logActionUserID" => Session::get('userID')
+                // 'sessionID' => 0,
+                // 'sessionUserID' => Session::get('userID'),
+                // "logActionUsername" => Session::get('userName'),
+                // "logActionUserID" => Session::get('userID')
             ];
 
             if($request->jamsostek_report_type == 'formulir2'){
@@ -6817,7 +6819,7 @@ public function dataDetailReportFormatPY(Request $request)
                     'body' => json_encode($param)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $response = $client->post(env('API_URL').'​/MonthlyJamsostek​/getDaftarTenagaKerja', [
+                $response = $client->post(env('API_URL').'/MonthlyJamsostek/getDaftarTenagaKerja', [
                     'body' => json_encode($param)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir1b'){
@@ -6850,30 +6852,30 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($request->jamsostek_report_type == 'formulir2'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', ['data' => []])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', ['data' => []])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', ['data' => []])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', ['data' => []])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
         }else{
             if($request->jamsostek_report_type == 'formulir2'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', ['data' => $arrResult->dataListSet])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', ['data' => $arrResult->dataListSet])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', ['data' => $arrResult->dataListSet])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', ['data' => $arrResult->dataListSet])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
         }

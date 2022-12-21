@@ -43,7 +43,7 @@
 							<div class="hello-text">{{ __('dashboard.hello') }} {{ Session::get('userName') }}</div>
 							<p>{{ __('dashboard.welcome') }}</p>
 
-							<p>PT Intikom Berlian Mustika</p>
+							<p>{{ Session::get('companyName') }}</p>
 							<div class="text-company-detail">
 								<div class="col-6">
 									<div class="number-company-detail">1000</div>
@@ -576,43 +576,21 @@
  		$.ajax({
  			url: '{{ url("calendar/event") }}',
  			type: 'GET',
- 			data: {
- 				start_date: moment().startOf('month').format('YYYY-MM-DD\Thh:mm:ss'),
- 				end_date: moment().endOf('month').format('YYYY-MM-DD\Thh:mm:ss'),
- 			},
  			dataType: 'JSON',
  			success: function (response) {
- 				console.log(response.data);
+				let container = $(".calendar-dashboard").simpleCalendar({
+					fixedStartDay: 0, // Awal Minggu adalah hari Minggu
+					disableEmptyDetails: true,
+					displayEvent: true,
+					events: response.data
+				});
+
+				$calendar = container.data('plugin_simpleCalendar');
  			},
  			error: function (err) {
  				console.log('Error Get Event Calendar : '+ err);
  			},
  		});
-
-		let container = $(".calendar-dashboard").simpleCalendar({
-      		fixedStartDay: 0, // Awal Minggu adalah hari Minggu
-      		disableEmptyDetails: true,
-      		displayEvent: true,
-      		events: [
-		        {
-		        	startDate: new Date('2021-04-12'),
-		        	endDate: new Date('2021-04-12'),
-		        	summary: 'Event A'
-		        },
-		        {
-		        	startDate: new Date('2021-04-21'),
-		        	endDate: new Date('2021-04-22'),
-		        	summary: 'Event B'
-		        },
-		        {
-		        	startDate: new Date('2021-04-27'),
-		        	endDate: new Date('2021-04-30'),
-		        	summary: 'Event C'
-		        }
-		    ],
-      	});
-
-		$calendar = container.data('plugin_simpleCalendar');
 
 		$(".tabs-card").click(function() {  
 			$(".tabs-card").removeClass("active"); 

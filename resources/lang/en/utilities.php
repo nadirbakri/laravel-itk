@@ -21,6 +21,7 @@ return [
     'change_password' => 'Change Password',
     'user_log' => 'User Log',
     'audit_trail' => 'Audit Trail',
+    'change_employee_no' => 'Change Employee No',
     // 'export_personal_data' => 'Export Personal Data',
     'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 

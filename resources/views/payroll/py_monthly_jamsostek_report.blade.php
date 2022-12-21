@@ -491,6 +491,70 @@
         }
     });
 
+    
+
+    $('#btn-print').click(function (){
+        $(this).prop("disabled", true);
+        $(this).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        $('#monthly_jamsostek_report_form').submit();
+    });
+
+    if($('#monthly_jamsostek_report_form').length > 0){
+        $('#monthly_jamsostek_report_form').validate({
+            submitHandler: function(form){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    xhrFields: {
+                        responseType: 'blob',
+                    },
+                    url: "{{ url('payroll/monthly_jamsostek_report/print') }}",
+                    type: "POST",
+                    data: $('#monthly_jamsostek_report_form').serialize(),
+                    success: function(result, status, xhr){
+                        $('#btn-print').prop("disabled", false);
+                        $("#btn-print").html(
+                            '<i class="fa fa-print"></i> {{ __("payroll_monthly_jamsostek_report.label_print") }}'
+                        );
+                        
+                        var disposition = xhr.getResponseHeader('content-disposition');
+                        var matches = /"([^"]*)"/.exec(disposition);
+                        var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+
+                        var blob = new Blob([result], {
+                            type: 'application/pdf'
+                        });
+
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename;
+                        
+                        document.body.appendChild(link);
+
+                        link.click();
+                        document.body.removeChild(link);
+
+                        clicked = "";
+                    },
+                    error: function(response){
+                        $('#btn-print').prop("disabled", false);
+                        $('#btn-print').html(
+                            '<i class="fa fa-print"></i> {{ __("payroll_monthly_jamsostek_report.label_print") }}'
+                        );
+                        
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        })
+    }
+
 </script>
 
 </html>

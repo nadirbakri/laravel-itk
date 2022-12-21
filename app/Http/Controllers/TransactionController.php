@@ -997,7 +997,49 @@ class TransactionController extends Controller
         //     return Datatables::of($arrResult->dataListSet)->make(true);
         // }
     }
-    public function tableUpdateListBusinesstrip(Collection $rows)
+
+    public function prosesTransactionActiveDocument(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+                foreach($request->ticketNo as $key=>$value){
+                    $param[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "sessionID" => 0,
+                        "sessionUserID" => 'edwin',
+                        "languageCode" => App::getLocale(),
+                        'changeBy' => 'edwin',
+                        "status" => 'APPROVED',
+                        "ticketNo" => $value,
+                        "paidAmount" => $request->paidAmount[$key]
+                    ];
+                }
+                
+                $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
+                    ['body' => json_encode($param)]
+                );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function tableUpdateListBusinesstrip(Request $request)
     {
         $param = [];
         try {
@@ -1006,16 +1048,20 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
-            foreach ($rows as $row ){
+            
+            foreach($request->data as $value){
+                var_dump($value);
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
                     "languageCode" => App::getLocale(),
                     "changedBy" => Session::get('userID'),
-                    "status" => $row[2],
-                    "ticketNo" => $row[0],
-                    "paidAmount" => $row[9]
+                    "status" => $value['status'],
+                    "ticketNo" => $value['ticketNo'],
+                    "paidAmount" => $value['checkPaid']
                 ];
             }
             

@@ -194,12 +194,12 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmcalendar/getoffdaylist',
+            $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'startDate' => date('Y-m-d\TH:i:s', strtotime($request->start_date)),
-                        'endDate' => date('Y-m-d\TH:i:s', strtotime($request->end_date)),
+                        // 'startDate' => date('Y-m-d\TH:i:s', strtotime($request->start_date)),
+                        // 'endDate' => date('Y-m-d\TH:i:s', strtotime($request->end_date)),
                         'userID' => Session::get('userID'),
                         "sessionID" => 0,
                         'logActionUserID' => Session::get('userID'),
@@ -220,10 +220,20 @@ class DashboardController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        $arrData = [];
+
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            return response()->json($arrData);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            foreach($arrResult->dataListSet as $value){
+                $arrData[] = (object) [
+                    "startDate" => date('Y-m-d', strtotime($value->calendar)), 
+                    "endDate" => date('Y-m-d', strtotime($value->calendar)),
+                    "summary" => $value->description
+                ];
+            }
+
+            return Datatables::of($arrData)->make(true);
         }
     }
 }

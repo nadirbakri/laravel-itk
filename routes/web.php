@@ -755,7 +755,7 @@ Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
 Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
-Route::post('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
+Route::get('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
@@ -814,7 +814,7 @@ Route::get('utilities/user_security_maintenance', 'UtilitiesController@pageUserS
 Route::get('utilities/menu_master', 'UtilitiesController@pageMenuMasterUtilities');
 Route::get('utilities/group_authorization', 'UtilitiesController@pageAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access', 'UtilitiesController@pageUserAccessGroupUtilities');
-Route::get('utilities/change_password', 'UtilitiesController@pageChangeEmployeeNumberUtilities');
+Route::get('utilities/change_employee_no', 'UtilitiesController@pageChangeEmployeeNumberUtilities');
 Route::get('utilities/user_log', 'UtilitiesController@pageUserLogUtilities');
 Route::get('utilities/audit_trail', 'UtilitiesController@pageAuditTrailUtilities');
 Route::get('utilities/export_personal_data', 'UtilitiesController@pageExportPersonalDataUtilities');
@@ -851,6 +851,7 @@ Route::post('utilities/user/proses', 'UtilitiesController@prosesUserUtilities');
 Route::post('utilities/user_security_maintenance/level/proses', 'UtilitiesController@prosesUserSecurityMaintenanceLevelUtilities');
 Route::post('utilities/user_security_maintenance/company/proses', 'UtilitiesController@prosesUserSecurityMaintenanceCompanyUtilities');
 Route::post('utilities/user_security_maintenance/module/proses', 'UtilitiesController@prosesUserSecurityMaintenanceModuleUtilities');
+Route::post('utilities/change_employee_no/proses', 'UtilitiesController@prosesChangeEmployeeNumberUtilities');
 
 Route::post('utilities/audit_trail/export', 'UtilitiesController@exportAuditTrailUtilities');
 
@@ -899,6 +900,7 @@ Route::get('transaction/transaction_attendance', 'TransactionController@pageTran
 Route::get('transaction/transaction_business_trip', 'TransactionController@pageTransactionBusinessTrip');
 Route::get('transaction/transaction_overtime', 'TransactionController@pageTransactionOvertime');
 Route::get('transaction/transaction_active_document', 'TransactionController@pageTransactionActiveDocument');
+Route::post('transaction/transaction_active_document/proses', 'TransactionController@prosesTransactionActiveDocument');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');
