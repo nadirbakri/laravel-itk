@@ -597,6 +597,67 @@ class TransactionController extends Controller
         }
     }
     
+   
+    public function tableDetailCheckinList(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         'reimbursementType'=> $request->reimbursementType,
+            //         'businessUnit' => $request->businessUnit,
+            //         'exportMenu' => false,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID')
+            //     ]
+            //     ));
+            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin ',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'exportMenu' => false,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+    
     public function tableDetailTransport(Request $request)
     {
         try {

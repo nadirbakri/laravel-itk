@@ -231,7 +231,7 @@
                                         <th>Ticket Number</th>
                                         <th>Employee Name</th>
                                         {{-- <th>Business Unit</th> --}}
-                                        <th id="reimburement_status" name>Status</th>
+                                        <th>Status</th>
                                         {{-- <th>Reimbursement Type</th> --}}
                                         <th>Start Date</th>
                                         <th>End Date</th>
@@ -448,6 +448,8 @@
                         orderable: false,
                         "defaultContent": '',
                         render: function(data, type, row){
+                            // console.log(row.totalClaimAmount)
+                            let totalcamount = parseInt(row.totalClaimAmount)
                             if(row.status == 'PARTIAL APPROVED'){
                                 return '<input class="chk-select" type="checkbox" name="checkPaid[]">';
                             }else{
@@ -479,6 +481,7 @@
                 ]
             });
 
+           
             $("#btn-search").prop("disabled", true);
             $("#btn-search").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -575,7 +578,7 @@
         // alert(data1)
     }
 
-    $("#btn-upload").click(function () {
+    $("#btn-update").click(function () {
         $(this).prop("disabled", true);
         $(this).html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -602,8 +605,8 @@
                     data: $('#trans_business_trip_form').serialize(),
                     success: function (response) {
                         if (response.status == "true") {
-                            $("#btn-upload").prop("disabled", false);
-                            $("#btn-upload").html(
+                            $("#btn-update").prop("disabled", false);
+                            $("#btn-update").html(
                                 // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
                                 'Update Data'
                             );
@@ -616,8 +619,8 @@
                                     "{{ url('transaction/transaction_active_document') }}";
                             }, 3000);
                         } else {
-                            $("#btn-upload").prop("disabled", false);
-                            $("#btn-upload").html(
+                            $("#btn-update").prop("disabled", false);
+                            $("#btn-update").html(
                                 // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
                                 'Update Data'
                             );
@@ -634,8 +637,8 @@
                         }
                     },
                     error: function (response) {
-                        $("#btn-upload").prop("disabled", false);
-                        $("#btn-upload").html(
+                        $("#btn-update").prop("disabled", false);
+                        $("#btn-update").html(
                             // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
                             'Update Data'
                         );
