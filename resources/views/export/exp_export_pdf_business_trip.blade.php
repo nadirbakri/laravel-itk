@@ -161,14 +161,14 @@
                     </div>
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-5">
                         <div class="form-group">
                             <label for="status form-check-label">{{ __('export_pdf_business_trip.label_status') }}</label>
                         </div>
                         <select class="form-control select2" id="status" name="status"></select>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- BUTTON -->
                 <div class="row">
@@ -523,25 +523,26 @@ $.get("{{ url('level/api') }}", function (data) {
                             $("#btn-preview").html(
                                 '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
                             );
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
+                            var disposition = xhr.getResponseHeader('content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
+                            var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
                             // The actual download
                             var blob = new Blob([result], {
                                 type: 'application/pdf'
                             });
+
                             var link = document.createElement('a');
-                            const url = URL.createObjectURL(blob);
-                            link.href = window.open(url, "_blank");
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
 
 
                             document.body.appendChild(link);
 
                             link.click();
                             document.body.removeChild(link);
+
+                            clicked = "";
                         },
                         error: function (response) {
                             $("#btn-preview").prop("disabled", false);

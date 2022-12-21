@@ -932,23 +932,23 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
-            //         'status'=> $request->status,
-            //         'paidAmount'=> $request->paidAmpunt,
-            //         'ticketNo' => $request->ticketNo,
-            //         'employeeNo'=> $request->employeeNo
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionUserID' => Session::get('userID'),
+            //             // 'employeeNo' => $request->employeeNo,
+            //             // 'logActionUserID' => Session::get('userID'),
+            //             // 'logActionUsername' => Session::get('userName'),
+            //             // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //             // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //             // 'processDate' => $request->processDate, 
+            //             // 'type' =>  $request->transportType,
+            //             // 'businessUnit'=> $request->businessUnit,
+            //             'approvalRemarks'=> 'string',
+            //             'logActionUserID'=> 'string',
+            //             'logActionUsername'=> 'string',
+            //             'status'=> $request->status,
+            //             'paidAmount'=> $request->paidAmpunt,
+            //             'ticketNo' => $request->ticketNo,
+            //             'employeeNo'=> $request->employeeNo
             //     ]
             //     ));
 
