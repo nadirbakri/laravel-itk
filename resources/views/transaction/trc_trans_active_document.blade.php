@@ -418,7 +418,7 @@
                     // },
                     {data: 'ticketNo', name: 'ticketNo',
                     render: function (data, type, row) {
-                        if(row.status == 'PARTIAL APPROVED'){
+                        if(row.status == 'APPROVED'){
                             return '<input type="hidden" class="form-control" name="ticketNo[]" value="' +
     
                                 data + '">' + data;
@@ -450,8 +450,8 @@
                         render: function(data, type, row){
                             // console.log(row.totalClaimAmount)
                             let totalcamount = parseInt(row.totalClaimAmount)
-                            if(row.status == 'PARTIAL APPROVED'){
-                                return '<input class="chk-select" type="checkbox" name="checkPaid[]">';
+                            if(row.status == 'APPROVED'){ 
+                                return `<input class="chk-select" type="checkbox" id="checkPaid" name="checkPaid[]" value="`+row.totalClaimAmount+`">`;
                             }else{
                                 return '<input class="chk-select" type="checkbox" name="checkPaid[]" disabled>';
                             }
@@ -459,8 +459,8 @@
                     },
                     {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
-                        if(row.status == 'PARTIAL APPROVED'){
-                            return '<input type="text" class="form-control" name="paidAmount[]" value="' +
+                        if(row.status == 'APPROVED'){
+                            return '<input type="text" class="form-control" id="jesyca" name="paidAmount[]" value="' +
     
                                 data + '">';
                         }else{
@@ -650,6 +650,8 @@
             }
         })
     }
+
+
 </script>
 
 <script type="text/javascript">
@@ -849,6 +851,13 @@ $.get("{{ url('level/api') }}", function (data) {
             });
         }
 
+$('#business_trip_table').on('click', '.chk-select', function(){
+    let all_checkbox = $('#business_trip_table .chk-select:checked');
+    let getPaid = document.getElementById("checkPaid").value;
+    $('#jesyca').val(getPaid);
+// alert(all_checkbox);
+    // $('#jesyca').val(all_checkbox);
+})
 </script>
 
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
