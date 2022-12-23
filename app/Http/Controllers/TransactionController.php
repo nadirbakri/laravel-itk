@@ -612,11 +612,8 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
             //         'employeeNo'=> $request->employeeNo,
-            //         'reimbursementType'=> $request->reimbursementType,
-            //         'businessUnit' => $request->businessUnit,
             //         'exportMenu' => false,
             //         'companyCode' => Session::get('companyCode'), 
             //         'languageCode' => App::getLocale(), 
@@ -624,14 +621,14 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin ',
+            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
                         // 'employeeNo' => $request->employeeNo,
                         // 'logActionUserID' => Session::get('userID'),
                         // 'logActionUsername' => Session::get('userName'),
-                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
                         'employeeNo'=> $request->employeeNo,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
@@ -936,23 +933,23 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
-            //         'status'=> $request->status,
-            //         'paidAmount'=> $request->paidAmpunt,
-            //         'ticketNo' => $request->ticketNo,
-            //         'employeeNo'=> $request->employeeNo
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionUserID' => Session::get('userID'),
+            //             // 'employeeNo' => $request->employeeNo,
+            //             // 'logActionUserID' => Session::get('userID'),
+            //             // 'logActionUsername' => Session::get('userName'),
+            //             // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //             // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //             // 'processDate' => $request->processDate, 
+            //             // 'type' =>  $request->transportType,
+            //             // 'businessUnit'=> $request->businessUnit,
+            //             'approvalRemarks'=> 'string',
+            //             'logActionUserID'=> 'string',
+            //             'logActionUsername'=> 'string',
+            //             'status'=> $request->status,
+            //             'paidAmount'=> $request->paidAmpunt,
+            //             'ticketNo' => $request->ticketNo,
+            //             'employeeNo'=> $request->employeeNo
             //     ]
             //     ));
 
@@ -1014,22 +1011,21 @@ class TransactionController extends Controller
                     $param[] = [
                         "companyCode" => Session::get('companyCode'),
                         "sessionID" => 0,
-                        "sessionUserID" => 'edwin',
+                        "sessionUserID" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'changeBy' => 'edwin',
+                        'changeBy' => Session::get('userID'),
                         "status" => 'APPROVED',
                         "ticketNo" => $value,
-                        "paidAmount" => $request->paidAmount[$key]
+                        "paidAmount" => (int)$request->paidAmount[$key]
                     ];
                 }
-                
                 $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                     ['body' => json_encode($param)]
                 );
     
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

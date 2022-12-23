@@ -43,10 +43,7 @@
 	</style>
 </head>
 <body>
-    <!-- <h4 style="text-align:left">{{ $data_company[0]->companyName }}</h4>
-    <h4 style="text-align:left">{{ $data_company[0]->address }}</h4> -->
     <h3 style="text-align:center">Business Trip Report</h3>
-    <!-- <h5 style="text-align:center">Period : <span style="display: inline-block; margin-left: 10px;"></span>{{ $data_period }}</h5> -->
 	<table style="width:100%; font-size: 12px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
@@ -61,22 +58,12 @@
                 <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Full Name Requester</th>
             </tr>
         </thead>
-        <tbody>
-            <?php $no = 1; ?>
-            @foreach($data  => $value)
-            <tr>
-                <td style="text-align:center; border:1px solid #000;">{{ $no++ }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->employeeNo }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->ticketNo  }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->destination }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->purpose }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->projectName }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->customerName }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->status }}</td>
-                <td style="text-align:center; border:1px solid #000;">{{ $value->fullnameRequester }}</td>
-            </tr>
-            @endforeach
-        </tbody>
+        {{-- <tbody>
+			@foreach($data[1]->responseBusinessTrip as $key => $dataTable)
+			<tr>
+				<td>{{ $key+1}}</td>
+			</tr>
+		</tbody> --}}
     </table>
 
     <!-- <footer style="font-size:14px;">
@@ -85,12 +72,6 @@
         <p>Employee No :<span style="display: inline-block; margin-left: 40px;"></span> : {{ $data_employee_no_from }} to {{ $data_employee_no_to }}</p>
         <p>Total Printed :<span style="display: inline-block; margin-left: 40px;"></span> : {{ count($data) }} Record{s}</p>
         <hr/>
-        <?php
-            $timestamp = time();
-            $dt = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
-            $dt->setTimestamp($timestamp);
-            echo 'Date :<span style="display: inline-block; margin-left: 60px;"></span> {Server Date : ' . $dt->format('d/m/Y') . '}<span style="display: inline-block; margin-left: 40px;"></span> Hour Now :<span style="display: inline-block; margin-left: 40px;"></span> {Server Hour : ' . $dt->format('H:i:s A') . '}'
-        ?>
     </footer> -->
 <!-- 
     <script type="text/php">

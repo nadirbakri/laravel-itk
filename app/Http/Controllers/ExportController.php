@@ -160,17 +160,115 @@ class ExportController extends Controller
     }
    
     public function printExportBusinessTripPDF(Request $request){
-        $dataLevel = [];
+      if ($request->travel_type[0] == "TTA"){
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+            $param = [ 
+                'startDate' => $request->claim_date_from,
+                'endDate' => $request->claim_date_to,
+                'companyCode' => Session::get('companyCode'), 
+                'languageCode' => App::getLocale(), 
+                'sessionID' => 0, 
+                'exportMenu' => true,
+                'type' => 'REQUEST',
+                'businessUnit' =>$request->business_unit,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+            ['body' => json_encode($param)]
+        );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
-        if ($request->travel_type[0] == "TTA"){
-            return PDF::download(new BusinessTripExportPDF($request->claim_date_from, $request->claim_date_to, $request->travel_type[0],$request->business_unit, $dataLevel), 'Employee List Business Advance Trip Report.xlsx');
-        } else {
-            return PDF::download(new BusinessTripSeattleExportPDF($request->claim_date_from, $request->claim_date_to, $request->travel_type[0],$request->business_unit, $dataLevel), 'Employee List Business Seattle Trip Report.xlsx');
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+            return $pdf->stream('Business Trip.pdf');
+        }else{
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+            return $pdf->stream('Business Trip.pdf');
         }
+      }else{
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [ 
+                'startDate' => $request->claim_date_from,
+                'endDate' => $request->claim_date_to,
+                'companyCode' => Session::get('companyCode'), 
+                'languageCode' => App::getLocale(), 
+                'sessionID' => 0, 
+                'exportMenu' => true,
+                'type' => 'SETTLEMENT',
+                'businessUnit' =>$request->business_unit,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
+            //     $param['permitDateFrom'] = $this->permitDateFrom;
+            //     $param['permitDateTo'] = $this->permitDateTo;
+            // }
+
+            // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
+            //     $param['businessUnit'] = $this->businessUnit;
+            // }
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('export.exp_businesstripsettlementpdf', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+            return $pdf->stream('Business Trip Settlement.pdf');
+        }else{
+            $pdf = PDF::loadView('export.exp_businesstripsettlementpdf', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+            return $pdf->stream('Business Trip Settlement.pdf');
+        }
+      }
+       
+        // $dataLevel = [];
+
+        // for($i = 0; $i < $request->level_format; $i++){
+        //     $dataLevel[] = $request->{'level' . ($i+1)};
+        // }
+
+        // if ($request->travel_type[0] == "TTA"){
+        //     return PDF::download(new BusinessTripExportPDF($request->claim_date_from, $request->claim_date_to, $request->travel_type[0],$request->business_unit, $dataLevel));
+        // } else {
+        //     return PDF::download(new BusinessTripSeattleExportPDF($request->claim_date_from, $request->claim_date_to, $request->travel_type[0],$request->business_unit, $dataLevel));
+        // }
     }
    
     public function printExportBusinessTripChecking(Request $request){
