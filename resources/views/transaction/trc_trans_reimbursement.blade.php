@@ -532,12 +532,13 @@
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#direct_superior").val();
+        let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior)
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior){
+    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
         $.ajax({
             url: "{{ url('trans/update/table') }}",
             type: "get",
@@ -545,7 +546,8 @@
                 'status': reimbursement_status,
                 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior
+                'employeeNo' : direct_superior,
+                'approvalRemarks': approvalremarks
             },
             success: function (response) {
                                if (response.status == "true") {
@@ -648,13 +650,6 @@
                     {data: 'reimbursementEntity.totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
                     {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
-                    // {
-                    //     data: 'leaveBalanceBeforeExpiredDate', 
-                    //     name: 'leaveBalanceBeforeExpiredDate',
-                    //     render: function (data, type, row) {
-                    //         return moment(data).format('DD-MMM-YYYY');
-                    //     }
-                    // }
                 ],
                 select: {
                     style:    'multi',

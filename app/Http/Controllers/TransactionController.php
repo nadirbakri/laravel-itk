@@ -816,7 +816,7 @@ class TransactionController extends Controller
                         // 'processDate' => $request->processDate, 
                         // 'type' =>  $request->transportType,
                         // 'businessUnit'=> $request->businessUnit,
-                        'approvalRemarks'=> 'string',
+                        'approvalRemarks'=> $request->approvalRemarks,
                         'logActionUserID'=> 'string',
                         'logActionUsername'=> 'string',
                         'status'=> $request->status,

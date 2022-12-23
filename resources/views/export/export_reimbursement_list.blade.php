@@ -56,7 +56,7 @@
 				<td>{{ $value->reimbursementEntity->currency}}</td>
 				<td>{{ $value->reimbursementEntity->totalClaimAmount}}</td>
 				<td>{{ $value->reimbursementEntity->paidAmount}}</td>
-				<td>{{ $value->reimbursementEntity->paymentDate}}</td> 
+				<td>{{ \Carbon\Carbon::parse($value->reimbursementEntity->paymentDate)->format('Y-m-d') }}</td> 
 				<td></td> 
 				<td></td> 
 				<td>{{ $value->reimbursementEntity->totalPaidMonth}}</td> 
