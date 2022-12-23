@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('admin_main_menu_news_master.head') }}</title>
+    <title>{{ __('trans_reimbursement.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -11,21 +11,31 @@
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('admin_main_menu_checkin_list.css') }}"> 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
+        .div-trans-medical {
+            max-width: 100%;
+            margin: auto;
+            /*margin-top: 1%;*/
+        }
+
+        .div-profile {
+            margin-top: 0;
+        }
+
+        .div-row-profile {
+            margin: 0;
+        }
+
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
             -webkit-border-top-left-radius: 5px;
             -webkit-border-top-right-radius: 5px;
-            -moz-bord er-radius-topleft: 5px;
+            -moz-border-radius-topleft: 5px;
             -moz-border-radius-topright: 5px;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
@@ -93,72 +103,35 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
-        .row button {
-            background-color: #1E90FF;
-            border: none;
-            color: white;
-            padding: 5px 11px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin: 4px 2px;
-            cursor: pointer;
-            }
 
-        .btn{
-            margin-top:10px;
-            margin: 20px 40px;
+        .detailstatus h5{
+            font-size: 16px;
         }
-        .card{
-            max-width: 1200px;
-            border-radius: 0.3rem;
-            margin-left: 4%;
-            margin-right: 2%;
-            margin-top:15px
-       }
-       .judul h1{
-        font-size: 35px;
-        margin-left: 4%;
-        margin-right: 2%;
-        margin-top:50px
-       }
-       .judul hr{
-        max-width:1200px;
-        margin-left:4%;
-        margin-right: 2%;
-       }
-       .buttonadd{
-        width: 40px;
-        height: 40px;
-        background: #dac52c;
-        border-radius: 100%;
-       }
-       .newscategory select{
-        width: 210px;
-       }
+        .approve h5{
+            font-size: 18px;
+        }
+        .detailstatus input{
+            outline: none;
+        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <div class="judul">
-            <h1>{{ __('admin_main_menu_news_master.judul') }}<h1>
-            <hr>
-        </div>
-        <form id="admin_menu_news_master" method="post">
+        <form id="trans_medical_form" method="post">
             @csrf
-            <div class="card" >
-                <div class="card-header">
-               Check in List
+            <div class="div-trans-medical">
+                <div class="div-title">
+                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
+                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                        <span class="title-text">{{ __('trans_reimbursement.list') }}</span>
+                    </a>
                 </div>
-            <div class="card-body">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>Check In Date</b></label>
+                            <label for="claim_date_from form-check-label">{{ __('trans_transport.label_claim_date_start') }}</label>
                         </div>
-                    </div>
-                    <div class="">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
                                 placeholder="{{ __('trans_transport.label_claim_date_start') }}">
@@ -167,38 +140,68 @@
                             </div>
                         </div>
                         <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
-                            
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                                <label for="direct_superior form-check-label">Employee No</label>
+                        </div>
+                                <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
+                    </div>
+                </div>
+
+                <!-- BUTTON -->
+                <div class="row">
+                    <div class="col-3">
+                        <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
+                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        </button>
+                    </div>
+                </div>
+<br>
+                <!-- TABLE -->
+
+                <div class="card">
+                   
+                <div class="row">
+                    <div class="col-6">
+                        <p><b>{{ __('trans_medical.list_table') }}</b></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Employee Name</th>
+                                    <th>CheckIn Date</th>
+                                    <th>CheckOut Date</th>
+                                    <th>CheckIn Hour</th>
+                                    <th>CheckOut Hour</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
                 </div>
                 
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>User ID</b></label>
-                        </div>
-                    </div>
-                    <div class="newscategory">
-                        <input type="text" class="form-control" name="btn_list" id="btn_list" data-toggle="modal" data-target="#modal_list_user">
-                    </div>
-                </div>
-           
-                <div class="row">
-                    <div class="col-12">
-                        <div class="col-3">
-                            <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                                <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
-                            </button>
-                        </div> 
-                    </div>
-                </div>
+
             </div>
-         </form> 
+        </form>
     </div>
 
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
-            <div class="modal fade" id="modal_list_user">
+            <div class="modal fade" id="modal_list_mass_leave">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
@@ -212,19 +215,15 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    {{-- <th>User ID</th> --}}
                                     <th>Employee ID</th>
                                     <th>Full Name</th>
                                     <th>Division</th>
-                                    <th>Ranking Name</th>
+                                    <th>Ranking Name<</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -241,29 +240,7 @@
         </form>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <p><b>{{ __('trans_medical.list_table') }}</b></p>
-        </div>
-        <div class="row">
-            <div class="table-responsive">
-                <table id="reimbursement_table" class="display table-striped table-hover dt-responsive display nowrap" >
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Employee Name</th>
-                            <th>Last Check In (Device)	</th>
-                            {{-- <th>Last Check In (Server)	</th> --}}
-                            {{-- <th>Description</th>
-                            <th>Preview Location</th> --}}
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-        </div>
-    </div>
+
 
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -291,7 +268,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('trans_mass_leave.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('trans_medical.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -301,11 +278,6 @@
         </div>
     </div>
 </body>
-<script>
-    $(document).ready(function () {
-        $('table.display').DataTable();
-    });
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -319,6 +291,14 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('table.display').DataTable({
+        });
+    });
+</script>
+
 <script type="text/javascript">
     $(function () {
         initDatePicker();
@@ -340,8 +320,74 @@
         });
     }
 </script>
-<script>
-    $('#btn_list').click(()=> {
+<script type="text/javascript">
+    function load_data_medical_history(claim_date_from, direct_superior) {
+            table = $('#medical_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('adm/checkinlist/table') }}",
+                    data: {
+                        'checkInDate': claim_date_from,
+                        'employeeNo' : direct_superior
+
+                    }
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {data: 'userID', name: 'userID'},
+                    {data: 'directSuperiorID', name: 'directSuperiorID'},
+                    {data: 'checkInDate', name: 'checkInDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
+                    {data: 'checkOutDate', name: 'checkOutDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                            }
+                    },
+                    {data: 'checkInHour', name: 'checkInHour'},
+                    {data: 'checkOutHour', name: 'checkOutHour'}
+                    
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+
+            $("#btn-search").prop("disabled", true);
+            $("#btn-search").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
+            );
+
+            
+
+            $("#btn-search").prop("disabled", false);
+            $("#btn-search").html(
+                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+            );
+        }
+
+        $("#trans_medical_form").submit((e)=>{
+            e.preventDefault();
+
+            var claim_date_from = $("#claim_date_from").val();
+            var direct_superior = $("#direct_superior").val();
+
+            $('#medical_table').DataTable().destroy();
+            load_data_medical_history(claim_date_from, direct_superior);
+    })
+
+    $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
             processing: true,
@@ -377,156 +423,13 @@
             
         });        
     })
-
-     
+    
     const klik = (element) => {
-        let title = $(element).parent().siblings('.sorting_1').text()
+        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        $('#direct_superior').val(employee_id)
 
-        // alert(newscategory)
-        $('#btn_list').val(title)
-      
         $('.close').click();
     }
-</script>
-<script>
-        function load_data_checkinlist(claim_date_from, btn_list) {
-            table = $('#reimbursement_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('adm/checkinlist/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'employeeNo' : btn_list
-
-                    }
-                },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
-                    {data: 'checkInDate', name: 'checkInDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
-                    },
-                    {data: 'checkOutDate', name: 'checkOutDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                            }}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
-
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-
-            );
-
-            
-
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
-
-        $("#admin_menu_news_master").submit((e)=>{
-            e.preventDefault();
-
-            var claim_date_from = $("#claim_date_from").val();
-            var employeenom = $("#btn_list").val();
-            // alert(employeenom);
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
-
-            $('#reimbursement_table').DataTable().destroy();
-            load_data_checkinlist(claim_date_from, btn_list);
-    })
-</script>
-<script>
-    $("#btn-save").click(function () {
-          $(this).prop("disabled", true);
-          $(this).html(
-              '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-          );
-          $("#admin_menu_news_master").submit();
-      });
-
-      if ($("#admin_menu_news_master").length > 0) {
-              $("#admin_menu_news_master").validate({
-                  submitHandler: function (form) {
-                      $.ajaxSetup({
-                          headers: {
-                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                          }
-                      });
-                      $.ajax({
-                          url: "{{ url('admin_menu/news_master/proses') }}",
-                          type: "POST",
-                          data: $('#admin_menu_news_master').serialize(),
-                          success: function (response) {
-                              if (response.status == "true"){
-                                  $("#btn-save").prop("disabled", false);
-                                  $("#btn-save").html(
-                                      '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
-                                  );
-                                  
-                                  $('#notification_success').modal('show');
-                                  $('#message-notification-success').html(response
-                                  .message);
-                                  setTimeout(function () {
-                                  window.location =
-                                      "{{ url('admin_menu/news_master') }}";
-                                  }, 3000);
-                              } else {
-                              $("#btn-save").prop("disabled", false);
-                              $("#btn-save").html(
-                                  '<i class="fa fa-floppy-o"></i> Save'
-                              );
-                              $('#notification_error').modal('show');
-                              if (response.message == null || response.message ==
-                                  '') {
-                                  $('#message-notification-error').html(
-                                      "{{ __('login.error') }}");
-                              } else {
-                                  $('#message-notification-error').html(response
-                                      .message);
-                              }
-                          }
-                      },
-                      error: function (response) {
-                          $("#btn-save").prop("disabled", false);
-                          $("#btn-save").html(
-                              '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
-                          );
-
-                          $('#notification').modal('show');
-                          $('#message-notification').html(response);
-                      }
-                  });
-              }
-          })
-      }
-
 
 </script>
 </html>

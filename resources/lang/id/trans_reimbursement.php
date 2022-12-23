@@ -1,0 +1,30 @@
+<?php
+return [ 
+    'judul' => 'Reimbursement List',
+    'list' => 'Reimbursement List',
+    'employee' => 'Employee No',
+    'list_table' => 'REIMBURSEMENT LIST',
+    'label_claim_date_start' => 'Tanggal Pengajuan - Dari',
+    'label_claim_date_end' => 'Tanggal Pengajuan - Ke',
+    'label_processed_date' => 'Tanggal di Proses',
+    'label_business_unit' => 'Unit Bisnis',
+    'label_status' => 'Status',
+    'label_reimbursement_type' => 'Tipe Reimbursement',
+    'label_bu' => 'Unit Bisnis',
+    'btn_upload' => 'Unggah',
+    'btn_search' => 'Cari',
+    'btn_list' => 'Daftar',
+    'alert_success' => 'Sukses !',
+    'detail' => 'Detail',
+    'receiptdate' => 'Tanggal Penerimaan',
+    'status' => 'Status',
+    'ticketno' => 'Nomor Tiket',
+    'name' => 'Nama',
+    'cname' => 'Nama Pelanggan',
+    'pname' => 'Nama Proyek',
+    'pdate' => 'Tanggal Pembayaran',
+    'treq' => 'Jumlah Permintaan',
+    'premarks' => 'Catatan pembayaran',
+    'tpaid' => 'Jumlah Dibayar'
+]
+?>

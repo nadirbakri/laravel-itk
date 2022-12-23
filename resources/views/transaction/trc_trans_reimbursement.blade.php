@@ -130,11 +130,11 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('trans_transport.label_claim_date_start') }}</label>
+                            <label for="claim_date_from form-check-label">{{ __('trans_reimbursement.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('trans_transport.label_claim_date_start') }}">
+                                placeholder="{{ __('trans_reimbursement.label_claim_date_start') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -143,11 +143,11 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_to form-check-label">{{ __('trans_transport.label_claim_date_end') }}</label>
+                            <label for="claim_date_to form-check-label">{{ __('trans_reimbursement.label_claim_date_end') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                                placeholder="{{ __('trans_transport.label_claim_date_end') }}">
+                                placeholder="{{ __('trans_reimbursement.label_claim_date_end') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -158,13 +158,13 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label">{{ __('export_medical.label_reimbursement_type') }}</label>
+                            <label for="reimbursement_type form-check-label">{{ __('trans_reimbursement.label_reimbursement_type') }}</label>
                         </div>
                         <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('export_medical.label_business_unit') }}</label>
+                            <label for="business_unit form-check-label">{{ __('trans_reimbursement.label_business_unit') }}</label>
                         </div>
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
@@ -172,7 +172,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">Employee No</label>
+                                <label for="direct_superior form-check-label">{{ __('trans_reimbursement.employee') }}</label>
                         </div>
                                 <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
@@ -182,19 +182,19 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_reimbursement.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> Upload
+                        <i class="fa fa-plus"></i>{{ __('trans_reimbursement.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i>{{ __('trans_reimbursement.btn_list') }}
                         </button>
                     </div>
                     {{-- <div class="col-3">
@@ -210,7 +210,7 @@
                    
                 <div class="row">
                     <div class="col-6">
-                        <p><b>{{ __('trans_medical.list_table') }}</b></p>
+                        <p><b> {{ __('trans_reimbursement.list_table') }}</b></p>
                     </div>
                 </div>
                 <div class="row">
@@ -218,26 +218,23 @@
                         <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
-                                    <th>Detail</th>
-                                    <th>Receipt Date</th>
-                                    <th>Status</th>
-                                    <th>Ticket Number</th>
-                                    {{-- <th>Bussines Unit</th> --}}
-                                    <th>Name</th>
-                                    <th>Customer Name</th>
-                                    <th>Project Name</th>
-                                    <th>Payment Date</th>
-                                    <th>Total Request</th>
-                                    <th>Paid Remarks</th>
-                                    <th>Total Paid</th>
+                                    <th>{{ __('trans_reimbursement.detail') }}</th>
+                                    <th>{{ __('trans_reimbursement.receiptdate') }}</th>
+                                    <th>{{ __('trans_reimbursement.status') }}</th>
+                                    <th>{{ __('trans_reimbursement.ticketno') }}</th>
+                                    <th>{{ __('trans_reimbursement.name') }}</th>
+                                    <th>{{ __('trans_reimbursement.cname') }}</th>
+                                    <th>{{ __('trans_reimbursement.pname') }}</th>
+                                    <th>{{ __('trans_reimbursement.pdate') }}</th>
+                                    <th>{{ __('trans_reimbursement.treq') }}</th>
+                                    <th>{{ __('trans_reimbursement.premarks') }}</th>
+                                    <th>{{ __('trans_reimbursement.tpaid') }}</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
                 </div>
-                
-
             </div>
         </form>
     </div>
