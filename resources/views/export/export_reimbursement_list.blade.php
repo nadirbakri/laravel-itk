@@ -19,24 +19,24 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th>No</th>
-				<th>Request Date</th>
-				<th>Status</th>
-				<th>Ticket Number</th>
-				<th>Receipt Date</th>
-				<th>Employee No</th>
-				<th>Customer Name</th>
-                <th>Project Name</th>
-				<th>Total Request(Rp)</th>
-				<th>Remarks</th>
-                <th>Currency</th>
-                <th>Total Claim Amount</th>
-                <th>Paid Amount</th>
-                <th>Payment Date</th>
-				<th>No Rekening</th>
-				<th>Total Approved HRD(Rp)</th>
-				<th>Total Paid</th>
-				<th>Paid Remarks</th>
+				<th>{{ __('export_reimbursement.no') }}</th>
+				<th>{{ __('export_reimbursement.reqdate') }}</th>
+				<th>{{ __('export_reimbursement.status') }}</th>
+				<th>{{ __('export_reimbursement.ticket') }}</th>
+				<th>{{ __('export_reimbursement.rdate') }}</th>
+				<th>{{ __('export_reimbursement.employee') }}</th>
+				<th>{{ __('export_reimbursement.cname') }}</th>
+                <th>{{ __('export_reimbursement.pname') }}</th>
+				<th>{{ __('export_reimbursement.treq') }}</th>
+				<th>{{ __('export_reimbursement.remarks') }}</th>
+                <th>{{ __('export_reimbursement.currency') }}</th>
+                <th>{{ __('export_reimbursement.tcamount') }}</th>
+                <th>{{ __('export_reimbursement.pamount') }}</th>
+                <th>{{ __('export_reimbursement.pdate') }}</th>
+				<th>{{ __('export_reimbursement.nrek') }}</th>
+				<th>{{ __('export_reimbursement.tapprove') }}</th>
+				<th>{{ __('export_reimbursement.tpaid') }}</th>
+				<th>{{ __('export_reimbursement.premarks') }}</th>
 			</tr>
 		</thead>
 		<tbody>

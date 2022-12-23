@@ -120,7 +120,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('export_reimbursement.label_claim_date') }}</label>
+                            <label for="claim_date_from form-check-label">{{ __('export_reimbursement.label_claim_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
@@ -133,7 +133,7 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_to form-check-label">{{ __('export_reimbursement.label_to') }}</label>
+                            <label for="claim_date_to form-check-label">{{ __('export_reimbursement.label_claim_end') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"

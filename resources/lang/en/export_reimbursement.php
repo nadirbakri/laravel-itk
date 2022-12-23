@@ -4,8 +4,8 @@ return [
     'judul' => 'Export Reimbursement',
     'list' => 'Export Reimbursement',
     'label_claim_date' => 'Claim Date',
-    'label_claim_start' => 'Date - Start',
-    'label_claim_end' => 'Date - End',
+    'label_claim_start' => 'Claim Date - Start',
+    'label_claim_end' => 'Claim Date - End',
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_business_unit' => 'Business Unit',
     'label_to' => 'To',
@@ -13,7 +13,25 @@ return [
     'label_slip' => 'Slip',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+    'no' => 'No',
+    'reqdate' => 'Request Date',
+    'status' => 'Status',
+    'ticket' => 'Ticket No',
+    'rdate' => 'Receipt Date',
+    'employee' => 'Employee No',
+    'cname' => 'Customer Name',
+    'pname' => 'Project Name',
+    'treq' => 'Total Request',
+    'remarks' => 'Remarks',
+    'currency' => 'Currency',
+    'tcamount' => 'Total Claim Amount',
+    'pamount' => 'Paid Amount',
+    'pdate' => 'Payment Date',
+    'nrek' => 'Nomor Rekening',
+    'tapprove' => 'Total Approve HRD',
+    'tpaid' => 'Total Paid',
+    'premarks' => 'Paid Remarks'
 ]
 
 ?>
