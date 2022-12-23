@@ -418,7 +418,7 @@
                     // },
                     {data: 'ticketNo', name: 'ticketNo',
                     render: function (data, type, row) {
-                        if(row.status == 'PARTIAL APPROVED'){
+                        if(row.status == 'APPROVED'){
                             return '<input type="hidden" class="form-control" name="ticketNo[]" value="' +
     
                                 data + '">' + data;
@@ -450,7 +450,7 @@
                         render: function(data, type, row){
                             // console.log(row.totalClaimAmount)
                             let totalcamount = parseInt(row.totalClaimAmount)
-                            if(row.status == 'PARTIAL APPROVED'){
+                            if(row.status == 'APPROVED'){
                                 return '<input class="chk-select" type="checkbox" name="checkPaid[]">';
                             }else{
                                 return '<input class="chk-select" type="checkbox" name="checkPaid[]" disabled>';
@@ -459,7 +459,7 @@
                     },
                     {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
-                        if(row.status == 'PARTIAL APPROVED'){
+                        if(row.status == 'APPROVED'){
                             return '<input type="text" class="form-control" name="paidAmount[]" value="' +
     
                                 data + '">';

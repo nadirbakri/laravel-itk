@@ -52,6 +52,8 @@ Route::get('main', 'HomeController@pageMain')->name('main');
 Route::get('home', 'DashboardController@pageHomeDashboard');
 Route::get('home/breadcrumbs', 'HomeController@getURLBreadcrumbs');
 Route::get('calendar/event', 'DashboardController@getEventCalendar');
+Route::get('active_employee', 'DashboardController@getActiveEmployee');
+Route::get('attendance_today', 'DashboardController@getAttendanceToday');
 
 /* Route Untuk Menu Personel */
 Route::get('personnel', 'PersonelController@pagePersonelMain');
@@ -819,6 +821,7 @@ Route::get('utilities/user_log', 'UtilitiesController@pageUserLogUtilities');
 Route::get('utilities/audit_trail', 'UtilitiesController@pageAuditTrailUtilities');
 Route::get('utilities/export_personal_data', 'UtilitiesController@pageExportPersonalDataUtilities');
 Route::get('utilities/dashboard_admin_ess', 'UtilitiesController@pageDashboardESSUtilities');
+Route::get('utilities/news_master', 'UtilitiesController@pageNewsMasterUtilities');
 
 Route::get('utilities/user_security_maintenance/table', 'UtilitiesController@tableUserSecurityMaintenanceUtilities');
 Route::get('utilities/group_authorization/table', 'UtilitiesController@tableAuthorizationCodeGroupUtilities');
@@ -901,6 +904,7 @@ Route::get('transaction/transaction_business_trip', 'TransactionController@pageT
 Route::get('transaction/transaction_overtime', 'TransactionController@pageTransactionOvertime');
 Route::get('transaction/transaction_active_document', 'TransactionController@pageTransactionActiveDocument');
 Route::post('transaction/transaction_active_document/proses', 'TransactionController@prosesTransactionActiveDocument');
+Route::get('transaction/checkin_list', 'TransactionController@pageTransactionCheckinList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');

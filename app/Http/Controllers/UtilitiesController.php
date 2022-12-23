@@ -70,6 +70,11 @@ class UtilitiesController extends Controller
     	return view('utilities.utilities_dashboard_ess');
     }
 
+    public function pageNewsMasterUtilities()
+    {
+    	return view('admin_menu.admin_main_menu_news_master');
+    }
+
     public function tableUserSecurityMaintenanceUtilities(Request $request)
     {
         try {
@@ -1138,17 +1143,13 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/change_employee_no',
+            $response = $client->put(env('API_URL') . '/ChangeEmployeeNo/UpdateChangeEmployeeNo',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employee_no,
+                        'employeeNoOld' => $request->employee_no,
                         'employeeNoNew' => $request->employee_no_new,
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
+                        "sessionID" => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),

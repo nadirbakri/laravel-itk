@@ -22,6 +22,7 @@ return [
     'user_log' => 'Log Pengguna',
     'audit_trail' => 'Jejak Audit',
     'change_employee_no' => 'Perubahan No Karyawan',
+    'news_master' => 'Berita Master',
     // 'export_personal_data' => 'Unggah Data personal',
     'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 

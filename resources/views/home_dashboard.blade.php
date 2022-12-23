@@ -7,6 +7,8 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('css/simple-calendar.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 	<style type="text/css">
@@ -46,11 +48,11 @@
 							<p>{{ Session::get('companyName') }}</p>
 							<div class="text-company-detail">
 								<div class="col-6">
-									<div class="number-company-detail">1000</div>
+									<div class="number-company-detail" id="totalEmployee"></div>
 									<div>{{ __('dashboard.employee') }}</div>
 								</div>
 								<div class="col-6">
-									<div class="number-company-detail">30</div>
+									<div class="number-company-detail" id="openPosition"></div>
 									<div>{{ __('dashboard.posisi') }}</div>
 								</div>
 							</div>
@@ -167,7 +169,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<p>{{ __('dashboard.middle-one') }}</p>
-							<p class="count-card-middle">1</p>
+							<p class="count-card-middle" id="end_contract_month"></p>
 						</div>
 					</div>
 				</a>
@@ -178,7 +180,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<p>{{ __('dashboard.middle-two') }}</p>
-							<p class="count-card-middle">4</p>
+							<p class="count-card-middle" id="birthday_month"></p>
 						</div>
 					</div>
 				</a>
@@ -189,7 +191,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<p>{{ __('dashboard.middle-three') }}</p>
-							<p class="count-card-middle">0</p>
+							<p class="count-card-middle" id="end_probation_month"></p>
 						</div>
 					</div>
 				</a>
@@ -200,7 +202,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<p>{{ __('dashboard.middle-four') }}</p>
-							<p class="count-card-middle">1</p>
+							<p class="count-card-middle" id="new_hire_month"></p>
 						</div>
 					</div>
 				</a>
@@ -211,7 +213,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<p>{{ __('dashboard.middle-five') }}</p>
-							<p class="count-card-middle">4</p>
+							<p class="count-card-middle" id="join_month"></p>
 						</div>
 					</div>
 				</a>
@@ -222,7 +224,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<p>{{ __('dashboard.middle-six') }}</p>
-							<p class="count-card-middle">0</p>
+							<p class="count-card-middle" id="resign_month"></p>
 						</div>
 					</div>
 				</a>
@@ -235,12 +237,12 @@
 						<div class="detail-middle-card">
 							<div class="text-middle-card">
 								<p>{{ __('dashboard.middle-one') }}</p>
-								<p class="count-card-middle">1</p>
+								<p class="count-card-middle" id="end_contract_month_tab"></p>
 							</div>
 							<div class="vl"></div>
 							<div class="line-bottom-card"></div>
 							<div class="table-middle-card">
-								<table class="card-table table">
+								<table class="card-table table" id="end_contract_month_table" style="width: 100%">
 									<thead>
 										<tr>
 											<th>{{ __('dashboard.table_employee_no') }}</th>
@@ -251,16 +253,6 @@
 											<th>{{ __('dashboard.table_end_date') }}</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-											<td>01-Jan-2025</td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -269,12 +261,12 @@
 						<div class="detail-middle-card">
 							<div class="text-middle-card">
 								<p>{{ __('dashboard.middle-two') }}</p>
-								<p class="count-card-middle">4</p>
+								<p class="count-card-middle" id="birthday_month_tab"></p>
 							</div>
 							<div class="vl"></div>
 							<div class="line-bottom-card"></div>
 							<div class="table-middle-card">
-								<table class="card-table table">
+								<table class="card-table table" id="birthday_month_table" style="width: 100%">
 									<thead>
 										<tr>
 											<th>{{ __('dashboard.table_employee_no') }}</th>
@@ -284,36 +276,6 @@
 											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -322,12 +284,12 @@
 						<div class="detail-middle-card">
 							<div class="text-middle-card">
 								<p>{{ __('dashboard.middle-three') }}</p>
-								<p class="count-card-middle">0</p>
+								<p class="count-card-middle" id="end_probation_month_tab"></p>
 							</div>
 							<div class="vl"></div>
 							<div class="line-bottom-card"></div>
 							<div class="table-middle-card">
-								<table class="card-table table">
+								<table class="card-table table" id="end_probation_month_table" style="width: 100%">
 									<thead>
 										<tr>
 											<th>{{ __('dashboard.table_employee_no') }}</th>
@@ -337,11 +299,6 @@
 											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td colspan="5" align="center">{{ __('dashboard.table_no_data') }}</td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -350,12 +307,12 @@
 						<div class="detail-middle-card">
 							<div class="text-middle-card">
 								<p>{{ __('dashboard.middle-four') }}</p>
-								<p class="count-card-middle">1</p>
+								<p class="count-card-middle" id="new_hire_month_tab"></p>
 							</div>
 							<div class="vl"></div>
 							<div class="line-bottom-card"></div>
 							<div class="table-middle-card">
-								<table class="card-table table">
+								<table class="card-table table" id="new_hire_month_table" style="width: 100%">
 									<thead>
 										<tr>
 											<th>{{ __('dashboard.table_employee_no') }}</th>
@@ -366,16 +323,6 @@
 											<th>{{ __('dashboard.table_end_date') }}</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-											<td>01-Jan-2025</td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -384,12 +331,12 @@
 						<div class="detail-middle-card">
 							<div class="text-middle-card">
 								<p>{{ __('dashboard.middle-five') }}</p>
-								<p class="count-card-middle">4</p>
+								<p class="count-card-middle" id="join_month_tab"></p>
 							</div>
 							<div class="vl"></div>
 							<div class="line-bottom-card"></div>
 							<div class="table-middle-card">
-								<table class="card-table table">
+								<table class="card-table table" id="join_month_table" style="width: 100%">
 									<thead>
 										<tr>
 											<th>{{ __('dashboard.table_employee_no') }}</th>
@@ -399,36 +346,6 @@
 											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-										<tr>
-											<td>9999002</td>
-											<td>Budiman Purnomo</td>
-											<td>Head Office</td>
-											<td>Komisaris Independen</td>
-											<td>01-Jan-1960</td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -437,12 +354,12 @@
 						<div class="detail-middle-card">
 							<div class="text-middle-card">
 								<p>{{ __('dashboard.middle-six') }}</p>
-								<p class="count-card-middle">0</p>
+								<p class="count-card-middle" id="resign_month_tab"></p>
 							</div>
 							<div class="vl"></div>
 							<div class="line-bottom-card"></div>
 							<div class="table-middle-card">
-								<table class="card-table table">
+								<table class="card-table table" id="resign_month_table" style="width: 100%">
 									<thead>
 										<tr>
 											<th>{{ __('dashboard.table_employee_no') }}</th>
@@ -452,11 +369,6 @@
 											<th>{{ __('dashboard.table_birth_date') }}</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td colspan="5" align="center">{{ __('dashboard.table_no_data') }}</td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -500,12 +412,16 @@
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script src="https://rawgit.com/beaver71/Chart.PieceLabel.js/master/build/Chart.PieceLabel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <script src="{{ asset('js/jquery.simple-calendar.js') }}"></script>
 <script>
 	var $calendar;
+	// var employeeActiveData = null;
 	$(document).ready(function () {
 		var firebaseConfig = {
 			apiKey: "AIzaSyB0e5Cq6q0c7rFx-YtSIa8Ib4h85xjTd6I",
@@ -582,7 +498,7 @@
 					fixedStartDay: 0, // Awal Minggu adalah hari Minggu
 					disableEmptyDetails: true,
 					displayEvent: true,
-					events: response.data
+					events: response
 				});
 
 				$calendar = container.data('plugin_simpleCalendar');
@@ -592,9 +508,290 @@
  			},
  		});
 
+		 $.ajax({
+ 			url: '{{ url("active_employee") }}',
+ 			type: 'GET',
+ 			dataType: 'JSON',
+ 			success: function (response) {
+				// console.log(response);s
+				$('#totalEmployee').html(response.totalEmployee);
+				$('#openPosition').html(response.openPosition);
+
+				var employeeActiveData = {
+					labels: [
+					"Male",
+					"Female"
+					],
+					datasets: [
+					{
+						data: [response.maleEmployee, response.femaleEmployee],
+						backgroundColor: [
+						"#004883",
+						"#E75B52"
+						]
+					}]
+				};
+
+				var employeeAgeData = {
+					labels: [
+					"Age 21 - 30",
+					"Age 30 - 40",
+					"Age 40 - 55"
+					],
+					datasets: [
+					{
+						data: [response.ageFirst, response.ageSecond, response.ageThird],
+						backgroundColor: [
+						"#4472C4",
+						"#E75B52",
+						"#A5A5A5"
+						]
+					}]
+				};
+
+				var employeeServiceData = {
+					labels: [
+					"< 5 Years",
+					"5 - 10 Years",
+					"10 - 15 Years",
+					"> 15 Years"
+					],
+					datasets: [
+					{
+						data: [response.joinFirst, response.joinSecond, response.joinThird, response.joinFourth],
+						backgroundColor: [
+						"#004883",
+						"#004883",
+						"#004883",
+						"#004883"
+						],
+						maxBarThickness: 20
+					}]
+				};
+
+				var doughnutChartEmployeeActive = new Chart(chartEmployeeActive, {
+					type: 'doughnut',
+					data: employeeActiveData,
+					options: chartOptionsEmployeeActive
+				});
+
+				var doughnutChartEmployeeAge = new Chart(chartEmployeeAge, {
+					type: 'doughnut',
+					data: employeeAgeData,
+					options: chartOptionsEmployeeAge
+				});
+
+				var barChartEmployeeService = new Chart(chartEmployeeService, {
+					type: 'bar',
+					data: employeeServiceData,
+					options: chartOptionsEmployeeService
+				});
+
+				$('#end_contract_month, #end_contract_month_tab').html(response.endContractMonth);
+				$('#birthday_month, #birthday_month_tab').html(response.birthdayMonth);
+				$('#end_probation_month, #end_probation_month_tab').html(response.endProbationMonth);
+				$('#new_hire_month, #new_hire_month_tab').html(response.hireMonth);
+				$('#join_month, #join_month_tab').html(response.joinMonth);
+				$('#resign_month, #resign_month_tab').html(response.resignMonth);
+
+				load_data_table_end_contract_month(Object.keys(response.endContractData).map(function (key) { return response.endContractData[key]; }));
+				load_data_table_birthday_month(Object.keys(response.birthdayData).map(function (key) { return response.birthdayData[key]; }));
+				load_data_table_end_probation_month(Object.keys(response.endProbationData).map(function (key) { return response.endProbationData[key]; }));
+				load_data_table_hire_month(Object.keys(response.hireData).map(function (key) { return response.hireData[key]; }));
+				load_data_table_join_month(Object.keys(response.joinData).map(function (key) { return response.joinData[key]; }));
+				load_data_table_resign_month(Object.keys(response.resignData).map(function (key) { return response.resignData[key]; }));
+				
+ 			},
+ 			error: function (err) {
+ 				console.log('Error : '+ err);
+ 			},
+ 		});
+
 		$(".tabs-card").click(function() {  
 			$(".tabs-card").removeClass("active"); 
 		});
+
+		function load_data_table_end_contract_month(data) {
+            table = $('#end_contract_month_table').DataTable({
+                // processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: data,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 0, "asc" ]],
+                columns: [
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'fullName', name: 'fullName'},
+					{data: 'locationName', name: 'locationName'},
+					{data: 'positionName', name: 'positionName'},
+                    {
+                        data: 'contractStartDate', 
+                        name: 'contractStartDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    },
+					{
+                        data: 'contractEndDate', 
+                        name: 'contractEndDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
+                ]
+            });
+        }
+
+		function load_data_table_birthday_month(data) {
+            table = $('#birthday_month_table').DataTable({
+                // processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: data,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 0, "asc" ]],
+                columns: [
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'fullName', name: 'fullName'},
+					{data: 'locationName', name: 'locationName'},
+					{data: 'positionName', name: 'positionName'},
+                    {
+                        data: 'birthDate', 
+                        name: 'birthDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
+                ]
+            });
+        }
+
+		function load_data_table_end_probation_month(data) {
+            table = $('#end_probation_month_table').DataTable({
+                // processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: data,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 0, "asc" ]],
+                columns: [
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'fullName', name: 'fullName'},
+					{data: 'locationName', name: 'locationName'},
+					{data: 'positionName', name: 'positionName'},
+                    {
+                        data: 'birthDate', 
+                        name: 'birthDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
+                ]
+            });
+        }
+
+		function load_data_table_hire_month(data) {
+            table = $('#new_hire_month_table').DataTable({
+                // processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: data,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 0, "asc" ]],
+                columns: [
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'fullName', name: 'fullName'},
+					{data: 'locationName', name: 'locationName'},
+					{data: 'positionName', name: 'positionName'},
+                    {
+                        data: 'contractStartDate', 
+                        name: 'contractStartDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    },
+					{
+                        data: 'contractEndDate', 
+                        name: 'contractEndDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
+                ]
+            });
+        }
+
+		function load_data_table_join_month(data) {
+            table = $('#join_month_table').DataTable({
+                // processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: data,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 0, "asc" ]],
+                columns: [
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'fullName', name: 'fullName'},
+					{data: 'locationName', name: 'locationName'},
+					{data: 'positionName', name: 'positionName'},
+                    {
+                        data: 'birthDate', 
+                        name: 'birthDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
+                ]
+            });
+        }
+
+		function load_data_table_resign_month(data) {
+            table = $('#resign_month_table').DataTable({
+                // processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: data,
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 0, "asc" ]],
+                columns: [
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'fullName', name: 'fullName'},
+					{data: 'locationName', name: 'locationName'},
+					{data: 'positionName', name: 'positionName'},
+                    {
+                        data: 'birthDate', 
+                        name: 'birthDate',
+                        render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    }
+                ]
+            });
+        }
 
 		var chartEmployeeActive = document.getElementById("graph_employee_active");
 		var chartEmployeeAge = document.getElementById("graph_employee_age");
@@ -642,58 +839,6 @@
 				}
 			}
 		});
-
-		var employeeActiveData = {
-			labels: [
-			"Male",
-			"Female"
-			],
-			datasets: [
-			{
-				data: [580, 420],
-				backgroundColor: [
-				"#004883",
-				"#E75B52"
-				]
-			}]
-		};
-
-		var employeeAgeData = {
-			labels: [
-			"Age 21 - 30",
-			"Age 30 - 40",
-			"Age 40 - 55"
-			],
-			datasets: [
-			{
-				data: [350, 550, 100],
-				backgroundColor: [
-				"#4472C4",
-				"#E75B52",
-				"#A5A5A5"
-				]
-			}]
-		};
-
-		var employeeServiceData = {
-			labels: [
-			"< 5 Years",
-			"5 - 10 Years",
-			"10 - 15 Years",
-			"> 15 Years"
-			],
-			datasets: [
-			{
-				data: [58, 34, 6, 12],
-				backgroundColor: [
-				"#004883",
-				"#004883",
-				"#004883",
-				"#004883"
-				],
-				maxBarThickness: 20
-			}]
-		};
 
 		var payrollData = {
 			labels: [
@@ -985,24 +1130,6 @@
 				}]
 			},
 		};
-
-		var doughnutChartEmployeeActive = new Chart(chartEmployeeActive, {
-			type: 'doughnut',
-			data: employeeActiveData,
-			options: chartOptionsEmployeeActive
-		});
-
-		var doughnutChartEmployeeAge = new Chart(chartEmployeeAge, {
-			type: 'doughnut',
-			data: employeeAgeData,
-			options: chartOptionsEmployeeAge
-		});
-
-		var barChartEmployeeService = new Chart(chartEmployeeService, {
-			type: 'bar',
-			data: employeeServiceData,
-			options: chartOptionsEmployeeService
-		});
 
 		var lineChartPayroll = new Chart(chartPayroll, {
 			type: 'line',

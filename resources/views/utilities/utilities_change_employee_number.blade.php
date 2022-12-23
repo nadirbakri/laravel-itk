@@ -322,7 +322,7 @@
                     }
                 });
                 $.ajax({
-                    url: "{{ url('payroll/change_employee_no/proses') }}",
+                    url: "{{ url('utilities/change_employee_no/proses') }}",
                     type: "POST",
                     data: $('#change_employee_no_form').serialize(),
                     success: function (response) {

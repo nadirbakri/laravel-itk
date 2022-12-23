@@ -63,6 +63,10 @@ class TransactionController extends Controller
         return view('transaction.trc_trans_active_document');
     }
 
+    public function pageTransactionCheckinList(){
+        return view('admin_menu.admin_main_menu_checkin_list');
+    }
+
     // public function tableInputTransactionTransport(Request $request)
     // {
     //     try {

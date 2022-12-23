@@ -97,6 +97,14 @@
 					</a>
 				</div>
 			</div>
+			<div class="row div-child-data">
+				<div class="col col-6">
+					<a href="{{ url('utilities/news_master') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.news_master') }}</span>
+					</a>
+				</div>
+			</div>
 			<!-- <div class="row div-child-data">
 				<div class="col col-6">
 					<a href="{{ url('utilities/export_personal_data') }}" target="iframe_dashboard">

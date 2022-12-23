@@ -128,7 +128,7 @@
 }
 
 #sidebar-wrapper.active .list-group-item {
-  padding: 0.3rem;
+  padding: 0.25rem;
   margin-bottom: 1.25rem;
   transition: all 0.3s;
 }
@@ -144,8 +144,8 @@
 }
 
 #sidebar-wrapper.active .list-group-item img {
-  left: 27%;
-  max-width: 50%;
+  left: 29%;
+  max-width: 45%;
 }
 
 #sidebar-wrapper .list-group-item span {
@@ -297,19 +297,14 @@ hr {
 
 footer {
   position: fixed;
-  height: 10%;
+  height: 25%;
   bottom: 0;
   width: 100%;
-  max-width: 20%;
+  max-width: 7%;
   display: block;
   font-size: 2vh;
   transition: all 0.3s;
   padding-top: 4%;
-}
-
-#sidebar-wrapper.active footer {
-  height: 18%;
-  max-width: 7%;
   text-align: center;
 }
 

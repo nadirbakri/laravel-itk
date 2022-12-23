@@ -43,9 +43,9 @@ class LoanReportExport implements FromView, ShouldAutoSize
             $param = [
                 'companyCode' => Session::get('companyCode'),
                 "reportType" => $this->reportType,
-                // "loanTypeOne" => $this->loanTypeOne,
-                // "loanTypeTwo" => $this->loanTypeTwo,
-                // "loanTypeThree" => $this->loanTypeThree,
+                "loanType1" => $this->loanTypeOne, 
+                "loanType2" => $this->loanTypeTwo, 
+                "loanType3" => $this->loanTypeThree,
                 "includeResign" => $this->includeResign,
                 "languageID" => App::getLocale(),
                 "sessionID" => 0,
@@ -155,7 +155,8 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }else if($this->reportType == "S"){
                 return view('payroll.py_export_loan_report_summary_report_excel', [
-                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                    'data' => [], 'data_company' => $arrCompany->dataListSet, 
+                    'loanDesc1' => $this->loanTypeOne, 'loanDesc2' => $this->loanTypeTwo, 'loanDesc3' => $this->loanTypeThree
                 ]);
             }
         }else{
@@ -177,7 +178,8 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }else if($this->reportType == "S"){
                 return view('payroll.py_export_loan_report_summary_report_excel', [
-                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet,
+                    'loanDesc1' => $this->loanTypeOne, 'loanDesc2' => $this->loanTypeTwo, 'loanDesc3' => $this->loanTypeThree
                 ]);
             }
         }

@@ -121,54 +121,31 @@
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
 			</div>
-			<div class="card" style="margin-bottom: 1rem;">
-				<!-- STYLINGNYA GUA GABISA SORRY BANGET -ILYAS -->
-				<a class="collapsed" data-toggle="collapse" href="#web-collapse" aria-expanded="true" aria-controls="web-collapse">
-					<div class="card-header">
-						<div class="div-dropdown-title">
-							<span class="dropdown-title-text">WEB</span>
-							<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-						</div>
-					</div>
+			
+			@foreach (Session::get('menuList') as $menu)
+			<div class="list-group list-group-flush">
+				<a tabindex="0" role="button" data-url="{{ url($menu->link) }}" data-idd="{{ $menu->moduleID }}" class="list-group-item list-group-item-action menu">
+					<div class="color-active"></div>
+					<img src="{{ url('/icons/sidebar/' . $menu->icon) }}" alt="Home">
+					<img src="{{ url('/icons/sidebar/' . $menu->icon_name . '-bg.svg') }}" class="image-hover" alt="{{ $menu->moduleName }}">
+					<span>{{ $menu->moduleName }}</span>
+					<span class="tooltiptext">{{ $menu->moduleName }}</span>
 				</a>
-				<div id="web-collapse" class="collapse show" data-parent="#sidebar-wrapper">
-					@foreach (Session::get('menuList') as $menu)
-					<div class="list-group list-group-flush">
-						<a tabindex="0" role="button" data-url="{{ url($menu->link) }}" data-idd="{{ $menu->moduleID }}" class="list-group-item list-group-item-action menu">
-							<div class="color-active"></div>
-							<img src="{{ url('/icons/sidebar/' . $menu->icon) }}" alt="Home">
-							<img src="{{ url('/icons/sidebar/' . $menu->icon_name . '-bg.svg') }}" class="image-hover" alt="{{ $menu->moduleName }}">
-							<span>{{ $menu->moduleName }}</span>
-							<span class="tooltiptext">{{ $menu->moduleName }}</span>
-						</a>
-					</div>
-					@endforeach
-				</div>
 			</div>
-			<!-- <br> -->
-			<div class="card">
-				<a class="collapsed" data-toggle="collapse" href="#mob-collapse" aria-expanded="true" aria-controls="mob-collapse">
-					<div class="card-header">
-						<div class="div-dropdown-title">
-							<span class="dropdown-title-text">MOB</span>
-							<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-						</div>
-					</div>
+			@endforeach
+
+			@foreach (Session::get('menuListMob') as $menu)
+			<div class="list-group list-group-flush">
+				<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
+					<div class="color-active"></div>
+					<img src="{{ url('/icons/mob/sidebar/' . $menu['icon']) }}" alt="Home">
+					<img src="{{ url('/icons/mob/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
+					<span>{{ $menu['title'] }}</span>
+					<span class="tooltiptext">{{ $menu['title'] }}</span>
 				</a>
-				<div class="collapse" id="mob-collapse" data-parent="#sidebar-wrapper">
-					@foreach (Session::get('menuListMob') as $menu)
-					<div class="list-group list-group-flush">
-						<a href="{{ url($menu['link']) }}" target="iframe_dashboard" class="list-group-item list-group-item-action">
-							<div class="color-active"></div>
-							<img src="{{ url('/icons/mob/sidebar/' . $menu['icon']) }}" alt="Home">
-							<img src="{{ url('/icons/mob/sidebar/' . $menu['icon-name'] . '-bg.svg') }}" class="image-hover" alt="{{ $menu['title'] }}">
-							<span>{{ $menu['title'] }}</span>
-							<span class="tooltiptext">{{ $menu['title'] }}</span>
-						</a>
-					</div>
-					@endforeach
-				</div>
 			</div>
+			@endforeach
+			
 			<footer class="footer" id="footer">
 				<div class="container">
 					<span class="text-muted">© Copyright <br>PT Intikom Berlian Mustika <br>2021</span>
