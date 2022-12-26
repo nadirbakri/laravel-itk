@@ -2,19 +2,6 @@
 <html>
 <head>
     <title>{{ __('trans_attendance.judul') }}</title>
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-    <style type="text/css"> --}}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,8 +11,6 @@
         <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-        {{-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
-        {{-- <link  rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"> --}}
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
@@ -142,17 +127,17 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_attendance.list') }}</span>
+                        <span class="title-text">{{ __('trans_attendance.judul') }}</span>
                     </a>
                 </div>
             <div class="row">
                 <div class="col-5">
                     <div class="form-group">
-                        <label for="claim_date_from form-check-label">{{ __('trans_transport.label_claim_date_start') }}</label>
+                        <label for="claim_date_from form-check-label">{{ __('trans_attendance.label_claim_date_start') }}</label>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                            placeholder="{{ __('trans_transport.label_claim_date_start') }}">
+                            placeholder="{{ __('trans_attendance.label_claim_date_start') }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                         </div>
@@ -161,11 +146,11 @@
                 </div>
                 <div class="col-5">
                     <div class="form-group">
-                        <label for="claim_date_to form-check-label">{{ __('trans_transport.label_claim_date_end') }}</label>
+                        <label for="claim_date_to form-check-label">{{ __('trans_attendance.label_claim_date_end') }}</label>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                            placeholder="{{ __('trans_transport.label_claim_date_end') }}">
+                            placeholder="{{ __('trans_attendance.label_claim_date_end') }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                         </div>
@@ -176,7 +161,7 @@
             <div class="row">
                 <div class="col-5">
                     <div class="form-group">
-                            <label for="direct_superior form-check-label">Employee No</label>
+                            <label for="direct_superior form-check-label">{{ __('trans_attendance.employee') }}</label>
                     </div>
                             <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                 </div>
@@ -186,20 +171,15 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export">{{ __('trans_attendance.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i>{{ __('trans_attendance.btn_list') }}
                         </button>
                     </div>
-                    {{-- <div class="col-3">
-                        <button class="btn btn-primary" name="btn-list" id="btn-list" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-list.svg') }}" alt="export"> {{ __('trans_medical.btn_list') }}
-                        </button>
-                    </div> --}}
                 </div>
 
                 <!-- TABLE -->
@@ -216,14 +196,11 @@
                     <table id="reimbursement_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                         <thead>
                             <tr>
-                                <th>Detail</th>
-                                <th>Attendance Date</th>
-                                <th>Employee No</th>
-                                {{-- <th>Full Name</th> --}}
-                                {{-- <th>Office Location</th> --}}
-                                <th>Attendance Time In</th>
-                                <th>Attendance Time Out</th>
-                                <th>Description</th>
+                                <th>{{ __('trans_attendance.adate') }}</th>
+                                <th>{{ __('trans_attendance.enom') }}</th>
+                                <th>{{ __('trans_attendance.ati') }}</th>
+                                <th>{{ __('trans_attendance.ato') }}</th>
+                                <th>{{ __('trans_attendance.desc') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -240,7 +217,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_attendance.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -250,19 +227,15 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    {{-- <th>User ID</th> --}}
-                                    <th>Employee ID</th>
-                                    <th>Full Name</th>
-                                    <th>Division</th>
-                                    <th>Ranking Name</th>
+                                    <th>{{ __('trans_attendance.enom') }}</th>
+                                    <th>{{ __('trans_attendance.fname') }}</th>
+                                    <th>{{ __('trans_attendance.div') }}</th>
+                                    <th>{{ __('trans_attendance.rank') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -279,7 +252,7 @@
         </form>
     </div>
 
-    <div class="div-form">
+    {{-- <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
             <div class="modal fade" id="modal_list_detail">
@@ -399,7 +372,7 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> --}}
 
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -427,7 +400,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('trans_medical.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('trans_attendance.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -549,29 +522,41 @@
                 'sPaginationType': 'ellipses',
                 "order": [[ 1, "asc" ]],
                 columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
+                    // {
+                    //     orderable: false,
+                    //     targets: 0, 
+                    //     "defaultContent": '',
+                    //     render: function(data, type) {
+                    //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                    //     }
+                    // },
                     {data: 'createDate', name: 'createDate', 
                             render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
+                                if(data == null){
+                                    return '-'
+                                }else{
+                                    return moment(data).format('YYYY-MM-DD')
+                                }
                         }
                     },
                     {data: 'employeeNo', name: 'employeeNo'},
                     {data: 'checkInDate', name: 'checkInDate',
                             render: function (data, type, row){
-                            return moment(data).format('YYYY-MM-DD')
+                                if(data == null){
+                                    return '-'
+                                }else{
+                                    return moment(data).format('YYYY-MM-DD')
+                                }
                             }
                     },
                     // {data: 'businessUnit', name: 'businessUnit'},
                     {data: 'checkOutDate', name: 'checkOutDate',
                             render: function (data, type, row){
-                            return moment(data).format('YYYY-MM-DD')
+                                if(data == null){
+                                    return '-'
+                                }else{
+                                    return moment(data).format('YYYY-MM-DD')
+                                }
                             }
                     },
                     {data: 'absenceType', name: 'absenceType'},

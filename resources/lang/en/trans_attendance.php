@@ -2,13 +2,23 @@
 
 return [ 
     'judul' => 'Attendance List',
-    'list' => 'Attendance List',
     'list_table' => 'ATTENDANCE LIST',
     'label_claim_date_start' => 'Start Date',
     'label_claim_date_end' => 'End Date',
+    'employee' => 'Employee No',
+    'btn_list' => 'List',
+    'adate' => 'Attendance Date',
+    'enom' => 'Employee No',
+    'ati' => 'Attendance Time In',
+    'ato' => 'Attendance Time Out',
+    'desc' => 'Description',
+    'luser' => 'List User',
+    'fname' => 'Full Name',
+    'div' => 'Division',
+    'rank' => 'Ranking',
+
     'label_user_id' => 'User ID',
     'btn_search' => 'Search',
-    'btn_list' => 'List',
     'alert_success' => 'Success !'
 ]
 
