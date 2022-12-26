@@ -122,7 +122,7 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_workflow.list') }}</span>
+                        <span class="title-text">{{ __('trans_workflow.judul') }}</span>
                     </a>
                 </div>
 
@@ -164,7 +164,7 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="workflow_type form-check-label">{{ __('export_workflow.label_workflow_type') }}</label>
+                            <label for="workflow_type form-check-label">{{ __('trans_workflow.label_workflow_type') }}</label>
                         </div>
                         <select class="form-control select2" id="workflow_type" name="workflow_type"></select>
                     </div>
@@ -173,7 +173,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="employee_no form-check-label">Employee No</label>
+                            <label for="employee_no form-check-label">{{ __('trans_workflow.employee') }}</label>
                         </div>
                         <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder="employee-no">
                     </div>
@@ -182,13 +182,13 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_workflow.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('trans_workflow.btn_list') }}
                         </button>
                     </div>
                 </div>
@@ -206,21 +206,15 @@
                             <table id="workflow_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th>Detail</th>
-                                        <th>Request Date</th>
-                                        <th>Employee ID</th>
-                                        <th>Employee Name</th>
-                                        {{-- <th>Permit Type</th> --}}
-                                        {{-- <th>Description</th> --}}
-                                        <th>Status</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Remarks</th>
-                                        <th>Leave Duration</th>
-                                        <th>Approved By</th>
-                                        <th>Ticket No</th>
-                                        <th>Approval Remarks</th>
-                                        {{-- {{-- <th>Approved Date</th> --}}
+                                        <th>{{ __('trans_workflow.rdate') }}</th>
+                                        <th>{{ __('trans_workflow.employee') }}</th>
+                                        <th>{{ __('trans_workflow.ename') }}</th>
+                                        <th>{{ __('trans_workflow.status') }}</th>
+                                        <th>{{ __('trans_workflow.remarks') }}</th>
+                                        <th>{{ __('trans_workflow.lduration') }}</th>
+                                        <th>{{ __('trans_workflow.aby') }}</th>
+                                        <th>{{ __('trans_workflow.tno') }}</th>
+                                        <th>{{ __('trans_workflow.appremarks') }}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -239,7 +233,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_workflow.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -249,19 +243,15 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    {{-- <th>User ID</th> --}}
-                                    <th>Full Name</th>
-                                    <th>Employee ID</th>
-                                    <th>Division</th>
-                                    <th>Division</th>
+                                    <th>{{ __('trans_workflow.fname') }}</th>
+                                    <th>{{ __('trans_workflow.employee') }}</th>
+                                    <th>{{ __('trans_workflow.division') }}</th>
+                                    <th>{{ __('trans_workflow.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -277,7 +267,7 @@
             </div>
         </form>
     </div>
-    <div class="div-form">
+    {{-- <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
             <div class="modal fade" id="modal_list_detail">
@@ -338,12 +328,6 @@
                                 </div>
 
                                 <div class="row detailstatus">
-                                    {{-- <div class="col-3">
-                                        <h5>Total Paid</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="totalpaid" name="totalpaid" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div> --}}
                                     <div class="col-3">
                                         <h5>Dependent Name</h5>
                                     </div>
@@ -353,36 +337,7 @@
                                 </div>
                             
                                 <br>
-                                {{-- <div class="row">
-                                    <div class="col-3">
-                                        <h5>Status</h5>
-                                    </div>
-                                    <div class="col-5">
-                                            <select name="" id="" class="custom-select">
-                                                <option value="APPROVE">APPROVE</option>
-                                                <option value="REJECT">REJECT</option>
-                                                <option value="PAID">PAID</option>
-                                            </select>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="row">
-                                    <div class="col-3">
-                                        <h5>Total Paid</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <h5>Approval Remarks</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div> --}}
                                 <hr>
-                                {{-- <button class="btn btn-primary btn-block" type="button">Update</button> --}}
                             </div>
                         </div>
                     </div>
@@ -390,7 +345,7 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> --}}
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -496,14 +451,14 @@
                 'sPaginationType': 'ellipses',
                 "order": [[ 1, "asc" ]],
                 columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
+                    // {
+                    //     orderable: false,
+                    //     targets: 0, 
+                    //     "defaultContent": '',
+                    //     render: function(data, type) {
+                    //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                    //     }
+                    // },
                     {data: 'permitEntity.createdDate', name: 'createdDate', 
                                 render: function (data, type, row) {
                                 if (data == null){
@@ -516,24 +471,6 @@
                     {data: 'permitEntity.employeeNo', name: 'employeeNo'},
                     {data: 'permitEntity.customerName', name: 'customerName'},
                     {data: 'permitEntity.status', name: 'status'},
-                    {data: 'permitEntity.startDate', name: 'startDate', 
-                                render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
-                    {data: 'permitEntity.endDate', name: 'endDate', 
-                                render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
                     {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
                     {data: 'permitEntity.time', name: 'permitEntity.time'},
                     {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
@@ -576,14 +513,14 @@
                     'sPaginationType': 'ellipses',
                     "order": [[ 1, "asc" ]],
                     columns: [
-                        {
-                            orderable: false,
-                            targets: 0, 
-                            "defaultContent": '',
-                            render: function(data, type) {
-                                return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                            }
-                        },
+                        // {
+                        //     orderable: false,
+                        //     targets: 0, 
+                        //     "defaultContent": '',
+                        //     render: function(data, type) {
+                        //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                        //     }
+                        // },
                         {data: 'leaveEntity.createdDate', name: 'createdDate', 
                                 render: function (data, type, row) {
                                 if (data == null){
@@ -596,24 +533,6 @@
                         {data: 'leaveEntity.employeeNo', name: 'employeeNo'},
                         {data: 'leaveEntity.fullnameRequester', name: 'fullnameRequester'},
                         {data: 'leaveEntity.status', name: 'status'},
-                        {data: 'leaveEntity.startDate', name: 'startDate', 
-                            render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
-                    {data: 'leaveEntity.endDate', name: 'endDate', 
-                            render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
                     {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
                     {data: 'leaveEntity.leaveDurationDepan', name: 'leaveDurationDepan'},
                     {data: 'leaveEntity.createdBy', name: 'createdBy'},
