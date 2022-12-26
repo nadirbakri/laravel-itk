@@ -1,15 +1,43 @@
 <?php
-
 return [ 
     'judul' => 'Medical History',
     'list' => 'Medical History',
+    'label_claim_date_start' => 'Claim Date - Start',
+    'label_claim_date_end' => 'Claim Date - End',
+    'label_reimbursement_type' => 'Reimbursement Type',
+    'label_business_unit' => 'Business Unit',
+    'employeeno' => 'Employee No',
+    'btn_search' => 'Search',
+    'btn_upload' => 'Upload',
+    'btn_list' => 'List',
+    'btn_update' => 'Update',
     'list_table' => 'MEDICAL LIST',
+    'detail' => 'Detail',
+    'rdate' => 'Request Date',
+    'tnumber' => 'Ticket Number',
+    'status' => 'Status',
+    'enom' => 'Employee Number',
+    'ename' => 'Employee Name',
+    'redate' => 'Receipt Date',
+    'treq' => 'Total Request',
+    'prem' => 'Paid Remarks',
+    'tpaid' => 'Total Paid',
+    'luser' => 'List User',
+    'employeeid' => 'Employee ID',
+    'name' => 'Full Name',
+    'div' => 'Division',
+    'rank' => 'Ranking',
+    'dreimbursement' => 'Detail Reimbursement',
+    'pname' => 'Project Name',
+    'dname' => 'Dependent Name',
+    'acc' => 'Approve',
+    'reject' => 'Reject',
+    'paid' => 'Paid',
+    'ovt' => 'Upload Paid Overtime',
+    'fovt' => 'File Overtime',
+    
     'label_year' => 'Year',
     'label_user_id' => 'User ID',
-    'btn_search' => 'Search',
-    'btn_list' => 'List',
     'alert_success' => 'Success !',
-    'detail' => 'Detail'
 ]
-
 ?>

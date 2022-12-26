@@ -130,11 +130,11 @@
             <div class="row">
                 <div class="col-5">
                     <div class="form-group">
-                        <label for="claim_date_from form-check-label">{{ __('trans_transport.label_claim_date_start') }}</label>
+                        <label for="claim_date_from form-check-label">{{ __('trans_medical.label_claim_date_start') }}</label>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                            placeholder="{{ __('trans_transport.label_claim_date_start') }}">
+                            placeholder="{{ __('trans_medical.label_claim_date_start') }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                         </div>
@@ -143,11 +143,11 @@
                 </div>
                 <div class="col-5">
                     <div class="form-group">
-                        <label for="claim_date_to form-check-label">{{ __('trans_transport.label_claim_date_end') }}</label>
+                        <label for="claim_date_to form-check-label">{{ __('trans_medical.label_claim_date_end') }}</label>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                            placeholder="{{ __('trans_transport.label_claim_date_end') }}">
+                            placeholder="{{ __('trans_medical.label_claim_date_end') }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                         </div>
@@ -158,13 +158,13 @@
             <div class="row">
                 <div class="col-5">
                     <div class="form-group">
-                        <label for="reimbursement_type form-check-label">{{ __('export_medical.label_reimbursement_type') }}</label>
+                        <label for="reimbursement_type form-check-label">{{ __('trans_medical.label_reimbursement_type') }}</label>
                     </div>
                     <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                 </div>
                 <div class="col-5">
                     <div class="form-group">
-                        <label for="business_unit form-check-label">{{ __('export_medical.label_business_unit') }}</label>
+                        <label for="business_unit form-check-label">{{ __('trans_medical.label_business_unit') }}</label>
                     </div>
                     <select class="form-control select2" id="business_unit" name="business_unit"></select>
                 </div>
@@ -172,7 +172,7 @@
             <div class="row">
                 <div class="col-5">
                     <div class="form-group">
-                            <label for="direct_superior form-check-label">Employee No</label>
+                            <label for="direct_superior form-check-label">{{ __('trans_medical.employeeno') }}</label>
                     </div>
                             <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                 </div>
@@ -188,7 +188,7 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> Upload
+                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
@@ -218,16 +218,16 @@
                         <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
-                                    <th>Detail</th>
-                                    <th>Request Date</th>
-                                    <th>Ticket Number</th>
-                                    <th>Status</th>
-                                    <th>Employee Number</th>
-                                    <th>Employee Name</th>
-                                    <th>Receipt Date</th>
-                                    <th>Total Request</th>
-                                    <th>Paid Remarks</th>
-                                    <th>Total Paid</th>
+                                    <th>{{ __('trans_medical.detail') }}</th>
+                                    <th>{{ __('trans_medical.rdate') }}</th>
+                                    <th>{{ __('trans_medical.tnumber') }}</th>
+                                    <th>{{ __('trans_medical.status') }}</th>
+                                    <th>{{ __('trans_medical.enom') }}</th>
+                                    <th>{{ __('trans_medical.ename') }}</th>
+                                    <th>{{ __('trans_medical.redate') }}</th>
+                                    <th>{{ __('trans_medical.treq') }}</th>
+                                    <th>{{ __('trans_medical.prem') }}</th>
+                                    <th>{{ __('trans_medical.tpaid') }}</th>
                                     {{-- <th>Remarks</th> --}}
                                 </tr>
                             </thead>
@@ -248,7 +248,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_medical.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -259,10 +259,10 @@
                                 <tr>
                                     <th>#</th>
                                     {{-- <th>User ID</th> --}}
-                                    <th>Employee ID</th>
-                                    <th>Full Name</th>
-                                    <th>Division</th>
-                                    <th>Division</th>
+                                    <th>{{ __('trans_medical.employeeid') }}</th>
+                                    <th>{{ __('trans_medical.name') }}</th>
+                                    <th>{{ __('trans_medical.div') }}</th>
+                                    <th>{{ __('trans_medical.rank') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -294,7 +294,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Detail Reimbursement</h4>
+                        <h4 class="modal-little">{{ __('trans_medical.dreimbursement') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -304,13 +304,13 @@
                             <div class="card-body">
                                 <div class="row detailstatus">
                                     <div class="col-3  ">
-                                        <h5>Request Date</h5>
+                                        <h5>{{ __('trans_medical.rdate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Receipt Date</h5>
+                                        <h5>{{ __('trans_medical.redate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -319,13 +319,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Ticket Number</h5>
+                                        <h5>{{ __('trans_medical.tnumber') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_medical.status') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -334,13 +334,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Business Unit</h5>
+                                        <h5>{{ __('trans_medical.label_business_unit') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Claim Type</h5>
+                                        <h5>{{ __('trans_medical.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -349,13 +349,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Employee Name</h5>
+                                        <h5>{{ __('trans_medical.ename') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Project Name</h5>
+                                        <h5>{{ __('trans_medical.pname') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name">
@@ -364,13 +364,13 @@
                             
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Total Claim</h5>
+                                        <h5>{{ __('trans_medical.treq') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Dependent Name</h5>
+                                        <h5>{{ __('trans_medical.dname') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent">
@@ -383,15 +383,15 @@
                                     </div>
                                     <div class="col-5">
                                             <select name="" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">APPROVE</option>
-                                                <option value="REJECTED">REJECT</option>
-                                                <option value="PAID">PAID</option>
+                                                <option value="APPROVED">{{ __('trans_medical.acc') }}</option>
+                                                <option value="REJECTED">{{ __('trans_medical.reject') }}</option>
+                                                <option value="PAID">{{ __('trans_medical.paid') }}</option>
                                             </select>
                                     </div>
                                 </div>
                                 <div class="row approve">
                                     <div class="col-3">
-                                        <h5>Total Paid</h5>
+                                        <h5>{{ __('trans_medical.tpaid') }}</h5>
                                     </div>
                                     <div class="col-5">
                                         <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
@@ -399,14 +399,14 @@
                                 </div>
                                 <div class="row approve">
                                     <div class="col-3">
-                                        <h5>Approval Remarks</h5>
+                                        <h5>{{ __('trans_medical.prem') }}</h5>
                                     </div>
                                     <div class="col-5">
                                         <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                 </div>
                                 <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_medical.btn_update') }}</button>
                             </div>
                         </div>
                     </div>
@@ -424,7 +424,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Upload Paid Overtime</h4>
+                        <h4 class="modal-little">{{ __('trans_medical.ovt') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -433,11 +433,11 @@
                         <div class="card">
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>File Overtime</b></label>
+                                    <label for="medical_history form-check-label"><b>{{ __('trans_medical.fovt') }}</b></label>
                                         <input type="file" name="file_medical" id="file_medical">
                                     <br> <br>
                                     <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        Upload
+                                        {{ __('trans_medical.btn_upload') }}
                                     </button>
                                 </div>
                             </div>
@@ -612,12 +612,13 @@
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#direct_superior").val();
+        let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior)
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior){
+    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_medical/table') }}",
             type: "get",
@@ -625,7 +626,8 @@
                 'status': reimbursement_status,
                 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'directSuperiorID' : direct_superior
+                'directSuperiorID' : direct_superior,
+                'approvalRemarks' : approvalremarks
             },
             success: function (response) {
                 // console.log(response.status);

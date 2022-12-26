@@ -51,7 +51,7 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>#</td>
+				<td>{{ \Carbon\Carbon::parse($value->reimbursementEntity->createdDate)->format('Y-m-d') }}</td>
 				<td>{{ $value->reimbursementEntity->reimbursementStatus }}</td>
 				<td>{{ $value->reimbursementEntity->ticketNo }}</td>
 				<td>{{ $value->reimbursementEntity->medicalType1 }}</td>

@@ -451,7 +451,7 @@
                             // console.log(row.totalClaimAmount)
                             let totalcamount = parseInt(row.totalClaimAmount)
                             if(row.status == 'APPROVED'){ 
-                                return `<input class="chk-select" type="checkbox" id="checkPaid" name="checkPaid[]">`;
+                                return `<input class="chk-select" type="checkbox" id="checkPaid" name="checkPaid[]" value="`+totalcamount+`">`;
                             }else{
                                 return '<input class="chk-select" type="checkbox" name="checkPaid[]" disabled>';
                             }
@@ -460,7 +460,7 @@
                     {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
                         if(row.status == 'APPROVED'){
-                            return '<input type="text" class="form-control" name="paidAmount[]" value="' +
+                            return '<input type="text" id="jesyca" class="form-control" name="paidAmount[]" value="' +
     
                                 data + '">';
                         }else{

@@ -1014,7 +1014,7 @@ class TransactionController extends Controller
                         "sessionUserID" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
                         'changeBy' => Session::get('userID'),
-                        "status" => 'APPROVED',
+                        "status" => "APPROVED",
                         "ticketNo" => $value,
                         "paidAmount" => (int)$request->paidAmount[$key]
                     ];
@@ -1022,6 +1022,7 @@ class TransactionController extends Controller
                 $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                     ['body' => json_encode($param)]
                 );
+                // var_dump(json_encode($param));
     
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -1050,7 +1051,7 @@ class TransactionController extends Controller
             
             
             foreach($request->data as $value){
-                var_dump($value);
+                // var_dump($value);
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
                     "sessionID" => 0,
@@ -1186,12 +1187,13 @@ class TransactionController extends Controller
             //  var_dump(json_encode(
             //     [
             //         'status'=> $request->status,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'ticketNo' => $request->ticketNo,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'languageCode' => App::getLocale(), 
-            //         'paidAmount'=> (int) $request->paidAmount
+            //             'companyCode' => Session::get('companyCode'),
+            //             'ticketNo' => $request->ticketNo,
+            //             'directSuperiorID'=> $request->directSuperiorID,
+            //             'sessionUserID' => Session::get('userID'),
+            //             'languageCode' => App::getLocale(), 
+            //             'paidAmount'=> (int) $request->paidAmount,
+            //             'approvalRemarks'=> $request->approvalRemarks
                    
             //     ]
             //     ));
@@ -1204,7 +1206,8 @@ class TransactionController extends Controller
                         'directSuperiorID'=> $request->directSuperiorID,
                         'sessionUserID' => Session::get('userID'),
                         'languageCode' => App::getLocale(), 
-                        'paidAmount'=> (int) $request->paidAmount
+                        'paidAmount'=> (int) $request->paidAmount,
+                        'approvalRemarks'=> $request->approvalRemarks
                        
                     ]
                 )]
