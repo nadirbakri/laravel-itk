@@ -2,7 +2,6 @@
 
 return [ 
     'judul' => 'Transport List',
-    'list' => 'Transport List',
     'list_table' => 'TRANSPORT DETAIL',
     'label_claim_date_start' => 'Claim Date - Start',
     'label_claim_date_end' => 'Claim Date - End',
@@ -12,10 +11,32 @@ return [
     'label_transport_type' => 'Transport Type',
     'label_bu' => 'Business Unit',
     'btn_upload' => 'Upload',
+    'btn_list' => 'List',
     'btn_search' => 'Search',
-    'label_slip' => 'Slip',
+    'detail' => 'Detail',
+    'rdate' => 'Receipt Date',
+    'reqdate' => 'Request Date',
+    'status' => 'Status',
+    'tnom' => 'Ticket Number',
+    'name' => 'Name',
+    'type' => 'Type',
+    'cname' => 'Customer Name',
+    'sloc' => 'Start Location',
+    'eloc' => 'End Location',
+    'treq' => 'Total Request',
+    'tpaid' => 'Total Paid',
+    'remarks' => 'Remarks',
+    'parking' => 'Parking',
+    'tol' => 'Toll',
+    'luser' => 'List User',
+    'employee' => 'Employee ID',
+    'fname' => 'Full Name',
+    'division' => 'Division',
+    'ranking' => 'Ranking',
+    'dtransport' => 'Detail Transport',
+    'ename' => 'Employee Name',
+
     'btn_preview' => 'Preview',
-    'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'
 ]
 

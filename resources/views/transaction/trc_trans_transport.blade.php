@@ -124,7 +124,7 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_transport.list') }}</span>
+                        <span class="title-text">{{ __('trans_transport.judul') }}</span>
                     </a>
                 </div>
                 <div class="row">
@@ -158,13 +158,13 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label">{{ __('export_medical.label_reimbursement_type') }}</label>
+                            <label for="reimbursement_type form-check-label">{{ __('trans_transport.label_transport_type') }}</label>
                         </div>
                         <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('export_medical.label_business_unit') }}</label>
+                            <label for="business_unit form-check-label">{{ __('trans_transport.label_business_unit') }}</label>
                         </div>
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
@@ -195,35 +195,29 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_transport.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> Upload
+                        <i class="fa fa-plus"></i>{{ __('trans_transport.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('trans_transport.btn_list') }}
                         </button>
                     </div>
-                    {{-- <div class="col-3">
-                        <button class="btn btn-primary" name="btn-list" id="btn-list" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-list.svg') }}" alt="export"> {{ __('trans_medical.btn_list') }}
-                        </button>
-                    </div> --}}
                 </div>
 <br>
                 <!-- TABLE -->
-
                 <div class="card">
                    
                 <div class="row">
                     <div class="col-6">
-                        <p><b>{{ __('trans_medical.list_table') }}</b></p>
+                        <p><b>{{ __('trans_transport.list_table') }}</b></p>
                     </div>
                 </div>
                 <div class="row">
@@ -231,21 +225,20 @@
                         <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
-                                        <th>Detail</th>
-                                        <th>Receipt Date</th>
-                                        <th>Status</th>
-                                        <th>Ticket Number</th>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        {{-- <th>Company Customer</th> --}}
-                                        <th>Customer Name</th>
-                                        <th>Start Location</th>
-                                        <th>End Location</th>
-                                        <th>Total Request</th>
-                                        <th>Total Paid</th>
-                                        <th>Remarks</th>
-                                        <th>Parking</th>
-                                        <th>Toll</th>
+                                        <th>{{ __('trans_transport.detail') }}</th>
+                                        <th>{{ __('trans_transport.rdate') }}</th>
+                                        <th>{{ __('trans_transport.status') }}</th>
+                                        <th>{{ __('trans_transport.tnom') }}</th>
+                                        <th>{{ __('trans_transport.name') }}</th>
+                                        <th>{{ __('trans_transport.type') }}</th>
+                                        <th>{{ __('trans_transport.cname') }}</th>
+                                        <th>{{ __('trans_transport.sloc') }}</th>
+                                        <th>{{ __('trans_transport.eloc') }}</th>
+                                        <th>{{ __('trans_transport.treq') }}</th>
+                                        <th>{{ __('trans_transport.tpaid') }}</th>
+                                        <th>{{ __('trans_transport.remarks') }}</th>
+                                        <th>{{ __('trans_transport.parking') }}</th>
+                                        <th>{{ __('trans_transport.tol') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -265,7 +258,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_transport.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -275,11 +268,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    {{-- <th>User ID</th> --}}
-                                    <th>Employee ID</th>
-                                    <th>Full Name</th>
-                                    <th>Division</th>
-                                    <th>Ranking Name<</th>
+                                    <th>{{ __('trans_transport.employee') }}</th>
+                                    <th>{{ __('trans_transport.fname') }}</th>
+                                    <th>{{ __('trans_transport.division') }}</th>
+                                    <th>{{ __('trans_transport.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -311,7 +303,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Detail Reimbursement</h4>
+                        <h4 class="modal-little">{{ __('trans_transport.dtransport') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -321,13 +313,13 @@
                             <div class="card-body">
                                 <div class="row detailstatus">
                                     <div class="col-3  ">
-                                        <h5>Request Date</h5>
+                                        <h5>{{ __('trans_transport.reqdate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Receipt Date</h5>
+                                        <h5>{{ __('trans_transport.rdate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -336,13 +328,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Ticket Number</h5>
+                                        <h5>{{ __('trans_transport.tnom') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_transport.status') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -351,13 +343,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Business Unit</h5>
+                                        <h5>{{ __('trans_transport.label_business_unit') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Claim Type</h5>
+                                        <h5>{{ __('trans_transport.type') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -366,13 +358,12 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Employee Name</h5>
-                                    </div>
+                                        <h5>{{ __('trans_transport.ename') }}</h5>                                    </div>
                                     <div class="col">
                                         <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Project Name</h5>
+                                        <h5>{{ __('trans_transport.pname') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name">
@@ -381,13 +372,13 @@
                             
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Total Claim</h5>
+                                        <h5>{{ __('trans_transport.treq') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Dependent Name</h5>
+                                        <h5>{{ __('trans_transport.dname') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent">
@@ -396,19 +387,19 @@
                                 <br>
                                 <div class="row approve">
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_transport.status') }}</h5>
                                     </div>
                                     <div class="col-5">
                                             <select name="" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">APPROVE</option>
-                                                <option value="REJECTED">REJECT</option>
-                                                <option value="PAID">PAID</option>
+                                                <option value="APPROVED">>{{ __('trans_transport.approve') }}<</option>
+                                                <option value="REJECTED">>{{ __('trans_transport.reject') }}<</option>
+                                                <option value="PAID">>{{ __('trans_transport.paid') }}<</option>
                                             </select>
                                     </div>
                                 </div>
                                 <div class="row approve">
                                     <div class="col-3">
-                                        <h5>Total Paid</h5>
+                                        <h5>{{ __('trans_transport.tpaid') }}</h5>
                                     </div>
                                     <div class="col-5">
                                         <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
@@ -416,7 +407,7 @@
                                 </div>
                                 <div class="row approve">
                                     <div class="col-3">
-                                        <h5>Approval Remarks</h5>
+                                        <h5>{{ __('trans_transport.remarks') }}</h5>
                                     </div>
                                     <div class="col-5">
                                         <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -440,7 +431,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Upload Paid Overtime</h4>
+                        <h4 class="modal-little">{{ __('trans_transport.upaid') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -449,11 +440,11 @@
                         <div class="card">
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>File Overtime</b></label>
+                                    <label for="medical_history form-check-label"><b>{{ __('trans_transport.ftransport') }}</b></label>
                                         <input type="file" name="file_overtime" id="file_overtime">
                                     <br> <br>
                                     <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        Upload
+                                        {{ __('trans_transport.btn_upload') }}
                                     </button>
                                 </div>
                             </div>
