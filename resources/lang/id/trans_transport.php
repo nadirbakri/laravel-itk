@@ -45,6 +45,8 @@ return [
     'reject' => 'Ditolak',
     'paid' => 'Dibayar',
     'upaid' => 'Unggah File Transportasi',
+    'ftransport' => 'Berkas Transportasi',
+    'update' => 'Memperbaharui',
 
 ]
 

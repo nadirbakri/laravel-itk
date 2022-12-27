@@ -391,9 +391,9 @@
                                     </div>
                                     <div class="col-5">
                                             <select name="" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">>{{ __('trans_transport.approve') }}<</option>
-                                                <option value="REJECTED">>{{ __('trans_transport.reject') }}<</option>
-                                                <option value="PAID">>{{ __('trans_transport.paid') }}<</option>
+                                                <option value="APPROVED">{{ __('trans_transport.approve') }}</option>
+                                                <option value="REJECTED">{{ __('trans_transport.reject') }}</option>
+                                                <option value="PAID">{{ __('trans_transport.paid') }}</option>
                                             </select>
                                     </div>
                                 </div>
@@ -414,7 +414,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_transport.update') }}</button>
                             </div>
                         </div>
                     </div>
@@ -482,7 +482,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('trans_medical.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('trans_transport.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -505,7 +505,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('table.display').DataTable({
@@ -513,7 +512,6 @@
         });
     });
 </script>
-
 <script type="text/javascript">
     $(function () {
         initDatePicker();
@@ -535,19 +533,201 @@
         });
     }
 </script>
+<script type="text/javascript">
+    function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit,processed_date) {
+            table = $('#medical_table').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('trans/transport/table') }}",
+                    data: {
+                        'startDate': claim_date_from,
+                        'endDate': claim_date_to,
+                        'processDate' : processed_date,
+                        'type' : reimbursement_type,
+                        'businessUnit' : business_unit,
+                        'directSuperiorID' : direct_superior
 
+                    }
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'ellipses',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                        }
+                    },
+                    {data: 'transportEntity.receiptDate', name: 'receiptDate', 
+                            render: function (data, type, row) {
+                            return moment(data).format('DD-MMM-YYYY');
+                        }
+                    },
+                    {data: 'transportEntity.status', name: 'status'},
+                    {data: 'transportEntity.ticketNo', name: 'ticketNo'},
+                    {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
+                    {data: 'transportEntity.type', name: 'type'},
+                    // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
+                    {data: 'transportEntity.customerName', name: 'customerName'},
+                    {data: 'transportEntity.startLocation', name: 'startLocation'},
+                    {data: 'transportEntity.endLocation', name: 'endLocation'},
+                    {data: 'transportEntity.totalAmount', name: 'totalAmount'},
+                    {data: 'transportEntity.paidAmount', name: 'paidAmount'},
+                    {data: 'transportEntity.remarks', name: 'remarks'},
+                    {data: 'transportEntity.amountParkir', name: 'amountParkir'},
+                    {data: 'transportEntity.amountToll', name: 'amountToll'},
+                    // {
+                    //     data: 'leaveBalanceBeforeExpiredDate', 
+                    //     name: 'leaveBalanceBeforeExpiredDate',
+                    //     render: function (data, type, row) {
+                    //         return moment(data).format('DD-MMM-YYYY');
+                    //     }
+                    // }
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }
+            });
+
+            $("#btn-search").prop("disabled", true);
+            $("#btn-search").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
+            );
+
+            
+
+            $("#btn-search").prop("disabled", false);
+            $("#btn-search").html(
+                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+            );
+        }
+
+        $("#trans_medical_form").submit((e)=>{
+            e.preventDefault();
+
+            var claim_date_from = $("#claim_date_from").val();
+            var claim_date_to = $("#claim_date_to").val();
+            var direct_superior = $("#direct_superior").val();
+            var reimbursement_type = $("#reimbursement_type").val();
+            var business_unit = $("#business_unit").val();
+            var processed_date = $("#processed_date").val();
+
+            // $("#btn-search").prop("disabled", true);
+            // $("#btn-search").html(
+            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            // );
+
+            $('#medical_table').DataTable().destroy();
+            load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit,processed_date);
+    })
+    const klikdetail = (element) => {
+        let requestDate = $(element).parent().siblings('.sorting_1').text()
+        let status = $(element).parent().siblings('td').eq(1).text()
+        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
+        let totalClaim = $(element).parent().siblings('td').eq(6).text()
+        var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        let approvalremarks = $(element).parent().siblings('td').eq(10).text()
+        let totalpaid = $(element).parent().siblings('td').eq(9).text()
+        var business_unit = $("#business_unit").val();        
+        
+        // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
+        // let projectname = $(element).parent().siblings('td').eq(5).text()
+        // let employeename = $(element).parent().siblings('td').eq(3).text()
+        // let totalpaid = $(element).parent().siblings('td').eq(6).text()
+        // var reimbursement_type = $("#reimbursement_type").val();
+
+        $('#reqdate').val(requestDate)
+        $('#recdate').val(requestDate)
+        $('#tiketno').val(tikcetNo)
+        $('#status').val(status)
+        $('#b_unit').val(business_unit)
+        $('#employee_no').val(direct_superior)
+        $('#c_type').val(reimbursement_type)
+        $('#totalclaim').val(totalClaim)
+
+        $('#approvalremarks').val(approvalremarks)
+        $('#totalpaid').val(totalpaid)
+        
+        // $('#status').val(reimbursement_status)
+        // $('#tiketno').val(tikcetNo)
+        // $('#c_type').val(reimbursement_type)
+        // $('#employeeno').val(employeename)
+        // $('#projectname').val(projectname)
+        // $('#totalpaid').val(totalpaid)
+        // $('#direct_superior').val(employee_id)
+
+        // alert(reimbursement_type);
+    }
+
+    $('#btn-list').click(()=> {
+        $('#example').DataTable().destroy();
+        table2 = $('#example').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: {
+                url : "{{ url('transaction/list/table') }}"             
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'ellipses',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                             }
+                },
+                {data: 'employeeNo', name: 'employeeNo'},
+                {data: 'fullName', name: 'fullName'},
+                {data: 'positionName', name: 'positionName'},
+                {data: 'rankingName', name: 'rankingName'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        });        
+    })
+    
+    const klik = (element) => {
+        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        $('#direct_superior').val(employee_id)
+
+        $('.close').click();
+    }
+
+</script>
 <script>
     $('#btn-update').click(()=>{
         let reimbursement_status = $('#reimbursement_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#direct_superior").val();
+        let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior)
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior){
+    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_transport/table') }}",
             type: "get",
@@ -555,7 +735,8 @@
                 'status': reimbursement_status,
                 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior
+                'employeeNo' : direct_superior,
+                'approvalRemarks' : approvalremarks
             },
             success: function (response) {
                                if (response.status == "true") {
@@ -856,108 +1037,6 @@ loadDataAllTransport();
             });
         }
 
-        function load_data_transport(claim_date_from, claim_date_to,processed_date,transport_type, business_unit,directsuper_id  ) {
-            table = $('#transport_table').DataTable({
-    function load_data_medical_history(claim_date_from, claim_date_to,processed_date,reimbursement_type, business_unit,direct_superior) {
-            table = $('#medical_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/transport/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'processDate' : processed_date,
-                        'type' : reimbursement_type,
-                        'businessUnit' : business_unit,
-                        'directSuperiorID' : direct_superior
-                    }
-                },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
-                    {data: 'transportEntity.receiptDate', name: 'receiptDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('DD-MMM-YYYY');
-                        }
-                    },
-                    {data: 'transportEntity.status', name: 'status'},
-                    {data: 'transportEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'transportEntity.type', name: 'type'},
-                    // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
-                    {data: 'transportEntity.customerName', name: 'customerName'},
-                    {data: 'transportEntity.startLocation', name: 'startLocation'},
-                    {data: 'transportEntity.endLocation', name: 'endLocation'},
-                    {data: 'transportEntity.totalAmount', name: 'totalAmount'},
-                    {data: 'transportEntity.paidAmount', name: 'paidAmount'},
-                    {data: 'transportEntity.remarks', name: 'remarks'},
-                    {data: 'transportEntity.amountParkir', name: 'amountParkir'},
-                    {data: 'transportEntity.amountToll', name: 'amountToll'},
-                    // {
-                    //     data: 'leaveBalanceBeforeExpiredDate', 
-                    //     name: 'leaveBalanceBeforeExpiredDate',
-                    //     render: function (data, type, row) {
-                    //         return moment(data).format('DD-MMM-YYYY');
-                    //     }
-                    // }
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
-
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-
-            );
-
-            
-
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
-
-        $("#trans_medical_form").submit((e)=>{
-            e.preventDefault();
-
-            // var claim_date_from = $("#claim_date_from").val();
-            // var claim_date_to = $("#claim_date_to").val();
-            // var direct_superior = $("#direct_superior").val();
-            // var reimbursement_type = $("#reimbursement_type").val();
-            // var business_unit = $("#business_unit").val();
-
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var processed_date = $("#processed_date").val();
-            var reimbursement_type = $("#reimbursement_type").val();
-            var business_unit = $("#business_unit").val();
-            var direct_superior = $("#direct_superior").val();
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
-
-            $('#medical_table').DataTable().destroy();
-            load_data_medical_history(claim_date_from, claim_date_to,processed_date,reimbursement_type, business_unit,direct_superior  );
-    })
     const klikdetail = (element) => {
         let requestDate = $(element).parent().siblings('.sorting_1').text()
         let status = $(element).parent().siblings('td').eq(1).text()
@@ -1332,6 +1411,4 @@ if ($("#upload_paid_overtime_form").length > 0) {
                 });
             }
     </script>
-  
-    
 </html>

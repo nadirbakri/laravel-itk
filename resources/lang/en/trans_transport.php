@@ -35,6 +35,14 @@ return [
     'ranking' => 'Ranking',
     'dtransport' => 'Detail Transport',
     'ename' => 'Employee Name',
+    'pname' => 'Project Name',
+    'dname' => 'Dependent Name',
+    'approve' => 'Approve',
+    'reject' => 'Reject',
+    'paid' => 'Paid',
+    'upaid' => 'Upload Paid Transport',
+    'ftransport' => 'File Transport',
+    'update' => 'Update',
 
     'btn_preview' => 'Preview',
     'alert_success' => 'Success !'

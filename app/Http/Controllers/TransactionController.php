@@ -670,16 +670,16 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //             'exportMenu' =>false,
-            //             'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
-            //             'type' =>  $request->type,
-            //             'businessUnit'=> $request->businessUnit,
-            //             'directSuperiorID'=> $request->directSuperiorID,
-            //             'companyCode' => Session::get('companyCode'), 
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionID' => 0, 
-            //             'sessionUserID' => Session::get('userID'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'exportMenu' =>false,
+            //         'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+            //         'type' =>  $request->type,
+            //         'businessUnit'=> $request->businessUnit,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
 
@@ -860,20 +860,13 @@ class TransactionController extends Controller
             //         'languageCode' => App::getLocale(), 
             //         'sessionUserID' => Session::get('userID'),
             //         'employeeNo'=> $request->employeeNo,
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
             //         'approvalRemarks'=> 'string',
             //         'logActionUserID'=> 'string',
             //         'logActionUsername'=> 'string',
             //         'status'=> $request->status,
             //         'paidAmount'=> (int) $request->paidAmount,
-            //         'ticketNo' => $request->ticketNo
+            //         'ticketNo' => $request->ticketNo,
+            //         'approvalRemarks' => $request->approvalRemarks
             //     ]
             //     ));
 
@@ -884,20 +877,13 @@ class TransactionController extends Controller
                         'languageCode' => App::getLocale(), 
                         'sessionUserID' => Session::get('userID'),
                         'employeeNo'=> $request->employeeNo,
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
                         'approvalRemarks'=> 'string',
                         'logActionUserID'=> 'string',
                         'logActionUsername'=> 'string',
                         'status'=> $request->status,
                         'paidAmount'=> (int) $request->paidAmount,
-                        'ticketNo' => $request->ticketNo
+                        'ticketNo' => $request->ticketNo,
+                        'approvalRemarks' => $request->approvalRemarks
                     ]
                 )]
             );
