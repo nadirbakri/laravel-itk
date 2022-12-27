@@ -123,7 +123,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">Start Date</label>
+                            <label for="claim_date_from form-check-label">{{ __('trans_business_trip.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
@@ -136,7 +136,7 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_to form-check-label">End Date</label>
+                            <label for="claim_date_to form-check-label">{{ __('trans_business_trip.label_claim_date_end') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
@@ -156,19 +156,6 @@
                         </div>
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
-                    {{-- <div class="col-5">
-                        <div class="form-group">
-                            <label for="processed_date form-check-label">{{ __('trans_business_trip.label_processed_date') }}</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="processed_date" name="processed_date"
-                                placeholder="{{ __('trans_business_trip.label_processed_date') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="processed_date_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="processed_date_hidden" name="processed_date_hidden" hidden>
-                    </div> --}}
                     <div class="col-5">
                         <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('trans_business_trip.label_reimbursement_type') }}</label>
@@ -181,7 +168,7 @@
                     
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">Employee No</label>
+                                <label for="direct_superior form-check-label">{{ __('trans_business_trip.employee') }}</label>
                         </div>
                                 <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
@@ -203,7 +190,7 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_attendance.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('trans_business_trip.btn_list') }}
                         </button>
                     </div>
                 </div>
@@ -220,7 +207,7 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;">
-                         Update Data
+                        {{ __('trans_business_trip.update') }}
                         </button>
                     </div>
                     <div class="row">
@@ -228,18 +215,13 @@
                             <table id="business_trip_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th>Ticket Number</th>
-                                        <th>Employee Name</th>
-                                        {{-- <th>Business Unit</th> --}}
-                                        <th>Status</th>
-                                        {{-- <th>Reimbursement Type</th> --}}
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Destination</th>
-                                        <th>Export to PDF</th>
-                                        <th>Total Request</th>
-                                        <th>Paid</th>
-                                        <th>Total Paid</th>
+                                        <th>{{ __('trans_business_trip.tnom') }}</th>
+                                        <th>{{ __('trans_business_trip.name') }}</th>
+                                        <th>{{ __('trans_business_trip.status') }}</th>
+                                        <th>{{ __('trans_business_trip.destination') }}</th>
+                                        <th>{{ __('trans_business_trip.treq') }}</th>
+                                        <th>{{ __('trans_business_trip.cpaid') }}</th>
+                                        <th>{{ __('trans_business_trip.tpaid') }}</th>
                                         {{-- <th>Tujuan</th> --}}
                                     </tr>
                                 </thead>
@@ -259,7 +241,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_business_trip.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -269,18 +251,15 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>User ID</th>
-                                    <th>Employee ID</th>
-                                    <th>full Name</th>
-                                    <th>Division</th>
+                                    <th>{{ __('trans_business_trip.employee') }}</th>
+                                    <th>{{ __('trans_business_trip.name') }}</th>
+                                    <th>{{ __('trans_business_trip.division') }}</th>
+                                    <th>{{ __('trans_business_trip.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -336,7 +315,7 @@
 <script>
     $(document).ready( function () {
         $('table.display').DataTable({
-            scrollX: true,
+            // scrollX: true,
         });
     } );
 </script>
@@ -433,16 +412,15 @@
                     // {data: 'businessUnit', name: 'businessUnit'},
                     {data: 'status', name: 'status'},
                     // {data: 'destination', name: 'destination'},
-                    {data: 'startDate', name: 'startDate',
-                    render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }},
-                    {data: 'endDate', name: 'endDate',
-                    render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }},
+                    // {data: 'startDate', name: 'startDate',
+                    // render: function (data, type, row) {
+                    //         return moment(data).format('YYYY-MM-DD');
+                    //     }},
+                    // {data: 'endDate', name: 'endDate',
+                    // render: function (data, type, row) {
+                    //         return moment(data).format('YYYY-MM-DD');
+                    //     }},
                     {data: 'destination', name: 'destination'},
-                    {data: 'totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'totalClaimAmount', name: 'totalClaimAmount'},
                     {
                         orderable: false,

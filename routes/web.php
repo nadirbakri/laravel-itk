@@ -939,6 +939,7 @@ Route::get('admin_menu/user_group', 'AdminMenuController@pageAdminMenuUserGroup'
 Route::get('admin_menu/menu_master', 'AdminMenuController@pageAdminMenuMaster');
 Route::get('admin_menu/checkin_list', 'AdminMenuController@pageAdminMenuCheckinList');
 Route::get('admin_menu/news_master', 'AdminMenuController@pageAdminMenuNewsMaster');
+Route::get('maps/location', 'AdminMenuController@pageMaps');
 Route::get('adm_main_menu/news_master/list', 'AdminMenuController@pageAdminNewsList');
 Route::get('admin_menu/news_master/remove', 'AdminMenuController@pageNewsMasterRemove');
 Route::post('admin_menu/news_master/proses', 'AdminMenuController@pageAdminMenuNews');

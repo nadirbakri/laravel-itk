@@ -36,6 +36,8 @@ return [
     'update' => 'Update',
     'upaidbusiness' => 'Upload File Business Trip',
     'fbusinesstrip' => 'File Business Trip',
+    'luser' => 'List Business Trip',
+    'cpaid' => 'Paid',
 
     'label_slip' => 'Slip',
     'btn_preview' => 'Preview',

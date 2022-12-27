@@ -15,6 +15,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;key=ABQIAAAA8tt4eKTuBZMVnLJfP2BZrBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS4Rz1LFzG0odNPtk8VLkdrQF5grA"></script>
+    <script type="text/javascript">
+        // Langkah 4
+        function initialize() {
+        var latlng = new google.maps.LatLng(-6.4, 106.8186111);
+        var myOptions = {
+        zoom: 13,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        // Langkah 3
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+       myOptions);
+        }
+    </script>
     <style type="text/css">
         .div-trans-medical {
             max-width: 100%;
@@ -116,7 +131,7 @@
     </style>
 </head>
 
-<body>
+<body onload="initialize()">
     <div class="div-form">
         <form id="trans_medical_form" method="post">
             @csrf
@@ -180,6 +195,7 @@
                         <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
+                                    <th>Preview Location</th>
                                     <th>User ID</th>
                                     <th>Employee Name</th>
                                     <th>CheckIn Date</th>
@@ -341,6 +357,15 @@
                 'sPaginationType': 'ellipses',
                 "order": [[ 1, "asc" ]],
                 columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<a  href="{{ url('maps/location') }}" target="iframe_dashboard">Preview Location</a>' : '';
+
+                        }
+                    },
                     {data: 'userID', name: 'userID'},
                     {data: 'directSuperiorID', name: 'directSuperiorID'},
                     {data: 'checkInDate', name: 'checkInDate', 

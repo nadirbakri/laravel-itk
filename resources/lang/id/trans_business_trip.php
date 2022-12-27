@@ -39,8 +39,10 @@ return [
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !',
     'update' => 'Diperbaharui',
+    'cpaid' => 'Bayar',
     'upaidbusiness' => 'Unggah Berkas Perjalanan Dinas',
     'fbusinesstrip' => 'Berkas Perjalanan Dinas',
+    'luser' => 'Daftar Perjalanan Bisnis',
 ]
 
 ?>
