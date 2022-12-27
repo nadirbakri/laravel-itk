@@ -37,6 +37,8 @@ return [
     'reject' => 'Reject',
     'paid' => 'Paid',
     'update' => 'Update',
+    'upaidovt' => 'Upload File Overtime',
+    'fovt' => 'File Overtime',
 
 
     'label_slip' => 'Slip',

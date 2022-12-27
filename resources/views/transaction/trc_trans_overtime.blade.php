@@ -160,15 +160,6 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label">{{ __('trans_overtime.label_reimbursement_type') }}</label>
-                        </div>
-                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
                             <label for="business_unit form-check-label">{{ __('trans_overtime.label_bu') }}</label>
                         </div>
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
@@ -181,6 +172,14 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="reimbursement_type form-check-label">{{ __('trans_overtime.label_reimbursement_type') }}</label>
+                        </div>
+                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
+                    </div>
+                </div>
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
@@ -188,12 +187,12 @@
                             <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_overtime.btn_search') }}
                         </button>
                     </div>
-                    <div class="col-3">
+                    {{-- <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
                         <i class="fa fa-plus"></i>{{ __('trans_overtime.btn_upload') }}
                         </button>
-                    </div>
+                    </div> --}}
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
