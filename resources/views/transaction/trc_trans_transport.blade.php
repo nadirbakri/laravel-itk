@@ -1136,7 +1136,7 @@ $("#btn-process").click(function () {
 });
 
 $('#notification_success').on('hide.bs.modal', function () {
-    window.location = "{{ url('transaction/transaction_overtime') }}";
+    window.location = "{{ url('transaction/transaction_transport') }}";
 });
 
 if ($("#upload_paid_overtime_form").length > 0) {
@@ -1169,7 +1169,7 @@ if ($("#upload_paid_overtime_form").length > 0) {
                             .message);
                         setTimeout(function () {
                             window.location =
-                                "{{ url('transaction/transaction_reimbursement') }}";
+                                "{{ url('transaction/transaction_transport') }}";
                         }, 3000);
                     } else {
                         $("#btn-process").prop("disabled", false);

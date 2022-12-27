@@ -377,15 +377,15 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'businessUnit' => $request->businessUnit,
-            //         'employeeNo'=> $request->employeeNo,
-            //         'type' => "TOT",
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'businessUnit' => $request->businessUnit,
+            //             'employeeNo'=> $request->employeeNo,
+            //             'type' => "TOT",
+            //             'exportMenu' => false,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
             $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
@@ -394,7 +394,7 @@ class TransactionController extends Controller
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'businessUnit' => $request->businessUnit,
-                        'employeeNo'=> $request->employeeNo,
+                        'directSuperiorID'=> $request->directSuperiorID,
                         'type' => "TOT",
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
@@ -1089,56 +1089,26 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'status'=> $request->status,
-            //         'ticketNo' => $request->ticketNo,
-            //         'employeeNo'=> $request->employeeNo,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string'
-            // 'status'=> $request->status,
-            //             'companyCode' => Session::get('companyCode'),
             //             'ticketNo' => $request->ticketNo,
-            //             'employeeNo'=> $request->employeeNo,
-            //             'sessionUserID' => Session::get('userID'),
+            //             'directSuperiorID'=> $request->directSuperiorID,
+            //             'companyCode' => Session::get('companyCode'),
             //             'languageCode' => App::getLocale(), 
+            //             'sessionUserID' => Session::get('userID'),
+            //             'approvalRemarks'=> 'string',
+            //             'logActionUserID'=> 'string',
+            //             'logActionUsername'=> 'string'
             //     ]
-                // ));
+            //     ));
 
             $response = $client->put(env('API_URL') . '/tmovertime/updateovertimeapproval',
                 ['body' => json_encode(
                     [
-                        // 'status'=> $request->status,
-                        // 'companyCode' => Session::get('companyCode'),
-                        // 'ticketNo' => $request->ticketNo,
-                        // 'directSuperiorID'=> $request->directSuperiorID,
-                        // 'sessionUserID' => Session::get('userID'),
-                        // 'languageCode' => App::getLocale(), 
-                        // 'paidAmount'=> (int) $request->paidAmount
-
                         'status'=> $request->status,
                         'ticketNo' => $request->ticketNo,
-                        'employeeNo'=> $request->employeeNo,
+                        'directSuperiorID'=> $request->directSuperiorID,
                         'companyCode' => Session::get('companyCode'),
                         'languageCode' => App::getLocale(), 
                         'sessionUserID' => Session::get('userID'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
                         'approvalRemarks'=> 'string',
                         'logActionUserID'=> 'string',
                         'logActionUsername'=> 'string'

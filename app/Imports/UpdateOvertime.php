@@ -22,24 +22,6 @@ class UpdateOvertime implements ToCollection, WithStartRow
     */
     private $arrResult = [];
 
-    // public function transformDate($value, $format = 'm/d/Y')
-    // {
-    //     try {
-    //         return Carbon::instance(Date::excelToDateTimeObject($value));
-    //     } catch (\ErrorException $e) {
-    //         return Carbon::createFromFormat($format, date('m/d/Y', strtotime($value)));
-    //     }
-    // }
-
-    // public function transformDateTime($value, $format = 'Y-m-d\TH:i:s')
-    // {
-    //     try {
-    //         return Carbon::instance(Date::excelToDateTimeObject($value));
-    //     } catch (\ErrorException $e) {
-    //         return Carbon::createFromFormat($format, date("Y-m-d\TH:i:s", strtotime($value)));
-    //     }
-    // }
-
     public function collection(Collection $rows)
     {
         $param = [];
@@ -58,8 +40,8 @@ class UpdateOvertime implements ToCollection, WithStartRow
                     "languageCode" => App::getLocale(),
                     "changedBy" => Session::get('userID'),
                     "status" => $row[1],
-                    "ticketNo" => $row[2],
-                    "paidAmount" => $row[12]
+                    "ticketNo" => $row[2]
+                    // "paidAmount" => $row[12]
                 ];
             }
 

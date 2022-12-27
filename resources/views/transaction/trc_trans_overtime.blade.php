@@ -124,7 +124,7 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_overtime.list') }}</span>
+                        <span class="title-text">{{ __('trans_overtime.judul') }}</span>
                     </a>
                 </div>
 
@@ -158,24 +158,11 @@
                 </div>
 
                 <div class="row">
-                    {{-- <div class="col-5">
-                        <div class="form-group">
-                            <label for="processed_date form-check-label">{{ __('trans_overtime.label_processed_date') }}</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="processed_date" name="processed_date"
-                                placeholder="{{ __('trans_overtime.label_processed_date') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="processed_date_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="processed_date_hidden" name="processed_date_hidden" hidden>
-                    </div> --}}
                     <div class="col-5">
                         <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('trans_overtime.label_reimbursement_type') }}</label>
                         </div>
-                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type"></select>
+                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                     </div>
                 </div>
 
@@ -188,42 +175,31 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">Employee No</label>
+                                <label for="direct_superior form-check-label">{{ __('trans_overtime.employee') }}</label>
                         </div>
                                 <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
-                    {{-- <div class="col-5">
-                        <div class="form-group">
-                            <label for="status form-check-label">{{ __('trans_overtime.label_status') }}</label>
-                        </div>
-                        <select class="form-control select2" id="status" name="status"></select>
-                    </div> --}}
                 </div>
 
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_overtime.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> Upload
+                        <i class="fa fa-plus"></i>{{ __('trans_overtime.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('trans_overtime.btn_list') }}
                         </button>
                     </div>
-                    {{-- <div class="col-3">
-                        <button class="btn btn-primary" name="btn-list" id="btn-list" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-list.svg') }}" alt="export"> {{ __('trans_medical.btn_list') }}
-                        </button> class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10"
-                    </div> --}}
                 </div>
 
                 <!-- TABLE -->
@@ -239,19 +215,16 @@
                             <table id="overtime_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                       <th>Detail</th>
-                                       <th>Name</th>
-                                       <th>Status</th>
-                                       <th>Ticket No</th>
-                                       {{-- <th>Employee No</th> --}}
-                                       <th>Project Name</th>
-                                       <th>Overtime Date</th>
-                                       <th>Overtime Hour From</th>
-                                       <th>Overtime Hour To</th>
-                                       <th>Overtime Remarks</th>
-                                       <th>Costumer Name</th>
-                                       {{-- <th>Total Request</th>
-                                       <th>Total Paid</th> --}}
+                                       <th>{{ __('trans_overtime.detail') }}</th>
+                                       <th>{{ __('trans_overtime.name') }}</th>
+                                       <th>{{ __('trans_overtime.status') }}</th>
+                                       <th>{{ __('trans_overtime.tnom') }}</th>
+                                       <th>{{ __('trans_overtime.pname') }}</th>
+                                       <th>{{ __('trans_overtime.odate') }}</th>
+                                       <th>{{ __('trans_overtime.ohourfrom') }}</th>
+                                       <th>{{ __('trans_overtime.ohourto') }}</th>
+                                       <th>{{ __('trans_overtime.ohourremarks') }}</th>
+                                       <th>{{ __('trans_overtime.cname') }}</th>
                                 </thead>
                             </table>
                     </div>
@@ -268,7 +241,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_overtime.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -278,19 +251,15 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    {{-- <th>User ID</th> --}}
-                                    <th>Employee ID</th>
-                                    <th>Full Name</th>
-                                    <th>Division</th>
-                                    <th>Division</th>
+                                    <th>{{ __('trans_overtime.employee') }}</th>
+                                    <th>{{ __('trans_overtime.fname') }}</th>
+                                    <th>{{ __('trans_overtime.division') }}</th>
+                                    <th>{{ __('trans_overtime.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -314,7 +283,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Detail Reimbursement</h4>
+                        <h4 class="modal-little">{{ __('trans_overtime.dreimbursement') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -324,13 +293,13 @@
                             <div class="card-body">
                                 <div class="row detailstatus">
                                     <div class="col-3  ">
-                                        <h5>Request Date</h5>
+                                        <h5>{{ __('trans_overtime.rdate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Employee No</h5>
+                                        <h5>{{ __('trans_overtime.employee') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="employeeno" name="employeeno" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -339,13 +308,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Ticket Number</h5>
+                                        <h5>{{ __('trans_overtime.tnom') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_overtime.status') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -354,13 +323,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Business Unit</h5>
+                                        <h5>{{ __('trans_overtime.label_bu') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Claim Type</h5>
+                                        <h5>{{ __('trans_overtime.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -369,13 +338,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Employee Name</h5>
+                                        <h5>{{ __('trans_overtime.name') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="employeename" name="employeename" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Project Name</h5>
+                                        <h5>{{ __('trans_overtime.pname') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="projectname" name="projectname" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -384,13 +353,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Total Claim</h5>
+                                        <h5>{{ __('trans_overtime.tclaim') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Dependent Name</h5>
+                                        <h5>{{ __('trans_overtime.dname') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -400,26 +369,18 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_overtime.status') }}</h5>
                                     </div>
                                     <div class="col-5">
                                             <select name="" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">APPROVED</option>
-                                                <option value="REJECTED">REJECTED</option>
-                                                <option value="PAID">PAID</option>
+                                                <option value="APPROVED">{{ __('trans_overtime.approve') }}</option>
+                                                <option value="REJECTED">{{ __('trans_overtime.reject') }}</option>
+                                                <option value="PAID">{{ __('trans_overtime.paid') }}</option>
                                             </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <h5>Total Paid</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
-                                    </div>
-                                </div>
                                 <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_overtime.update') }}</button>
                             </div>
                         </div>
                     </div>
@@ -436,7 +397,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Upload Paid Overtime</h4>
+                        <h4 class="modal-little">{{ __('trans_overtime.upaidovt') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -445,11 +406,11 @@
                         <div class="card">
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>File Overtime</b></label>
+                                    <label for="medical_history form-check-label"><b>{{ __('trans_overtime.fovt') }}</b></label>
                                         <input type="file" name="file_overtime" id="file_overtime">
                                     <br> <br>
                                     <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        Upload
+                                        {{ __('trans_overtime.btn_upload') }}
                                     </button>
                                 </div>
                             </div>
@@ -553,7 +514,7 @@
                     data: {
                         'startDate': claim_date_from,
                         'endDate': claim_date_to,
-                        'employeeNo' : direct_superior,
+                        'directSuperiorID' : direct_superior,
                         'businessUnit' : business_unit,
                         'type': reimbursement_type
 
@@ -730,23 +691,23 @@
 <script>
     $('#btn-update').click(()=>{
         let reimbursement_status = $('#reimbursement_status').val();
-        let totalpaid = $('#totalpaid').val();
+        // let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#direct_superior").val();
 
         $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior)
+        update_data(reimbursement_status,ticketNo,direct_superior)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior){
+    function update_data(reimbursement_status, ticketNo,direct_superior){
         $.ajax({
             url: "{{ url('trans/update_overtime/table') }}",
             type: "get",
             data: {
                 'status': reimbursement_status,
-                'paidAmount': totalpaid,
+                // 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior
+                'directSuperiorID' : direct_superior
             },
             success: function (response) {
                 // console.log(response);
@@ -875,6 +836,7 @@
 <script type="text/javascript">
 
     loadDataExportOvertime();
+    loadDataFirstLastAllOvertime();
     loadDataBusinessUnit();
     loadDataFirstLastAllBusinessUnit();
     
@@ -1045,6 +1007,28 @@
                     }
                     $('#business_unit').val(data.levelCode);
                     $('#business_unit').removeClass('loading');
+                });
+            }
+            $("#btn-preview").click(function () {
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+                $("#export_overtime_form").submit();
+            });
+           
+            function loadDataFirstLastAllOvertime() {
+                $('#reimbursement_type').addClass('spinner-border');
+    
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/reimbursement_type/overtime_all/api') }}",
+                }).then(function (data) {
+                    if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
+                        $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
+                    }
+                    $('#reimbursement_type').val(data.comGenCode);
+                    $('#reimbursement_type').removeClass('loading');
                 });
             }
             $("#btn-preview").click(function () {
