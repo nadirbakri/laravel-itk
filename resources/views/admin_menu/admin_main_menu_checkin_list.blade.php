@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('trans_reimbursement.judul') }}</title>
+    <title>{{ __('admin_main_checkin_list.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,9 +15,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;key=ABQIAAAA8tt4eKTuBZMVnLJfP2BZrBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS4Rz1LFzG0odNPtk8VLkdrQF5grA"></script>
-    <script type="text/javascript">
-        // Langkah 4
+    {{-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;key=ABQIAAAA8tt4eKTuBZMVnLJfP2BZrBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS4Rz1LFzG0odNPtk8VLkdrQF5grA"></script> --}}
+    {{-- <script type="text/javascript">
         function initialize() {
         var latlng = new google.maps.LatLng(-6.4, 106.8186111);
         var myOptions = {
@@ -25,11 +24,10 @@
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        // Langkah 3
         var map = new google.maps.Map(document.getElementById("map_canvas"),
        myOptions);
         }
-    </script>
+    </script> --}}
     <style type="text/css">
         .div-trans-medical {
             max-width: 100%;
@@ -139,17 +137,17 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_reimbursement.list') }}</span>
+                        <span class="title-text">{{ __('admin_main_checkin_list.rjudul') }}</span>
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('trans_transport.label_claim_date_start') }}</label>
+                            <label for="claim_date_from form-check-label">{{ __('admin_main_checkin_list.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('trans_transport.label_claim_date_start') }}">
+                                placeholder="{{ __('admin_main_checkin_list.label_claim_date_start') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -160,7 +158,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">Employee No</label>
+                                <label for="direct_superior form-check-label">{{ __('admin_main_checkin_list.employee') }}</label>
                         </div>
                                 <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
@@ -170,24 +168,23 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_medical.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('admin_main_checkin_list.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('admin_main_checkin_list.btn_list') }}
                         </button>
                     </div>
                 </div>
 <br>
                 <!-- TABLE -->
 
-                <div class="card">
-                   
-                <div class="row">
+               <div class="card">
+               <div class="row">
                     <div class="col-6">
-                        <p><b>{{ __('trans_medical.list_table') }}</b></p>
+                        <p><b>{{ __('admin_main_checkin_list.list_user') }}</b></p>
                     </div>
                 </div>
                 <div class="row">
@@ -195,13 +192,13 @@
                         <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
-                                    <th>Preview Location</th>
-                                    <th>User ID</th>
-                                    <th>Employee Name</th>
-                                    <th>CheckIn Date</th>
-                                    <th>CheckOut Date</th>
-                                    <th>CheckIn Hour</th>
-                                    <th>CheckOut Hour</th>
+                                    <th>{{ __('admin_main_checkin_list.ploc') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.employee') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.name') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.cdate') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.codate') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.chour') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.cohour') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -221,7 +218,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('admin_main_checkin_list.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -231,10 +228,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Employee ID</th>
-                                    <th>Full Name</th>
-                                    <th>Division</th>
-                                    <th>Ranking Name<</th>
+                                    <th>{{ __('admin_main_checkin_list.employee') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.name') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.division') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -284,7 +281,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('trans_medical.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('admin_main_checkin_list.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -347,7 +344,6 @@
                     data: {
                         'checkInDate': claim_date_from,
                         'employeeNo' : direct_superior
-
                     }
                 },
                 error: function(jqXHR, ajaxOptions, thrownError) {
@@ -361,8 +357,13 @@
                         orderable: false,
                         targets: 0, 
                         "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<a  href="{{ url('maps/location') }}" target="iframe_dashboard">Preview Location</a>' : '';
+                        render: function(data, type,row) {
+                            // href="{{ url('maps/location') }}"
+                            let longitudes = (row.longitude)
+                            let latitudes = (row.latitude)
+                            // console.log(longitudes)
+                            // console.log(latitudes)
+                            return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}?longitudes=${longitudes}&latitudes=${latitudes}"   target="iframe_dashboard">Preview Location</a>` : '';
 
                         }
                     },
@@ -380,6 +381,8 @@
                     },
                     {data: 'checkInHour', name: 'checkInHour'},
                     {data: 'checkOutHour', name: 'checkOutHour'}
+                    // {data: 'longitude', name: 'longitude'},
+                    // {data: 'latitude', name: 'latitude'}
                     
                 ],
                 select: {
@@ -411,6 +414,7 @@
             $('#medical_table').DataTable().destroy();
             load_data_medical_history(claim_date_from, direct_superior);
     })
+
 
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
@@ -455,6 +459,10 @@
 
         $('.close').click();
     }
+    
 
+
+</script>
+<script>
 </script>
 </html>

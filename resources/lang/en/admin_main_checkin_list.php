@@ -1,19 +1,25 @@
 <?php
 
 return [
-    'head' => 'Checkin List',
-    'judul' => 'Admin Menu',
-    'judul2' => 'Checkin List',
-    'checkindate' => 'Checkin Date',
-    'userid' => 'User ID',
-    'search' => 'Search',
-    'formheader' => 'Detail List Check In',
-    'table1' => 'User ID',
-    'table2' => 'Employee Name',
-    'table3' => 'Last Check In (Device)',
-    'table4' => 'Last Check In (Server)',
-    'table5' => 'Description',
-    'table6' => 'Preview Location'
+    'judul' => 'Checkin List',
+    'rjudul' => 'Reimbursement Checkin List',
+    'label_claim_date_start' => 'Claim Date - Start',
+    'employee' => 'Employee No',
+    'btn_search' => 'Search',
+    'btn_list' => 'List',
+    'ploc' => 'Preview Location',
+    'name' => 'Employee Name',
+    'cdate' => 'Checkin Date',
+    'codate' => 'Checkout Date',
+    'chour' => 'Checkin Hour',
+    'cohour' => 'CheckOut Hour',
+    'luser' => 'List User',
+    'division' => 'Division',
+    'Ranking' => 'Ranking',
+    'list_table' => 'Ranking',
+    'list_user' => 'Detail CheckIn',
+    'alert_success' => 'Success!',
+    
 ]
 
 ?>

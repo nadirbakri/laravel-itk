@@ -191,15 +191,15 @@ class TransactionController extends Controller
                 // var_dump(json_encode(
                 //     [
                 //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //         'employeeNo'=> $request->employeeNo,
-                //         'type'=> "REQUEST",
-                //         'businessUnit' => $request->businessUnit,
-                //         // 'exportMenu' => false,
-                //         'companyCode' => Session::get('companyCode'), 
-                //         'languageCode' => App::getLocale(), 
-                //         'sessionID' => 0, 
-                //         'sessionUserID' => Session::get('userID')
+                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                //             'employeeNo'=> $request->employeeNo,
+                //             'type'=> "REQUEST",
+                //             'businessUnit' => $request->businessUnit,
+                //             // 'exportMenu' => false,
+                //             'companyCode' => Session::get('companyCode'), 
+                //             'languageCode' => App::getLocale(), 
+                //             'sessionID' => 0, 
+                //             'sessionUserID' => Session::get('userID')
                 //     ]
                 //     ));
                 $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
