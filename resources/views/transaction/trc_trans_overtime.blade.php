@@ -513,7 +513,7 @@
                     data: {
                         'startDate': claim_date_from,
                         'endDate': claim_date_to,
-                        'directSuperiorID' : direct_superior,
+                        'employeeNo' : direct_superior,
                         'businessUnit' : business_unit,
                         'type': reimbursement_type
 
@@ -706,7 +706,7 @@
                 'status': reimbursement_status,
                 // 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'directSuperiorID' : direct_superior
+                'employeeNo' : direct_superior
             },
             success: function (response) {
                 // console.log(response);

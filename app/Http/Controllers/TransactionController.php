@@ -393,7 +393,7 @@ class TransactionController extends Controller
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'businessUnit' => $request->businessUnit,
-                        'directSuperiorID'=> $request->directSuperiorID,
+                        'employeeNo'=> $request->employeeNo,
                         'type' => "TOT",
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
@@ -1089,14 +1089,11 @@ class TransactionController extends Controller
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
-                        'ticketNo' => $request->ticketNo,
-                        'directSuperiorID'=> $request->directSuperiorID,
                         'companyCode' => Session::get('companyCode'),
-                        'languageCode' => App::getLocale(), 
+                        'ticketNo' => $request->ticketNo,
+                        'employeeNo'=> $request->employeeNo,
                         'sessionUserID' => Session::get('userID'),
-                        'approvalRemarks'=> 'string',
-                        'logActionUserID'=> 'string',
-                        'logActionUsername'=> 'string'
+                        'languageCode' => App::getLocale()
                     ]
                 )]
             );
