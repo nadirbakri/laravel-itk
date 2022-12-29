@@ -9,6 +9,7 @@
     const urlParams = new URLSearchParams(queryString);
     const longitude = urlParams.get('longitudes')
     const latitude = urlParams.get('latitudes')
+    const names = urlParams.get('names')
 
     var latlng = new google.maps.LatLng(latitude,longitude);
     // console.log(latitude,longitude);
@@ -17,9 +18,18 @@
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
     var map = new google.maps.Map(document.getElementById("map_canvas"),
     myOptions);
+    var marker;
+    var infowindow = new google.maps.InfoWindow();
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude,longitude),
+        map: map
+    }); 
+
+    infowindow.setContent(names);
+    infowindow.open(map, marker);
+
     }
 </script>
 </head>

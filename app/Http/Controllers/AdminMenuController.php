@@ -22,6 +22,9 @@ class AdminMenuController extends Controller
     public function pageMaps(){
         return view('admin_menu.maps');
     }
+    public function pageMapsAll(){
+        return view('admin_menu.mapsall');
+    }
     
     public function pageAdminMenuUserMaster(){
         return view('admin_menu.admin_main_user_master');

@@ -12,7 +12,7 @@ return [
     'paid_active_document' => 'Paid Active Document List',
     'business_trip' => 'Business Trip List',
     'transaction_data' => 'Transaction Menu',
-    'check_in_list' => 'Check In List'
+    'multiplecheck_in_list' => 'Multiple Check In List'
 ]
 
 ?>

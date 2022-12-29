@@ -103,7 +103,7 @@
                         <div class="col col-3">
                             <a href="{{ url('transaction/checkin_list') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.check_in_list') }}</span>
+                                <span class="child-title-text">{{ __('transaction.multiplecheck_in_list') }}</span>
                             </a>
                         </div>
                     </div>

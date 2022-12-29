@@ -761,6 +761,7 @@ Route::get('trans/trans_active_document/detail_data', 'TransactionController@tab
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
+Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
 
 Route::post('transaction/update_reimbursement/import', 'TransactionController@importUpdateReimbursement');
 Route::post('transaction/update_transport/import', 'TransactionController@importUpdateTransport');
@@ -940,6 +941,7 @@ Route::get('admin_menu/menu_master', 'AdminMenuController@pageAdminMenuMaster');
 Route::get('admin_menu/checkin_list', 'AdminMenuController@pageAdminMenuCheckinList');
 Route::get('admin_menu/news_master', 'AdminMenuController@pageAdminMenuNewsMaster');
 Route::get('maps/location', 'AdminMenuController@pageMaps');
+Route::get('mapsall/location', 'AdminMenuController@pageMapsAll');
 Route::get('adm_main_menu/news_master/list', 'AdminMenuController@pageAdminNewsList');
 Route::get('admin_menu/news_master/remove', 'AdminMenuController@pageNewsMasterRemove');
 Route::post('admin_menu/news_master/proses', 'AdminMenuController@pageAdminMenuNews');

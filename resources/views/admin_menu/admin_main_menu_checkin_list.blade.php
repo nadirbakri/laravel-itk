@@ -129,7 +129,7 @@
     </style>
 </head>
 
-<body onload="initialize()">
+<body>
     <div class="div-form">
         <form id="trans_medical_form" method="post">
             @csrf
@@ -177,6 +177,15 @@
                         <i class="fa fa-plus"></i> {{ __('admin_main_checkin_list.btn_list') }}
                         </button>
                     </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-maps" id="btn-maps"
+                        style="width: 100%;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                          </svg> {{ __('admin_main_checkin_list.btn_maps') }}
+                        </button>
+                    </div>
                 </div>
 <br>
                 <!-- TABLE -->
@@ -197,8 +206,8 @@
                                     <th>{{ __('admin_main_checkin_list.name') }}</th>
                                     <th>{{ __('admin_main_checkin_list.cdate') }}</th>
                                     <th>{{ __('admin_main_checkin_list.codate') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.chour') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.cohour') }}</th>
+                                    {{-- <th>{{ __('admin_main_checkin_list.chour') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.cohour') }}</th> --}}
                                 </tr>
                             </thead>
                         </table>
@@ -358,16 +367,19 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type,row) {
+                            // allLatitudes += row.latitude + ', ';
+                            // allLongitudes += row.longitude + ', ';
                             // href="{{ url('maps/location') }}"
                             let longitudes = (row.longitude)
                             let latitudes = (row.latitude)
+                            let names = (row.directSuperiorID)
                             // console.log(longitudes)
                             // console.log(latitudes)
-                            return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}?longitudes=${longitudes}&latitudes=${latitudes}"   target="iframe_dashboard">Preview Location</a>` : '';
+                            return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}?names=${names}&longitudes=${longitudes}&latitudes=${latitudes}"   target="iframe_dashboard">Preview Location</a>` : '';
 
                         }
                     },
-                    {data: 'userID', name: 'userID'},
+                    {data: 'employeeNo', name: 'employeeNo'},
                     {data: 'directSuperiorID', name: 'directSuperiorID'},
                     {data: 'checkInDate', name: 'checkInDate', 
                             render: function (data, type, row) {
@@ -379,8 +391,8 @@
                             return moment(data).format('YYYY-MM-DD');
                             }
                     },
-                    {data: 'checkInHour', name: 'checkInHour'},
-                    {data: 'checkOutHour', name: 'checkOutHour'}
+                    // {data: 'checkInHour', name: 'checkInHour'},
+                    // {data: 'checkOutHour', name: 'checkOutHour'}
                     // {data: 'longitude', name: 'longitude'},
                     // {data: 'latitude', name: 'latitude'}
                     
@@ -390,6 +402,9 @@
                     selector: 'td:first-child'
                 }
             });
+
+            // console.log(allLongitudes)
+            // console.log(allLatitudes)
 
             $("#btn-search").prop("disabled", true);
             $("#btn-search").html(
@@ -415,7 +430,7 @@
             load_data_medical_history(claim_date_from, direct_superior);
     })
 
-
+    
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
@@ -464,5 +479,46 @@
 
 </script>
 <script>
+        $('#btn-maps').click(()=> {
+            // alert("t")
+            var claim_date_from = $("#claim_date_from").val();
+            var direct_superior = $("#direct_superior").val();
+            nadir(claim_date_from,direct_superior);
+
+        })
+
+
+        function nadir(claim_date_from,direct_superior){
+            $.ajax({
+                url : "{{url('adm/checkinlist_mapsall/table')}}",
+                data : {
+                    'checkInDate': claim_date_from,
+                    'employeeNo' : direct_superior
+                },
+                type : "get",
+                dataType : "json",
+                contentType : "application/json",
+                success : function(data){
+                    const allLatitudes = [];
+                    const allLongitudes = [];
+                    const allNames = [];
+
+                    data.dataListSet.forEach(x => {
+                        allLatitudes.push(x.latitude)
+                        allLongitudes.push(x.longitude)
+                        allNames.push(x.directSuperiorID)
+                    });
+
+                    let allLatitudesSerialized = encodeURIComponent(JSON.stringify(allLatitudes));
+                    let allLongitudesSerialized = encodeURIComponent(JSON.stringify(allLongitudes));
+                    let allNamesSerialized = encodeURIComponent(JSON.stringify(allNames));
+
+                    location.href = `{{ url('mapsall/location') }}?allnames=${allNamesSerialized}&allLatitudes=${allLatitudesSerialized}&allLongitudes=${allLongitudesSerialized}`
+                },
+                error : function(err){
+                    console.log(err);
+                }
+            })
+        }
 </script>
 </html>

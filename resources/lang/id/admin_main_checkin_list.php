@@ -1,7 +1,7 @@
 <?php
 return [
-    'judul' => 'Daftar Check-In',
-    'rjudul' => 'Klaim Daftar Check-In',
+    'judul' => 'Daftar Multiple Check-In',
+    'rjudul' => 'Klaim Daftar Multiple Check-In',
     'label_claim_date_start' => 'Tanggal Pengajuan - Dari',
     'employee' => 'ID Karyawan',
     'btn_search' => 'Cari',
@@ -15,8 +15,9 @@ return [
     'luser' => 'Daftar Pengguna',
     'division' => 'Divisi',
     'ranking' => 'Level',
-    'list_user' => 'Detail CheckIn',
+    'list_user' => 'Detail Multiple CheckIn',
     'alert_success' => 'Sukses!',
+    'btn_maps' => 'Maps',
 
     ]
 ?>
