@@ -66,6 +66,9 @@ class TransactionController extends Controller
     public function pageTransactionCheckinList(){
         return view('admin_menu.admin_main_menu_checkin_list');
     }
+    public function pageTransactionMapsCheckinList(){
+        return view('transaction.trc_trans_checkin_list');
+    }
 
     // public function tableInputTransactionTransport(Request $request)
     // {
@@ -630,6 +633,61 @@ class TransactionController extends Controller
                         'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
                         'employeeNo'=> $request->employeeNo,
                         'exportMenu' => false,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+  
+    public function tableDetailMapsCheckinList(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            var_dump(json_encode(
+                [
+                    'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                ]
+                ));
+            $response = $client->post(env('API_URL') . '/checkIn/getcheckin',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 

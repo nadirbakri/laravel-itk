@@ -106,6 +106,12 @@
                                 <span class="child-title-text">{{ __('transaction.multiplecheck_in_list') }}</span>
                             </a>
                         </div>
+                        <div class="col col-3">
+                            <a href="{{ url('transaction/mapscheckin_list') }}" target="iframe_dashboard">
+                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
+                                <span class="child-title-text">CheckIn List</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

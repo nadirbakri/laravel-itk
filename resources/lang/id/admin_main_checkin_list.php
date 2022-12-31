@@ -18,6 +18,6 @@ return [
     'list_user' => 'Detail Multiple CheckIn',
     'alert_success' => 'Sukses!',
     'btn_maps' => 'Maps',
-
+    'remarks' => 'Catatan',
     ]
 ?>

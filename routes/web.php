@@ -761,6 +761,7 @@ Route::get('trans/trans_active_document/detail_data', 'TransactionController@tab
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
+Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
 
 Route::post('transaction/update_reimbursement/import', 'TransactionController@importUpdateReimbursement');
@@ -906,6 +907,7 @@ Route::get('transaction/transaction_overtime', 'TransactionController@pageTransa
 Route::get('transaction/transaction_active_document', 'TransactionController@pageTransactionActiveDocument');
 Route::post('transaction/transaction_active_document/proses', 'TransactionController@prosesTransactionActiveDocument');
 Route::get('transaction/checkin_list', 'TransactionController@pageTransactionCheckinList');
+Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');
