@@ -66,6 +66,9 @@ class TransactionController extends Controller
     public function pageTransactionCheckinList(){
         return view('admin_menu.admin_main_menu_checkin_list');
     }
+    public function pageTransactionMapsCheckinList(){
+        return view('transaction.trc_trans_checkin_list');
+    }
 
     // public function tableInputTransactionTransport(Request $request)
     // {
@@ -181,7 +184,6 @@ class TransactionController extends Controller
    
     public function tableDetailBusinesstrip(Request $request)
     {
-    
         if ($request->reimbursement_type == "TTA"){
             try {
                 $client = new Client([
@@ -192,15 +194,15 @@ class TransactionController extends Controller
                 // var_dump(json_encode(
                 //     [
                 //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //         'employeeNo'=> $request->employeeNo,
-                //         'type'=> "REQUEST",
-                //         'businessUnit' => $request->businessUnit,
-                //         // 'exportMenu' => false,
-                //         'companyCode' => Session::get('companyCode'), 
-                //         'languageCode' => App::getLocale(), 
-                //         'sessionID' => 0, 
-                //         'sessionUserID' => Session::get('userID')
+                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                //             'employeeNo'=> $request->employeeNo,
+                //             'type'=> "REQUEST",
+                //             'businessUnit' => $request->businessUnit,
+                //             // 'exportMenu' => false,
+                //             'companyCode' => Session::get('companyCode'), 
+                //             'languageCode' => App::getLocale(), 
+                //             'sessionID' => 0, 
+                //             'sessionUserID' => Session::get('userID')
                 //     ]
                 //     ));
                 $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
@@ -243,7 +245,7 @@ class TransactionController extends Controller
             return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
         }
 
-    }else if ($request->type == "TTB"){
+    }else if ($request->reimbursement_type == "TTB"){
         try {
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -379,7 +381,7 @@ class TransactionController extends Controller
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
             //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
             //         'businessUnit' => $request->businessUnit,
-            //         'employeeNo'=> $request->employeeNo,
+            //         'directSuperiorID'=> $request->directSuperiorID,
             //         'type' => "TOT",
             //         'exportMenu' => false,
             //         'companyCode' => Session::get('companyCode'), 
@@ -658,6 +660,118 @@ class TransactionController extends Controller
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
+  
+    public function tableDetailMapsCheckinList(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
+            //             'employeeNo'=> $request->employeeNo,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID')
+            //     ]
+            //     ));
+            $response = $client->post(env('API_URL') . '/checkIn/getcheckin',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+  
+    public function tableDetailCheckinListAll(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         'exportMenu' => false,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID')
+            //     ]
+            //     ));
+            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'exportMenu' => false,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+        return $arrResult;
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
+    }
     
     public function tableDetailTransport(Request $request)
     {
@@ -670,16 +784,16 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //             'exportMenu' =>false,
-            //             'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
-            //             'type' =>  $request->type,
-            //             'businessUnit'=> $request->businessUnit,
-            //             'directSuperiorID'=> $request->directSuperiorID,
-            //             'companyCode' => Session::get('companyCode'), 
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionID' => 0, 
-            //             'sessionUserID' => Session::get('userID'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'exportMenu' =>false,
+            //         'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+            //         'type' =>  $request->type,
+            //         'businessUnit'=> $request->businessUnit,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
 
@@ -860,20 +974,13 @@ class TransactionController extends Controller
             //         'languageCode' => App::getLocale(), 
             //         'sessionUserID' => Session::get('userID'),
             //         'employeeNo'=> $request->employeeNo,
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
             //         'approvalRemarks'=> 'string',
             //         'logActionUserID'=> 'string',
             //         'logActionUsername'=> 'string',
             //         'status'=> $request->status,
             //         'paidAmount'=> (int) $request->paidAmount,
-            //         'ticketNo' => $request->ticketNo
+            //         'ticketNo' => $request->ticketNo,
+            //         'approvalRemarks' => $request->approvalRemarks
             //     ]
             //     ));
 
@@ -884,20 +991,13 @@ class TransactionController extends Controller
                         'languageCode' => App::getLocale(), 
                         'sessionUserID' => Session::get('userID'),
                         'employeeNo'=> $request->employeeNo,
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
                         'approvalRemarks'=> 'string',
                         'logActionUserID'=> 'string',
                         'logActionUsername'=> 'string',
                         'status'=> $request->status,
                         'paidAmount'=> (int) $request->paidAmount,
-                        'ticketNo' => $request->ticketNo
+                        'ticketNo' => $request->ticketNo,
+                        'approvalRemarks' => $request->approvalRemarks
                     ]
                 )]
             );
@@ -932,23 +1032,16 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //         'companyCode' => Session::get('companyCode'),
+            //             'companyCode' => Session::get('companyCode'),
             //             'languageCode' => App::getLocale(), 
             //             'sessionUserID' => Session::get('userID'),
-            //             // 'employeeNo' => $request->employeeNo,
-            //             // 'logActionUserID' => Session::get('userID'),
-            //             // 'logActionUsername' => Session::get('userName'),
-            //             // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //             // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //             // 'processDate' => $request->processDate, 
-            //             // 'type' =>  $request->transportType,
-            //             // 'businessUnit'=> $request->businessUnit,
             //             'approvalRemarks'=> 'string',
             //             'logActionUserID'=> 'string',
             //             'logActionUsername'=> 'string',
             //             'status'=> $request->status,
-            //             'paidAmount'=> $request->paidAmpunt,
+            //             'paidAmount'=> $request->paidAmount,
             //             'ticketNo' => $request->ticketNo,
+            //             'approvalRemarks' => $request->approvalRemarks,
             //             'employeeNo'=> $request->employeeNo
             //     ]
             //     ));
@@ -959,20 +1052,13 @@ class TransactionController extends Controller
                         'companyCode' => Session::get('companyCode'),
                         'languageCode' => App::getLocale(), 
                         'sessionUserID' => Session::get('userID'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
                         'approvalRemarks'=> 'string',
                         'logActionUserID'=> 'string',
                         'logActionUsername'=> 'string',
                         'status'=> $request->status,
-                        'paidAmount'=> $request->paidAmpunt,
+                        'paidAmount'=>(int) $request->paidAmount,
                         'ticketNo' => $request->ticketNo,
+                        'approvalRemarks' => $request->approvalRemarks,
                         'employeeNo'=> $request->employeeNo
                     ]
                 )]
@@ -1103,59 +1189,26 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'status'=> $request->status,
-            //         'ticketNo' => $request->ticketNo,
-            //         'employeeNo'=> $request->employeeNo,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string'
-            // 'status'=> $request->status,
-            //             'companyCode' => Session::get('companyCode'),
             //             'ticketNo' => $request->ticketNo,
-            //             'employeeNo'=> $request->employeeNo,
-            //             'sessionUserID' => Session::get('userID'),
+            //             'directSuperiorID'=> $request->directSuperiorID,
+            //             'companyCode' => Session::get('companyCode'),
             //             'languageCode' => App::getLocale(), 
+            //             'sessionUserID' => Session::get('userID'),
+            //             'approvalRemarks'=> 'string',
+            //             'logActionUserID'=> 'string',
+            //             'logActionUsername'=> 'string'
             //     ]
-                // ));
+            //     ));
 
             $response = $client->put(env('API_URL') . '/tmovertime/updateovertimeapproval',
                 ['body' => json_encode(
                     [
-                        // 'status'=> $request->status,
-                        // 'companyCode' => Session::get('companyCode'),
-                        // 'ticketNo' => $request->ticketNo,
-                        // 'directSuperiorID'=> $request->directSuperiorID,
-                        // 'sessionUserID' => Session::get('userID'),
-                        // 'languageCode' => App::getLocale(), 
-                        // 'paidAmount'=> (int) $request->paidAmount
-
                         'status'=> $request->status,
+                        'companyCode' => Session::get('companyCode'),
                         'ticketNo' => $request->ticketNo,
                         'employeeNo'=> $request->employeeNo,
-                        'companyCode' => Session::get('companyCode'),
-                        'languageCode' => App::getLocale(), 
                         'sessionUserID' => Session::get('userID'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
-                        'approvalRemarks'=> 'string',
-                        'logActionUserID'=> 'string',
-                        'logActionUsername'=> 'string'
+                        'languageCode' => App::getLocale()
                     ]
                 )]
             );

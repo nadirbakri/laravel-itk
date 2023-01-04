@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('admin_main_checkin_list.judul') }}</title>
+    <title>{{ __('trc_transaction_checkin.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -137,17 +137,17 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('admin_main_checkin_list.rjudul') }}</span>
+                        <span class="title-text">{{ __('trc_transaction_checkin.rjudul') }}</span>
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('admin_main_checkin_list.label_claim_date_start') }}</label>
+                            <label for="claim_date_from form-check-label">{{ __('trc_transaction_checkin.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('admin_main_checkin_list.label_claim_date_start') }}">
+                                placeholder="{{ __('trc_transaction_checkin.label_claim_date_start') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -158,7 +158,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">{{ __('admin_main_checkin_list.employee') }}</label>
+                                <label for="direct_superior form-check-label">{{ __('trc_transaction_checkin.employee') }}</label>
                         </div>
                                 <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
@@ -168,13 +168,13 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('admin_main_checkin_list.btn_search') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trc_transaction_checkin.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('admin_main_checkin_list.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('trc_transaction_checkin.btn_list') }}
                         </button>
                     </div>
                     <div class="col-3">
@@ -183,7 +183,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                             <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                             <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                          </svg> {{ __('admin_main_checkin_list.btn_maps') }}
+                          </svg> {{ __('trc_transaction_checkin.btn_maps') }}
                         </button>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                <div class="card">
                <div class="row">
                     <div class="col-6">
-                        <p><b>{{ __('admin_main_checkin_list.list_user') }}</b></p>
+                        <p><b>{{ __('trc_transaction_checkin.list_user') }}</b></p>
                     </div>
                 </div>
                 <div class="row">
@@ -201,14 +201,11 @@
                         <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
-                                    <th>{{ __('admin_main_checkin_list.ploc') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.employee') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.name') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.cdate') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.codate') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.remarks') }}</th>
-                                    {{-- <th>{{ __('admin_main_checkin_list.chour') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.cohour') }}</th> --}}
+                                    <th>{{ __('trc_transaction_checkin.location') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.userid') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.ename') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.lcheckin') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.description') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -228,7 +225,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">{{ __('admin_main_checkin_list.luser') }}</h4>
+                        <h4 class="modal-little">{{ __('trc_transaction_checkin.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -238,10 +235,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{{ __('admin_main_checkin_list.employee') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.name') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.division') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.ranking') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.employee') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.name') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.division') }}</th>
+                                    <th>{{ __('trc_transaction_checkin.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -291,7 +288,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('admin_main_checkin_list.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('trc_transaction_checkin.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -350,9 +347,9 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url : "{{ url('adm/checkinlist/table') }}",
+                    url : "{{ url('adm/checkinlistmaps/table') }}",
                     data: {
-                        'checkInDate': claim_date_from,
+                        'lastCheckIn': claim_date_from,
                         'employeeNo' : direct_superior
                     }
                 },
@@ -371,28 +368,25 @@
                             // allLatitudes += row.latitude + ', ';
                             // allLongitudes += row.longitude + ', ';
                             // href="{{ url('maps/location') }}"
-                            let longitudes = (row.longitude)
-                            let latitudes = (row.latitude)
-                            let names = (row.directSuperiorID)
+                            // let longitudes = (row.longitude)
+                            // let latitudes = (row.latitude)
+                            // let names = (row.directSuperiorID)
                             // console.log(longitudes)
                             // console.log(latitudes)
-                            return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}?names=${names}&longitudes=${longitudes}&latitudes=${latitudes}"   target="iframe_dashboard">Preview Location</a>` : '';
+                            // ?names=${names}&longitudes=${longitudes}&latitudes=${latitudes}
+                            return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}"   target="iframe_dashboard">Preview Location</a>` : '';
 
                         }
                     },
                     {data: 'employeeNo', name: 'employeeNo'},
-                    {data: 'directSuperiorID', name: 'directSuperiorID'},
-                    {data: 'checkInDate', name: 'checkInDate', 
+                    {data: 'fullName', name: 'fullName'},
+                    {data: 'lastCheckIn', name: 'lastCheckIn', 
                             render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
-                    {data: 'checkOutDate', name: 'checkOutDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                            }
-                    },
-                    {data: 'remarks', name: 'remarks'}
+                    {data: 'officeDesc', name: 'officeDesc'},
+                    // {data: 'checkInHour', name: 'checkInHour'},
                     // {data: 'checkOutHour', name: 'checkOutHour'}
                     // {data: 'longitude', name: 'longitude'},
                     // {data: 'latitude', name: 'latitude'}
@@ -479,7 +473,7 @@
 
 
 </script>
-<script>
+{{-- <script>
         $('#btn-maps').click(()=> {
             // alert("t")
             var claim_date_from = $("#claim_date_from").val();
@@ -521,5 +515,5 @@
                 }
             })
         }
-</script>
+</script> --}}
 </html>

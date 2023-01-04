@@ -761,6 +761,8 @@ Route::get('trans/trans_active_document/detail_data', 'TransactionController@tab
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
+Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
+Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
 
 Route::post('transaction/update_reimbursement/import', 'TransactionController@importUpdateReimbursement');
 Route::post('transaction/update_transport/import', 'TransactionController@importUpdateTransport');
@@ -905,6 +907,7 @@ Route::get('transaction/transaction_overtime', 'TransactionController@pageTransa
 Route::get('transaction/transaction_active_document', 'TransactionController@pageTransactionActiveDocument');
 Route::post('transaction/transaction_active_document/proses', 'TransactionController@prosesTransactionActiveDocument');
 Route::get('transaction/checkin_list', 'TransactionController@pageTransactionCheckinList');
+Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');
@@ -939,6 +942,8 @@ Route::get('admin_menu/user_group', 'AdminMenuController@pageAdminMenuUserGroup'
 Route::get('admin_menu/menu_master', 'AdminMenuController@pageAdminMenuMaster');
 Route::get('admin_menu/checkin_list', 'AdminMenuController@pageAdminMenuCheckinList');
 Route::get('admin_menu/news_master', 'AdminMenuController@pageAdminMenuNewsMaster');
+Route::get('maps/location', 'AdminMenuController@pageMaps');
+Route::get('mapsall/location', 'AdminMenuController@pageMapsAll');
 Route::get('adm_main_menu/news_master/list', 'AdminMenuController@pageAdminNewsList');
 Route::get('admin_menu/news_master/remove', 'AdminMenuController@pageNewsMasterRemove');
 Route::post('admin_menu/news_master/proses', 'AdminMenuController@pageAdminMenuNews');
@@ -996,9 +1001,10 @@ Route::get('travel_type/all/api', 'DataController@dataTravelTypeAllAPI');
 Route::get('reimbursement_type/transport/api', 'DataController@dataReimbursementTypeTransportAPI');
 Route::get('reimbursement_type/transport/all/api', 'DataController@dataReimbursementTypeTransportAllAPI');
 Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementTypeOvertimeAPI');
+Route::get('reimbursement_type/overtime_all/api', 'DataController@dataReimbursementOvertimeAPI');
 Route::get('business_unit/function/api', 'DataController@dataBusinessUnitFunctionAPI');
 Route::get('travel_type/api', 'DataController@dataTravelTypeAPI');
-Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementOvertimeAPI');
+// Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementOvertimeAPI');
 Route::get('workflow/api', 'DataController@dataWorkFlowAPI');
 Route::get('status/api', 'DataController@dataStatusAPI');
 Route::get('status/func/api', 'DataController@dataStatusFunctionAPI');

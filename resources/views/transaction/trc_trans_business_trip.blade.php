@@ -181,7 +181,7 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">Employee No</label>
+                                <label for="direct_superior form-check-label">{{ __('trans_business_trip.employee') }}</label>
                         </div>
                                 <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
@@ -203,13 +203,13 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> Upload
+                        <i class="fa fa-plus"></i> {{ __('trans_business_trip.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_attendance.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('trans_business_trip.btn_list') }}
                         </button>
                     </div>
                 </div>
@@ -226,17 +226,17 @@
                             <table id="business_trip_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Ticket Number</th>
-                                        <th>Name</th>
-                                        <th>Customer Name</th>
-                                        <th>Status</th>
-                                        <th>Destination</th>
-                                        <th>Customer Name</th>
-                                        <th>Project Name</th>
-                                        <th>Total Paid</th>
-                                        <th>Total Request</th>
-                                        <th>Tujuan</th>
+                                        <th>{{ __('trans_business_trip.detail') }}</th>
+                                        <th>{{ __('trans_business_trip.tnom') }}</th>
+                                        <th>{{ __('trans_business_trip.name') }}</th>
+                                        <th>{{ __('trans_business_trip.cname') }}</th>
+                                        <th>{{ __('trans_business_trip.status') }}</th>
+                                        <th>{{ __('trans_business_trip.destination') }}</th>
+                                        <th>{{ __('trans_business_trip.cname') }}</th>
+                                        <th>{{ __('trans_business_trip.pname') }}</th>
+                                        <th>{{ __('trans_business_trip.tpaid') }}</th>
+                                        <th>{{ __('trans_business_trip.treq') }}</th>
+                                        <th>{{ __('trans_business_trip.tujuan') }}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -255,7 +255,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">{{ __('trans_business_trip.luser') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -265,18 +265,15 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>User ID</th>
-                                    <th>Employee ID</th>
-                                    <th>full Name</th>
-                                    <th>Division</th>
+                                    <th>{{ __('trans_business_trip.employee') }}</th>
+                                    <th>{{ __('trans_business_trip.name') }}</th>
+                                    <th>{{ __('trans_business_trip.division') }}</th>
+                                    <th>{{ __('trans_business_trip.ranking') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -286,8 +283,6 @@
                         </table>
                     </div>
                    </div>
-
-                    
                 </div>
             </div>
         </form>
@@ -299,7 +294,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Detail Reimbursement</h4>
+                        <h4 class="modal-little">{{ __('trans_business_trip.dbtrip') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -309,13 +304,13 @@
                             <div class="card-body">
                                 <div class="row detailstatus">
                                     <div class="col-3  ">
-                                        <h5>Request Date</h5>
+                                        <h5>{{ __('trans_business_trip.rdate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Receipt Date</h5>
+                                        <h5>{{ __('trans_business_trip.redate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -324,13 +319,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Ticket Number</h5>
+                                        <h5>{{ __('trans_business_trip.tnom') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_business_trip.status') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -339,13 +334,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Business Unit</h5>
+                                        <h5>{{ __('trans_business_trip.label_bu') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Total Claim </h5>
+                                        <h5>{{ __('trans_business_trip.treq') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -354,13 +349,13 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Employee No</h5>
+                                        <h5>{{ __('trans_business_trip.employee') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                     <div class="col-3">
-                                        <h5>Type</h5>
+                                        <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="type" name="type">
@@ -370,19 +365,19 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-3">
-                                        <h5>Status</h5>
+                                        <h5>{{ __('trans_business_trip.status') }}</h5>
                                     </div>
                                     <div class="col-5">
                                             <select name="" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">APPROVE</option>
-                                                <option value="REJECTED">REJECT</option>
-                                                <option value="PAID">PAID</option>
+                                                <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
+                                                <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
+                                                <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
                                             </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
-                                        <h5>Total Paid</h5>
+                                        <h5>{{ __('trans_business_trip.tpaid') }}</h5>
                                     </div>
                                     <div class="col-5">
                                         <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
@@ -390,14 +385,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
-                                        <h5>Approval Remarks</h5>
+                                        <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
                                     </div>
                                     <div class="col-5">
                                         <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                 </div>
                                 <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_business_trip.update') }}</button>
                             </div>
                         </div>
                     </div>
@@ -414,7 +409,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Upload Paid Business Trip</h4>
+                        <h4 class="modal-little">{{ __('trans_business_trip.upaidbusiness') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -423,11 +418,11 @@
                         <div class="card">
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>File Business Trip</b></label>
+                                    <label for="medical_history form-check-label"><b>{{ __('trans_business_trip.fbusinesstrip') }}</b></label>
                                         <input type="file" name="file_overtime" id="file_overtime">
                                     <br> <br>
                                     <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        Upload
+                                        {{ __('trans_business_trip.btn_upload') }}
                                     </button>
                                 </div>
                             </div>
@@ -959,12 +954,13 @@ $.get("{{ url('level/api') }}", function (data) {
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#direct_superior").val();
+        let approvalremarks = $("#approvalremarks").val();
 
         $('.close').click();
-        update_data_approval_businesstrip(reimbursement_status,totalpaid,ticketNo,direct_superior)
+        update_data_approval_businesstrip(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
-    function update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo,direct_superior){
+    function update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_approvalbusinesstrip/table') }}",
             type: "get",
@@ -972,7 +968,8 @@ $.get("{{ url('level/api') }}", function (data) {
                 'status': reimbursement_status,
                 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior
+                'employeeNo' : direct_superior,
+                'approvalRemarks' : approvalremarks
             },
             success: function (response) {
                 // console.log(response);

@@ -8684,7 +8684,7 @@ class DataController extends Controller
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
-					"variable" => "Reimbursement_Overtime",
+					"variable" => "Transaction_Ovt",
 					"languageCode" => App::getLocale(),
 					]
 					)]
@@ -9123,8 +9123,11 @@ class DataController extends Controller
 
 	public function dataReimbursementOvertimeAPI (Request $request)
 	{
-		$search = $request->search;
-
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
+		
 		try {
 			$client = new Client([
 				'headers' => [ 'Content-Type' => 'application/json',

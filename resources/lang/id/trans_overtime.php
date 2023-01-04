@@ -1,0 +1,50 @@
+<?php
+
+return [ 
+    'judul' => 'Daftar Lembur',
+    'list' => 'Overtime List',
+    'employee' => 'ID Karyawan',
+    'list_table' => 'DAFTAR KERJA LEMBUR',
+    'label_claim_date_start' => 'Tanggal Pengajuan - Dari',
+    'label_claim_date_end' => 'Tanggal Pengajuan - Sampai',
+    'label_processed_date' => 'Processed Date',
+    'label_business_unit' => 'Business Unit',
+    'label_status' => 'Status',
+    'label_reimbursement_type' => 'Tipe Pengajuan',
+    'label_bu' => 'Unit Bisnis',
+    'btn_upload' => 'Unggah',
+    'btn_search' => 'Cari',
+    'btn_list' => 'Daftar',
+    'detail' => 'Detail',
+    'name' => 'Nama',
+    'status' => 'Status',
+    'tnom' => 'Nomor Tiker',
+    'pname' => 'Nama Proyek',
+    'odate' => 'Tanggal Lembur',
+    'ohourfrom' => 'Waktu Lembur Dari',
+    'ohourto' => 'Waktu Lembur Sampai',
+    'ohourremarks' => 'Catatan',
+    'cname' => 'Nama Pelanggan',
+    'luser' => 'Daftar Pengguna',
+    'fname' => 'Nama Lengkap',
+    'division' => 'Divisi',
+    'ranking' => 'Level',
+    'dreimbursement' => 'Detail Kerja Lembur',
+    'rdate' => 'Tanggal Pengajuan',
+    'tclaim' => 'Total Permintaan',
+    'dname' => 'Nama Tanggungan',
+    'approve' => 'Disetujui',
+    'reject' => 'Ditolak',
+    'paid' => 'Dibayar',
+    'update' => 'Diubah',
+    'upaidovt' => 'Unggah Berkas Lembur',
+    'fovt' => 'Berkas Kerja Lembur',
+
+
+    'label_slip' => 'Slip',
+    'btn_preview' => 'Preview',
+    'btn_send_to' => 'Send To',
+    'alert_success' => 'Success !'
+]
+
+?>

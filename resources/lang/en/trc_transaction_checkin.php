@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'judul' => 'Multiple Checkin List',
-    'rjudul' => 'Reimbursement Multiple Checkin List',
+    'judul' => 'Checkin List',
+    'rjudul' => 'Reimbursement Checkin List',
     'label_claim_date_start' => 'Claim Date - Start',
     'employee' => 'Employee No',
     'btn_search' => 'Search',
@@ -17,10 +17,15 @@ return [
     'division' => 'Division',
     'Ranking' => 'Ranking',
     'list_table' => 'Ranking',
-    'list_user' => 'Detail Multiple CheckIn',
+    'list_user' => 'Detail CheckIn',
     'alert_success' => 'Success!',
     'btn_maps' => 'Maps',
     'remarks' => 'Remarks',
+    'userid' => 'User ID',
+    'ename' => 'Employee Name',
+    'lcheckin' => 'Last CheckIn (Device)',
+    'description' => 'Description',
+    'location' => 'Preview Location',
     
 ]
 
