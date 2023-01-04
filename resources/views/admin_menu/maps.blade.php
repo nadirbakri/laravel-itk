@@ -12,6 +12,7 @@
     const names = urlParams.get('names')
 
     var latlng = new google.maps.LatLng(latitude,longitude);
+    // var polyline = L.polyline(latlng, {color: 'blue'}).addTo(map);
     // console.log(latitude,longitude);
     var myOptions = {
     zoom: 13,

@@ -669,16 +669,16 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
-                        'employeeNo'=> $request->employeeNo,
-                        'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
-                        'sessionID' => 0, 
-                        'sessionUserID' => Session::get('userID')
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
+            //             'employeeNo'=> $request->employeeNo,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID')
+            //     ]
+            //     ));
             $response = $client->post(env('API_URL') . '/checkIn/getcheckin',
                 ['body' => json_encode(
                     [

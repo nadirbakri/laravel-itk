@@ -2,7 +2,10 @@
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;key=AIzaSyBO4bpr0RvxO0esRe_PkDcDCycliPWSwS0"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
+    // let poly;
+    // let map;
     function initialize() {
         const queryString = window.location.search;
         // console.log(queryString);
@@ -18,8 +21,16 @@
             center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        
+
+        var polymapstes = {
+            path: latlng,
+            geodesic: true,
+            strokeColort: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+        }
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions, polymapstes);
+
         var infowindow = new google.maps.InfoWindow();
 
         var marker, i;
