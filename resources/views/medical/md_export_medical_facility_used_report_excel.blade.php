@@ -39,7 +39,7 @@
             </tr>
             <tr></tr>
             <tr>
-                <th colspan="16" style="text-align:center; font-weight:bold;"><h3>Medical Facility Used {{  }}</h3></th>
+                <th colspan="16" style="text-align:center; font-weight:bold;"><h3>Medical Facility Used {{ $type }}</h3></th>
             </tr>
             <tr>
                 <th colspan="16" style="text-align:center; font-weight:bold;"><pre>{{ __('payroll_dumtk.label_as_of_period') }}       {{ $data[1]->asOfPeriod }}</pre></th>

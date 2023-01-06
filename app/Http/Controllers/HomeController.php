@@ -20,21 +20,25 @@ class HomeController extends Controller
     public function getURLBreadcrumbs(Request $request)
     {
     	$path = array_filter(explode('/', parse_url($request->get('url_data'), PHP_URL_PATH)));
+		// var_dump($path);
     	$breadcrumbs = array();
-        $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $path[1]));
-        $first = $path[1];
-        $breadcrumbs[] = "<a href=\"$path[1]\" target=\"iframe_dashboard\">$title</a>";
+        $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $path[2]));
+        $first = $path[2];
+        $breadcrumbs[] = "<a href=\"$path[2]\" target=\"iframe_dashboard\">$title</a>";
 
         array_shift($path);
         $pathkeys = array_keys($path);
+		$pertama = reset($pathkeys);
         $last = end($pathkeys);
     	foreach ($path AS $x => $crumb) {
-    		$title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
+			if($x != $pertama){
+				$title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
 
-    		if ($x != $last)
-    			$breadcrumbs[] = "<a href=\"$first/$crumb\" target=\"iframe_dashboard\">$title</a>";
-    		else
-    			$breadcrumbs[] = $title;
+				if ($x != $last)
+					$breadcrumbs[] = "<a href=\"$first/$crumb\" target=\"iframe_dashboard\">$title</a>";
+				else
+					$breadcrumbs[] = $title;
+			}
     	}
 
     	return implode('&nbsp; / &nbsp;', $breadcrumbs);

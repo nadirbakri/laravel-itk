@@ -6,7 +6,7 @@
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('css/payroll.css') }}">
 	<style type="text/css">
 		.div-payroll {
@@ -32,33 +32,19 @@
 			<img src="{{ url('icons/sidebar/payroll.png') }}" alt="Title">
 			<span class="title-text">{{ __('payroll.judul') }}</span>
 		</div>
-		@if($dataMenu != null || $dataMenu != '')
-		@foreach($dataMenu as $key => $value)
-			<div class="card">
-				@if(strpos($value->menuName, 'Data Entry') !== false)
-				<a class="collapsed" data-toggle="collapse" href="#payroll-master-data" aria-expanded="true" aria-controls="payroll-master-data">
-					<div class="card-header">
-						<div class="div-dropdown-title">
-							<img class="dropdown-logo" src="{{ url('/icons/payroll/payroll-master-data.svg') }}" alt="payroll">
-							<span class="dropdown-title-text">{{ $value->menuName }}</span>
-							<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-						</div>
-					</div>
-				</a>
-				<div id="payroll-master-data" class="collapse">
-					<div class="card-block">
-						<div class="row div-child-data">
-						</div>
+		<div class="card">
+			<a class="collapsed" data-toggle="collapse" href="#payroll-master-data" aria-expanded="true" aria-controls="payroll-master-data">
+				<div class="card-header">
+					<div class="div-dropdown-title">
+						<img class="dropdown-logo" src="{{ url('/icons/payroll/payroll-master-data.svg') }}" alt="payroll">
+						<span class="dropdown-title-text">{{ __('payroll.data_entry') }}</span>
+						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
 					</div>
 				</div>
-				@continue
-				@endif
-				<div class="col col-3">
-					<a href="{{ url($value->pageURL) }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-						<span class="child-title-text">{{ $value->menuName }}</span>
-					</a>
-				</div>		
+			</a>
+			<div id="payroll-master-data" class="collapse">
+				<div class="card-block">
+					<div class="row div-child-data">
 						<div class="col col-3">
 							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
@@ -85,51 +71,51 @@
 						</div>
 					</div>
 					<div class="div-head-data">
-						<span class="head-title-text">{{ __('payroll.thr_bonus') }}</span>
+					<span class="head-title-text">{{ __('payroll.thr_bonus') }}</span>
+				</div>
+				<div class="row div-child-data">
+					<div class="col col-3">
+						<a href="{{ url('payroll/thr_data_entry') }}" target="iframe_dashboard">
+							<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+							<span class="child-title-text">{{ __('payroll.thr_data_entry') }}</span>
+						</a>
 					</div>
-					<div class="row div-child-data">
-						<div class="col col-3">
-							<a href="{{ url('payroll/thr_data_entry') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.thr_data_entry') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.bonus_data_entry') }}</span>
-							</a>
-						</div>	
+					<div class="col col-3">
+						<a href="{{ url('payroll/bonus_data_entry') }}" target="iframe_dashboard">
+							<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+							<span class="child-title-text">{{ __('payroll.bonus_data_entry') }}</span>
+						</a>
+					</div>	
+				</div>
+				<div class="div-head-data">
+					<span class="head-title-text">{{ __('payroll.loan') }}</span>
+				</div>
+				<div class="row div-child-data">
+					<div class="col col-3">
+						<a href="{{ url('payroll/loan_master') }}" target="iframe_dashboard">
+							<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+							<span class="child-title-text">{{ __('payroll.loan_master') }}</span>
+						</a>
 					</div>
-					<div class="div-head-data">
-						<span class="head-title-text">{{ __('payroll.loan') }}</span>
+					<div class="col col-3">
+						<a href="{{ url('payroll/loan_data_entry') }}" target="iframe_dashboard">
+							<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+							<span class="child-title-text">{{ __('payroll.loan_data_entry') }}</span>
+						</a>
 					</div>
-					<div class="row div-child-data">
-						<div class="col col-3">
-							<a href="{{ url('payroll/loan_master') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.loan_master') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/loan_data_entry') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.loan_data_entry') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/full_partial_loan_payment') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.partial_full_loan_payment') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/loan_payment') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.loan_payment') }}</span>
-							</a>
-						</div>
+					<div class="col col-3">
+						<a href="{{ url('payroll/full_partial_loan_payment') }}" target="iframe_dashboard">
+							<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+							<span class="child-title-text">{{ __('payroll.partial_full_loan_payment') }}</span>
+						</a>
 					</div>
+					<div class="col col-3">
+						<a href="{{ url('payroll/loan_payment') }}" target="iframe_dashboard">
+							<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+							<span class="child-title-text">{{ __('payroll.loan_payment') }}</span>
+						</a>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -444,8 +430,6 @@
 				</div>
 			</div>
 		</div>
-		@endforeach
-		@endif
 	</div>
 	@if($errors->any())
 	<div class="modal fade" role="dialog" id="notification_error">

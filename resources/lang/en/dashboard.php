@@ -27,7 +27,7 @@ return [
     'present' => 'Present',
     'late' => 'Late',
     'absent' => 'Absent',
-    'early_back' => 'Early Back',
+    'leave' => 'Leave',
     'payroll' => 'Payroll',
     'overtime_pay' => 'Overtime Pay',
     'table_employee_no' => 'Employee No',
