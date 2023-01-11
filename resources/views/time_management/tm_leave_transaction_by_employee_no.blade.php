@@ -81,7 +81,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url('time_management') }}" target="iframe_dashboard">
+            <a href="{{ url('/time_management') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_leave_transaction_by_employee_no.list') }}</span>
             </a>

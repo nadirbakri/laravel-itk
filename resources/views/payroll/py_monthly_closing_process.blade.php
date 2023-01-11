@@ -64,7 +64,7 @@
 <body>
 	<div class="div-payroll">
         <div class="div-title">
-			<a href="{{ url('payroll') }}" target="iframe_dashboard">
+			<a href="{{ url('/payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('payroll_monthly_payroll_closing_process.list') }}</span>
 			</a>

@@ -111,7 +111,7 @@
             @csrf
             <div class="div-medical">
                 <div class="div-title">
-                    <a href="{{ url('medical') }}" target="iframe_dashboard">
+                    <a href="{{ url('/medical') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('md_disease_report.list') }}</span>
                     </a>

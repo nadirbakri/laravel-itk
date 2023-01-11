@@ -539,7 +539,7 @@
  			type: 'GET',
  			dataType: 'JSON',
  			success: function (response) {
-				console.log(response);
+				// console.log(response.data2);
 				var overtimePayData = {
 					labels: response.data2.tanggal,
 					datasets: [
@@ -1062,7 +1062,7 @@
 						fontFamily: 'Montserrat',
 						fontColor: '#4472C4',
 						callback: function(value, index, values) {
-							return value.toFixed(1) + ' %';
+							return value;
 						},
 						beginAtZero: true
 					}
@@ -1099,8 +1099,8 @@
 							return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 						},
 						beginAtZero: true,
-						stepSize: 1000000000,
-						max: 7000000000
+						// stepSize: 1000000000,
+						// max: 7000000000
 					}
 				}]
 			},

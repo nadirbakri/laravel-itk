@@ -712,7 +712,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -782,7 +782,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -1907,40 +1907,40 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    "employeeNoFrom" => $request->employee_no_from,
-                    "employeeNoTo" => $request->employee_no_to,
-                    "absentDateFrom" => $request->absent_date_from,
-                    "absentDateTo" => $request->absent_date_to,
-                    'sessionID' => 0,
-                    'userID' => Session::get('userID'), 
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    "languageCode" => App::getLocale()
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         "employeeNoFrom" => $request->employee_no_from,
+            //         "employeeNoTo" => $request->employee_no_to,
+            //         "absentDateFrom" => $request->absent_date_from,
+            //         "absentDateTo" => $request->absent_date_to,
+            //         'sessionID' => 0,
+            //         'userID' => Session::get('userID'), 
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName'),
+            //         "languageCode" => App::getLocale()
+            //     ]
+            //     ));
             
-            // $response = $client->post(env('API_URL') . '/updateabsenteeismprocess/updateabsenteeismprocess',
-            //     ['body' => json_encode(
-            //         [
-            //             'companyCode' => Session::get('companyCode'),
-            //             "employeeNoFrom" => $request->employee_no_from,
-            //             "employeeNoTo" => $request->employee_no_to,
-            //             "absentDateFrom" => $request->absent_date_from,
-            //             "absentDateTo" => $request->absent_date_to,
-            //             'sessionID' => 0,
-            //             'userID' => Session::get('userID'), 
-            //             'logActionUserID' => Session::get('userID'),
-            //             'logActionUsername' => Session::get('userName'),
-            //             "languageCode" => App::getLocale()
-            //         ]
-            //     )]
-            // );
+            $response = $client->post(env('API_URL') . '/updateabsenteeismprocess/updateabsenteeismprocess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNoFrom" => $request->employee_no_from,
+                        "employeeNoTo" => $request->employee_no_to,
+                        "absentDateFrom" => $request->absent_date_from,
+                        "absentDateTo" => $request->absent_date_to,
+                        'sessionID' => 0,
+                        'userID' => Session::get('userID'), 
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -1950,9 +1950,9 @@ class TimeManagementController extends Controller
             }
         }
 
-        // $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function prosesShiftMasterCodeTM(Request $request)

@@ -22,7 +22,8 @@ class OrganizationStructureController extends Controller
             $response = $client->post(env('API_URL') . '/listorganization',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'supervisorPositionCode' => $request->supervisorPositionCode
                     ]
                 )]
             );

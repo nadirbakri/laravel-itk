@@ -68,7 +68,7 @@ class PayrollController extends Controller
 
         } catch (RequestException $e) {
 	    	$response = $e->getResponse();
-			var_dump($response);
+			// var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -1328,7 +1328,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1356,7 +1363,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1543,7 +1557,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1571,7 +1592,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -1641,7 +1669,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2365,7 +2400,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -2392,7 +2434,14 @@ class PayrollController extends Controller
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());  
@@ -2461,7 +2510,14 @@ public function dataDetailReportFormatPY(Request $request)
             )]
         );
     } catch (RequestException $e) {
-        var_dump($e->getResponse());
+        $response = $e->getResponse();
+        if($response->getStatusCode() == 401){
+            return view('error.login');
+        }else if($response->getStatusCode() == 404){
+            return view('error.not_found');
+        }else{
+            return view('error.bad_request');
+        }
     }
 
     $arrResult = json_decode($response->getBody()->getContents());  
@@ -2790,7 +2846,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            var_dump(json_encode($param));
+            // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prreportformat/insertreportformat',
@@ -2989,7 +3045,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -3778,43 +3834,43 @@ public function dataDetailReportFormatPY(Request $request)
                     $paramDetail[] = null;
                 }
 
-                var_dump(json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        "employeeNo" => $request->employee_no_hidden,
-                        "employeeName" => $request->employee_name,
-                        "loanNo" => (int) $request->loan_no,
-                        "auditLoanSeqNo" => (int) $request->paid_loan_seq,
-                        "paymentFlag" => $request->payment_method,
-                        "ratePerYear" => (float) $request->rate_per_year,
-                        "noOfInstallmentNotYetPaid" => (int) $request->no_of_installment_not_yet_paid,
-                        "currencyCode" => $request->currency_code,
-                        "periodYear" => (int) $request->period_year,
-                        "periodMonth" => (int) $request->period_month,
-                        "statusPeriod" => $request->status_period,
-                        "principalAmount" => (float) $request->principal_amount_installment,
-                        "interestAmount" => (float) $request->interest_amount_per_installment,
-                        "outstandingAmount" => (float) $request->outstanding_amount,
-                        "totalNotYetPaid" => (float) $request->total_not_yet_paid,
-                        "paymentAmount" => (float) $request->payment_amount,
-                        "paymentOtherCost" => (float) $request->other_cost,
-                        "totalPayment" => (float) $request->total_payment,
-                        "newOutstandingPaymentAmount" => (float) $request->new_outstanding_amount,
-                        "newRatePerYear" => (float) $request->new_rate_per_year,
-                        "newNoOfInstallmentNotYetPaid" => (int) $request->new_no_of_installment_not_yet_paid,
-                        "employeeDetail" => $paramDetail,
-                        "changeNo" => 0,
-                        "changeBy" => Session::get('userID'),
-                        "changeDate" => date("Y-m-d\TH:i:s"),
-                        "createBy" => Session::get('userID'),
-                        "createDate" => date("Y-m-d\TH:i:s"),
-                        "languageCode" => App::getLocale(),
-                        "sessionID" => 0,
-                        "sessionUserID" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
-                    ]
-                    ));
+                // var_dump(json_encode(
+                //     [
+                //         'companyCode' => Session::get('companyCode'),
+                //         "employeeNo" => $request->employee_no_hidden,
+                //         "employeeName" => $request->employee_name,
+                //         "loanNo" => (int) $request->loan_no,
+                //         "auditLoanSeqNo" => (int) $request->paid_loan_seq,
+                //         "paymentFlag" => $request->payment_method,
+                //         "ratePerYear" => (float) $request->rate_per_year,
+                //         "noOfInstallmentNotYetPaid" => (int) $request->no_of_installment_not_yet_paid,
+                //         "currencyCode" => $request->currency_code,
+                //         "periodYear" => (int) $request->period_year,
+                //         "periodMonth" => (int) $request->period_month,
+                //         "statusPeriod" => $request->status_period,
+                //         "principalAmount" => (float) $request->principal_amount_installment,
+                //         "interestAmount" => (float) $request->interest_amount_per_installment,
+                //         "outstandingAmount" => (float) $request->outstanding_amount,
+                //         "totalNotYetPaid" => (float) $request->total_not_yet_paid,
+                //         "paymentAmount" => (float) $request->payment_amount,
+                //         "paymentOtherCost" => (float) $request->other_cost,
+                //         "totalPayment" => (float) $request->total_payment,
+                //         "newOutstandingPaymentAmount" => (float) $request->new_outstanding_amount,
+                //         "newRatePerYear" => (float) $request->new_rate_per_year,
+                //         "newNoOfInstallmentNotYetPaid" => (int) $request->new_no_of_installment_not_yet_paid,
+                //         "employeeDetail" => $paramDetail,
+                //         "changeNo" => 0,
+                //         "changeBy" => Session::get('userID'),
+                //         "changeDate" => date("Y-m-d\TH:i:s"),
+                //         "createBy" => Session::get('userID'),
+                //         "createDate" => date("Y-m-d\TH:i:s"),
+                //         "languageCode" => App::getLocale(),
+                //         "sessionID" => 0,
+                //         "sessionUserID" => Session::get('userID'),
+                //         "logActionUserID" => Session::get('userID'),
+                //         "logActionUsername" => Session::get('userID')
+                //     ]
+                //     ));
 
                 $response = $client->put(env('API_URL') . '/prloanpayment/updateprloanpayment',
                     ['body' => json_encode(
@@ -3981,7 +4037,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -4125,7 +4181,7 @@ public function dataDetailReportFormatPY(Request $request)
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -4285,7 +4341,14 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
         } catch (RequestException $e) {
-            var_dump($e->getResponse());
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
@@ -4446,7 +4509,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump((int) $request->column_no_hidden);
+            // var_dump((int) $request->column_no_hidden);
 
             $response = $client->delete(env('API_URL') . '/prformatspt/deleteprformatspt',
                 ['body' => json_encode(
@@ -5429,7 +5492,7 @@ public function dataDetailReportFormatPY(Request $request)
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -5503,7 +5566,7 @@ public function dataDetailReportFormatPY(Request $request)
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -5706,25 +5769,25 @@ public function dataDetailReportFormatPY(Request $request)
 
             // var_dump((int) $request->period_month);
             // var_dump(Session::get('token'));
-            var_dump(json_encode(
-                [
-                    "companyCode" => Session::get('companyCode'),
-                    "periodMonth" => (int) $request->process_period_month_hidden,
-                    "periodYear" => (int) $request->process_period_year,
-                    "employeeNoFrom" => $request->employee_no_from,
-                    "employeeNoTo" => $request->employee_no_to,
-                    "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
-                    "languageCode" => App::getLocale(),
-                    "changedBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userName') 
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         "companyCode" => Session::get('companyCode'),
+            //         "periodMonth" => (int) $request->process_period_month_hidden,
+            //         "periodYear" => (int) $request->process_period_year,
+            //         "employeeNoFrom" => $request->employee_no_from,
+            //         "employeeNoTo" => $request->employee_no_to,
+            //         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+            //         "languageCode" => App::getLocale(),
+            //         "changedBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userName') 
+            //     ]
+            //     ));
 
             $response = $client->post(env('API_URL') . '/prmonthlyclosingprocess/insertprmonthlyclosing',
                 ['body' => json_encode(
@@ -5920,33 +5983,33 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
-            var_dump(json_encode(
-                [
-                    "companyCode" => Session::get('companyCode'),
-                    "periodMonth" => (int) $request->period_month,
-                    "periodYear" => (int) $request->period_year,
-                    "languageCode" => App::getLocale(),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userName') 
-                ]
-            ));
+            // var_dump(json_encode(
+            //     [
+            //         "companyCode" => Session::get('companyCode'),
+            //         "periodMonth" => (int) $request->period_month,
+            //         "periodYear" => (int) $request->period_year,
+            //         "languageCode" => App::getLocale(),
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userName') 
+            //     ]
+            // ));
 
-            // $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
-            //     ['body' => json_encode(
-            //         [
-            //             "companyCode" => Session::get('companyCode'),
-            //             "periodMonth" => (int) $request->period_month,
-            //             "periodYear" => (int) $request->period_year,
-            //             "languageCode" => App::getLocale(),
-            //             "sessionID" => 0,
-            //             "sessionUserID" => Session::get('userID'),
-            //             "logActionUsername" => Session::get('userID'),
-            //             "logActionUserID" => Session::get('userName') 
-            //         ]
-            //     )]
-            // );
+            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userName') 
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5958,9 +6021,9 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }
 
-        // $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
 
-        // return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
     public function prosesTaxCalculationProcessPY(Request $request)
@@ -5972,22 +6035,22 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            var_dump(json_encode(
-                [
-                    "companyCode" => Session::get('companyCode'),
-                    "periodProcess" => $request->process_period,
-                    "recalculateTHRTax" => isset($request->recalculate_thr_tax) ? (bool) $request->recalculate_thr_tax : false,
-                    "recalculateBonusTax" => isset($request->recalculate_bonus_tax) ? (bool) $request->recalculate_bonus_tax : false,
-                    "range" => isset($request->range) ? (bool) $request->range : false,
-                    "employeeNoFrom" => $request->employee_no_from,
-                    "employeeNoTo" => $request->employee_no_to,
-                    "languageCode" => App::getLocale(),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userName') 
-                ]
-                ));
+            // var_dump(json_encode(
+            //     [
+            //         "companyCode" => Session::get('companyCode'),
+            //         "periodProcess" => $request->process_period,
+            //         "recalculateTHRTax" => isset($request->recalculate_thr_tax) ? (bool) $request->recalculate_thr_tax : false,
+            //         "recalculateBonusTax" => isset($request->recalculate_bonus_tax) ? (bool) $request->recalculate_bonus_tax : false,
+            //         "range" => isset($request->range) ? (bool) $request->range : false,
+            //         "employeeNoFrom" => $request->employee_no_from,
+            //         "employeeNoTo" => $request->employee_no_to,
+            //         "languageCode" => App::getLocale(),
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userName') 
+            //     ]
+            //     ));
 
             $response = $client->post(env('API_URL') . '/prtaxcalculation/prtaxcalculationprocess',
                 ['body' => json_encode(
@@ -6534,7 +6597,7 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump($request->format_type);
         }catch(Exception $e){
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6752,7 +6815,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         }catch(Exception $e){
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6836,7 +6899,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         }catch(Exception $e){
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

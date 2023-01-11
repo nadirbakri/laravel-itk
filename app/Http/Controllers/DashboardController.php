@@ -379,12 +379,12 @@ class DashboardController extends Controller
 
             if($arrResult2->dataListSet == null){
                 return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
-            'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
-            'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => []]);
+                'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
+                'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => []]);
             }else{
                 return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
-            'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
-            'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => $arrResult2->dataListSet[0]->summaryAmount]);
+                'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
+                'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => $arrResult2->dataListSet[0]->summaryAmount]);
             }
         }
     }
@@ -406,8 +406,6 @@ class DashboardController extends Controller
 	    				'companyCode' => Session::get('companyCode'),
                         'periodMonth' => (int) date('n'),
                         'periodYear' => (int) date('Y'),
-                        // 'periodMonth' => 1,
-                        // 'periodYear' => 2021,
                         'languageID' => App::getLocale(),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
@@ -423,8 +421,6 @@ class DashboardController extends Controller
 	    				'companyCode' => Session::get('companyCode'),
                         'periodMonth' => (int) date('n'),
                         'periodYear' => (int) date('Y'),
-                        // 'periodMonth' => 1,
-                        // 'periodYear' => 2021,
                         'languageID' => App::getLocale(),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
@@ -459,18 +455,27 @@ class DashboardController extends Controller
             }
         }
 
+        $totalOvt = [];
+
         for($i = 1; $i <= Carbon::now()->daysInMonth; $i++){
             $dataOvt2['tanggal'][] = date("Y-m-d", mktime(0, 0, 0, date('m'), $i, date('Y')));
-            $dataOvt2['total'][] = 0;
+            $totalOvt[date("Y-m-d", mktime(0, 0, 0, date('m'), $i, date('Y')))] = 0;
         }
 
         // var_dump($dataOvt2);
 
-        // if($arrResult2->dataListSet == null){
-        //     $dataOvt2 = [];
-        // }else{
-        //     $dataOvt2 = array_intersect($dataOvt2, $arrResult2->dataListSet);
-        // }
+        if($arrResult2->dataListSet == null){
+            $dataOvt2 = [];
+        }else{
+            foreach($arrResult2->dataListSet as $key => $value){
+                $tanggal = date("Y-m-d", strtotime($value->overtimeDate));
+                if(array_key_exists($tanggal, $totalOvt)){
+                    $totalOvt[$tanggal] += $value->overtimeTotalCost;
+                }
+            }
+
+            $dataOvt2['total'] = array_values($totalOvt);
+        }
 
         return response()->json(['data1' => $dataOvt1, 'data2' => $dataOvt2]);
     }
@@ -485,20 +490,20 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // $response = $client->post(env('API_URL') . '/salarycalculation/getbasicsalarydashboardentity',
-	    	// 	['body' => json_encode(
-	    	// 		[
-	    	// 			'companyCode' => Session::get('companyCode'),
-            //             // 'periodYear' => (int) date('Y'),
-            //             'periodYear' => 2021,
-            //             'languageID' => App::getLocale(),
-            //             "sessionID" => 0,
-            //             "sessionUserID" => Session::get('userID'),
-            //             "logActionUserID" => Session::get('userID'),
-            //             "logActionUsername" => Session::get('userID')
-	    	// 		]
-	    	// 	)]
-	    	// );
+            $response = $client->post(env('API_URL') . '/salarycalculation/getbasicsalarydashboardentity',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        // 'periodYear' => (int) date('Y'),
+                        'periodYear' => 2022,
+                        'languageID' => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -510,22 +515,28 @@ class DashboardController extends Controller
             }
         }
 
-        // $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
+
+        $totalPay = [];
 
         for($i = 1; $i <= 12; $i++){
             $dataPay['month'][] = date('F', mktime(0, 0, 0, $i, 10));
-            $dataPay['total'][] = 0;
+            $totalPay[date('F', mktime(0, 0, 0, $i, 10))] = 0;
         }
 
-        // if($arrResult->dataListSet == null){
-        //     $dataPay = [];
-        // }else{
-        //     for($i = 1; $i <= 12; $i++){
-        //         $dataPay['month'][] = date('F', mktime(0, 0, 0, $i, 10));
-        //         $dataPay['total'][] = 0;
-        //     }
-        // }
+        if($arrResult->dataListSet == null){
+            $dataPay = [];
+        }else{
+            foreach($arrResult->dataListSet as $key => $value){
+                $tanggal = date("F", strtotime($value->periodYear . '-' . $value->periodMonth . '-01'));
+                if(array_key_exists($tanggal, $totalPay)){
+                    $totalPay[$tanggal] += $value->basicSalary;
+                }
+            }
+
+            $dataPay['total'] = array_values($totalPay);
+        }
 
         return response()->json($dataPay);
     }

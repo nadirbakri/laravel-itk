@@ -85,7 +85,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url('time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('/time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_template_preparation.list') }}</span>
             </a> 

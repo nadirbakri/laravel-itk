@@ -119,7 +119,7 @@
             </a>
         </div>
         <div class="div-title">
-			<a href="{{ url('payroll') }}" target="iframe_dashboard">
+			<a href="{{ url('/payroll') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('payroll_thr_data_entry.list') }}</span>
 			</a>

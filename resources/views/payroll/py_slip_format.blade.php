@@ -104,7 +104,7 @@
 <body>
     <div class="div-payroll">
         <div class="div-title">
-            <a href="{{ url('payroll') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('/payroll') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('payroll_slip_format.list') }}</span>
             </a>

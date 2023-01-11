@@ -143,16 +143,16 @@ class RemainingMedicalLimitReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
 
-        // if($arrResult->dataListSet[0] == null){
-        //     return view('medical.md_export_remaining_medical_limit_report_excel', [
-        //         'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
-        //     ]);
-        // }else{
-        //     return view('medical.md_export_remaining_medical_limit_report_excel', [
-        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
-        //     ]); 
-        // }
+        if($arrResult->dataListSet[0] == null){
+            return view('medical.md_export_remaining_medical_limit_report_excel', [
+                'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
+            ]);
+        }else{
+            return view('medical.md_export_remaining_medical_limit_report_excel', [
+                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
+            ]); 
+        }
     }
 }

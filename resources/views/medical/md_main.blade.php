@@ -180,7 +180,7 @@
 			</a>
 			<div id="medical-process" class="collapse">
 				<div class="card-block">
-					<div class="row div-child-data">
+					<!-- <div class="row div-child-data">
 						<div class="col col-3">
 							<a href="{{ url('medical/confirmation_for_medical_transaction') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/medical/submenu-process.svg') }}" alt="Child medical">
@@ -199,7 +199,7 @@
 								<span class="child-title-text">{{ __('medical.month_end_process') }}</span>
 							</a>
 						</div>
-					</div>
+					</div> -->
 					<div class="div-head-data">
 						<span class="head-title-text">{{ __('medical.transfer_payment_to_excel') }}</span>
 					</div>

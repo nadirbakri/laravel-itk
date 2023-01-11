@@ -125,16 +125,16 @@ class AnnualReportExcel implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
 
-        // if($arrResult->dataListSet[0] == null){
-        //     return view('payroll.py_export_annual_report_excel', [
-        //         'data' => [], 'data_company' => $arrCompany->dataListSet
-        //     ]);
-        // }else{
-        //     return view('payroll.py_export_annual_report_excel', [
-        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
-        //     ]); 
-        // }
+        if($arrResult->dataListSet[0] == null){
+            return view('payroll.py_export_annual_report_excel', [
+                'data' => [], 'data_company' => $arrCompany->dataListSet
+            ]);
+        }else{
+            return view('payroll.py_export_annual_report_excel', [
+                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+            ]); 
+        }
     }
 }

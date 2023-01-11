@@ -110,16 +110,16 @@ class EmployeeCardExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
 
-        // if($arrResult->dataListSet == null){
-        //     return view('personel.personel_export_employee_card', [
-        //         'data' => []
-        //     ]);
-        // }else{
-        //     return view('personel.personel_export_employee_card', [
-        //         'data' => $arrResult->dataListSet
-        //     ]);
-        // }
+        if($arrResult->dataListSet == null){
+            return view('personel.personel_export_employee_card', [
+                'data' => []
+            ]);
+        }else{
+            return view('personel.personel_export_employee_card', [
+                'data' => $arrResult->dataListSet
+            ]);
+        }
     }
 }

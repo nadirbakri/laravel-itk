@@ -106,7 +106,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('medical') }}" target="iframe_dashboard">
+			<a href="{{ url('/medical') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('md_input_personnel_limit.list') }}</span>
 			</a>

@@ -319,7 +319,7 @@
 		$(".menu").on('click', function() {
             var data = $(this).data("idd");
 			var url = $(this).data('url');
-			console.log(url);
+			// console.log(url);
 			$.redirect(url, 
 			{ 
 				'moduleID' : data 
