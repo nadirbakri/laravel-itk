@@ -9853,7 +9853,7 @@ class PersonelController extends Controller
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Employee Card Report.pdf');
         }else{
@@ -9970,7 +9970,7 @@ class PersonelController extends Controller
 
         // var_dump($arrResult->dataListSet[0]);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('personel.personel_export_evaluation_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Evaluation Report.pdf');
         }else{

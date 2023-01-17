@@ -123,7 +123,7 @@ class RetroactiveReportExport implements FromView, ShouldAutoSize
 
         // var_dump($arrCompany->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('payroll.py_export_retroactive_report_excel', [
                 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period
             ]);

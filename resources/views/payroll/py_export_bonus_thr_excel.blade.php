@@ -30,6 +30,7 @@
 	</style>
 </head>
 <body>
+    @if(count($data) > 1)
     <table>
         <thead>
             <tr>
@@ -83,5 +84,6 @@
             </tr>
         </tbody>
     </table>
+    @endif
 </body>
 </html>

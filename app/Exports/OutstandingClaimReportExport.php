@@ -161,7 +161,7 @@ class OutstandingClaimReportExport implements FromView, ShouldAutoSize
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('medical.md_export_outstanding_claim_report_excel', [
                 'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
             ]);

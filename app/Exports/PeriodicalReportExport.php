@@ -137,7 +137,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
             }
 
 
-            // var_dump(json_encode($param));
+            var_dump(json_encode($param));
             $response = $client->post(env('API_URL').'/prretroactivereport/getretroactivereport', [
                 'body' => json_encode($param)
             ]);
@@ -166,7 +166,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
         // var_dump($arrFormat->dataListSet);
 
-        // if($arrResult->dataListSet[0] == null){
+        // if($arrResult->dataListSet == null){
         //     return view('payroll.py_export_periodical_report_excel', [
         //         'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_format' => $arrFormat->dataListSet, 'data_period' => $this->period
         //     ]);

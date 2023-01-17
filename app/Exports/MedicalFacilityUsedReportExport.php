@@ -53,13 +53,6 @@ class MedicalFacilityUsedReportExport implements FromView, ShouldAutoSize
                 "logActionUserID" => Session::get('userID')
             ];
 
-            $paramGetCompany = [
-                'companyCode' => Session::get('companyCode'),
-                'languageID' =>App::getLocale(),
-                'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
-            ];
-
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
                 $param['employeeNoFrom'] = $this->employeeNoFrom;
                 $param['employeeNoTo'] = $this->employeeNoTo;
@@ -134,10 +127,6 @@ class MedicalFacilityUsedReportExport implements FromView, ShouldAutoSize
             $response = $client->post(env('API_URL').'/mdfacilityusedreport/getmedicalfacilityusedreport', [
                 'body' => json_encode($param)
             ]);
-
-            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
-                'body' => json_encode($paramGetCompany)
-            ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -150,17 +139,16 @@ class MedicalFacilityUsedReportExport implements FromView, ShouldAutoSize
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('medical.md_export_medical_facility_used_report_excel', [
-                'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal, 'type' => $this->reportType
+                'data' => [], 'grand_total' => $this->grandTotal, 'type' => $this->reportType, 'period' => date('d M Y', strtotime($this->periodPaymentFrom)) . ' - ' . date('d M Y', strtotime($this->periodPaymentTo))
             ]);
         }else{
             return view('medical.md_export_medical_facility_used_report_excel', [
-                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal, 'type' => $this->reportType
+                'data' => $arrResult->dataListSet, 'grand_total' => $this->grandTotal, 'type' => $this->reportType, 'period' => date('d M Y', strtotime($this->periodPaymentFrom)) . ' - ' . date('d M Y', strtotime($this->periodPaymentTo))
             ]); 
         }
     }

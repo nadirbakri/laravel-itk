@@ -20,6 +20,7 @@ use App;
 use File;
 use DataTables;
 use Excel;
+use PDF;
 
 class MedicalController extends Controller
 {
@@ -1686,6 +1687,128 @@ class MedicalController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function printMedicalFacilityUsedReport(Request $request){
+        $dataLevel = [];
+
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            for($i = 0; $i < $request->level_format; $i++){
+                $dataLevel[] = $request->{'level' . ($i+1)};
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "reportType" => $request->report_type,
+                "claimTo" => $request->claim_to,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->period_payment_from) || !empty($request->period_payment_to)){
+                $param['periodPaymentFrom'] = $request->period_payment_from;
+                $param['periodPaymentTo'] = $request->period_payment_to;
+            }
+
+            if(!empty($request->currency_code_from) || !empty($request->currency_code_to)){
+                $param['currencyCodeFrom'] = $request->currency_code_from;
+                $param['currencyCodeTo'] = $request->currency_code_to;
+            }
+    
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedCodeFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizedCodeTo'] = (int) $request->group_authorized_code_to;
+            }
+
+            if(!empty($request->claim_code_from) || !empty($request->claim_code_to)){
+                $param['claimCodeFrom'] = $request->claim_code_from;
+                $param['claimCodeTo'] = $request->claim_code_to;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = [
+                            'levelCode' => $value2
+                        ];
+                    }
+                    $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "levelType" => (string) ($key + 1),
+                        "level" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/mdfacilityusedreport/getmedicalfacilityusedreport', [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('medical.md_export_medical_facility_used_report', ['data' => [], 'grand_total' => $request->grand_total, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_payment_from)) . ' - ' . date('d M Y', strtotime($request->period_payment_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Medical Facility Used ' . ucfirst($request->report_type) . '.pdf');
+        }else{
+            $pdf = PDF::loadView('medical.md_export_medical_facility_used_report', ['data' => $arrResult->dataListSet, 'grand_total' => $request->grand_total, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_payment_from)) . ' - ' . date('d M Y', strtotime($request->period_payment_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Medical Facility Used ' . ucfirst($request->report_type) . '.pdf');
+        }
+    }
+
     public function printMedicalFacilityUsedReportExcel(Request $request){
         $dataLevel = [];
 
@@ -1715,6 +1838,144 @@ class MedicalController extends Controller
         );
     }
 
+    public function printDiseaseReport(Request $request){
+        $dataLevel = [];
+
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            for($i = 0; $i < $request->level_format; $i++){
+                $dataLevel[] = $request->{'level' . ($i+1)};
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "reportType" => $request->report_type,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $paramGetCompany = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->period_claim_from) || !empty($request->period_claim_to)){
+                $param['periodClaimFrom'] = $request->period_claim_from;
+                $param['periodClaimTo'] = $request->period_claim_to;
+            }
+    
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedCodeFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizedCodeTo'] = (int) $request->group_authorized_code_to;
+            }
+
+            if(!empty($request->disease_from) || !empty($request->disease_to)){
+                $param['diseaseFrom'] = $request->disease_from;
+                $param['diseaseTo'] = $request->disease_to;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = [
+                            'levelCode' => $value2
+                        ];
+                    }
+                    $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "levelType" => (string) ($key + 1),
+                        "level" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/mddiseasesreport/getdiseasereport', [
+                'body' => json_encode($param)
+            ]);
+
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
+                'body' => json_encode($paramGetCompany)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            if($request->report_type == 'detail'){
+                $pdf = PDF::loadView('medical.md_export_disease_detail_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            }else{
+                $pdf = PDF::loadView('medical.md_export_disease_summary_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            }
+        }else{
+            if($request->report_type == 'detail'){
+                $pdf = PDF::loadView('medical.md_export_disease_detail_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            }else{
+                $pdf = PDF::loadView('medical.md_export_disease_summary_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            }
+        }
+    }
+
     public function printDiseaseReportExcel(Request $request){
         $dataLevel = [];
 
@@ -1738,6 +1999,144 @@ class MedicalController extends Controller
             $dataLevel),
             'Disease Report.xlsx'
         );
+    }
+
+    public function printClaimReport(Request $request){
+        $dataLevel = [];
+
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            for($i = 0; $i < $request->level_format; $i++){
+                $dataLevel[] = $request->{'level' . ($i+1)};
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "sortByAmount" => isset($request->sort_by_amount) ? (bool) $request->sort_by_amount : false,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $paramGetCompany = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->claim_code_from) || !empty($request->claim_code_to)){
+                $param['claimDateFrom'] = $request->claim_code_from;
+                $param['claimDateTo'] = $request->claim_code_to;
+            }
+    
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedCodeFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizedCodeTo'] = (int) $request->group_authorized_code_to;
+            }
+
+            if(!empty($request->currency_code_from) || !empty($request->currency_code_to)){
+                $param['currencyCodeFrom'] = $request->currency_code_from;
+                $param['currencyCodeTo'] = $request->currency_code_to;
+            }
+
+            if(!empty($request->claim_code_from) || !empty($request->claim_code_to)){
+                $param['claimCodeFrom'] = $request->claim_code_from;
+                $param['claimCodeTo'] = $request->claim_code_to;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = [
+                            'levelCode' => $value2
+                        ];
+                    }
+                    $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "levelType" => (string) ($key + 1),
+                        "level" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/mdclaimreport/getclaimreport', [
+                'body' => json_encode($param)
+            ]);
+
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
+                'body' => json_encode($paramGetCompany)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('medical.md_export_disease_summary_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+        }else{
+            if($request->report_type == 'detail'){
+                $pdf = PDF::loadView('medical.md_export_disease_detail_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            }else{
+                $pdf = PDF::loadView('medical.md_export_disease_summary_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            }
+        }
     }
 
     public function printClaimReportExcel(Request $request){

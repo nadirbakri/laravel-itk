@@ -794,9 +794,12 @@ Route::post('medical/treatment_eligibility/proses', 'MedicalController@prosesTre
 Route::post('medical/claim_list/proses', 'MedicalController@prosesClaimListMD');
 Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTransactionMD');
 
+Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');
+Route::post('medical/claim_report/print', 'MedicalController@printClaimReport');
 Route::post('medical/claim_report/print/excel', 'MedicalController@printClaimReportExcel');
 Route::post('medical/remaining_medical_limit_report/print/excel', 'MedicalController@printRemainingMedicalLimitReportExcel');
+Route::post('medical/disease_report/print', 'MedicalController@printDiseaseReport');
 Route::post('medical/disease_report/print/excel', 'MedicalController@printDiseaseReportExcel');
 Route::post('medical/claim_payment_transaction_report_slip/print/excel', 'MedicalController@printClaimPaymentTransactionReportSlipExcel');
 Route::post('medical/outstanding_claim_report/print/excel', 'MedicalController@printOutstandingClaimReportExcel');
@@ -1034,6 +1037,7 @@ Route::get('position/all/api', 'DataController@dataPositionAllAPI');
 Route::get('position/func/api', 'DataController@dataPositionFunctionAPI');
 Route::get('supervisor/position/api', 'DataController@dataSupervisorPositionAPI');
 Route::get('employee_no/position/api', 'DataController@dataEmployeeNoPositionAPI');
+Route::get('employee_no/supervisor/position/api', 'DataController@dataEmployeeNoSupervisorPositionAPI');
 Route::get('level_type/api', 'DataController@dataLevelTypeAPI');
 Route::get('level_type/type/api', 'DataController@dataLevelTypeTypeAPI');
 Route::get('group_user_access/api', 'DataController@dataUserAccessGroupAPI');

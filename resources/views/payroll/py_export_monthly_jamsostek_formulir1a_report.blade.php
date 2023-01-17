@@ -108,10 +108,6 @@
             <td width="15%">&nbsp;</td>
         </tr>
 	</table>
-
-    
-
-    
    
     <script type="text/php">
     if (isset($pdf)) {

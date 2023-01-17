@@ -85,7 +85,7 @@ class DUMTKReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null || $arrCompany->dataListSet[0] !== null)
+        if ($arrResult->dataListSet !== null)
         {
             $arraySend[] = $arrCompany->dataListSet[0];
             $arraySend[] = $arrResult->dataListSet[0];
@@ -95,7 +95,7 @@ class DUMTKReportExport implements FromView, ShouldAutoSize
 
         $paramSend[] = (object) $param;
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('payroll.py_export_dumtk_excel', [
                 'data' => []
             ]);

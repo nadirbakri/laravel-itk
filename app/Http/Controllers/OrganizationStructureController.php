@@ -40,6 +40,10 @@ class OrganizationStructureController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet);
+        if($arrResult->dataListSet == null){
+            return response()->json([]);
+        }else{
+            return response()->json($arrResult->dataListSet);
+        }
     }
 }

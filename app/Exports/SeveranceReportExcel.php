@@ -87,15 +87,16 @@ class SeveranceReportExcel implements FromView, ShouldAutoSize
         // var_dump($arrResult->dataListSet[0]);
         
         $arraySend[] = $arrCompany->dataListSet[0];
-        $arraySend[] = $arrResult->dataListSet[0];
 
         // var_dump($arraySend);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('payroll.py_export_severance_report_excel', [
                 'data' => []
             ]);
         }else{
+            $arraySend[] = $arrResult->dataListSet[0];
+            
             return view('payroll.py_export_severance_report_excel', [
                 'data' => [$arraySend]
             ]); 

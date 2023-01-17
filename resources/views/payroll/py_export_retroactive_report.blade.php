@@ -47,7 +47,7 @@
     <h4 style="text-align:left">{{ $data_company[0]->address }}</h4>
     <h3 style="text-align:center">Retroactive Report</h3>
     <h5 style="text-align:center">Period : <span style="display: inline-block; margin-left: 10px;"></span>{{ $data_period }}</h5>
-	<table style="width:100%; font-size: 12px;" class="table table-bordered table-hover responsive table_detail">
+	<table style="width:100%; font-size: 8px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
                 <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
@@ -65,15 +65,21 @@
                 <td style="text-align:center; border:1px solid #000;">{{ $no++ }}</td>
                 <td style="text-align:center; border:1px solid #000;">{{ $value->employeeNo }}</td>
                 <td style="text-align:center; border:1px solid #000;">{{ $value->fullName }}</td>
-                @foreach($value->field as $key2 => $value2)
-                    <td style="text-align:center; border:1px solid #000;">{{ $value2->value }}</td>
-                @endforeach
+                @if(count($value->field) > 0)
+                    @foreach($value->field as $key2 => $value2)
+                        <td style="text-align:center; border:1px solid #000;">{{ $value2->value }}</td>
+                    @endforeach
+                @else
+                    @foreach($data[0]->field as $key2 => $value2)
+                        <td style="text-align:center; border:1px solid #000;"></th>
+                    @endforeach
+                @endif
             </tr>
             @endforeach
         </tbody>
     </table>
 
-    <footer style="font-size:14px;">
+    <footer style="font-size:8px;">
         <br>
         <p>Report Parameter</p>
         <p>Employee No :<span style="display: inline-block; margin-left: 40px;"></span> : {{ $data_employee_no_from }} to {{ $data_employee_no_to }}</p>

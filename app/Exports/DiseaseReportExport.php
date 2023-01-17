@@ -144,14 +144,26 @@ class DiseaseReportExport implements FromView, ShouldAutoSize
 
         // var_dump($arrResult->dataListSet);
 
-        // if($arrResult->dataListSet[0] == null){
-        //     return view('medical.md_export_medical_facility_used_report_excel', [
-        //         'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
-        //     ]);
-        // }else{
-        //     return view('medical.md_export_medical_facility_used_report_excel', [
-        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
-        //     ]); 
-        // }
+        if($arrResult->dataListSet == null){
+            if($this->reportType == 'detail'){
+                return view('medical.md_export_disease_detail_report_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet, 'type' => $this->reportType, 'period' => date('d M Y', strtotime($this->periodClaimFrom)) . ' - ' . date('d M Y', strtotime($this->periodClaimTo))
+                ]);
+            }else{
+                return view('medical.md_export_disease_summary_report_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet, 'type' => $this->reportType, 'period' => date('d M Y', strtotime($this->periodClaimFrom)) . ' - ' . date('d M Y', strtotime($this->periodClaimTo))
+                ]);
+            }
+        }else{
+            if($this->reportType == 'detail'){
+                return view('medical.md_export_disease_detail_report_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $this->reportType, 'period' => date('d M Y', strtotime($this->periodClaimFrom)) . ' - ' . date('d M Y', strtotime($this->periodClaimTo))
+                ]);
+            }else{
+                return view('medical.md_export_disease_summary_report_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $this->reportType, 'period' => date('d M Y', strtotime($this->periodClaimFrom)) . ' - ' . date('d M Y', strtotime($this->periodClaimTo))
+                ]);
+            }
+        }
     }
 }

@@ -56,7 +56,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('/personel') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url('/personnel') }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_employee_card.list') }}</span>
             </a>

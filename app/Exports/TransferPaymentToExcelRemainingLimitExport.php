@@ -105,7 +105,7 @@ class TransferPaymentToExcelRemainingLimitExport implements FromView, ShouldAuto
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('medical.md_transfer_payment_to_excel_remaining_limit_excel', [
                 'data' => []
             ]);

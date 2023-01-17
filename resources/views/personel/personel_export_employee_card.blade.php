@@ -54,7 +54,7 @@
 	<table style="width:100%;" class="table table-bordered table-hover responsive table_detail">
         <tbody>
             <tr>
-                <td rowspan="4" width="30%" style="border: 3px solid black;"><img src="data:image/png;base64, {{ (isset($data->peMasterData->photo)) ? $data->peMasterData->photo : '' }}" style="width: 180px; height: 200px" alt="Photo"></img></td>
+                <td rowspan="4" width="30%" style="border: 3px solid black;"><img src="data:image/png;base64, {{ (isset($data->peMasterData->photo) && $data->peMasterData->photo != '') ? $data->peMasterData->photo : '' }}" style="width: 180px; height: 200px" alt="Photo"></img></td>
                 <td width="5%"></td>
                 <td style="text-align: left; font-weight:bold;" width="30%">Employee No</td>
                 <td width="3%">:</td>
