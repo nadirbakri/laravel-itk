@@ -6,7 +6,7 @@
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('css/simple-calendar.css') }}">
@@ -47,14 +47,14 @@
 
 							<p>{{ Session::get('companyName') }}</p>
 							<div class="text-company-detail">
-								<div class="col-6">
+								<div class="col-12">
 									<div class="number-company-detail" id="totalEmployee"></div>
 									<div>{{ __('dashboard.employee') }}</div>
 								</div>
-								<div class="col-6">
+								<!-- <div class="col-6">
 									<div class="number-company-detail" id="openPosition"></div>
 									<div>{{ __('dashboard.posisi') }}</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="img-card-welcome"><img src="{{ url('/pictures/welcome-card.svg') }}" alt="Toogle"></div>
@@ -79,23 +79,23 @@
 							<tbody>
 								<tr>
 									<th>{{ __('dashboard.present') }}</td>
-									<td>950</td>
-									<td>95,0%</td>
+									<td id="total_present"></td>
+									<td id="persentage_present"></td>
 								</tr>
 								<tr>
 									<th>{{ __('dashboard.late') }}</td>
-									<td>35</td>
-									<td>3,5%</td>
+									<td id="total_late"></td>
+									<td id="persentage_late"></td>
 								</tr>
 								<tr>
 									<th>{{ __('dashboard.absent') }}</td>
-									<td>15</td>
-									<td>1,5%</td>
+									<td id="total_absent"></td>
+									<td id="persentage_absent"></td>
 								</tr>
 								<tr>
-									<th>{{ __('dashboard.early_back') }}</td>
-									<td>5</td>
-									<td>0,5%</td>
+									<th>{{ __('dashboard.leave') }}</td>
+									<td id="total_leave"></td>
+									<td id="persentage_leave"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -508,11 +508,134 @@
  			},
  		});
 
+		$.ajax({
+ 			url: '{{ url("getPayroll") }}',
+ 			type: 'GET',
+ 			dataType: 'JSON',
+ 			success: function (response) {
+				var payrollData = {
+					labels: response.month,
+					datasets: [
+					{
+						data: response.total,
+						borderColor: "#FFC814",
+						fill: false,
+					}]
+				};
+
+				var lineChartPayroll = new Chart(chartPayroll, {
+					type: 'line',
+					data: payrollData,
+					options: chartOptionsPayroll
+				});
+ 			},
+ 			error: function (err) {
+ 				console.log('Error Get Event Calendar : '+ err);
+ 			},
+ 		});
+
+		$.ajax({
+ 			url: '{{ url("getOvertime") }}',
+ 			type: 'GET',
+ 			dataType: 'JSON',
+ 			success: function (response) {
+				// console.log(response.data2);
+				var overtimePayData = {
+					labels: response.data2.tanggal,
+					datasets: [
+					{
+						data: response.data2.total,
+						borderColor: "#004883",
+						fill: false,
+					}]
+				};
+
+				var overtimeHourData = {
+					labels: response.data1.month,
+					datasets: [
+					{
+						data: response.data1.totalOvertimeHour,
+						backgroundColor: [
+						"#4472C4",
+						"#004883"
+						],
+						maxBarThickness: 20
+					}]
+				};
+
+				var lineChartOvertimePay = new Chart(chartOvertimePay, {
+					type: 'line',
+					data: overtimePayData,
+					options: chartOptionsOvertimePay
+				});
+
+				var barChartOvertimeHour = new Chart(chartOvertimeHour, {
+					type: 'bar',
+					data: overtimeHourData,
+					options: chartOptionsOvertimeHour
+				});
+ 			},
+ 			error: function (err) {
+ 				console.log('Error Get Event Calendar : '+ err);
+ 			},
+ 		});
+
+		 function isEmpty(obj) {
+            for(var prop in obj) {
+                if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+                    return false;
+                }
+            }
+
+            return JSON.stringify(obj) === JSON.stringify({});
+        }
+
 		 $.ajax({
  			url: '{{ url("active_employee") }}',
  			type: 'GET',
  			dataType: 'JSON',
  			success: function (response) {
+				var totalPresent = 0;
+				var totalLate = 0;
+				var totalAbsent = 0;
+				var totalLeave = 0;
+				if(!isEmpty(response.dataAbsent)){
+					$.each(response.dataAbsent, function (key, val) {
+						if(val.description == "ABSENT"){
+							totalAbsent += val.amount;
+						}
+
+						if(val.description == "LATE"){
+							totalLate += val.amount;
+						}
+
+						if(val.description == "AL"){
+							totalLeave += val.amount;
+						}
+
+						if(val.description == "LEB"){
+							totalLate += val.amount;
+						}
+
+						if(val.description == "LT+NO"){
+							totalLate += val.amount;
+						}
+
+
+					});
+				}
+
+				totalPresent = response.totalEmployee - (totalLate + totalAbsent + totalLeave);
+
+				$('#total_present').html(totalPresent);
+				$('#total_late').html(totalLate);
+				$('#total_absent').html(totalAbsent);
+				$('#total_leave').html(totalLeave);
+				$('#persentage_present').html(Math.round((totalPresent / response.totalEmployee) * 100) + '%');
+				$('#persentage_late').html(Math.round((totalLate / response.totalEmployee) * 100) + '%');
+				$('#persentage_absent').html(Math.round((totalAbsent / response.totalEmployee) * 100) + '%');
+				$('#persentage_leave').html(Math.round((totalLeave / response.totalEmployee) * 100) + '%');
+
 				// console.log(response);s
 				$('#totalEmployee').html(response.totalEmployee);
 				$('#openPosition').html(response.openPosition);
@@ -840,66 +963,6 @@
 			}
 		});
 
-		var payrollData = {
-			labels: [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December"
-			],
-			datasets: [
-			{
-				data: [4000000000, 3500000000, 4250000000, 4500000000, 4250000000],
-				borderColor: "#FFC814",
-				fill: false,
-			}]
-		};
-
-		var overtimePayData = {
-			labels: [
-			"March 01",
-			"March 02",
-			"March 03",
-			"March 04",
-			"March 05",
-			"March 06",
-			"March 07",
-			"March 08",
-			"March 09",
-			"March 10"
-			],
-			datasets: [
-			{
-				data: [3000000, 3500000, 3250000, 4000000, 4250000],
-				borderColor: "#004883",
-				fill: false,
-			}]
-		};
-
-		var overtimeHourData = {
-			labels: [
-			"June",
-			"July"
-			],
-			datasets: [
-			{
-				data: [15, 20],
-				backgroundColor: [
-				"#4472C4",
-				"#004883"
-				],
-				maxBarThickness: 20
-			}]
-		};
-
 		var chartOptionsEmployeeActive = {
 			responsive: true,
 			maintainAspectRatio: false,
@@ -999,7 +1062,7 @@
 						fontFamily: 'Montserrat',
 						fontColor: '#4472C4',
 						callback: function(value, index, values) {
-							return value.toFixed(1) + ' %';
+							return value;
 						},
 						beginAtZero: true
 					}
@@ -1036,8 +1099,8 @@
 							return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 						},
 						beginAtZero: true,
-						stepSize: 1000000000,
-						max: 7000000000
+						// stepSize: 1000000000,
+						// max: 7000000000
 					}
 				}]
 			},
@@ -1130,24 +1193,6 @@
 				}]
 			},
 		};
-
-		var lineChartPayroll = new Chart(chartPayroll, {
-			type: 'line',
-			data: payrollData,
-			options: chartOptionsPayroll
-		});
-
-		var lineChartOvertimePay = new Chart(chartOvertimePay, {
-			type: 'line',
-			data: overtimePayData,
-			options: chartOptionsOvertimePay
-		});
-
-		var barChartOvertimeHour = new Chart(chartOvertimeHour, {
-			type: 'bar',
-			data: overtimeHourData,
-			options: chartOptionsOvertimeHour
-		});
 
 		chartEmployeeActive.onclick = function(evt) {
 			var activePoints = doughnutChartEmployeeActive.getElementsAtEvent(evt);

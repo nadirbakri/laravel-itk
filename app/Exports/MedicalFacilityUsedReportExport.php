@@ -156,11 +156,11 @@ class MedicalFacilityUsedReportExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet[0] == null){
             return view('medical.md_export_medical_facility_used_report_excel', [
-                'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
+                'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal, 'type' => $this->reportType
             ]);
         }else{
             return view('medical.md_export_medical_facility_used_report_excel', [
-                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
+                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal, 'type' => $this->reportType
             ]); 
         }
     }

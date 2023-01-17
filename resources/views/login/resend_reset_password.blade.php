@@ -207,7 +207,7 @@
 	</main>
 	<footer class="footer">
 		<div class="container">
-			<span class="text-muted">© Copyright PT Intikom Berlian Mustika 2021</span>
+			<span class="text-muted">© Copyright PT Intikom Berlian Mustika {{ date('Y') }}</span>
 		</div>
 	</footer>
 	<div class="modal fade" role="dialog" id="notification">

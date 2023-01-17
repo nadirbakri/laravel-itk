@@ -6,7 +6,7 @@
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -712,7 +712,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: '/level/api',
+                    url: "{{ url('/level/api') }}"level/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -744,7 +744,7 @@ $.get("{{ url('level/api') }}", function (data) {
 
             $.ajax({
                 type: 'GET',
-                url: '/level/func/api',
+                url: "{{ url('/level/func/api') }}"level/func/api',
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -759,7 +759,7 @@ $.get("{{ url('level/api') }}", function (data) {
 
             $.ajax({
                 type: 'GET',
-                url: '/travel_type/all/api',
+                url: "{{ url('/travel_type/all/api') }}"travel_type/all/api',
             }).then(function (data) {
                 if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
                     $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
@@ -802,7 +802,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: '/travel_type/api',
+                    url: "{{ url('/travel_type/api') }}"travel_type/api',
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

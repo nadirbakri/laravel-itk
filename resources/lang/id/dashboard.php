@@ -27,7 +27,7 @@ return [
     'present' => 'Hadir',
     'late' => 'Terlambat',
     'absent' => 'Tidak Hadir',
-    'early_back' => 'Pulang Lebih Awal',
+    'leave' => 'Cuti',
     'payroll' => 'Upah',
     'overtime_pay' => 'Upah Lembur',
     'table_employee_no' => 'No Pegawai',

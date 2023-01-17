@@ -9698,28 +9698,32 @@ class PersonelController extends Controller
 
             $arrResult = json_decode($response->getBody()->getContents());
 
-            if ($arrResult->dataListSet[0]->flagAutoEmployeeNo == true) {
-                $response2 = $client->post(env('API_URL') . $request->url,
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'userID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')
-                        ]
-                    )]
-                );
-
-                $arrResult2 = json_decode($response2->getBody()->getContents());
-
-                if($arrResult2->dataListSet == null){
-                    $number = 1;
-                }else{
-                    // var_dump($arrResult2->dataListSet);
-                    if(isset($arrResult2->dataListSet[0]->employeeNo)){
-                        $number = max(array_column($arrResult2->dataListSet, 'employeeNo')) + 1;
+            if(isset($arrResult->dataListSet[0]->flagAutoEmployeeNo)){
+                if ($arrResult->dataListSet[0]->flagAutoEmployeeNo == true) {
+                    $response2 = $client->post(env('API_URL') . $request->url,
+                        ['body' => json_encode(
+                            [
+                                'companyCode' => Session::get('companyCode'),
+                                'userID' => Session::get('userID'),
+                                'logActionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName')
+                            ]
+                        )]
+                    );
+    
+                    $arrResult2 = json_decode($response2->getBody()->getContents());
+    
+                    if($arrResult2->dataListSet == null){
+                        $number = 1;
+                    }else{
+                        // var_dump($arrResult2->dataListSet);
+                        if(isset($arrResult2->dataListSet[0]->employeeNo)){
+                            $number = max(array_column($arrResult2->dataListSet, 'employeeNo')) + 1;
+                        }
                     }
                 }
+            }else{
+                $number = 0;
             }
 
         } catch (RequestException $e) {
@@ -9835,7 +9839,7 @@ class PersonelController extends Controller
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
-            var_dump($response);
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

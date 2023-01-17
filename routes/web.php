@@ -53,7 +53,8 @@ Route::get('home', 'DashboardController@pageHomeDashboard');
 Route::get('home/breadcrumbs', 'HomeController@getURLBreadcrumbs');
 Route::get('calendar/event', 'DashboardController@getEventCalendar');
 Route::get('active_employee', 'DashboardController@getActiveEmployee');
-Route::get('attendance_today', 'DashboardController@getAttendanceToday');
+Route::get('getOvertime', 'DashboardController@getOvertime');
+Route::get('getPayroll', 'DashboardController@getPayroll');
 
 /* Route Untuk Menu Personel */
 Route::get('personnel', 'PersonelController@pagePersonelMain');

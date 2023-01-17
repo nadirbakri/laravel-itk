@@ -9,6 +9,7 @@ use Validator;
 use Session;
 use App;
 use DataTables;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -253,6 +254,16 @@ class DashboardController extends Controller
 	    			]
 	    		)]
 	    	);
+
+            $response2 = $client->post(env('API_URL') . '/tmabsence/getbyspecificdate',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'startDate' => date('Y-m-d'),
+                        'endDate' => date('Y-m-d')
+	    			]
+	    		)]
+	    	);
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -265,8 +276,7 @@ class DashboardController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
-
+        $arrResult2 = json_decode($response2->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             return response()->json(['totalEmployee' => 0, 'openPosition' => 0, 'maleEmployee' => 0, 'femaleEmployee' => 0, 'ageFirst' => 0, 'ageSecond' => 0, 'ageThird' => 0, 'joinFirst' => 0, 'joinSecond' => 0, 'joinThird' => 0, 'joinFourth' => 0,
@@ -367,9 +377,167 @@ class DashboardController extends Controller
                 return false;
             });
 
-            return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
-            'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
-            'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth)]);
+            if($arrResult2->dataListSet == null){
+                return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
+                'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
+                'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => []]);
+            }else{
+                return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
+                'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 
+                'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'hireData' => $hireMonth, 'hireMonth' => count($hireMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => $arrResult2->dataListSet[0]->summaryAmount]);
+            }
         }
+    }
+
+    public function getOvertime(Request $request)
+    {
+        $dataOvt1 = [];
+        $dataOvt2 = [];
+
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/TmOvertime/getOvertimeHourDashboard',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'periodMonth' => (int) date('n'),
+                        'periodYear' => (int) date('Y'),
+                        'languageID' => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+
+            $response2 = $client->post(env('API_URL') . '/TmOvertime/getOvertimeCostDashboard',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'periodMonth' => (int) date('n'),
+                        'periodYear' => (int) date('Y'),
+                        'languageID' => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response2->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $dataOvt1 = [];
+        }else{
+            usort($arrResult->dataListSet, function($a, $b) {return strcmp($a->periodmonth, $b->periodmonth);});
+
+            foreach($arrResult->dataListSet as $val)
+            {
+                $dataOvt1['totalOvertimeHour'][] = $val->totalOvertimeHour;
+                $dataOvt1['month'][] = date('F', mktime(0, 0, 0, $val->periodmonth, 10));
+            }
+        }
+
+        $totalOvt = [];
+
+        for($i = 1; $i <= Carbon::now()->daysInMonth; $i++){
+            $dataOvt2['tanggal'][] = date("Y-m-d", mktime(0, 0, 0, date('m'), $i, date('Y')));
+            $totalOvt[date("Y-m-d", mktime(0, 0, 0, date('m'), $i, date('Y')))] = 0;
+        }
+
+        // var_dump($dataOvt2);
+
+        if($arrResult2->dataListSet == null){
+            $dataOvt2 = [];
+        }else{
+            foreach($arrResult2->dataListSet as $key => $value){
+                $tanggal = date("Y-m-d", strtotime($value->overtimeDate));
+                if(array_key_exists($tanggal, $totalOvt)){
+                    $totalOvt[$tanggal] += $value->overtimeTotalCost;
+                }
+            }
+
+            $dataOvt2['total'] = array_values($totalOvt);
+        }
+
+        return response()->json(['data1' => $dataOvt1, 'data2' => $dataOvt2]);
+    }
+
+    public function getPayroll(Request $request)
+    {
+        $dataPay = [];
+
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/salarycalculation/getbasicsalarydashboardentity',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        // 'periodYear' => (int) date('Y'),
+                        'periodYear' => 2022,
+                        'languageID' => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        $totalPay = [];
+
+        for($i = 1; $i <= 12; $i++){
+            $dataPay['month'][] = date('F', mktime(0, 0, 0, $i, 10));
+            $totalPay[date('F', mktime(0, 0, 0, $i, 10))] = 0;
+        }
+
+        if($arrResult->dataListSet == null){
+            $dataPay = [];
+        }else{
+            foreach($arrResult->dataListSet as $key => $value){
+                $tanggal = date("F", strtotime($value->periodYear . '-' . $value->periodMonth . '-01'));
+                if(array_key_exists($tanggal, $totalPay)){
+                    $totalPay[$tanggal] += $value->basicSalary;
+                }
+            }
+
+            $dataPay['total'] = array_values($totalPay);
+        }
+
+        return response()->json($dataPay);
     }
 }

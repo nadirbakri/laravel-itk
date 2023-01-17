@@ -6,7 +6,7 @@
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
@@ -212,6 +212,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		var data_position = [];
+		var urlPicture = "{{ url('/pictures/profile-picture.png') }}";
 
 		load_data();
 
@@ -259,57 +260,59 @@
 			loadDataEmployeeNo('#employee_number_layer_two', positionCode);
 		});
 
-		function load_data() {
+		function load_data(supervisorPositionCode = '') {
+			
+		}
+
+		function load_data_layer_one(supervisorPositionCode = '') {
 			$.ajax({
 				url: "{{ url('utilities/organization_chart/get/position') }}",
 				type: "GET",
+				data: {
+                    'supervisorPositionCode': supervisorPositionCode
+                },
 				success: function(data) {
-					data_position = data;
-					load_data_layer_one(data_position);				
+					data.forEach(function(value, key) {
+						var htmlPicture = (value.photo == null || value.photo == "") ? '<img src="'+ urlPicture +'" class="d-block rounded-circle" style="width: 3.7rem;" alt="">' : '<img src="data:image/png;base64,' + value.photo + '" class="d-block rounded-circle" style="width: 4.2rem;" alt="">';
+						if(key < 1){
+							$('#div-organization-structure-level-one').append(
+								'<div class="carousel-item active">'+
+								'<div class="item__third" data-pos="' + value.employeeNo + '">'+
+								htmlPicture +
+								'<div class="carousel-caption d-none d-md-block">'+
+								'<h5 class="employee-name">' + value.fullName + '</h5>'+
+								'<p>' + value.positionName + '</p>'+
+								'</div></div></div>'
+							);
+
+							$('#employee-name-layer-one').html(value.fullName);
+							$('#position-name-layer-one').html(value.positionName);
+
+							load_data_layer_two(value.positionCode);
+							loadDataEmployeeNo('#employee_number_layer_two', value.positionCode);
+						}else{
+							$('#div-organization-structure-level-one').append(
+								'<div class="carousel-item">'+
+								'<div class="item__third" data-pos="' + value.employeeNo + '">'+
+								htmlPicture +
+								'<div class="carousel-caption d-none d-md-block">'+
+								'<h5 class="employee-name">' + value.fullName + '</h5>'+
+								'<p>' + value.positionName + '</p>'+
+								'</div></div></div>'
+							);
+						}
+					});
+
+					set_carousel('#chartOrganizationLevelOne');			
 				},
 				error: function(data) {
 					
 				}
 
 			});
-		}
-
-		function load_data_layer_one(data = '') {
-			let data_layer_one = data.filter(function(o){
-				return o.supervisorPositionCode == null;
-			});
-
-			data_layer_one.forEach(function(value, key) {
-				if(key < 1){
-					$('#div-organization-structure-level-one').append(
-						'<div class="carousel-item active">'+
-						'<div class="item__third" data-pos="' + value.positionCode + '">'+
-						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
-						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.fullName + '</h5>'+
-						'<p>' + value.positionName + '</p>'+
-						'</div></div></div>'
-					);
-
-					$('#employee-name-layer-one').html(value.fullName);
-					$('#position-name-layer-one').html(value.positionName);
-
-					load_data_layer_two(data, value.positionCode);
-					loadDataEmployeeNo('#employee_number_layer_two', value.positionCode);
-				}else{
-					$('#div-organization-structure-level-one').append(
-						'<div class="carousel-item">'+
-						'<div class="item__third" data-pos="' + value.positionCode + '">'+
-						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
-						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.fullName + '</h5>'+
-						'<p>' + value.positionName + '</p>'+
-						'</div></div></div>'
-					);
-				}
-			});
-
-			set_carousel('#chartOrganizationLevelOne');
+			// let data_layer_one = data.filter(function(o){
+			// 	return o.supervisorPositionCode == null;
+			// });
 		}
 
 		$('#chartOrganizationLevelTwo').on('slid.bs.carousel', function (e) {
@@ -320,50 +323,63 @@
 			});
 			$('#employee-name-layer-two').html(select_data[0].fullName);
 			$('#position-name-layer-two').html(select_data[0].positionName);
-			load_data_layer_three(data_position, positionCode);
+			load_data_layer_three(positionCode);
 			loadDataEmployeeNo('#employee_number_layer_three', positionCode);
 		});
 
-		function load_data_layer_two(data = '', positionCode = '') {
+		function load_data_layer_two(supervisorPositionCode = '') {
 			$('#div-organization-structure-level-two').html('');
+			$.ajax({
+				url: "{{ url('utilities/organization_chart/get/position') }}",
+				type: "GET",
+				data: {
+                    'supervisorPositionCode': supervisorPositionCode
+                },
+				success: function(data) {
+					$('#direct-count-layer-one').html(data.length);
 
-			let data_layer_two = data.filter(function(o){
-				return o.supervisorPositionCode == positionCode;
-			});
+					data.forEach(function(value, key) {
+						var htmlPicture = (value.photo == null || value.photo == "") ? '<img src="'+ urlPicture +'" class="d-block" style="max-width: 50px;" alt="">' : '<img src="data:image/png;base64,"' + value.photo + '" class="d-block" alt="">';
+						if(key < 1){
+							$('#div-organization-structure-level-two').append(
+								'<div class="carousel-item active">'+
+								'<div class="item__third" data-pos="' + value.positionCode + '">'+
+								htmlPicture +
+								'<div class="carousel-caption d-none d-md-block">'+
+								'<h5 class="employee-name">' + value.fullName + '</h5>'+
+								'<p>' + value.positionName + '</p>'+
+								'</div></div></div>'
+							);
 
-			$('#direct-count-layer-one').html(data_layer_two.length);
+							$('#employee-name-layer-two').html(value.fullName);
+							$('#position-name-layer-two').html(value.positionName);
 
-			data_layer_two.forEach(function(value, key) {
-				if(key < 1){
-					$('#div-organization-structure-level-two').append(
-						'<div class="carousel-item active">'+
-						'<div class="item__third" data-pos="' + value.positionCode + '">'+
-						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
-						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.fullName + '</h5>'+
-						'<p>' + value.positionName + '</p>'+
-						'</div></div></div>'
-					);
+							load_data_layer_three(value.positionCode);
+							loadDataEmployeeNo('#employee_number_layer_three', value.positionCode);
+						}else{
+							$('#div-organization-structure-level-two').append(
+								'<div class="carousel-item">'+
+								'<div class="item__third" data-pos="' + value.positionCode + '">'+
+								htmlPicture +
+								'<div class="carousel-caption d-none d-md-block">'+
+								'<h5 class="employee-name">' + value.fullName + '</h5>'+
+								'<p>' + value.positionName + '</p>'+
+								'</div></div></div>'
+							);
+						}
+					});
 
-					$('#employee-name-layer-two').html(value.fullName);
-					$('#position-name-layer-two').html(value.positionName);
-
-					load_data_layer_three(data, value.positionCode);
-					loadDataEmployeeNo('#employee_number_layer_three', value.positionCode);
-				}else{
-					$('#div-organization-structure-level-two').append(
-						'<div class="carousel-item">'+
-						'<div class="item__third" data-pos="' + value.positionCode + '">'+
-						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
-						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.fullName + '</h5>'+
-						'<p>' + value.positionName + '</p>'+
-						'</div></div></div>'
-					);
+					set_carousel('#chartOrganizationLevelTwo');		
+				},
+				error: function(data) {
+					
 				}
+
 			});
 
-			set_carousel('#chartOrganizationLevelTwo');
+			// let data_layer_two = data.filter(function(o){
+			// 	return o.supervisorPositionCode == positionCode;
+			// });
 		}
 
 		$('#chartOrganizationLevelThree').on('slid.bs.carousel', function (e) {
@@ -379,40 +395,54 @@
 		function load_data_layer_three(data = '', positionCode = '') {
 			$('#div-organization-structure-level-three').html('');
 
-			let data_layer_three = data.filter(function(o){
-				return o.supervisorPositionCode == positionCode;
-			});
+			// let data_layer_three = data.filter(function(o){
+			// 	return o.supervisorPositionCode == positionCode;
+			// });
+			$.ajax({
+				url: "{{ url('utilities/organization_chart/get/position') }}",
+				type: "GET",
+				data: {
+                    'supervisorPositionCode': supervisorPositionCode
+                },
+				success: function(data) {
+					$('#direct-count-layer-two').html(data.length);
 
-			$('#direct-count-layer-two').html(data_layer_three.length);
+					data.forEach(function(value, key) {
+						var htmlPicture = (value.photo == null || value.photo == "") ? '<img src="'+ urlPicture +'" class="d-block" style="max-width: 50px;" alt="">' : '<img src="data:image/png;base64,"' + value.photo + '" class="d-block" alt="">';
 
-			data_layer_three.forEach(function(value, key) {
-				if(key < 1){
-					$('#div-organization-structure-level-three').append(
-						'<div class="carousel-item active">'+
-						'<div class="item__third" data-pos="' + value.positionCode + '">'+
-						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
-						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.fullName + '</h5>'+
-						'<p>' + value.positionName + '</p>'+
-						'</div></div></div>'
-					);
+						if(key < 1){
+							$('#div-organization-structure-level-three').append(
+								'<div class="carousel-item active">'+
+								'<div class="item__third" data-pos="' + value.positionCode + '">'+
+								htmlPicture +
+								'<div class="carousel-caption d-none d-md-block">'+
+								'<h5 class="employee-name">' + value.fullName + '</h5>'+
+								'<p>' + value.positionName + '</p>'+
+								'</div></div></div>'
+							);
 
-					$('#employee-name-layer-three').html(value.fullName);
-					$('#position-name-layer-three').html(value.positionName);
-				}else{
-					$('#div-organization-structure-level-three').append(
-						'<div class="carousel-item">'+
-						'<div class="item__third" data-pos="' + value.positionCode + '">'+
-						'<img src=' + "{{ url('/pictures/profile-picture.png') }}" + ' class="d-block" alt="">'+
-						'<div class="carousel-caption d-none d-md-block">'+
-						'<h5 class="employee-name">' + value.fullName + '</h5>'+
-						'<p>' + value.positionName + '</p>'+
-						'</div></div></div>'
-					);
+							$('#employee-name-layer-three').html(value.fullName);
+							$('#position-name-layer-three').html(value.positionName);
+						}else{
+							$('#div-organization-structure-level-three').append(
+								'<div class="carousel-item">'+
+								'<div class="item__third" data-pos="' + value.positionCode + '">'+
+								htmlPicture +
+								'<div class="carousel-caption d-none d-md-block">'+
+								'<h5 class="employee-name">' + value.fullName + '</h5>'+
+								'<p>' + value.positionName + '</p>'+
+								'</div></div></div>'
+							);
+						}
+					});
+
+					set_carousel('#chartOrganizationLevelThree');	
+				},
+				error: function(data) {
+					
 				}
-			});
 
-			set_carousel('#chartOrganizationLevelThree');
+			});
 		}
 
 		$.fn.filterByData = function(prop, val) {
@@ -423,32 +453,34 @@
 
 		$('#employee_number_layer_one').on("select2:select", function(e) { 
             var data = $('#employee_number_layer_one').select2('data');
+			// console.log(data[0]);
             $('#chartOrganizationLevelOne .carousel-inner .carousel-item.active').removeClass('active');
-            var hasil = $('#chartOrganizationLevelOne .carousel-inner .carousel-item .item__third:nth-child(2)').filterByData('pos', 'BU-Dev');
+            var hasil = $('#chartOrganizationLevelOne .carousel-inner .carousel-item .item__third:nth-child(2)').filterByData('pos', data[0].data.employeeNo);
             if(hasil.length > 0){
             	hasil.parent().addClass('active');
 
-            	let select_data = data_position.filter(function(o){
-            		return o.positionCode == 'BU-Dev';
-            	});
-            	$('#employee-name-layer-one').html(select_data[0].fullName);
-            	$('#position-name-layer-one').html(select_data[0].positionName);
-            	load_data_layer_two(data_position, 'BU-Dev');
+            	// let select_data = data_position.filter(function(o){
+            	// 	return o.positionCode == 'BU-Dev';
+            	// });
+				// console.log(data[0]);
+            	$('#employee-name-layer-one').html(data[0].data.fullName);
+            	$('#position-name-layer-one').html(data[0].data.positionName);
+            	// load_data_layer_two(data, 'BU-Dev');
             }
         });
 
         $('#employee_number_layer_two').on("select2:select", function(e) { 
             var data = $('#employee_number_layer_two').select2('data');
             $('#chartOrganizationLevelTwo .carousel-inner .carousel-item.active').removeClass('active');
-            var hasil = $('#chartOrganizationLevelTwo .carousel-inner .carousel-item .item__third:nth-child(2)').filterByData('pos', 'BC4');
+            var hasil = $('#chartOrganizationLevelTwo .carousel-inner .carousel-item .item__third:nth-child(2)').filterByData('pos', data[0].data.employeeNo);
             if(hasil.length > 0){
             	hasil.parent().addClass('active');
-            	let select_data = data_position.filter(function(o){
-            		return o.positionCode == 'BC4';
-            	});
-            	$('#employee-name-layer-two').html(select_data[0].fullName);
-            	$('#position-name-layer-two').html(select_data[0].positionName);
-            	load_data_layer_three(data_position, 'BC4');
+            	// let select_data = data_position.filter(function(o){
+            	// 	return o.positionCode == 'BC4';
+            	// });
+            	$('#employee-name-layer-two').html(data[0].data.fullName);
+            	$('#position-name-layer-two').html(data[0].data.positionName);
+            	// load_data_layer_three(data_position, 'BC4');
             }
         });
 
@@ -458,11 +490,11 @@
             var hasil = $('#chartOrganizationLevelThree .carousel-inner .carousel-item .item__third:nth-child(2)').filterByData('pos', 'Dev2');
             if(hasil.length > 0){
             	hasil.parent().addClass('active');
-            	let select_data = data_position.filter(function(o){
-            		return o.positionCode == 'Dev2';
-            	});
-            	$('#employee-name-layer-three').html(select_data[0].fullName);
-            	$('#position-name-layer-three').html(select_data[0].positionName);
+            	// let select_data = data_position.filter(function(o){
+            	// 	return o.positionCode == 'Dev2';
+            	// });
+            	$('#employee-name-layer-three').html(data[0].data.fullName);
+            	$('#position-name-layer-three').html(data[0].data.positionName);
             }
         });
 

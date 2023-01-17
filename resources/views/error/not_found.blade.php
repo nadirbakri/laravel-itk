@@ -6,7 +6,7 @@
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 	<link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
 	<style type="text/css">
@@ -48,7 +48,7 @@
                 <p>{{ __('error_page.text4') }}</p>
                 <p><a href="mailto:support@intikom.com">support@intikom.com</a></p>
                 <br><br>
-                <p class="text-muted">© Copyright PT Intikom Berlian Mustika 2021</p>
+                <p class="text-muted">© Copyright PT Intikom Berlian Mustika {{ date('Y') }}</p>
             </div>
             <div class="col-3"></div>
         </div>
