@@ -11,7 +11,6 @@
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
@@ -21,7 +20,6 @@
         .div-trans-workflow {
             max-width: 100%;
             margin: auto;
-            /*margin-top: 1%;*/
         }
 
         .div-profile {
@@ -152,7 +150,7 @@
                             </div>
                         </div>
                         <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
-                    </div>
+                    </div>      
                 </div>
 
                 <div class="row">
@@ -468,9 +466,9 @@
                                 }
                             }
                     },
-                    {data: 'permitEntity.employeeNo', name: 'employeeNo'},
-                    {data: 'permitEntity.customerName', name: 'customerName'},
-                    {data: 'permitEntity.status', name: 'status'},
+                    {data: 'permitEntity.employeeNo', name: 'permitEntity.employeeNo'},
+                    {data: 'permitEntity.fullnameRequester', name: 'permitEntity.fullnameRequester'},
+                    {data: 'permitEntity.status', name: 'permitEntity.status'},
                     {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
                     {data: 'permitEntity.time', name: 'permitEntity.time'},
                     {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
@@ -530,14 +528,14 @@
                                 }
                             }
                         },
-                        {data: 'leaveEntity.employeeNo', name: 'employeeNo'},
-                        {data: 'leaveEntity.fullnameRequester', name: 'fullnameRequester'},
-                        {data: 'leaveEntity.status', name: 'status'},
-                    {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
-                    {data: 'leaveEntity.leaveDurationDepan', name: 'leaveDurationDepan'},
-                    {data: 'leaveEntity.createdBy', name: 'createdBy'},
-                    {data: 'leaveEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'leaveEntity.approvalRemarks', name: 'approvalRemarks'},
+                        {data: 'leaveEntity.employeeNo', name: 'leaveEntity.employeeNo'},
+                        {data: 'leaveEntity.fullnameRequester', name: 'leaveEntity.fullnameRequester'},
+                        {data: 'leaveEntity.status', name: 'leaveEntity.status'},
+                        {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
+                        {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
+                        {data: 'leaveEntity.createdBy', name: 'leaveEntity.createdBy'},
+                        {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
+                        {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
                         // {
                         //     data: 'leaveBalanceBeforeExpiredDate', 
                         //     name: 'leaveBalanceBeforeExpiredDate',
@@ -545,7 +543,7 @@
                         //         return moment(data).format('DD-MMM-YYYY');
                         //     }
                         // }
-                    ],
+                    ], 
                     select: {
                         style:    'multi',
                         selector: 'td:first-child'
@@ -824,7 +822,6 @@
                     },
                     templateResult: formatSelect
                 });
-            }
-    
+            }  
     </script>
 </html>
