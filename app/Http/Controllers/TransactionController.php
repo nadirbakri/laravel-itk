@@ -144,10 +144,6 @@ class TransactionController extends Controller
             $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementhistoryall',
                 ['body' => json_encode(
                     [
-                        // 'companyCode' => Session::get('companyCode'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'employeeNo'=> $request->employeeNo,
@@ -439,14 +435,15 @@ class TransactionController extends Controller
                 // var_dump(json_encode(
                 //     [
                 //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //         'employeeNo'=> $request->employeeNo,
-                //         'businessUnit' => $request->businessUnit,
-                //         'workflowType' => "ER",
-                //         'companyCode' => Session::get('companyCode'), 
-                //         'languageCode' => App::getLocale(), 
-                //         'sessionID' => 0, 
-                //         'sessionUserID' => Session::get('userID'),
+                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                //             'businessUnit' => $request->businessUnit,
+                //             'exportMenu' => false,
+                //             'companyCode' => Session::get('companyCode'), 
+                //             'workflowType' => "ER",
+                //             'languageCode' => App::getLocale(), 
+                //             'employeeNo'=> $request->employeeNo,
+                //             'sessionID' => 0, 
+                //             'sessionUserID' => Session::get('userID'),
                 //     ]
                 //     ));
                 $response = $client->post(env('API_URL') . '/tmpermit/gettmpermitdetailList',
@@ -847,6 +844,22 @@ class TransactionController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+              
+            // var_dump(json_encode(
+            //     [
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'exportMenu' =>false,
+            //         'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+            //         'type' =>  $request->type,
+            //         'businessUnit'=> $request->businessUnit,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
+            //     ]
+            //     ));
 
             $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
                 ['body' => json_encode(
@@ -910,7 +923,7 @@ class TransactionController extends Controller
             //             // 'processDate' => $request->processDate, 
             //             // 'type' =>  $request->transportType,
             //             // 'businessUnit'=> $request->businessUnit,
-            //             'approvalRemarks'=> 'string',
+            //             'approvalRemarks'=> $request->approvalRemarks,
             //             'logActionUserID'=> 'string',
             //             'logActionUsername'=> 'string',
             //             'status'=> $request->status,

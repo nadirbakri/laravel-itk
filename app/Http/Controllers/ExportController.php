@@ -160,7 +160,7 @@ class ExportController extends Controller
     }
    
     public function printExportBusinessTripPDF(Request $request){
-      if ($request->travel_type[0] == "TTA"){
+      if ($request->travel_type == "TTA"){
         try {
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -194,12 +194,13 @@ class ExportController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
             return $pdf->stream('Business Trip.pdf');
         }else{
-            $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' =>$arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
             return $pdf->stream('Business Trip.pdf');
         }
       }else{
@@ -220,16 +221,6 @@ class ExportController extends Controller
                 'businessUnit' =>$request->business_unit,
                 'sessionUserID' => Session::get('userID')
             ];
-
-            // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
-            //     $param['permitDateFrom'] = $this->permitDateFrom;
-            //     $param['permitDateTo'] = $this->permitDateTo;
-            // }
-
-            // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
-            //     $param['businessUnit'] = $this->businessUnit;
-            // }
-            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
                 ['body' => json_encode($param)]

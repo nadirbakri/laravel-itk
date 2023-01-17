@@ -106,6 +106,15 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
+        .detailstatus h5{
+            font-size: 16px;
+        }
+        .approve h5{
+            font-size: 18px;
+        }
+        .detailstatus input{
+            outline: none;
+        }
     </style>
 </head>
 
@@ -302,33 +311,19 @@
                     <div class="modal-body">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row detailstatus">
-                                    <div class="col-3  ">
-                                        <h5>{{ __('trans_business_trip.rdate') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.redate') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.tnom') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.status') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -337,13 +332,13 @@
                                         <h5>{{ __('trans_business_trip.label_bu') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.treq') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -352,18 +347,18 @@
                                         <h5>{{ __('trans_business_trip.employee') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="type" name="type">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="type" name="type" disabled>
                                     </div>
                                 </div>
                             
                                 <br>
-                                <div class="row">
+                                <div class="row approve">
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.status') }}</h5>
                                     </div>
@@ -375,7 +370,7 @@
                                             </select>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row approve">
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.tpaid') }}</h5>
                                     </div>
@@ -383,7 +378,7 @@
                                         <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row approve">
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
                                     </div>
@@ -558,16 +553,9 @@
                     {data: 'destination', name: 'destination'},
                     {data: 'customerName', name: 'customerName'},
                     {data: 'projectName', name: 'projectName'},
-                    {data: 'projectName', name: 'projectName'},
+                    {data: 'total', name: 'total'},
                     {data: 'totalClaimAmount', name: 'totalClaimAmount'},
                     {data: 'purpose', name: 'purpose'},
-                    // {
-                    //     data: 'leaveBalanceBeforeExpiredDate', 
-                    //     name: 'leaveBalanceBeforeExpiredDate',
-                    //     render: function (data, type, row) {
-                    //         return moment(data).format('DD-MMM-YYYY');
-                    //     }
-                    // }
                 ],
                 select: {
                     style:    'multi',
@@ -648,11 +636,13 @@
         let ticket_number = $(element).parent().siblings('.sorting_1').text()
         let status = $(element).parent().siblings('td').eq(3).text()
         let totalclaim = $(element).parent().siblings('td').eq(8).text()
+        let totalpaid = $(element).parent().siblings('td').eq(7).text()
         var business_unit = $("#business_unit").val();
         var direct_superior = $("#direct_superior").val();
         var reimbursement_type = $("#reimbursement_type").val();
 
         $('#tiketno').val(ticket_number)
+        $('#totalpaid').val(totalpaid)
         $('#status').val(status)
         $('#b_unit').val(business_unit)
         $('#employeeno').val(direct_superior)

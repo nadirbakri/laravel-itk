@@ -307,13 +307,13 @@
                                         <h5>{{ __('trans_medical.rdate') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.redate') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -322,13 +322,13 @@
                                         <h5>{{ __('trans_medical.tnumber') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.status') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -337,13 +337,13 @@
                                         <h5>{{ __('trans_medical.label_business_unit') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -352,13 +352,13 @@
                                         <h5>{{ __('trans_medical.ename') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.pname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name" disabled>
                                     </div>
                                 </div>
                             
@@ -367,13 +367,13 @@
                                         <h5>{{ __('trans_medical.treq') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.dname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent" disabled>
                                     </div>
                                 </div>
                                 <br>
@@ -707,7 +707,7 @@
 
                         }
                     },
-                    {data: 'reimbursementEntity.createdDate', name: 'createdDate', 
+                    {data: 'reimbursementEntity.createdDate', name: 'reimbursementEntity.createdDate', 
                                 render: function (data, type, row) {
                                 if (data == null){
                                     return '-'
@@ -716,11 +716,11 @@
                                 }
                             }
                     },
-                    {data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementStatus'},
-                    {data: 'reimbursementEntity.directSuperiorID', name: 'directSuperiorID'},
-                    {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'reimbursementEntity.receiptDate', name: 'receiptDate',
+                    {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
+                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
+                    {data: 'reimbursementEntity.directSuperiorID', name: 'reimbursementEntity.directSuperiorID'},
+                    {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
+                    {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate',
                                 render: function (data, type, row) {
                                 if (data == null){
                                     return '-'
@@ -729,10 +729,10 @@
                                 }
                             }
                     },
-                    {data: 'reimbursementEntity.totalClaimAmount', name: 'totalClaimAmount'},
-                    {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'
+                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount'},
+                    {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'
                     },
-                    {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount'},
                 ],
                 select: {
                     style:    'multi',

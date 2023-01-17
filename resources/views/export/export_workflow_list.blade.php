@@ -22,15 +22,16 @@
 				<th>No</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
-				<th>Permit Type</th>
+				{{-- <th>Permit Type</th> --}}
                 <th>Permit Start Date</th>
                 <th>Permit End Date</th>
                 <th>Permit Start Hour</th>
                 <th>Permit End Hour</th>
-				<th>Claim Date To</th>
+				{{-- <th>Claim Date To</th> --}}
 				<th>Status</th>
-                <th>Approve Date</th>
+                {{-- <th>Approve Date</th>
                 <th>Description</th>
+                <th>Approval Remarks</th> --}}
                 <th>Customer Name</th>
 			</tr>
 		</thead>
@@ -41,15 +42,16 @@
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->permitEntity->employeeNo }}</td>
 				<td>{{ $value->permitEntity->fullnameRequester }}</td>
-				<td></td>
+				{{-- <td></td> --}}
 				<td>{{ $value->permitEntity->permitDateFrom }}</td>
 				<td>{{ $value->permitEntity->permitDateTo }}</td>
 				<td>{{ $value->permitEntity->permitHourFrom}}</td>
 				<td>{{ $value->permitEntity->permitHourTo}}</td>
-				<td></td>
+				{{-- <td></td> --}}
 				<td>{{ $value->permitEntity->status}}</td>
+				{{-- <td></td>
 				<td></td>
-				<td></td>
+				<td></td> --}}
 				<td>{{ $value->permitEntity->customerName}}</td>
 			</tr>
 			@endforeach

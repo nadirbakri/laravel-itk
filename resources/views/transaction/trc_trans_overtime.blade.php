@@ -291,17 +291,23 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row detailstatus">
-                                    <div class="col-3  ">
+                                    <div class="col-3">
+                                        <h5>{{ __('trans_overtime.dname') }}</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                    </div>
+                                    {{-- <div class="col-3  ">
                                         <h5>{{ __('trans_overtime.rdate') }}</h5>
                                     </div>
                                     <div class="col">
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
+                                    </div> --}}
                                     <div class="col-3">
                                         <h5>{{ __('trans_overtime.employee') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -310,13 +316,13 @@
                                         <h5>{{ __('trans_overtime.tnom') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_overtime.status') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -325,13 +331,13 @@
                                         <h5>{{ __('trans_overtime.label_bu') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_overtime.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -340,30 +346,16 @@
                                         <h5>{{ __('trans_overtime.name') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employeename" name="employeename" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employeename" name="employeename" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_overtime.pname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="projectname" name="projectname" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="projectname" name="projectname" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from"disabled>
                                     </div>
                                 </div>
 
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.tclaim') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.dname') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
                             
                                 <br>
                                 <div class="row">
@@ -539,27 +531,27 @@
                     //         return moment(data).format('YYYY-MM-DD');
                     //     }
                     // },
-                    {data: 'overtimeEntity.fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'overtimeEntity.status', name: 'status'},
-                    {data: 'overtimeEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'overtimeEntity.projectName', name: 'projectName'},
-                    {data: 'overtimeEntity.overtimeDate', name: 'overtimeDate', 
+                    {data: 'overtimeEntity.fullnameRequester', name: 'overtimeEntity.fullnameRequester'},
+                    {data: 'overtimeEntity.status', name: 'overtimeEntity.status'},
+                    {data: 'overtimeEntity.ticketNo', name: 'overtimeEntity.ticketNo'},
+                    {data: 'overtimeEntity.projectName', name: 'overtimeEntity.projectName'},
+                    {data: 'overtimeEntity.overtimeDate', name: 'overtimeEntity.overtimeDate', 
                             render: function (data, type, row){
                             return moment(data).format('YYYY-MM-DD');
                             }
                     },
-                    {data: 'overtimeEntity.overtimeHourFrom', name: 'overtimeHourFrom',
+                    {data: 'overtimeEntity.overtimeHourFrom', name: 'overtimeEntity.overtimeHourFrom',
                             render: function (data, type, row){
                                 return moment(data).format('HH-MM-SS')
                             }
                 },
-                    {data: 'overtimeEntity.overtimeHourTo', name: 'overtimeHourTo',
+                    {data: 'overtimeEntity.overtimeHourTo', name: 'overtimeEntity.overtimeHourTo',
                             render: function (data, type, row){
                                 return moment(data).format('HH-MM-SS')
                             }
                 },
-                    {data: 'overtimeEntity.overtimeRemarks', name: 'overtimeRemarks'},
-                    {data: 'overtimeEntity.customerName', name: 'customerName'},
+                    {data: 'overtimeEntity.overtimeRemarks', name: 'overtimeEntity.overtimeRemarks'},
+                    {data: 'overtimeEntity.customerName', name: 'overtimeEntity.customerName'},
                     // {data: 'overtimeEntity.', name: ''},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
@@ -680,6 +672,7 @@
         $('#direct_superior').val(employee_id)
 
         $('.close').click();
+        
         // let fullname = $(element).parent().siblings('td').eq(1).text()
         // let division = $(element).parent().siblings('td').eq(2).text()
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
