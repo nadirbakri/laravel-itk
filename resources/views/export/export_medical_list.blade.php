@@ -26,24 +26,14 @@
 				<th>Claim Type</th>
 				<th>Employee No</th>
 				<th>Receipt Date</th>
-				<th>Company Customer</th>
+				{{-- <th>Company Customer</th> --}}
 				<th>Remarks</th>
-				<th>Total Request(Rp)</th>
+				{{-- <th>Total Request(Rp)</th>
 				<th>Total Per Employee</th>
 				<th>No Rekening</th>
-				<th>Total Approved HRD(Rp)</th>
+				<th>Total Approved HRD(Rp)</th> --}}
 				<th>Total Paid</th>
 				<th>Paid Remarks</th>
-				{{-- <th>Reimbursement Status</th>
-				<th>Ticket No</th> --}}
-				{{-- <th>Business Unit</th> --}}
-				{{-- <th>Receipt Date</th>
-				<th>Employee No</th>
-                <th>Medical Type</th>
-                <th>Claim For</th>
-                <th>Name</th>
-                <th>Total Claim</th>
-                <th>Payment Date</th> --}}
 			</tr>
 		</thead>
 		<tbody>
@@ -57,13 +47,12 @@
 				<td>{{ $value->reimbursementEntity->medicalType1 }}</td>
 				<td>{{ $value->reimbursementEntity->employeeNo}}</td>
 				<td>{{ \Carbon\Carbon::parse($value->reimbursementEntity->receiptDate)->format('Y-m-d') }}</td>
-				{{-- <td>{{ $value->reimbursementEntity->reciptDate }}</td> --}}
-				<td><b>TOTAL</b></td>
+				{{-- <td><b>TOTAL</b></td> --}}
 				<td>{{ $value->reimbursementEntity->reimbursementRemarks}}</td>
-				<td><b>0</b></td>
+				{{-- <td><b>0</b></td>
 				<td><b>0</b></td>
 				<td>#</td>
-				<td></td>
+				<td></td> --}}
 				<td>{{ $value->reimbursementEntity->paidAmount}}</td>
 				<td>{{ $value->reimbursementEntity->approvalRemarks}}</td>
 				{{-- <td>{{ $value->reimbursementEntity->paymentDate}}</td> --}}

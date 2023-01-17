@@ -181,12 +181,6 @@
                             </div>
                                     <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                         </div>
-                    {{-- <div class="col-5">
-                        <div class="form-group">
-                            <label for="status form-check-label">{{ __('trans_reimbursement.label_status') }}</label>
-                        </div>
-                        <select class="form-control select2" id="status" name="status"></select>
-                    </div> --}}
                 </div>
 
                 <div class="row">
@@ -223,11 +217,6 @@
                         <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
                         </button>
                     </div>
-                    {{-- <div class="col-3">
-                        <button class="btn btn-primary" name="btn-list" id="btn-list" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-list.svg') }}" alt="export"> {{ __('trans_medical.btn_list') }}
-                        </button>
-                    </div> --}}
                 </div>
 
                 <!-- TABLE -->

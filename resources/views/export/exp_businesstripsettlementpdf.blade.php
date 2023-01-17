@@ -19,7 +19,8 @@
 			margin-right: 30px;
 			margin-bottom: 25px;
 			margin-top: 25px;
-		}
+		}, 
+        
 		.table_detail td{
 			border:1px solid #000;
 			text-align:center;
@@ -47,55 +48,40 @@
 	<table style="width:100%; font-size: 12px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Employee No</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Ticket No</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Destination</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Purpose</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Project Name</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Customer Name</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Status</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Full Name Requester</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">No</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Employee No</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Ticket No</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Destination</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Purpose</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Project Name</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Customer Name</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Status</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #b5f797;">Full Name Requester</th>
             </tr>
         </thead>
-        {{-- <tbody>
-			@foreach($data[1]->responseBusinessTrip as $key => $dataTable)
-			<tr>
-				<td>{{ $key+1}}</td>
-			</tr>
-		</tbody> --}}
+        <tbody>
+			<?php $no = 1; ?>
+			@foreach($data as $value)
+				@foreach($value->responseSettlement as $value2)
+				<tr>
+					@if($value->responseSettlement =! null)
+					<td>{{ $no++ }}</td>
+					<td>{{ $value2->ticketNo }}</td>
+					<td>{{ $value2->fullnameRequester }}</td>
+					<td>{{ $value2->customerName }}</td>
+					<td>{{ $value2->status }}</td>
+					<td>{{ $value3->typeClaim }}</td>
+					<td>{{ $value2->destination }}</td>
+					<td>{{ $value2->customerName }}</td>
+					<td>{{ $value2->projectName }}</td>
+					@else
+					<td>{{ $value2->responseSettlement}}</td>
+					@endif
+				</tr>
+					@endforeach
+				@endforeach
+		</tbody>
     </table>
 
-    <!-- <footer style="font-size:14px;">
-        <br>
-        <p>Report Parameter</p>
-        <p>Employee No :<span style="display: inline-block; margin-left: 40px;"></span> : {{ $data_employee_no_from }} to {{ $data_employee_no_to }}</p>
-        <p>Total Printed :<span style="display: inline-block; margin-left: 40px;"></span> : {{ count($data) }} Record{s}</p>
-        <hr/>
-    </footer> -->
-<!-- 
-    <script type="text/php">
-    if (isset($pdf)) {
-        $pdf->page_script('
-            $page = sprintf(_("Page %d/%d"),  $PAGE_NUM, $PAGE_COUNT);
-            // Uncomment the following line if you use a Laravel-based i18n
-            //$text = __("Page :pageNum/:pageCount", ["pageNum" => $PAGE_NUM, "pageCount" => $PAGE_COUNT]);
-            $font = null;
-            $size = 9;
-            $color = array(0,0,0);
-            $word_space = 0.5;  //  default
-            $char_space = 0.5;  //  default
-            $angle = 0.5;   //  default
-
-            // Compute text width to center correctly
-            $textWidth = $fontMetrics->getTextWidth($page, $font, $size);
-
-            $x = ($pdf->get_width() - $textWidth) - 75;
-            $y = $pdf->get_height() - 45;
-
-            $pdf->text($x, $y, $page, $font, $size, $color, $word_space, $char_space, $angle);
-        '); // End of page_script
-    }
-    </script> -->
 </body>
 </html>

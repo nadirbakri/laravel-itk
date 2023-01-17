@@ -305,13 +305,13 @@
                                         <h5>Request Date</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>Receipt Date</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -320,13 +320,13 @@
                                         <h5>Ticket Number</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -335,13 +335,13 @@
                                         <h5>Business Unit</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>Claim Type</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                 </div>
 
@@ -350,13 +350,13 @@
                                         <h5>Employee Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>Project Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name" disabled>
                                     </div>
                                 </div>
                             
@@ -365,13 +365,13 @@
                                         <h5>Total Claim</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>Dependent Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent" disabled>
                                     </div>
                                 </div>
                                 <br>
@@ -392,7 +392,7 @@
                                         <h5>Total Paid</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
+                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row approve">
@@ -627,18 +627,17 @@
                             return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
-                    {data: 'reimbursementEntity.receiptDate', name: 'receiptDate', 
+                    {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate', 
                             render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
-                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementStatus'},
-                    {data: 'reimbursementEntity.ticketNo', name: 'ticketNo'},
-                    // {data: 'businessUnit', name: 'businessUnit'},
-                    {data: 'reimbursementEntity.fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'reimbursementEntity.customerName', name: 'customerName'},
-                    {data: 'reimbursementEntity.projectName', name: 'projectName'},
-                    {data: 'reimbursementEntity.paymentDate', name: 'paymentDate', 
+                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
+                    {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
+                    {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
+                    {data: 'reimbursementEntity.customerName', name: 'reimbursementEntity.customerName'},
+                    {data: 'reimbursementEntity.projectName', name: 'reimbursementEntity.projectName'},
+                    {data: 'reimbursementEntity.paymentDate', name: 'reimbursementEntity.paymentDate', 
                             render: function (data, type, row) {
                                 if (data == null){
                                     return '-'
@@ -647,9 +646,9 @@
                                 }
                             }
                     },
-                    {data: 'reimbursementEntity.totalClaimAmount', name: 'totalClaimAmount'},
-                    {data: 'reimbursementEntity.approvalRemarks', name: 'approvalRemarks'},
-                    {data: 'reimbursementEntity.paidAmount', name: 'paidAmount'},
+                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount'},
+                    {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount'},
                 ],
                 select: {
                     style:    'multi',

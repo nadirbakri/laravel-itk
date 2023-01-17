@@ -60,21 +60,30 @@
             </tr>
         </thead>
         <tbody>
-			@foreach($data[1]->responseBusinessTrip as $key => $dataTable)
-			<tr>
-				<td>{{ $key+1}}</td>
-			</tr>
+			<?php $no = 1; ?>
+			@foreach($data as $value)
+				@foreach($value->responseBusinessTrip as $value2)
+				<tr>
+					{{-- @if($value->responseSettlement =! null) --}}
+					<td>{{ $no++ }}</td>
+					<td>{{ $value2->employeeNo }}</td>
+					<td>{{ $value2->ticketNo }}</td>
+					<td>{{ $value2->destination }}</td>
+					<td>{{ $value2->purpose }}</td>
+					<td>{{ $value2->projectName }}</td>
+					<td>{{ $value2->customerName }}</td>
+					<td>{{ $value2->status }}</td>
+					<td></td>
+					
+				</tr>
+					@endforeach
+				@endforeach
 		</tbody>
     </table>
 
-    <!-- <footer style="font-size:14px;">
-        <br>
-        <p>Report Parameter</p>
-        <p>Employee No :<span style="display: inline-block; margin-left: 40px;"></span> : {{ $data_employee_no_from }} to {{ $data_employee_no_to }}</p>
-        <p>Total Printed :<span style="display: inline-block; margin-left: 40px;"></span> : {{ count($data) }} Record{s}</p>
-        <hr/>
+  
       
-    </footer> -->
+    </footer>
 <!-- 
     <script type="text/php">
     if (isset($pdf)) {

@@ -566,24 +566,24 @@
                             return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
-                    {data: 'transportEntity.receiptDate', name: 'receiptDate', 
+                    {data: 'transportEntity.receiptDate', name: 'transportEntity.receiptDate', 
                             render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
                     },
-                    {data: 'transportEntity.status', name: 'status'},
-                    {data: 'transportEntity.ticketNo', name: 'ticketNo'},
-                    {data: 'transportEntity.fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'transportEntity.type', name: 'type'},
+                    {data: 'transportEntity.status', name: 'transportEntity.status'},
+                    {data: 'transportEntity.ticketNo', name: 'transportEntity.ticketNo'},
+                    {data: 'transportEntity.fullnameRequester', name: 'transportEntity.fullnameRequester'},
+                    {data: 'transportEntity.type', name: 'transportEntity.type'},
                     // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
-                    {data: 'transportEntity.customerName', name: 'customerName'},
-                    {data: 'transportEntity.startLocation', name: 'startLocation'},
-                    {data: 'transportEntity.endLocation', name: 'endLocation'},
-                    {data: 'transportEntity.totalAmount', name: 'totalAmount'},
-                    {data: 'transportEntity.paidAmount', name: 'paidAmount'},
-                    {data: 'transportEntity.remarks', name: 'remarks'},
-                    {data: 'transportEntity.amountParkir', name: 'amountParkir'},
-                    {data: 'transportEntity.amountToll', name: 'amountToll'},
+                    {data: 'transportEntity.customerName', name: 'transportEntity.customerName'},
+                    {data: 'transportEntity.startLocation', name: 'transportEntity.startLocation'},
+                    {data: 'transportEntity.endLocation', name: 'transportEntity.endLocation'},
+                    {data: 'transportEntity.totalAmount', name: 'transportEntity.totalAmount'},
+                    {data: 'transportEntity.paidAmount', name: 'transportEntity.paidAmount'},
+                    {data: 'transportEntity.remarks', name: 'transportEntity.remarks'},
+                    {data: 'transportEntity.amountParkir', name: 'transportEntity.amountParkir'},
+                    {data: 'transportEntity.amountToll', name: 'transportEntity.amountToll'},
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',

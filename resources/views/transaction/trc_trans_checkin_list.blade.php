@@ -365,15 +365,6 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type,row) {
-                            // allLatitudes += row.latitude + ', ';
-                            // allLongitudes += row.longitude + ', ';
-                            // href="{{ url('maps/location') }}"
-                            // let longitudes = (row.longitude)
-                            // let latitudes = (row.latitude)
-                            // let names = (row.directSuperiorID)
-                            // console.log(longitudes)
-                            // console.log(latitudes)
-                            // ?names=${names}&longitudes=${longitudes}&latitudes=${latitudes}
                             return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}"   target="iframe_dashboard">Preview Location</a>` : '';
 
                         }
