@@ -1280,7 +1280,7 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         }
                     },
                     ajax: {
-                        url: "{{ url('/reimbursement_type/transport/api') }}"reimbursement_type/transport/api',
+                        url: "{{ url('/reimbursement_type/transport/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",
@@ -1312,7 +1312,7 @@ if ($("#upload_paid_overtime_form").length > 0) {
     
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/reimbursement_type/transport/all/api') }}"reimbursement_type/transport/all/api',
+                    url: "{{ url('/reimbursement_type/transport/all/api') }}",
                 }).then(function (data) {
                     if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
                         $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
@@ -1368,7 +1368,7 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         }
                     },
                     ajax: {
-                        url: "{{ url('/level/api') }}"level/api',
+                        url: "{{ url('/level/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",
@@ -1401,7 +1401,7 @@ if ($("#upload_paid_overtime_form").length > 0) {
     
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/level/func/api') }}"level/func/api',
+                    url: "{{ url('/level/func/api') }}",
                 }).then(function (data) {
                     if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                         $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
