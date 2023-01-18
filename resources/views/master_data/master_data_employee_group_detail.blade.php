@@ -159,7 +159,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_code" name="group_code" >                        
+                        <input type="text" class="form-control" id="group_code" name="group_code" disabled >                        
                         </div>
                     </div>
                 </div>

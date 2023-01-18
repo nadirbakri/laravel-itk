@@ -1,8 +1,8 @@
 <?php
 return [
     'judul' => 'Daftar Multiple Check-In',
-    'rjudul' => 'Klaim Daftar Multiple Check-In',
-    'label_claim_date_start' => 'Tanggal Pengajuan - Dari',
+    'rjudul' => 'Daftar Multiple Check-In',
+    'label_claim_date_start' => 'Multiple CheckIn',
     'employee' => 'ID Karyawan',
     'btn_search' => 'Cari',
     'btn_list' => 'Daftar',

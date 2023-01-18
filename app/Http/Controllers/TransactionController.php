@@ -785,16 +785,16 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'exportMenu' =>false,
-            //         'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
-            //         'type' =>  $request->type,
-            //         'businessUnit'=> $request->businessUnit,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
+            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'exportMenu' =>false,
+            //             'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+            //             'type' =>  $request->type,
+            //             'businessUnit'=> $request->businessUnit,
+            //             'directSuperiorID'=> $request->directSuperiorID,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
 
@@ -804,7 +804,7 @@ class TransactionController extends Controller
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'exportMenu' =>false,
-                        'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+                        // 'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
                         'directSuperiorID'=> $request->directSuperiorID,
@@ -1049,17 +1049,17 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //             'companyCode' => Session::get('companyCode'),
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionUserID' => Session::get('userID'),
-            //             'approvalRemarks'=> 'string',
-            //             'logActionUserID'=> 'string',
-            //             'logActionUsername'=> 'string',
-            //             'status'=> $request->status,
-            //             'paidAmount'=> $request->paidAmount,
-            //             'ticketNo' => $request->ticketNo,
-            //             'approvalRemarks' => $request->approvalRemarks,
-            //             'employeeNo'=> $request->employeeNo
+            //         'companyCode' => Session::get('companyCode'),
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionUserID' => Session::get('userID'),
+            //         'approvalRemarks'=> 'string',
+            //         'logActionUserID'=> 'string',
+            //         'logActionUsername'=> 'string',
+            //         'status'=> $request->status,
+            //         'paidAmount'=>(int) $request->paidAmount,
+            //         'ticketNo' => $request->ticketNo,
+            //         'approvalRemarks' => $request->approvalRemarks,
+            //         'employeeNo'=> $request->employeeNos
             //     ]
             //     ));
 

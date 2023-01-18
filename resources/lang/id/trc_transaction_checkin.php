@@ -2,8 +2,8 @@
 
 return [
     'judul' => 'Daftatr Checkin',
-    'rjudul' => 'Pengajuan Daftar Checkin',
-    'label_claim_date_start' => 'Tanggal Pengajuan - Dari',
+    'rjudul' => 'Daftar Checkin',
+    'label_claim_date_start' => 'Tanggal',
     'employee' => 'Daftar Karyawan',
     'btn_search' => 'Cari',
     'btn_list' => 'Daftar',

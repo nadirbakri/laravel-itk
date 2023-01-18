@@ -999,10 +999,13 @@ Route::get('reimbursement_type/export/api', 'DataController@dataReimbursementTyp
 Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI');
 Route::get('reimbursement_type/all/api', 'DataController@dataReimbursementTypeAllAPI');
 Route::get('reimbursement_type/func/api', 'DataController@dataReimbursementTypeFunctionAPI');
+Route::get('news_category/api', 'DataController@dataNewsCategory');
 Route::get('reimbursement_type_medical/all/api', 'DataController@dataReimbursementTypeMedicalFunctionAPI');
+Route::get('transport_type/all/api', 'DataController@dataTransportAll');
 Route::get('travel_type/all/api', 'DataController@dataTravelTypeAllAPI');
 // diatas buat bikin select ALL
 Route::get('reimbursement_type/transport/api', 'DataController@dataReimbursementTypeTransportAPI');
+Route::get('transport_type/api', 'DataController@dataTransportType');
 Route::get('reimbursement_type/transport/all/api', 'DataController@dataReimbursementTypeTransportAllAPI');
 Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementTypeOvertimeAPI');
 Route::get('reimbursement_type/overtime_all/api', 'DataController@dataReimbursementOvertimeAPI');

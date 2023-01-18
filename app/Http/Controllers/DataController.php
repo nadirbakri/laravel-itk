@@ -8539,6 +8539,59 @@ class DataController extends Controller
 		}
 		return response()->json($data);
 	}
+	
+	public function dataNewsCategory (Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "News_Category_", 
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			// foreach($arrResult->dataListSet as $value){
+			// 	foreach($value as $v){
+			// 		if($v['Value'] ==  )
+			// 	}
+			// }
+
+			// var_dump($request);
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->value)){
+						return preg_match('/' . $search . '/i', $value->value);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
 	public function dataReimbursementTypeExportAPI (Request $request)
 	{
 		$search = $request->search;
@@ -8631,6 +8684,46 @@ class DataController extends Controller
 
         return response()->json($reimbursement_type[0]);
 	}
+	
+	public function dataTransportAll()
+    {
+    	$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						"variable" => "ReimbursementTransport_",
+						"languageCode" => App::getLocale(),
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+
+        return response()->json($reimbursement_type[0]);
+	}
 
 	public function dataEmployeeStatusAllAPI()
     {
@@ -8675,6 +8768,52 @@ class DataController extends Controller
 
 	// Export Reimbursement Transport
 	public function dataReimbursementTypeTransportAPI(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "ReimbursementTransport_",
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->value)){
+						return preg_match('/' . $search . '/i', $value->value);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+	
+	public function dataTransportType(Request $request)
 	{
 		$search = $request->search;
 
