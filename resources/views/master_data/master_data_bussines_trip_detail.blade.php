@@ -152,7 +152,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" >                        </div>
+                        <input type="text" class="form-control" id="" name="" disabled></div>
                     </div>
                 </div>
                 <div class="row">
@@ -169,7 +169,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>User ID</th>
-                                <th>Full Name/th>
+                                <th>Full Name</th>
                             </tr>
                         </thead>
                     </table>

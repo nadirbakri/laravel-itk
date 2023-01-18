@@ -2,8 +2,8 @@
 
 return [
     'judul' => 'Checkin List',
-    'rjudul' => 'Reimbursement Checkin List',
-    'label_claim_date_start' => 'Claim Date - Start',
+    'rjudul' => 'Checkin List',
+    'label_claim_date_start' => 'Date',
     'employee' => 'Employee No',
     'btn_search' => 'Search',
     'btn_list' => 'List',
