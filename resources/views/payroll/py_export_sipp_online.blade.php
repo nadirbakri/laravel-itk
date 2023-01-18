@@ -308,7 +308,7 @@
                         success: function(result, status, xhr){
                             $("#btn-print").prop("disabled", false);
                             $("#btn-print").html(
-                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_export_sipp_online.btn_process") }}'
+                                '<i class="fa fa-download"></i> {{ __("payroll_export_sipp_online.label_download") }}'
                             );
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
@@ -342,7 +342,7 @@
                         error: function (response) {
                             $("#btn-print").prop("disabled", false);
                             $("#btn-print").html(
-                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_export_sipp_online.btn_process") }}'
+                                '<i class="fa fa-download"></i> {{ __("payroll_export_sipp_online.label_download") }}'
                             );
 
                             $('#notification_error').modal('show');

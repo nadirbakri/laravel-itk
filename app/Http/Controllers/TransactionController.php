@@ -592,6 +592,10 @@ class TransactionController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
+        // $serializedData = serialize($arrResult->dataListSet);
+
+        // // save serialized data in a text file
+        // file_put_contents('your_file_name.txt', $serializedData);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);

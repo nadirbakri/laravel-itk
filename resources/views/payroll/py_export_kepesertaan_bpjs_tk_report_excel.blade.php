@@ -85,12 +85,12 @@
                 <th>{{ date('Y-m-d', strtotime($value->tanggalLahir)) }}</th>
                 <th>{{ $value->namaIbuKandung }}</th>
                 <th>{{ $value->jenisIdentitas }}</th>
-                <th></th>
+                <th>{{ $value->noIdentitas }}</th>
                 <th>{{ $value->masaLakuIdentitas }}</th>
                 <th>{{ $value->gender }}</th>
-                <th></th>
+                <th>E</th>
                 <th>{{ date('Y-m-d', strtotime($value->tanggalKepesertaan)) }}</th>
-                <th>{{ $value->maritalStatus }}</th>
+                <th>{{ $value->statusKawin }}</th>
                 <th>{{ $value->golonganDarah }}</th>
                 <th>{{ $value->npwp }}</th>
                 <th>{{ $value->kodeNegara }}</th>

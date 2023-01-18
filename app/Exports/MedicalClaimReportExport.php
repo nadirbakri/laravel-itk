@@ -152,13 +152,13 @@ class MedicalClaimReportExport implements FromView, ShouldAutoSize
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('medical.md_export_medical_claim_report_excel', [
                 'data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
             ]);
         }else{
             return view('medical.md_export_medical_claim_report_excel', [
-                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
+                'data' => $arrResult->dataListSet[0], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $this->grandTotal
             ]); 
         }
     }

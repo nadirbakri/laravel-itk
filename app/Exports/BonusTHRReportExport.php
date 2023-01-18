@@ -85,8 +85,9 @@ class BonusTHRReportExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
 
-        if ($arrResult->dataListSet[0] !== null || $arrCompany->dataListSet[0] !== null)
+        if ($arrResult->dataListSet !== null && $arrCompany->dataListSet !== null)
         {
             $arraySend[] = $arrCompany->dataListSet[0];
             $arraySend[] = $arrResult->dataListSet[0];
@@ -95,15 +96,8 @@ class BonusTHRReportExport implements FromView, ShouldAutoSize
         }
 
         // var_dump($arraySend);
-
-        if($arrResult->dataListSet[0] == null){
-            return view('payroll.py_export_bonus_thr_excel', [
-                'data' => []
-            ]);
-        }else{
-            return view('payroll.py_export_bonus_thr_excel', [
-                'data' => $arraySend
-            ]); 
-        }
+        return view('payroll.py_export_bonus_thr_excel', [
+            'data' => $arraySend
+        ]);
     }
 }

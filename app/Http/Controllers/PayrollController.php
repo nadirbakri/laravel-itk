@@ -6313,11 +6313,10 @@ public function dataDetailReportFormatPY(Request $request)
         // var_dump($arrResult->dataListSet);
         
         $arraySend[] = $arrCompany->dataListSet[0];
-        $arraySend[] = $arrResult->dataListSet[0];
 
         // var_dump($arraySend);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             if($request->report_type == "report"){
                 $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
                 return $pdf->stream('Severance Report.pdf');
@@ -6326,6 +6325,8 @@ public function dataDetailReportFormatPY(Request $request)
                 return $pdf->stream('Severance Slip.pdf');
             }
         }else{
+            $arraySend[] = $arrResult->dataListSet[0];
+
             if($request->report_type == "report"){
                 $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => [$arraySend]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
                 return $pdf->stream('Severance Report.pdf');
@@ -6378,7 +6379,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         // var_dump($arrResult->dataListSet[0]);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Journal Report.pdf');
         }else{
@@ -7004,7 +7005,7 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null || $arrCompany->dataListSet[0] !== null)
+        if ($arrResult->dataListSet !== null)
         {
             $arraySend[] = $arrCompany->dataListSet[0];
             $arraySend[] = $arrResult->dataListSet[0];
@@ -7014,7 +7015,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $paramSend[] = (object) $param;
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('DUMTK Report.pdf');
         }else{
@@ -7078,14 +7079,14 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null)
+        if ($arrResult->dataListSet !== null)
         {
             $arraySend[] = $arrResult->dataListSet[0];
         } else {
             $arraySend[] = [];
         }
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Salary Historical Report.pdf');
         }else{
@@ -7185,7 +7186,7 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null)
+        if ($arrResult->dataListSet !== null)
         {
             $arraySend[] = $arrCompany->dataListSet[0];
             $arraySend[] = $arrResult->dataListSet[0];
@@ -7193,13 +7194,8 @@ public function dataDetailReportFormatPY(Request $request)
             $arraySend[] = [];
         }
 
-        if($arrResult->dataListSet[0] == null){
-            $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
-            return $pdf->stream('Bonus & THR Report.pdf');
-        }else{
-            $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
-            return $pdf->stream('Bonus & THR Report.pdf');
-        }
+        $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+        return $pdf->stream('Bonus & THR Report.pdf');
     }
 
     public function printBonusTHRReportPayrollExcel(Request $request){
@@ -7213,6 +7209,96 @@ public function dataDetailReportFormatPY(Request $request)
             $request->group_authorized_code_to), 
             'Bonus & THR Report.xlsx'
         );
+    }
+
+    public function printExportDataKepesertaanBPJSTKReportPayroll(Request $request){
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        try{
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = $value;
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] =$value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] =$value2;
+                    }
+                    $data_level[] = [
+                        "levelType" => (string) ($key + 1),
+                        "levelCode" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // var_dump(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/bpjs/getbpjslist', [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $customPaper = array(0,0,792.00,1224.00);
+        
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
+        }else{
+            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => $arrResult->dataListSet])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
+        }
     }
 
     public function printExportDataKepesertaanBPJSTKReportPayrollExcel(Request $request){
@@ -7351,12 +7437,13 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+        $customPaper = array(0,0,792.00,1224.00);
 
-        if($arrResult->dataListSet[0] == null){
-            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Retroactive Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Retroactive Report.pdf');
         }
     }

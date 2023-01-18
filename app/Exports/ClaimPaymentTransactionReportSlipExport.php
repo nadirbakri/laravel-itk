@@ -144,7 +144,7 @@ class ClaimPaymentTransactionReportSlipExport implements FromView, ShouldAutoSiz
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('medical.md_export_claim_payment_transaction_report_slip_excel', [
                 'data' => [], 'data_company' => $arrCompany->dataListSet
             ]);

@@ -136,7 +136,7 @@ class LoanReportExport implements FromView, ShouldAutoSize
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             if($this->reportType == "L"){
                 return view('payroll.py_export_loan_report_loan_report_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet

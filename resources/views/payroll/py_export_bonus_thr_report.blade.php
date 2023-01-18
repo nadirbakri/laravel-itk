@@ -36,6 +36,7 @@
 	</style>
 </head>
 <body>
+    @if(count($data) > 1)
     <h4 style="text-align:left">{{ $data[0]->companyName }}</h4>
     <h4 style="text-align:left">{{ $data[0]->address }}</h4>
     <h3 style="text-align:center">{{ $data[1]->reportName }} Report</h3>
@@ -75,6 +76,7 @@
             </tr>
         </tbody>
     </table>
+    @endif
 
     <script type="text/php">
     if (isset($pdf)) {

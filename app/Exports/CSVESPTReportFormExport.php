@@ -78,7 +78,7 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             if($this->format == "periodical"){
                 return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
                     'data' => []

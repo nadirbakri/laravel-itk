@@ -64,14 +64,14 @@ class SalaryHistoricalReportExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if ($arrResult->dataListSet[0] !== null)
+        if ($arrResult->dataListSet !== null)
         {
             $arraySend[] = $arrResult->dataListSet[0];
         } else {
             $arraySend[] = [];
         }
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('payroll.py_export_salary_historical_report_excel', [
                 'data' => []
             ]);

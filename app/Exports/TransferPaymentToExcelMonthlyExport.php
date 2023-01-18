@@ -103,7 +103,7 @@ class TransferPaymentToExcelMonthlyExport implements FromView, ShouldAutoSize
 
         // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet[0] == null){
+        if($arrResult->dataListSet == null){
             return view('medical.md_transfer_payment_to_excel_monthly_excel', [
                 'data' => []
             ]);
