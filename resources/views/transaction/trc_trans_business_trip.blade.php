@@ -444,6 +444,23 @@
             </div>
         </div>
     </div>
+    {{-- if status false --}}
+    <div class="modal fade" role="dialog" id="notification_update_data_fail">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Update Data Failed!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-update-data-fail"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" role="dialog" id="notification_success">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -984,8 +1001,8 @@ $.get("{{ url('level/api') }}", function (data) {
                                    'Update'
                                );
                                
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
+                               $('#notification_update_data_fail').modal('show');
+                               $('#message-notification-update-data-fail').html(response
                                    .message);
                                setTimeout(function () {
                                    window.location =

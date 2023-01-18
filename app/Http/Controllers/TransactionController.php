@@ -1045,17 +1045,17 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //             'companyCode' => Session::get('companyCode'),
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionUserID' => Session::get('userID'),
-            //             'approvalRemarks'=> 'string',
-            //             'logActionUserID'=> 'string',
-            //             'logActionUsername'=> 'string',
-            //             'status'=> $request->status,
-            //             'paidAmount'=> $request->paidAmount,
-            //             'ticketNo' => $request->ticketNo,
-            //             'approvalRemarks' => $request->approvalRemarks,
-            //             'employeeNo'=> $request->employeeNo
+            //         'companyCode' => Session::get('companyCode'),
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionUserID' => Session::get('userID'),
+            //         'approvalRemarks'=> 'string',
+            //         'logActionUserID'=> 'string',
+            //         'logActionUsername'=> 'string',
+            //         'status'=> $request->status,
+            //         'paidAmount'=>(int) $request->paidAmount,
+            //         'ticketNo' => $request->ticketNo,
+            //         'approvalRemarks' => $request->approvalRemarks,
+            //         'employeeNo'=> $request->employeeNos
             //     ]
             //     ));
 

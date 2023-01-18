@@ -996,6 +996,7 @@ Route::get('reimbursement_type/export/api', 'DataController@dataReimbursementTyp
 Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI');
 Route::get('reimbursement_type/all/api', 'DataController@dataReimbursementTypeAllAPI');
 Route::get('reimbursement_type/func/api', 'DataController@dataReimbursementTypeFunctionAPI');
+Route::get('news_category/api', 'DataController@dataNewsCategory');
 Route::get('reimbursement_type_medical/all/api', 'DataController@dataReimbursementTypeMedicalFunctionAPI');
 Route::get('travel_type/all/api', 'DataController@dataTravelTypeAllAPI');
 // diatas buat bikin select ALL

@@ -471,6 +471,22 @@
             </div>
         </div>
     </div>
+     {{-- if status false --}}
+     <div class="modal fade" role="dialog" id="notification_update_data_fail">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Update Data Failed!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-update-data-fail"></span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" id="notification_success">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -754,23 +770,21 @@
                                            "{{ url('transaction/transaction_transport') }}";
                                    }, 3000);
                                } else{
-                                   $("#btn-update").prop("disabled", false);
-                                   $("#btn-update").html(
-                                       // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                       'Update'
-                                   );
-   
-                                   $('#notification_error').modal('show');
-                                   if (response.message == null || response.message ==
-                                       '') {
-                                       $('#message-notification-error').html(
-                                           "{{ __('login.error') }}");
-                                   } else {
-                                       $('#message-notification-error').html(response
-                                           .message);
-                                   }
-                               }
-                           },
+                                $("#btn-update").prop("disabled", false);
+                               $("#btn-update").html(
+                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                   'Update'
+                               );
+                               
+                               $('#notification_update_data_fail').modal('show');
+                               $('#message-notification-update-data-fail').html(response
+                                   .message);
+                               setTimeout(function () {
+                                   window.location =
+                                       "{{ url('transaction/transaction_transport') }}";
+                               }, 3000);
+                           }
+                       },
                 error: function (response) {
                 $("#btn-update").prop("disabled", false);
                 $("#btn-update").html(

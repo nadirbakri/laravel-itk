@@ -134,7 +134,7 @@
         border-radius: 100%;
        }
        .newscategory select{
-        width: 210px;
+        width: 100px;
        }
     </style>
 </head>
@@ -497,6 +497,77 @@
                 });
             } 
         })
+    
+</script>
+<script>
+    loadDataNewsCategory();
+
+    $.get("{{ url('news_category/api') }}", function (data) {
+                $.each(data, function (k, v) {
+                    $('#n_category').append("<option value=" + v.variable + ">" + v.value +
+                        "</option>");
+                });
+            });
+
+            function loadDataNewsCategory(){
+                function formatSelect(data) {
+                    if (data.loading) {
+                        return $search
+                    }
+    
+                    if (data.id) {
+                        var $result2 = $('<div class="row">' + 
+                            '<div class="col-6">' + data.data.value + '<div>' +
+                            '</div>');
+    
+                        return $result2;
+                    }
+                }
+    
+                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+                
+                $('#n_category').select2({
+                    width: '100%',
+                    placeholder: 'Choose News Category',
+                    allowClear: true,
+                    // multiple: true,
+                    // tags: true,
+                    closeOnSelect: true,
+                    language: {
+                        errorLoading: function () {
+                            return $search;
+                        },
+                        searching: function () {
+                            return $search;
+                        }
+                    },
+                    ajax: {
+                        url: "{{ url('/news_category/api') }}",
+                        dataType: 'json',
+                        delay: 250,
+                        type: "GET",
+                        data: function (params) {
+                            return {
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                search: params.term
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: $.map(data, function (item) {
+                                    return {
+                                        text: item.value,
+                                        id: item.comGenCode,
+                                        data: item
+                                    }
+                                })
+                            };
+                        },
+                        cache: true,
+                    },
+                    templateResult: formatSelect
+                });
+            }
     
 </script>
 </html>
