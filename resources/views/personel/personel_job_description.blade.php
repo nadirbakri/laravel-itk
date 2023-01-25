@@ -111,7 +111,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/job_description/table') }}",
+        ajax: "{{ url('personnel/job_description/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -126,7 +126,7 @@
 
     $('#job_description_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/job_description/detail_data') }}", { 'position_code' : data.position_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/job_description/detail_data') }}", { 'position_code' : data.position_code }, "GET", "iframe_dashboard");
     });
     
   });

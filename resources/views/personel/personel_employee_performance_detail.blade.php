@@ -107,7 +107,7 @@
             </div>
         </form>
         <div class="div-title">
-            <a href="{{ url('personel/performance') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/performance') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_performance.list_detail') }}</span>
             </a>
@@ -709,7 +709,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/performance/award/table') }}",
+                    url: "{{ url('personnel/performance/award/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -769,7 +769,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/performance/sanction/table') }}",
+                    url: "{{ url('personnel/performance/sanction/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -843,7 +843,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/performance/evaluation/table') }}",
+                    url: "{{ url('personnel/performance/evaluation/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -913,7 +913,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/performance/evaluation/form/table') }}",
+                    url: "{{ url('personnel/performance/evaluation/form/table') }}",
                     data: {
                         'formCode': formCode
                     }
@@ -1016,7 +1016,7 @@
 
         $('#modal_add_award').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peaward/getpeaward',
@@ -1034,7 +1034,7 @@
 
         $('#modal_add_sanction').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/pesanction/getpesanction',
@@ -1052,7 +1052,7 @@
 
         $('#modal_add_evaluation').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peevaluation/getpeevaluation',
@@ -1119,7 +1119,7 @@
             });
 
             $.ajax({
-                url: "{{ url('personel/performance/result/check') }}",
+                url: "{{ url('personnel/performance/result/check') }}",
                 type: "GET",
                 data: {
                     'valueSum': sum
@@ -1157,7 +1157,7 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/performance/award/remove') }}",
+                    url: "{{ url('personnel/performance/award/remove') }}",
                     type: "GET",
                     data: {
                         'employeeNo': data[0].employeeNo,
@@ -1199,7 +1199,7 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/performance/sanction/remove') }}",
+                    url: "{{ url('personnel/performance/sanction/remove') }}",
                     type: "GET",
                     data: {
                         'employeeNo': data[0].employeeNo,
@@ -1241,7 +1241,7 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/performance/evaluation/remove') }}",
+                    url: "{{ url('personnel/performance/evaluation/remove') }}",
                     type: "GET",
                     data: {
                         'employeeNo': data[0].employeeNo,
@@ -1472,7 +1472,7 @@
                     var formdata = new FormData(myform);
 
                     $.ajax({
-                        url: "{{ url('personel/employee/photo/proses') }}",
+                        url: "{{ url('personnel/employee/photo/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -1484,7 +1484,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/performance') }}";
+                                        "{{ url('personnel/performance') }}";
                                 }, 3000);
                             } else {
                                 $('#notification_error').modal('show');
@@ -1566,7 +1566,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/performance/award/proses') }}",
+                        url: "{{ url('personnel/performance/award/proses') }}",
                         type: "POST",
                         data: $('#award_form').serialize(),
                         success: function (response) {
@@ -1691,7 +1691,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/performance/sanction/proses') }}",
+                        url: "{{ url('personnel/performance/sanction/proses') }}",
                         type: "POST",
                         data: $('#sanction_form').serialize(),
                         success: function (response) {
@@ -1809,7 +1809,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/performance/evaluation/proses') }}",
+                        url: "{{ url('personnel/performance/evaluation/proses') }}",
                         type: "POST",
                         data: $('#evaluation_form').serialize(),
                         success: function (response) {

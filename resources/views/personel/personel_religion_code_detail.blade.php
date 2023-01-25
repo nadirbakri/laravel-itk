@@ -69,7 +69,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/religion_code') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/religion_code') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Religion Code List</span>
 			</a>

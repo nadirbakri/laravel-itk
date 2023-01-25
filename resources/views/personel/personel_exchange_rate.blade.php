@@ -112,7 +112,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/exchange_rate/table') }}",
+        ajax: "{{ url('personnel/exchange_rate/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -128,7 +128,7 @@
 
     $('#exchange_rate_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/exchange_rate/detail_data') }}", { 'currency_from' : data.currency_from, 'currency_to' : data.currency_to }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/exchange_rate/detail_data') }}", { 'currency_from' : data.currency_from, 'currency_to' : data.currency_to }, "GET", "iframe_dashboard");
     });
     
   });

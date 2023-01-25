@@ -243,7 +243,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 console.log(response.data[0].levelFormat);
@@ -886,7 +886,7 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_dependents/print') }}",
+                        url: "{{ url('personnel/employee_dependents/print') }}",
                         type: "POST",
                         data: $('#employee_dependents_form').serialize(),
                         success: function (result, status, xhr) {

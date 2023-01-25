@@ -318,7 +318,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('payroll/transfer_data_to_bank/export_to_file') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('payroll/transfer_data_to_bank/export_to_file') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_transfer_data_to_bank.btn_cancel') }}
                         </a>

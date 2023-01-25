@@ -194,7 +194,7 @@
         serverSide: true,
         orderCellsTop: true,
         ajax: {
-            url: "{{ url('personel/location/table') }}",
+            url: "{{ url('personnel/location/table') }}",
             cache: false
         },
         error: function(jqXHR, ajaxOptions, thrownError) {
@@ -228,7 +228,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url: "{{ url('personel/location/table') }}",
+                url: "{{ url('personnel/location/table') }}",
                 cache: false
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
@@ -258,17 +258,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/location') }}";
+        window.location = "{{ url('personnel/location') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/location/detail_data') }}", { 'locationCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/location/detail_data') }}", { 'locationCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/location/detail_data') }}", { 'locationCode' : data[0].locationCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/location/detail_data') }}", { 'locationCode' : data[0].locationCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -279,7 +279,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/location/status') }}",
+                url: "{{ url('personnel/location/status') }}",
                 type: "GET",
                 data: { 'locationCode' : data[0].locationCode, 'locationName' : data[0].locationName, 'func' : 'A' },
                 success: function(response) {
@@ -287,7 +287,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/location') }}";
+                            window.location = "{{ url('personnel/location') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -315,7 +315,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/location/status') }}",
+                url: "{{ url('personnel/location/status') }}",
                 type: "GET",
                 data: { 'locationCode' : data[0].locationCode, 'locationName' : data[0].locationName, 'func' : 'D' },
                 success: function(response) {
@@ -323,7 +323,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/location') }}";
+                            window.location = "{{ url('personnel/location') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -349,7 +349,7 @@
 
     $('#location_code_table tbody').on('click', 'tr td:not(:first-child)', function () {
         var data = table.row(this).data();
-        $.redirect("{{ url('personel/location/detail_data') }}", { 'locationCode' : data.locationCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/location/detail_data') }}", { 'locationCode' : data.locationCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

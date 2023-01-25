@@ -151,7 +151,7 @@
                             </button>
                         </div>
                         <div class="col-3">
-                            <a class="btn btn-primary" href="{{ url('payroll/payroll_calculation') }}" target="iframe_dashboard"
+                            <a class="btn btn-outline-primary" href="{{ url('payroll/payroll_calculation') }}" target="iframe_dashboard"
                                 name="btn-cancel" id="btn-cancel" style="width: 100%;">
                                 <i class="fa fa-times-circle"></i> {{ __('payroll_calculation.btn_cancel') }}
                             </a>
@@ -165,7 +165,7 @@
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
-            <div class="modal fade" id="modal_add_edit_payroll_calculation" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal_add_edit_payroll_calculation" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">

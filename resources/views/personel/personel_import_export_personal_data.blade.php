@@ -211,7 +211,7 @@
                 xhrFields: {
                     responseType: 'blob',
                 },
-                url: "{{ url('personel/personal_data/export') }}",
+                url: "{{ url('personnel/personal_data/export') }}",
                 type: "POST",
                 success: function (result, status, xhr) {
                     $("#btn-export").prop("disabled", false);
@@ -264,7 +264,7 @@
                 xhrFields: {
                     responseType: 'blob',
                 },
-                url: "{{ url('personel/personal_data/template') }}",
+                url: "{{ url('personnel/personal_data/template') }}",
                 type: "POST",
                 success: function (result, status, xhr) {
                     $("#btn-download-template").prop("disabled", false);
@@ -342,7 +342,7 @@
                     var formdata = new FormData(myform);
 
                     $.ajax({
-                        url: "{{ url('personel/personal_data/import') }}",
+                        url: "{{ url('personnel/personal_data/import') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -359,7 +359,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/import_export_personal_data') }}";
+                                        "{{ url('personnel/import_export_personal_data') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-import").prop("disabled", false);

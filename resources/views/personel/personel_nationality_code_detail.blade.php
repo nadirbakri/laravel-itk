@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/nationality_code') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/nationality_code') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Nationality Code List</span>
 			</a>

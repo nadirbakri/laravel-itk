@@ -196,7 +196,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/zip/table') }}",
+        ajax: "{{ url('personnel/zip/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -230,7 +230,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/zip/table') }}",
+            ajax: "{{ url('personnel/zip/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -261,17 +261,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/zip') }}";
+        window.location = "{{ url('personnel/zip') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/zip/detail_data') }}", { 'zipCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/zip/detail_data') }}", { 'zipCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/zip/detail_data') }}", { 'zipCode' : data[0].zipCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/zip/detail_data') }}", { 'zipCode' : data[0].zipCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -282,7 +282,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/zip/status') }}",
+                url: "{{ url('personnel/zip/status') }}",
                 type: "GET",
                 data: { 'zipCode' : data[0].zipCode, 'func' : 'A' },
                 success: function(response) {
@@ -290,7 +290,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/zip') }}";
+                            window.location = "{{ url('personnel/zip') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -318,7 +318,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/zip/status') }}",
+                url: "{{ url('personnel/zip/status') }}",
                 type: "GET",
                 data: { 'zipCode' : data[0].zipCode, 'func' : 'D' },
                 success: function(response) {
@@ -326,7 +326,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/zip') }}";
+                            window.location = "{{ url('personnel/zip') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -352,7 +352,7 @@
 
     $('#zip_code_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/zip/detail_data') }}", { 'zipCode' : data.zipCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/zip/detail_data') }}", { 'zipCode' : data.zipCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

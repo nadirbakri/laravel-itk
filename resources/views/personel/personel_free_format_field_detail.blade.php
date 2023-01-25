@@ -71,7 +71,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/free_format_field') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/free_format_field') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_free_format_field.list_detail') }}</span>
             </a>
@@ -169,7 +169,7 @@
                     </button>
                 </div>
                 <div class="col-3">
-                    <a class="btn btn-primary" href="{{ url('personel/free_format_field') }}" target="iframe_dashboard"
+                    <a class="btn btn-outline-primary" href="{{ url('personnel/free_format_field') }}" target="iframe_dashboard"
                         name="btn-cancel-data" id="btn-cancel-data" style="width: 100%;">
                         <i class="fa fa-times-circle"></i> {{ __('personel_free_format_field.btn_cancel') }}
                     </a>
@@ -322,7 +322,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/free_format_field') }}";
+            window.location = "{{ url('personnel/free_format_field') }}";
         })
 
         $('#notification_success_field_list').on('hide.bs.modal', function () {
@@ -372,7 +372,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/free_format_field/detail/table') }}",
+                    url: "{{ url('personnel/free_format_field/detail/table') }}",
                     data: {
                         freeFormatCode: freeFormatCode
                     }
@@ -437,7 +437,7 @@
 
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/free_format_field/detail/status') }}",
+                    url: "{{ url('personnel/free_format_field/detail/status') }}",
                     type: "GET",
                     data: {
                         'freeFormatCode': data[0].freeFormatCode,
@@ -495,7 +495,7 @@
 
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/free_format_field/detail/status') }}",
+                    url: "{{ url('personnel/free_format_field/detail/status') }}",
                     type: "GET",
                     data: {
                         'freeFormatCode': data[0].freeFormatCode,
@@ -595,7 +595,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/free_format_field/proses') }}",
+                        url: "{{ url('personnel/free_format_field/proses') }}",
                         type: "POST",
                         data: $('#free_format_field_form').serialize(),
                         success: function (response) {
@@ -610,7 +610,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/free_format_field') }}";
+                                        "{{ url('personnel/free_format_field') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save-data").prop("disabled", false);
@@ -685,7 +685,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/free_format_field/detail/proses') }}",
+                        url: "{{ url('personnel/free_format_field/detail/proses') }}",
                         type: "POST",
                         data: $('#field_list_form').serialize(),
                         success: function (response) {

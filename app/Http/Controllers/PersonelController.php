@@ -9749,8 +9749,13 @@ class PersonelController extends Controller
         }
 
         // var_dump($request->input_type);
-
-        return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->input_type, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+        try{
+            return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->input_type, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+        }catch (\Maatwebsite\Excel\Validators\ValidationException $failures)
+        {
+            dd($failures);
+            // return view('welcome', compact('failures'));
+        }
     }
 
     public function printEmployeeTurnOverReportPersonel(Request $request)

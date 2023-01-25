@@ -112,7 +112,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/format_report/table') }}",
+        ajax: "{{ url('personnel/format_report/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -128,7 +128,7 @@
 
     $('#format_report_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/format_report/detail_data') }}", { 'report_code' : data.report_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/format_report/detail_data') }}", { 'report_code' : data.report_code }, "GET", "iframe_dashboard");
     });
     
   });

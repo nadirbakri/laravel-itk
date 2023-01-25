@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/type_of_course/table') }}",
+        ajax: "{{ url('personnel/type_of_course/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -221,7 +221,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/type_of_course/table') }}",
+            ajax: "{{ url('personnel/type_of_course/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -249,17 +249,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/type_of_course') }}";
+        window.location = "{{ url('personnel/type_of_course') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/type_of_course/detail_data') }}", { 'courseTypeCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/type_of_course/detail_data') }}", { 'courseTypeCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/type_of_course/detail_data') }}", { 'courseTypeCode' : data[0].courseTypeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/type_of_course/detail_data') }}", { 'courseTypeCode' : data[0].courseTypeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -270,7 +270,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/type_of_course/status') }}",
+                url: "{{ url('personnel/type_of_course/status') }}",
                 type: "GET",
                 data: { 'courseTypeCode' : data[0].courseTypeCode, 'courseTypeName' : data[0].courseTypeName, 'func' : 'A' },
                 success: function(response) {
@@ -278,7 +278,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/type_of_course') }}";
+                            window.location = "{{ url('personnel/type_of_course') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -306,7 +306,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/type_of_course/status') }}",
+                url: "{{ url('personnel/type_of_course/status') }}",
                 type: "GET",
                 data: { 'courseTypeCode' : data[0].courseTypeCode, 'courseTypeName' : data[0].courseTypeName, 'func' : 'D' },
                 success: function(response) {
@@ -314,7 +314,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/type_of_course') }}";
+                            window.location = "{{ url('personnel/type_of_course') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -340,7 +340,7 @@
 
     $('#type_of_course_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/type_of_course/detail_data') }}", { 'courseTypeCode' : data.courseTypeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/type_of_course/detail_data') }}", { 'courseTypeCode' : data.courseTypeCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

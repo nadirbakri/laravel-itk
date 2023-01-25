@@ -298,6 +298,8 @@ class PersonalDataImport implements ToCollection, WithValidation, WithStartRow
                 ];
             }
 
+            // dd(json_encode($param));
+
             $response = $client->post(env('API_URL') . '/pemaster/importpemaster',
                 ['body' => json_encode($param)]
             );

@@ -82,7 +82,7 @@
             </div>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/payroll_data') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/payroll_data') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Payroll Data List</span>
 			</a>

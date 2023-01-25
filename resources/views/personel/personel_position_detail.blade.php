@@ -72,7 +72,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/position') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/position') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_position.list_detail') }}</span>
             </a>
@@ -133,7 +133,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/position') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/position') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_position.btn_cancel') }}
                         </a>
@@ -243,7 +243,7 @@
         loadDataSupervisorPositionCode();
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/position') }}";
+            window.location = "{{ url('personnel/position') }}";
         });
 
         $('#supervisor_position_code').on("select2:select", function (e) {
@@ -377,7 +377,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/position/proses') }}",
+                        url: "{{ url('personnel/position/proses') }}",
                         type: "POST",
                         data: $('#position_form').serialize(),
                         success: function (response) {
@@ -392,7 +392,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/position') }}";
+                                        "{{ url('personnel/position') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

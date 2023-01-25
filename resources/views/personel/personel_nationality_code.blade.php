@@ -111,7 +111,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/nationality_code/table') }}",
+        ajax: "{{ url('personnel/nationality_code/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -126,7 +126,7 @@
 
     $('#nationality_code_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/nationality_code/detail_data') }}", { 'nationality_code' : data.nationality_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/nationality_code/detail_data') }}", { 'nationality_code' : data.nationality_code }, "GET", "iframe_dashboard");
     });
     
   });

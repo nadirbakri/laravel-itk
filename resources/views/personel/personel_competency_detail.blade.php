@@ -110,7 +110,7 @@
             </div>
         </form>
         <div class="div-title">
-            <a href="{{ url('personel/competency') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/competency') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_competency.list_detail') }}</span>
             </a>
@@ -1381,7 +1381,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/formal_education/table') }}",
+                    url: "{{ url('personnel/competency/formal_education/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1454,7 +1454,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/language/table') }}",
+                    url: "{{ url('personnel/competency/language/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1511,7 +1511,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/organization/table') }}",
+                    url: "{{ url('personnel/competency/organization/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1574,7 +1574,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/reference/table') }}",
+                    url: "{{ url('personnel/competency/reference/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1631,7 +1631,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/skill/table') }}",
+                    url: "{{ url('personnel/competency/skill/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1684,7 +1684,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/project_experience/table') }}",
+                    url: "{{ url('personnel/competency/project_experience/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1755,7 +1755,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/competency/training_list/table') }}",
+                    url: "{{ url('personnel/competency/training_list/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1895,7 +1895,7 @@
 
         $('#modal_add_formal_education').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peeducation/getpeeducation',
@@ -1913,7 +1913,7 @@
 
         $('#modal_add_language').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/pelanguage/getpelanguage',
@@ -1931,7 +1931,7 @@
 
         $('#modal_add_organization').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peorganization/getpeorganization',
@@ -1949,7 +1949,7 @@
 
         $('#modal_add_reference').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/pereference/getpereference',
@@ -1967,7 +1967,7 @@
 
         $('#modal_add_skill').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peskill/getpeskill',
@@ -1985,7 +1985,7 @@
 
         $('#modal_add_project_experience').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peprojectexperience/getpeprojectexperience',
@@ -2003,7 +2003,7 @@
 
         $('#modal_add_training_list').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/petraining/getpetraining',
@@ -2023,7 +2023,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/formal_education/remove') }}",
+                    url: "{{ url('personnel/competency/formal_education/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2063,7 +2063,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/language/remove') }}",
+                    url: "{{ url('personnel/competency/language/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2103,7 +2103,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/organization/remove') }}",
+                    url: "{{ url('personnel/competency/organization/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2143,7 +2143,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/reference/remove') }}",
+                    url: "{{ url('personnel/competency/reference/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2183,7 +2183,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/skill/remove') }}",
+                    url: "{{ url('personnel/competency/skill/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2223,7 +2223,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/project_experience/remove') }}",
+                    url: "{{ url('personnel/competency/project_experience/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2264,7 +2264,7 @@
             
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/competency/training_list/remove') }}",
+                    url: "{{ url('personnel/competency/training_list/remove') }}",
                     type: "POST",
                     data: {
                         'data': data
@@ -2752,7 +2752,7 @@
                     var formdata = new FormData(myform);
 
                     $.ajax({
-                        url: "{{ url('personel/employee/photo/proses') }}",
+                        url: "{{ url('personnel/employee/photo/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -2764,7 +2764,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/competency') }}";
+                                        "{{ url('personnel/competency') }}";
                                 }, 3000);
                             } else {
                                 $('#notification_error').modal('show');
@@ -2870,7 +2870,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/competency/formal_education/proses') }}",
+                        url: "{{ url('personnel/competency/formal_education/proses') }}",
                         type: "POST",
                         data: $('#formal_education_form').serialize(),
                         success: function (response) {
@@ -2981,7 +2981,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/competency/language/proses') }}",
+                        url: "{{ url('personnel/competency/language/proses') }}",
                         type: "POST",
                         data: $('#language_form').serialize(),
                         success: function (response) {
@@ -3093,7 +3093,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/competency/organization/proses') }}",
+                        url: "{{ url('personnel/competency/organization/proses') }}",
                         type: "POST",
                         data: $('#organization_form').serialize(),
                         success: function (response) {
@@ -3196,7 +3196,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/competency/reference/proses') }}",
+                        url: "{{ url('personnel/competency/reference/proses') }}",
                         type: "POST",
                         data: $('#reference_form').serialize(),
                         success: function (response) {
@@ -3294,7 +3294,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/competency/skill/proses') }}",
+                        url: "{{ url('personnel/competency/skill/proses') }}",
                         type: "POST",
                         data: $('#skill_form').serialize(),
                         success: function (response) {
@@ -3410,7 +3410,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/competency/project_experience/proses') }}",
+                        url: "{{ url('personnel/competency/project_experience/proses') }}",
                         type: "POST",
                         data: $('#project_experience_form').serialize(),
                         success: function (response) {
@@ -3556,7 +3556,7 @@
 
 
                     $.ajax({
-                        url: "{{ url('personel/competency/training_list/proses') }}",
+                        url: "{{ url('personnel/competency/training_list/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,

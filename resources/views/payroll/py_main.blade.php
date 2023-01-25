@@ -45,6 +45,12 @@
 			<div id="payroll-master-data" class="collapse">
 				<div class="card-block">
 					<div class="row div-child-data">
+					<div class="col col-3">
+							<a href="{{ url('payroll/salary_master') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.salary_master') }}</span>
+							</a>
+						</div>
 						<div class="col col-3">
 							<a href="{{ url('payroll/tarif_master') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-data.svg') }}" alt="Child payroll">

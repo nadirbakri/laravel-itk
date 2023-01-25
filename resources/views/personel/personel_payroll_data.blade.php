@@ -112,7 +112,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/payroll_data/table') }}",
+        ajax: "{{ url('personnel/payroll_data/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -128,7 +128,7 @@
 
     $('#payroll_data_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/payroll_data/detail_data') }}", { 'employee_no' : data.employee_no, 'employee_name' : data.employee_name }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/payroll_data/detail_data') }}", { 'employee_no' : data.employee_no, 'employee_name' : data.employee_name }, "GET", "iframe_dashboard");
     });
     
   });

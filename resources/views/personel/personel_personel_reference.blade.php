@@ -418,7 +418,7 @@
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/personel_reference') }}";
+            window.location = "{{ url('personnel/personel_reference') }}";
         })
 
         $("#toolbar-new").on('click', function () {
@@ -510,7 +510,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/personel_reference/proses') }}",
+                        url: "{{ url('personnel/personel_reference/proses') }}",
                         type: "POST",
                         data: $('#personel_reference_form').serialize(),
                         success: function (response) {
@@ -527,7 +527,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/personel_reference') }}";
+                                        "{{ url('personnel/personel_reference') }}";
                                 }, 3000);
                             } else {
                                 $("#toolbar-save").prop("disabled", false);

@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/line_of_business') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/line_of_business') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Line of Business List</span>
 			</a>

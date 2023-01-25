@@ -769,7 +769,7 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_card/print') }}",
+                        url: "{{ url('personnel/employee_card/print') }}",
                         type: "POST",
                         data: $('#employee_card_form').serialize(),
                         success: function (result, status, xhr) {

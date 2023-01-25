@@ -115,7 +115,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/source_bank/table') }}",
+        ajax: "{{ url('personnel/source_bank/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -134,7 +134,7 @@
 
     $('#source_bank_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/source_bank/detail_data') }}", { 'source_bank_code' : data.source_bank_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/source_bank/detail_data') }}", { 'source_bank_code' : data.source_bank_code }, "GET", "iframe_dashboard");
     });
     
   });

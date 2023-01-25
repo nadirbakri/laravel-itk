@@ -69,7 +69,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/exchange_rate') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/exchange_rate') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Exchange Rate List</span>
 			</a>
@@ -258,7 +258,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/exchange_rate/exchange_rate/table') }}",
+            ajax: "{{ url('personnel/exchange_rate/exchange_rate/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },

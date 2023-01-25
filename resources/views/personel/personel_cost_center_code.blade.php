@@ -194,7 +194,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/cost_center/table') }}",
+        ajax: "{{ url('personnel/cost_center/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -227,7 +227,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/cost_center/table') }}",
+            ajax: "{{ url('personnel/cost_center/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -257,17 +257,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/cost_center') }}";
+        window.location = "{{ url('personnel/cost_center') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/cost_center/detail_data') }}", { 'costCenterCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/cost_center/detail_data') }}", { 'costCenterCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/cost_center/detail_data') }}", { 'costCenterCode' : data[0].costCenterCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/cost_center/detail_data') }}", { 'costCenterCode' : data[0].costCenterCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -278,7 +278,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/cost_center/status') }}",
+                url: "{{ url('personnel/cost_center/status') }}",
                 type: "GET",
                 data: { 'costCenterCode' : data[0].costCenterCode, 'func' : 'A' },
                 success: function(response) {
@@ -286,7 +286,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/cost_center') }}";
+                            window.location = "{{ url('personnel/cost_center') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -314,7 +314,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/cost_center/status') }}",
+                url: "{{ url('personnel/cost_center/status') }}",
                 type: "GET",
                 data: { 'costCenterCode' : data[0].costCenterCode, 'func' : 'D' },
                 success: function(response) {
@@ -322,7 +322,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/cost_center') }}";
+                            window.location = "{{ url('personnel/cost_center') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -348,7 +348,7 @@
 
     $('#cost_center_code_table tbody').on('click', 'tr td:not(:first-child)', function () {
         var data = table.row(this).data();
-        $.redirect("{{ url('personel/cost_center/detail_data') }}", { 'costCenterCode' : data.costCenterCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/cost_center/detail_data') }}", { 'costCenterCode' : data.costCenterCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

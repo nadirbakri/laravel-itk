@@ -215,7 +215,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/final_performance_result/table') }}",
+            ajax: "{{ url('personnel/final_performance_result/table') }}",
             error: function (jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                     "\r\n" + ajaxOptions.responseText);
@@ -266,7 +266,7 @@
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('personel/final_performance_result/table') }}",
+                ajax: "{{ url('personnel/final_performance_result/table') }}",
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                         "\r\n" + ajaxOptions.responseText);
@@ -314,17 +314,17 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/final_performance_result') }}";
+            window.location = "{{ url('personnel/final_performance_result') }}";
         })
 
         $("#toolbar-new").on('click', function() {
-            $.redirect("{{ url('personel/final_performance_result/detail_data') }}", { 'sequenceNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/final_performance_result/detail_data') }}", { 'sequenceNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
         });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("{{ url('personel/final_performance_result/detail_data') }}", { 'sequenceNo' : data[0].sequenceNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+                $.redirect("{{ url('personnel/final_performance_result/detail_data') }}", { 'sequenceNo' : data[0].sequenceNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -335,7 +335,7 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.ajax({
-                    url: "{{ url('personel/final_performance_result/status') }}",
+                    url: "{{ url('personnel/final_performance_result/status') }}",
                     type: "GET",
                     data: { 'sequenceNo' : data[0].sequenceNo, 'value' : data[0].value, 'from' : data[0].from, 'to' : data[0].to, 'func' : 'A' },
                     success: function(response) {
@@ -343,7 +343,7 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function(){ 
-                                window.location = "{{ url('personel/final_performance_result') }}";
+                                window.location = "{{ url('personnel/final_performance_result') }}";
                             }, 3000);
                         }else{
                             $('#notification_error').modal('show');
@@ -371,7 +371,7 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $.ajax({
-                    url: "{{ url('personel/final_performance_result/status') }}",
+                    url: "{{ url('personnel/final_performance_result/status') }}",
                     type: "GET",
                     data: { 'sequenceNo' : data[0].sequenceNo, 'value' : data[0].value, 'from' : data[0].from, 'to' : data[0].to, 'func' : 'D' },
                     success: function(response) {
@@ -379,7 +379,7 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function(){ 
-                                window.location = "{{ url('personel/final_performance_result') }}";
+                                window.location = "{{ url('personnel/final_performance_result') }}";
                             }, 3000);
                         }else{
                             $('#notification_error').modal('show');
@@ -405,7 +405,7 @@
 
         $('#final_performance_result_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('personel/final_performance_result/detail_data') }}", { 'sequenceNo' : data.sequenceNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/final_performance_result/detail_data') }}", { 'sequenceNo' : data.sequenceNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     });
 

@@ -192,7 +192,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/free_format_field/table') }}",
+        ajax: "{{ url('personnel/free_format_field/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -225,7 +225,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/free_format_field/table') }}",
+            ajax: "{{ url('personnel/free_format_field/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -255,17 +255,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/free_format_field') }}";
+        window.location = "{{ url('personnel/free_format_field') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/free_format_field/detail_data') }}", { 'freeFormatCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/free_format_field/detail_data') }}", { 'freeFormatCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/free_format_field/detail_data') }}", { 'freeFormatCode' : data[0].freeFormatCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/free_format_field/detail_data') }}", { 'freeFormatCode' : data[0].freeFormatCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -276,7 +276,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/free_format_field/status') }}",
+                url: "{{ url('personnel/free_format_field/status') }}",
                 type: "GET",
                 data: { 'freeFormatCode' : data[0].freeFormatCode, 'description' : data[0].description, 'freeFormatFieldType' : data[0].freeFormatFieldType, 'func' : 'A' },
                 success: function(response) {
@@ -284,7 +284,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/free_format_field') }}";
+                            window.location = "{{ url('personnel/free_format_field') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -312,7 +312,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/free_format_field/status') }}",
+                url: "{{ url('personnel/free_format_field/status') }}",
                 type: "GET",
                 data: { 'freeFormatCode' : data[0].freeFormatCode, 'description' : data[0].description, 'freeFormatFieldType' : data[0].freeFormatFieldType, 'func' : 'D' },
                 success: function(response) {
@@ -320,7 +320,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/free_format_field') }}";
+                            window.location = "{{ url('personnel/free_format_field') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -346,7 +346,7 @@
 
     $('#free_format_field_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/free_format_field/detail_data') }}", { 'freeFormatCode' : data.freeFormatCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/free_format_field/detail_data') }}", { 'freeFormatCode' : data.freeFormatCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

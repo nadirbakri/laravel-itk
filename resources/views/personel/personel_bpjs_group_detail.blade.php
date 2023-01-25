@@ -71,7 +71,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/bpjs_group') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/bpjs_group') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_bpjs_group.list_detail') }}</span>
             </a>
@@ -129,7 +129,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/bpjs_group') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/bpjs_group') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_bpjs_group.btn_cancel') }}
                         </a>
@@ -211,7 +211,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/bpjs_group') }}";
+            window.location = "{{ url('personnel/bpjs_group') }}";
         })
 
         $("#btn-save").click(function () {
@@ -275,7 +275,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/bpjs_group/proses') }}",
+                        url: "{{ url('personnel/bpjs_group/proses') }}",
                         type: "POST",
                         data: $('#bpjs_group_form').serialize(),
                         success: function (response) {
@@ -290,7 +290,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/bpjs_group') }}";
+                                        "{{ url('personnel/bpjs_group') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

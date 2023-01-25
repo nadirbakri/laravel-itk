@@ -72,7 +72,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/npwp_group') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/npwp_group') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_npwp_group.list_detail') }}</span>
             </a>
@@ -185,7 +185,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/npwp_group') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/npwp_group') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_npwp_group.btn_cancel') }}
                         </a>
@@ -307,7 +307,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/npwp_group') }}";
+            window.location = "{{ url('personnel/npwp_group') }}";
         })
 
         $("#btn-save").click(function () {
@@ -395,7 +395,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/npwp_group/proses') }}",
+                        url: "{{ url('personnel/npwp_group/proses') }}",
                         type: "POST",
                         data: $('#npwp_group_form').serialize(),
                         success: function (response) {
@@ -410,7 +410,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/npwp_group') }}";
+                                        "{{ url('personnel/npwp_group') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

@@ -213,7 +213,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/print_letter/table') }}"
+                    url: "{{ url('personnel/print_letter/table') }}"
                 },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
@@ -435,7 +435,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/print_letter/print') }}",
+                        url: "{{ url('personnel/print_letter/print') }}",
                         type: "POST",
                         data: $('#print_letter_form').serialize(),
                         success: function (response) {

@@ -82,7 +82,7 @@
             </div>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/other_information') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/other_information') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Other Information List</span>
 			</a>
@@ -366,7 +366,7 @@
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('personel/other_information/free_format_field/table') }}",
+                ajax: "{{ url('personnel/other_information/free_format_field/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },

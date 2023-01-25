@@ -193,7 +193,7 @@
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
         $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 var arrLevel = [];
@@ -229,7 +229,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/work_detail/table') }}",
+            ajax: "{{ url('personnel/work_detail/table') }}",
             error: function (jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                     "\r\n" + ajaxOptions.responseText);
@@ -288,7 +288,7 @@
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('personel/work_detail/table') }}",
+                ajax: "{{ url('personnel/work_detail/table') }}",
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                         "\r\n" + ajaxOptions.responseText);
@@ -361,13 +361,13 @@
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/work_detail') }}";
+            window.location = "{{ url('personnel/work_detail') }}";
         })
 
         $("#toolbar-edit").on('click', function () {
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
-                $.redirect("{{ url('personel/work_detail/detail_data') }}", {
+                $.redirect("{{ url('personnel/work_detail/detail_data') }}", {
                     'employeeNo': data[0].employeeNo
                 }, "GET", "iframe_dashboard");
             } else {
@@ -378,7 +378,7 @@
 
         $('#work_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('personel/work_detail/detail_data') }}", {
+            $.redirect("{{ url('personnel/work_detail/detail_data') }}", {
                 'employeeNo': data.employeeNo
             }, "GET", "iframe_dashboard");
         });

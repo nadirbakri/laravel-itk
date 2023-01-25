@@ -299,7 +299,7 @@
     $('#modal_add_attachment').on('show.bs.modal', function () {
         var empNo = $('#employee_no').val();
         $.ajax({
-            url: "{{ url('personel/number/check') }}",
+            url: "{{ url('personnel/number/check') }}",
             type: "GET",
             data: {
                 'url': '/peattachment/getpeattachment',
@@ -325,7 +325,7 @@
             });
             
             $.ajax({
-                url: "{{ url('personel/employee_attachment/remove') }}",
+                url: "{{ url('personnel/employee_attachment/remove') }}",
                 type: "POST",
                 data: {
                     'data': data,
@@ -366,7 +366,7 @@
         if (data.length > 0) {
             console.log(data);
             $.ajax({
-                url: "{{ url('personel/employee_attachment/view') }}",
+                url: "{{ url('personnel/employee_attachment/view') }}",
                 type: "GET",
                 data: {
                     'attachmentCode': data[0].attachmentCode,
@@ -403,7 +403,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url: "{{ url('personel/employee_attachment/table') }}",
+                url: "{{ url('personnel/employee_attachment/table') }}",
                 data: {
                     'employeeNo': employeeNo
                 }
@@ -644,7 +644,7 @@
                 var formdata = new FormData(myform);
 
                 $.ajax({
-                    url: "{{ url('personel/employee_attachment/proses') }}",
+                    url: "{{ url('personnel/employee_attachment/proses') }}",
                     type: "POST",
                     processData: false,
                     contentType: false,

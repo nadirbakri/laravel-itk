@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/transfer_bank') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/transfer_bank') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Transfer Bank List</span>
 			</a>

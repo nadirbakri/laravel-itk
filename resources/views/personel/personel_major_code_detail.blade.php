@@ -71,7 +71,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/major') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/major') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">M{{ __('personel_major_code.list_detail') }}</span>
             </a>
@@ -113,7 +113,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/major') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/major') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_major_code.btn_cancel') }}
                         </a>
@@ -191,7 +191,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/major') }}";
+            window.location = "{{ url('personnel/major') }}";
         })
 
 		$("#btn-save").click(function () {
@@ -242,7 +242,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/major/proses') }}",
+                        url: "{{ url('personnel/major/proses') }}",
                         type: "POST",
                         data: $('#major_form').serialize(),
                         success: function (response) {
@@ -256,7 +256,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/major') }}";
+                                        "{{ url('personnel/major') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
