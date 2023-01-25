@@ -57,10 +57,10 @@ class UpdateReimbursement implements ToCollection, WithStartRow
                     "sessionUserID" => Session::get('userID'),
                     "languageCode" => App::getLocale(),
                     "changedBy" => Session::get('userID'),
-                    "status" => $row[2],
-                    "ticketNo" => $row[3],
-                    "paidAmount" => $row[12],
-                    "approvalRemarks" => $row[17],
+                    "status" => $row[1],
+                    "ticketNo" => $row[2],
+                    "paidAmount" => $row[11],
+                    "approvalRemarks" => $row[12],
                 ];
             }
 

@@ -58,6 +58,20 @@
                                 <span class="child-title-text">{{ __('master_data.employee_group') }}</span>
                             </a>
                         </div>
+                       {{-- employee group leave --}}
+                        <div class="col col-3">
+                            <a href="{{ url('master_data/employee_group_leave') }}" target="iframe_dashboard">
+                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
+                                <span class="child-title-text">{{ __('master_data.employee_group_leave') }}</span>
+                            </a>
+                        </div>
+                      {{-- employee group overtime --}}
+                        <div class="col col-3">
+                            <a href="{{ url('master_data/employee_group_overtime') }}" target="iframe_dashboard">
+                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
+                                <span class="child-title-text">{{ __('master_data.employee_group_overtime') }}</span>
+                            </a>
+                        </div>
                         <div class="col col-3">
                             <a href="{{ url('master_data/employee_group_detail') }}" target="iframe_dashboard">
                                 <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">

@@ -917,6 +917,8 @@ Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactio
 Route::get('master_data', 'MasterDataController@pageMasterData');
 Route::get('master_data/employee_master', 'MasterDataController@pageMasterDataEmployeeMaster');
 Route::get('master_data/employee_group', 'MasterDataController@pageMasterDataEmployeeGroup');
+Route::get('master_data/employee_group_leave', 'MasterDataController@pageMasterDataEmployeeGroupLeave');
+Route::get('master_data/employee_group_overtime', 'MasterDataController@pageMasterDataEmployeeGroupOvertime');
 Route::get('master_data/employee_group_detail', 'MasterDataController@pageMasterDataEmployeeGroupDetail');
 Route::get('master_data/employee_group_reimbursement', 'MasterDataController@pageMasterDataEmployeeGroupReimbursement');
 Route::get('master_data/employee_group_reimbursement_detail', 'MasterDataController@pageMasterDataEmployeeGroupReimbursementDetail');
@@ -924,6 +926,7 @@ Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataH
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
+Route::get('master_data_leave/list/table', 'MasterDataController@tabelDetailEmployeeLeave');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
 Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
 Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
@@ -934,6 +937,7 @@ Route::get('master_data/tambah_user/table', 'MasterDataController@tableEmployeeG
 Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHolidayCalendar');
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
+Route::post('master_data/employee_group_leave/proses', 'MasterDataController@prosesEmployeeGroupLeave');
 Route::post('master_data/employee_reimbursement/proses', 'MasterDataController@prosesEmployeeReimbursement');
 Route::post('master_data/holiday_calendar/proses', 'MasterDataController@prosesEmployeeHolidayCalendar');
 Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@prosesEmployeeBusinessTrip');

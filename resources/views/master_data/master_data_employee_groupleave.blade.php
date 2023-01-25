@@ -139,7 +139,7 @@
             <h1>
                 <a href="{{ url('master_data') }}" target="iframe_dashboard">
                     <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                    <span class="title-text">{{ __('data_employee_group.judul') }}</span>
+                    <span class="title-text">{{ __('data_employee_groupleave.judul') }}</span>
                 </a>
             </h1>
             <hr>
@@ -148,13 +148,13 @@
             @csrf
             <div class="card" >
                 <div class="card-header">
-                {{ __('data_employee_group.judul2') }}
+                {{ __('data_employee_groupleave.judul2') }}
                 </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname1') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_groupleave.formgroupname1') }}</b></label>
                         </div>
                     </div>
                     <div class="">
@@ -166,7 +166,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname2') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_groupleave.formgroupname2') }}</b></label>
                         </div>
                     </div>
                     <div class="">
@@ -178,7 +178,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname3') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_groupleave.formgroupname3') }}</b></label>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,6 @@
                                 <th>#</th>
                                 <th>Approval Level</th>
                                 <th>Approval Code</th>
-                                <th>Limit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -199,7 +198,6 @@
                                 <td id="ceklis" name="ceklis"></td>
                                 <td id="group_code1" name="group_code1"></td>
                                 <td id="group_code2" name="group_code2"></td>
-                                <td id="total_limit" name="total_limit"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -219,7 +217,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group_detail.formgroupname3') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_groupleave.formgroupname3') }}</b></label>
                         </div>
                     </div>
                 </div>
@@ -332,7 +330,6 @@
                                     <th>#</th>
                                     <th>Group Code</th>
                                     <th>Group Name</th>
-                                    {{-- <th>Limit</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -340,7 +337,6 @@
                                     <td></td>        
                                     <td></td>        
                                     <td></td>       
-                                    {{-- <td></td>        --}}
                                 </tr>
                             </tbody>
                         </table>
@@ -463,7 +459,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list_reimbursement/table') }}"             
+                url : "{{ url('master_data_leave/list/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -530,20 +526,10 @@
                     {data: 'approvalCode', name: 'approvalCode',
                     render: function (data, type, row) {
 
-                        return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
+                    return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
 
-                            data + '">' + data;
+                        data + '">' + data;
 
-                        }
-                    },
-                    {data: 'limit', name: 'limit',
-                    render: function (data, type, row) {
-                        if(typeof data !== 'undefined'){
-                            return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="' + data 
-                            + '">';
-                        }else{
-                            return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="0">';
-                        }
                     }}
                 ],
                 select: {
@@ -576,7 +562,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list_reimbursement/table') }}"
+                url : "{{ url('master_data/list/table') }}"
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -594,8 +580,7 @@
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
-                {data: 'groupName', name: 'groupName'}
-                // {data: 'limit', name: 'limit'}
+                {data: 'groupName', name: 'groupName'},
             ],
             select: {
                 style:    'multi',
@@ -607,7 +592,7 @@
     const klikk = (element) => {
         var count = table3.data().count();
         var appCode = $(element).parent().siblings('.sorting_1').text();
-       
+        // console.log(appCode);
         $('.close').click();
         table3.row.add({
             'no' : '<input class="chk-select" type="checkbox">',
@@ -735,7 +720,7 @@
                             }
                         });
                         $.ajax({
-                            url: "{{ url('master_data/employee_reimbursement/proses') }}",
+                            url: "{{ url('master_data/employee_group_leave/proses') }}",
                             type: "POST",
                             data: $('#md_employee_group').serialize(),
                             success: function (response) {
@@ -750,7 +735,7 @@
                                     .message);
                                     setTimeout(function () {
                                     window.location =
-                                        "{{ url('master_data/employee_group_reimbursement') }}";
+                                        "{{ url('master_data/employee_group_leave') }}";
                                     }, 3000);
                                 } else {
                                 $("#btn-save").prop("disabled", false);

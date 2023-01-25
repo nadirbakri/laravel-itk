@@ -152,7 +152,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="" name="" disabled></div>
+                        <input type="text" class="form-control" id="" name="" readonly></div>
                     </div>
                 </div>
                 <div class="row">

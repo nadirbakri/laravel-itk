@@ -119,7 +119,24 @@ class AdminMenuController extends Controller
                 //         'recordStatus' => "A"
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/news/insertnews',
+                if ($request->t_news2 == "new"){
+                    $response = $client->post(env('API_URL') . '/news/insertnews',
+                        ['body' => json_encode(
+                            [
+                                'companyCode' => Session::get('companyCode'),
+                                'languageCode' => App::getLocale(),
+                                'sessionID' => 0,
+                                'sessionUserID' => Session::get('userID'),
+                                'title' => $request->t_news,
+                                'category' => $request->n_category,
+                                'content' => $request->c_news,
+                                'recordStatus' => "A",
+                                'photo' => ($request->hasFile('photo')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                            ]
+                        )]
+                    );
+                }else {
+                    $response = $client->post(env('API_URL') . '/news/updatenews',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -134,6 +151,7 @@ class AdminMenuController extends Controller
                         ]
                     )]
                 );
+                }
     
               
 

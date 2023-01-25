@@ -27,6 +27,14 @@ class MasterDataController extends Controller
     public function pageMasterDataEmployeeGroup(){
         return view('master_data.master_data_employee_group');
     }
+   
+    public function pageMasterDataEmployeeGroupLeave(){
+        return view('master_data.master_data_employee_groupleave');
+    }
+   
+    public function pageMasterDataEmployeeGroupOvertime(){
+        return view('master_data.master_data_employee_groupovertime');
+    }
 
     public function pageMasterDataEmployeeGroupDetail(){
         return view('master_data.master_data_employee_group_detail');
@@ -59,7 +67,7 @@ class MasterDataController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
+// var_dump(json_encode([  'companyCode' => Session::get('companyCode')]));
             $response = $client->post(env('API_URL') . '/gmgroup/getgroupcode',
                 ['body' => json_encode(
                     [
@@ -75,6 +83,74 @@ class MasterDataController extends Controller
                         'companyCode' => Session::get('companyCode'), 
                         // 'languageCode' => App::getLocale(), 
                         // 'sessionID' => 0, 
+                        // 'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+  
+    public function tabelDetailEmployeeLeave(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // var_dump(json_encode( [
+            //     // 'companyCode' => Session::get('companyCode'),
+            //     // 'employeeNo' => $request->employeeNo,
+            //     // 'logActionUserID' => Session::get('userID'),
+            //     // 'logActionUsername' => Session::get('userName'),
+            //     // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //     // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //     // 'processDate' => $request->processDate, 
+            //     // 'type' =>  $request->transportType,
+            //     // 'businessUnit'=> $request->businessUnit,
+            //     'companyCode' => Session::get('companyCode'), 
+            //     // 'languageCode' => App::getLocale(), 
+            //     // 'sessionUserID' => Session::get('userID'), 
+            //     // 'languageCode' => App::getLocale(), 
+            //     // 'sessionID' => 0,
+            //     // 'sessionUserID' => Session::get('userID'),
+            // ]));
+
+            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodeleave',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+                        // 'processDate' => $request->processDate, 
+                        // 'type' =>  $request->transportType,
+                        // 'businessUnit'=> $request->businessUnit,
+                        'companyCode' => Session::get('companyCode'), 
+                        // 'languageCode' => App::getLocale(), 
+                        // 'sessionUserID' => Session::get('userID'), 
+                        // 'languageCode' => App::getLocale(), 
+                        // 'sessionID' => 0,
                         // 'sessionUserID' => Session::get('userID'),
                     ]
                 )]
@@ -561,18 +637,92 @@ class MasterDataController extends Controller
                         "groupName" => $value
                     ];
                 }
+            //    if (strpos($request->group_name, "/\u00a0")) $request->group_name = str_replace("/\u00a0", " ", $request->group_name);
+                // var_dump((strpos($request->group_name, "/\u00a0")) $request->group_name = str_replace("/\u00a0", " ", $request->group_name))
+                // var_dump(json_encode(
+                //     [
+                //         'companyCode' => Session::get('companyCode'),
+                //             'groupCode' => $request->group_code,
+                //             'groupName' => $request->group_name,
+                //             'directApproval' => $a,
+                //             'emailSetting' =>$b,
+                //             "sessionID" => 0,
+                //             "sessionUserID" => Session::get('userID'),
+                //             "languageCode" => App::getLocale()
+                //     ]
+                //     ));
+                $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcode',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'groupCode' => $request->group_code,
+                            'groupName' => $request->group_name,
+                            'directApproval' => $a,
+                            'emailSetting' =>$b,
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+ 
+    public function prosesEmployeeGroupLeave(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+                foreach($request->approvalCode as $key=>$value){
+                    $a[] = [
+                        "approvalLevel" => (int) $request->approvalLevel[$key],
+                        "approvalCode" => $value
+                    ];
+                }
+
+                foreach($request->groupName as $key=>$value){
+                    $b[] = [
+                        "groupID" => $request->groupID[$key],
+                        "groupName" => $value
+                    ];
+                }
+                
+                // if (strpos($request->group_name, "\u00a0") {
+                //     $request->group_name = str_replace("\u00a0", " ", $request->group_name)
+                // })
+
+                // if (strpos($request->group_name, "\u00a0")) $request->group_name = str_replace("\u00a0", " ", $request->group_name);
                 // var_dump(json_encode(
                 //     [
                 //         'companyCode' => Session::get('companyCode'),
                 //         'groupCode' => $request->group_code,
                 //         'groupName' => $request->group_name,
                 //         'directApproval' => $a,
+                //         'emailSetting' =>$b,
                 //         "sessionID" => 0,
                 //         "sessionUserID" => Session::get('userID'),
                 //         "languageCode" => App::getLocale()
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcode',
+
+                $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcodeleave',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -629,14 +779,14 @@ class MasterDataController extends Controller
                 // var_dump(json_encode(
                 //     [
                 //         'companyCode' => Session::get('companyCode'),
-                //         'groupCode' => $request->group_code,
-                //         'groupName' => $request->group_name,
-                //         'limit' => $request->limit,
-                //         'directApproval' => $a,
-                //         'emailSetting' =>$b,
-                //         "sessionID" => 0,
-                //         "sessionUserID" => Session::get('userID'),
-                //         "languageCode" => App::getLocale()
+                //             'groupCode' => $request->group_code,
+                //             'groupName' => $request->group_name,
+                //             'limit' => $request->limit,
+                //             'directApproval' => $a,
+                //             'emailSetting' =>$b,
+                //             "sessionID" => 0,
+                //             "sessionUserID" => Session::get('userID'),
+                //             "languageCode" => App::getLocale()
                 //     ]
                 //     ));
                 $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcodereimbursement',
@@ -645,7 +795,7 @@ class MasterDataController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'groupCode' => $request->group_code,
                             'groupName' => $request->group_name,
-                            'limit' => $request->limit,
+                            // 'limit' => $request->limit,
                             'directApproval' => $a,
                             'emailSetting' =>$b,
                             "sessionID" => 0,
@@ -801,13 +951,12 @@ class MasterDataController extends Controller
                     ];
                 }
                 
-
+                // if (strpos($request->group_name, "\u00a0")) $request->group_name = str_replace("\u00a0", " ", $request->group_name);
                 // var_dump(json_encode(
                 //     [
                 //         'companyCode' => Session::get('companyCode'),
                 //             'groupCode' => $request->group_code,
                 //             'groupMember' => $a,
-                //             'emailSetting' => $b,
                 //             "sessionID" => 0,
                 //             "sessionUserID" => Session::get('userID'),
                 //             "languageCode" => App::getLocale()
@@ -841,4 +990,6 @@ class MasterDataController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
+    
+   
 }

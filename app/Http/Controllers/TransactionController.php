@@ -776,35 +776,61 @@ class TransactionController extends Controller
     
     public function tableDetailTransport(Request $request)
     {
+        // dd(Carbon::parse($request->startDate));
         try {
+          
+            $dt = Carbon::now()->format('Y-m-d');
+            // startdate
+            $startdate=Carbon::parse($request->startDate)->format('Y-m-d');
+            $isNull = false;
+            if ($dt == $startdate ){
+                $isNull = true;
+            }
+
+            // enddate
+            $enddate=Carbon::parse($request->endDate)->format('Y-m-d');
+            $isNullenddate = false;
+            if ($dt == $enddate){
+                $isNullenddate = true;
+            }
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // processdate
+            $processdate=Carbon::parse($request->processDate)->format('Y-m-d');
+            $isNullprocessDate = false;
+            if ($dt == $processdate){
+                $isNullprocessDate = true;
+            }
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
             // var_dump(json_encode(
             //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //             'exportMenu' =>false,
-            //             'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
-            //             'type' =>  $request->type,
-            //             'businessUnit'=> $request->businessUnit,
-            //             'directSuperiorID'=> $request->directSuperiorID,
-            //             'companyCode' => Session::get('companyCode'), 
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionID' => 0, 
-            //             'sessionUserID' => Session::get('userID'),
+            //         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'exportMenu' =>false,
+            //         'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
+            //         'type' =>  $request->type,
+            //         'businessUnit'=> $request->businessUnit,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
 
             $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
                 ['body' => json_encode(
                     [
-                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
                         'exportMenu' =>false,
-                        // 'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+                        'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
                         'directSuperiorID'=> $request->directSuperiorID,
@@ -912,23 +938,23 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'companyCode' => Session::get('companyCode'),
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionUserID' => Session::get('userID'),
-            //             'employeeNo'=> $request->employeeNo,
-            //             // 'employeeNo' => $request->employeeNo,
-            //             // 'logActionUserID' => Session::get('userID'),
-            //             // 'logActionUsername' => Session::get('userName'),
-            //             // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //             // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //             // 'processDate' => $request->processDate, 
-            //             // 'type' =>  $request->transportType,
-            //             // 'businessUnit'=> $request->businessUnit,
-            //             'approvalRemarks'=> $request->approvalRemarks,
-            //             'logActionUserID'=> 'string',
-            //             'logActionUsername'=> 'string',
-            //             'status'=> $request->status,
-            //             'paidAmount'=> (int) $request->paidAmount,
-            //             'ticketNo' => $request->ticketNo
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionUserID' => Session::get('userID'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         // 'employeeNo' => $request->employeeNo,
+            //         // 'logActionUserID' => Session::get('userID'),
+            //         // 'logActionUsername' => Session::get('userName'),
+            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
+            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
+            //         // 'processDate' => $request->processDate, 
+            //         // 'type' =>  $request->transportType,
+            //         // 'businessUnit'=> $request->businessUnit,
+            //         'approvalRemarks'=> $request->approvalRemarks,
+            //         'logActionUserID'=> 'string',
+            //         'logActionUsername'=> 'string',
+            //         'status'=> $request->status,
+            //         'paidAmount'=> (int) $request->paidAmount,
+            //         'ticketNo' => $request->ticketNo
             //     ]
             //     ));
 
@@ -1206,14 +1232,11 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'status'=> $request->status,
-            //             'ticketNo' => $request->ticketNo,
-            //             'directSuperiorID'=> $request->directSuperiorID,
-            //             'companyCode' => Session::get('companyCode'),
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionUserID' => Session::get('userID'),
-            //             'approvalRemarks'=> 'string',
-            //             'logActionUserID'=> 'string',
-            //             'logActionUsername'=> 'string'
+            //         'companyCode' => Session::get('companyCode'),
+            //         'ticketNo' => $request->ticketNo,
+            //         'employeeNo'=> $request->employeeNo,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'languageCode' => App::getLocale()
             //     ]
             //     ));
 
@@ -1257,13 +1280,13 @@ class TransactionController extends Controller
             //  var_dump(json_encode(
             //     [
             //         'status'=> $request->status,
-            //             'companyCode' => Session::get('companyCode'),
-            //             'ticketNo' => $request->ticketNo,
-            //             'directSuperiorID'=> $request->directSuperiorID,
-            //             'sessionUserID' => Session::get('userID'),
-            //             'languageCode' => App::getLocale(), 
-            //             'paidAmount'=> (int) $request->paidAmount,
-            //             'approvalRemarks'=> $request->approvalRemarks
+            //         'companyCode' => Session::get('companyCode'),
+            //         'ticketNo' => $request->ticketNo,
+            //         'directSuperiorID'=> $request->directSuperiorID,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'languageCode' => App::getLocale(), 
+            //         'paidAmount'=> (int) $request->paidAmount,
+            //         'approvalRemarks'=> $request->approvalRemarks
                    
             //     ]
             //     ));

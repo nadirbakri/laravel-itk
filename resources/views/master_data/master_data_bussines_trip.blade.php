@@ -159,7 +159,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_code" name="group_code" disabled >                        
+                        <input type="text" class="form-control" id="group_code" name="group_code" readonly >                        
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_name" name="group_name" disabled>                        
+                        <input type="text" class="form-control" id="group_name" name="group_name" readonly>                        
                     </div>
                     </div>
                 </div>

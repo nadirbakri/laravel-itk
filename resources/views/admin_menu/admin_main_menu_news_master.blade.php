@@ -161,7 +161,8 @@
                     <div class="">
                         <div class="form-group">
                         <input type="text" class="form-control" id="t_news" name="t_news" ></div>
-                            
+                        <input type="text" value="new" class="form-control" id="t_news2" name="t_news2" hidden></div>
+
                     </div>
                 </div>
                 
@@ -372,6 +373,7 @@
 
         // alert(newscategory)
         $('#t_news').val(title)
+        $('#t_news2').val("update")
         $('#c_news').val(table2.row($(element).parent()).data().content)
         $('#n_category').append($('<option>', {
             value: newscategory,

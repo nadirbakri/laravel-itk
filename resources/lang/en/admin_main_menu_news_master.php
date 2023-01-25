@@ -5,7 +5,7 @@ return [
     'judul' => 'Admin Menu',
     'formjudul' => 'News Master',
     'form1' => 'Title',
-    'form2' => 'News Kategory',
+    'form2' => 'News Category',
     'form3' => 'Content',
     'form4' => 'Attachment',
     'save' => 'Save',
