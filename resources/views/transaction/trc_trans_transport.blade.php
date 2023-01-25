@@ -316,13 +316,13 @@
                                         <h5>{{ __('trans_transport.reqdate') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_transport.rdate') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from"readonly>
                                     </div>
                                 </div>
 
@@ -331,13 +331,13 @@
                                         <h5>{{ __('trans_transport.tnom') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from"readonly>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_transport.status') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
                                     </div>
                                 </div>
 
@@ -346,13 +346,13 @@
                                         <h5>{{ __('trans_transport.label_business_unit') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_transport.type') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
                                     </div>
                                 </div>
 
@@ -360,13 +360,13 @@
                                     <div class="col-3">
                                         <h5>{{ __('trans_transport.ename') }}</h5>                                    </div>
                                     <div class="col">
-                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_transport.pname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name" readonly>
                                     </div>
                                 </div>
                             
@@ -375,13 +375,13 @@
                                         <h5>{{ __('trans_transport.treq') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_transport.dname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent">
+                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent" readonly>
                                     </div>
                                 </div>
                                 <br>
@@ -410,7 +410,7 @@
                                         <h5>{{ __('trans_transport.remarks') }}</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" >
                                     </div>
                                 </div>
                                 <hr>
@@ -551,6 +551,7 @@
 </script>
 <script type="text/javascript">
     function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit,processed_date) {
+        // console.log(claim_date_from)
             table = $('#medical_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -560,7 +561,7 @@
                     data: {
                         'startDate': claim_date_from,
                         'endDate': claim_date_to,
-                        // 'processDate' : processed_date,
+                        'processDate' : processed_date,
                         'type' : reimbursement_type,
                         'businessUnit' : business_unit,
                         'directSuperiorID' : direct_superior

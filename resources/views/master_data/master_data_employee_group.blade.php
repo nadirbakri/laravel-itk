@@ -159,7 +159,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_code" name="group_code" disabled>                        
+                        <input type="text" class="form-control" id="group_code" name="group_code" readonly>                        
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_name" name="group_name" disabled>                        
+                        <input type="text" class="form-control" id="group_name" name="group_name" readonly>                        
                     </div>
                     </div>
                 </div>
@@ -542,7 +542,8 @@
 
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
-        let fullname = $(element).parent().siblings('td').eq(1).text()
+        // var text = $(this).text().replace(/\u00A0/, " ");
+        let fullname = $(element).parent().siblings('td').eq(1).text().replace("\u00A0", " ");
         $('#group_code').val(employee_id)
         $('#group_name').val(fullname)
 
@@ -688,7 +689,7 @@
     const klikemail = (element) => {
         var count = table5.data().count();
         var groupid = $(element).parent().siblings('.sorting_1').text();
-        let groupname = $(element).parent().siblings('td').eq(1).text();
+        let groupname = $(element).parent().siblings('td').eq(1).text().replace("\u00A0", " ");
         // console.log(appCode);
         $('.close').click();
         table5.row.add({

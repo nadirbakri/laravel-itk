@@ -3,7 +3,9 @@
 return [
     'judul' => 'Master Data',
     'employee_master' => 'Employee Master',
-    'employee_group' => 'Employee Group',
+    'employee_group' => 'Employee Group Permit',
+    'employee_group_leave' => 'Employee Group Leave',
+    'employee_group_overtime' => 'Employee Group Overtime',
     'employee_group_detail' => 'Employee Group Member',
     'employee_group_reimbursement' => 'Employee Group Reimbursement',
     'employee_group_reimbursement_detail' => 'Employee Group Reimbursement Detail',
