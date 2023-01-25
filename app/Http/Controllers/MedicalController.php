@@ -2036,9 +2036,9 @@ class MedicalController extends Controller
                 $param['employeeNoTo'] = $request->employee_no_to;
             }
 
-            if(!empty($request->claim_code_from) || !empty($request->claim_code_to)){
-                $param['claimDateFrom'] = $request->claim_code_from;
-                $param['claimDateTo'] = $request->claim_code_to;
+            if(!empty($request->claim_date_from) || !empty($request->claim_date_to)){
+                $param['claimDateFrom'] = $request->claim_date_from;
+                $param['claimDateTo'] = $request->claim_date_to;
             }
     
             if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
@@ -2111,6 +2111,7 @@ class MedicalController extends Controller
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2126,16 +2127,11 @@ class MedicalController extends Controller
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('medical.md_export_disease_summary_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
-            return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
+            $pdf = PDF::loadView('medical.md_export_medical_claim_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'grand_total' => $request->grandTotal])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Medical Claim Report.pdf');
         }else{
-            if($request->report_type == 'detail'){
-                $pdf = PDF::loadView('medical.md_export_disease_detail_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
-                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
-            }else{
-                $pdf = PDF::loadView('medical.md_export_disease_summary_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'type' => $request->report_type, 'period' => date('d M Y', strtotime($request->period_claim_from)) . ' - ' . date('d M Y', strtotime($request->period_claim_to))])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
-                return $pdf->stream(ucfirst($request->report_type) . ' Disease Report.pdf');
-            }
+            $pdf = PDF::loadView('medical.md_export_medical_claim_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'grand_total' => $request->grandTotal])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Medical Claim Report.pdf');
         }
     }
 

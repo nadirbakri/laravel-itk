@@ -31,14 +31,14 @@
     <table style="width: 100%;">
         <thead>
             <tr>
-                <th colspan="11">{{ $data_company[0]->companyName }}</th>
+                <td>{{ $data_company[0]->companyName }}</td>
             </tr>
             <tr>
-                <th colspan="11">{{ $data_company[0]->address }}</th>
+                <td>{{ $data_company[0]->address }}</td>
             </tr>
             <tr></tr>
             <tr>
-                <th colspan="11" style="text-align:center; font-weight:bold;"><h3>Medical Claim Report</h3></th>
+                <th style="text-align:center; font-weight:bold;"><h3>Medical Claim Report</h3></th>
             </tr>
         </thead>
     </table>
