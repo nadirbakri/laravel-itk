@@ -35,7 +35,7 @@
                 <th>{{ __('export_reimbursement.pdate') }}</th>
 				{{-- <th>{{ __('export_reimbursement.nrek') }}</th>
 				<th>{{ __('export_reimbursement.tapprove') }}</th> --}}
-				<th>{{ __('export_reimbursement.tpaid') }}</th>
+				{{-- <th>{{ __('export_reimbursement.tpaid') }}</th> --}}
 				<th>{{ __('export_reimbursement.premarks') }}</th>
 			</tr>
 		</thead>
@@ -59,7 +59,7 @@
 				<td>{{ \Carbon\Carbon::parse($value->reimbursementEntity->paymentDate)->format('Y-m-d') }}</td> 
 				{{-- <td></td> 
 				<td></td>  --}}
-				<td>{{ $value->reimbursementEntity->totalPaidMonth}}</td> 
+				{{-- <td>{{ $value->reimbursementEntity->totalPaidMonth}}</td>  --}}
 				<td>{{ $value->reimbursementEntity->approvalRemarks}}</td> 
 			</tr>
 			@endforeach

@@ -706,11 +706,12 @@
         let requestDate = $(element).parent().siblings('.sorting_1').text()
         let status = $(element).parent().siblings('td').eq(1).text()
         let tikcetNo = $(element).parent().siblings('td').eq(2).text()
-        let totalClaim = $(element).parent().siblings('td').eq(6).text()
+        let totalClaim = $(element).parent().siblings('td').eq(7).text()
         var direct_superior = $("#direct_superior").val();
         var reimbursement_type = $("#reimbursement_type").val();
         let approvalremarks = $(element).parent().siblings('td').eq(8).text()
         let totalpaid = $(element).parent().siblings('td').eq(9).text()
+        let pname = $(element).parent().siblings('td').eq(6).text()
         var business_unit = $("#business_unit").val();        
         
         // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
@@ -720,6 +721,7 @@
         // var reimbursement_type = $("#reimbursement_type").val();
 
         $('#reqdate').val(requestDate)
+        $('#project_name').val(pname)
         $('#recdate').val(requestDate)
         $('#tiketno').val(tikcetNo)
         $('#status').val(status)

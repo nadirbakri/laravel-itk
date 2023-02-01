@@ -57,9 +57,9 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
                     "sessionUserID" => Session::get('userID'),
                     "languageCode" => App::getLocale(),
                     "changedBy" => Session::get('userID'),
-                    "status" => $row[5],
+                    "status" => $row[1],
                     "ticketNo" => $row[2],
-                    "paidAmount" => $row[12]
+                    "paidAmount" => $row[10]
                 ];
             }
 

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
+    1<link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
     <link rel="stylesheet" href="{{ asset('css/data_employee_grou.css') }}"> 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -380,9 +380,7 @@
                         </table>
                     </div>
                 </div>
-
-                    
-            </div>
+             </div>
         </form>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
@@ -424,7 +422,6 @@
 <script>
     $(document).ready(function () {
         $('table.display').DataTable();
-
         // $('#exampletwo').DataTable().destroy();
         // load_data_approval_table();
     });

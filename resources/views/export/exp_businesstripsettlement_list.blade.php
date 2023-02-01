@@ -21,21 +21,21 @@
 			<tr>
 				<th>No</th>
 				{{-- <th>Request Date</th> --}}
+                <th>Status</th>
 				<th>Ticket Number</th>
 				<th>Employee Name</th>
 				<th>Customer Name</th>
-                <th>Status</th>
                 <th>Claim Type</th>
                 {{-- <th>SPPD Type</th> --}}
                 <th>Destination</th>
                 <th>Customer Name</th>
 				<th>Project Name</th>
 				<th>Currency</th>
+				<th>Total Paid</th>
 				<th>Total Request</th>
 				{{-- <th>Total Per Employee</th>
 				<th>No Rekening</th> --}}
 				<th>Total Approve HRD</th>
-				<th>Total Paid</th>
 				<th>Tujuan</th>
 			</tr>
 		</thead>
@@ -57,6 +57,7 @@
 					<td>{{ $value2->customerName }}</td>
 					<td>{{ $value2->projectName }}</td>
 					<td>IDR</td>
+					<td>{{ $value2->total }}</td>
 					<td>{{ $value2->totalClaimAmount }}</td>
 					{{-- <td></td>
 					<td></td> --}}

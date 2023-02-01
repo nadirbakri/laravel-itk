@@ -129,16 +129,16 @@ class TransactionController extends Controller
 
             // var_dump(json_encode(
             //     [
-            //             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //             'employeeNo'=> $request->employeeNo,
-            //             'medicalType1'=> $request->medicalType1,
-            //             'businessUnit' => $request->businessUnit,
-            //             'exportMenu' => false,
-            //             'companyCode' => Session::get('companyCode'), 
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionID' => 0, 
-            //             'sessionUserID' => Session::get('userID'),
+            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+            //         'employeeNo'=> $request->employeeNo,
+            //         'medicalType1'=> $request->medicalType1,
+            //         'businessUnit' => $request->businessUnit,
+            //         'exportMenu' => false,
+            //         'companyCode' => Session::get('companyCode'), 
+            //         'languageCode' => App::getLocale(), 
+            //         'sessionID' => 0, 
+            //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
             $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementhistoryall',
@@ -312,14 +312,15 @@ class TransactionController extends Controller
                 // var_dump(json_encode(
                 //     [
                 //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //         'employeeNo'=> $request->employeeNo,
-                //         'medicalType1'=> $request->medicalType1,
-                //         'businessUnit' => $request->businessUnit,
-                //         'companyCode' => Session::get('companyCode'), 
-                //         'languageCode' => App::getLocale(), 
-                //         'sessionID' => 0, 
-                //         'sessionUserID' => Session::get('userID'),
+                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                //             'employeeNo'=> $request->employeeNo,
+                //             'type'=> "ALL",
+                //             'businessUnit' => $request->businessUnit,
+                //             'exportMenu' => false,
+                //             'companyCode' => Session::get('companyCode'), 
+                //             'languageCode' => App::getLocale(), 
+                //             'sessionID' => 0, 
+                //             'sessionUserID' => Session::get('userID'),
                 //     ]
                 //     ));
                 $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
@@ -334,7 +335,7 @@ class TransactionController extends Controller
                             'employeeNo'=> $request->employeeNo,
                             'type'=> "ALL",
                             'businessUnit' => $request->businessUnit,
-                            // 'exportMenu' => false,
+                            'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => App::getLocale(), 
                             'sessionID' => 0, 
@@ -811,16 +812,16 @@ class TransactionController extends Controller
             // var_dump(json_encode(
             //     [
             //         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'exportMenu' =>false,
-            //         'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
-            //         'type' =>  $request->type,
-            //         'businessUnit'=> $request->businessUnit,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
+            //             'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
+            //             'exportMenu' =>false,
+            //             'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
+            //             'type' =>  $request->type,
+            //             'businessUnit'=> $request->businessUnit,
+            //             'employeeNo'=> $request->employeeNo,
+            //             'companyCode' => Session::get('companyCode'), 
+            //             'languageCode' => App::getLocale(), 
+            //             'sessionID' => 0, 
+            //             'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
 
@@ -833,7 +834,7 @@ class TransactionController extends Controller
                         'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
-                        'directSuperiorID'=> $request->directSuperiorID,
+                        'employeeNo'=> $request->employeeNo,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 

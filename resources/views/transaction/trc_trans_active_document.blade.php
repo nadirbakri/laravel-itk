@@ -650,6 +650,15 @@
 
 <script type="text/javascript">
 
+$('#business_trip_table').on('click', '.chk-select', function(){
+    let all_checkbox = $('#business_trip_table .chk-select:checked');
+    let getPaid = document.getElementById("checkPaid").value;
+    $('#jesyca').val(getPaid);
+// alert(all_checkbox);
+    // $('#jesyca').val(all_checkbox);
+})
+</script>
+<script>
 loadDataBusinessUnit();
 loadDataTravelType();
 loadDataFirstLastAllTravelType();
@@ -728,7 +737,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}"level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -760,7 +769,7 @@ $.get("{{ url('level/api') }}", function (data) {
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/level/func/api') }}"level/func/api',
+                url: "{{ url('/level/func/api') }}",
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -775,7 +784,7 @@ $.get("{{ url('level/api') }}", function (data) {
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/travel_type/all/api') }}"travel_type/all/api',
+                url: "{{ url('/travel_type/all/api') }}",
             }).then(function (data) {
                 if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
                     $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
@@ -818,7 +827,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: "{{ url('/travel_type/api') }}"travel_type/api',
+                    url: "{{ url('/travel_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -845,13 +854,7 @@ $.get("{{ url('level/api') }}", function (data) {
             });
         }
 
-$('#business_trip_table').on('click', '.chk-select', function(){
-    let all_checkbox = $('#business_trip_table .chk-select:checked');
-    let getPaid = document.getElementById("checkPaid").value;
-    $('#jesyca').val(getPaid);
-// alert(all_checkbox);
-    // $('#jesyca').val(all_checkbox);
-})
+
 </script>
 
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
