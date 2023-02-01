@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/attachment_code') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/attachment_code') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Attachment Code List</span>
 			</a>

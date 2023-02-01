@@ -159,7 +159,7 @@
                                 <th>Fixed Component</th>
                                 <th>Currency Code</th>
                                 <th>Amount
-                                    <small class="text-muted">(0 - 0,9)</small>
+                                    <!-- <small class="text-muted">(0 - 0,9)</small> -->
                                 </th>
                                 <th style="display: none;">Field Type</th>
                             </tr>
@@ -174,7 +174,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('payroll/salary_master') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('payroll/salary_master') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_salary_master.btn_cancel') }}
                         </a>
@@ -320,7 +320,7 @@
                     '<input type="text" class="form-control" name="description[]" id="description" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
                     '<input type="text" class="form-control" name="fixed_component[]" id="fixed_component" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null) ? (v.fieldType == 'T' || v.fieldType == 'P' ? 'Yes' : 'No') : '') +'" readonly>',
                     '<input type="text" class="form-control" name="currency_code[]" id="currency_code" value="'+ ((typeof v.currencyCode !== 'undefined' && v.currencyCode !== null) ? v.currencyCode : '') +'" readonly>',
-                    '<input type="number" min=0 max=0.9 step="0.1" class="form-control" name="amount[]" id="amount" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'">',
+                    '<input type="text" class="form-control" name="amount[]" id="amount" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'">',
                     '<input type="text" class="form-control" name="field_type[]" id="field_type" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null) ? v.fieldType : '') +'" hidden>',
                 ]).draw();
             });

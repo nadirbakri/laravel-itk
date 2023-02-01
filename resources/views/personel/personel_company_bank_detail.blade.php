@@ -71,7 +71,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/company_bank') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/company_bank') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_company_bank.list_detail') }}</span>
             </a>
@@ -122,7 +122,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/company_bank') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/company_bank') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_company_bank.btn_cancel') }}
                         </a>
@@ -205,7 +205,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/company_bank') }}";
+            window.location = "{{ url('personnel/company_bank') }}";
         })
 
         $("#btn-save").click(function () {
@@ -257,7 +257,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/company_bank/proses') }}",
+                        url: "{{ url('personnel/company_bank/proses') }}",
                         type: "POST",
                         data: $('#company_bank_form').serialize(),
                         success: function (response) {
@@ -272,7 +272,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/company_bank') }}";
+                                        "{{ url('personnel/company_bank') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

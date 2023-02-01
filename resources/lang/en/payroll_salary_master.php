@@ -11,7 +11,7 @@ return [
     'label_add_remark' => 'Add Remark for changes on Basic Salary?',
     'label_remark' => 'Remark',
     'btn_save' => 'Save',
-    'btn_save_no_remark' => 'Save no Remark',
+    'btn_save_no_remark' => 'Save without Remark',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',
     'alert_warning' => 'Warning',

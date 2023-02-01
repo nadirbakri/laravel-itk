@@ -71,7 +71,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/zip') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/zip') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_zip_code.list_detail') }}</span>
             </a>
@@ -138,7 +138,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/zip') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/zip') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_zip_code.btn_cancel') }}
                         </a>
@@ -222,7 +222,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/zip') }}";
+            window.location = "{{ url('personnel/zip') }}";
         })
 
         $("#btn-save").click(function () {
@@ -292,7 +292,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/zip/proses') }}",
+                        url: "{{ url('personnel/zip/proses') }}",
                         type: "POST",
                         data: $('#zip_code_form').serialize(),
                         success: function (response) {
@@ -306,7 +306,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/zip') }}";
+                                        "{{ url('personnel/zip') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

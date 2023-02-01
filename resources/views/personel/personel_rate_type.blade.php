@@ -111,7 +111,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/rate_type/table') }}",
+        ajax: "{{ url('personnel/rate_type/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -126,7 +126,7 @@
 
     $('#rate_type_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/rate_type/detail_data') }}", { 'rate_type' : data.rate_type }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/rate_type/detail_data') }}", { 'rate_type' : data.rate_type }, "GET", "iframe_dashboard");
     });
     
   });

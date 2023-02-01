@@ -1077,6 +1077,7 @@
             $('#minute_rounded_from').val("0").trigger('change');
             $('#minute_rounded_to').val("1").trigger('change');
             $('#minute_rounded_become').val("0").trigger('change');
+            $('#minutes_rounded_table').DataTable().destroy();
             load_data_table_minutes_rounded();
             $("#toolbar-new").show();
             $("#toolbar-edit").hide();
@@ -1241,6 +1242,8 @@
             } );
         });
 
+        $('#minutes_rounded_table').DataTable().destroy();
+        $('#reference_time_management_table').DataTable().destroy();
         load_data_table_minutes_rounded();
         load_data_table_reference_time_management();
 

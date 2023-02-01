@@ -212,6 +212,12 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
+    
     $(function () {
         initDatePicker();
     });
@@ -245,7 +251,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);
@@ -887,7 +893,7 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/employee_list/print') }}",
+                        url: "{{ url('personnel/employee_list/print') }}",
                         type: "POST",
                         data: $('#employee_list_form').serialize(),
                         success: function (result, status, xhr) {

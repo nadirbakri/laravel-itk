@@ -111,7 +111,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/line_of_business/table') }}",
+        ajax: "{{ url('personnel/line_of_business/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -126,7 +126,7 @@
 
     $('#line_of_business_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/line_of_business/detail_data') }}", { 'line_of_business_code' : data.line_of_business_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/line_of_business/detail_data') }}", { 'line_of_business_code' : data.line_of_business_code }, "GET", "iframe_dashboard");
     });
     
   });

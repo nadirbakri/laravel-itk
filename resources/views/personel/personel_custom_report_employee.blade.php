@@ -711,7 +711,7 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('personel/custom_report_employee/print') }}",
+                        url: "{{ url('personnel/custom_report_employee/print') }}",
                         type: "POST",
                         data: { 'field' : $('#custom_report_employee_form').serialize(), 'field_name' : JSON.stringify(arrayfieldName) },
                         success: function (result, status, xhr) {

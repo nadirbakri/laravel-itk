@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/decree_code') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/decree_code') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Decree Code List</span>
 			</a>

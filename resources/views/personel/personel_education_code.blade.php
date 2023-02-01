@@ -111,7 +111,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/education_code/table') }}",
+        ajax: "{{ url('personnel/education_code/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -126,7 +126,7 @@
 
     $('#education_code_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/education_code/detail_data') }}", { 'education_code' : data.education_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/education_code/detail_data') }}", { 'education_code' : data.education_code }, "GET", "iframe_dashboard");
     });
     
   });

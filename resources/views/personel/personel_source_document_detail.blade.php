@@ -73,7 +73,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/source_document') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/source_document') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_source_document.list_detail') }}</span>
             </a>
@@ -183,7 +183,7 @@
                     </button>
                 </div>
                 <div class="col-3">
-                    <a class="btn btn-primary" href="{{ url('personel/source_document') }}" target="iframe_dashboard"
+                    <a class="btn btn-outline-primary" href="{{ url('personnel/source_document') }}" target="iframe_dashboard"
                         name="btn-cancel-letter" id="btn-cancel-letter" style="width: 100%;">
                         <i class="fa fa-times-circle"></i> {{ __('personel_source_document.btn_cancel') }}
                     </a>
@@ -388,7 +388,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/source_document/detail/table') }}",
+                    url: "{{ url('personnel/source_document/detail/table') }}",
                     data: {
                         letterType: letterType
                     }
@@ -429,7 +429,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/source_document/signer/table') }}",
+                    url: "{{ url('personnel/source_document/signer/table') }}",
                     data: {
                         letterType: letterType
                     }
@@ -474,7 +474,7 @@
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/source_document') }}";
+            window.location = "{{ url('personnel/source_document') }}";
         })
 
         $('#notification_success_detail').on('hide.bs.modal', function () {
@@ -722,7 +722,7 @@
                     // }
 
                     $.ajax({
-                        url: "{{ url('personel/source_document/proses') }}",
+                        url: "{{ url('personnel/source_document/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -739,7 +739,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/source_document') }}";
+                                        "{{ url('personnel/source_document') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save-letter").prop("disabled", false);
@@ -820,7 +820,7 @@
                         $('#message-notification-error').html("Letter Type Must Be Filled");
                     } else {
                         $.ajax({
-                            url: "{{ url('personel/source_document/detail/proses') }}",
+                            url: "{{ url('personnel/source_document/detail/proses') }}",
                             type: "POST",
                             data: $('#detail_form').serialize(),
                             success: function (response) {
@@ -921,7 +921,7 @@
                         $('#message-notification-error').html("Letter Type Must Be Filled");
                     } else {
                         $.ajax({
-                            url: "{{ url('personel/source_document/signer/proses') }}",
+                            url: "{{ url('personnel/source_document/signer/proses') }}",
                             type: "POST",
                             data: $('#signer_form').serialize(),
                             success: function (response) {

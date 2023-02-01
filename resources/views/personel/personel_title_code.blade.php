@@ -193,7 +193,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/title/table') }}",
+        ajax: "{{ url('personnel/title/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -224,7 +224,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/title/table') }}",
+            ajax: "{{ url('personnel/title/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -252,17 +252,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/title') }}";
+        window.location = "{{ url('personnel/title') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/title/detail_data') }}", { 'titleCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/title/detail_data') }}", { 'titleCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/title/detail_data') }}", { 'titleCode' : data[0].titleCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/title/detail_data') }}", { 'titleCode' : data[0].titleCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -273,7 +273,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/title/status') }}",
+                url: "{{ url('personnel/title/status') }}",
                 type: "GET",
                 data: { 'titleCode' : data[0].titleCode, 'titleName' : data[0].titleName, 'func' : 'A' },
                 success: function(response) {
@@ -281,7 +281,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/title') }}";
+                            window.location = "{{ url('personnel/title') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -309,7 +309,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/title/status') }}",
+                url: "{{ url('personnel/title/status') }}",
                 type: "GET",
                 data: { 'titleCode' : data[0].titleCode, 'titleName' : data[0].titleName, 'func' : 'D' },
                 success: function(response) {
@@ -317,7 +317,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/title') }}";
+                            window.location = "{{ url('personnel/title') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -343,7 +343,7 @@
 
     $('#title_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/title/detail_data') }}", { 'titleCode' : data.titleCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/title/detail_data') }}", { 'titleCode' : data.titleCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

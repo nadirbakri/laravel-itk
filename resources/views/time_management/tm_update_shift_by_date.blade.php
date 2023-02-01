@@ -250,7 +250,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);

@@ -119,7 +119,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('utilities/group_authorization') }}"
+                        <a class="btn btn-outline-primary" href="{{ url('utilities/group_authorization') }}"
                             target="iframe_dashboard" name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('utilities_authorization_code_group.btn_cancel') }}
                         </a>

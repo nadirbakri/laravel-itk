@@ -112,7 +112,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/religion_code/table') }}",
+        ajax: "{{ url('personnel/religion_code/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -128,7 +128,7 @@
 
     $('#religion_code_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/religion_code/detail_data') }}", { 'religion_code' : data.religion_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/religion_code/detail_data') }}", { 'religion_code' : data.religion_code }, "GET", "iframe_dashboard");
     });
     
   });

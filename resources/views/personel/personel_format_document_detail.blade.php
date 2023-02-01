@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personel/format_document') }}" target="iframe_dashboard">
+			<a href="{{ url('personnel/format_document') }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Format Document List</span>
 			</a>
@@ -326,7 +326,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/format_document/format_document/table') }}",
+            ajax: "{{ url('personnel/format_document/format_document/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },

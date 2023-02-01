@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/institution/table') }}",
+        ajax: "{{ url('personnel/institution/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -221,7 +221,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/institution/table') }}",
+            ajax: "{{ url('personnel/institution/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -249,17 +249,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/institution') }}";
+        window.location = "{{ url('personnel/institution') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/institution/detail_data') }}", { 'institutionCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/institution/detail_data') }}", { 'institutionCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/institution/detail_data') }}", { 'institutionCode' : data[0].institutionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/institution/detail_data') }}", { 'institutionCode' : data[0].institutionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -270,7 +270,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/institution/status') }}",
+                url: "{{ url('personnel/institution/status') }}",
                 type: "GET",
                 data: { 'institutionCode' : data[0].institutionCode, 'institutionName' : data[0].institutionName, 'func' : 'A' },
                 success: function(response) {
@@ -278,7 +278,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/institution') }}";
+                            window.location = "{{ url('personnel/institution') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -306,7 +306,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/institution/status') }}",
+                url: "{{ url('personnel/institution/status') }}",
                 type: "GET",
                 data: { 'institutionCode' : data[0].institutionCode, 'institutionName' : data[0].institutionName, 'func' : 'D' },
                 success: function(response) {
@@ -314,7 +314,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/institution') }}";
+                            window.location = "{{ url('personnel/institution') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -340,7 +340,7 @@
 
     $('#institution_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/institution/detail_data') }}", { 'institutionCode' : data.institutionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/institution/detail_data') }}", { 'institutionCode' : data.institutionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

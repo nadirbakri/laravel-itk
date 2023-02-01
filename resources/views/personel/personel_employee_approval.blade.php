@@ -198,7 +198,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/employee_approval/table') }}",
+        ajax: "{{ url('personnel/employee_approval/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -237,7 +237,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/employee_approval/table') }}",
+            ajax: "{{ url('personnel/employee_approval/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -290,7 +290,7 @@
     });
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/employee_approval') }}";
+        window.location = "{{ url('personnel/employee_approval') }}";
     })
 
     $("#toolbar-edit").on('click', function() {
@@ -310,7 +310,7 @@
             });
             
             $.ajax({
-                url: "{{ url('personel/employee_approval/proses') }}",
+                url: "{{ url('personnel/employee_approval/proses') }}",
                 type: "POST",
                 data: {
                     'data': data

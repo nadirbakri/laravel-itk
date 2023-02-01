@@ -195,7 +195,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/bpjs_group/table') }}",
+        ajax: "{{ url('personnel/bpjs_group/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -228,7 +228,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/bpjs_group/table') }}",
+            ajax: "{{ url('personnel/bpjs_group/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -258,17 +258,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/bpjs_group') }}";
+        window.location = "{{ url('personnel/bpjs_group') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/bpjs_group/detail_data') }}", { 'bpjsCode' : null, 'bpjsNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/bpjs_group/detail_data') }}", { 'bpjsCode' : null, 'bpjsNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/bpjs_group/detail_data') }}", { 'bpjsCode' : data[0].bpjsCode, 'bpjsNo' : data[0].bpjsNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/bpjs_group/detail_data') }}", { 'bpjsCode' : data[0].bpjsCode, 'bpjsNo' : data[0].bpjsNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -279,7 +279,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/bpjs_group/status') }}",
+                url: "{{ url('personnel/bpjs_group/status') }}",
                 type: "GET",
                 data: { 'bpjsCode' : data[0].bpjsCode, 'bpjsNo' : data[0].bpjsNo, 'func' : 'A' },
                 success: function(response) {
@@ -287,7 +287,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/bpjs_group') }}";
+                            window.location = "{{ url('personnel/bpjs_group') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -315,7 +315,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/bpjs_group/status') }}",
+                url: "{{ url('personnel/bpjs_group/status') }}",
                 type: "GET",
                 data: { 'bpjsCode' : data[0].bpjsCode, 'bpjsNo' : data[0].bpjsNo, 'func' : 'D' },
                 success: function(response) {
@@ -323,7 +323,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/bpjs_group') }}";
+                            window.location = "{{ url('personnel/bpjs_group') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -349,7 +349,7 @@
 
     $('#bpjs_group_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/bpjs_group/detail_data') }}", { 'bpjsCode' : data.bpjsCode, 'bpjsNo' : data.bpjsNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/bpjs_group/detail_data') }}", { 'bpjsCode' : data.bpjsCode, 'bpjsNo' : data.bpjsNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

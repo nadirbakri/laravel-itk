@@ -194,7 +194,7 @@
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
         $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 var arrLevel = [];
@@ -230,7 +230,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/personal_data/table') }}",
+            ajax: "{{ url('personnel/personal_data/table') }}",
             error: function (jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                     "\r\n" + ajaxOptions.responseText);
@@ -289,7 +289,7 @@
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('personel/personal_data/table') }}",
+                ajax: "{{ url('personnel/personal_data/table') }}",
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                         "\r\n" + ajaxOptions.responseText);
@@ -362,11 +362,11 @@
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/personal_data') }}";
+            window.location = "{{ url('personnel/personal_data') }}";
         })
 
         $("#toolbar-new").on('click', function () {
-            $.redirect("{{ url('personel/personal_data/detail_data') }}", {
+            $.redirect("{{ url('personnel/personal_data/detail_data') }}", {
                 'employeeNo': null,
                 'func': 'new'
             }, "GET", "iframe_dashboard");
@@ -375,7 +375,7 @@
         $("#toolbar-edit").on('click', function () {
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
-                $.redirect("{{ url('personel/personal_data/detail_data') }}", {
+                $.redirect("{{ url('personnel/personal_data/detail_data') }}", {
                     'employeeNo': data[0].employeeNo,
                     'func': 'edit'
                 }, "GET", "iframe_dashboard");
@@ -389,7 +389,7 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/personal_data/status') }}",
+                    url: "{{ url('personnel/personal_data/status') }}",
                     type: "GET",
                     data: {
                         'employeeNo': data[0].employeeNo,
@@ -400,7 +400,7 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function () {
-                                window.location = "{{ url('personel/personal_data') }}";
+                                window.location = "{{ url('personnel/personal_data') }}";
                             }, 3000);
                         } else {
                             $('#notification_error').modal('show');
@@ -429,7 +429,7 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/personal_data/status') }}",
+                    url: "{{ url('personnel/personal_data/status') }}",
                     type: "GET",
                     data: {
                         'employeeNo': data[0].employeeNo,
@@ -440,7 +440,7 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response.message);
                             setTimeout(function () {
-                                window.location = "{{ url('personel/personal_data') }}";
+                                window.location = "{{ url('personnel/personal_data') }}";
                             }, 3000);
                         } else {
                             $('#notification_error').modal('show');
@@ -467,7 +467,7 @@
 
         $('#personal_data_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("{{ url('personel/personal_data/detail_data') }}", {
+            $.redirect("{{ url('personnel/personal_data/detail_data') }}", {
                 'employeeNo': data.employeeNo,
                 'func': 'edit'
             }, "GET", "iframe_dashboard");

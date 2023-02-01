@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/major/table') }}",
+        ajax: "{{ url('personnel/major/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -221,7 +221,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/major/table') }}",
+            ajax: "{{ url('personnel/major/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -249,17 +249,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/major') }}";
+        window.location = "{{ url('personnel/major') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/major/detail_data') }}", { 'majorCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/major/detail_data') }}", { 'majorCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/major/detail_data') }}", { 'majorCode' : data[0].majorCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/major/detail_data') }}", { 'majorCode' : data[0].majorCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -270,7 +270,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/major/status') }}",
+                url: "{{ url('personnel/major/status') }}",
                 type: "GET",
                 data: { 'majorCode' : data[0].majorCode, 'majorName' : data[0].majorName, 'func' : 'A' },
                 success: function(response) {
@@ -278,7 +278,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/major') }}";
+                            window.location = "{{ url('personnel/major') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -306,7 +306,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/major/status') }}",
+                url: "{{ url('personnel/major/status') }}",
                 type: "GET",
                 data: { 'majorCode' : data[0].majorCode, 'majorName' : data[0].majorName, 'func' : 'D' },
                 success: function(response) {
@@ -314,7 +314,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/major') }}";
+                            window.location = "{{ url('personnel/major') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -340,7 +340,7 @@
 
     $('#major_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/major/detail_data') }}", { 'majorCode' : data.majorCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/major/detail_data') }}", { 'majorCode' : data.majorCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

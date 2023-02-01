@@ -196,7 +196,7 @@
         serverSide: true,
         orderCellsTop: true,
         ajax: {
-            url: "{{ url('personel/level/table') }}",
+            url: "{{ url('personnel/level/table') }}",
             cache: false
         },
         error: function(jqXHR, ajaxOptions, thrownError) {
@@ -232,7 +232,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url: "{{ url('personel/level/table') }}",
+                url: "{{ url('personnel/level/table') }}",
                 cache: false
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
@@ -264,17 +264,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/level') }}";
+        window.location = "{{ url('personnel/level') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/level/detail_data') }}", { 'levelType' : null, 'levelCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/level/detail_data') }}", { 'levelType' : null, 'levelCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/level/detail_data') }}", { 'levelType' : data.levelType, 'levelCode' : data[0].levelCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/level/detail_data') }}", { 'levelType' : data.levelType, 'levelCode' : data[0].levelCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -285,7 +285,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/level/status') }}",
+                url: "{{ url('personnel/level/status') }}",
                 type: "GET",
                 data: { 'levelType' : data[0].levelType, 'levelCode' : data[0].levelCode, 'levelName' : data[0].levelName, 'func' : 'A' },
                 success: function(response) {
@@ -293,7 +293,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/level') }}";
+                            window.location = "{{ url('personnel/level') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -321,7 +321,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/level/status') }}",
+                url: "{{ url('personnel/level/status') }}",
                 type: "GET",
                 data: { 'levelType' : data[0].levelType, 'levelCode' : data[0].levelCode, 'levelName' : data[0].levelName, 'func' : 'D' },
                 success: function(response) {
@@ -329,7 +329,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/level') }}";
+                            window.location = "{{ url('personnel/level') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -355,7 +355,7 @@
 
     $('#level_table tbody').on('click', 'tr td:not(:first-child)', function () {
         var data = table.row(this).data();
-        $.redirect("{{ url('personel/level/detail_data') }}", { 'levelType' : data.levelType, 'levelCode' : data.levelCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/level/detail_data') }}", { 'levelType' : data.levelType, 'levelCode' : data.levelCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

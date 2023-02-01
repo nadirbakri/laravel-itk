@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/ranking/table') }}",
+        ajax: "{{ url('personnel/ranking/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -221,7 +221,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/ranking/table') }}",
+            ajax: "{{ url('personnel/ranking/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -249,17 +249,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/ranking') }}";
+        window.location = "{{ url('personnel/ranking') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/ranking/detail_data') }}", { 'rankingCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/ranking/detail_data') }}", { 'rankingCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/ranking/detail_data') }}", { 'rankingCode' : data[0].rankingCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/ranking/detail_data') }}", { 'rankingCode' : data[0].rankingCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -270,7 +270,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/ranking/status') }}",
+                url: "{{ url('personnel/ranking/status') }}",
                 type: "GET",
                 data: { 'rankingCode' : data[0].rankingCode, 'rankingName' : data[0].rankingName, 'func' : 'A' },
                 success: function(response) {
@@ -278,7 +278,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/ranking') }}";
+                            window.location = "{{ url('personnel/ranking') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -306,7 +306,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/ranking/status') }}",
+                url: "{{ url('personnel/ranking/status') }}",
                 type: "GET",
                 data: { 'rankingCode' : data[0].rankingCode, 'rankingName' : data[0].rankingName, 'func' : 'D' },
                 success: function(response) {
@@ -314,7 +314,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/ranking') }}";
+                            window.location = "{{ url('personnel/ranking') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -340,7 +340,7 @@
 
     $('#ranking_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/ranking/detail_data') }}", { 'rankingCode' : data.rankingCode,  'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/ranking/detail_data') }}", { 'rankingCode' : data.rankingCode,  'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

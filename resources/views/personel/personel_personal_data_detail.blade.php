@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div class="div-title">
-                    <a href="{{ url('personel/personal_data') }}" target="iframe_dashboard">
+                    <a href="{{ url('personnel/personal_data') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('personel_personal_data.list_detail') }}</span>
                     </a>
@@ -1261,7 +1261,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label
@@ -1313,7 +1313,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
@@ -2252,7 +2252,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2269,7 +2269,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2286,7 +2286,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2306,7 +2306,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2321,7 +2321,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2336,7 +2336,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2351,7 +2351,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2366,7 +2366,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2381,7 +2381,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2396,7 +2396,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2411,7 +2411,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2426,7 +2426,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2441,7 +2441,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2456,7 +2456,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2471,7 +2471,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2486,7 +2486,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2501,7 +2501,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2516,7 +2516,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2531,7 +2531,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2546,7 +2546,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2561,7 +2561,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2576,7 +2576,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2591,7 +2591,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2606,7 +2606,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2621,7 +2621,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2636,7 +2636,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2651,7 +2651,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            defaultDate: null,
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -2670,6 +2670,38 @@
         var arrayFamilyDependent = [];
         var arrData = @json($data);
         var arrData2 = @json($data2);
+
+        loadDataBirthPlace();
+        loadDataGender();
+        loadDataBloodType();
+        loadDataMaritalStatus();
+        loadDataReligion();
+        loadDataNationality();
+        loadDataDrivingLicenseCarType();
+        loadDataDrivingLicenseCarRegistPlace();
+        loadDataDrivingLicenseMotorcycleRegistPlace();
+        loadDataCity();
+        loadDataZipCode();
+        loadDataDistrict();
+        loadDataSubdistrict();
+        loadDataRelation();
+        loadDataEmploymentStatus();
+        loadDataEmploymentType();
+        loadDataTerminationCode();
+        loadDataBenefits();
+        loadDataAbsenteeismType();
+        loadDataWorkPatternCode();
+        loadDataTaxStatus();
+        loadDataTaxOffice();
+        loadDataTaxCalculationMethod();
+        loadDataGroupNPWP();
+        loadDataGroupBPJS();
+        loadDataGroupAuthorize();
+        loadDataCompanyBankCode();
+        loadDataEmployeeBankCode();
+        loadDataCurrency();
+        loadDataInsuranceCode();
+        loadDataInsuranceClass();
 
         if (func == 'new') {
             //Profile
@@ -2836,7 +2868,7 @@
             $('#remarks_insurance').val("");
 
             $.ajax({
-                url: "{{ url('personel/report/level/check') }}",
+                url: "{{ url('personnel/report/level/check') }}",
                 type: "GET",
                 success: function (response) {
                     $('#level_format').val(response.data[0].levelFormat);
@@ -3985,37 +4017,6 @@
             return $("<textarea/>").html(value).text();
         }
 // ini
-        loadDataBirthPlace();
-        loadDataGender();
-        loadDataBloodType();
-        loadDataMaritalStatus();
-        loadDataReligion();
-        loadDataNationality();
-        loadDataDrivingLicenseCarType();
-        loadDataDrivingLicenseCarRegistPlace();
-        loadDataDrivingLicenseMotorcycleRegistPlace();
-        loadDataCity();
-        loadDataZipCode();
-        loadDataDistrict();
-        loadDataSubdistrict();
-        loadDataRelation();
-        loadDataEmploymentStatus();
-        loadDataEmploymentType();
-        loadDataTerminationCode();
-        loadDataBenefits();
-        loadDataAbsenteeismType();
-        loadDataWorkPatternCode();
-        loadDataTaxStatus();
-        loadDataTaxOffice();
-        loadDataTaxCalculationMethod();
-        loadDataGroupNPWP();
-        loadDataGroupBPJS();
-        loadDataGroupAuthorize();
-        loadDataCompanyBankCode();
-        loadDataEmployeeBankCode();
-        loadDataCurrency();
-        loadDataInsuranceCode();
-        loadDataInsuranceClass();
 
         $('#fringe_benefit_data_table thead tr').clone(true).appendTo('#fringe_benefit_data_table thead');
         $('#fringe_benefit_data_table thead tr:eq(1) th:not(:first-child)').each(function (i) {
@@ -4086,7 +4087,7 @@
             var data = $('#city_select_home').select2('data');
             $('#city_text_home').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/city_name/detail') }}",
+                url: "{{ url('personnel/city_name/detail') }}",
                 type: "GET",
                 data: {
                     'cityCode': data[0].id
@@ -4098,7 +4099,7 @@
             var data = $('#city_select_other').select2('data');
             $('#city_text_other').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/city_name/detail') }}",
+                url: "{{ url('personnel/city_name/detail') }}",
                 type: "GET",
                 data: {
                     'cityCode': data[0].id
@@ -4110,7 +4111,7 @@
             var data = $('#city_select_work').select2('data');
             $('#city_text_work').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/city_name/detail') }}",
+                url: "{{ url('personnel/city_name/detail') }}",
                 type: "GET",
                 data: {
                     'cityCode': data[0].id
@@ -4122,7 +4123,7 @@
             var data = $('#city_select_correspondence').select2('data');
             $('#city_text_correspondence').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/city_name/detail') }}",
+                url: "{{ url('personnel/city_name/detail') }}",
                 type: "GET",
                 data: {
                     'cityCode': data[0].id
@@ -4134,7 +4135,7 @@
             var data = $('#zip_code_select_home').select2('data');
             $('#zip_code_text_home').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/zip_code/detail') }}",
+                url: "{{ url('personnel/zip_code/detail') }}",
                 type: "GET",
                 data: {
                     'zipCode': data[0].id
@@ -4146,7 +4147,7 @@
             var data = $('#zip_code_select_other').select2('data');
             $('#zip_code_text_other').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/zip_code/detail') }}",
+                url: "{{ url('personnel/zip_code/detail') }}",
                 type: "GET",
                 data: {
                     'zipCode': data[0].id
@@ -4158,7 +4159,7 @@
             var data = $('#zip_code_select_work').select2('data');
             $('#zip_code_text_work').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/zip_code/detail') }}",
+                url: "{{ url('personnel/zip_code/detail') }}",
                 type: "GET",
                 data: {
                     'zipCode': data[0].id
@@ -4170,7 +4171,7 @@
             var data = $('#zip_code_select_correspondence').select2('data');
             $('#zip_code_text_correspondence').val(htmlDecode(data[0].text));
             $.ajax({
-                url: "{{ url('personel/zip_code/detail') }}",
+                url: "{{ url('personnel/zip_code/detail') }}",
                 type: "GET",
                 data: {
                     'zipCode': data[0].id
@@ -4220,7 +4221,7 @@
 
         $('#prefix_title_one, #prefix_title_two, #prefix_title_three, #suffix_title_one, #suffix_title_two, #suffix_title_three')
             .inputpicker({
-                url: "{{ url('personel/personal_data/prefix_title') }}",
+                url: "{{ url('personnel/personal_data/prefix_title') }}",
                 fields: [{
                         name: 'title_code',
                         text: 'Title Code'
@@ -6615,7 +6616,7 @@
         //             var formdata = new FormData(myform);
 
         //             $.ajax({
-        //                 url: "{{ url('personel/employee/photo/proses') }}",
+        //                 url: "{{ url('personnel/employee/photo/proses') }}",
         //                 type: "POST",
         //                 processData: false,
         //                 contentType: false,
@@ -6627,7 +6628,7 @@
         //                             .message);
         //                         setTimeout(function () {
         //                             window.location =
-        //                                 "{{ url('personel/personal_data') }}";
+        //                                 "{{ url('personnel/personal_data') }}";
         //                         }, 3000);
         //                     } else {
         //                         $('#notification_error').modal('show');
@@ -6773,7 +6774,7 @@
                     var formdata = new FormData(myform);
 
                     $.ajax({
-                        url: "{{ url('personel/personal_data/proses') }}",
+                        url: "{{ url('personnel/personal_data/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -6790,7 +6791,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/personal_data') }}";
+                                        "{{ url('personnel/personal_data') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save-profile").prop("disabled", false);
@@ -6865,7 +6866,7 @@
         //                 }
         //             });
         //             $.ajax({
-        //                 url: "{{ url('personel/position/proses') }}",
+        //                 url: "{{ url('personnel/position/proses') }}",
         //                 type: "POST",
         //                 data: $('#employment_data_form').serialize(),
         //                 success: function (response) {
@@ -6880,7 +6881,7 @@
         //                             .message);
         //                         setTimeout(function () {
         //                             window.location =
-        //                                 "{{ url('personel/position') }}";
+        //                                 "{{ url('personnel/position') }}";
         //                         }, 3000);
         //                     } else {
         //                         $("#btn-save-employment-data").prop("disabled", false);
@@ -6949,7 +6950,7 @@
         //                 }
         //             });
         //             $.ajax({
-        //                 url: "{{ url('personel/data/family_dependent/proses') }}",
+        //                 url: "{{ url('personnel/data/family_dependent/proses') }}",
         //                 type: "POST",
         //                 data: $('#family_dependent_data_form').serialize(),
         //                 success: function (response) {
@@ -7005,7 +7006,7 @@
         //         processing: true,
         //         serverSide: true,
         //         orderCellsTop: true,
-        //         ajax: "{{ url('personel/personal_data/dependent/table') }}",
+        //         ajax: "{{ url('personnel/personal_data/dependent/table') }}",
         //         error: function (jqXHR, ajaxOptions, thrownError) {
         //             alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
         //                 "\r\n" + ajaxOptions.responseText);

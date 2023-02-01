@@ -107,7 +107,7 @@
             </div>
         </form>
         <div class="div-title">
-            <a href="{{ url('personel/work_detail') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/work_detail') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_work_detail.list_detail') }}</span>
             </a>
@@ -880,7 +880,7 @@
         }
 
         $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 var arrLevel = [];
@@ -948,7 +948,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/work_detail/job_history/table') }}",
+                    url: "{{ url('personnel/work_detail/job_history/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1031,7 +1031,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/work_detail/work_experience/table') }}",
+                    url: "{{ url('personnel/work_detail/work_experience/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1106,7 +1106,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/work_detail/free_format_field/table') }}",
+                    url: "{{ url('personnel/work_detail/free_format_field/table') }}",
                     data: {
                         'employeeNo': employeeNo
                     }
@@ -1368,7 +1368,7 @@
 
         $('#modal_add_work_experience').on('show.bs.modal', function () {
             $.ajax({
-                url: "{{ url('personel/number/check') }}",
+                url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
                     'url': '/peworkexperience/getpeworkexperience',
@@ -1402,7 +1402,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/work_detail/job_history/remove') }}",
+                    url: "{{ url('personnel/work_detail/job_history/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -1442,7 +1442,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/work_detail/work_experience/remove') }}",
+                    url: "{{ url('personnel/work_detail/work_experience/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -1482,7 +1482,7 @@
             var data = table.rows('.selected').data().toArray();
             if (data.length > 0) {
                 $.ajax({
-                    url: "{{ url('personel/work_detail/free_format_field/remove') }}",
+                    url: "{{ url('personnel/work_detail/free_format_field/remove') }}",
                     type: "GET",
                     data: {
                         'data': data
@@ -2251,7 +2251,7 @@
                     var formdata = new FormData(myform);
 
                     $.ajax({
-                        url: "{{ url('personel/employee/photo/proses') }}",
+                        url: "{{ url('personnel/employee/photo/proses') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -2263,7 +2263,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/work_detail') }}";
+                                        "{{ url('personnel/work_detail') }}";
                                 }, 3000);
                             } else {
                                 $('#notification_error').modal('show');
@@ -2363,7 +2363,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/work_detail/job_history/proses') }}",
+                        url: "{{ url('personnel/work_detail/job_history/proses') }}",
                         type: "POST",
                         data: $('#job_history_form').serialize(),
                         success: function (response) {
@@ -2468,7 +2468,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/work_detail/work_experience/proses') }}",
+                        url: "{{ url('personnel/work_detail/work_experience/proses') }}",
                         type: "POST",
                         data: $('#work_experience_form').serialize(),
                         success: function (response) {
@@ -2561,7 +2561,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/work_detail/free_format_field/proses') }}",
+                        url: "{{ url('personnel/work_detail/free_format_field/proses') }}",
                         type: "POST",
                         data: $('#free_format_field_form').serialize(),
                         success: function (response) {

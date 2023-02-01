@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/source_document/table') }}",
+        ajax: "{{ url('personnel/source_document/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -223,7 +223,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/source_document/table') }}",
+            ajax: "{{ url('personnel/source_document/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -253,17 +253,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/source_document') }}";
+        window.location = "{{ url('personnel/source_document') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/source_document/detail_data') }}", { 'letterType' : null, 'languageID' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/source_document/detail_data') }}", { 'letterType' : null, 'languageID' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/source_document/detail_data') }}", { 'letterType' : data[0].letterType, 'languageID' : data[0].languageID, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/source_document/detail_data') }}", { 'letterType' : data[0].letterType, 'languageID' : data[0].languageID, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -274,7 +274,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/source_document/status') }}",
+                url: "{{ url('personnel/source_document/status') }}",
                 type: "GET",
                 data: { 'letterType' : data[0].letterType, 'languageID' : data[0].languageID, 'func' : 'A' },
                 success: function(response) {
@@ -282,7 +282,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/source_document') }}";
+                            window.location = "{{ url('personnel/source_document') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -310,7 +310,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/source_document/status') }}",
+                url: "{{ url('personnel/source_document/status') }}",
                 type: "GET",
                 data: { 'letterType' : data[0].letterType, 'languageID' : data[0].languageID, 'func' : 'D' },
                 success: function(response) {
@@ -318,7 +318,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/source_document') }}";
+                            window.location = "{{ url('personnel/source_document') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -344,7 +344,7 @@
 
     $('#source_document_table tbody').on('click', 'tr td:not(:first-child, :nth-child(3))', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/source_document/detail_data') }}", { 'letterType' : data.letterType, 'languageID' : data.languageID, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/source_document/detail_data') }}", { 'letterType' : data.letterType, 'languageID' : data.languageID, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

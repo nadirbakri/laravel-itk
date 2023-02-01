@@ -195,7 +195,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/position/table') }}",
+        ajax: "{{ url('personnel/position/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -227,7 +227,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/position/table') }}",
+            ajax: "{{ url('personnel/position/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -256,17 +256,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/position') }}";
+        window.location = "{{ url('personnel/position') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/position/detail_data') }}", { 'positionCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/position/detail_data') }}", { 'positionCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/position/detail_data') }}", { 'positionCode' : data[0].positionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/position/detail_data') }}", { 'positionCode' : data[0].positionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -277,7 +277,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/position/status') }}",
+                url: "{{ url('personnel/position/status') }}",
                 type: "GET",
                 data: { 'positionCode' : data[0].positionCode, 'func' : 'A' },
                 success: function(response) {
@@ -285,7 +285,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/position') }}";
+                            window.location = "{{ url('personnel/position') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -313,7 +313,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/position/status') }}",
+                url: "{{ url('personnel/position/status') }}",
                 type: "GET",
                 data: { 'positionCode' : data[0].positionCode, 'func' : 'D' },
                 success: function(response) {
@@ -321,7 +321,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/position') }}";
+                            window.location = "{{ url('personnel/position') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -347,7 +347,7 @@
 
     $('#position_table tbody').on('click', 'tr td:not(:first-child)', function () {
         var data = table.row(this).data();
-        $.redirect("{{ url('personel/position/detail_data') }}", { 'positionCode' : data.positionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/position/detail_data') }}", { 'positionCode' : data.positionCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

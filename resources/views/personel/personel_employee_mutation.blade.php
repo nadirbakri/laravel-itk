@@ -670,7 +670,7 @@
 	    }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/employee_mutation') }}";
+            window.location = "{{ url('personnel/employee_mutation') }}";
         })
 
         $.get("{{ url('mutation/type/api') }}", function (data) {
@@ -738,7 +738,7 @@
             $('#employee_name').val(htmlDecode(data[0].title));
 
             $.ajax({
-                url: "{{ url('personel/employee_mutation/detail_data') }}",
+                url: "{{ url('personnel/employee_mutation/detail_data') }}",
                 type: "GET",
                 data: {
                     'employeeNo': data[0].id
@@ -1640,7 +1640,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personel/employee_mutation/proses') }}",
+                        url: "{{ url('personnel/employee_mutation/proses') }}",
                         type: "POST",
                         data: $('#mutation_form').serialize(),
                         success: function (response) {
@@ -1650,7 +1650,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/employee_mutation') }}";
+                                        "{{ url('personnel/employee_mutation') }}";
                                 }, 3000);
                             } else {
                                 $('#notification_error').modal('show');

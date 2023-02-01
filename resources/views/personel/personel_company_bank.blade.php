@@ -194,7 +194,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/company_bank/table') }}",
+        ajax: "{{ url('personnel/company_bank/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -226,7 +226,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/company_bank/table') }}",
+            ajax: "{{ url('personnel/company_bank/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -255,17 +255,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/company_bank') }}";
+        window.location = "{{ url('personnel/company_bank') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/company_bank/detail_data') }}", { 'bankCode' : null, 'accountNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/company_bank/detail_data') }}", { 'bankCode' : null, 'accountNo' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/company_bank/detail_data') }}", { 'bankCode' : data[0].bankCode, 'accountNo' : data[0].accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/company_bank/detail_data') }}", { 'bankCode' : data[0].bankCode, 'accountNo' : data[0].accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -276,7 +276,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/company_bank/status') }}",
+                url: "{{ url('personnel/company_bank/status') }}",
                 type: "GET",
                 data: { 'bankCode' : data[0].bankCode, 'accountNo' : data[0].accountNo, 'func' : 'A' },
                 success: function(response) {
@@ -284,7 +284,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/company_bank') }}";
+                            window.location = "{{ url('personnel/company_bank') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -312,7 +312,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/company_bank/status') }}",
+                url: "{{ url('personnel/company_bank/status') }}",
                 type: "GET",
                 data: { 'bankCode' : data[0].bankCode, 'accountNo' : data[0].accountNo, 'func' : 'D' },
                 success: function(response) {
@@ -320,7 +320,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/company_bank') }}";
+                            window.location = "{{ url('personnel/company_bank') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -346,7 +346,7 @@
 
     $('#company_bank_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/company_bank/detail_data') }}", { 'bankCode' : data.bankCode, 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/company_bank/detail_data') }}", { 'bankCode' : data.bankCode, 'accountNo' : data.accountNo, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

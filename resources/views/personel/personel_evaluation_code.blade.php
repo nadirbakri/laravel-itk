@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/evaluation_form/table') }}",
+        ajax: "{{ url('personnel/evaluation_form/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -221,7 +221,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/evaluation_form/table') }}",
+            ajax: "{{ url('personnel/evaluation_form/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -249,17 +249,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/evaluation_form') }}";
+        window.location = "{{ url('personnel/evaluation_form') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/evaluation_form/detail_data') }}", { 'formCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/evaluation_form/detail_data') }}", { 'formCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/evaluation_form/detail_data') }}", { 'formCode' : data[0].formCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/evaluation_form/detail_data') }}", { 'formCode' : data[0].formCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -270,7 +270,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/evaluation_form/status') }}",
+                url: "{{ url('personnel/evaluation_form/status') }}",
                 type: "GET",
                 data: { 'formCode' : data[0].formCode, 'formName' : data[0].formName, 'func' : 'A' },
                 success: function(response) {
@@ -278,7 +278,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/evaluation_form') }}";
+                            window.location = "{{ url('personnel/evaluation_form') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -306,7 +306,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/evaluation_form/status') }}",
+                url: "{{ url('personnel/evaluation_form/status') }}",
                 type: "GET",
                 data: { 'formCode' : data[0].formCode, 'formName' : data[0].formName, 'func' : 'D' },
                 success: function(response) {
@@ -314,7 +314,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/evaluation_form') }}";
+                            window.location = "{{ url('personnel/evaluation_form') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -340,7 +340,7 @@
 
     $('#evaluation_form_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/evaluation_form/detail_data') }}", { 'formCode' : data.formCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/evaluation_form/detail_data') }}", { 'formCode' : data.formCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

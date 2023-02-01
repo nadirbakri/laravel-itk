@@ -4515,7 +4515,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $level = array_merge($level, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+			$level = array_merge($level, $arrResult->dataListSet);	
+		}
 
         return response()->json($level[0]);
 	}

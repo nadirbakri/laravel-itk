@@ -112,7 +112,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/relation_code/table') }}",
+        ajax: "{{ url('personnel/relation_code/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -128,7 +128,7 @@
 
     $('#relation_code_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/relation_code/detail_data') }}", { 'relation_code' : data.relation_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/relation_code/detail_data') }}", { 'relation_code' : data.relation_code }, "GET", "iframe_dashboard");
     });
     
   });

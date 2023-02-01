@@ -190,7 +190,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/skill/table') }}",
+        ajax: "{{ url('personnel/skill/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -221,7 +221,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/skill/table') }}",
+            ajax: "{{ url('personnel/skill/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -249,17 +249,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/skill') }}";
+        window.location = "{{ url('personnel/skill') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/skill/detail_data') }}", { 'skillCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/skill/detail_data') }}", { 'skillCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/skill/detail_data') }}", { 'skillCode' : data[0].skillCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/skill/detail_data') }}", { 'skillCode' : data[0].skillCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -270,7 +270,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/skill/status') }}",
+                url: "{{ url('personnel/skill/status') }}",
                 type: "GET",
                 data: { 'skillCode' : data[0].skillCode, 'skillName' : data[0].skillName, 'func' : 'A' },
                 success: function(response) {
@@ -278,7 +278,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/skill') }}";
+                            window.location = "{{ url('personnel/skill') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -306,7 +306,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/skill/status') }}",
+                url: "{{ url('personnel/skill/status') }}",
                 type: "GET",
                 data: { 'skillCode' : data[0].skillCode, 'skillName' : data[0].skillName, 'func' : 'D' },
                 success: function(response) {
@@ -314,7 +314,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/skill') }}";
+                            window.location = "{{ url('personnel/skill') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -340,7 +340,7 @@
 
     $('#skill_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/skill/detail_data') }}", { 'skillCode' : data.skillCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/skill/detail_data') }}", { 'skillCode' : data.skillCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

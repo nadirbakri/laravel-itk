@@ -72,7 +72,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('personel/evaluation_form') }}" target="iframe_dashboard">
+            <a href="{{ url('personnel/evaluation_form') }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_evaluation_code.list_detail') }}</span>
             </a>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="col-6"></div>
                     <div class="col-3">
-                        <a class="btn btn-primary" href="{{ url('personel/evaluation_form') }}"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/evaluation_form') }}"
                             target="iframe_dashboard" name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_evaluation_code.btn_cancel') }}
                         </a>
@@ -333,7 +333,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url: "{{ url('personel/evaluation_form/evaluation_aspect/table') }}",
+                    url: "{{ url('personnel/evaluation_form/evaluation_aspect/table') }}",
                     data: {
                         formCode: formCode
                     }
@@ -412,7 +412,7 @@
                     bInfo: false,
                     bLengthChange: false,
                     ajax: {
-                        url: "{{ url('personel/evaluation_form/predicate/table') }}",
+                        url: "{{ url('personnel/evaluation_form/predicate/table') }}",
                         data: {
                             formCode: d.formCode,
                             sequenceNo: d.sequenceNo
@@ -433,7 +433,7 @@
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personel/evaluation_form') }}";
+            window.location = "{{ url('personnel/evaluation_form') }}";
         })
 
         $('#modal_add_evaluated_aspect').on('hide.bs.modal', function () {
@@ -479,7 +479,7 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.ajax({
-                    url: "{{ url('personel/evaluation_form/evaluated_aspect/remove') }}",
+                    url: "{{ url('personnel/evaluation_form/evaluated_aspect/remove') }}",
                     type: "GET",
                     data: {
                         'formCode': data[0].formCode,
@@ -574,7 +574,7 @@
                     });
 
                     $.ajax({
-                        url: "{{ url('personel/evaluation_form/proses') }}",
+                        url: "{{ url('personnel/evaluation_form/proses') }}",
                         type: "POST",
                         data: $('#evaluation_form').serialize(),
                         success: function (response) {
@@ -589,7 +589,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personel/evaluation_form') }}";
+                                        "{{ url('personnel/evaluation_form') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
@@ -670,7 +670,7 @@
                     });
 
                     $.ajax({
-                        url: "{{ url('personel/evaluation_form/evaluted_aspect/proses') }}",
+                        url: "{{ url('personnel/evaluation_form/evaluted_aspect/proses') }}",
                         type: "POST",
                         data: $('#evaluated_aspect_form').serialize(),
                         success: function (response) {

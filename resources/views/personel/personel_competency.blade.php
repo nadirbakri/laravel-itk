@@ -179,7 +179,7 @@
     $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
     $.ajax({
-            url: "{{ url('personel/report/level/check') }}",
+            url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
                 var arrLevel = [];
@@ -215,7 +215,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/competency/table') }}",
+        ajax: "{{ url('personnel/competency/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -250,7 +250,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/competency/table') }}",
+            ajax: "{{ url('personnel/competency/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -282,7 +282,7 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/competency') }}";
+        window.location = "{{ url('personnel/competency') }}";
     });
 
     $('#competency_table tbody').on('click', 'input[type="checkbox"]', function(e){
@@ -305,7 +305,7 @@
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/competency/detail_data') }}", { 'employeeNo' : data[0].employeeNo }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/competency/detail_data') }}", { 'employeeNo' : data[0].employeeNo }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -314,7 +314,7 @@
 
     $('#competency_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/competency/detail_data') }}", { 'employeeNo' : data.employeeNo }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/competency/detail_data') }}", { 'employeeNo' : data.employeeNo }, "GET", "iframe_dashboard");
     });
     
   });

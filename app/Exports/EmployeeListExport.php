@@ -108,12 +108,14 @@ class EmployeeListExport implements FromView, ShouldAutoSize
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
             }else{
-                return view('error.bad_request');
+                return redirect()->back() ->with('alert', 'Error!');
+                // return view('error.bad_request');
             }
         }
 

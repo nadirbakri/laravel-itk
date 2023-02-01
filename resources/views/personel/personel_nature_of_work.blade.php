@@ -194,7 +194,7 @@
         serverSide: true,
         orderCellsTop: true,
         ajax: {
-            url: "{{ url('personel/nature_of_work/table') }}",
+            url: "{{ url('personnel/nature_of_work/table') }}",
             cache: false
         },
         error: function(jqXHR, ajaxOptions, thrownError) {
@@ -232,7 +232,7 @@
             processing: true,
             serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('personel/nature_of_work/table') }}",
+            ajax: "{{ url('personnel/nature_of_work/table') }}",
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -260,17 +260,17 @@
     }
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personel/nature_of_work') }}";
+        window.location = "{{ url('personnel/nature_of_work') }}";
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personel/nature_of_work/detail_data') }}", { 'workNatureCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/nature_of_work/detail_data') }}", { 'workNatureCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personel/nature_of_work/detail_data') }}", { 'workNatureCode' : data[0].workNatureCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/nature_of_work/detail_data') }}", { 'workNatureCode' : data[0].workNatureCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
@@ -281,7 +281,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/nature_of_work/status') }}",
+                url: "{{ url('personnel/nature_of_work/status') }}",
                 type: "GET",
                 data: { 'workNatureCode' : data[0].workNatureCode, 'workNatureName' : data[0].workNaturename, 'func' : 'A' },
                 success: function(response) {
@@ -289,7 +289,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/nature_of_work') }}";
+                            window.location = "{{ url('personnel/nature_of_work') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -317,7 +317,7 @@
         var data = table.rows('.selected').data();
         if(data.count() > 0){
             $.ajax({
-                url: "{{ url('personel/nature_of_work/status') }}",
+                url: "{{ url('personnel/nature_of_work/status') }}",
                 type: "GET",
                 data: { 'workNatureCode' : data[0].workNatureCode, 'workNatureName' : data[0].workNaturename, 'func' : 'D' },
                 success: function(response) {
@@ -325,7 +325,7 @@
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response.message);
                         setTimeout(function(){ 
-                            window.location = "{{ url('personel/nature_of_work') }}";
+                            window.location = "{{ url('personnel/nature_of_work') }}";
                         }, 3000);
                     }else{
                         $('#notification_error').modal('show');
@@ -354,7 +354,7 @@
 
     $('#nature_of_work_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/nature_of_work/detail_data') }}", { 'workNatureCode' : data.workNatureCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/nature_of_work/detail_data') }}", { 'workNatureCode' : data.workNatureCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });

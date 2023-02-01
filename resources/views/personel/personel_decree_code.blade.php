@@ -112,7 +112,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/decree_code/table') }}",
+        ajax: "{{ url('personnel/decree_code/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -128,7 +128,7 @@
 
     $('#decree_code_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/decree_code/detail_data') }}", { 'decree_code' : data.decree_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/decree_code/detail_data') }}", { 'decree_code' : data.decree_code }, "GET", "iframe_dashboard");
     });
     
   });

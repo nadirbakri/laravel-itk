@@ -111,7 +111,7 @@
         processing: true,
         serverSide: true,
         orderCellsTop: true,
-        ajax: "{{ url('personel/insurance_code/table') }}",
+        ajax: "{{ url('personnel/insurance_code/table') }}",
         error: function(jqXHR, ajaxOptions, thrownError) {
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
@@ -126,7 +126,7 @@
 
     $('#insurance_code_table tbody').on('click', 'tr', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personel/insurance_code/detail_data') }}", { 'insurance_code' : data.insurance_code }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/insurance_code/detail_data') }}", { 'insurance_code' : data.insurance_code }, "GET", "iframe_dashboard");
     });
     
   });
