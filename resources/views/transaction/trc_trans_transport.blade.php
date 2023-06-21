@@ -564,7 +564,7 @@
                         'processDate' : processed_date,
                         'type' : reimbursement_type,
                         'businessUnit' : business_unit,
-                        'directSuperiorID' : direct_superior
+                        'employeeNo' : direct_superior
 
                     }
                 },

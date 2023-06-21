@@ -382,9 +382,7 @@
                         </table>
                     </div>
                 </div>
-
-                    
-            </div>
+             </div>
         </form>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
@@ -426,7 +424,6 @@
 <script>
     $(document).ready(function () {
         $('table.display').DataTable();
-
         // $('#exampletwo').DataTable().destroy();
         // load_data_approval_table();
     });

@@ -21,10 +21,10 @@
 			<tr>
 				<th>No</th>
 				{{-- <th>Request Date</th> --}}
+                <th>Status</th>
 				<th>Ticket Number</th>
 				<th>Employee Name</th>
 				<th>Customer Name</th>
-                <th>Status</th>
                 <th>Claim Type</th>
                 {{-- <th>SPPD Type</th> --}}
                 <th>Destination</th>
@@ -47,10 +47,10 @@
 				<tr>
 					{{-- @if($value->responseBusinessTrip =! null) --}}
 					<td>{{ $no++ }}</td>
+					<td>{{ $value2->status }}</td>
 					<td>{{ $value2->ticketNo }}</td>
 					<td>{{ $value2->fullnameRequester }}</td>
 					<td>{{ $value2->customerName }}</td>
-					<td>{{ $value2->status }}</td>
 					<td>{{ $value3->typeClaim }}</td>
 					{{-- <td></td> --}}
 					<td>{{ $value2->destination }}</td>
@@ -58,8 +58,10 @@
 					<td>{{ $value2->projectName }}</td>
 					{{-- <td></td> --}}
 					<td>{{ $value2->totalClaimAmount }}</td>
+					<td>{{ $value2->totalClaimAmount }}</td>
+					<td>{{ $value2->total }}</td>
 					{{-- <td></td>
-					<td></td> --}}
+					{{-- <td></td> --}}
 					<td>{{ $value3->sequence }}</td>
 					<td>{{ $value2->purpose }}</td>
 				</tr>
