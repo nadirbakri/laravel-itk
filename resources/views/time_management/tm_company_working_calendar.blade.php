@@ -163,7 +163,7 @@
             </button>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_company_working_calendar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_company_working_calendar"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -339,7 +339,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "desc" ]],
             columns: [
                 {
@@ -375,7 +375,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "desc" ]],
                 columns: [
                     {
@@ -401,6 +401,23 @@
                 }
             });
         }
+
+        $('#company_working_calendar_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#company_working_calendar_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
@@ -451,10 +468,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Location Code</b></div>' +
-                        '<div class="col-6"><b>Location Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.locationCode + '</div>' +
                         '<div class="col-6">' + data.data.locationName + '</div>' +
                         '</div>');
@@ -462,6 +475,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#location').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -513,10 +538,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-12"><b>Calendar Type</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         // '<div class="col-6">' + data.data.comGenCode + '</div>' +
                         '<div class="col-12">' + data.data.value + '</div>' +
                         '</div>');

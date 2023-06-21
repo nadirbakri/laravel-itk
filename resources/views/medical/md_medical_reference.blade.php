@@ -975,7 +975,7 @@
                         '<div class="col-6"><b>Currency Code</b></div>' +
                         '<div class="col-6"><b>Description</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

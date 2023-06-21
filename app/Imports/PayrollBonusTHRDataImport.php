@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -15,7 +17,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
 
-class PayrollBonusTHRDataImport implements ToCollection, WithValidation, WithStartRow
+class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -41,6 +43,19 @@ class PayrollBonusTHRDataImport implements ToCollection, WithValidation, WithSta
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+
+            Validator::make($rows->toArray(), [
+                '*.0' => 'required|not_in:NULL',
+                '*.2' => 'required|not_in:NULL',
+                '*.3' => 'required|not_in:NULL'
+            ], [
+                '*.0.required' => 'Employee No is Required',
+                '*.0.not_in' => 'Employee No cannot be Null',
+                '*.2.required' => 'Flag Type is Required',
+                '*.2.not_in' => 'Flag Type cannot be Null',
+                '*.3.required' => 'Process Date is Required',
+                '*.3.not_in' => 'Process Date cannot be Null'
+            ])->validate();
 
             foreach ($rows as $row) {
                 $param[] = [
@@ -69,8 +84,14 @@ class PayrollBonusTHRDataImport implements ToCollection, WithValidation, WithSta
             $response = $client->put(env('API_URL') . '/importfromexcel/updatebonusthr',
                 ['body' => json_encode($param)]
             );
+        } catch (ValidationException $e) {
+            $validationErrors = $e->validator->errors()->messages();
+            $errorValidate = array_shift($validationErrors);
+            $this->arrResult[]['message'] = array_shift($errorValidate);
+            return $this->arrResult;
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            $this->arrResult[]['message'] = $response;
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -81,36 +102,6 @@ class PayrollBonusTHRDataImport implements ToCollection, WithValidation, WithSta
         }
 
         $this->arrResult[] = json_decode($response->getBody()->getContents());
-    }
-
-    public function rules(): array
-    {
-        return [
-            '0' => 'required|not_in:NULL',
-            '2' => 'required|not_in:NULL',
-            '3' => 'required|not_in:NULL',
-        ];
-    }
-
-    public function customValidationMessages()
-    {
-        return [
-            '0.required' => 'Employee No is Required',
-            '0.not_in' => 'Employee No cannot be Null',
-            '2.required' => 'Flag Type is Required',
-            '2.not_in' => 'Flag Type cannot be Null',
-            '3.required' => 'Process Date is Required',
-            '3.not_in' => 'Process Date cannot be Null'
-        ];
-    }
-
-    public function customValidationAttributes()
-    {
-        return [
-            '0' => 'Employee No',
-            '2' => 'Flag Type',
-            '3' => 'Process Date'
-        ];
     }
 
     public function startRow(): int

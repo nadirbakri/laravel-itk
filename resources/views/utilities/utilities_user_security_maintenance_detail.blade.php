@@ -297,7 +297,7 @@
             </div> -->
         </div>
     </div>
-    <div class="modal fade" id="modal_add_level" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_level"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -360,7 +360,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_company" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_company"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -470,7 +470,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_module" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_module"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -641,7 +641,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 order: [
                     [1, 'asc']
                 ],
@@ -674,6 +674,23 @@
             });
         }
 
+        $('#level_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#personal_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_company(userID = '') {
             company_table = $('#company_table').DataTable({
                 processing: true,
@@ -690,7 +707,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 columns: [{
                         orderable: false,
                         targets: 0,
@@ -736,6 +753,23 @@
             });
         }
 
+        $('#company_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#company_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_module(userID = '') {
             module_table = $('#module_table').DataTable({
                 processing: true,
@@ -752,7 +786,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 columns: [{
                         orderable: false,
                         targets: 0,
@@ -778,6 +812,23 @@
             });
         }
 
+        $('#module_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#module_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_level_authorization(levelType = '', levelCodeVal = {}) {
             level_auth_table = $('#level_authorization_table').DataTable({
                 processing: true,
@@ -796,7 +847,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 columns: [{
                         orderable: false,
                         targets: 0,
@@ -1077,7 +1128,7 @@
                         '<div class="col-6"><b>Company Code</b></div>' +
                         '<div class="col-6"><b>Company Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1190,7 +1241,7 @@
                         '<div class="col-6"><b>Module ID</b></div>' +
                         '<div class="col-6"><b>Module Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1261,7 +1312,7 @@
                         '<div class="col-6"><b>Code</b></div>' +
                         '<div class="col-6"><b>Description</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

@@ -281,7 +281,7 @@
         //     '<div class="col-6"><b>Employee No</b></div>' +
         //     '<div class="col-6"><b>Employee Name</b></div>' +
         //     '</div>';
-        //     $('.select2-search').append(html);
+        //     $('.select2-search--dropdown').append(html);
         // });
 
         $('#select').focus(function (event) {
@@ -396,10 +396,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.employeeNo + '</div>' +
                         '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
@@ -408,12 +404,24 @@
                 }
             }
 
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
             // $(field).on('select2:open', function (e) {
             //     html = '<div class="row header-select">' +
             //         '<div class="col-6"><b>Employee No</b></div>' +
             //         '<div class="col-6"><b>Employee Name</b></div>' +
             //         '</div>';
-            //     $('.select2-search').append(html);
+            //     $('.select2-search--dropdown').append(html);
             // });
 
             // $(field).on('select2:close', function (event) {
@@ -428,7 +436,7 @@
             //             '<div class="col-6"><b>Employee No</b></div>' +
             //             '<div class="col-6"><b>Full Name</b></div>' +
             //             '</div>';
-            //         $('.select2-search').append(html);
+            //         $('.select2-search--dropdown').append(html);
             //         headerIsAppend = true;
             //     }
             // });
@@ -485,10 +493,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
                         '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
                         '</div>');
@@ -497,17 +501,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Group Authorize Code</b></div>' +
-            //             '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -561,10 +565,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Position Code</b></div>' +
-                        '<div class="col-6"><b>Position Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.positionCode + '</div>' +
                         '<div class="col-6">' + data.data.positionName + '</div>' +
                         '</div>');
@@ -573,17 +573,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $('#position').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Position Code</b></div>' +
-            //             '<div class="col-6"><b>Position Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $('#position').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -637,10 +637,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Location Code</b></div>' +
-                        '<div class="col-6"><b>Location Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.locationCode + '</div>' +
                         '<div class="col-6">' + data.data.locationName + '</div>' +
                         '</div>');
@@ -649,17 +645,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $('#location').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Location Code</b></div>' +
-            //             '<div class="col-6"><b>Location Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $('#location').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -711,10 +707,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Ranking Code</b></div>' +
-                        '<div class="col-6"><b>Ranking Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.rankingCode + '</div>' +
                         '<div class="col-6">' + data.data.rankingName + '</div>' +
                         '</div>');
@@ -723,17 +715,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $('#ranking').on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Ranking Code</b></div>' +
-            //             '<div class="col-6"><b>Ranking Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $('#ranking').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Ranking Code</b></div>' +
+                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -785,10 +777,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Level Code</b></div>' +
-                        '<div class="col-6"><b>Level Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.levelCode + '</div>' +
                         '<div class="col-6">' + data.data.levelName + '</div>' +
                         '</div>');
@@ -797,17 +785,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Level Code</b></div>' +
-            //             '<div class="col-6"><b>Level Name</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -832,7 +820,7 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            'levelType': levelType
+                            levelType: levelType
                         };
                     },
                     processResults: function (data) {

@@ -168,27 +168,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/account') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.account') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/spt_format') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.spt_format') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
 							<a href="{{ url('payroll/salary_component_data') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.salary_component_data') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/slip_format') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.slip_format') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -198,9 +180,27 @@
 							</a>
 						</div>
 						<div class="col col-3">
+							<a href="{{ url('payroll/slip_format') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.slip_format') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/spt_format') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.spt_format') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
 							<a href="{{ url('payroll/multi_cost_center') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.multi_cost_center') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/account') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-maintenance.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.account') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -228,6 +228,65 @@
 					<div class="row div-child-data">
 					</div>
 					<div class="div-head-data">
+						<span class="head-title-text">{{ __('payroll.monthly_process') }}</span>
+					</div>
+					<div class="row div-child-data">
+						<div class="col col-3">
+							<a href="{{ url('payroll/absenteeism_overtime_calculation_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.absenteeism_overtime_calculation_process') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/salary_calculation_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.salary_calculation_process') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/tax_calculation_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.tax_calculation_process') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/transfer_data_to_bank') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.transfer_data_to_bank') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/journal_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.journal_process') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/monthly_payroll_closing_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.monthly_payroll_closing_process') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/monthly_system_closing') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.monthly_system_closing') }}</span>
+							</a>
+						</div>
+						<!-- <div class="col col-3">
+							<a href="{{ url('payroll/periodical_update_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.periodical_update_process') }}</span>
+							</a>
+						</div> -->
+						<!-- <div class="col col-3">
+							<a href="{{ url('payroll/overtime_calculation_process') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.overtime_calculation_process') }}</span>
+							</a>
+						</div> -->
+					</div>
+					<div class="div-head-data">
 						<span class="head-title-text">{{ __('payroll.yearly_process') }}</span>
 					</div>
 					<div class="row div-child-data">
@@ -250,65 +309,6 @@
 							</a>
 						</div>
 					</div>
-					<div class="div-head-data">
-						<span class="head-title-text">{{ __('payroll.monthly_process') }}</span>
-					</div>
-					<div class="row div-child-data">
-						<div class="col col-3">
-							<a href="{{ url('payroll/monthly_payroll_closing_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.monthly_payroll_closing_process') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/monthly_system_closing') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.monthly_system_closing') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/transfer_data_to_bank') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.transfer_data_to_bank') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/periodical_update_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.periodical_update_process') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/overtime_calculation_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.overtime_calculation_process') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/journal_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.journal_process') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/salary_calculation_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.salary_calculation_process') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/tax_calculation_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.tax_calculation_process') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/absenteeism_overtime_calculation_process') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-process.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.absenteeism_overtime_calculation_process') }}</span>
-							</a>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -326,48 +326,6 @@
 				<div class="card-block">
 					<div class="row div-child-data">
 						<div class="col col-3">
-							<a href="{{ url('payroll/dumtk') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.dumtk') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/monthly_jamsostek_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.monthly_jamsostek_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/export_sipp_online') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.export_sipp_online_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/loan_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.loan_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/journal_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.journal_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/bonus_thr_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.bonus_thr_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/export_data_kepesertaan_bpjs_tk_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.export_data_kepesertaan_bpjs_tk_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
 							<a href="{{ url('payroll/periodical_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.periodical_report') }}</span>
@@ -380,15 +338,9 @@
 							</a>
 						</div>
 						<div class="col col-3">
-							<a href="{{ url('payroll/severance_report') }}" target="iframe_dashboard">
+							<a href="{{ url('payroll/journal_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.severance_report') }}</span>
-							</a>
-						</div>
-						<div class="col col-3">
-							<a href="{{ url('payroll/salary_historical_report') }}" target="iframe_dashboard">
-								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
-								<span class="child-title-text">{{ __('payroll.salary_historical_report') }}</span>
+								<span class="child-title-text">{{ __('payroll.journal_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">
@@ -398,9 +350,58 @@
 							</a>
 						</div>
 						<div class="col col-3">
+							<a href="{{ url('payroll/severance_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.severance_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/bonus_thr_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.bonus_thr_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/loan_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.loan_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/monthly_jamsostek_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.monthly_jamsostek_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/salary_historical_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.salary_historical_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
 							<a href="{{ url('payroll/retroactive_report') }}" target="iframe_dashboard">
 								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
 								<span class="child-title-text">{{ __('payroll.retroactive_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/dumtk') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.dumtk') }}</span>
+							</a>
+						</div>
+						
+						<div class="col col-3">
+							<a href="{{ url('payroll/export_sipp_online') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.export_sipp_online_report') }}</span>
+							</a>
+						</div>
+						<div class="col col-3">
+							<a href="{{ url('payroll/export_data_kepesertaan_bpjs_tk_report') }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/payroll/submenu-report.svg') }}" alt="Child payroll">
+								<span class="child-title-text">{{ __('payroll.export_data_kepesertaan_bpjs_tk_report') }}</span>
 							</a>
 						</div>
 						<div class="col col-3">

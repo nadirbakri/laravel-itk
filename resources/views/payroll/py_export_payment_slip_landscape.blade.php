@@ -91,56 +91,76 @@
                             <td colspan="3" style="font-size: 22px; font-weight: 600;">Allowance</td> 
                         </tr>
                         <br>
+                        @if($value->allowance1Label != null)
                         <tr>
                             <td width="40%">{{ ($value->allowance1Label != null) ? $value->allowance1Label : 'Allowance 1' }}</td>
                             <td width="15%" style="text-align:center;">IDR</td>
                             <td width="30%" style="text-align:right;">{{ number_format($value->allowance1Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance2Label != null)
                         <tr>
                             <td>{{ ($value->allowance2Label != null) ? $value->allowance2Label : 'Allowance 2' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance2Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance3Label != null)
                         <tr>
                             <td>{{ ($value->allowance3Label != null) ? $value->allowance3Label : 'Allowance 3' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance3Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance4Label != null)
                         <tr>
                             <td>{{ ($value->allowance4Label != null) ? $value->allowance4Label : 'Allowance 4' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance4Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance5Label != null)
                         <tr>
                             <td>{{ ($value->allowance5Label != null) ? $value->allowance5Label : 'Allowance 5' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance5Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance6Label != null)
                         <tr>
                             <td>{{ ($value->allowance6Label != null) ? $value->allowance6Label : 'Allowance 6' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance6Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance7Label != null)
                         <tr>
                             <td>{{ ($value->allowance7Label != null) ? $value->allowance7Label : 'Allowance 7' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance3Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance8Label != null)
                         <tr>
                             <td>{{ ($value->allowance8Label != null) ? $value->allowance8Label : 'Allowance 8' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance3Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance9Label != null)
                         <tr>
                             <td>{{ ($value->allowance9Label != null) ? $value->allowance9Label : 'Allowance 9' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance9Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->allowance10Label != null)
                         <tr>
                             <td>{{ ($value->allowance10Label != null) ? $value->allowance10Label : 'Allowance 10' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->allowance10Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
                         <tr>
                             <td>Total Allowance</td>
                             <td style="text-align:center; border-top: 1px solid black;">IDR</td>
@@ -156,56 +176,76 @@
                             <td colspan="3" style="font-size: 22px; font-weight: 600; padding-left: 10px;">Deduction</td>    
                         </tr>
                         <br>
+                        @if($value->deduction1Label != null)
                         <tr>
                             <td width="40%" style="padding-left: 10px;">{{ ($value->deduction1Label != null) ? $value->deduction1Label : 'Deduction 1' }}</td>
                             <td width="15%" style="text-align:center;">IDR</td>
                             <td width="30%" style="text-align:right;">{{ number_format($value->deduction1Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction2Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction2Label != null) ? $value->deduction2Label : 'Deduction 2' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction2Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction3Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction3Label != null) ? $value->deduction3Label : 'Deduction 3' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction3Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction4Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction4Label != null) ? $value->deduction4Label : 'Deduction 4' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction4Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction5Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction5Label != null) ? $value->deduction5Label : 'Deduction 5' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction5Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction6Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction6Label != null) ? $value->deduction6Label : 'Deduction 6' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction6Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction7Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction7Label != null) ? $value->deduction7Label : 'Deduction 7' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction7Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction8Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction8Label != null) ? $value->deduction8Label : 'Deduction 8' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction8Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction9Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction9Label != null) ? $value->deduction9Label : 'Deduction 9' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction9Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
+                        @if($value->deduction10Label != null)
                         <tr>
                             <td style="padding-left: 10px;">{{ ($value->deduction10Label != null) ? $value->deduction10Label : 'Deduction 10' }}</td>
                             <td style="text-align:center;">IDR</td>
                             <td style="text-align:right;">{{ number_format($value->deduction10Field, 2, ',', '.') }}</td></tr>
                         </tr>
+                        @endif
                         <tr>
                             <td style="padding-left: 10px;">Total Deduction</td>
                             <td style="text-align:center; border-top: 1px solid black;">IDR</td>

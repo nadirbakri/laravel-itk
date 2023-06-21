@@ -23,6 +23,9 @@ return [
     'audit_trail' => 'Jejak Audit',
     'change_employee_no' => 'Perubahan No Karyawan',
     'news_master' => 'Berita Master',
+    'announcement' => 'Pengumuman',
+    'company_master' => 'Perusahaan Master',
+    'process_user_id' => 'Proses Identitas Pengguna dan Kata Sandi',
     // 'export_personal_data' => 'Unggah Data personal',
     'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 

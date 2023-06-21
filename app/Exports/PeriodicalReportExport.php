@@ -69,14 +69,6 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 'sessionUserID' => Session::get('userID')
             ];
 
-            $paramGetFormat = [
-                'companyCode' => Session::get('companyCode'),
-                'reportCode' => $this->reportName,
-                'languageCode' =>App::getLocale(),
-                'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
-            ];
-
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
                 $param['employeeNoFrom'] = $this->employeeNoFrom;
                 $param['employeeNoTo'] = $this->employeeNoTo;
@@ -87,9 +79,9 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 $param['costCenterTo'] = $this->costCenterCodeTo;
             }
 
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
+            if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
+                $param['groupAuthorizedCodeFrom'] = (int) $this->groupAuthorizedCodeFrom;
+                $param['groupAuthorizedCodeTo'] = (int) $this->groupAuthorizedCodeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
@@ -137,20 +129,17 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
             }
 
 
-            var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/prretroactivereport/getretroactivereport', [
+            // var_dump(json_encode($param));
+            $response = $client->post(env('API_URL').'/prperiodicalreport/getperiodicalreport', [
                 'body' => json_encode($param)
             ]);
 
             $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
-
-            $responseGetFormat = $client->post(env('API_URL').'/prreportformat/getreportformatlist', [
-                'body' => json_encode($paramGetFormat)
-            ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -162,18 +151,17 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
-        $arrFormat = json_decode($responseGetFormat->getBody()->getContents());
 
-        // var_dump($arrFormat->dataListSet);
+        // dd($arrResult->dataListSet);
 
-        // if($arrResult->dataListSet == null){
-        //     return view('payroll.py_export_periodical_report_excel', [
-        //         'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_format' => $arrFormat->dataListSet, 'data_period' => $this->period
-        //     ]);
-        // }else{
-        //     return view('payroll.py_export_periodical_report_excel', [
-        //         'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_format' => $arrFormat->dataListSet, 'data_period' => $this->period
-        //     ]); 
-        // }
+        if($arrResult->dataListSet == null){
+            return view('payroll.py_export_periodical_report_excel', [
+                'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
+            ]);
+        }else{
+            return view('payroll.py_export_periodical_report_excel', [
+                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
+            ]); 
+        }
     }
 }

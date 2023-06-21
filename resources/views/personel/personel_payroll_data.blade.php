@@ -117,7 +117,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         columns: [
             {data: 'employee_no', name: 'employee_no'},
             {data: 'employee_name', name: 'employee_name'},

@@ -32,7 +32,7 @@
 
 <body>
 	<div class="div-time_management">
-        <img src="{{ public_path('pictures/500.svg') }}" alt="Toogle">
+        <img src="{{ asset('pictures/500.svg') }}" alt="Toogle">
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6" style="text-align: center; font-size: 1.5rem; font-family: Montserrat;">{{ __('error_page.subjudul') }}</div>

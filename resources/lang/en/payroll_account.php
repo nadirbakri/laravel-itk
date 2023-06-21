@@ -15,6 +15,8 @@ return [
     'label_account_description' => 'Account Description',
     'label_reference' => 'Reference',
     'label_record_status' => 'Record Status',
+    'label_grouping_one' => 'Grouping 1',
+    'label_grouping_two' => 'Grouping 2',
     'account_no_required' => 'Account No Required',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',

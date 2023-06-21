@@ -503,7 +503,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lfrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     // {
@@ -620,7 +620,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -828,7 +828,8 @@
                         data: function (params) {
                             return {
                                 _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 'levelType' : '1' 
+                                search: params.term, 
+                                levelType : '1' 
     
                             };
                         },

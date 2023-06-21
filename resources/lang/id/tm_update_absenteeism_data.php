@@ -15,6 +15,7 @@
         'label_column_i' => 'Column I : Kode Lembur',
         'label_column_j' => 'Column J : Jam Lembur',
         'btn_process' => 'Proses',
+        'btn_download_template' => 'Unduh Templat',
         'alert_success' => 'Sukses !'
 ]
 

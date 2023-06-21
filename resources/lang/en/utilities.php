@@ -23,6 +23,9 @@ return [
     'audit_trail' => 'Audit Trail',
     'change_employee_no' => 'Change Employee No',
     'news_master' => 'News Master',
+    'announcement' => 'Announcement',
+    'company_master' => 'Company Master',
+    'process_user_id' => 'Process User ID and Password',
     // 'export_personal_data' => 'Export Personal Data',
     'dashboard_admin_ess' => 'Dashboard (Admin & ESS)',
 

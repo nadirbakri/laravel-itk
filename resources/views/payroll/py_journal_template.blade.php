@@ -204,7 +204,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
@@ -227,6 +227,23 @@
                 }
             });
         }
+
+        $('#journal_template_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#journal_template_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $("#toolbar-new").on('click', function() {
             $.redirect("{{ url('payroll/journal_template/detail_data') }}", { 'journalCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");

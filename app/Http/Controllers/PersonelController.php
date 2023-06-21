@@ -12,6 +12,22 @@ use App\Exports\EmployeeCardExport;
 use App\Exports\PersonalDataExport;
 use App\Exports\PersonalDataTemplateExport;
 use App\Imports\PersonalDataImport;
+use App\Imports\PersonalDataSheetImport;
+use App\Exports\MasterDataTemplateExport;
+use App\Imports\LevelDataImport;
+use App\Imports\CostCenterDataImport;
+use App\Imports\LocationDataImport;
+use App\Imports\PositionDataImport;
+use App\Imports\RankingDataImport;
+use App\Imports\GradeDataImport;
+use App\Imports\GroupDataImport;
+use App\Imports\NatureofWorkDataImport;
+use App\Imports\InstitutionDataImport;
+use App\Imports\MajorDataImport;
+use App\Imports\CityDataImport;
+use App\Imports\ZipCodeDataImport;
+use App\Imports\AccountDataImport;
+use App\Imports\JournalTemplateDataImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -75,6 +91,11 @@ class PersonelController extends Controller
     public function pageImportExportPersonel()
     {
          return view('personel.personel_import_export_personal_data');
+    }
+
+    public function pageImportMasterDataPersonel()
+    {
+         return view('personel.personel_import_master_data');
     }
 
     public function pageEmployeeMutationPersonel()
@@ -2176,17 +2197,43 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/getuserdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
+            if ($request->employeeNo !== null) {
+                $response = $client->post(env('API_URL') . '/getuserdetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());  
+
+                if($arrResult->dataListSet == null){
+                    $data = [];
+                }
+                else {
+                    $data = $arrResult->dataListSet;
+                    // var_dump($data[0]->photo);
+                    if ($data[0]->photo == null){
+                        $filename = 'profile-picture.png';
+                    }
+                    else {
+                        $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                    }
+                }
+
+                return view('personel.personel_employee_performance_detail', ['data' => $data, 'photo' => $filename, 'func' => $request->func]);
+            }
+
+            else {
+                $filename = 'profile-picture.png';
+                return view('personel.personel_employee_performance_detail', ['data' => '', 'photo' => $filename]);
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2217,17 +2264,43 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/getuserdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
+            if ($request->employeeNo !== null) {
+                $response = $client->post(env('API_URL') . '/getuserdetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());  
+
+                if($arrResult->dataListSet == null){
+                    $data = [];
+                }
+                else {
+                    $data = $arrResult->dataListSet;
+                    // var_dump($data[0]->photo);
+                    if ($data[0]->photo == null){
+                        $filename = 'profile-picture.png';
+                    }
+                    else {
+                        $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                    }
+                }
+
+                return view('personel.personel_work_detail_detail', ['data' => $data, 'photo' => $filename, 'func' => $request->func]);
+            }
+
+            else {
+                $filename = 'profile-picture.png';
+                return view('personel.personel_work_detail_detail', ['data' => '', 'photo' => $filename]);
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2238,16 +2311,6 @@ class PersonelController extends Controller
                 return view('error.bad_request');
             }
         }
-
-        $arrResult = json_decode($response->getBody()->getContents());  
-
-        if($arrResult->dataListSet == null){
-            $data = [];
-        }else{
-            $data = $arrResult->dataListSet;
-        }
-
-        return view('personel.personel_work_detail_detail', ['data' => $data, 'photo' => '']);
     }
 
     public function dataDetailCompetencyPersonel(Request $request)
@@ -4052,7 +4115,7 @@ class PersonelController extends Controller
         		'data' => $data_detail
         	);
 
-            dd($data);
+            // dd($data);
 
             return response()->json($data);
         }
@@ -5667,7 +5730,7 @@ class PersonelController extends Controller
 
             $param['userAkses'] = $datauserAkses;
 
-            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
+            if(!empty($request->level_format) && !is_null($request->level_format)){
                 for($i = 0; $i < $request->level_format; $i++){
                     $data_level[] = [
                         "companyCode" => Session::get('companyCode'),
@@ -5681,94 +5744,90 @@ class PersonelController extends Controller
                 $param['peMasterLevel'] = $data_level;
             }
 
-            if(!empty($request->id_no_info) && !is_null($request->id_no_info[0])){
-                $datapeMasterInfo = [
-                    'companyCode' => Session::get('companyCode'),
-                    'employeeNo' => $request->employee_no_info,
-                    "nickName" => $request->fullname_info,
-                    "bloodType" => $request->blood_type_info,
-                    "passportNo" => $request->passport_no_info,
-                    "passportDate" => $request->passport_date_info,
-                    "passportPlaceRegistration" => null,
-                    "passportExpiryDate" => null,
-                    "drivingLicenseMobilNo" => $request->driving_license_car_no_info,
-                    "drivingLicenseMobilType" => $request->driving_license_car_type_info,
-                    "drivingLicenseMobilNoDate" => $request->driving_license_car_date_info,
-                    "drivingLicenseMobilNoPlaceRegistration" => $request->driving_license_car_registration_place_info,
-                    "drivingLicenseMobilNoExpiryDate" => $request->driving_license_car_expiry_date_info,
-                    "drivingLicenseMotorNo" => $request->driving_license_motorcycle_no_info,
-                    "drivingLicenseMotorNoDate" => $request->driving_license_motorcycle_date_info,
-                    "drivingLicenseMotorNoPlaceRegistration" => $request->driving_license_motorcycle_registration_place_info,
-                    "drivingLicenseMotorNoExpiryDate" => $request->driving_license_motorcycle_expiry_date_info,
-                    "employeeCardId" => $request->company_card_id_other,
-                    "idNo" => $request->id_no_info,
-                    "idNoDate" => null,
-                    "idNoPlaceRegistration" => null,
-                    "idNoExpiryDate" => null,                
-                    "homeAddress" => $request->address_home,
-                    "homeCityCode" => $request->city_select_home,
-                    "homeZipCode" => $request->zip_code_select_home,
-                    "homePhone" => $request->phone_number_home,
-                    "homeDistrictCode" => $request->district_select_home,
-                    "homeSubDistrictCode" => $request->subdistrict_select_home,
-                    "otherDistrictCode" => $request->district_select_other,
-                    "otherSubDistrictCode" => $request->subdistrict_select_other,
-                    "otherAddress" => $request->address_other,
-                    "otherCityCode" => $request->city_select_other,
-                    "otherZipCode" => $request->zip_code_select_other,
-                    "otherPhone" => $request->phone_number_other,
-                    "workAddress" => $request->address_work,
-                    "workCityCode" => $request->city_select_work,
-                    "workZipCode" => $request->zip_code_select_work,
-                    "workPhone" => $request->phone_number_work,
-                    "correspondenceAddress" => $request->address_correspondence,
-                    "correspondenceCityCode" => $request->city_select_correspondence,
-                    "correspondenceZipCode" => $request->zip_code_select_correspondence,
-                    "correspondencePhone" => $request->phone_number_correspondence,
-                    "personalHandphone" => $request->handphone_no_other,
-                    "personalEmailAddress" => $request->personal_email_other,
-                    "companyEmailAddress" => $request->company_email_other,
-                    "emergencyName" => $request->name_emergency,
-                    "emergencyAddress" => $request->address_emergency,
-                    "emergencyPhone" => $request->phone_number_emergency,
-                    "emergencyRelation" => $request->relation_emergency,
-                    "emergencyEmailAddress" => $request->email_emergency,
-                    "jobDesc" => null,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "sessionID" => 0,
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')
-                ];
-                $param['peMasterInfo'] = $datapeMasterInfo;
-            }
+            $datapeMasterInfo = [
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employee_no_info,
+                "nickName" => $request->fullname_info,
+                "bloodType" => $request->blood_type_info,
+                "passportNo" => $request->passport_no_info,
+                "passportDate" => $request->passport_date_info,
+                "passportPlaceRegistration" => null,
+                "passportExpiryDate" => null,
+                "drivingLicenseMobilNo" => $request->driving_license_car_no_info,
+                "drivingLicenseMobilType" => $request->driving_license_car_type_info,
+                "drivingLicenseMobilNoDate" => $request->driving_license_car_date_info,
+                "drivingLicenseMobilNoPlaceRegistration" => $request->driving_license_car_registration_place_info,
+                "drivingLicenseMobilNoExpiryDate" => $request->driving_license_car_expiry_date_info,
+                "drivingLicenseMotorNo" => $request->driving_license_motorcycle_no_info,
+                "drivingLicenseMotorNoDate" => $request->driving_license_motorcycle_date_info,
+                "drivingLicenseMotorNoPlaceRegistration" => $request->driving_license_motorcycle_registration_place_info,
+                "drivingLicenseMotorNoExpiryDate" => $request->driving_license_motorcycle_expiry_date_info,
+                "employeeCardId" => $request->company_card_id_other,
+                "idNo" => $request->id_no_info,
+                "idNoDate" => null,
+                "idNoPlaceRegistration" => null,
+                "idNoExpiryDate" => null,                
+                "homeAddress" => $request->address_home,
+                "homeCityCode" => $request->city_select_home,
+                "homeZipCode" => $request->zip_code_select_home,
+                "homePhone" => $request->phone_number_home,
+                "homeDistrictCode" => $request->district_select_home,
+                "homeSubDistrictCode" => $request->subdistrict_select_home,
+                "otherDistrictCode" => $request->district_select_other,
+                "otherSubDistrictCode" => $request->subdistrict_select_other,
+                "otherAddress" => $request->address_other,
+                "otherCityCode" => $request->city_select_other,
+                "otherZipCode" => $request->zip_code_select_other,
+                "otherPhone" => $request->phone_number_other,
+                "workAddress" => $request->address_work,
+                "workCityCode" => $request->city_select_work,
+                "workZipCode" => $request->zip_code_select_work,
+                "workPhone" => $request->phone_number_work,
+                "correspondenceAddress" => $request->address_correspondence,
+                "correspondenceCityCode" => $request->city_select_correspondence,
+                "correspondenceZipCode" => $request->zip_code_select_correspondence,
+                "correspondencePhone" => $request->phone_number_correspondence,
+                "personalHandphone" => $request->handphone_no_other,
+                "personalEmailAddress" => $request->personal_email_other,
+                "companyEmailAddress" => $request->company_email_other,
+                "emergencyName" => $request->name_emergency,
+                "emergencyAddress" => $request->address_emergency,
+                "emergencyPhone" => $request->phone_number_emergency,
+                "emergencyRelation" => $request->relation_emergency,
+                "emergencyEmailAddress" => $request->email_emergency,
+                "jobDesc" => null,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "sessionID" => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
+            ];
+            $param['peMasterInfo'] = $datapeMasterInfo;
 
-            if(!empty($request->insurance_code_insurance) && !is_null($request->insurance_code_insurance[0])){
-                $datapeMasterInsurance = [
-                    'companyCode' => Session::get('companyCode'),
-                    'employeeNo' => $request->employee_no_info,
-                    "insuranceCode" => $request->insurance_code_insurance,
-                    "insuranceClassCode" => $request->insurance_class_insurance,
-                    "insuranceStartDate" => $request->insurance_date_insurance,
-                    "insuranceEndDate" => null,
-                    "insurancePolicyNo" => $request->insurance_policy_no_insurance,
-                    "insuranceRemark" => $request->remarks_insurance,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')
-                ];
-                $param['peMasterInsurance'] = $datapeMasterInsurance;
-            }
+            $datapeMasterInsurance = [
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employee_no_info,
+                "insuranceCode" => $request->insurance_code_insurance,
+                "insuranceClassCode" => $request->insurance_class_insurance,
+                "insuranceStartDate" => $request->insurance_date_insurance,
+                "insuranceEndDate" => null,
+                "insurancePolicyNo" => $request->insurance_policy_no_insurance,
+                "insuranceRemark" => $request->remarks_insurance,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
+            ];
+            $param['peMasterInsurance'] = $datapeMasterInsurance;
 
-            if(!empty($request->fringe_benefits) && !is_null($request->fringe_benefits[0])){
+            if(isset($request->fringe_benefits)){
                 foreach($request->seq_no_fringe_benefit as $value){
                     // var_dump($request->fringe_benefits[$value]);
                     $datapeMasterFringeBenefit[] = [
@@ -5791,7 +5850,7 @@ class PersonelController extends Controller
                 $param['peMasterFringeBenefit'] = $datapeMasterFringeBenefit;
             }
 
-            if(!empty($request->family_name) && !is_null($request->family_name[0])){
+            if(isset($request->family_name)){
                 foreach($request->seq_no_family_dependent as $value){
                     $datapeMasterFamily[] = [
                         'companyCode' => Session::get('companyCode'),
@@ -5819,7 +5878,7 @@ class PersonelController extends Controller
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
 
-            // var_dump(json_encode($param));
+            dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
@@ -6105,6 +6164,7 @@ class PersonelController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'locationCode' => $request->location_code,
                             'locationName' => $request->location_name,
+                            'bpjsLocationCode' => $request->bpjs_location_code,
                             'latitudeTop' => 0,
                             'latitudeBot' => 0,
                             'longitudeTop' => 0,
@@ -6129,6 +6189,7 @@ class PersonelController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'locationCode' => $request->location_code,
                             'locationName' => $request->location_name,
+                            'bpjsLocationCode' => $request->bpjs_location_code,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
@@ -9753,7 +9814,7 @@ class PersonelController extends Controller
             return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->input_type, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
         }catch (\Maatwebsite\Excel\Validators\ValidationException $failures)
         {
-            dd($failures);
+            // dd($failures);
             // return view('welcome', compact('failures'));
         }
     }
@@ -10456,7 +10517,7 @@ class PersonelController extends Controller
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
             $import = new PersonalDataImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
             File::delete('file_excel/'.$nama_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
@@ -10470,5 +10531,125 @@ class PersonelController extends Controller
         }else{
             return $import->getArrResult();
         }
+    }
+
+    public function importMasterDataPersonel(Request $request)
+    {
+        try{
+            $file = $request->file('import_export');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            switch ($request->maintenance_type) {
+                case 'level':
+                    $import = new LevelDataImport;
+                    break;
+                case 'cost_center':
+                    $import = new CostCenterDataImport;
+                    break;
+                case 'location':
+                    $import = new LocationDataImport;
+                    break;
+                case 'position':
+                    $import = new PositionDataImport;
+                    break;
+                case 'ranking':
+                    $import = new RankingDataImport;
+                    break;
+                case 'grade':
+                    $import = new GradeDataImport;
+                    break;
+                case 'group':
+                    $import = new GroupDataImport;
+                    break;
+                case 'nature_of_work':
+                    $import = new NatureofWorkDataImport;
+                    break;
+                case 'institution':
+                    $import = new InstitutionDataImport;
+                    break;
+                case 'major':
+                    $import = new MajorDataImport;
+                    break;
+                case 'city':
+                    $import = new CityDataImport;
+                    break;
+                case 'zip_code':
+                    $import = new ZipCodeDataImport;
+                    break;
+                case 'account':
+                    $import = new AccountDataImport;
+                    break;
+                case 'journal_template':
+                    $import = new JournalTemplateDataImport;
+                    break;
+                default:
+                    $import = new PersonalDataImport;
+            }
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function downloadTemplateMasterDataPersonel(Request $request)
+    {
+        $fileName = null;
+        switch ($request->maintenance_type) {
+            case 'level':
+                $fileName = "Template Level Master.xlsx";
+                break;
+            case 'cost_center':
+                $fileName = "Template Cost Center Master.xlsx";
+                break;
+            case 'location':
+                $fileName = "Template Location Master.xlsx";
+                break;
+            case 'position':
+                $fileName = "Template Position Master.xlsx";
+                break;
+            case 'ranking':
+                $fileName = "Template Ranking Master.xlsx";
+                break;
+            case 'grade':
+                $fileName = "Template Grade Master.xlsx";
+                break;
+            case 'group':
+                $fileName = "Template Group Master.xlsx";
+                break;
+            case 'nature_of_work':
+                $fileName = "Template Nature of Work Master.xlsx";
+                break;
+            case 'institution':
+                $fileName = "Template Institution Master.xlsx";
+                break;
+            case 'major':
+                $fileName = "Template Major Master.xlsx";
+                break;
+            case 'city':
+                $fileName = "Template City Master.xlsx";
+                break;
+            case 'zip_code':
+                $fileName = "Template Zip Code Master.xlsx";
+                break;
+            case 'account':
+                $fileName = "Template Account Master.xlsx";
+                break;
+            case 'journal_template':
+                $fileName = "Template Journal Master.xlsx";
+                break;
+            default:
+                $fileName = "Template Master.xlsx";
+        }
+        return Excel::download(new MasterDataTemplateExport($request->maintenance_type), $fileName);
     }
 }

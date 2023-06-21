@@ -671,7 +671,7 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="modal_custom" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_custom"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -711,7 +711,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_allowance" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_allowance" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -775,7 +775,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_deduction" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_deduction" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -785,7 +785,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="allowance_form" method="post">
+                    <form id="deduction_form" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -1262,10 +1262,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Field Name</b></div>' +
-                        '<div class="col-6"><b>Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.fieldName + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
@@ -1273,6 +1269,19 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#component_allowance, #component_deduction').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Field Name</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             $('#component_allowance, #component_deduction').select2({

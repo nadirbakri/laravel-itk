@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modal_add_edit_thr_formula" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal_add_edit_thr_formula"  role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -613,7 +613,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
@@ -635,6 +635,23 @@
                 }
             });
         }
+
+        $('#thr_formula_detail_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#thr_formula_detail_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         function loadDataFieldChooser(){
             function formatSelect(data) {
@@ -671,12 +688,11 @@
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
-                    data: {
-                        'tableName' : tableChooser
-                    }, function (params) {
+                    data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            tableName: tableChooser
                         };
                     },
                     processResults: function (data) {

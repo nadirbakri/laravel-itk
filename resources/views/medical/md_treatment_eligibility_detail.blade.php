@@ -365,10 +365,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Position Code</b></div>' +
-                        '<div class="col-6"><b>Position Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.positionCode + '</div>' +
                         '<div class="col-6">' + data.data.positionName + '</div>' +
                         '</div>');
@@ -376,6 +372,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#position').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -441,6 +449,18 @@
                 }
             }
 
+            var headerIsAppend = false;
+            $('#ranking').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Ranking Code</b></div>' +
+                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             var $employeeNo = $('#ranking').select2({
@@ -493,10 +513,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Claim Code</b></div>' +
-                        '<div class="col-6"><b>Claim Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.claimCode + '</div>' +
                         '<div class="col-6">' + data.data.claimName + '</div>' +
                         '</div>');
@@ -504,6 +520,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#claim_code').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Claim Code</b></div>' +
+                        '<div class="col-6"><b>Claim Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 

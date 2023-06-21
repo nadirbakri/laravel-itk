@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('holiday_calender.head') }}</title>
+    <title>{{ __('data_employee_master.judul_holiday_calendar') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -12,10 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('css/data_employee_grou.css') }}"> 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
@@ -90,7 +88,7 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
-        .row button {
+        .row .button {
             background-color: #1E90FF;
             border: none;
             color: white;
@@ -114,36 +112,38 @@
             margin-top:15px
        }
        .judul h1{
-        font-size: 35px;
-        margin-left: 4%;
-        margin-right: 2%;
-        margin-top:50px
-       }
-       .judul hr{
-        max-width:1200px;
-        margin-left:4%;
-        margin-right: 2%;
-       }
-       .buttonadd{
-        width: 40px;
-        height: 40px;
-        background: #dac52c;
-        border-radius: 100%;
-       }
+            font-size: 25px;
+            margin-left: 4%;
+            margin-right: 2%;
+            margin-top:50px
+        }
+        .judul hr{
+            max-width:1200px;
+            margin-left:4%;
+            margin-right: 2%;
+        }
+        .buttonadd{
+            width: 40px;
+            height: 40px;
+            background: #dac52c;
+            border-radius: 100%;
+        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <div class="judul">
-            <h1>{{ __('holiday_calender.judul') }}</h1>
-            <hr>
+        <div class="div-title">
+            <a href="{{ url('master_data') }}" target="iframe_dashboard">
+                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                <span class="title-text">{{ __('data_employee_group.judul_holiday_calendar') }}</span>
+            </a>
         </div>
         <form id="holiday_calender_form" method="post">
             @csrf
             <div class="card" >
                 <div class="card-header">
-                {{ __('holiday_calender.judul2') }}
+                    <h5>{{ __('data_employee_group.judul_holiday_calendar') }}</h5>
                 </div>
             <div class="card-body">
                 <div class="row">
@@ -153,12 +153,11 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="date_holiday" name="date_holiday" placeholder="date-holiday">
-                            {{-- <div class="input-group-prepend">
-                                <span class="input-group-text" id="date-calendar"><span class="fa fa-calendar"></span></span>
-                            </div> --}}
-                            
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="date_holiday" name="date_holiday">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="date_holiday_calendar"><span class="fa fa-calendar"></span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,17 +180,21 @@
 <br>
                 <!-- BUTOON -->
                 <div class="row">
-                    <div class="col">
-                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview">
-                        {{ __('holiday_calender.button') }}
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-save" id="btn-save" value="preview" style="width: 100%;">
+                        <i class="fa fa-floppy-o"></i> {{ __('holiday_calender.button') }}
                         </button>     
-                        <button type="button" class="btn btn-primary" onClick="window.location.reload();"  value="preview">
-                            {{ __('admin_main_menu_news_master.cancel') }}
-                        </button>     
-                        <button class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_email_settings" type="button">
-                        {{ __('holiday_calender.button2') }}
+                    </div>     
+                    <div class="col-3">  
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_email_settings" type="button" style="width: 100%;">
+                        <i class="fa fa-plus"></i> {{ __('holiday_calender.button2') }}
                         </button>     
                     </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-primary" onClick="window.location.reload();"  value="preview" style="width: 100%;">
+                        <i class="fa fa-times"></i> {{ __('admin_main_menu_news_master.cancel') }}
+                        </button>   
+                    </div> 
                 </div>  
             </div>
         </form>
@@ -288,13 +291,8 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
-<script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
-
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
+<script>
+        let dateHoliday = $('.input-group input').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -305,12 +303,31 @@
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
                 });
-            }
+            },
+            onChange: function(selectedDates, dateStr, instance) {
+                console.log(dateStr);
+                if(dateStr != null && dateStr != ''){
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ url('/master_data/holiday_calendar/get') }}",
+                        data: {
+                            'calendar': dateStr
+                        }
+                    }).then(function (data) {
+                        if(data.length > 0){
+                            dateHoliday.setDate(data[0].calendar);
+                            dateHoliday.prop('readonly', true);
+                            $('#description_date').val(data[0].description);
+                        }else{
+                            dateHoliday.setDate('');
+                            dateHoliday.prop('readonly', false);
+                            $('#description_date').val('');
+                        }
+                    });
+                }
+            },
         });
-    }
 
-</script>
-<script>
       $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
@@ -324,7 +341,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -351,11 +368,12 @@
     })
 
     const klik = (element) => {
-        let employee_id = $(element).parent().siblings('.sorting_1').text()
-        let fullname = $(element).parent().siblings('td').eq(1).text()
+        let employee_id = $(element).parent().siblings('.sorting_1').text();
+        let fullname = $(element).parent().siblings('td').eq(1).text();
 
-        $('#date_holiday').val(employee_id)
-        $('#description_date').val(fullname)
+        dateHoliday.setDate(employee_id);
+        // $('#date_holiday').val(employee_id);
+        $('#description_date').val(fullname);
 
         $('.close').click();
         // let division = $(element).parent().siblings('td').eq(2).text()

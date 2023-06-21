@@ -120,7 +120,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         columns: [
             {data: 'source_bank_code', name: 'source_bank_code'},
             {data: 'source_bank_name', name: 'source_bank_name'},

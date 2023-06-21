@@ -26,42 +26,72 @@
 
 		<div class="div-menu">
 			<div class="row div-child-data">
-				<div class="col col-6">
+				<div class="col col-4">
 					<a href="{{ url('utilities/organization_chart') }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" style="max-width: 7.5%;" alt="Child Personel">
 						<span class="child-title-text">{{ __('utilities.organization_chart') }}</span>
 					</a>
 				</div>
+				<div class="col col-6">
+					<a href="{{ url('utilities/user_log') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.user_log') }}</span>
+					</a>
+				</div>
 			</div>
 			<div class="row div-child-data">
-				<div class="col col-6">
+				<div class="col col-4">
 					<a href="{{ url('utilities/user_security_maintenance') }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" style="max-width: 7.5%;" alt="Child Personel">
 						<span class="child-title-text">{{ __('utilities.user_security_maintenance') }}</span>
 					</a>
 				</div>
+				<div class="col col-6">
+					<a href="{{ url('utilities/audit_trail') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.audit_trail') }}</span>
+					</a>
+				</div>
 			</div>
 			<div class="row div-child-data">
-				<div class="col col-6">
+				<div class="col col-4">
 					<a href="{{ url('utilities/menu_master') }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" style="max-width: 7.5%;" alt="Child Personel">
 						<span class="child-title-text">{{ __('utilities.menu_master') }}</span>
 					</a>
 				</div>
-			</div>
-			<div class="row div-child-data">
 				<div class="col col-6">
-					<a href="{{ url('utilities/group_authorization') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/change_employee_no') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.group_authorization') }}</span>
+						<span class="child-title-text">{{ __('utilities.change_employee_no') }}</span>
 					</a>
 				</div>
 			</div>
 			<div class="row div-child-data">
+				<div class="col col-4">
+					<a href="{{ url('utilities/group_authorization') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" style="max-width: 7.5%;" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.group_authorization') }}</span>
+					</a>
+				</div>
 				<div class="col col-6">
-					<a href="{{ url('utilities/group_user_access') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/news_master') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.news_master') }}</span>
+					</a>
+				</div>
+			</div>
+			<div class="row div-child-data">
+				<div class="col col-4">
+					<a href="{{ url('utilities/group_user_access') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" style="max-width: 7.5%;" alt="Child Personel">
 						<span class="child-title-text">{{ __('utilities.group_user_access') }}</span>
+					</a>
+				</div>
+				<div class="col col-6">
+					<a href="{{ url('utilities/announcement') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.announcement') }}</span>
 					</a>
 				</div>
 			</div>
@@ -74,36 +104,30 @@
 				</div>
 			</div> -->
 			<div class="row div-child-data">
+				<div class="col col-4">
+					<a href="{{ url('utilities/company') }}" target="iframe_dashboard">
+						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" style="max-width: 7.5%;" alt="Child Personel">
+						<span class="child-title-text">{{ __('utilities.company_master') }}</span>
+					</a>
+				</div>
 				<div class="col col-6">
-					<a href="{{ url('utilities/user_log') }}" target="iframe_dashboard">
+					<a href="{{ url('utilities/process_user_id') }}" target="iframe_dashboard">
 						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.user_log') }}</span>
+						<span class="child-title-text">{{ __('utilities.process_user_id') }}</span>
 					</a>
 				</div>
 			</div>
 			<div class="row div-child-data">
-				<div class="col col-6">
-					<a href="{{ url('utilities/audit_trail') }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.audit_trail') }}</span>
-					</a>
-				</div>
+				
 			</div>
 			<div class="row div-child-data">
-				<div class="col col-6">
-					<a href="{{ url('utilities/change_employee_no') }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.change_employee_no') }}</span>
-					</a>
-				</div>
+				
 			</div>
 			<div class="row div-child-data">
-				<div class="col col-6">
-					<a href="{{ url('utilities/news_master') }}" target="iframe_dashboard">
-						<img src="{{ url('/icons/utilities/submenu-utilities.png') }}" alt="Child Personel">
-						<span class="child-title-text">{{ __('utilities.news_master') }}</span>
-					</a>
-				</div>
+				
+			</div>
+			<div class="row div-child-data">
+				
 			</div>
 			<!-- <div class="row div-child-data">
 				<div class="col col-6">

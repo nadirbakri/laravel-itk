@@ -117,7 +117,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         columns: [
             {data: 'relation_code', name: 'relation_code'},
             {data: 'relation_description', name: 'relation_description'},

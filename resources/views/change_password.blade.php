@@ -60,7 +60,7 @@
                             <div class="input-group">
                                 <input type="password" class="form-control" name="old_password" id="old_password" placeholder="{{ __('change_password.old_password_placeholder') }}">
                                 <div class="input-group-append">
-                                    <button class="btn rounded-right" type="button" id="show_old_password"><i id="icon_show_old_password" class="fa fa-eye" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-secondary rounded-right" type="button" id="show_old_password"><i id="icon_show_old_password" class="fa fa-eye" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                             <label class="text-danger">&nbsp</label>
@@ -74,7 +74,7 @@
                             <div class="input-group">
                                 <input type="password" class="form-control" name="new_password" id="new_password" placeholder="{{ __('change_password.new_password_placeholder') }}">
                                 <div class="input-group-append">
-                                    <button class="btn rounded-right" type="button" id="show_new_password"><i id="icon_show_new_password" class="fa fa-eye" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-secondary rounded-right" type="button" id="show_new_password"><i id="icon_show_new_password" class="fa fa-eye" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                             <label class="text-danger">&nbsp</label>
@@ -88,7 +88,7 @@
                             <div class="input-group">
                                 <input type="password" class="form-control" name="confirm_new_password" id="confirm_new_password" placeholder="{{ __('change_password.confirm_new_password_placeholder') }}">
                                 <div class="input-group-append">
-                                    <button class="btn rounded-right" type="button" id="show_confirm_new_password"><i id="icon_show_confirm_new_password" class="fa fa-eye" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-secondary rounded-right" type="button" id="show_confirm_new_password"><i id="icon_show_confirm_new_password" class="fa fa-eye" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                             <label class="text-danger">&nbsp</label>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-submit" id="btn-submit" style="width: 100%;">
                             <i class="fa fa-check"></i> Confirm
                         </button>

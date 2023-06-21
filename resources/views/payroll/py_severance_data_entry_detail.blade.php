@@ -366,7 +366,7 @@
                     html = '<div class="row">' +
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

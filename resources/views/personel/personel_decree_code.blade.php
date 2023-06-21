@@ -117,7 +117,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         columns: [
             {data: 'decree_code', name: 'decree_code'},
             {data: 'decree_name', name: 'decree_name'},

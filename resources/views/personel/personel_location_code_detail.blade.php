@@ -106,6 +106,15 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="bpjs_location_code">{{ __('personel_location_code.label_bpjs_location_code') }}</label>
+                            <input type="text" class="form-control" id="bpjs_location_code" name="bpjs_location_code"
+                                placeholder="{{ __('personel_location_code.label_bpjs_location_code') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
@@ -177,6 +186,7 @@
             $('#record_function').val("New");
             $('#location_code').val("");
             $('#location_name').val("");
+            $('#bpjs_location_code').val("");
             $('#location_code').prop('readonly', false);
         } else if (func == 'edit') {
             $('#record_status').val("{{ isset($data[0]->recordStatus) ? $data[0]->recordStatus : '' }}");
@@ -184,6 +194,7 @@
             $('#location_code').val("{{ isset($data[0]->locationCode) ? $data[0]->locationCode : '' }}");
             $('#location_name').val(htmlDecode(
                 "{{ isset($data[0]->locationName) ? $data[0]->locationName : '' }}"));
+            $('#bpjs_location_code').val("{{ isset($data[0]->bpjsLocationCode) ? $data[0]->bpjsLocationCode : '' }}");
             $('#location_code').prop('readonly', true);
         }
 

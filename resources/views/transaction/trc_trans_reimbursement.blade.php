@@ -174,7 +174,7 @@
                         <div class="form-group">
                                 <label for="direct_superior form-check-label">{{ __('trans_reimbursement.employee') }}</label>
                         </div>
-                                <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
+                                <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="{{ __('trans_reimbursement.employee') }}">
                     </div>
                 </div>
 
@@ -182,19 +182,19 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_reimbursement.btn_search') }}
+                        <i class="fa fa-search"></i> {{ __('trans_reimbursement.btn_search') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i>{{ __('trans_reimbursement.btn_upload') }}
+                        <i class="fa fa-upload"></i> {{ __('trans_reimbursement.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i>{{ __('trans_reimbursement.btn_list') }}
+                        <i class="fa fa-list"></i> {{ __('trans_reimbursement.btn_list') }}
                         </button>
                     </div>
                     {{-- <div class="col-3">
@@ -255,20 +255,16 @@
                         <table id="example" class="display">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    {{-- <th>User ID</th> --}}
+                                    <th style="text-align: center;">#</th>
                                     <th>Employee ID</th>
                                     <th>Full Name</th>
                                     <th>Division</th>
-                                    <th>Ranking Name<</th>
+                                    <th>Ranking Name</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
+                                    <td style="text-align: center;"></td>        
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
@@ -421,24 +417,32 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Upload Paid Overtime</h4>
+                        <h4 class="modal-little">Upload Paid Reimbursement</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        <div class="card">
-                            <div class="col-5">
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>File Overtime</b></label>
-                                        <input type="file" name="file_overtime" id="file_overtime">
-                                    <br> <br>
-                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                                    <label for="file_overtime">File Reimbursement</label>
+                                    <span style="color: red;">*</span>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_overtime" name="file_overtime">
+                                        <label class="custom-file-label" for="file_overtime">Choose Import File</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="btn-process" id="btn-process" style="width: 100%;">
                                         Upload
                                     </button>
                                 </div>
                             </div>
-                        </div>
                     </div>
                    </div>
                 </div>
@@ -544,6 +548,11 @@
 </script>
 
 <script>
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
+
     $('#btn-update').click(()=>{
         let reimbursement_status = $('#reimbursement_status').val();
         let totalpaid = $('#totalpaid').val();
@@ -567,37 +576,37 @@
                 'approvalRemarks': approvalremarks
             },
             success: function (response) {
-                               if (response.status == "true") {
-                                   $("#btn-update").prop("disabled", false);
-                                   $("#btn-update").html(
-                                       // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
-                                       'Update'
-                                   );
-                                   
-                                   $('#notification_success').modal('show');
-                                   $('#message-notification-success').html(response
-                                       .message);
-                                   setTimeout(function () {
-                                       window.location =
-                                           "{{ url('transaction/transaction_reimbursement') }}";
-                                   }, 3000);
-                               } else{
-                                $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_update_data_fail').modal('show');
-                               $('#message-notification-update-data-fail').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_reimbursement') }}";
-                               }, 3000);
-                           }
-                       },
-                error: function (response) {
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_reimbursement') }}";
+                    }, 3000);
+                } else{
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_update_data_fail').modal('show');
+                    $('#message-notification-update-data-fail').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_reimbursement') }}";
+                    }, 3000);
+                }
+            },
+            error: function (response) {
                 $("#btn-update").prop("disabled", false);
                 $("#btn-update").html(
                     // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
@@ -631,7 +640,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lfrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
@@ -639,11 +648,11 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                            return type === 'display'? '<button type="button" title="Detail" class="btn btn-info btn-circle" id="btn-detail" data-toggle="modal" data-target="#modal_list_detail" onclick="klikdetail(this)"><i class="fa fa-file-text"></i></button>' : '';
                         }
                     },
                     {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate', 
-                            render: function (data, type, row) {
+                        render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
@@ -712,12 +721,6 @@
         let approvalremarks = $(element).parent().siblings('td').eq(8).text()
         let totalpaid = $(element).parent().siblings('td').eq(9).text()
         var business_unit = $("#business_unit").val();        
-        
-        // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
-        // let projectname = $(element).parent().siblings('td').eq(5).text()
-        // let employeename = $(element).parent().siblings('td').eq(3).text()
-        // let totalpaid = $(element).parent().siblings('td').eq(6).text()
-        // var reimbursement_type = $("#reimbursement_type").val();
 
         $('#reqdate').val(requestDate)
         $('#recdate').val(requestDate)
@@ -730,16 +733,6 @@
 
         $('#approvalremarks').val(approvalremarks)
         $('#totalpaid').val(totalpaid)
-        
-        // $('#status').val(reimbursement_status)
-        // $('#tiketno').val(tikcetNo)
-        // $('#c_type').val(reimbursement_type)
-        // $('#employeeno').val(employeename)
-        // $('#projectname').val(projectname)
-        // $('#totalpaid').val(totalpaid)
-        // $('#direct_superior').val(employee_id)
-
-        // alert(reimbursement_type);
     }
 
     $('#btn-list').click(()=> {
@@ -755,15 +748,16 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
                     orderable: false,
-                    targets: 0, 
+                    targets: 0,
+                    className: 'dt-center',
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                        return type === 'display'? '<a href="#" id="btnaja" onclick="klik(this)"> <i class="fa fa-check"></i></a>' : '';
                              }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
@@ -1040,7 +1034,8 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         data: function (params) {
                             return {
                                 _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 'levelType' : '1' 
+                                search: params.term, 
+                                levelType: '1' 
     
                             };
                         },

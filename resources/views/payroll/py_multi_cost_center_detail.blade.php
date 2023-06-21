@@ -391,10 +391,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.employeeNo + '</div>' +
                         '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
@@ -402,6 +398,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#employee_no').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -483,9 +491,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Cost Center Code</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.costCenterCode + '</div>' +
                         '</div>');
 
@@ -541,7 +546,7 @@
         function load_table_cost_center() {
             table = $('#cost_center_table').DataTable({
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "columnDefs": [
                     {
                         "className": "dt-center",
@@ -554,6 +559,23 @@
                 }
             });
         }
+
+        $('#cost_center_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#cost_center_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $('#btn-add-cost').on('click', function () {
             data_cost_center++;

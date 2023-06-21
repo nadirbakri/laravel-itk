@@ -394,7 +394,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_formal_education" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_formal_education"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -502,7 +502,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_language" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_language"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -660,7 +660,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_reference" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_reference"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -730,7 +730,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_skill" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_skill"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1391,7 +1391,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1448,6 +1448,23 @@
             });
         }
 
+        $('#formal_education_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#formal_education_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_language(employeeNo = '') {
             table = $('#language_data_table').DataTable({
                 processing: true,
@@ -1464,7 +1481,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1505,6 +1522,23 @@
             });
         }
 
+        $('#language_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#language_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_organization(employeeNo = '') {
             table = $('#organization_data_table').DataTable({
                 processing: true,
@@ -1521,7 +1555,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1568,6 +1602,23 @@
             });
         }
 
+        $('#organization_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#organization_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_reference(employeeNo = '') {
             table = $('#reference_data_table').DataTable({
                 processing: true,
@@ -1584,7 +1635,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1625,6 +1676,23 @@
             });
         }
 
+        $('#reference_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#reference_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_skill(employeeNo = '') {
             table = $('#skill_data_table').DataTable({
                 processing: true,
@@ -1641,7 +1709,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1678,6 +1746,23 @@
             });
         }
 
+        $('#skill_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#skill_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_project_experience(employeeNo = '') {
             table = $('#project_experience_data_table').DataTable({
                 processing: true,
@@ -1694,7 +1779,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1749,6 +1834,23 @@
             });
         }
 
+        $('#project_experience_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#project_experience_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_training_list(employeeNo = '') {
             table = $('#training_list_data_table').DataTable({
                 processing: true,
@@ -1765,7 +1867,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1819,6 +1921,23 @@
                 }
             });
         }
+
+        $('#training_list_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#training_list_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $('#formal_education_data_table, #language_data_table, #organization_data_table, #reference_data_table, #skill_data_table, #project_experience_data_table, #training_list_data_table').on('click', 'tbody input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
@@ -2323,7 +2442,7 @@
                         '<div class="col-6"><b>Institution Code</b></div>' +
                         '<div class="col-6"><b>Institution Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2394,7 +2513,7 @@
                         '<div class="col-6"><b>Major Code</b></div>' +
                         '<div class="col-6"><b>Major Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2465,7 +2584,7 @@
                         '<div class="col-6"><b>Title Code</b></div>' +
                         '<div class="col-6"><b>Title Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2536,7 +2655,7 @@
                         '<div class="col-6"><b>City Code</b></div>' +
                         '<div class="col-6"><b>City Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2607,7 +2726,7 @@
                         '<div class="col-6"><b>Skill Code</b></div>' +
                         '<div class="col-6"><b>Skill Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

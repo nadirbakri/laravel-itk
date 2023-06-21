@@ -116,10 +116,28 @@
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="{{ url('payroll/transfer_data_to_bank/export_to_file') }}" target="iframe_dashboard">
+                    <a href="{{ url('payroll') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('payroll_transfer_data_to_bank.list') }}</span>
                     </a>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="output_file">{{ __('payroll_transfer_data_to_bank.label_output_file') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-control select2" id="output_file" name="output_file">
+                            <option value="BANK CENTRAL ASIA">Bank Central Asia</option>
+                            <option value="BANK INA">Bank Ina</option>
+                            <option value="BTPN">BTPN</option>
+                            <option value="BANK INA MULTI ACCOUNT">Bank Ina Multi Account</option>
+                            <option value="MCM">MCM Bank Mandiri</option>
+                            <!-- <option value="MANDIRI">Bank Mandiri</option> -->
+                            <option value="BOT">BOT</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -130,7 +148,6 @@
                     <div class="col-6">
                         <select class="form-control select2" id="source_bank" name="source_bank"></select>
                     </div>
-                    <input type="hidden" class="form-control" id="output_file" name="output_file" value="{{ $bankType }}">
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -482,10 +499,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.employeeNo + '</div>' +
                         '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
@@ -493,6 +506,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -559,10 +584,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-12"><b>Bank Code</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-12">' + data.data.bankCode + '</div>' +
                         '</div>');
 
@@ -637,7 +659,7 @@
                     html = '<div class="row">' +
                         '<div class="col-12"><b>Report Code</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -708,10 +730,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
                         '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
                         '</div>');
@@ -719,6 +737,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 

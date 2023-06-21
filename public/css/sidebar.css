@@ -38,12 +38,6 @@
   padding: 0 2rem 0 1rem;
 }
 
-#sidebar-wrapper.active {
-  min-width: 7%;
-  max-width: 7%;
-  text-align: center;
-}
-
 .navbar-collapse {
   flex-basis: unset;
 }
@@ -65,6 +59,12 @@
   min-width: 19%;
   max-width: 19%;
   transition: all .3s;
+}
+
+#sidebar-wrapper.active {
+  min-width: 7%;
+  max-width: 7%;
+  text-align: center;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -122,7 +122,7 @@
 }
 
 #sidebar-wrapper .list-group-item {
-  padding: 0.3rem;
+  padding: 0;
   margin-bottom: 1.25rem;
   /* transition: all 0.3s; */
 }
@@ -140,7 +140,7 @@
 
 #sidebar-wrapper .list-group-item img {
   left: 15%;
-  max-width: 25%;
+  max-width: 15%;
 }
 
 #sidebar-wrapper.active .list-group-item img {
@@ -149,7 +149,7 @@
 }
 
 #sidebar-wrapper .list-group-item span {
-  left: 40%;
+  left: 35%;
 }
 
 #sidebar-wrapper.active .list-group-item span {
@@ -257,6 +257,17 @@ hr {
   margin: 4% 8%;
 }
 
+.dropdown-company {
+  display: table;
+  padding: 0.8rem;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 1.5vh;
+}
+
 .dropdown-profile, .img-setting-link {
   display: table;
   padding: 0.5rem;
@@ -265,7 +276,7 @@ hr {
   position: relative;
 }
 
-.dropdown-profile-content {
+.dropdown-profile-content, .dropdown-company-content {
   display: none;
   position: absolute;
   right: 0;
@@ -279,11 +290,11 @@ hr {
   max-width: 15% !important;
 }
 
-.dropdown-profile-content a:hover {
+.dropdown-profile-content a:hover, .dropdown-company-content a:hover {
   background-color: #f1f1f1;
 }
 
-.dropdown-profile:hover .dropdown-profile-content {
+.dropdown-profile:hover .dropdown-profile-content, .dropdown-company:hover .dropdown-company-content {
   display: block;
 }
 
@@ -291,11 +302,27 @@ hr {
   background-color: #F9F8F8;
 }
 
+.dropdown-company:hover {
+  background-color: #105e9e;
+}
+
 .sidebar-bottom {
   display: relative;
 }
 
-footer {
+#sidebar-wrapper footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 19%;
+  display: block;
+  font-size: 2vh;
+  transition: all 0.3s;
+  padding-top: 4%;
+  text-align: center;
+}
+
+#sidebar-wrapper.active footer {
   position: fixed;
   height: 25%;
   bottom: 0;
@@ -327,6 +354,7 @@ iframe {
   width: 1vw;
   height: 2.2vw;
   padding-top: 1%;
+  margin-bottom: 0.2rem;
 }
 
 .list-group-item.active .image-hover {
@@ -335,21 +363,25 @@ iframe {
 
 #sidebar-wrapper.active .list-group-item .tooltiptext {
   visibility: hidden;
-  width: 100%;
   background-color: #084D86;
   font-family: Montserrat;
   font-size: 1.5vh;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px 10px;
   position: absolute;
   z-index: 1;
-  bottom: -0.6rem;
-  left: 170%;
+  bottom: -60%;
+  left: 160%;
   border-radius: 0.1rem;
   margin-left: -3.5rem;
   opacity: 0;
   transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  /* top: -1rem; */
 }
 
 #sidebar-wrapper.active .list-group-item .tooltiptext:before{
@@ -364,7 +396,8 @@ iframe {
   border-right: 1.7vw solid #084D86;;
   left: -1.5vw;
 
-  top: 0.35vw;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #sidebar-wrapper.active .list-group-item:hover .tooltiptext {

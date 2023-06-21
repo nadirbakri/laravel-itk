@@ -348,7 +348,6 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
-                            console.log(response);
                             if (response[0].status == "true") {
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
@@ -362,6 +361,7 @@
                                         "{{ url('personnel/import_export_personal_data') }}";
                                 }, 3000);
                             } else {
+                                console.log(response[0]);
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'

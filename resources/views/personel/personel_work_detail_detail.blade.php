@@ -88,10 +88,11 @@
                     <div class="col-2 subdiv-profile-image">
                         <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
                             alt="Profile"> -->
-                        <img src="{{ url('/pictures/profile-picture.png') }}" alt="Profile">
+                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
                         <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                             {{ __('personel_work_detail.btn_change_picture') }}
-                            <input type="file" class="form-control" id="photo_profile" name="photo_profile" hidden>
+                            <input type="file" class="form-control" id="photo_profile" name="photo_profile" value="true" hidden>
+                            <textarea name="photo_employee" id="photo_employee" cols="30" rows="10" hidden></textarea>
                         </label>
                     </div>
                     <div class="col-9 subdiv-profile">
@@ -234,7 +235,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_job_history" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_job_history"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -507,7 +508,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_work_experience" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_work_experience"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -623,7 +624,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_free_format_field" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_free_format_field"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -958,7 +959,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1041,7 +1042,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1116,7 +1117,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -1171,8 +1172,20 @@
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 alert("Only formats are allowed : " + fileExtension.join(', '));
             } else {
-                $('#employee_profile_form').submit();
+                for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+                    var file = e.originalEvent.srcElement.files[i];
+                    // console.log(file);
+                    var img = $('#photo');
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
+                        img.attr('src', reader.result);
+                        // console.log(reader.result);
+                    }
+                    reader.readAsDataURL(file);
+                    // $("#photo_profile").after(img);
+                }
             }
+            // $('#photo_profile').val(file);
         });
 
         $.get("{{ url('employment/status/api') }}", function (data) {
@@ -1541,7 +1554,7 @@
                         '<div class="col-6"><b>Position Code</b></div>' +
                         '<div class="col-6"><b>Position Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1611,7 +1624,7 @@
                         '<div class="col-6"><b>Ranking Code</b></div>' +
                         '<div class="col-6"><b>Ranking Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1681,7 +1694,7 @@
                         '<div class="col-6"><b>Grade Code</b></div>' +
                         '<div class="col-6"><b>Grade Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1751,7 +1764,7 @@
                         '<div class="col-6"><b>Location Code</b></div>' +
                         '<div class="col-6"><b>Location Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1821,7 +1834,7 @@
                         '<div class="col-6"><b>Group Code</b></div>' +
                         '<div class="col-6"><b>Group Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1891,7 +1904,7 @@
                         '<div class="col-6"><b>Work Nature Code</b></div>' +
                         '<div class="col-6"><b>Work Nature Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1961,7 +1974,7 @@
                         '<div class="col-6"><b>Company Code</b></div>' +
                         '<div class="col-6"><b>Company Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2031,7 +2044,7 @@
                         '<div class="col-6"><b>Free Format Code</b></div>' +
                         '<div class="col-6"><b>Description</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2102,7 +2115,7 @@
                         '<div class="col-6"><b>List Code</b></div>' +
                         '<div class="col-6"><b>List Value</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2173,7 +2186,7 @@
                         '<div class="col-6"><b>Level Code</b></div>' +
                         '<div class="col-6"><b>Level Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -2221,70 +2234,70 @@
             });
         }
 
-        if ($("#employee_profile_form").length > 0) {
-            $("#employee_profile_form").validate({
-                rules: {
-                    photo_profile: {
-                        extension: "jpg|jpeg|png",
-                    },
-                },
-                messages: {
-                    photo_profile: {
-                        extension: "{{ __('personel_performance.photo_profile_extension') }}",
-                    },
-                },
-                errorPlacement: function (error, element) {
-                    error.insertAfter(element);
-                    alert(error.html());
-                },
-                showErrors: function (errorMap, errorList) {
-                    this.defaultShowErrors();
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
+        // if ($("#employee_profile_form").length > 0) {
+        //     $("#employee_profile_form").validate({
+        //         rules: {
+        //             photo_profile: {
+        //                 extension: "jpg|jpeg|png",
+        //             },
+        //         },
+        //         messages: {
+        //             photo_profile: {
+        //                 extension: "{{ __('personel_performance.photo_profile_extension') }}",
+        //             },
+        //         },
+        //         errorPlacement: function (error, element) {
+        //             error.insertAfter(element);
+        //             alert(error.html());
+        //         },
+        //         showErrors: function (errorMap, errorList) {
+        //             this.defaultShowErrors();
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
 
-                    var myform = document.getElementById("employee_profile_form");
-                    var formdata = new FormData(myform);
+        //             var myform = document.getElementById("employee_profile_form");
+        //             var formdata = new FormData(myform);
 
-                    $.ajax({
-                        url: "{{ url('personnel/employee/photo/proses') }}",
-                        type: "POST",
-                        processData: false,
-                        contentType: false,
-                        data: formdata,
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('personnel/work_detail') }}";
-                                }, 3000);
-                            } else {
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
-                }
-            })
-        }
+        //             $.ajax({
+        //                 url: "{{ url('personnel/employee/photo/proses') }}",
+        //                 type: "POST",
+        //                 processData: false,
+        //                 contentType: false,
+        //                 data: formdata,
+        //                 success: function (response) {
+        //                     if (response.status == "true") {
+        //                         $('#notification_success').modal('show');
+        //                         $('#message-notification-success').html(response
+        //                             .message);
+        //                         setTimeout(function () {
+        //                             window.location =
+        //                                 "{{ url('personnel/work_detail') }}";
+        //                         }, 3000);
+        //                     } else {
+        //                         $('#notification_error').modal('show');
+        //                         if (response.message == null || response.message ==
+        //                             '') {
+        //                             $('#message-notification-error').html(
+        //                                 "{{ __('login.error') }}");
+        //                         } else {
+        //                             $('#message-notification-error').html(response
+        //                                 .message);
+        //                         }
+        //                     }
+        //                 },
+        //                 error: function (response) {
+        //                     $('#notification_error').modal('show');
+        //                     $('#message-notification-error').html(response);
+        //                 }
+        //             });
+        //         }
+        //     })
+        // }
 
         $("#btn-save-job-history").click(function () {
             $(this).prop("disabled", true);

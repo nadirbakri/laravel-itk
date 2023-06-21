@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;key=AIzaSyBO4bpr0RvxO0esRe_PkDcDCycliPWSwS0"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&amp;key=AIzaSyBO4bpr0RvxO0esRe_PkDcDCycliPWSwS0"></script>
 <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?keyAIzaSyBO4bpr0RvxO0esRe_PkDcDCycliPWSwS0&callback=initMap&v=weekly"></script> -->
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">

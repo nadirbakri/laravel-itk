@@ -283,6 +283,8 @@
             $('#journal_code').val('');
             $('#description').val('');
             $('#field_name').val('');
+            $('#grouping_one').val('');
+            $('#grouping_two').val('');
             $('#debit_kredit').val(null).trigger('change');
             $('#cost_center').val(null).trigger('change');
             $('#account').val(null).trigger('change');
@@ -294,6 +296,8 @@
             $('#journal_code').val((typeof arrData[0].journalCode !== 'undefined') ? arrData[0].journalCode : '');
             $('#description').val((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '');
             $('#field_name').val((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '');
+            $('#grouping_one').val((typeof arrData[0].grouping1 !== 'undefined') ? arrData[0].grouping1 : '');
+            $('#grouping_two').val((typeof arrData[0].grouping2 !== 'undefined') ? arrData[0].grouping2 : '');
             $('#debit_kredit').val((typeof arrData[0].debitKredit !== 'undefined') ? arrData[0].debitKredit : '').trigger('change');
             $('#journal_code_hidden').val((typeof arrData[0].journalCode !== 'undefined') ? arrData[0].journalCode : '');
 
@@ -434,10 +438,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Field Name</b></div>' +
-                        '<div class="col-6"><b>Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.fieldName + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
@@ -445,6 +445,19 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#operator').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Field Name</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             $('#operator').select2({
@@ -495,11 +508,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>Cost Center Code</b></div>' +
-                        '<div class="col-6"><b>Cost Center Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-2">' + data.data.costCenterCode + '<div>' +
                         '<div class="col-10">' + data.data.costCenterDescription + '<div>' +
                         '</div>');
@@ -507,6 +516,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#cost_center').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Cost Center Code</b></div>' +
+                        '<div class="col-6"><b>Cost Center Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -559,11 +580,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>Account No</b></div>' +
-                        '<div class="col-6"><b>Account Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-6">' + data.data.accountNo + '<div>' +
                         '<div class="col-6">' + data.data.accountDescription + '<div>' +
                         '</div>');
@@ -571,6 +588,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#account').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Account No</b></div>' +
+                        '<div class="col-6"><b>Account Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 

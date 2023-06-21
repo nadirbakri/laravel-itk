@@ -216,7 +216,7 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="modal_authentication" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_authentication"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-authentication text-center">
@@ -408,7 +408,7 @@
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

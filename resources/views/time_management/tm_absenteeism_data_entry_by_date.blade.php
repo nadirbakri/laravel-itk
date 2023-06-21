@@ -486,23 +486,23 @@
                             // loadDataDetailLocation('#location' + (k+1), ((typeof v.locationCode !== 'undefined' && v.locationCode !== null) ? v.locationCode : ''));
                             // loadDataDetailGrade('#grade' + (k+1), ((typeof v.gradeCode !== 'undefined' && v.gradeCode !== null) ? v.gradeCode : ''));
 
-                            pickrActualDateIn[k].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? v.actualDateIn : ''));
-                            pickrActualDateOut[k].setDate(((typeof v.actualDateOut !== 'undefined' && v.actualDateOut !== null) ? v.actualDateOut : ''));
-                            pickrActualTimeIn[k].setDate(((typeof v.actualTimeIn !== 'undefined' && v.actualTimeIn !== null) ? v.actualTimeIn : ''));
-                            pickrActualTimeOut[k].setDate(((typeof v.actualTimeOut !== 'undefined' && v.actualTimeOut !== null) ? v.actualTimeOut : ''));
-                            pickrTotalActualHour[k].setDate(((typeof v.totalActualHour !== 'undefined' && v.totalActualHour !== null) ? v.totalActualHour : ''));
-                            pickrFingerAbsentHour[k].setDate(((typeof v.fingerAbsentHour !== 'undefined' && v.fingerAbsentHour !== null) ? v.fingerAbsentHour : ''));
-                            pickrAbsentHour[k].setDate(((typeof v.absentHour !== 'undefined' && v.absentHour !== null) ? v.absentHour : ''));
-                            pickrOvertimeBefore[k].setDate(((typeof v.overtimeBefore !== 'undefined' && v.overtimeBefore !== null) ? v.overtimeBefore : ''));
-                            pickrOvertimeStart[k].setDate(((typeof v.overtimeStart !== 'undefined' && v.overtimeStart !== null) ? v.overtimeStart : ''));
-                            pickrOvertimeFinish[k].setDate(((typeof v.overtimeFinish !== 'undefined' && v.overtimeFinish !== null) ? v.overtimeFinish : ''));
-                            pickrOvertimeHour[k].setDate(((typeof v.overtimeHour !== 'undefined' && v.overtimeHour !== null) ? v.overtimeHour : ''));
-                            pickrOvertimeBot[k].setDate(((typeof v.overtimeBot !== 'undefined' && v.overtimeBot !== null) ? v.overtimeBot : ''));
-                            pickrTotalNormalHour[k].setDate(((typeof v.totalNormalHour !== 'undefined' && v.totalNormalHour !== null) ? v.totalNormalHour : ''));
-                            pickrNormalHourIn[k].setDate(((typeof v.normalHourIn !== 'undefined' && v.normalHourIn !== null) ? v.normalHourIn : ''));
-                            pickrNormalHourOut[k].setDate(((typeof v.normalHourOut !== 'undefined' && v.normalHourOut !== null) ? v.normalHourOut : ''));
-                            pickrNormalOvertimeBefore[k].setDate(((typeof v.normalOvertimeBefore !== 'undefined' && v.normalOvertimeBefore !== null) ? v.normalOvertimeBefore : ''));
-                            pickrNormalOvertimeAfter[k].setDate(((typeof v.normalOvertimeAfter !== 'undefined' && v.normalOvertimeAfter !== null) ? v.normalOvertimeAfter : ''));
+                            pickrActualDateIn[k].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? moment(v.actualDateIn).format('YYYY-MM-DD') : ''));
+                            pickrActualDateOut[k].setDate(((typeof v.actualDateOut !== 'undefined' && v.actualDateOut !== null) ? moment(v.actualDateOut).format('YYYY-MM-DD') : ''));
+                            pickrActualTimeIn[k].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? moment(v.actualDateIn).format('HH:mm:ss') : ''));
+                            pickrActualTimeOut[k].setDate(((typeof v.actualDateOut !== 'undefined' && v.actualDateOut !== null) ? moment(v.actualDateOut).format('HH:mm:ss') : ''));
+                            pickrTotalActualHour[k].setDate(((typeof v.totalActualHour !== 'undefined' && v.totalActualHour !== null) ? moment(v.totalActualHour).format('HH:mm:ss') : ''));
+                            pickrFingerAbsentHour[k].setDate(((typeof v.hourAbsent !== 'undefined' && v.hourAbsent !== null) ? moment(v.hourAbsent).format('HH:mm:ss') : ''));
+                            pickrAbsentHour[k].setDate(((typeof v.absentHour !== 'undefined' && v.absentHour !== null) ? moment(v.hourAbsent2).format('HH:mm:ss') : ''));
+                            pickrOvertimeBefore[k].setDate(((typeof v.ovtBeforeIn !== 'undefined' && v.ovtBeforeIn !== null) ? moment(v.ovtBeforeIn).format('HH:mm:ss') : ''));
+                            pickrOvertimeStart[k].setDate(((typeof v.ovtIn !== 'undefined' && v.ovtIn !== null) ? moment(v.ovtIn).format('HH:mm:ss') : ''));
+                            pickrOvertimeFinish[k].setDate(((typeof v.ovtOut !== 'undefined' && v.ovtOut !== null) ? moment(v.ovtOut).format('HH:mm:ss') : ''));
+                            pickrOvertimeHour[k].setDate(((typeof v.hourOvt !== 'undefined' && v.hourOvt !== null) ? moment(v.hourOvt).format('HH:mm:ss') : ''));
+                            pickrOvertimeBot[k].setDate(((typeof v.buildInOvt !== 'undefined' && v.buildInOvt !== null) ? moment(v.buildInOvt).format('HH:mm:ss') : ''));
+                            pickrTotalNormalHour[k].setDate(((typeof v.totalNormalHour !== 'undefined' && v.totalNormalHour !== null) ? moment(v.totalNormalHour).format('HH:mm:ss') : ''));
+                            pickrNormalHourIn[k].setDate(((typeof v.normalDateIn !== 'undefined' && v.normalDateIn !== null) ? moment(v.normalDateIn).format('HH:mm:ss') : ''));
+                            pickrNormalHourOut[k].setDate(((typeof v.normalDateOut !== 'undefined' && v.normalDateOut !== null) ? moment(v.normalDateOut).format('HH:mm:ss') : ''));
+                            pickrNormalOvertimeBefore[k].setDate(((typeof v.ovtBefore !== 'undefined' && v.ovtBefore !== null) ? moment(v.ovtBefore).format('HH:mm:ss') : ''));
+                            pickrNormalOvertimeAfter[k].setDate(((typeof v.ovtAfter !== 'undefined' && v.ovtAfter !== null) ? moment(v.ovtAfter).format('HH:mm:ss') : ''));
                         });
                     }
                 }
@@ -775,7 +775,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -835,10 +835,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Shift Code</b></div>' +
-                        '<div class="col-6"><b>Shift Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.shiftCode + '</div>' +
                         '<div class="col-6">' + data.data.shiftName + '</div>' +
                         '</div>');
@@ -846,6 +842,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Shift Code</b></div>' +
+                        '<div class="col-6"><b>Shift Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -899,10 +907,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Cost Center Code</b></div>' +
-                        '<div class="col-6"><b>Cost Center Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.costCenterCode + '</div>' +
                         '<div class="col-6">' + data.data.costCenterDescription + '</div>' +
                         '</div>');
@@ -910,6 +914,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Cost Center Code</b></div>' +
+                        '<div class="col-6"><b>Cost Center Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -964,10 +980,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Absent Code</b></div>' +
-                        '<div class="col-6"><b>Absent Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.absentCode + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
@@ -975,6 +987,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Absent Code</b></div>' +
+                        '<div class="col-6"><b>Absent Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -1029,10 +1053,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Overtime Code</b></div>' +
-                        '<div class="col-6"><b>Overtime Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.absentCode + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
@@ -1040,6 +1060,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Overtime Code</b></div>' +
+                        '<div class="col-6"><b>Overtime Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -1094,10 +1126,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Position Code</b></div>' +
-                        '<div class="col-6"><b>Position Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.positionCode + '</div>' +
                         '<div class="col-6">' + data.data.positionName + '</div>' +
                         '</div>');
@@ -1105,6 +1133,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -1159,10 +1199,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Location Code</b></div>' +
-                        '<div class="col-6"><b>Location Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.locationCode + '</div>' +
                         '<div class="col-6">' + data.data.locationName + '</div>' +
                         '</div>');
@@ -1170,6 +1206,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -1224,10 +1272,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Grade Code</b></div>' +
-                        '<div class="col-6"><b>Grade Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.gradeCode + '</div>' +
                         '<div class="col-6">' + data.data.gradeName + '</div>' +
                         '</div>');
@@ -1235,6 +1279,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Grade Code</b></div>' +
+                        '<div class="col-6"><b>Grade Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 

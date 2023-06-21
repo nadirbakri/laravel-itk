@@ -245,7 +245,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
@@ -298,7 +298,7 @@
                         render: function (data, type, row) {
                             if (data === 'T') {
                                 return 'Increase Tax';
-                            } else if (data === 'T') {
+                            } else if (data === 'N') {
                                 return 'Non Taxable';
                             } else {
                                 return 'Decrease Tax';
@@ -312,6 +312,23 @@
                 }
             });
         }
+
+        $('#salary_component_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#salary_component_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $("#toolbar-new").on('click', function() {
             $.redirect("{{ url('payroll/salary_component_data/detail_data') }}", 

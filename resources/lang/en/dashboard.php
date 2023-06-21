@@ -38,6 +38,8 @@ return [
     'table_end_date' => 'End Date',
     'table_birth_date' => 'Birth Date',
     'table_no_data' => 'No Data To Display',
+    'table_termination_date' => 'Termination Date',
+    'table_join_date' => 'Join Date',
     'chart_active_employee' => 'Active Employee',
     'chart_employee_count' => 'Employee Headcount By Age',
     'chart_employee_length' => 'Employee Length of Service',

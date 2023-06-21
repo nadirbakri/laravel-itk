@@ -11,6 +11,7 @@ use App\Exports\AbsenteeismOvertimeReportExport;
 use App\Exports\DetailAbsenteeismReportExport;
 use App\Exports\DetailAbsenteeismReasonReportExport;
 use App\Exports\DetailRateOvertimeReportExport;
+use App\Exports\UpdateAbsenteeismDataTemplateExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\TimeRecordingProcessFormImport;
@@ -132,6 +133,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -210,6 +212,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -236,7 +239,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -246,6 +249,7 @@ class TimeManagementController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -348,7 +352,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1000,7 +1004,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1039,7 +1043,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1265,17 +1269,26 @@ class TimeManagementController extends Controller
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
             $import = new UpdateAbsenteeismDataImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
             File::delete('file_excel/'.$nama_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
             return array(0 => $objError);
         }
-        
-        return $import->getArrResult();
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
     }
 
+    public function templateUpdateAbsenteeismData()
+    {
+        return Excel::download(new UpdateAbsenteeismDataTemplateExport, 'Template Update Absenteeism Data.xlsx');
+    }
 
     public function prosesUpdateShiftByDateTM(Request $request)
     {
@@ -2365,8 +2378,8 @@ class TimeManagementController extends Controller
                     'seqNo' => isset($request->seq_no[$key]) ? (int) $request->seq_no[$key] : null,
                     'day' => isset($request->day[$key]) ? $request->day[$key] : null,
                     'shiftCode' => isset($request->shift_code[$key]) ? $request->shift_code[$key] : null,
-                    'actualDateIn' => isset($request->actual_date_in[$key]) ? $request->actual_date_in[$key] : null,
-                    'actualDateOut' => isset($request->actual_date_out[$key]) ? $request->actual_date_out[$key] : null,
+                    'actualDateIn' => isset($request->actual_date_in[$key]) ? $request->actual_date_in[$key] . "T" . $request->actual_time_in[$key] : null,
+                    'actualDateOut' => isset($request->actual_date_out[$key]) ? $request->actual_date_out[$key] . "T" . $request->actual_time_out[$key] : null,
                     'totalActualHour' => isset($request->total_actual_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_actual_hour[$key] : null,
                     'absentCode' => isset($request->finger_absent_code[$key]) ? $request->finger_absent_code[$key] : null,
                     'hourAbsent' => isset($request->finger_absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->finger_absent_hour[$key] : null,
@@ -2379,7 +2392,7 @@ class TimeManagementController extends Controller
                     'descriptionAbsent3' => null,
                     'ovtCode' => isset($request->overtime_code[$key]) ? $request->overtime_code[$key] : null,
                     'ovtBeforeIn' => isset($request->overtime_before[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_before[$key] : null,
-                    'ovtIn' => isset($request->employee_noovertime_start_table[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_start[$key] : null,
+                    'ovtIn' => isset($request->overtime_start[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_start[$key] : null,
                     'ovtOut' => isset($request->overtime_finish[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_finish[$key] : null,
                     'hourOvt' => isset($request->overtime_hour[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_hour[$key] : null,
                     'buildInOvt' => isset($request->overtime_bot[$key]) ? $request->overtime_bot[$key] : null,

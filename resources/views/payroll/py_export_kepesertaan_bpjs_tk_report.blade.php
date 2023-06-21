@@ -66,38 +66,38 @@
         <tbody>
             @foreach($data as $key => $value)
             <tr>
-                <td>{{ $value->noPegawai }}</td>
-                <td>{{ $value->namaDepan }}</td>
-                <td>{{ $value->namaTengah }}</td>
-                <td>{{ $value->namaBelakang }}</td>
-                <td>{{ $value->gelar }}</td>
+                <td>{{ $value->bpjstkData->noPegawai }}</td>
+                <td>{{ $value->bpjstkData->namaDepan }}</td>
+                <td>{{ $value->bpjstkData->namaTengah }}</td>
+                <td>{{ $value->bpjstkData->namaBelakang }}</td>
+                <td>{{ $value->bpjstkData->gelar }}</td>
                 <td></td>
-                <td>{{ $value->teleponRumah }}</td>
+                <td>{{ $value->bpjstkData->teleponRumah }}</td>
                 <td></td>
-                <td>{{ $value->teleponKantor }}</td>
+                <td>{{ $value->bpjstkData->teleponKantor }}</td>
                 <td></td>
-                <td>{{ $value->hp }}</td>
-                <td>{{ $value->email }}</td>
-                <td>{{ $value->tempatLahir }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->tanggalLahir)) }}</td>
-                <td>{{ $value->namaIbuKandung }}</td>
-                <td>{{ $value->jenisIdentitas }}</td>
-                <td>{{ $value->noIdentitas }}</td>
-                <td>{{ $value->masaLakuIdentitas }}</td>
-                <td>{{ $value->gender }}</td>
+                <td>{{ $value->bpjstkData->hp }}</td>
+                <td>{{ $value->bpjstkData->email }}</td>
+                <td>{{ $value->bpjstkData->tempatLahir }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->bpjstkData->tanggalLahir)) }}</td>
+                <td>{{ $value->bpjstkData->namaIbuKandung }}</td>
+                <td>{{ $value->bpjstkData->jenisIdentitas }}</td>
+                <td>{{ $value->bpjstkData->noIdentitas }}</td>
+                <td>{{ $value->bpjstkData->masaLakuIdentitas }}</td>
+                <td>{{ $value->bpjstkData->jenisKelamin }}</td>
                 <td>E</td>
-                <td>{{ date('Y-m-d', strtotime($value->tanggalKepesertaan)) }}</td>
-                <td>{{ $value->statusKawin }}</td>
-                <td>{{ $value->golonganDarah }}</td>
-                <td>{{ $value->npwp }}</td>
-                <td>{{ $value->kodeNegara }}</td>
-                <td>{{ $value->upah }}</td>
-                <td>{{ $value->alamat }}</td>
-                <td>{{ $value->kodePos }}</td>
-                <td>{{ $value->lokasiPekerjaan }}</td>
-                <td>{{ $value->statusPegawai }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->tglAwalBekerja)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->tglAkhirKontrak)) }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->bpjstkData->tanggalKepesertaan)) }}</td>
+                <td>{{ $value->bpjstkData->statusKawin }}</td>
+                <td>{{ $value->bpjstkData->golonganDarah }}</td>
+                <td>{{ $value->bpjstkData->npwp }}</td>
+                <td>{{ $value->bpjstkData->kodeNegara }}</td>
+                <td>{{ $value->bpjstkData->upah }}</td>
+                <td>{{ $value->bpjstkData->alamat }}</td>
+                <td>{{ $value->bpjstkData->kodePos }}</td>
+                <td>{{ $value->bpjstkData->lokasiPekerjaan }}</td>
+                <td>{{ $value->bpjstkData->statusPegawai }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->bpjstkData->tglAwalBekerja)) }}</td>
+                <td>{{ date('Y-m-d', strtotime($value->bpjstkData->tglAkhirKontrak)) }}</td>
             </tr>
             @endforeach
         </tbody>

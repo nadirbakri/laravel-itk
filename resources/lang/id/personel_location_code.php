@@ -18,6 +18,7 @@ return [
     'label_record_status' => 'Status Data',
     'label_location_code' => 'Kode Lokasi',
     'label_location_name' => 'Nama Lokasi',
+    'label_bpjs_location_code' => 'Kode Lokasi BPJS',
     'location_code_required' => 'Kode Lokasi Harus Diisi',
     'location_name_required' => 'Nama Lokasi Harus Diisi',
     'btn_save' => 'Simpan',

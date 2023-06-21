@@ -117,7 +117,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         columns: [
             {data: 'insurance_class_code', name: 'insurance_class_code'},
             {data: 'insurance_class_description', name: 'insurance_class_description'},

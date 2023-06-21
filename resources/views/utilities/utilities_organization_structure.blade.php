@@ -211,6 +211,7 @@
 
 		loadDataEmployeeNo('#employee_number_layer_one', 'empty');
 
+
 		function set_carousel(paramClass = '') {
 			$('.carousel-item', paramClass).each(function(){
 				var next = $(this).next();
@@ -533,7 +534,7 @@
 					'<div class="col-6"><b>Employee No</b></div>' +
 					'<div class="col-6"><b>Employee Name</b></div>' +
 					'</div>';
-					$('.select2-search').append(html);
+					$('.select2-search--dropdown').html(html);
 					headerIsAppend = true;
 				}
 			});

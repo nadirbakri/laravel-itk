@@ -15,6 +15,8 @@ return [
     'label_account_description' => 'Deskripsi Akun',
     'label_reference' => 'Referensi',
     'label_record_status' => 'Rekam Status',
+    'label_grouping_one' => 'Grouping 1',
+    'label_grouping_two' => 'Grouping 2',
     'account_no_required' => 'Diperlukan Akun No',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',

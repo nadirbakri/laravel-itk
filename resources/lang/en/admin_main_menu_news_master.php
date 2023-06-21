@@ -2,7 +2,7 @@
 
 return [
     'head' => 'News Master',
-    'judul' => 'Admin Menu',
+    'judul' => 'Utilities',
     'formjudul' => 'News Master',
     'form1' => 'Title',
     'form2' => 'News Category',

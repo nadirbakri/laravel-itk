@@ -280,7 +280,7 @@
                         '<div class="col-6"><b>Position Code</b></div>' +
                         '<div class="col-6"><b>Position Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

@@ -107,46 +107,47 @@
                         </div>
                     </div>
                 </div>
+            
+                <div class="row">
+                    <div class="col-8">
+                        <table id="user_data_table" class="table hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>User ID</th>
+                                    <!-- <th>User Name</th> -->
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-add-user" id="btn-add-user"
+                            style="width: 100%;" data-toggle="modal" data-target="#modal_add_user">
+                            <i class="fa fa-plus"></i> {{ __('utilities_user_access_group.btn_add_user') }}
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-danger" name="btn-remove-user" id="btn-remove-user"
+                            style="width: 100%;">
+                            <i class="fa fa-times"></i> {{ __('utilities_user_access_group.btn_remove_user') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <div class="row">
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-save-data" id="btn-save-data"
+                            style="width: 100%;">
+                            <i class="fa fa-floppy-o"></i> {{ __('utilities_user_access_group.btn_save') }}
+                        </button>
+                    </div>
+                </div>
             </form>
-            <div class="row">
-                <div class="col-8">
-                    <table id="user_data_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>User ID</th>
-                                <!-- <th>User Name</th> -->
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-add-user" id="btn-add-user"
-                        style="width: 100%;" data-toggle="modal" data-target="#modal_add_user">
-                        <i class="fa fa-plus"></i> {{ __('utilities_user_access_group.btn_add_user') }}
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-danger" name="btn-remove-user" id="btn-remove-user"
-                        style="width: 100%;">
-                        <i class="fa fa-times"></i> {{ __('utilities_user_access_group.btn_remove_user') }}
-                    </button>
-                </div>
-            </div>
-            <div class="row"></div>
-            <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-primary" name="btn-save-data" id="btn-save-data"
-                        style="width: 100%;">
-                        <i class="fa fa-floppy-o"></i> {{ __('utilities_user_access_group.btn_save') }}
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_user" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -177,7 +178,7 @@
                         </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" id="btn-save-user" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i>
+                    <button type="button" id="btn-save-user" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i>
                         {{ __('utilities_user_access_group.btn_save') }}</button>
                     <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                             class="fa fa-times-circle"></i> {{ __('utilities_user_access_group.btn_cancel') }}</button>
@@ -260,6 +261,7 @@
     $(document).ready(function () {
         var table = null;
         var func = "{{ $func }}";
+        var arrData2 = @json($data2);
 
         if (func == 'new') {
             $('#record_status').val("A");
@@ -268,6 +270,7 @@
             $('#group_name').val("");
             $('#group_id').prop('readonly', false);
             $('#user_data_table').DataTable().clear().destroy();
+            load_table_user();
         } else if (func == 'edit') {
             $('#record_status').val("{{ isset($data[0]->recordStatus) ? $data[0]->recordStatus : '' }}");
             $('#record_function').val("Edit");
@@ -276,7 +279,27 @@
                 "{{ isset($data[0]->groupAccessName) ? $data[0]->groupAccessName : '' }}"));
             $('#group_id').prop('readonly', true);
             $('#user_data_table').DataTable().clear().destroy();
-            load_table_user("{{ isset($data[0]->groupAccessID) ? $data[0]->groupAccessID : '' }}");
+            load_table_user();
+            if(!isEmpty(arrData2)){
+                $.each(arrData2, function(k, v) {
+                    table.row.add([
+                        '<input class="chk-select" type="checkbox">',
+                        '<input type="hidden" class="form-control" name="userid_group[]" value="' + v.userID + '">' + v.userID
+                    ]).draw();
+                });
+
+                table.columns.adjust();
+            }
+        }
+
+        function isEmpty(obj) {
+            for(var prop in obj) {
+                if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+                    return false;
+                }
+            }
+
+            return JSON.stringify(obj) === JSON.stringify({});
         }
 
         function htmlDecode(value) {
@@ -307,90 +330,70 @@
             });
         });
 
-        function load_table_user(groupAccessID = '') {
+        // function load_table_user(groupAccessID = '') {
+        //     table = $('#user_data_table').DataTable({
+        //         processing: true,
+        //         serverSide: true,
+        //         orderCellsTop: true,
+        //         ajax: {
+        //             url: "{{ url('utilities/group_user_access/user/table') }}",
+        //             data: {
+        //                 groupAccessID: groupAccessID
+        //             }
+        //         },
+        //         error: function (jqXHR, ajaxOptions, thrownError) {
+        //             alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
+        //                 "\r\n" + ajaxOptions.responseText);
+        //         },
+        //         "sDom": 'lrtip',
+        //         'sPaginationType': 'full_numbers',
+        //         "order": [
+        //             [1, "asc"]
+        //         ],
+        //         columns: [{
+        //                 orderable: false,
+        //                 targets: 0,
+        //                 "defaultContent": '',
+        //                 render: function (data, type) {
+        //                     return type === 'display' ?
+        //                         '<input class="chk-select" type="checkbox">' : '';
+        //                 }
+        //             },
+        //             {
+        //                 data: 'userID',
+        //                 name: 'userID'
+        //             },
+        //             // {data: 'name', name: 'name'}
+        //         ],
+        //         select: {
+        //             style: 'multi',
+        //             selector: 'td:first-child'
+        //         }
+        //     });
+        // }
+
+        function load_table_user() {
             table = $('#user_data_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url: "{{ url('utilities/group_user_access/user/table') }}",
-                    data: {
-                        groupAccessID: groupAccessID
-                    }
-                },
-                error: function (jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
-                        "\r\n" + ajaxOptions.responseText);
-                },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                "order": [
-                    [1, "asc"]
-                ],
-                columns: [{
-                        orderable: false,
-                        targets: 0,
-                        "defaultContent": '',
-                        render: function (data, type) {
-                            return type === 'display' ?
-                                '<input class="chk-select" type="checkbox">' : '';
-                        }
-                    },
-                    {
-                        data: 'userID',
-                        name: 'userID'
-                    },
-                    // {data: 'name', name: 'name'}
-                ],
-                select: {
-                    style: 'multi',
-                    selector: 'td:first-child'
-                }
+                'sPaginationType': 'full_numbers'
             });
         }
 
-        $("#btn-save-data").on('click', function () {
-            $('#user_access_group_form').submit();
+        $('#user_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
         });
 
-        $("#btn-remove-user").on('click', function () {
-            var data = table.rows('.selected').data();
-            if (data.count() > 0) {
-                $.ajax({
-                    url: "{{ url('utilities/group_user_access/user/remove') }}",
-                    type: "GET",
-                    data: {
-                        'groupAccessID': data[0].groupAccessID,
-                        'userID': data[0].userID
-                    },
-                    success: function (response) {
-                        if (response.status == "true") {
-                            $('#notification_success_user').modal('show');
-                            $('#message-notification-success-user').html(response.message);
-                            var oTable = $('#user_data_table').dataTable();
-                            oTable.fnDraw(false);
-                            setTimeout(function () {
-                                $('#notification_success_user').modal('hide');
-                            }, 3000);
-                        } else {
-                            $('#notification_error').modal('show');
-                            if (response.message == null || response.message == '') {
-                                $('#message-notification-error').html(
-                                    "{{ __('login.error') }}");
-                            } else {
-                                $('#message-notification-error').html(response.message);
-                            }
-                        }
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            } else {
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html('No Data Selected');
-            }
+        $('#user_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -403,8 +406,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.userID + '</div>' +
-                        '<div class="col-6">' + data.data.userName + '</div>' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -415,10 +418,10 @@
             $('#user_id').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
-                        '<div class="col-6"><b>User ID</b></div>' +
-                        '<div class="col-6"><b>User Name</b></div>' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -490,11 +493,23 @@
         });
 
         $("#btn-save-user").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#user_form").submit();
+            // $(this).prop("disabled", true);
+            // $(this).html(
+            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            // );
+            // $("#user_form").submit();
+            var userID = $('#user_id').val();
+            table.row.add([
+                '<input class="chk-select" type="checkbox">',
+                '<input type="hidden" class="form-control" name="userid_group[]" value="' + userID + '">' + userID
+            ]).draw();
+            $('#user_id').val(null).trigger('change');
+            $('#user_name').val(null);
+            $('#modal_add_user').modal('hide');
+        });
+
+        $('#btn-remove-user').on('click', function () {
+            table.row('.selected').remove().draw();
         });
 
         if ($("#user_access_group_form").length > 0) {

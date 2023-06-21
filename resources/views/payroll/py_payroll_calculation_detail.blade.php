@@ -165,7 +165,7 @@
     <div class="div-form">
         <form id="payroll_calculation_detail_modal_form" method="post">
             @csrf
-            <div class="modal fade" id="modal_add_edit_payroll_calculation" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal_add_edit_payroll_calculation"  role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -274,6 +274,8 @@
                                 </div>
                                 <div class="col-2">
                                     <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
                                         <div class="form-radio">
                                             <input class="form-radio-input" type="radio" id="and_operator"
                                                 name="operator" value="And">
@@ -481,8 +483,7 @@
             $('#field_name_hidden').val((typeof arrData[0].fieldName !== 'undefined') ? arrData[0].fieldName : '');
 
             load_table_payroll_calculation_detail();
-            // console.log(arrData2[0].seqNo);
-            if (arrData2[0].seqNo !== 'undefined' && arrData2[0].seqNo !== "") {
+            if (arrData2 != null) {
                 for (var i = 0; i < arrData2.length; i++) {
                     arrayPayrollCalculation.push({
                         "seqNo": ((typeof arrData2[i].seqNo !== 'undefined') ? arrData2[i].seqNo : ''),
@@ -507,6 +508,8 @@
         });
 
         $("#btn-edit").on('click', function() {
+            $('#table_chooser').val(null).trigger('change');
+            $('#field_chooser').val(null).trigger('change');
             var data = table.rows('.selected').data();
             if(data.count() > 0){
                 $('#modal_add_edit_payroll_calculation').modal('show');
@@ -524,7 +527,7 @@
         $('#table_chooser').on('change', function () {
             tableChooser = $('#table_chooser').val();
             $('#field_chooser').val(null).trigger('change');
-            loadDataFieldChooser();
+            loadDataFieldChooser(tableChooser);
         });
 
         $('#field_chooser').on('select2:select', function (e) {
@@ -573,10 +576,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Field Name</b></div>' +
-                        '<div class="col-6"><b>Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.fieldName + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
@@ -584,6 +583,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#field_name').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Field Name</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -639,7 +650,7 @@
                 data: arrayPayrollCalculation,
 
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
 
                 columns: [
                     {
@@ -683,8 +694,25 @@
             });
         }
 
+        $('#payroll_calculation_detail_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
 
-        function loadDataFieldChooser(){
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#payroll_calculation_detail_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+
+        function loadDataFieldChooser(tableChooser = ''){
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -721,12 +749,11 @@
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
-                    data: {
-                        'tableName' : tableChooser
-                    }, function (params) {
+                    data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            tableName: tableChooser
                         };
                     },
                     processResults: function (data) {
@@ -803,33 +830,40 @@
                 $('#no').val(count+1);
             }
             else {
-                $.ajax({
-                    url: "{{ url('payroll/payroll_calculation_number/check') }}",
-                    type: "GET",
-                    data: {
-                        'url': '/prcalculation/getprcalculationdetail',
-                        'seqNo': arrData2[0].seqNo
-                    },
-                    success: function (response) {
-                        var count = (table.rows().count())+1;
-                        if (response > 0 && count !== response) {
-                            var total = parseInt(response) + parseInt(count);
-                            $('#no').val(total - 1);
-                        }
-                        else if (response > 0 && count == response) {
+                if(arrData2 != null){
+                    $.ajax({
+                        url: "{{ url('payroll/payroll_calculation_number/check') }}",
+                        type: "GET",
+                        data: {
+                            'url': '/prcalculation/getprcalculationdetail',
+                            'seqNo': arrData2[0].seqNo
+                        },
+                        success: function (response) {
                             $('#no').val(response);
+                            // console.log(table.rows().count());
+                            // var count = (table.rows().count())+1;
+                            // if (response > 0 && count !== response) {
+                            //     var total = parseInt(response) + parseInt(count);
+                            //     $('#no').val(total - 1);
+                            // }
+                            // else if (response > 0 && count == response) {
+                            //     $('#no').val(response);
+                            // }
+                            // else {
+                            //     for (var i = 0; i <= count; i++){
+                            //         $('#no').val(i);
+                            //     }
+                            // }
+                        },
+                        error: function (response) {
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
                         }
-                        else {
-                            for (var i = 0; i <= count; i++){
-                                $('#no').val(i);
-                            }
-                        }
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
+                    });
+                }else{
+                    var count = table.rows().count();
+                    $('#no').val(count+1);
+                }
             }
         });
 

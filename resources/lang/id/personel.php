@@ -48,6 +48,7 @@ return [
     'employee_attachment' => 'Lampiran Pegawai',
     'change_employee_no' => 'Ganti No Pegawai',
     'import_export_personal_data' => 'Import & Export Data Pribadi',
+    'import_master_data' => 'Import Master Data',
     // 'npwp_mutation' => 'Mutasi NPWP',
     // 'termination_data_entry' => 'Entri Data Terminasi',
     // 'award_data_entry' => 'Entri Data Penghargaan',

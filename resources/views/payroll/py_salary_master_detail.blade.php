@@ -181,7 +181,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modal_warning_salary_master" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal_warning_salary_master"  role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header modal-header-notification-warning text-center">
@@ -315,6 +315,7 @@
         load_data_table_salary_master_detail();
         if (typeof arrData[0].grid !== 'undefined') {
             $.each(arrData[0].grid, function(k, v) {
+                console.log(v);
                 table.row.add([
                     '<input type="text" class="form-control" name="field_name[]" id="field_name" value="'+ ((typeof v.fieldName !== 'undefined' && v.fieldName !== null) ? v.fieldName : '') +'" readonly>',
                     '<input type="text" class="form-control" name="description[]" id="description" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
@@ -373,7 +374,7 @@
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

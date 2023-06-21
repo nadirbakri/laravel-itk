@@ -735,7 +735,7 @@
                 orderCellsTop: true,
                 paging: false,
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "deferLoading": 10
             });
         }
@@ -1361,7 +1361,7 @@
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1432,7 +1432,7 @@
                         '<div class="col-6"><b>Loan Code</b></div>' +
                         '<div class="col-6"><b>Loan Description</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

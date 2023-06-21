@@ -114,6 +114,11 @@
                             <i class="fa fa-play-circle-o"></i> {{ __('tm_update_absenteeism_data.btn_process') }}
                         </button>
                     </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-process" name="btn-export" id="btn-export">
+                            <i class="fa fa-download"></i> {{ __('tm_update_absenteeism_data.btn_download_template') }}
+                        </button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -204,6 +209,59 @@
 
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('time_management/update_absenteeism_data') }}";
+        });
+
+        $("#btn-export").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('time_management/update_absenteeism_data/download') }}",
+                type: "POST",
+                success: function (result, status, xhr) {
+                    $("#btn-export").prop("disabled", false);
+                    $("#btn-export").html(
+                        '<i class="fa fa-download"></i> {{ __("tm_update_absenteeism_data.btn_download_template") }}'
+                    );
+
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'audit_trail.xlsx');
+                
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#btn-export").prop("disabled", false);
+                    $("#btn-export").html(
+                        '<i class="fa fa-download"></i> {{ __("tm_update_absenteeism_data.btn_download_template") }}'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
         });
 
         if ($("#tm_update_absenteeism_data_form").length > 0) {

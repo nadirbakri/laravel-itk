@@ -173,11 +173,41 @@
         padding: 2%;
     }
 
+    #loading {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 9999;
+    }
+
+    .spinner {
+        margin-left: 45%;
+        margin-top: 20%;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 5px solid #ccc;
+        border-top-color: #333;
+        animation: spin 1s infinite linear;
+    }
+
+    @keyframes spin {
+    to { transform: rotate(360deg); }
+    }
+
 </style>
 @endsection
 
 @section('content')
 <main role="main">
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
     <div>
         <lottie-player class="img-login" src="{{ asset('pictures/login.json') }}"  background="transparent"  speed="1" loop autoplay></lottie-player>
     </div>
@@ -225,6 +255,15 @@
                     </button>
                 </div>
             </div>
+            <p class="bawah-judul-text" style="text-align:center; font-size: 2.5vh">{{ __('login.login_with') }}</p>
+            <div class="row">
+                <!-- <div class="col-2 form-group">&nbsp;</div> -->
+                <div class="col-12 form-group">
+                    <a href="{{ url('login-sso') }}" class="btn btn-outline-secondary" name="btn_sso" id="btn_sso" style="width: 100%;">
+                        <img src="{{ url('/pictures/microsoft.svg') }}" style="display: inline-block; float: none; margin: 0px 0px 1% 0px; max-width: 8%;"> {{ __('login.button_sso') }}
+                    </a>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="label-checkbox" for="chk_demo_account"><input type="checkbox" name="chk_demo_account"
                         id="chk_demo_account" /> <span>{{ __('login.label_demo_account') }}</span></label>
@@ -267,6 +306,14 @@
 @endsection
 
 @section('js-content')
+<script>
+	var msg = '{{Session::get('alert')}}';
+	var exist = '{{Session::has('alert')}}';
+	if(exist){
+		alert(msg);
+	}
+</script>
+
 <script>
     var exist = '{{$errors->any()}}';
     var message = '{{Session::get('
@@ -315,9 +362,22 @@
         //     $("#login_form").submit();
         // });
 
+        $("#btn_sso").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+        });
+
         $("#btn_clear").click(function () {
             $('#login_form').trigger("reset");
-            $("#btn_clear").attr('disabled', true);
+            $("#btn_clear").prop('disabled', true);
+        });
+
+        $('#login_form input').focus(function() {
+            if(!$(this).val()) {
+                $("#btn_clear").prop('disabled', false);
+            }
         });
 
         if ($("#login_form").length > 0) {
@@ -365,6 +425,8 @@
                     $("#btn_submit").html(
                         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
                     );
+
+                    // $('#loading').show();
                     
                     $.ajaxSetup({
                         headers: {
@@ -379,6 +441,7 @@
                             if (response.status == "true") {
                                 window.location = "{{ url('main') }}";
                             } else {
+                                // $('#loading').hide();
                                 $('#notification').modal('show');
 								$("#btn_submit").prop("disabled", false);
 								$("#btn_submit").html(
@@ -394,6 +457,7 @@
                             }
                         },
                         error: function (response) {
+                            // $('#loading').hide();
                             $("#btn_submit").prop("disabled", false);
                             $("#btn_submit").html(
                                 '<i class="fa fa-sign-in"></i> {{ __("login.button_login") }}'

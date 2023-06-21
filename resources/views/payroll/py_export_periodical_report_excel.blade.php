@@ -29,104 +29,69 @@
 	</style>
 </head>
 <body>
+    @if(count($data) > 0 && (count($data[0]->detail) > 0 || count($data[0]->summary) > 0))
+    <?php
+        $countcolspan = count($data[0]->detail[0]->field) + 3;
+    ?>
     <table>
         <thead>
             <tr>
-                <th colspan="16">{{ $data_company[0]->companyName }}</th>
+                <th colspan="{{ $countcolspan }}">{{ $data_company[0]->companyName }}</th>
             </tr>
             <tr>
-                <th colspan="16">{{ $data_company[0]->address }}</th>
+                <th colspan="{{ $countcolspan }}">{{ $data_company[0]->address }}</th>
             </tr>
             <tr></tr>
             <tr>
-                <th colspan="16" style="text-align:center; font-weight:bold;"><h3></h3></th>
+                <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><h3>Periodical Report</h3></th>
             </tr>
             <tr>
-                <th colspan="16" style="text-align:center; font-weight:bold;"><pre>{{ __('payroll_dumtk.label_as_of_period') }}       {{ $data[1]->asOfPeriod }}</pre></th>
+                <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
             </tr>
             <tr></tr>
         </thead>
     </table>
+    <?php
+    $total = [];
+    ?>
     <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th rowspan="2" style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_no') }}</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_bpjs_no') }}</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_employee_no') }}</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_gender') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_january') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_february') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_march') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_april') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_may') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_june') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_july') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_august') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_september') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_october') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_november') }}</th>
-                <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_december') }}</th>
-            </tr>
-            <tr>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_bpjs_joining_date') }}</th>
-                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_full_name') }}</th>
-                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ __('payroll_dumtk.header_birth_date') }}</th>
+                <th style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Employee No</th>
+                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Full Name</th>
+                @foreach($data[0]->detail[0]->field as $key => $dataTable)
+                <?php
+                $total[$dataTable->field] = 0;
+                ?>
+                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataTable->tableName }}</th>
+                @endforeach
             </tr>
         </thead>
         <tbody>
-            @foreach($data[1]->employeeDetail as $key => $dataTable)
+            @foreach($data[0]->detail as $key => $dataTable)
             <tr>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $key+1 }}</td>
-                <td style="text-align:left; border:1px solid #000;">{{ $dataTable->bpjsNo }}</td>
+                <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $key+1 }}</td>
                 <td style="text-align:left; border:1px solid #000;">{{ $dataTable->employeeNo }}</td>
-                <td style="text-align:left; border:1px solid #000;">{{ $dataTable->gender === 'M' ? 'Male' : ($dataTable->gender === 'F' ? 'Female' : '') }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->january }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->february }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->march }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->april }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->may }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->june }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->july }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->august }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->september }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->october }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->november }}</td>
-                <td rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataTable->bulan->december }}</td>
-            </tr>
-            <tr>
-                <td style="text-align:left; border:1px solid #000;">{{ date('Y-m-d',strtotime($dataTable->bpjsJoiningDate)) }}</td>
                 <td style="text-align:left; border:1px solid #000;">{{ $dataTable->fullName }}</td>
-                <td style="text-align:left; border:1px solid #000;">{{ date('Y-m-d',strtotime($dataTable->birthDate)) }}</td>
+                @foreach($dataTable->field as $key2 => $dataTable2)
+                <?php
+                $total[$dataTable2->field] += $dataTable2->value;
+                ?>
+                <td style="text-align:left; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                @endforeach
             </tr>
             @endforeach
+            @if($grand_total)
             <tr>
-                <td colspan="16" style="background-color: yellow; text-align:center; border:1px solid #000;">{{ __('payroll_dumtk.grand_total') }} : {{ $data[1]->grandTotal }}</td>
+                <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</td>
+                @foreach($data[0]->detail[0]->field as $key3 => $dataTable3)
+                <td style="text-align:left; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                @endforeach
             </tr>
-            <tr></tr>
-            <tr>
-                <td colspan="2" style="font-weight: bold;">{{ __('payroll_dumtk.report_parameter') }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">{{ __('payroll_dumtk.label_employee_no') }} : </td>
-                <td>{{ $data2[0]->employeeNoFrom }} {{ __('payroll_dumtk.label_to') }} {{ $data2[0]->employeeNoTo }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">{{ __('payroll_dumtk.total_printed') }} : </td>
-                <td>{{ count($data[1]->employeeDetail) }} Record{s}</td>
-            </tr>
-            <tr>
-                <?php
-                    $timestamp = time();
-                    $dt = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
-                    $dt->setTimestamp($timestamp);
-                    echo '<td colspan="2" style="border-top: 2px solid #000">' . __('payroll_dumtk.date_now') . ' :' .'</td>';
-                    echo '<td style="border-top: 2px solid #000">' . 'Server Date : ' . $dt->format('d/m/Y') .'</td>';
-                    echo '<td style="border-top: 2px solid #000"></td>';
-                    echo '<td colspan="2" style="border-top: 2px solid #000">' . __('payroll_dumtk.hour_now') . ' :' .'</td>';
-                    echo '<td style="border-top: 2px solid #000">' . 'Server Hour : ' . $dt->format('H:i:s A') .'</td>';
-                ?>
-            </tr>
+            @endif
         </tbody>
     </table>
+    @endif
 </body>
 </html>

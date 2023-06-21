@@ -116,7 +116,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         columns: [
             {data: 'line_of_business_code', name: 'line_of_business_code'},
             {data: 'line_of_business_name', name: 'line_of_business_name'},

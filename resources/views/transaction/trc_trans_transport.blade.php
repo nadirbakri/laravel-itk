@@ -572,7 +572,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lfrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
@@ -700,7 +700,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -1105,7 +1105,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -1390,7 +1390,8 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         data: function (params) {
                             return {
                                 _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 'levelType' : '1' 
+                                search: params.term, 
+                                levelType: '1' 
     
                             };
                         },

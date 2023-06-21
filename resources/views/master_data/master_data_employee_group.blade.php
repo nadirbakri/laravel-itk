@@ -12,10 +12,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('css/data_employee_grou.css') }}"> 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+    
     <style type="text/css">
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
@@ -90,7 +89,7 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
-        .row button {
+        .row .button {
             background-color: #1E90FF;
             border: none;
             color: white;
@@ -100,7 +99,7 @@
             display: inline-block;
             margin: 4px 2px;
             cursor: pointer;
-            }
+        }
 
         .btn{
             margin-top:10px;
@@ -112,73 +111,70 @@
             margin-left: 4%;
             margin-right: 2%;
             margin-top:15px
-       }
-       .judul h1{
-        font-size: 25px;
-        margin-left: 4%;
-        margin-right: 2%;
-        margin-top:50px
-       }
-       .judul hr{
-        max-width:1200px;
-        margin-left:4%;
-        margin-right: 2%;
-       }
-       .buttonadd{
-        width: 40px;
-        height: 40px;
-        background: #dac52c;
-        border-radius: 100%;
-       }
+        }
+        .judul h1{
+            font-size: 25px;
+            margin-left: 4%;
+            margin-right: 2%;
+            margin-top:50px
+        }
+        .judul hr{
+            max-width:1200px;
+            margin-left:4%;
+            margin-right: 2%;
+        }
+        .buttonadd{
+            width: 40px;
+            height: 40px;
+            background: #dac52c;
+            border-radius: 100%;
+        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <div class="judul">
-            <h1>
-                <a href="{{ url('master_data') }}" target="iframe_dashboard">
-                    <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                    <span class="title-text">{{ __('data_employee_group.judul') }}</span>
-                </a>
-            </h1>
-            <hr>
+        <div class="div-title">
+            <a href="{{ url('master_data') }}" target="iframe_dashboard">
+                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                <span class="title-text">{{ __('data_employee_group.judul_employee_group_permit') }}</span>
+            </a>
         </div>
         <form id="md_employee_group" method="post">
             @csrf
             <div class="card" >
                 <div class="card-header">
-                {{ __('data_employee_group.judul2') }}
+                    <h5>{{ __('data_employee_group.judul_employee_group_permit') }}</h5>
                 </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname1') }}</b></label>
+                            <label for="group_code form-check-label"><b>{{ __('data_employee_group.formgroupname1') }}</b></label>
                         </div>
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_code" name="group_code" readonly>                        
+                        <input type="text" class="form-control" id="group_code" name="group_code">                        
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname2') }}</b></label>
+                            <label for="group_name form-check-label"><b>{{ __('data_employee_group.formgroupname2') }}</b></label>
                         </div>
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_name" name="group_name" readonly>                        
+                        <input type="text" class="form-control" id="group_name" name="group_name">                        
                     </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_group.formgroupname3') }}</b></label>
+                            <label for="exampletwo form-check-label"><b>{{ __('data_employee_group.formgroupname3') }}</b></label>
                         </div>
                     </div>
                 </div>
@@ -202,10 +198,10 @@
                         </tbody>
                     </table>
 
-                    <button class="btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_group_two" type="button">
+                    <button class="button btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_group_two" type="button">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <button class="btn-danger buttonadd" name="btn-delete" id="btn-delete" type="button">
+                    <button class="button btn-danger buttonadd" name="btn-delete" id="btn-delete" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg>
                     </button>
@@ -241,10 +237,10 @@
                         </tbody>
                     </table>
 
-                    <button class="btn btn-primary buttonadd" name="btn-add2" id="btn-add2" data-toggle="modal" data-target="#modal_list_group_email_setting" type="button">
+                    <button class="button btn btn-primary buttonadd" name="btn-add2" id="btn-add2" data-toggle="modal" data-target="#modal_list_group_email_setting" type="button">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <button class="btn-danger buttonadd" name="btn-delete2" id="btn-delete2" type="button">
+                    <button class="button btn-danger buttonadd" name="btn-delete2" id="btn-delete2" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg>
                     </button>
@@ -264,7 +260,13 @@
                             style="width: 100%;">
                             <i class="fa fa-floppy-o"></i> {{ __('md_claim_transaction.btn_save') }}
                         </button>
-                    </div>        
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-primary"
+                        onClick="window.location.reload();" value="preview" style="width: 100%;">
+                            <i class="fa fa-times"></i> {{ __('admin_main_menu_news_master.cancel') }}
+                        </button>   
+                    </div>  
                 </div>  
             </div>
         </form>
@@ -465,7 +467,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -541,11 +543,13 @@
         } 
 
     const klik = (element) => {
-        let employee_id = $(element).parent().siblings('.sorting_1').text()
+        let employee_id = $(element).parent().siblings('.sorting_1').text();
         // var text = $(this).text().replace(/\u00A0/, " ");
         let fullname = $(element).parent().siblings('td').eq(1).text().replace("\u00A0", " ");
-        $('#group_code').val(employee_id)
-        $('#group_name').val(fullname)
+        $('#group_code').val(employee_id);
+        $('#group_name').val(fullname);
+        $('#group_code').prop('readonly', true);
+        $('#group_name').prop('readonly', true);
 
         $('.close').click();
         arrApproval = table2.row($(element).parent()).data().directApproval;
@@ -554,7 +558,44 @@
         load_data_email_table();
     }
 
-    
+    $('#exampletwo tbody').on('click', 'input[type="checkbox"]', function(e){
+        var $row = $(this).closest('tr');
+
+        if(this.checked){
+            $row.addClass('selected');
+        } else {
+            $row.removeClass('selected');
+        }
+
+        // Prevent click event from propagating to parent
+        e.stopPropagation();
+    });
+
+    $('#exampletwo').on('click', 'tr td:first-child', function(e){
+        $(this).parent().find('input[type="checkbox"]').trigger('click');
+    });
+
+    $('#group_code').blur(function () {
+        if($(this).val() != null && $(this).val() != ''){
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/master_data/get') }}",
+                data: {
+                    'groupCode': $(this).val()
+                }
+            }).then(function (data) {
+                $('#group_code').val(data[0].groupCode);
+                $('#group_name').val(data[0].groupName);
+                $('#group_code').prop('readonly', true);
+                $('#group_name').prop('readonly', true);
+
+                arrApproval = data[0].directApproval;
+                load_data_approval_table();
+                arrEmailSettings = data[0].emailSettings;
+                load_data_email_table();
+            });
+        }
+    });
 
     $('#btn-add').click(()=> {
         $('#examplethree').DataTable().destroy();
@@ -569,7 +610,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -619,7 +660,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -700,6 +741,23 @@
         // arrApproval = table4.row($(element).parent()).data().directApproval;
         // load_data_approval_table();
     }
+
+    $('#exampleemail tbody').on('click', 'input[type="checkbox"]', function(e){
+        var $row = $(this).closest('tr');
+
+        if(this.checked){
+            $row.addClass('selected');
+        } else {
+            $row.removeClass('selected');
+        }
+
+        // Prevent click event from propagating to parent
+        e.stopPropagation();
+    });
+
+    $('#exampleemail').on('click', 'tr td:first-child', function(e){
+        $(this).parent().find('input[type="checkbox"]').trigger('click');
+    });
      
 </script>
 

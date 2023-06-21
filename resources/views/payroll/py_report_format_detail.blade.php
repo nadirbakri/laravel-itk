@@ -204,7 +204,7 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_report_format_detail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_report_format_detail" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -311,7 +311,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_report_format_condition" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_report_format_condition" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -520,7 +520,7 @@
                 data: arrayReportFormatDetail,
 
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
 
                 columns: [
                     {
@@ -596,11 +596,28 @@
             });
         }
 
+        $('#report_format_detail_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#report_format_detail_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_report_format_condition() {
             table2 = $('#report_format_condition_table').DataTable({
                 data: arrayReportFormatCondition,
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 columns: [
                     {
                         orderable: false,
@@ -659,6 +676,23 @@
                 }
             });
         }
+
+        $('#report_format_condition_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#report_format_condition_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $('#btn-add-report-format-detail').on('click', function () {
             $('#column_no').val("");

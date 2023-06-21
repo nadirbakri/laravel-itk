@@ -1107,14 +1107,14 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-				'data_home_zip_code' => ($request->homeZipCode == null) ? [] : $arrResult->dataListSet[0],
-				'data_other_zip_code' => ($request->otherZipCode == null) ? [] : $arrResult2->dataListSet[0],
-				'data_work_zip_code' => ($request->workZipCode == null) ? [] : $arrResult3->dataListSet[0],
-				'data_correspondence_zip_code' => ($request->correspondenceZipCode == null) ? [] : $arrResult4->dataListSet[0],
-				'data_home_district_code' => ($request->homeDistrictCode == null) ? [] : $arrResult5->dataListSet[0],
-				'data_other_district_code' => ($request->otherDistrictCode == null) ? [] : $arrResult6->dataListSet[0],
-				'data_home_subdistrict_code' => ($request->homeSubdistrictCode == null) ? [] : $arrResult7->dataListSet[0],
-				'data_other_district_code' => ($request->otherSubDistrictCode == null) ? [] : $arrResult8->dataListSet[0],
+				'data_home_zip_code' => ($request->homeZipCode == null || $arrResult->dataListSet == null) ? [] : $arrResult->dataListSet[0],
+				'data_other_zip_code' => ($request->otherZipCode == null || $arrResult2->dataListSet == null) ? [] : $arrResult2->dataListSet[0],
+				'data_work_zip_code' => ($request->workZipCode == null || $arrResult3->dataListSet == null) ? [] : $arrResult3->dataListSet[0],
+				'data_correspondence_zip_code' => ($request->correspondenceZipCode == null || $arrResult4->dataListSet == null) ? [] : $arrResult4->dataListSet[0],
+				'data_home_district_code' => ($request->homeDistrictCode == null || $arrResult5->dataListSet == null) ? [] : $arrResult5->dataListSet[0],
+				'data_other_district_code' => ($request->otherDistrictCode == null || $arrResult6->dataListSet == null) ? [] : $arrResult6->dataListSet[0],
+				'data_home_subdistrict_code' => ($request->homeSubdistrictCode == null || $arrResult7->dataListSet == null) ? [] : $arrResult7->dataListSet[0],
+				'data_other_subdistrict_code' => ($request->otherSubDistrictCode == null || $arrResult8->dataListSet == null) ? [] : $arrResult8->dataListSet[0],
 			]
 		);
 	}
@@ -1148,6 +1148,27 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		$arrPropinsi = [];
+		if($arrResult->dataListSet != null){
+			foreach($arrResult->dataListSet as $key => $val) {
+				if(!in_array($val->propinsi, $arrPropinsi)) {
+					$arrPropinsi[] = $val->propinsi;
+				}else{
+					array_splice($arrResult->dataListSet, $key);
+				}
+			}
+		}
+
+		// var_dump($arrResult->dataListSet);
+
+		// $resultArr = array_values(array_filter($arrResult->dataListSet, function($obj){
+		// 	if(in_array($obj->propinsi, $arrPropinsi)) {
+		// 		return false;
+		// 	}
+		// 	$arrPropinsi[] = $obj->propinsi;
+		// 	return true;
+		// }));
 
 	    if($search == ''){
 	    	$data = $arrResult->dataListSet;
@@ -1233,6 +1254,17 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		$arrKabupaten = [];
+		if($arrResult->dataListSet != null){
+			foreach($arrResult->dataListSet as $key => $val) {
+				if(!in_array($val->kabupaten, $arrKabupaten)) {
+					$arrKabupaten[] = $val->kabupaten;
+				}else{
+					array_splice($arrResult->dataListSet, $key);
+				}
+			}
+		}
 
 	    if($search == ''){
 	    	$data = $arrResult->dataListSet;
@@ -2057,7 +2089,6 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
-						'companyCode' => Session::get('companyCode'),
 	    				'recordStatus' => 'A'
 	    			]
 	    		)]
@@ -2140,6 +2171,47 @@ class DataController extends Controller
 	    }
 
         return response()->json($company);
+	}
+
+	public function dataSessionCompanyAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    		['body' => json_encode(
+	    			[
+						'holdingCompany' => $request->company
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
+	}
+
+	public function changeSessionCompanyAPI(Request $request)
+    {
+		Session::put('companyCode', $request->companyCode);
+		Session::put('companyName', $request->companyName);
+
+        return response()->json(["status" => true, "message" => "Success!"]);
 	}
 
 	public function dataModuleAPI(Request $request)
@@ -2815,7 +2887,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/user/getusermaster',
+	    	$response = $client->post(env('API_URL') . '/user/getuserview',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -2841,10 +2913,10 @@ class DataController extends Controller
 	    	$user_data    = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->userID)){
-	    				return preg_match('/' . $search . '/i', $value->userID);
-	    			}else if(preg_match('/' . $search . '/i', $value->userName)){
-	    				return preg_match('/' . $search . '/i', $value->userName);
+	    			if(preg_match('/' . $search . '/i', $value->employeeNo)){
+	    				return preg_match('/' . $search . '/i', $value->employeeNo);
+	    			}else if(preg_match('/' . $search . '/i', $value->fullName)){
+	    				return preg_match('/' . $search . '/i', $value->fullName);
 	    			}
 	    		}
 	    	);
@@ -3384,13 +3456,13 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-				'data_birth_place' => ($request->birthPlace == null) ? [] : $arrResult->dataListSet[0],
-				'data_driving_license_car_no_place_registration' => ($request->drivingLicenseMobilNoPlaceRegistration == null) ? [] : $arrResult2->dataListSet[0],
-				'data_driving_license_motorcycle_no_place_registration' => ($request->drivingLicenseMotorNoPlaceRegistration == null) ? [] : $arrResult3->dataListSet[0],
-				'data_home_city_code' => ($request->homeCityCode == null) ? [] : $arrResult4->dataListSet[0],
-				'data_other_city_code' => ($request->otherCityCode == null) ? [] : $arrResult5->dataListSet[0],
-				'data_work_city_code' => ($request->workCityCode == null) ? [] : $arrResult6->dataListSet[0],
-				'data_correspondence_city_code' => ($request->correspondenceCityCode == null) ? [] : $arrResult7->dataListSet[0],
+				'data_birth_place' => ($request->birthPlace == null || $arrResult->dataListSet == null) ? [] : $arrResult->dataListSet[0],
+				'data_driving_license_car_no_place_registration' => ($request->drivingLicenseMobilNoPlaceRegistration == null || $arrResult2->dataListSet == null) ? [] : $arrResult2->dataListSet[0],
+				'data_driving_license_motorcycle_no_place_registration' => ($request->drivingLicenseMotorNoPlaceRegistration == null || $arrResult3->dataListSet == null) ? [] : $arrResult3->dataListSet[0],
+				'data_home_city_code' => ($request->homeCityCode == null || $arrResult4->dataListSet == null) ? [] : $arrResult4->dataListSet[0],
+				'data_other_city_code' => ($request->otherCityCode == null || $arrResult5->dataListSet == null) ? [] : $arrResult5->dataListSet[0],
+				'data_work_city_code' => ($request->workCityCode == null || $arrResult6->dataListSet == null) ? [] : $arrResult6->dataListSet[0],
+				'data_correspondence_city_code' => ($request->correspondenceCityCode == null || $arrResult7->dataListSet == null) ? [] : $arrResult7->dataListSet[0],
 			]
 		);
 	}
@@ -5798,7 +5870,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 						'absentType' => 'L',
@@ -5845,7 +5917,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 	    				'absentType' => 'O',
@@ -5894,7 +5966,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -5914,7 +5986,22 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    return response()->json($arrResult->dataListSet);
+		if($search == ''){
+	    	$absent = $arrResult->dataListSet;
+	    }else{
+	    	$absent = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->absentCode)){
+	    				return preg_match('/' . $search . '/i', $value->absentCode);
+	    			}else if(preg_match('/' . $search . '/i', $value->description)){
+						return preg_match('/' . $search . '/i', $value->description);
+					}
+	    		}
+	    	);
+	    }
+
+        return response()->json($absent);
 	}
 
 	public function dataShiftMasterCodeAPI(Request $request)
@@ -5999,7 +6086,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/gettmabsentcode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6470,25 +6557,25 @@ class DataController extends Controller
 
 	    return response()->json(
 			[
-			'data_gender' => ($request->gender == null) ? [] : $arrResult->dataListSet[0], 
-			'data_marital_status' => ($request->maritalStatus == null) ? [] : $arrResult2->dataListSet[0], 
-			'data_religion' => ($request->religionCode == null) ? [] : $arrResult3->dataListSet[0], 
-			'data_nationality' => ($request->nationality == null) ? [] : $arrResult4->dataListSet[0], 
-			'data_employment_status' => ($request->employmentStatus == null) ? [] : $arrResult5->dataListSet[0], 
-			'data_employment_type' => ($request->employmentType == null) ? [] : $arrResult6->dataListSet[0], 
-			'data_termination_code' => ($request->terminationCode == null) ? [] : $arrResult7->dataListSet[0], 
-			'data_absenteeism_type' => ($request->absenteeismType == null) ? [] : $arrResult8->dataListSet[0], 
-			'data_tax_status' => ($request->taxStatus == null) ? [] : $arrResult9->dataListSet[0], 
-			'data_tax_status_next_year' => ($request->taxStatusNextYear == null) ? [] : $arrResult10->dataListSet[0], 
-			'data_tax_office' => ($request->taxOffice == null) ? [] : $arrResult11->dataListSet[0],
-			'data_tax_calculation_method' => ($request->taxCalculationMethod == null) ? [] : $arrResult12->dataListSet[0],
-			'data_currency_code_1' => ($request->currencyCode1 == null) ? [] : $arrResult13->dataListSet[0],
-			'data_currency_code_2' => ($request->currencyCode2 == null) ? [] : $arrResult14->dataListSet[0],
-			'data_currency_code_3' => ($request->currencyCode3 == null) ? [] : $arrResult15->dataListSet[0],
-			'data_blood_type' => ($request->bloodType == null) ? [] : $arrResult16->dataListSet[0],
-			'data_driving_license_car_type' => ($request->drivingLicenseMobilType == null) ? [] : $arrResult17->dataListSet[0],
-			'data_insurance_code' => ($request->insuranceCode == null) ? [] : $arrResult18->dataListSet[0],
-			'data_insurance_class' => ($request->insuranceClassCode == null) ? [] : $arrResult19->dataListSet[0],
+			'data_gender' => ($request->gender == null || $arrResult->dataListSet == null) ? [] : $arrResult->dataListSet[0], 
+			'data_marital_status' => ($request->maritalStatus == null || $arrResult2->dataListSet == null) ? [] : $arrResult2->dataListSet[0], 
+			'data_religion' => ($request->religionCode == null || $arrResult3->dataListSet == null) ? [] : $arrResult3->dataListSet[0], 
+			'data_nationality' => ($request->nationality == null || $arrResult4->dataListSet == null) ? [] : $arrResult4->dataListSet[0], 
+			'data_employment_status' => ($request->employmentStatus == null || $arrResult5->dataListSet == null) ? [] : $arrResult5->dataListSet[0], 
+			'data_employment_type' => ($request->employmentType == null || $arrResult6->dataListSet == null) ? [] : $arrResult6->dataListSet[0], 
+			'data_termination_code' => ($request->terminationCode == null || $arrResult7->dataListSet == null) ? [] : $arrResult7->dataListSet[0], 
+			'data_absenteeism_type' => ($request->absenteeismType == null || $arrResult8->dataListSet == null) ? [] : $arrResult8->dataListSet[0], 
+			'data_tax_status' => ($request->taxStatus == null || $arrResult9->dataListSet == null) ? [] : $arrResult9->dataListSet[0], 
+			'data_tax_status_next_year' => ($request->taxStatusNextYear == null || $arrResult10->dataListSet == null) ? [] : $arrResult10->dataListSet[0], 
+			'data_tax_office' => ($request->taxOffice == null || $arrResult11->dataListSet == null) ? [] : $arrResult11->dataListSet[0],
+			'data_tax_calculation_method' => ($request->taxCalculationMethod == null || $arrResult12->dataListSet == null) ? [] : $arrResult12->dataListSet[0],
+			'data_currency_code_1' => ($request->currencyCode1 == null || $arrResult13->dataListSet == null) ? [] : $arrResult13->dataListSet[0],
+			'data_currency_code_2' => ($request->currencyCode2 == null || $arrResult14->dataListSet == null) ? [] : $arrResult14->dataListSet[0],
+			'data_currency_code_3' => ($request->currencyCode3 == null || $arrResult15->dataListSet == null) ? [] : $arrResult15->dataListSet[0],
+			'data_blood_type' => ($request->bloodType == null || $arrResult16->dataListSet == null) ? [] : $arrResult16->dataListSet[0],
+			'data_driving_license_car_type' => ($request->drivingLicenseMobilType == null || $arrResult17->dataListSet == null) ? [] : $arrResult17->dataListSet[0],
+			'data_insurance_code' => ($request->insuranceCode == null || $arrResult18->dataListSet == null) ? [] : $arrResult18->dataListSet[0],
+			'data_insurance_class' => ($request->insuranceClassCode == null || $arrResult19->dataListSet == null) ? [] : $arrResult19->dataListSet[0],
 			]
 		);
 	}
@@ -6797,8 +6884,8 @@ class DataController extends Controller
 	    	$data = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->tableName)){
-	    				return preg_match('/' . $search . '/i', $value->tableName);
+	    			if(preg_match('/' . $search . '/i', $value)){
+	    				return preg_match('/' . $search . '/i', $value);
 	    			}	    		
 				}
 	    	);
@@ -7157,8 +7244,8 @@ class DataController extends Controller
 	    	$data = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->transferTo)){
-	    				return preg_match('/' . $search . '/i', $value->transferTo);
+	    			if(preg_match('/' . $search . '/i', $value)){
+	    				return preg_match('/' . $search . '/i', $value);
 	    			}	    		
 				}
 	    	);
@@ -8551,11 +8638,10 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/news/getnewscat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
-					"variable" => "News_Category_", 
 					"languageCode" => App::getLocale(),
 					]
 					)]
@@ -8573,27 +8659,158 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 
-			// foreach($arrResult->dataListSet as $value){
-			// 	foreach($value as $v){
-			// 		if($v['Value'] ==  )
-			// 	}
-			// }
-
-			// var_dump($request);
 			if($search == ''){
 				$data = $arrResult->dataListSet;
 			}else{
 				$data    = array_filter(
 				$arrResult->dataListSet,
 				function($value) use ($search){
-					if(preg_match('/' . $search . '/i', $value->value)){
-						return preg_match('/' . $search . '/i', $value->value);
+					if(preg_match('/' . $search . '/i', $value->categoryName)){
+						return preg_match('/' . $search . '/i', $value->categoryName);
 					}
 				}
 			);
 		}
 		return response()->json($data);
 	}
+
+	public function dataNewsCategoryDetail(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/news/getnewscat',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					'categoryName' => $request->categoryName,
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->categoryName)){
+						return preg_match('/' . $search . '/i', $value->categoryName);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataAnnouncementCategory(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/announcement/getannouncementcat',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->categoryName)){
+						return preg_match('/' . $search . '/i', $value->categoryName);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataAnnouncementCategoryDetail(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/announcement/getannouncementcat',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					'categoryName' => $request->categoryName,
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->categoryName)){
+						return preg_match('/' . $search . '/i', $value->categoryName);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
 	public function dataReimbursementTypeExportAPI (Request $request)
 	{
 		$search = $request->search;
@@ -9588,6 +9805,103 @@ class DataController extends Controller
 	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
 
         return response()->json($reimbursement_type[0]);
+	}
+
+	public function dataHoldingCompanyAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A'
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$company = $arrResult->dataListSet;
+	    }else{
+	    	$company = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->companyName)){
+	    				return preg_match('/' . $search . '/i', $value->companyName);
+	    			}else if(preg_match('/' . $search . '/i', $value->companyCode)){
+	    				return preg_match('/' . $search . '/i', $value->companyCode);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($company);
+	}
+
+	public function dataHoldingCompanyDetailAPI(Request $request)
+    {
+    	$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+
+			$response = $client->post(env('API_URL') . '/company/getcompany',
+				['body' => json_encode(
+					[
+						'recordStatus' => 'A',
+						'companyCode' => $request->companyCode
+					]
+				)]
+			);
+		} catch (RequestException $e) {
+			$response = $e->getResponse();
+			if($response->getStatusCode() == 401){
+				return view('error.login');
+			}else if($response->getStatusCode() == 404){
+				return view('error.not_found');
+			}else{
+				return view('error.bad_request');
+			}
+		}
+
+		$arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+			$company = $arrResult->dataListSet;
+		}else{
+			$company = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->companyName)){
+						return preg_match('/' . $search . '/i', $value->companyName);
+					}else if(preg_match('/' . $search . '/i', $value->companyCode)){
+						return preg_match('/' . $search . '/i', $value->companyCode);
+					}
+				}
+			);
+		}
+
+		return response()->json($company);
 	}
 
 }

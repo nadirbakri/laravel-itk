@@ -18,6 +18,7 @@ return [
     'label_record_status' => 'Record Status',
     'label_location_code' => 'Location Code',
     'label_location_name' => 'Location Name',
+    'label_bpjs_location_code' => 'BPJS Location Code',
     'location_code_required' => 'Location Code is Required',
     'location_name_required' => 'Location Name is Required',
     'btn_save' => 'Save',

@@ -149,7 +149,7 @@
             </button>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_field_name" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_field_name"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -236,7 +236,7 @@
                 data: arrayfieldName,
 
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -263,6 +263,23 @@
                     }
             });
         }
+
+        $('#custom_report_employee_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#custom_report_employee_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -334,10 +351,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.employeeNo + '</div>' +
                         '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
@@ -345,6 +358,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -413,10 +438,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
                         '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
                         '</div>');
@@ -425,17 +446,17 @@
                 }
             }
 
-            // var headerIsAppend = false;
-            // $(field).on('select2:open', function (e) {
-            //     if (!headerIsAppend) {
-            //         html = '<div class="row">' +
-            //             '<div class="col-6"><b>Group Authorize Code</b></div>' +
-            //             '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-            //             '</div>';
-            //         $('.select2-search').append(html);
-            //         headerIsAppend = true;
-            //     }
-            // });
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -488,11 +509,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>Code</b></div>' +
-                        '<div class="col-6"><b>Value</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-6">' + data.data.comGenCode + '<div>' +
                         '<div class="col-6">' + data.data.value + '<div>' +
                         '</div>');
@@ -500,6 +517,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#employment_status').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Code</b></div>' +
+                        '<div class="col-6"><b>Value</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -556,10 +585,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-12"><b>Field</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-12">' + data.text + '</div>' +
                         '</div>');
 

@@ -1209,7 +1209,7 @@
                 orderCellsTop: true,
                 paging: false,
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
             });
         }
 
@@ -1238,7 +1238,7 @@
                         '<div class="col-4"><b>Employee Name</b></div>' +
                         '<div class="col-4"><b>Loan No</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

@@ -228,7 +228,7 @@
                         '<div class="col-6"><b>User ID</b></div>' +
                         '<div class="col-6"><b>User Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -299,7 +299,7 @@
                         '<div class="col-6"><b>Module ID</b></div>' +
                         '<div class="col-6"><b>Module Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -367,7 +367,7 @@
                     html = '<div class="row">' +
                         '<div class="col-12"><b>Table</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

@@ -4,6 +4,7 @@ return [
     'judul' => 'Halaman Impor dan Ekspor Data Personel',
     'list' => 'Impor dan Ekspor Data Personel',
     'label_import_export' => 'Impor dan Ekspor',
+    'label_maintenance_type' => 'Maintenance Type',
     'help_import_export' => '(Ekstensi File : XLS, XLSX, XML)',
     'btn-import' => 'Impor',
     'btn-export' => 'Ekspor',

@@ -146,7 +146,7 @@
                         <div class="col-2 subdiv-profile">
                             <div class="row">
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
+                                    <button type="button" class="btn btn-primary" name="btn-save-profile" id="btn-save-profile"
                                         style="width: 100%;">
                                         <i class="fa fa-floppy-o"></i> {{ __('personel_personal_data.btn_save') }}
                                     </button>
@@ -1929,7 +1929,7 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_family_dependent_data" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_family_dependent_data"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2080,7 +2080,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_employment_data" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_employment_data"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2346,20 +2346,20 @@
             }
         });
 
-        let pickerTaxRegisteredDatePayroll = $('#tax_registered_date_payroll').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: null,
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#tax_registered_date_payroll_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
+        // let pickerTaxRegisteredDatePayroll = $('#tax_registered_date_payroll').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: null,
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings("#tax_registered_date_payroll_calendar").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
 
         let pickerTaxExpiryDateInfo = $('#tax_expiry_date_info').flatpickr({
             altInput: true,
@@ -2376,20 +2376,20 @@
             }
         });
 
-        let pickerTaxExpiryDatePayroll = $('#tax_expiry_date_payroll').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: null,
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#tax_expiry_date_payroll_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
+        // let pickerTaxExpiryDatePayroll = $('#tax_expiry_date_payroll').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: null,
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings("#tax_expiry_date_payroll_calendar").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
 
         let pickerDrivingLicenseCarDate = $('#driving_license_car_date_info').flatpickr({
             altInput: true,
@@ -2800,7 +2800,7 @@
             $('#termination_code_employment').val(null).trigger('change');
             $('#special_reason_resign_employment').prop('checked', false);
             $('#termination_remarks_employment').val("");
-            $('#expatriat_employment').prop('checked', false);
+            $('#expatriat_employment').prop('checked', true);
             $('#license_no_employment').val("");
             $('#commisioner_employment').prop('checked', false);
             $('#fringe_benefit_data_table').DataTable().destroy();
@@ -2824,7 +2824,7 @@
             $('#group_authorize_payroll').val(null).trigger('change');
 
             $('#bpjs_number_tenaga_kerja').val("");
-            $('#join_tenaga_kerja').prop('checked', false);
+            $('#join_tenaga_kerja').prop('checked', true);
             $('#non_accidental_death_insurance_tenaga_kerja').prop('checked', false);
             $('#pension_by_employer_tenaga_kerja').prop('checked', false);
             $('#work_related_accident_insurance_tenaga_kerja').prop('checked', false);
@@ -2834,7 +2834,7 @@
             $('#work_related_accident_insurance_three_tenaga_kerja').prop('checked', false);
 
             $('#bpjs_number_kesehatan').val("");
-            $('#join_kesehatan').prop('checked', false);
+            $('#join_kesehatan').prop('checked', true);
 
             $('#company_bank_code_primary').val(null).trigger('change');
             $('#employee_bank_code_primary').val(null).trigger('change');
@@ -3647,9 +3647,9 @@
                 $('#finger_not_required_absenteeism').prop('checked', false);
             }
 
-            $('#tax_registered_no_payroll').val(((typeof arrData2[0].taxRegisteredNo !== 'undefined') ? arrData2[0].taxRegisteredNo : ''));
-            pickerTaxRegisteredDatePayroll.setDate(((typeof arrData2[0].taxRegisteredDate !== 'undefined') ? arrData2[0].taxRegisteredDate : ''));
-            pickerTaxExpiryDatePayroll.setDate(((typeof arrData2[0].taxRegisteredExpiryDate !== 'undefined') ? arrData2[0].taxRegisteredExpiryDate : ''));
+            // $('#tax_registered_no_payroll').val(((typeof arrData2[0].taxRegisteredNo !== 'undefined') ? arrData2[0].taxRegisteredNo : ''));
+            // pickerTaxRegisteredDatePayroll.setDate(((typeof arrData2[0].taxRegisteredDate !== 'undefined') ? arrData2[0].taxRegisteredDate : ''));
+            // pickerTaxExpiryDatePayroll.setDate(((typeof arrData2[0].taxRegisteredExpiryDate !== 'undefined') ? arrData2[0].taxRegisteredExpiryDate : ''));
 
             $.ajax({
                 type: 'GET',
@@ -4013,6 +4013,56 @@
             }
         }
 
+        $('#join_tenaga_kerja').on('change', function () {
+            if ($('#join_tenaga_kerja').is(':checked')) {
+                $('#bpjs_number_tenaga_kerja').prop('disabled', false);
+                pickerJoiningDateBPJSTenagaKerja._input.removeAttribute('disabled');
+                pickerPaymentPeriodStartDateBPJSTenagaKerja._input.removeAttribute('disabled');
+                $('#non_accidental_death_insurance_tenaga_kerja').prop('disabled', false);
+                $('#pension_by_employer_tenaga_kerja').prop('disabled', false);
+                $('#work_related_accident_insurance_tenaga_kerja').prop('disabled', false);
+                $('#pension_by_employee_tenaga_kerja').prop('disabled', false);
+                $('#work_related_accident_insurance_two_tenaga_kerja').prop('disabled', false);
+                $('#pension_insurance_tenaga_kerja').prop('disabled', false);
+                $('#work_related_accident_insurance_three_tenaga_kerja').prop('disabled', false);
+            } else {
+                $('#bpjs_number_tenaga_kerja').prop('disabled', true);
+                pickerJoiningDateBPJSTenagaKerja._input.setAttribute("disabled", "disabled");
+                pickerPaymentPeriodStartDateBPJSTenagaKerja._input.setAttribute("disabled", "disabled");
+                $('#non_accidental_death_insurance_tenaga_kerja').prop('disabled', true);
+                $('#pension_by_employer_tenaga_kerja').prop('disabled', true);
+                $('#work_related_accident_insurance_tenaga_kerja').prop('disabled', true);
+                $('#pension_by_employee_tenaga_kerja').prop('disabled', true);
+                $('#work_related_accident_insurance_two_tenaga_kerja').prop('disabled', true);
+                $('#pension_insurance_tenaga_kerja').prop('disabled', true);
+                $('#work_related_accident_insurance_three_tenaga_kerja').prop('disabled', true);
+            }
+        });
+
+        $('#join_kesehatan').on('change', function () {
+            if ($('#join_kesehatan').is(':checked')) {
+                $('#bpjs_number_kesehatan').prop('disabled', false);
+                pickerJoiningDateBPJSKesehatan._input.removeAttribute('disabled');
+                pickerPaymentPeriodStartDateBPJSKesehatan._input.removeAttribute('disabled');
+            } else {
+                $('#bpjs_number_kesehatan').prop('disabled', true);
+                pickerJoiningDateBPJSKesehatan._input.setAttribute("disabled", "disabled");
+                pickerPaymentPeriodStartDateBPJSKesehatan._input.setAttribute("disabled", "disabled");
+            }
+        });
+
+        $('#expatriat_employment').on('change', function () {
+            if ($('#expatriat_employment').is(':checked')) {
+                $('#license_no_employment').prop('disabled', false);
+                pickerExpatriatStartDate._input.removeAttribute('disabled');
+                pickerExpatriatEndDate._input.removeAttribute('disabled');
+            } else {
+                $('#license_no_employment').prop('disabled', true);
+                pickerExpatriatStartDate._input.setAttribute("disabled", "disabled");
+                pickerExpatriatEndDate._input.setAttribute("disabled", "disabled");
+            }
+        });
+
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
         }
@@ -4268,10 +4318,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Level Code</b></div>' +
-                        '<div class="col-6"><b>Level Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.levelCode + '</div>' +
                         '<div class="col-6">' + data.data.levelName + '</div>' +
                         '</div>');
@@ -4279,6 +4325,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -4303,7 +4361,7 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            'levelType': levelType
+                            levelType: levelType
                         };
                     },
                     processResults: function (data) {
@@ -5316,7 +5374,7 @@
             //         html = '<div class="row">' +
             //             '<div class="col-6"><b>Termination Code</b></div>' +
             //             '</div>';
-            //         $('.select2-search').append(html);
+            //         $('.select2-search--dropdown').append(html);
             //         headerIsAppend = true;
             //     }
             // });
@@ -5733,11 +5791,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>NPWP Code</b></div>' +
-                        '<div class="col-6"><b>Pemotong Kuasa</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-6">' + data.data.npwpCode + '<div>' +
                         '<div class="col-6">' + data.data.pemotongKuasa + '<div>' +
                         '</div>');
@@ -5745,6 +5799,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#group_npwp_payroll').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>NPWP Code</b></div>' +
+                        '<div class="col-6"><b>Pemotong Kuasa</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -5798,11 +5864,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6"><b>BPJS Code</b></div>' +
-                        '<div class="col-6"><b>BPJS No</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-6">' + data.data.bpjsCode + '<div>' +
                         '<div class="col-6">' + data.data.bpjsNo + '<div>' +
                         '</div>');
@@ -5810,6 +5872,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#group_bpjs_payroll').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>BPJS Code</b></div>' +
+                        '<div class="col-6"><b>BPJS No</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -5864,10 +5938,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
-                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
                         '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
                         '</div>');
@@ -5875,6 +5945,18 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#group_authorize_payroll').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -5926,12 +6008,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-4"><b>Bank Code</b></div>' +
-                        '<div class="col-4"><b>Description</b></div>' +
-                        '<div class="col-4"><b>Account No</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-4">' + data.data.bankCode + '</div>' +
                         '<div class="col-4">' + data.data.description + '</div>' +
                         '<div class="col-4">' + data.data.accountNo + '</div>' +
@@ -5941,9 +6018,22 @@
                 }
             }
 
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
             var $company_bank = $('#company_bank_code_primary, #company_bank_code_optional_one, #company_bank_code_optional_two');
+
+            var headerIsAppend = false;
+            $company_bank.on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-4"><b>Bank Code</b></div>' +
+                        '<div class="col-4"><b>Description</b></div>' +
+                        '<div class="col-4"><b>Account No</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             $company_bank.select2({
                 width: '100%',
@@ -5996,11 +6086,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-4"><b>Bank Code</b></div>' +
-                        '<div class="col-4"><b>Bank Name</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-4">' + data.data.bankCode + '</div>' +
                         '<div class="col-4">' + data.data.bankName + '</div>' +
                         '</div>');
@@ -6009,9 +6095,22 @@
                 }
             }
 
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
             var $employee_bank_code = $('#employee_bank_code_primary, #employee_bank_code_optional_one, #employee_bank_code_optional_two');
 
+            var headerIsAppend = false;
+            $employee_bank_code.on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Bank Code</b></div>' +
+                        '<div class="col-6"><b>Bank Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
             $employee_bank_code.select2({
                 width: '100%',
                 placeholder: 'Choose Employee Bank Code',
@@ -6243,7 +6342,7 @@
                 data: arrayFringeBenefit,
 
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 // "order": [
                 //     [1, "asc"]
                 // ],xx
@@ -6305,6 +6404,23 @@
             });
         }
 
+        $('#fringe_benefit_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#fringe_benefit_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_family_dependent_data() {
             table2 = $('#family_dependent_data_table').DataTable({
                 // processing: true,
@@ -6312,7 +6428,7 @@
                 data: arrayFamilyDependent,
 
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
 
                 columns: [
                     {
@@ -6419,6 +6535,23 @@
                 }
             });
         }
+
+        $('#family_dependent_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#family_dependent_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $('#modal_add_employment_data').on('show.bs.modal', function () {
             if (func == 'new') {
@@ -6669,15 +6802,6 @@
                     contract_end_date_employment: {
                         required: true,
                     },
-                    license_no_employment: {
-                        required: true,
-                    },
-                    start_date_employment: {
-                        required: true,
-                    },
-                    end_date_employment: {
-                        required: true,
-                    },
                     absenteeism_type_absenteeism: {
                         required: true,
                     },
@@ -6715,15 +6839,6 @@
                     },
                     contract_end_date_employment: {
                         required: "{{ __('personel_personal_data.contract_end_date_required') }}",
-                    },
-                    license_no_employment: {
-                        required: "{{ __('personel_personal_data.license_no_required') }}",
-                    },
-                    start_date_employment: {
-                        required: "{{ __('personel_personal_data.start_date_required') }}",
-                    },
-                    end_date_employment: {
-                        required: "{{ __('personel_personal_data.end_date_required') }}",
                     },
                     absenteeism_type_absenteeism: {
                         required: "{{ __('personel_personal_data.absenteeism_type_required') }}",

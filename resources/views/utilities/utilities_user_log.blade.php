@@ -170,7 +170,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "desc"]
                 ],
@@ -228,7 +228,7 @@
                         '<div class="col-6"><b>User ID</b></div>' +
                         '<div class="col-6"><b>User Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

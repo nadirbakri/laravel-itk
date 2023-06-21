@@ -123,13 +123,13 @@
                         <div class="form-group">
                             <label for="status form-check-label">{{ __('trans_mass_leave.label_status') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="status" name="status">
+                        <input type="text" class="form-control" id="status" name="status" placeholder="{{ __('trans_mass_leave.label_status') }}" >
                     </div>
                     <div class="col-5">
                         <div class="form-group">
                             <label for="request_id form-check-label">{{ __('trans_mass_leave.label_request_id') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="request_id" name="request_id">
+                        <input type="text" class="form-control" id="request_id" name="request_id" placeholder="{{ __('trans_mass_leave.label_request_id') }}">
                     </div>
                 </div>
 
@@ -182,7 +182,7 @@
                         <div class="form-group">
                             <label for="remarks form-check-label">{{ __('trans_mass_leave.label_remarks') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="remarks" name="remarks">
+                        <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
                     </div>
                 </div>
 
@@ -199,43 +199,48 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-save.svg') }}" alt="save"> {{ __('trans_mass_leave.btn_save') }}
+                            <i class="fa fa-save"></i> {{ __('trans_mass_leave.btn_save') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_mass_leave">
-                        <i class="fa fa-plus"></i> {{ __('trans_mass_leave.button1') }}
+                            <i class="fa fa-list"></i> {{ __('trans_mass_leave.button1') }}
                         </button>
                     </div>
                     <div class="col-3">
                         <button class="btn btn-danger" name="btn-remove" id="btn-remove" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-remove.svg') }}" alt="remove"> {{ __('trans_mass_leave.btn_remove') }}
+                            <i class="fa fa-times"></i> {{ __('trans_mass_leave.btn_remove') }}
                         </button>
                     </div>
                 </div>
 
-                <!-- TABLE -->
-                <div class="row">
-                    <div class="col-6">
-                        <p>{{ __('trans_mass_leave.list_table') }}</p>
+                <br>
+
+                <div class="card">
+                    <!-- TABLE -->
+                    <div class="row">
+                        <div class="col-6">
+                            <p><b>{{ __('trans_mass_leave.list_table') }}</b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="mass_leave_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Seq Number</th>
+                                        <th>Req Seq Number</th>
+                                        <th>User ID</th>
+                                        <th>Full Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="div-table">
-                    <table id="mass_leave_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Seq Number</th>
-                                <th>Req Seq Number</th>
-                                <th>User ID</th>
-                                <th>Full Name</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-
             </div>
         </form>
     </div>

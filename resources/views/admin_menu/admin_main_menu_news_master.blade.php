@@ -12,13 +12,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('admin_main_menu_checkin_list.css') }}"> 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+
     <style type="text/css">
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
@@ -93,7 +89,7 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
-        .row button {
+        .row .button {
             background-color: #1E90FF;
             border: none;
             color: white;
@@ -117,73 +113,78 @@
             margin-top:15px
        }
        .judul h1{
-        font-size: 35px;
-        margin-left: 4%;
-        margin-right: 2%;
-        margin-top:50px
-       }
-       .judul hr{
-        max-width:1200px;
-        margin-left:4%;
-        margin-right: 2%;
-       }
-       .buttonadd{
-        width: 40px;
-        height: 40px;
-        background: #dac52c;
-        border-radius: 100%;
-       }
+            font-size: 25px;
+            margin-left: 4%;
+            margin-right: 2%;
+            margin-top:50px
+        }
+        .judul hr{
+            max-width:1200px;
+            margin-left:4%;
+            margin-right: 2%;
+        }
+        .buttonadd{
+            width: 40px;
+            height: 40px;
+            background: #dac52c;
+            border-radius: 100%;
+        }
        .newscategory select{
-        width: 100px;
+            width: 100px;
        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <div class="judul">
-            <h1>{{ __('admin_main_menu_news_master.judul') }}<h1>
-            <hr>
+        <div class="div-title">
+            <a href="{{ url('utilities') }}" target="iframe_dashboard">
+                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                <span class="title-text">{{ __('admin_main_menu_news_master.judul') }}</span>
+            </a>
         </div>
-        <form id="admin_menu_news_master" method="post">
+        <form id="admin_menu_news_master" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card" >
                 <div class="card-header">
-                {{ __('admin_main_menu_news_master.formjudul') }}
+                    <h5>{{ __('admin_main_menu_news_master.formjudul') }}</h5>
                 </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('admin_main_menu_news_master.form1') }}</b></label>
+                            <label for="t_news form-check-label"><b>{{ __('admin_main_menu_news_master.form1') }}</b></label>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="col-5">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="t_news" name="t_news" ></div>
-                        <input type="text" value="new" class="form-control" id="t_news2" name="t_news2" hidden></div>
-
+                            <input type="text" class="form-control" id="t_news" name="t_news">
+                            <input type="hidden" value="new" class="form-control" id="t_news2" name="t_news2">
+                            <input type="hidden" class="form-control" id="sysno" name="sysno">
+                        </div>
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('admin_main_menu_news_master.form2') }}</b></label>
+                            <label for="n_category form-check-label"><b>{{ __('admin_main_menu_news_master.form2') }}</b></label>
                         </div>
                     </div>
-                    <div class="newscategory">
-                            <select  class="form-control select2" id="n_category" name="n_category"></select>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <select class="form-control select2" id="n_category" name="n_category"></select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>Content</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('admin_main_menu_news_master.form3') }}</b></label>
                         </div>
                     </div>
-                    <div class="class">
+                    <div class="col-5">
                         <div class="form-group">
                             <textarea type="text" class="form-control" id="c_news" name="c_news"></textarea>
                         </div>
@@ -192,33 +193,47 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>Attachment</b></label>
+                            <label for="file_attachment form-check-label"><b>File Attachment</b></label>
                         </div>
                     </div>
-                        <form action="aksi.php" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file">
-	                    </form>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="file_attachment" name="file_attachment">
+                                <label class="custom-file-label file-label" for="file_attachment">Select File Attachment</label>
+                            </div>
+                            <div id="div-file"></div>
+                        </div>
+                    </div>
                 </div>
-                    <div class="row">
-                        <div class="col-2">
-                           
-                        </div>
-                            <img src="" alt="" id="photo" name="photo" style="width:200px" >
-                    </div>
-           
                 <div class="row">
-                    <div class="col-12"> 
-                            <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save">
-                            {{ __('admin_main_menu_news_master.save') }}                    </button>  
-                            <button class="btn btn-primary" type="submit" name="btn-delete" id="btn-delete">
-                            {{ __('admin_main_menu_news_master.delete') }}
-                            </button>  
-                            <button class="btn btn-primary" onClick="window.location.reload();"  value="preview">
-                            {{ __('admin_main_menu_news_master.cancel') }}
-                            </button> 
-                            <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_news">
-                            {{ __('admin_main_menu_news_master.list') }}
-                            </button>  
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="image_attachment form-check-label"><b>Image Attachment</b></label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="image_attachment" name="image_attachment">
+                                <label class="custom-file-label image-label" for="image_attachment">Select Image Attachment</label>
+                            </div>
+                            <div id="div-image"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save" style="width: 100%">{{ __('admin_main_menu_news_master.save') }}</button>  
+                    </div>
+                    <!-- <div class="col-2">
+                        <button class="btn btn-primary" type="submit" name="btn-delete" id="btn-delete" style="width: 100%">{{ __('admin_main_menu_news_master.delete') }}</button>  
+                    </div> -->
+                    <div class="col-3">
+                        <button class="btn btn-outline-primary" onClick="window.location.reload();" value="preview" style="width: 100%">{{ __('admin_main_menu_news_master.cancel') }}</button> 
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_news" style="width: 100%">{{ __('admin_main_menu_news_master.list') }}</button>  
                     </div>
                 </div>
             </div>
@@ -232,7 +247,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">List User</h4>
+                        <h4 class="modal-little">List News</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -244,19 +259,14 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>News Category</th>
-                                    {{-- <th>Description</th> --}}
-                                    <th>Create Date</th>
+                                    <th>Created Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
                                     <td></td>        
                                     <td></td>        
-                                    {{-- <td></td>         --}}
+                                    <td></td>        
                                     <td></td>        
                                 </tr>
                             </tbody>
@@ -325,6 +335,16 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script>
+    $('input[name="file_attachment"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.file-label').html(fileName);
+    });
+
+    $('input[name="image_attachment"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.image-label').html(fileName);
+    });
+
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
@@ -338,7 +358,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -367,19 +387,34 @@
     })
 
     const klik = (element) => {
-        let title = $(element).parent().siblings('.sorting_1').text()
-        let newscategory = $(element).parent().siblings('td').eq(1).text()
-        let desc = $(element).parent().siblings('td').eq(2).text()
+        let title = $(element).parent().siblings('.sorting_1').text();
+        let newscategory = $(element).parent().siblings('td').eq(1).text();
+        let desc = $(element).parent().siblings('td').eq(2).text();
+        // console.log(table2.row($(element).parent()).data());
 
         // alert(newscategory)
-        $('#t_news').val(title)
-        $('#t_news2').val("update")
-        $('#c_news').val(table2.row($(element).parent()).data().content)
-        $('#n_category').append($('<option>', {
-            value: newscategory,
-            text: newscategory
-        }));
-        $('#photo').attr('src', 'data:image/png;base64,' + table2.row($(element).parent()).data().photo);
+        $('#t_news').val(title);
+        $('#t_news2').val("update");
+        $('#c_news').val(table2.row($(element).parent()).data().content);
+        $('#sysno').val(table2.row($(element).parent()).data().sysNo);
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/news_category/detail/api') }}",
+            data: {
+                'categoryName' : newscategory
+            }
+        }).then(function (data2) {
+            var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                .categoryName).text(data2[0].categoryName);
+            $("#n_category").append($newOption).trigger('change');
+        });
+        // $('#n_category').append($('<option>', {
+        //     value: newscategory,
+        //     text: newscategory
+        // }));
+        // console.log(table2.row($(element).parent()).data().photo);
+        $('#div-file').html('<a target="_self" href="data:application/pdf;base64, ' + table2.row($(element).parent()).data().pdfFile + '">Download PDF</a>');
+        $('#div-image').html('<img src="data:image/png;base64, ' + table2.row($(element).parent()).data().photo + '" style="width: 170px; height: 50px;" alt="">');
         $('.close').click();
     }
 </script>
@@ -400,10 +435,16 @@
                               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                           }
                       });
+
+                      var myForm = document.getElementById('admin_menu_news_master');
+                      var formdata = new FormData(myForm);
+
                       $.ajax({
                           url: "{{ url('admin_menu/news_master/proses') }}",
                           type: "POST",
-                          data: $('#admin_menu_news_master').serialize(),
+                          processData: false,
+                          contentType: false,
+                          data: formdata,
                           success: function (response) {
                               if (response.status == "true"){
                                   $("#btn-save").prop("disabled", false);
@@ -506,7 +547,7 @@
 
     $.get("{{ url('news_category/api') }}", function (data) {
                 $.each(data, function (k, v) {
-                    $('#n_category').append("<option value=" + v.variable + ">" + v.value +
+                    $('#n_category').append("<option value=" + v.categoryName + ">" + v.categoryName +
                         "</option>");
                 });
             });
@@ -519,7 +560,7 @@
     
                     if (data.id) {
                         var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
+                            '<div class="col-6">' + data.data.categoryName + '<div>' +
                             '</div>');
     
                         return $result2;
@@ -558,8 +599,8 @@
                             return {
                                 results: $.map(data, function (item) {
                                     return {
-                                        text: item.value,
-                                        id: item.comGenCode,
+                                        text: item.categoryName,
+                                        id: item.categoryName,
                                         data: item
                                     }
                                 })

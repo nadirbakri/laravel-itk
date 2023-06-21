@@ -394,7 +394,7 @@
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -452,7 +452,7 @@
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
                         // '<div class="col-6"><b>Description</b></div>' +
-                        '<div class="col-6">' + data.data.description + '</div>' +
+                        '<div class="col-12">' + data.data.description + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -463,9 +463,9 @@
             $('#leave_code').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
-                        '<div class="col-6"><b>Description</b></div>' +
+                        '<div class="col-12"><b>Description</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

@@ -18,6 +18,7 @@
 <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
             <tr>
+				<th>Company Code *</th>
 				<th>Employee No *</th>
 				<th>Employee Name *</th>
 				<th>Birth Place *</th>
@@ -152,6 +153,7 @@
         <tbody>
             @foreach($data as $value)
             <tr>
+				<td>{{ $value->companyCode }}</td>
                 <td>{{ $value->employeeNo }}</td>
                 <td>{{ $value->fullName }}</td>
                 <td>{{ $value->birthPlace }}</td>

@@ -48,6 +48,7 @@ return [
     'employee_attachment' => 'Employee Attachment',
     'change_employee_no' => 'Change Employee No',
     'import_export_personal_data' => 'Import & Export Personal Data',
+    'import_master_data' => 'Import Master Data',
     // 'npwp_mutation' => 'NPWP Mutation',
     // 'termination_data_entry' => 'Termination Data Entry',
     // 'award_data_entry' => 'Award Data Entry',

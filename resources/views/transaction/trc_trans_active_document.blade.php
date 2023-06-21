@@ -116,7 +116,7 @@
                 <div class="div-title">
                     <a href="{{ url('transaction') }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_business_trip.list') }}</span>
+                        <span class="title-text">{{ __('trans_active_document.list') }}</span>
                     </a>
                 </div>
 
@@ -395,22 +395,9 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lftip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
-                    // {
-                    //     orderable: false,
-                    //     targets: 0, 
-                    //     "defaultContent": '',
-                    //     render: function(data, type) {
-                    //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                    //     }
-                    // },
-                    // {data: 'responseBusinessTrip.requestDate', name: 'requestDate', 
-                    //         render: function (data, type, row) {
-                    //         return moment(data).format('YYYY-MM-DD');
-                    //     }
-                    // },
                     {data: 'ticketNo', name: 'ticketNo',
                     render: function (data, type, row) {
                         if(row.status == 'APPROVED'){
@@ -425,17 +412,7 @@
 
                     }},
                     {data: 'fullnameRequester', name: 'fullnameRequester'},
-                    // {data: 'businessUnit', name: 'businessUnit'},
                     {data: 'status', name: 'status'},
-                    // {data: 'destination', name: 'destination'},
-                    // {data: 'startDate', name: 'startDate',
-                    // render: function (data, type, row) {
-                    //         return moment(data).format('YYYY-MM-DD');
-                    //     }},
-                    // {data: 'endDate', name: 'endDate',
-                    // render: function (data, type, row) {
-                    //         return moment(data).format('YYYY-MM-DD');
-                    //     }},
                     {data: 'destination', name: 'destination'},
                     {data: 'totalClaimAmount', name: 'totalClaimAmount'},
                     {
@@ -464,14 +441,7 @@
                         }
 
                         }
-                    },
-                    // {
-                    //     data: 'leaveBalanceBeforeExpiredDate', 
-                    //     name: 'leaveBalanceBeforeExpiredDate',
-                    //     render: function (data, type, row) {
-                    //         return moment(data).format('DD-MMM-YYYY');
-                    //     }
-                    // }
+                    }
                 ]
             });
 
@@ -520,7 +490,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -645,6 +615,23 @@
         })
     }
 
+    $('#business_trip_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        var $row = $(this).closest('tr');
+
+        if(this.checked){
+            $row.addClass('selected');
+        } else {
+            $row.removeClass('selected');
+        }
+
+        // Prevent click event from propagating to parent
+        e.stopPropagation();
+    });
+
+    $('#business_trip_table').on('click', 'tr td:first-child', function(e){
+        $(this).parent().find('input[type="checkbox"]').trigger('click');
+    });
+
 
 </script>
 
@@ -728,7 +715,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}"level/api',
+                    url: "{{ url('/level/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -760,7 +747,7 @@ $.get("{{ url('level/api') }}", function (data) {
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/level/func/api') }}"level/func/api',
+                url: "{{ url('/level/func/api') }}",
             }).then(function (data) {
                 if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
                     $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
@@ -775,7 +762,7 @@ $.get("{{ url('level/api') }}", function (data) {
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/travel_type/all/api') }}"travel_type/all/api',
+                url: "{{ url('/travel_type/all/api') }}",
             }).then(function (data) {
                 if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
                     $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
@@ -818,7 +805,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: "{{ url('/travel_type/api') }}"travel_type/api',
+                    url: "{{ url('/travel_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

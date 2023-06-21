@@ -140,7 +140,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_configure_menu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_configure_menu"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -189,7 +189,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_copy_to_another_group" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_copy_to_another_group"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -387,7 +387,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -454,7 +454,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -768,7 +768,7 @@
                         '<div class="col-6"><b>Group ID</b></div>' +
                         '<div class="col-6"><b>Group Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -839,7 +839,7 @@
                         '<div class="col-6"><b>Module ID</b></div>' +
                         '<div class="col-6"><b>Module Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

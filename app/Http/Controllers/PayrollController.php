@@ -47,42 +47,44 @@ class PayrollController extends Controller
 {
     public function pagePayroll(Request $request) 
     {
-        try {
-	    	$client = new Client([
-	    		'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ],
-	    	]);
+        // try {
+	    // 	$client = new Client([
+	    // 		'headers' => [ 'Content-Type' => 'application/json',
+        //         'Authorization' => 'Bearer ' . Session::get('token') ],
+	    // 	]);
 
-	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
-	    		['body' => json_encode(
-	    			[
-	    				'companyCode' => Session::get('companyCode'),
-                        'groupAccessID' => Session::get('groupAccessID'),
-                        'moduleID' => $request->moduleID,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-	    			]
-	    		)]
-	    	);
+	    // 	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    // 		['body' => json_encode(
+	    // 			[
+	    // 				'companyCode' => Session::get('companyCode'),
+        //                 'groupAccessID' => Session::get('groupAccessID'),
+        //                 'moduleID' => $request->moduleID,
+        //                 'userID' => Session::get('userID'),
+        //                 'logActionUserID' => Session::get('userID'),
+        //                 'logActionUsername' => Session::get('userName')
+	    // 			]
+	    // 		)]
+	    // 	);
 
-        } catch (RequestException $e) {
-	    	$response = $e->getResponse();
-			// var_dump($response);
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-	    }
+        // } catch (RequestException $e) {
+	    // 	$response = $e->getResponse();
+		// 	// var_dump($response);
+        //     if($response->getStatusCode() == 401){
+        //         return view('error.login');
+        //     }else if($response->getStatusCode() == 404){
+        //         return view('error.not_found');
+        //     }else{
+        //         return view('error.bad_request');
+        //     }
+	    // }
 
-	    $arrResult = json_decode($response->getBody()->getContents());
+	    // $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // // var_dump($arrResult->dataListSet);
 
-        return view ('payroll.py_main', ['dataMenu' => $arrResult->dataListSet]);
+        // return view ('payroll.py_main', ['dataMenu' => $arrResult->dataListSet]);
+
+        return view ('payroll.py_main');
     }
 
     public function pageAccount()
@@ -2734,6 +2736,8 @@ public function dataDetailReportFormatPY(Request $request)
                 'accountNo' => $request->account_no,
                 'accountDescription' => $request->account_description,
                 'reference' => $request->reference,
+                'grouping1' => $request->grouping_one,
+                'grouping2' => $request->grouping_two,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),
@@ -2801,7 +2805,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }
             }
             else {
-                $data_detail[] = null;
+                $data_detail = [];
             }
             
             if (isset($request->seq_no)) {
@@ -2823,7 +2827,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }
             }
             else {
-                $data_condition [] = null;
+                $data_condition = [];
             }
 
             $param = [
@@ -4071,6 +4075,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'debitKredit' => $request->debit_kredit,
                     'account' => $request->account,
                     'description' => $request->description,
+                    'grouping1' => $request->grouping_one,
+                    'grouping2' => $request->grouping_two,
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),
@@ -4093,6 +4099,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'debitKredit' => $request->debit_kredit,
                     'account' => $request->account,
                     'description' => $request->description,
+                    'grouping1' => $request->grouping1,
+                    'grouping2' => $request->grouping2,
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),
@@ -5326,7 +5334,7 @@ public function dataDetailReportFormatPY(Request $request)
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
             $import = new PayrollBonusTHRDataImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
             File::delete('file_excel/'.$nama_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
@@ -5334,7 +5342,12 @@ public function dataDetailReportFormatPY(Request $request)
             return array(0 => $objError);
         }
 
-        return $import->getArrResult();
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
     }
 
     public function templateImportDataFromExcelPY(Request $request)
@@ -5550,6 +5563,8 @@ public function dataDetailReportFormatPY(Request $request)
                 'slipName' => $request->slip_name_allowance,
             ];
 
+            // var_dump(json_encode($param));
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
                     ['body' => json_encode($param)]
@@ -5595,6 +5610,8 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // var_dump($request->slip_type_deduction);
+
             $varDeductionLabel = 'deduction' . $request->number_deduction . 'Label';
             $varDeductionField = 'deduction' . $request->number_deduction . 'Field';
 
@@ -5604,8 +5621,8 @@ public function dataDetailReportFormatPY(Request $request)
                 'slipName' => $request->slip_name_deduction,
                 'fontSize' => (int) $request->font_size_deduction,
                 'formatNumber' => $request->number_format_deduction,
-                '{$varDeductionLabel}' => $request->field_label_deduction,
-                '{$varDeductionField}' => $request->field_name_deduction,
+                $varDeductionLabel => $request->field_label_deduction,
+                $varDeductionField => $request->field_name_deduction,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),
@@ -5669,6 +5686,31 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+
+            // var_dump(json_encode(
+            //     [
+            //         "companyCode" => Session::get('companyCode'),
+            //         "employeeNoFrom" => $request->employee_no_from,
+            //         "employeeNoTo" => $request->employee_no_to,
+            //         "periodMonth" => (int) $request->process_period_month_hidden,
+            //         "periodYear" => (int) $request->process_period_year_hidden,
+            //         "loanPaymentProcess" => isset($request->loan_payment_process) ? (bool) $request->loan_payment_process : false,
+            //         "retroactiveProcess" => isset($request->retroactive_process) ? (bool) $request->retroactive_process : false,
+            //         "retroactive" => (int) $request->retroactive,
+            //         "includeProbationPerod" => isset($request->include_probation_period) ? (bool) $request->include_probation_period : false,
+            //         "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive) ? (bool) $request->include_jamsostek_retroactive : false,
+            //         "range" => isset($request->range) ? (bool) $request->range : false,
+            //         "languageCode" => App::getLocale(),
+            //         "changedBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userName') 
+            //     ]
+            //     ));
 
             $response = $client->put(env('API_URL') . '/salarycalculation/updatesalarycalculation',
                 ['body' => json_encode(
@@ -6038,7 +6080,7 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(json_encode(
             //     [
             //         "companyCode" => Session::get('companyCode'),
-            //         "periodProcess" => $request->process_period,
+            //         "periodProcess" => $request->process_period_det,
             //         "recalculateTHRTax" => isset($request->recalculate_thr_tax) ? (bool) $request->recalculate_thr_tax : false,
             //         "recalculateBonusTax" => isset($request->recalculate_bonus_tax) ? (bool) $request->recalculate_bonus_tax : false,
             //         "range" => isset($request->range) ? (bool) $request->range : false,
@@ -6056,7 +6098,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
-                        "periodProcess" => $request->process_period,
+                        "periodProcess" => $request->process_period_det,
                         "recalculateTHRTax" => isset($request->recalculate_thr_tax) ? (bool) $request->recalculate_thr_tax : false,
                         "recalculateBonusTax" => isset($request->recalculate_bonus_tax) ? (bool) $request->recalculate_bonus_tax : false,
                         "range" => isset($request->range) ? (bool) $request->range : false,
@@ -6535,7 +6577,12 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printPaymentSlipPayroll(Request $request){
         try{
-            
+            $dataLevel = [];
+
+            for($i = 0; $i < $request->level_format; $i++){
+                $dataLevel[] = $request->{'level' . ($i+1)};
+            }
+
             $client = new Client([
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . (isset($request->token) ? $request->token : Session::get('token')) ]
@@ -6589,6 +6636,50 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['displayCompanyLogo'] = $request->display_logo == "0" ? false : true;
             }
 
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = [
+                            'levelCode' => $value2
+                        ];
+                    }
+                    $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "levelType" => (string) ($key + 1),
+                        "level" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
             // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL').'/PrPaymentSlipReport/GetPaymentSlipReport', [
@@ -6609,8 +6700,6 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
@@ -7280,6 +7369,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -7291,6 +7381,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
         $customPaper = array(0,0,792.00,1224.00);
+        // var_dump($arrResult->dataListSet);
         
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
@@ -7445,6 +7536,140 @@ public function dataDetailReportFormatPY(Request $request)
         }else{
             $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
             return $pdf->stream('Retroactive Report.pdf');
+        }
+    }
+
+    public function printPeriodicalReportPayroll(Request $request){
+        try{
+            $dataLevel = [];
+
+            for($i = 0; $i < $request->level_format; $i++){
+                $dataLevel[] = $request->{'level' . ($i+1)};
+            }
+
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "reportCode" => $request->report_name,
+                "employeeNoFrom" => $request->employee_no_from,
+                "employeeNoTo" => $request->employee_no_to,
+                "period" => $request->period,
+                "statusPeriod" => 0,
+                "multiCostCenter" => isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
+                "reportStatus" => $request->report_status,
+                "reportType" => $request->report_type,
+                "displayLine" => isset($request->display_line) ? (bool) $request->display_line : false,
+                "printSignature" => isset($request->print_signature) ? (bool) $request->print_signature : false,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $paramGetCompany = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->cost_center_code_from) || !empty($request->cost_center_code_to)){
+                $param['costCenterFrom'] = $request->cost_center_code_from;
+                $param['costCenterTo'] = $request->cost_center_code_to;
+            }
+
+            if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+                $param['groupAuthorizedCodeFrom'] = (int) $request->group_authorized_code_from;
+                $param['groupAuthorizedCodeTo'] = (int) $request->group_authorized_code_to;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = [
+                            'levelCode' => $value2
+                        ];
+                    }
+                    $data_level[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "levelType" => (string) ($key + 1),
+                        "level" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/prperiodicalreport/getperiodicalreport', [
+                'body' => json_encode($param)
+            ]);
+
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
+                'body' => json_encode($paramGetCompany)
+            ]);
+            
+        } catch (RequestException $e){
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Periodical Report.pdf');
+        }else{
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream('Periodical Report.pdf');
         }
     }
 

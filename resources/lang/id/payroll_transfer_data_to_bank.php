@@ -14,6 +14,7 @@ return [
     'label_bank_ina' => 'Bank Ina',
     'label_bank_mandiri' => 'Bank Mandiri',
     'label_bank_ina_multi_account' => 'Bank Ina Multi Account',
+    'label_output_file' => 'File Keluaran',
     'label_source_bank' => 'Bank Asal',
     'label_account_number' => 'Nomor Akun',
     'label_transfer_code' => 'Kode Transfer',

@@ -285,7 +285,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'employee_no', name: 'employee_no'},

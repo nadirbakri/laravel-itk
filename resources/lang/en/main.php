@@ -20,5 +20,7 @@ return [
     'logout' => 'Sign Out',
     'language_success' => 'Language Changed Successfully',
     'language_success_title' => 'Success !',
+    'success' => 'Updated Successfully',
+    'success_title' => 'Success !',
 
 ];

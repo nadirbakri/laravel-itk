@@ -357,7 +357,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lfrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
@@ -370,7 +370,7 @@
                         }
                     },
                     {data: 'employeeNo', name: 'employeeNo'},
-                    {data: 'fullName', name: 'fullName'},
+                    {data: 'fullname', name: 'fullname'},
                     {data: 'lastCheckIn', name: 'lastCheckIn', 
                             render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
@@ -430,7 +430,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lfrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {

@@ -843,7 +843,7 @@
                     html = '<div class="row">' +
                         '<div class="col-12"><b>NPWP Code</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -913,7 +913,7 @@
                         '<div class="col-6"><b>Company Code</b></div>' +
                         '<div class="col-6"><b>Company Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -983,7 +983,7 @@
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1054,7 +1054,7 @@
                         '<div class="col-6"><b>Location Code</b></div>' +
                         '<div class="col-6"><b>Location Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1124,7 +1124,7 @@
                         '<div class="col-6"><b>Group Code</b></div>' +
                         '<div class="col-6"><b>Group Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1194,7 +1194,7 @@
                         '<div class="col-6"><b>Grade Code</b></div>' +
                         '<div class="col-6"><b>Grade Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1264,7 +1264,7 @@
                         '<div class="col-6"><b>Position Code</b></div>' +
                         '<div class="col-6"><b>Position Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1334,7 +1334,7 @@
                         '<div class="col-6"><b>Ranking Code</b></div>' +
                         '<div class="col-6"><b>Ranking Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1404,7 +1404,7 @@
                         '<div class="col-6"><b>Work Nature Code</b></div>' +
                         '<div class="col-6"><b>Work Nature Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1474,7 +1474,7 @@
                         '<div class="col-6"><b>Cost Center Code</b></div>' +
                         '<div class="col-6"><b>Cost Center Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1544,7 +1544,7 @@
                         '<div class="col-6"><b>Level Code</b></div>' +
                         '<div class="col-6"><b>Level Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

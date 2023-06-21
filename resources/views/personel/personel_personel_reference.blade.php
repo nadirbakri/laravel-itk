@@ -369,7 +369,7 @@
         function load_table_level() {
             table = $('#level_table').DataTable({
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses'
+                'sPaginationType': 'full_numbers'
             });
         }
 

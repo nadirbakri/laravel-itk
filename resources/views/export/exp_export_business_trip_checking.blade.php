@@ -118,10 +118,12 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="claim_date_from form-check-label">{{ __('export_business_trip_checking.label_claim_date') }}</label>
                         </div>
+                    </div>
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
                                 placeholder="{{ __('export_business_trip_checking.label_claim_start') }}">
@@ -129,12 +131,13 @@
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
                     </div>
-                    <div class="col-5">
+                    <div class="col-0.5">
                         <div class="form-group">
                             <label for="claim_date_to form-check-label">{{ __('export_business_trip_checking.label_to') }}</label>
                         </div>
+                    </div>
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
                                 placeholder="{{ __('export_business_trip_checking.label_claim_end') }}">
@@ -142,23 +145,30 @@
                                 <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-3">
                         <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('export_business_trip_checking.label_business_unit') }}</label>
+                            <label for="business_unit">{{ __('export_business_trip_checking.label_business_unit') }}</label>
                         </div>
-                        <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <div class="form-group">
-                            <label for="status form-check-label">User ID</label>
+                            <select class="form-control select2" id="business_unit" name="business_unit"></select>
                         </div>
-                        <input type="text" class="form-control" id="user_id" name="user_id"
-                        placeholder="user id">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="user_id">{{ __('export_business_trip_checking.label_user_id') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                        <input type="text" class="form-control" id="user_id" name="user_id" placeholder="User ID">
+                        </div>
                     </div>
                 </div>
 
@@ -166,7 +176,7 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-export.svg') }}" alt="export"> {{ __('export_business_trip_checking.btn_export') }}
+                            <i class="fa fa-download"></i> {{ __('export_business_trip_checking.btn_export') }}
                         </button>
                     </div>
                 </div>

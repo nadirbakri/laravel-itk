@@ -17,7 +17,11 @@
 			display:flex;
     		align-items:center;
 		}
-		.list-group-item {
+		#sidebar-wrapper .list-group-item {
+			border: 0;
+			margin-top: 10%;
+		}
+		#sidebar-wrapper.active .list-group-item {
 			border: 0;
 			margin-top: 15%;
 		}
@@ -81,15 +85,43 @@
 		.form-check-change-language {
 			margin-bottom: 7%;	
 		}
-		.modal-header-notification {
-			border-bottom: 0 none;
-			-webkit-border-top-left-radius: 5px;
-			-webkit-border-top-right-radius: 5px;
-			-moz-border-radius-topleft: 5px;
-			-moz-border-radius-topright: 5px;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
+		.select-company {
+			border: none;
+			background-color: transparent;
+			padding: 5px;
+			font-size: 1.5vh;
+			width: 15%;
+			color: #fff;
+			font-family: Montserrat;
 		}
+
+		.select-company:focus {
+			outline: none;
+		}
+
+		.select-company option {
+			color: black; /* Font color for non-selected options */
+		}
+		.modal-header-notification-error {
+            border-bottom:1px solid #eee;
+            background-color: #f44336;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .modal-header-notification-success {
+            border-bottom:1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
 		.div-title-notification {
 			margin: 1.5%;
 			margin-top: 2%;
@@ -160,13 +192,20 @@
 				<div class="navbar-collapse breadcrumb-link" id="div-breadcrumbs">
 					
 				</div>
-				<div class="navbar-collapse company-link" style="display: block !important;">
+				<!-- <div id="companyData" class="navbar-collapse company-link" style="display: block !important;">
 					<span>{{ Session::get('companyName') }}</span> 
 				</div>
+				<div id="dropdownCompanyData"class="dropdown-company">
+					<span>{{ Session::get('companyName') }}</span> 
+					<div id="valueDropdownCompanyData" class="dropdown-company-content dropdown-menu"></div>
+				</div> -->
+				<select class="select-company" id="select-company" name="select-company"></select>
 				<div class="navbar-collapse right-link">
 					<span class="navbar-divide-complete">|</span>
+					@if(Session::has('haveUtilities'))
 					<div class="img-setting-link"><a href="{{ url('/utilities') }}" target="iframe_dashboard"><img src="{{ url('/pictures/setting-white.png') }}" alt="Setting"></a></div>
 					<span class="navbar-divide">|</span>
+					@endif
 					<div class="dropdown-profile">
 						@if(Session::get('photo') == NULL)
 						<img class="rounded-circle" src="{{ url('/pictures/default-profile.png') }}" style="width: 2.5rem;" alt="Profile">
@@ -187,7 +226,7 @@
 			<iframe src="{{ url('/home') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
 		</div>
 	</div>
-	<div class="modal fade" id="modal_change_language" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="modal_change_language"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             	<div class="modal-header" id="modal-header-change-language">
@@ -197,28 +236,28 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="change_language_form" method="post">
+                    <form id="change_language_form" method="post" style="font-size: 17px;">
                     	@csrf
                     	<div class="row">
-                    		<div class="col-6">
-                    			<div class="form-check form-check-change-language">
-                    				<input class="form-check-input" type="radio" name="change_language" id="change_language_english" value="en">
-                    				<label class="form-check-label label-change-language" for="change_language_english">English</label>
-                    			</div>
+                    		<div class="col-12">
+								<div class="form-check">
+									<input type="radio" id="change_language" name="change_language_english" value="en">
+									<label for="change_language_english">English</label>
+								</div>
                     		</div>
                     	</div>
-                    	<div class="row">
-                    		<div class="col-6">
-                    			<div class="form-check form-check-change-language">
-                    				<input class="form-check-input" type="radio" name="change_language" id="change_language_bahasa_indonesia" value="id">
-                    				<label class="form-check-label label-change-language" for="change_language_bahasa_indonesia">Bahasa Indonesia</label>
-                    			</div>
+						<div class="row">
+                    		<div class="col-12">
+								<div class="form-check">
+									<input type="radio" id="change_language" name="change_language_bahasa_indonesia" value="id">
+									<label for="change_language_bahasa_indonesia">Bahasa Indonesia</label>
+								</div>
                     		</div>
                     	</div>
                 </div>
                 <div class="modal-footer justify-content-between" id="modal-footer-change-language">
-                    <button type="submit" class="btn btn-primary w-50"><i class="fa fa-check"></i> Confirm</button>
-                    <button type="button" class="btn btn-danger w-50" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
+                    <button type="submit" class="btn btn-primary w-25"><i class="fa fa-check"></i> Confirm</button>
+                    <button type="button" class="btn btn-danger w-25" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
                 </div>
                 </form>
             </div>
@@ -227,7 +266,7 @@
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header modal-header-notification">
+                <div class="modal-header modal-header-notification-error">
                     <h5 class="modal-title">Error!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -242,7 +281,7 @@
     <div class="modal fade" role="dialog" id="notification_language_success">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header modal-header-notification">
+                <div class="modal-header modal-header-notification-success">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -254,6 +293,26 @@
                 	</div>
                 	<div class="div-title-notification">
                     	<span id="message-notification-success">{{ __('main.language_success') }}</span>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                	<div class="div-title-notification">
+                		<img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                		<span class="title-text-notification">{{ __('main.success_title') }}</span>
+                	</div>
+                	<div class="div-title-notification">
+                    	<span id="message-notification-success">{{ __('main.success') }}</span>
                 	</div>
                 </div>
             </div>
@@ -297,6 +356,7 @@
 	})(jQuery);
 
 	$(document).ready(function() {
+		var companyCode = "{{ Session::get('companyCode') }}";
 		$('.list-group-item-action').first().toggleClass('active');
 		$('.list-group-item-action').first().find('.color-active').toggleClass('active');
 
@@ -340,7 +400,64 @@
 				}
 
 			});
+
+			$.ajax({
+				url: "{{ url('session_company/api') }}",
+				type: "GET",
+				data: { "company" : companyCode },
+				success: function(response) {
+					if(response.length > 0){
+						$('#select-company').empty();
+						$.each(response, function (k, v) {
+							if(v.companyCode != companyCode){
+								$('#select-company').append(
+									'<option value="' + v.companyCode + '">' + v.companyName + '</option>'
+								);
+							}else{
+								$('#select-company').append(
+									'<option value="' + v.companyCode + '" selected>' + v.companyName + '</option>'
+								);
+							}
+						});
+					}
+				},
+				error: function(response) {
+					$('#notification_error').modal('show');
+					$('#message-notification-error').html(response);
+				}
+
+			});
 		});
+
+		$('#select-company').on('change', function () {
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{ url('session_company/change') }}",
+				type: "POST",
+				data: { "companyCode" : $(this).val(), "companyName" : $("#select-company option:selected").text() },
+				success: function(response) {
+					if(response.status){
+						$('#notification_success').modal('show');
+						setTimeout(function(){ 
+							$('#notification_success').modal('hide');
+							window.location.reload();
+						}, 3000);
+					}else{
+						$('#notification_error').modal('show');
+						$('#message-notification-error').html(response.message);
+					}
+				},
+				error: function(response) {
+					$('#notification_error').modal('show');
+					$('#message-notification-error').html(response);
+				}
+
+			});
+        });
 
 		$('#notification_language_success').on('hide.bs.modal', function () {
 			window.location.reload();

@@ -120,6 +120,22 @@
                                 placeholder="{{ __('payroll_account.label_reference') }}">
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="grouping_one">{{ __('payroll_account.label_grouping_one') }}</label>
+                            <input type="text" class="form-control" id="grouping_one" name="grouping_one"
+                                placeholder="{{ __('payroll_journal_template.label_grouping_one') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="grouping_two">{{ __('payroll_account.label_grouping_two') }}</label>
+                            <input type="text" class="form-control" id="grouping_two" name="grouping_two"
+                                placeholder="{{ __('payroll_journal_template.label_grouping_two') }}">
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -200,12 +216,16 @@
             $('#account_no').val("");
             $('#account_description').val("");
             $('#reference').val("");
+            $('#grouping_one').val("");
+            $('#grouping_two').val("");
         }
         else if (func == 'edit') {
             $('#record_function').val("Edit");
             $('#account_no').val(((typeof arrData[0].accountNo !== 'undefined') ? arrData[0].accountNo : '')).prop('readonly', true);
             $('#account_description').val(htmlDecode(((typeof arrData[0].accountDescription !== 'undefined') ? arrData[0].accountDescription : '')));
             $('#reference').val(((typeof arrData[0].reference !== 'undefined') ? arrData[0].reference : ''));
+            $('#grouping_one').val(((typeof arrData[0].grouping1 !== 'undefined') ? arrData[0].grouping1 : ''));
+            $('#grouping_two').val(((typeof arrData[0].grouping2 !== 'undefined') ? arrData[0].grouping2 : ''));
         }
 
         function htmlDecode(value) {

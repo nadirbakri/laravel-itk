@@ -183,7 +183,7 @@
             </div>
 		</div>
 	</div>
-	<div class="modal fade" id="modal_add_report_format" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="modal_add_report_format"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -285,7 +285,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_report_format_condition" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_report_format_condition"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -425,7 +425,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             columns: [
                 {data: 'column_name', name: 'column_name'},
                 {data: 'table_name', name: 'table_name'},
@@ -459,7 +459,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             columns: [
                 {data: 'seq_no', name: 'seq_no'},
                 {data: 'table_name', name: 'table_name'},

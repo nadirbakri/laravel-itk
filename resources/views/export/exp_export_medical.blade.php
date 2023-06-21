@@ -116,12 +116,13 @@
                         <span class="title-text">{{ __('export_medical.list') }}</span>
                     </a>
                 </div>
-
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="claim_date_from form-check-label">{{ __('export_medical.label_claim_date') }}</label>
                         </div>
+                    </div>
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
                                 placeholder="{{ __('export_medical.label_claim_start') }}">
@@ -129,12 +130,13 @@
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
                     </div>
-                    <div class="col-5">
+                    <div class="col-0.5">
                         <div class="form-group">
                             <label for="claim_date_to form-check-label">{{ __('export_medical.label_to') }}</label>
-                        </div>  
+                        </div>
+                    </div>
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
                                 placeholder="{{ __('export_medical.label_claim_end') }}">
@@ -142,22 +144,30 @@
                                 <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-3">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label">{{ __('export_medical.label_reimbursement_type') }}</label>
+                            <label for="reimbursement_type">{{ __('export_medical.label_reimbursement_type') }}</label>
                         </div>
-                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('export_medical.label_business_unit') }}</label>
+                            <select class="form-control select2" id="reimbursement_type" name="reimbursement_type"></select>
                         </div>
-                        <select class="form-control select2" id="business_unit" name="business_unit"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="business_unit">{{ __('export_medical.label_business_unit') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="business_unit" name="business_unit"></select>
+                        </div>
                     </div>
                 </div>
 
@@ -165,7 +175,7 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-export.svg') }}" alt="export"> {{ __('export_medical.btn_export') }}
+                        <i class="fa fa-download"></i> {{ __('export_medical.btn_export') }}
                         </button>
                     </div>
                 </div>
@@ -419,7 +429,8 @@ loadDataFirstLastAllBusinessUnit();
                     data: function (params) {
                         return {
                             _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term, 'levelType' : '1' 
+                            search: params.term, 
+                            levelType: '1' 
 
                         };
                     },

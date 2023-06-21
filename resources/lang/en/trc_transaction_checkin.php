@@ -15,7 +15,7 @@ return [
     'cohour' => 'CheckOut Hour',
     'luser' => 'List User',
     'division' => 'Division',
-    'Ranking' => 'Ranking',
+    'ranking' => 'Ranking',
     'list_table' => 'Ranking',
     'list_user' => 'Detail CheckIn',
     'alert_success' => 'Success!',

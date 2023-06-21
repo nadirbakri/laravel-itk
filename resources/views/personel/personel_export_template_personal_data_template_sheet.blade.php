@@ -18,6 +18,7 @@
 <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
             <tr>
+				<th>Company Code *</th>
 				<th>Employee No *</th>
 				<th>Employee Name *</th>
 				<th>Birth Place *</th>

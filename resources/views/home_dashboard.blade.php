@@ -32,10 +32,41 @@
 		.img-card-welcome img {
 			max-width: 75%;
 		}
+
+		#loading {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+		@keyframes spin {
+		to { transform: rotate(360deg); }
+		}
 	</style>
 </head>
 
 <body>
+	@if(Session::has('haveHome'))
+	<div id="loading">
+        <div class="spinner"></div>
+    </div>
 	<div class="div-dashboard">
 		<div class="row card-top">
 			<div class="col col-8">
@@ -198,17 +229,6 @@
 			</div>
 
 			<div class="col col-2">
-				<a class="tabs-card" id="card-middle-four" href="#middle-four" data-toggle="tab" role="tab">
-					<div class="card h-100">
-						<div class="card-body">
-							<p>{{ __('dashboard.middle-four') }}</p>
-							<p class="count-card-middle" id="new_hire_month"></p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col col-2">
 				<a class="tabs-card" id="card-middle-five" href="#middle-five" data-toggle="tab" role="tab">
 					<div class="card h-100">
 						<div class="card-body">
@@ -296,29 +316,6 @@
 											<th>{{ __('dashboard.table_name') }}</th>
 											<th>{{ __('dashboard.table_location') }}</th>
 											<th>{{ __('dashboard.table_position') }}</th>
-											<th>{{ __('dashboard.table_birth_date') }}</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div id="middle-four" class="card-body tab-pane fade" role="tabpanel">
-						<div class="detail-middle-card">
-							<div class="text-middle-card">
-								<p>{{ __('dashboard.middle-four') }}</p>
-								<p class="count-card-middle" id="new_hire_month_tab"></p>
-							</div>
-							<div class="vl"></div>
-							<div class="line-bottom-card"></div>
-							<div class="table-middle-card">
-								<table class="card-table table" id="new_hire_month_table" style="width: 100%">
-									<thead>
-										<tr>
-											<th>{{ __('dashboard.table_employee_no') }}</th>
-											<th>{{ __('dashboard.table_name') }}</th>
-											<th>{{ __('dashboard.table_location') }}</th>
-											<th>{{ __('dashboard.table_position') }}</th>
 											<th>{{ __('dashboard.table_start_date') }}</th>
 											<th>{{ __('dashboard.table_end_date') }}</th>
 										</tr>
@@ -343,7 +340,7 @@
 											<th>{{ __('dashboard.table_name') }}</th>
 											<th>{{ __('dashboard.table_location') }}</th>
 											<th>{{ __('dashboard.table_position') }}</th>
-											<th>{{ __('dashboard.table_birth_date') }}</th>
+											<th>{{ __('dashboard.table_join_date') }}</th>
 										</tr>
 									</thead>
 								</table>
@@ -366,7 +363,7 @@
 											<th>{{ __('dashboard.table_name') }}</th>
 											<th>{{ __('dashboard.table_location') }}</th>
 											<th>{{ __('dashboard.table_position') }}</th>
-											<th>{{ __('dashboard.table_birth_date') }}</th>
+											<th>{{ __('dashboard.table_termination_date') }}</th>
 										</tr>
 									</thead>
 								</table>
@@ -377,6 +374,7 @@
 			</div>
 		</div>
 	</div>
+	@endif
 	<div class="modal fade" role="dialog" id="data-from-chart">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -423,6 +421,13 @@
 	var $calendar;
 	// var employeeActiveData = null;
 	$(document).ready(function () {
+		var barChartEmployeeService = null;
+		var lineChartOvertimePay = null;
+		var lineChartPayroll = null;
+		var barChartOvertimeHour = null;
+		var doughnutChartEmployeeActive = null;
+		var doughnutChartEmployeeAge = null;
+
 		var firebaseConfig = {
 			apiKey: "AIzaSyB0e5Cq6q0c7rFx-YtSIa8Ib4h85xjTd6I",
 			authDomain: "laravel-itk.firebaseapp.com",
@@ -432,6 +437,8 @@
 			appId: "1:592986504219:web:93d88f5e6dc231d88c8cbe",
 			measurementId: "G-3DS7F0TQVC"
 		};
+
+		$('#loading').show();
 
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
@@ -446,8 +453,6 @@
      				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
      			}
      		});
-
-     		console.log(token);
 
      		$.ajax({
      			url: '{{ url("save-token") }}',
@@ -489,7 +494,7 @@
  			new Notification(noteTitle, noteOptions);
  		});
 
- 		$.ajax({
+ 		var reqCalendar = $.ajax({
  			url: '{{ url("calendar/event") }}',
  			type: 'GET',
  			dataType: 'JSON',
@@ -508,13 +513,13 @@
  			},
  		});
 
-		$.ajax({
+		var reqPayroll = $.ajax({
  			url: '{{ url("getPayroll") }}',
  			type: 'GET',
  			dataType: 'JSON',
  			success: function (response) {
 				var payrollData = {
-					labels: response.month,
+					labels: response.tanggal,
 					datasets: [
 					{
 						data: response.total,
@@ -523,7 +528,7 @@
 					}]
 				};
 
-				var lineChartPayroll = new Chart(chartPayroll, {
+				lineChartPayroll = new Chart(chartPayroll, {
 					type: 'line',
 					data: payrollData,
 					options: chartOptionsPayroll
@@ -534,7 +539,7 @@
  			},
  		});
 
-		$.ajax({
+		var reqOvertime = $.ajax({
  			url: '{{ url("getOvertime") }}',
  			type: 'GET',
  			dataType: 'JSON',
@@ -563,13 +568,13 @@
 					}]
 				};
 
-				var lineChartOvertimePay = new Chart(chartOvertimePay, {
+				lineChartOvertimePay = new Chart(chartOvertimePay, {
 					type: 'line',
 					data: overtimePayData,
 					options: chartOptionsOvertimePay
 				});
 
-				var barChartOvertimeHour = new Chart(chartOvertimeHour, {
+				barChartOvertimeHour = new Chart(chartOvertimeHour, {
 					type: 'bar',
 					data: overtimeHourData,
 					options: chartOptionsOvertimeHour
@@ -590,7 +595,7 @@
             return JSON.stringify(obj) === JSON.stringify({});
         }
 
-		 $.ajax({
+		var reqActiveEmp = $.ajax({
  			url: '{{ url("active_employee") }}',
  			type: 'GET',
  			dataType: 'JSON',
@@ -620,8 +625,6 @@
 						if(val.description == "LT+NO"){
 							totalLate += val.amount;
 						}
-
-
 					});
 				}
 
@@ -631,10 +634,18 @@
 				$('#total_late').html(totalLate);
 				$('#total_absent').html(totalAbsent);
 				$('#total_leave').html(totalLeave);
-				$('#persentage_present').html(Math.round((totalPresent / response.totalEmployee) * 100) + '%');
-				$('#persentage_late').html(Math.round((totalLate / response.totalEmployee) * 100) + '%');
-				$('#persentage_absent').html(Math.round((totalAbsent / response.totalEmployee) * 100) + '%');
-				$('#persentage_leave').html(Math.round((totalLeave / response.totalEmployee) * 100) + '%');
+				if(response.totalEmployee > 0){
+					$('#persentage_present').html(Math.round((totalPresent / response.totalEmployee) * 100) + '%');
+					$('#persentage_late').html(Math.round((totalLate / response.totalEmployee) * 100) + '%');
+					$('#persentage_absent').html(Math.round((totalAbsent / response.totalEmployee) * 100) + '%');
+					$('#persentage_leave').html(Math.round((totalLeave / response.totalEmployee) * 100) + '%');
+				}else{
+					$('#persentage_present').html('0%');
+					$('#persentage_late').html('0%');
+					$('#persentage_absent').html('0%');
+					$('#persentage_leave').html('0%');
+				}
+				
 
 				// console.log(response);s
 				$('#totalEmployee').html(response.totalEmployee);
@@ -657,17 +668,21 @@
 
 				var employeeAgeData = {
 					labels: [
+					"Age < 21",
 					"Age 21 - 30",
 					"Age 30 - 40",
-					"Age 40 - 55"
+					"Age 40 - 55",
+					"Age > 55"
 					],
 					datasets: [
 					{
-						data: [response.ageFirst, response.ageSecond, response.ageThird],
+						data: [response.ageFirst, response.ageSecond, response.ageThird, response.ageFourth, response.ageFifth],
 						backgroundColor: [
 						"#4472C4",
 						"#E75B52",
-						"#A5A5A5"
+						"#A5A5A5",
+						"#9ACD32",
+						"#FF7F50"
 						]
 					}]
 				};
@@ -692,19 +707,19 @@
 					}]
 				};
 
-				var doughnutChartEmployeeActive = new Chart(chartEmployeeActive, {
+				doughnutChartEmployeeActive = new Chart(chartEmployeeActive, {
 					type: 'doughnut',
 					data: employeeActiveData,
 					options: chartOptionsEmployeeActive
 				});
 
-				var doughnutChartEmployeeAge = new Chart(chartEmployeeAge, {
+				doughnutChartEmployeeAge = new Chart(chartEmployeeAge, {
 					type: 'doughnut',
 					data: employeeAgeData,
 					options: chartOptionsEmployeeAge
 				});
 
-				var barChartEmployeeService = new Chart(chartEmployeeService, {
+				barChartEmployeeService = new Chart(chartEmployeeService, {
 					type: 'bar',
 					data: employeeServiceData,
 					options: chartOptionsEmployeeService
@@ -713,14 +728,12 @@
 				$('#end_contract_month, #end_contract_month_tab').html(response.endContractMonth);
 				$('#birthday_month, #birthday_month_tab').html(response.birthdayMonth);
 				$('#end_probation_month, #end_probation_month_tab').html(response.endProbationMonth);
-				$('#new_hire_month, #new_hire_month_tab').html(response.hireMonth);
 				$('#join_month, #join_month_tab').html(response.joinMonth);
 				$('#resign_month, #resign_month_tab').html(response.resignMonth);
 
 				load_data_table_end_contract_month(Object.keys(response.endContractData).map(function (key) { return response.endContractData[key]; }));
 				load_data_table_birthday_month(Object.keys(response.birthdayData).map(function (key) { return response.birthdayData[key]; }));
 				load_data_table_end_probation_month(Object.keys(response.endProbationData).map(function (key) { return response.endProbationData[key]; }));
-				load_data_table_hire_month(Object.keys(response.hireData).map(function (key) { return response.hireData[key]; }));
 				load_data_table_join_month(Object.keys(response.joinData).map(function (key) { return response.joinData[key]; }));
 				load_data_table_resign_month(Object.keys(response.resignData).map(function (key) { return response.resignData[key]; }));
 				
@@ -729,6 +742,12 @@
  				console.log('Error : '+ err);
  			},
  		});
+
+		$.when(reqCalendar, reqPayroll, reqOvertime, reqActiveEmp).done(function() {
+			$('#loading').hide();
+		}).fail(function() {
+			console.log('Error!');
+		});
 
 		$(".tabs-card").click(function() {  
 			$(".tabs-card").removeClass("active"); 
@@ -744,7 +763,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 0, "asc" ]],
                 columns: [
                     {data: 'employeeNo', name: 'employeeNo'},
@@ -779,7 +798,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 0, "asc" ]],
                 columns: [
                     {data: 'employeeNo', name: 'employeeNo'},
@@ -807,7 +826,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 0, "asc" ]],
                 columns: [
                     {data: 'employeeNo', name: 'employeeNo'},
@@ -815,43 +834,15 @@
 					{data: 'locationName', name: 'locationName'},
 					{data: 'positionName', name: 'positionName'},
                     {
-                        data: 'birthDate', 
-                        name: 'birthDate',
-                        render: function (data, type, row) {
-                            return moment(data).format('DD-MMM-YYYY');
-                        }
-                    }
-                ]
-            });
-        }
-
-		function load_data_table_hire_month(data) {
-            table = $('#new_hire_month_table').DataTable({
-                // processing: true,
-                // serverSide: true,
-                orderCellsTop: true,
-                data: data,
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
-                "order": [[ 0, "asc" ]],
-                columns: [
-                    {data: 'employeeNo', name: 'employeeNo'},
-                    {data: 'fullName', name: 'fullName'},
-					{data: 'locationName', name: 'locationName'},
-					{data: 'positionName', name: 'positionName'},
-                    {
-                        data: 'contractStartDate', 
-                        name: 'contractStartDate',
+                        data: 'joinDate', 
+                        name: 'joinDate',
                         render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
                     },
 					{
-                        data: 'contractEndDate', 
-                        name: 'contractEndDate',
+                        data: 'probationEndDate', 
+                        name: 'probationEndDate',
                         render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
@@ -870,7 +861,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 0, "asc" ]],
                 columns: [
                     {data: 'employeeNo', name: 'employeeNo'},
@@ -878,8 +869,8 @@
 					{data: 'locationName', name: 'locationName'},
 					{data: 'positionName', name: 'positionName'},
                     {
-                        data: 'birthDate', 
-                        name: 'birthDate',
+                        data: 'joinDate', 
+                        name: 'joinDate',
                         render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
@@ -898,7 +889,7 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 0, "asc" ]],
                 columns: [
                     {data: 'employeeNo', name: 'employeeNo'},
@@ -906,8 +897,8 @@
 					{data: 'locationName', name: 'locationName'},
 					{data: 'positionName', name: 'positionName'},
                     {
-                        data: 'birthDate', 
-                        name: 'birthDate',
+                        data: 'terminationDate', 
+                        name: 'terminationDate',
                         render: function (data, type, row) {
                             return moment(data).format('DD-MMM-YYYY');
                         }
@@ -1067,7 +1058,7 @@
 						beginAtZero: true
 					}
 				}]
-			},
+			}
 		};
 
 		var chartOptionsPayroll = {
@@ -1111,6 +1102,13 @@
 				point: {
 					radius: 5
 				}
+			},
+			tooltips: {
+				callbacks: {
+					label: function(tooltipItem, data) {
+						return 'Rp ' + data['datasets'][0]['data'][tooltipItem['index']].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+					},
+				},
 			}
 		};
 
@@ -1158,6 +1156,13 @@
 				point: {
 					radius: 5
 				}
+			},
+			tooltips: {
+				callbacks: {
+					label: function(tooltipItem, data) {
+						return 'Rp ' + data['datasets'][0]['data'][tooltipItem['index']].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+					},
+				},
 			}
 		};
 
@@ -1221,7 +1226,7 @@
 				var label = chartData.labels[idx];
 				var value = chartData.datasets[0].data[idx];
 
-				$('#graph_employee_service').hide();
+				$('#data-from-chart').modal('show');
 			}
 		};
 	});

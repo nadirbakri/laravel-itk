@@ -506,7 +506,7 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="modal_spt_format" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_spt_format"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1175,10 +1175,6 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6"><b>Field Name</b></div>' +
-                        '<div class="col-6"><b>Description</b></div>' +
-                        '</div>' +
-                        '<div class="row">' +
                         '<div class="col-6">' + data.data.fieldName + '</div>' +
                         '<div class="col-6">' + data.data.description + '</div>' +
                         '</div>');
@@ -1186,6 +1182,19 @@
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#operator').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Field Name</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
             $('#operator').select2({

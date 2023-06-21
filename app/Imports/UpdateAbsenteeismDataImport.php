@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -15,7 +17,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
 
-class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithStartRow
+class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 {
     /**
     * @param Collection $collection
@@ -52,19 +54,29 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithS
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            Validator::make($rows->toArray(), [
+                '*.1' => 'date_format:m/d/Y',
+                '*.3' => 'date_format:H:i',
+                '*.4' => 'date_format:H:i'
+            ], [
+                '*.1.date_format' => 'Date Format Must Be (01/31/2000)',
+                '*.3.date_format' => 'Hour & Minute In Format Must Be (07:01)',
+                '*.4.date_format' => 'Hour & Minute Out Format Must Be (07:01)'
+            ])->validate();
+
             foreach ($rows as $row) {
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
-                    "employeeNo" => (string) $row[0],
-                    "absentDate" => date("Y-m-d\TH:i:s", strtotime($row[1])),
-                    "absentCode" => (string) $row[2],
-                    "ovtIn" => date("Y-m-d\TH:i:s", strtotime($row[3])),
-                    "ovtOut" => date("Y-m-d\TH:i:s", strtotime($row[4])),
-                    "day" => $row[5],
-                    "shiftCode" => (string) $row[6],
-                    "costCenterCode" => (string) $row[7],
-                    "ovtCode" => (string) $row[8],
-                    "hourOvt" => date("Y-m-d\TH:i:s", strtotime($row[9])),
+                    "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
+                    "absentDate" => isset($row[1]) ? date("Y-m-d\TH:i:s", strtotime($row[1])) : null,
+                    "absentCode" => isset($row[2]) ? (string) $row[2] : null,
+                    "actualDateIn" => isset($row[3]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[3])) : null,
+                    "actualDateOut" => isset($row[4]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[4])) : null,
+                    "day" => isset($row[5]) ? $row[5] : null,
+                    "shiftCode" => isset($row[6]) ? (string) $row[6] : null,
+                    "costCenterCode" => isset($row[7]) ? (string) $row[7] : null,
+                    "ovtCode" => isset($row[8]) ? (string) $row[8] : null,
+                    "hourOvt" => isset($row[9]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[9])) : null,
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),
@@ -83,9 +95,15 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithS
             $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]
             );
+        } catch (ValidationException $e) {
+            $validationErrors = $e->validator->errors()->messages();
+            $errorValidate = array_shift($validationErrors);
+            $this->arrResult[]['message'] = array_shift($errorValidate);
+            return $this->arrResult;
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
+            $this->arrResult[]['message'] = $response;
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -96,33 +114,6 @@ class UpdateAbsenteeismDataImport implements ToCollection, WithValidation, WithS
         }
 
         $this->arrResult[] = json_decode($response->getBody()->getContents());
-    }
-
-    public function rules(): array
-    {
-        return [
-            '1' => 'date_format:m/d/Y',
-            '3' => 'date_format:H:i',
-            '4' => 'date_format:H:i',
-        ];
-    }
-
-    public function customValidationMessages()
-    {
-        return [
-            '1.date_format' => 'Date Format Must Be (01/31/2000)',
-            '3.date_format' => 'Hour & Minute In Format Must Be (07:01)',
-            '4.date_format' => 'Hour & Minute Out Format Must Be (07:01)',
-        ];
-    }
-
-    public function customValidationAttributes()
-    {
-        return [
-            '1' => 'Date',
-            '3' => 'Hour & Minute In',
-            '4' => 'Hour & Minute Out',
-        ];
     }
 
     public function startRow(): int

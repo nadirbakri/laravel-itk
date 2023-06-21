@@ -15,7 +15,7 @@ return [
     'cohour' => 'CheckOut Hour',
     'luser' => 'Daftar Pengguna',
     'division' => 'Divisi',
-    'Ranking' => 'Level',
+    'ranking' => 'Level',
     'list_table' => 'Ranking',
     'list_user' => 'Detail  CheckIn',
     'alert_success' => 'Sukses!',

@@ -157,7 +157,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="modal fade" id="modal_add_exchange_rate" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="modal_add_exchange_rate"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -263,7 +263,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             columns: [
                 {data: 'rate_date', name: 'rate_date'},
                 {data: 'conversion_rate', name: 'conversion_rate'}

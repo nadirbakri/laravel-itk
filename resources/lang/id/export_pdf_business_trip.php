@@ -1,8 +1,8 @@
 <?php
 
 return [ 
-    'judul' => 'Export Trip as PDF',
-    'list' => 'Export Trip as PDF',
+    'judul' => 'Export PDF Business Trip',
+    'list' => 'Export PDF Business Trip',
     'label_claim_date' => 'Travel Date From',
     'label_claim_start' => 'Date - Start',
     'label_claim_end' => 'Date - End',

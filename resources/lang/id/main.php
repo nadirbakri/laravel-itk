@@ -20,5 +20,7 @@ return [
     'logout' => 'Keluar',
     'language_success' => 'Bahasa Berhasil Diubah',
     'language_success_title' => 'Berhasil !',
+    'success' => 'Berhasil Diubah',
+    'success_title' => 'Berhasil !',
 
 ];

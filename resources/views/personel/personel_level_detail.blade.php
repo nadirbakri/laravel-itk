@@ -277,7 +277,7 @@
                         '<div class="col-6"><b>Level Type</b></div>' +
                         '<div class="col-6"><b>Level Description</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });

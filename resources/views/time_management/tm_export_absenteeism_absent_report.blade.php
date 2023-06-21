@@ -46,7 +46,11 @@
 				<td>{{ $value2->valueString }}</td>
 				@endforeach
 				@foreach($value->aggregateColumn as $value2)
-				<td>{{ isset($value2->valueNum) ? $value2->valueNum : $value2->valueDec }}</td>
+					@if($value2->key == 'TotalHourOVT')
+					<td>{{ isset($value2->valueNum) ? date("H:i", (int) $value2->valueNum / 1000000) : date("H:i", (int) $value2->valueDec / 1000000) }}</td>
+					@else
+					<td>{{ isset($value2->valueNum) ? $value2->valueNum : $value2->valueDec }}</td>
+					@endif
 				@endforeach
 			</tr>
 			@endforeach

@@ -201,7 +201,7 @@
         	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
         },
         "sDom": 'lrtip',
-        'sPaginationType': 'ellipses',
+        'sPaginationType': 'full_numbers',
         "order": [[ 1, "asc" ]],
         columns: [
             {
@@ -237,7 +237,7 @@
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
             "sDom": 'lrtip',
-            'sPaginationType': 'ellipses',
+            'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
                 {
@@ -258,6 +258,23 @@
             }
         });
     }
+
+    $('#nature_of_work_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        var $row = $(this).closest('tr');
+
+        if(this.checked){
+            $row.addClass('selected');
+        } else {
+            $row.removeClass('selected');
+        }
+
+        // Prevent click event from propagating to parent
+        e.stopPropagation();
+    });
+
+    $('#nature_of_work_table').on('click', 'tr td:first-child', function(e){
+        $(this).parent().find('input[type="checkbox"]').trigger('click');
+    });
 
     $('#notification_success').on('hide.bs.modal', function () {
         window.location = "{{ url('personnel/nature_of_work') }}";

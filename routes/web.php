@@ -32,12 +32,19 @@ Route::get('/cache-config', function() {
     return '<h1>Config facade value cached</h1>';
 });
 
+Route::get('/cache-route', function() {
+    $exitCode = Artisan::call('route:clear');
+    return '<h1>Cache facade value cleared</h1>';
+});
+
 
 /* Route Untuk Halaman Login */
 Route::get('login', 'LoginController@pageLogin')->name('login');
 Route::post('login/proses', 'LoginController@prosesLogin');
 Route::get('logout', 'LoginController@prosesLogout');
 Route::post('authentication/proses', 'LoginController@prosesAuthentication');
+Route::get('login-sso', 'LoginController@redirectToAzure');
+Route::get('auth/sso', 'LoginController@handleAzureCallback');
 
 /* Route Untuk Halaman Reset Password */
 Route::get('reset_password', 'ResetPasswordController@pageResetPassword');
@@ -67,6 +74,7 @@ Route::get('personnel/payroll_data', 'PersonelController@pagePayrollDataPersonel
 Route::get('personnel/employee_approval', 'PersonelController@pageEmployeeApprovalPersonel');
 Route::get('personnel/employee_attachment', 'PersonelController@pageEmployeeAttachmentPersonel');
 Route::get('personnel/import_export_personal_data', 'PersonelController@pageImportExportPersonel');
+Route::get('personnel/import_master_data', 'PersonelController@pageImportMasterDataPersonel');
 Route::get('personnel/employee_mutation', 'PersonelController@pageEmployeeMutationPersonel');
 Route::get('personnel/npwp_mutation', 'PersonelController@pageNPWPMutationPersonel');
 Route::get('personnel/termination_data_entry', 'PersonelController@pageTerminationDataEntryPersonel');
@@ -391,6 +399,8 @@ Route::get('personnel/report/level/check', 'PersonelController@checkReportLevelP
 Route::post('personnel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personnel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');
 Route::get('personnel/employee_attachment/view', 'PersonelController@viewEmployeeAttachmentPersonel');
+Route::post('personnel/import_master_data/download_template', 'PersonelController@downloadTemplateMasterDataPersonel');
+Route::post('personnel/import_master_data/import', 'PersonelController@importMasterDataPersonel');
 
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement');
@@ -501,6 +511,7 @@ Route::post('time_management/detail_rate_overtime_report/print', 'TimeManagement
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
+Route::post('time_management/update_absenteeism_data/download', 'TimeManagementController@templateUpdateAbsenteeismData');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll');
@@ -537,7 +548,8 @@ Route::get('payroll/spt_process', 'PayrollController@pageSptProcess');
 Route::get('payroll/final_tax_process', 'PayrollController@pageFinalTaxProcess');
 Route::get('payroll/monthly_payroll_closing_process', 'PayrollController@pageMonthlyPayrollClosingProcess');
 Route::get('payroll/monthly_system_closing', 'PayrollController@pageMonthlySystemClosing');
-Route::get('payroll/transfer_data_to_bank', 'PayrollController@pageTransferDataToBank');
+// Route::get('payroll/transfer_data_to_bank', 'PayrollController@pageTransferDataToBank');
+Route::get('payroll/transfer_data_to_bank', 'PayrollController@dataDetailTransferDataToBankPY');
 Route::get('payroll/periodical_update_process', 'PayrollController@pagePeriodicalUpdateProcess');
 Route::get('payroll/overtime_calculation_process', 'PayrollController@pageOvertimeCalculationProcess');
 Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
@@ -706,6 +718,7 @@ Route::post('payroll/annual_report/print', 'PayrollController@printAnnualReportP
 Route::post('payroll/annual_report/print/excel', 'PayrollController@printAnnualReportPayrollExcel');
 Route::post('payroll/loan_report/print', 'PayrollController@printLoanReportPayroll');
 Route::post('payroll/loan_report/print/excel', 'PayrollController@printLoanReportPayrollExcel');
+Route::post('payroll/periodical_report/print', 'PayrollController@printPeriodicalReportPayroll');
 Route::post('payroll/periodical_report/excel/print', 'PayrollController@printPeriodicalReportPayrollExcel');
 Route::post('payroll/export_sipp_online/print', 'PayrollController@printExportSIPPOnlinePayroll');
 Route::post('payroll/spt_pph_report/print', 'PayrollController@printSPTPPHReportPayroll');
@@ -829,6 +842,9 @@ Route::get('utilities/audit_trail', 'UtilitiesController@pageAuditTrailUtilities
 Route::get('utilities/export_personal_data', 'UtilitiesController@pageExportPersonalDataUtilities');
 Route::get('utilities/dashboard_admin_ess', 'UtilitiesController@pageDashboardESSUtilities');
 Route::get('utilities/news_master', 'UtilitiesController@pageNewsMasterUtilities');
+Route::get('utilities/announcement', 'UtilitiesController@pageAnnouncementUtilities');
+Route::get('utilities/company', 'UtilitiesController@pageCompanyUtilities');
+Route::get('utilities/process_user_id', 'UtilitiesController@pageProcessUserIDUtilities');
 
 Route::get('utilities/user_security_maintenance/table', 'UtilitiesController@tableUserSecurityMaintenanceUtilities');
 Route::get('utilities/group_authorization/table', 'UtilitiesController@tableAuthorizationCodeGroupUtilities');
@@ -836,10 +852,12 @@ Route::get('utilities/group_user_access/table', 'UtilitiesController@tableUserAc
 Route::get('utilities/user_log/table', 'UtilitiesController@tableUserLogUtilities');
 Route::get('utilities/menu_master/table', 'UtilitiesController@tableMenuMasterUtilities');
 Route::get('utilities/change_password/employee/table', 'UtilitiesController@tableChangeEmployeeNumberEmployeeUtilities');
+Route::get('utilities/company/table', 'UtilitiesController@tableCompanyUtilities');
 
 Route::get('utilities/group_authorization/detail_data', 'UtilitiesController@dataDetailAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/detail_data', 'UtilitiesController@dataDetailUserAccessGroupUtilities');
 Route::get('utilities/user_security_maintenance/detail_data', 'UtilitiesController@dataDetailUserSecurityMaintenanceUtilities');
+Route::get('utilities/company/detail_data', 'UtilitiesController@dataDetailCompanyUtilities');
 
 Route::get('utilities/user_security_maintenance/level/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelUtilities');
 Route::get('utilities/user_security_maintenance/company/table', 'UtilitiesController@tableUserSecurityMaintenanceCompanyUtilities');
@@ -851,6 +869,7 @@ Route::get('utilities/menu_master/configure_menu/table', 'UtilitiesController@ta
 Route::get('utilities/group_authorization/status', 'UtilitiesController@statusAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/status', 'UtilitiesController@statusUserAccessGroupUtilities');
 Route::get('utilities/user/status', 'UtilitiesController@statusUserUtilities');
+Route::get('utilities/company/status', 'UtilitiesController@statusCompanyUtilities');
 
 Route::post('utilities/group_authorization/proses', 'UtilitiesController@prosesAuthorizationCodeGroupUtilities');
 Route::post('utilities/group_user_access/proses', 'UtilitiesController@prosesUserAccessGroupUtilities');
@@ -862,6 +881,8 @@ Route::post('utilities/user_security_maintenance/level/proses', 'UtilitiesContro
 Route::post('utilities/user_security_maintenance/company/proses', 'UtilitiesController@prosesUserSecurityMaintenanceCompanyUtilities');
 Route::post('utilities/user_security_maintenance/module/proses', 'UtilitiesController@prosesUserSecurityMaintenanceModuleUtilities');
 Route::post('utilities/change_employee_no/proses', 'UtilitiesController@prosesChangeEmployeeNumberUtilities');
+Route::post('utilities/company/proses', 'UtilitiesController@prosesCompanyUtilities');
+Route::post('utilities/process_user_id/proses', 'UtilitiesController@prosesProcessUserIDUtilities');
 
 Route::post('utilities/audit_trail/export', 'UtilitiesController@exportAuditTrailUtilities');
 
@@ -928,6 +949,7 @@ Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBuss
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
 Route::get('master_data_leave/list/table', 'MasterDataController@tabelDetailEmployeeLeave');
+Route::get('master_data_overtime/list/table', 'MasterDataController@tabelDetailEmployeeOvertime');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
 Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
 Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
@@ -937,8 +959,17 @@ Route::get('master_data/employee_group_detail/table', 'MasterDataController@tabl
 Route::get('master_data/tambah_user/table', 'MasterDataController@tableEmployeeGroupTambahUser');
 Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHolidayCalendar');
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
+Route::get('master_data/get', 'MasterDataController@getMasterData');
+Route::get('master_data/employee_group_detail/get', 'MasterDataController@getMasterDataEmployeeGroupDetail');
+Route::get('master_data/leave/get', 'MasterDataController@getLeaveMasterData');
+Route::get('master_data/overtime/get', 'MasterDataController@getOvertimeMasterData');
+Route::get('master_data/detail/get', 'MasterDataController@getDetailMasterData');
+Route::get('master_data/reimbursement/get', 'MasterDataController@getReimbursementMasterData');
+Route::get('master_data/holiday_calendar/get', 'MasterDataController@getHolidayCalendarMasterData');
+Route::get('master_data/business_trip/get', 'MasterDataController@getBusinessTripMasterData');
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
 Route::post('master_data/employee_group_leave/proses', 'MasterDataController@prosesEmployeeGroupLeave');
+Route::post('master_data/employee_group_overtime/proses', 'MasterDataController@prosesEmployeeGroupOvertime');
 Route::post('master_data/employee_reimbursement/proses', 'MasterDataController@prosesEmployeeReimbursement');
 Route::post('master_data/holiday_calendar/proses', 'MasterDataController@prosesEmployeeHolidayCalendar');
 Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@prosesEmployeeBusinessTrip');
@@ -956,6 +987,8 @@ Route::get('mapsall/location', 'AdminMenuController@pageMapsAll');
 Route::get('adm_main_menu/news_master/list', 'AdminMenuController@pageAdminNewsList');
 Route::get('admin_menu/news_master/remove', 'AdminMenuController@pageNewsMasterRemove');
 Route::post('admin_menu/news_master/proses', 'AdminMenuController@pageAdminMenuNews');
+Route::get('adm_main_menu/announcement/list', 'AdminMenuController@listAnnouncementAdminMenu');
+Route::post('admin_menu/announcement/proses', 'AdminMenuController@prosesAnnouncementAdminMenu');
 
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');
@@ -1005,6 +1038,9 @@ Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI')
 Route::get('reimbursement_type/all/api', 'DataController@dataReimbursementTypeAllAPI');
 Route::get('reimbursement_type/func/api', 'DataController@dataReimbursementTypeFunctionAPI');
 Route::get('news_category/api', 'DataController@dataNewsCategory');
+Route::get('news_category/detail/api', 'DataController@dataNewsCategoryDetail');
+Route::get('announcement_category/api', 'DataController@dataAnnouncementCategory');
+Route::get('announcement_category/detail/api', 'DataController@dataAnnouncementCategoryDetail');
 Route::get('reimbursement_type_medical/all/api', 'DataController@dataReimbursementTypeMedicalFunctionAPI');
 Route::get('transport_type/all/api', 'DataController@dataTransportAll');
 Route::get('travel_type/all/api', 'DataController@dataTravelTypeAllAPI');
@@ -1034,6 +1070,8 @@ Route::get('employee_no_full_partial_loan_payment/api', 'DataController@dataEmpl
 Route::get('employee_no_loan_payment/api', 'DataController@dataEmployeeNoLoanPaymentAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
+Route::get('session_company/api', 'DataController@dataSessionCompanyAPI');
+Route::post('session_company/change', 'DataController@changeSessionCompanyAPI');
 Route::get('module/api', 'DataController@dataModuleAPI');
 Route::get('group_authorize/api', 'DataController@dataGroupAuthorizeAPI');
 Route::get('group_authorize/func/api', 'DataController@dataGroupAuthorizeFunctionAPI');
@@ -1072,6 +1110,8 @@ Route::get('location/api', 'DataController@dataLocationAPI');
 Route::get('location/detail/api', 'DataController@dataLocationDetailAPI');
 Route::get('location/all/api', 'DataController@dataLocationAllAPI');
 Route::get('location/func/api', 'DataController@dataLocationFunctionAPI');
+Route::get('holding_company/api', 'DataController@dataHoldingCompanyAPI');
+Route::get('holding_company/detail/api', 'DataController@dataHoldingCompanyDetailAPI');
 Route::get('ranking/api', 'DataController@dataRankingAPI');
 Route::get('ranking/detail/api', 'DataController@dataRankingDetailAPI');
 Route::get('ranking/all/api', 'DataController@dataRankingAllAPI');

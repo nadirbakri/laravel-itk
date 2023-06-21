@@ -75,6 +75,21 @@ class UtilitiesController extends Controller
     	return view('admin_menu.admin_main_menu_news_master');
     }
 
+    public function pageAnnouncementUtilities()
+    {
+    	return view('admin_menu.admin_main_announcement');
+    }
+
+    public function pageCompanyUtilities()
+    {
+    	return view('utilities.utilities_company_master');
+    }
+
+    public function pageProcessUserIDUtilities()
+    {
+    	return view('utilities.utilities_process_user_id');
+    }
+
     public function tableUserSecurityMaintenanceUtilities(Request $request)
     {
         try {
@@ -161,6 +176,43 @@ class UtilitiesController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableCompanyUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/company/getcompany',
+                ['body' => json_encode(
+                    [
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -347,7 +399,7 @@ class UtilitiesController extends Controller
         return view('utilities.utilities_authorization_code_group_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
-    public function dataDetailUserAccessGroupUtilities(Request $request)
+    public function dataDetailCompanyUtilities(Request $request)
     {
         try {
             $client = new Client([
@@ -355,11 +407,10 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
+            $response = $client->post(env('API_URL') . '/company/getcompany',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode'),
-                        'groupAccessID' => $request->groupAccessID,
+                        'companyCode' => $request->companyCode,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -379,7 +430,54 @@ class UtilitiesController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());  
 
-        return view('utilities.utilities_user_access_group_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        return view('utilities.utilities_company_master_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailUserAccessGroupUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => $request->groupAccessID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response2 = $client->post(env('API_URL') . '/groupuseraccessdetail/getgroupuseraccessdetail',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => $request->groupAccessID,
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult2 = json_decode($response2->getBody()->getContents());  
+
+        return view('utilities.utilities_user_access_group_detail', ['data' => $arrResult->dataListSet, 'data2' => $arrResult2->dataListSet, 'func' => $request->func]);
     }
 
     public function tableUserSecurityMaintenanceLevelUtilities(Request $request)
@@ -745,6 +843,50 @@ class UtilitiesController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function statusCompanyUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/company',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => $request->companyCode,
+                        'companyName' => $request->companyName,
+                        'npwpNo' => $request->npwpNo,
+                        'holdingCompany' => $request->holdingCompany,
+                        'locationCode' => $request->locationCode,
+                        'address' => $request->address,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "sessionUserID" => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesAuthorizationCodeGroupUtilities(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -812,8 +954,82 @@ class UtilitiesController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesCompanyUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/company',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => $request->company_code,
+                            'companyName' => $request->company_name,
+                            'npwpNo' => $request->npwp_no,
+                            'holdingCompany' => $request->holding_company,
+                            'locationCode' => $request->location_code,
+                            'address' => $request->address,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/company',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => $request->company_code,
+                            'companyName' => $request->company_name,
+                            'npwpNo' => $request->npwp_no,
+                            'holdingCompany' => $request->holding_company,
+                            'locationCode' => $request->location_code,
+                            'address' => $request->address,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesUserAccessGroupUtilities(Request $request)
     {
+        $param = [];
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
@@ -842,6 +1058,33 @@ class UtilitiesController extends Controller
                         ]
                     )]
                 );
+
+                if(count($request->userid_group) > 0){
+                    foreach($request->userid_group as $key => $value){
+                        $param[] = [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            'groupAccessID' => $request->group_id,
+                            'userID' => $value,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ];
+                    }
+
+                    $response2 = $client->post(env('API_URL') . '/groupuseraccessdetail',
+                        ['body' => json_encode($param)]
+                    );
+
+                    $arrResult2 = json_decode($response2->getBody()->getContents());
+                }
             }else{
                 $response = $client->put(env('API_URL') . '/groupuseraccess',
                     ['body' => json_encode(
@@ -859,11 +1102,39 @@ class UtilitiesController extends Controller
                         ]
                     )]
                 );
+
+                if(count($request->userid_group) > 0){
+                    foreach($request->userid_group as $key => $value){
+                        $param[] = [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            'groupAccessID' => $request->group_id,
+                            'userID' => $value,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ];
+                    }
+
+                    // var_dump(json_encode($param));
+
+                    $response2 = $client->put(env('API_URL') . '/groupuseraccessdetail',
+                        ['body' => json_encode($param)]
+                    );
+
+                    $arrResult2 = json_decode($response2->getBody()->getContents());
+                }
             }
-
-
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -875,7 +1146,13 @@ class UtilitiesController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        if($arrResult->status == "false"){
+            return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        }else if(isset($arrResult2->status) && $arrResult2->status == "false"){
+            return response()->json(['status' => $arrResult2->status, 'message' => $arrResult2->message]);
+        }else{
+            return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        }
     }
 
     public function addUserAccessGroupUserUtilities(Request $request)
@@ -1362,6 +1639,45 @@ class UtilitiesController extends Controller
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
         // return response()->json($request->company_default_checkbox);
+    }
+
+    public function prosesProcessUserIDUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/BulkSendEmail/SendEmails',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNoFrom' => $request->employee_no_from,
+                        'employeeNoTo' => $request->employee_no_to,
+                        "sessionID" => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function exportAuditTrailUtilities(Request $request)

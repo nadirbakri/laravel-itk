@@ -15,6 +15,7 @@
         'label_column_i' => 'Column I : Overtime Code',
         'label_column_j' => 'Column J : Overtime Hour',
         'btn_process' => 'Process',
+        'btn_download_template' => 'Download Template',
         'alert_success' => 'Success !'
 ]
 

@@ -177,7 +177,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_add_field_list" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_field_list"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -382,7 +382,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -410,6 +410,23 @@
                 }
             });
         }
+
+        $('#field_list_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#field_list_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
 
         $("#btn-save-data").click(function () {
             $(this).prop("disabled", true);

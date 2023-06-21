@@ -88,10 +88,11 @@
                     <div class="col-2 subdiv-profile-image">
                         <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
                             alt="Profile"> -->
-                        <img src="{{ url('/pictures/profile-picture.png') }}" alt="Profile">
+                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
                         <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                             {{ __('personel_performance.btn_change_picture') }}
-                            <input type="file" class="form-control" id="photo_profile" name="photo_profile" hidden>
+                            <input type="file" class="form-control" id="photo_profile" name="photo_profile" value="true" hidden>
+                            <textarea name="photo_employee" id="photo_employee" cols="30" rows="10" hidden></textarea>
                         </label>
                     </div>
                     <div class="col-9 subdiv-profile">
@@ -719,7 +720,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -763,6 +764,23 @@
             });
         }
 
+        $('#award_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#award_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_sanction(employeeNo = '') {
             table = $('#sanction_data_table').DataTable({
                 processing: true,
@@ -779,7 +797,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -837,6 +855,23 @@
             });
         }
 
+        $('#sanction_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#sanction_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_evaluation(employeeNo = '') {
             table = $('#evaluation_data_table').DataTable({
                 processing: true,
@@ -853,7 +888,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [1, "asc"]
                 ],
@@ -907,6 +942,23 @@
             });
         }
 
+        $('#evaluation_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#evaluation_data_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
         function load_table_evaluation_form_code(formCode = '') {
             table_detail = $('#evaluation_form_code_table').DataTable({
                 processing: true,
@@ -923,7 +975,7 @@
                         "\r\n" + ajaxOptions.responseText);
                 },
                 "sDom": 'lrtip',
-                'sPaginationType': 'ellipses',
+                'sPaginationType': 'full_numbers',
                 "order": [
                     [0, "asc"]
                 ],
@@ -993,8 +1045,20 @@
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 alert("Only formats are allowed : " + fileExtension.join(', '));
             } else {
-                $('#employee_profile_form').submit();
+                for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+                    var file = e.originalEvent.srcElement.files[i];
+                    // console.log(file);
+                    var img = $('#photo');
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
+                        img.attr('src', reader.result);
+                        // console.log(reader.result);
+                    }
+                    reader.readAsDataURL(file);
+                    // $("#photo_profile").after(img);
+                }
             }
+            // $('#photo_profile').val(file);
         });
 
         $.get("{{ url('decree/api') }}", function (data) {
@@ -1301,7 +1365,7 @@
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1371,7 +1435,7 @@
                         '<div class="col-6"><b>Form Code</b></div>' +
                         '<div class="col-6"><b>Form Name</b></div>' +
                         '</div>';
-                    $('.select2-search').append(html);
+                    $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
                 }
             });
@@ -1442,70 +1506,70 @@
             $("#evaluation_form").submit();
         });
 
-        if ($("#employee_profile_form").length > 0) {
-            $("#employee_profile_form").validate({
-                rules: {
-                    photo_profile: {
-                        extension: "jpg|jpeg|png",
-                    },
-                },
-                messages: {
-                    photo_profile: {
-                        extension: "{{ __('personel_performance.photo_profile_extension') }}",
-                    },
-                },
-                errorPlacement: function (error, element) {
-                    error.insertAfter(element);
-                    alert(error.html());
-                },
-                showErrors: function (errorMap, errorList) {
-                    this.defaultShowErrors();
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
+        // if ($("#employee_profile_form").length > 0) {
+        //     $("#employee_profile_form").validate({
+        //         rules: {
+        //             photo_profile: {
+        //                 extension: "jpg|jpeg|png",
+        //             },
+        //         },
+        //         messages: {
+        //             photo_profile: {
+        //                 extension: "{{ __('personel_performance.photo_profile_extension') }}",
+        //             },
+        //         },
+        //         errorPlacement: function (error, element) {
+        //             error.insertAfter(element);
+        //             alert(error.html());
+        //         },
+        //         showErrors: function (errorMap, errorList) {
+        //             this.defaultShowErrors();
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
 
-                    var myform = document.getElementById("employee_profile_form");
-                    var formdata = new FormData(myform);
+        //             var myform = document.getElementById("employee_profile_form");
+        //             var formdata = new FormData(myform);
 
-                    $.ajax({
-                        url: "{{ url('personnel/employee/photo/proses') }}",
-                        type: "POST",
-                        processData: false,
-                        contentType: false,
-                        data: formdata,
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('personnel/performance') }}";
-                                }, 3000);
-                            } else {
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
-                }
-            })
-        }
+        //             $.ajax({
+        //                 url: "{{ url('personnel/employee/photo/proses') }}",
+        //                 type: "POST",
+        //                 processData: false,
+        //                 contentType: false,
+        //                 data: formdata,
+        //                 success: function (response) {
+        //                     if (response.status == "true") {
+        //                         $('#notification_success').modal('show');
+        //                         $('#message-notification-success').html(response
+        //                             .message);
+        //                         setTimeout(function () {
+        //                             window.location =
+        //                                 "{{ url('personnel/performance') }}";
+        //                         }, 3000);
+        //                     } else {
+        //                         $('#notification_error').modal('show');
+        //                         if (response.message == null || response.message ==
+        //                             '') {
+        //                             $('#message-notification-error').html(
+        //                                 "{{ __('login.error') }}");
+        //                         } else {
+        //                             $('#message-notification-error').html(response
+        //                                 .message);
+        //                         }
+        //                     }
+        //                 },
+        //                 error: function (response) {
+        //                     $('#notification_error').modal('show');
+        //                     $('#message-notification-error').html(response);
+        //                 }
+        //             });
+        //         }
+        //     })
+        // }
 
         if ($("#award_form").length > 0) {
             $("#award_form").validate({
