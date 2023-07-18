@@ -24,6 +24,7 @@ class PersonalDataExport implements FromView, ShouldAutoSize
             $response = $client->post(env('API_URL') . '/pemaster/exportpemaster',
                 ['body' => json_encode(
                     [
+                        'companyCode' => Session::get('companyCode'),
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 
                         'userID' => Session::get('userID'),
