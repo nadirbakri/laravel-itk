@@ -278,11 +278,11 @@ class DashboardController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response2->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult2->dataListSet);
 
         if($arrResult->dataListSet == null){
             return response()->json(['totalEmployee' => 0, 'openPosition' => 0, 'maleEmployee' => 0, 'femaleEmployee' => 0, 'ageFirst' => 0, 'ageSecond' => 0, 'ageThird' => 0, 'ageFourth' => 0, 'ageFifth' => 0, 'joinFirst' => 0, 'joinSecond' => 0, 'joinThird' => 0, 'joinFourth' => 0,
-            'endContractData' => [], 'endContractMonth' => 0, 'birthdayData' => [], 'birthdayMonth' => 0, 'endProbationData' => [], 'endProbationMonth' => 0, 'joinData' => [], 'joinMonth' => 0, 'hireData' => [], 'hireMonth' => 0, 'resignData' => [], 'resignMonth' => 0]);
+            'endContractData' => [], 'endContractMonth' => 0, 'birthdayData' => [], 'birthdayMonth' => 0, 'endProbationData' => [], 'endProbationMonth' => 0, 'joinData' => [], 'joinMonth' => 0, 'hireData' => [], 'hireMonth' => 0, 'resignData' => [], 'resignMonth' => 0, 'dataAbsent' => []]);
         }else{
             $maleEmployee = array_filter($arrResult->dataListSet, function($obj){
                 if(isset($obj->gender)){
