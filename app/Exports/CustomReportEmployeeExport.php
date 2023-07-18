@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Exports;
+
+ini_set('max_execution_time', 180);
+
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
@@ -65,8 +68,6 @@ class CustomReportEmployeeExport implements FromView, ShouldAutoSize
                 }
                 $param['fieldNames'] = $data_field;
             }
-
-            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/reportformatemployee/getreportformatemployee',
                 ['body' => json_encode($param)]
