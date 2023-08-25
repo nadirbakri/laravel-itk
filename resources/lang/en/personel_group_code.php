@@ -12,9 +12,9 @@ return [
     |
     */
 
-    'judul' => 'Group Page',
+    'judul' => 'Group Approval Page',
     'list' => 'Personnel Menu List',
-    'list_detail' => 'Group List',
+    'list_detail' => 'Group Approval List',
     'label_record_status' => 'Record Status',
     'label_group_code' => 'Group Code',
     'label_group_name' => 'Group Name',

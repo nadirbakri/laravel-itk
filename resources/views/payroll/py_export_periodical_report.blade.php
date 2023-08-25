@@ -33,7 +33,7 @@
 <body>
     <h3>{{ $data_company[0]->companyName }} <br> {{ $data_company[0]->address }}</h3>
     <h3 style="text-align:center">Periodical Report</h3>
-    <h4 style="text-align:center">Period : {{ $data_period }}</h4>
+    <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
     <?php
     $total = [];
     ?>
@@ -45,13 +45,13 @@
         <thead>
             <tr>
                 <th style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Employee No</th>
-                <th style="text-align:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Full Name</th>
                 @foreach($data[0]->detail[0]->field as $key => $dataTable)
-                <?php
-                $total[$dataTable->field] = 0;
-                ?>
-                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataTable->tableName }}</th>
+                    @if(!is_string($dataTable->value))
+                        <?php
+                        $total[$dataTable->field] = 0;
+                        ?>
+                    @endif
+                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataTable->tableName }}</th>
                 @endforeach
             </tr>
         </thead>
@@ -59,13 +59,29 @@
             @foreach($data[0]->detail as $key => $dataTable)
             <tr>
                 <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $key+1 }}</td>
-                <td style="text-align:left; border:1px solid #000;">{{ $dataTable->employeeNo }}</td>
-                <td style="text-align:left; border:1px solid #000;">{{ $dataTable->fullName }}</td>
                 @foreach($dataTable->field as $key2 => $dataTable2)
-                <?php
-                $total[$dataTable2->field] += $dataTable2->value;
-                ?>
-                <td style="text-align:right; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                    <?php
+                    $alignment = "center";
+                    if($dataTable2->alignment == 1){
+                        $alignment = "left";
+                    }else if($dataTable2->alignment == 2){
+                        $alignment = "center";
+                    }else if($dataTable2->alignment == 3){
+                        $alignment = "right";
+                    }
+                    ?>
+                    @if($dataTable2->dataFormat == "#,##0")
+                        <?php
+                        $total[$dataTable2->field] += $dataTable2->value;
+                        ?>
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                    @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
+                    @elseif($dataTable2->dataFormat == "dd MM YYYY")
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataTable2->value)) }}</td>
+                    @else
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
+                    @endif
                 @endforeach
             </tr>
             @endforeach

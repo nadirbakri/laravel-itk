@@ -64,6 +64,9 @@
 	margin-left: 1.5%;
 	height: 8vh;
 }
+.modal-content {
+	border-radius: 1rem;
+}
 .dropdown-title-text {
   font-family: Montserrat;
   color: #707070;

@@ -32,34 +32,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -115,7 +115,7 @@
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="{{ url('/payroll') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('payroll_monthly_jamsostek_report.judul_form') }}</span>
                     </a>
@@ -385,7 +385,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            module: 'PY'
+                            module: 'PY',
+                            isRange: false
                         };
                     },
                     processResults: function (data) {
@@ -519,6 +520,38 @@
 
     if($('#monthly_jamsostek_report_form').length > 0){
         $('#monthly_jamsostek_report_form').validate({
+            rules: {
+                group_authorize_from: {
+                    required: true,
+                },
+                group_authorize_to: {
+                    required: true,
+                },
+            },
+            messages: {
+                group_authorize_from: {
+                    required: "{{ __('personel_employee_list.field_required') }}",
+                },
+                group_authorize_to: {
+                    required: "{{ __('personel_employee_list.field_required') }}",
+                },
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid');
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                $('#btn-print').prop("disabled", false);
+                $('#btn-print').html(
+                    '<i class="fa fa-print"></i> {{ __("payroll_monthly_jamsostek_report.label_print") }}'
+                );
+
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
             submitHandler: function(form){
                 $.ajaxSetup({
                     headers: {

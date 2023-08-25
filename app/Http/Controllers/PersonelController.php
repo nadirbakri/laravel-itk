@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+ini_set('max_execution_time', 180);
+
 use App\Exports\EmployeeListExport;
 use App\Exports\EmployeeReportByStatusExport;
 use App\Exports\EmployeeTurnOverReportExport;
@@ -12,6 +14,7 @@ use App\Exports\EmployeeCardExport;
 use App\Exports\PersonalDataExport;
 use App\Exports\PersonalDataTemplateExport;
 use App\Imports\PersonalDataImport;
+use App\Imports\PersonalDataUpdateImport;
 use App\Imports\PersonalDataSheetImport;
 use App\Exports\MasterDataTemplateExport;
 use App\Imports\LevelDataImport;
@@ -43,9 +46,50 @@ use PhpParser\Node\NullableType;
 
 class PersonelController extends Controller
 {
-    public function pagePersonelMain()
+    public function pagePersonelMain(Request $request)
     {
-    	return view('personel.personel_main');
+        try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ],
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => Session::get('groupAccessID'),
+                        'moduleID' => $request->moduleID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
+
+        } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+			// var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return view ('personel.personel_main', ['dataMenu' => [], 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess([], null)]);
+        }else{
+            return view ('personel.personel_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, null)]);
+        }
+
+        // return view('personel.personel_main');
     }
 
     public function pagePersonalDataPersonel()
@@ -96,6 +140,11 @@ class PersonelController extends Controller
     public function pageImportMasterDataPersonel()
     {
          return view('personel.personel_import_master_data');
+    }
+
+    public function pageImportUpdatePersonel()
+    {
+         return view('personel.personel_import_update_personal_data');
     }
 
     public function pageEmployeeMutationPersonel()
@@ -473,6 +522,7 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'groupAuthorizeCodeMax' => Session::get('groupAuthorizePersonnel'),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -511,6 +561,7 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'groupAuthorizeCodeMax' => Session::get('groupAuthorizePersonnel'),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -549,6 +600,7 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'groupAuthorizeCodeMax' => Session::get('groupAuthorizePersonnel'),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -587,6 +639,7 @@ class PersonelController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'groupAuthorizeCodeMax' => Session::get('groupAuthorizePersonnel'),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -2128,7 +2181,8 @@ class PersonelController extends Controller
                             'employeeNo' => $request->employeeNo,
                             'userID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')
+                            'logActionUsername' => Session::get('userName'),
+                            'languageCode' => App::getLocale()
                         ]
                     )]
                 );
@@ -2179,6 +2233,7 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2205,7 +2260,8 @@ class PersonelController extends Controller
                             'employeeNo' => $request->employeeNo,
                             'userID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')
+                            'logActionUsername' => Session::get('userName'),
+                            'languageCode' => App::getLocale()
                         ]
                     )]
                 );
@@ -2272,7 +2328,8 @@ class PersonelController extends Controller
                             'employeeNo' => $request->employeeNo,
                             'userID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')
+                            'logActionUsername' => Session::get('userName'),
+                            'languageCode' => App::getLocale()
                         ]
                     )]
                 );
@@ -2303,6 +2360,7 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2328,7 +2386,8 @@ class PersonelController extends Controller
                         'employeeNo' => $request->employeeNo,
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
                     ]
                 )]
             );
@@ -5878,7 +5937,7 @@ class PersonelController extends Controller
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
@@ -5892,6 +5951,7 @@ class PersonelController extends Controller
             }  
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -8582,11 +8642,15 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            foreach($request->level_code as $key => $value){
-                $data_level[] = [
-                    'levelType' => $request->level_code[$key],
-                    'levelCode' => $value
-                ];
+            if(isset($request->level_code)){
+                foreach($request->level_code as $key => $value){
+                    $data_level[] = [
+                        'levelType' => $request->level_code[$key],
+                        'levelCode' => $value
+                    ];
+                }
+            }else{
+                $data_level = [];
             }
 
             $response = $client->put(env('API_URL') . '/pemasterhistoryjob',
@@ -8647,6 +8711,7 @@ class PersonelController extends Controller
 
     public function prosesEmployeeMutationPersonel(Request $request)
     {
+        $param = [];
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
@@ -8656,42 +8721,131 @@ class PersonelController extends Controller
 
             foreach($request->level_new as $key => $value){
                 $data_level[] = [
-                    'levelType' => $request->level_type[$key],
+                    'levelType' => $request->level_type_new[$key],
                     'levelCode' => $value
                 ];
             }
 
-            $response = $client->post(env('API_URL') . '/mutation/executemutation',
-                ['body' => json_encode(
-                    [
-                        'mutationType' => $request->mutation_type,
-                        'employeeNo' => $request->employee_no,
-                        'remarks' => $request->remarks,
-                        'peMaster' => [
-                            'decreeCode' => $request->decree_code_new,
-                            'decreeNo' => $request->decree_no_new,
-                            'decreeDate' => $request->decree_date_new,
-                            'workLocation' => $request->work_location_new,
-                            'gradeCode' => $request->grade_code_new,
-                            'groupCode' => $request->group_code_new,
-                            'position' => $request->position_new,
-                            'ranking' => $request->ranking_new,
-                            'workNature' => $request->nature_of_work_new,
-                            'costCenterCode' => $request->cost_center_code_new,
-                            'startDate' => $request->start_date_new,
-                            'employmentStatus' => $request->employment_status_new,
-                            'contractDateStart' => $request->contract_start_date_new,
-                            'contractDateEnd' => $request->contract_end_date_new
-                        ],
-                        "masterLevel" => $data_level,
-                        'companyCode' => Session::get('companyCode'),
-                        'sessionID' => 0,
-                        'sessionUserID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        "languageCode" => strtoupper(App::getLocale())
-                    ]
-                )]
+            if($request->mutation_type == "N"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'npwpMutationCode' => $request->npwp_code_new,
+                    'startDate' => $request->period_start_date_new,
+                    'remarks' => $request->remarks,
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }else if($request->mutation_type == "M"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'companyCodeMutation' => $request->company_code_new,
+                    'changeEmployeeNo' => isset($request->change_employee_no_new) ? (bool) $request->change_employee_no_new : false,
+                    'newEmployeeNo' => $request->updated_employee_no_new,
+                    'startDate' => $request->start_date_new,
+                    'costCenterCode' => $request->cost_center_code_new,
+                    'locationCode' => $request->work_location_new,
+                    'gradeCode' => $request->grade_code_new,
+                    'positionCode' =>$request->position_new ,
+                    'rankingCode' => $request->ranking_new,
+                    'workNatureCode' => $request->nature_of_work_new,
+                    'groupCode' => $request->group_code_new,
+                    'level' => $data_level,
+                    'remarks' => $request->remarks,
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }else if($request->mutation_type == "P" || $request->mutation_type == "D"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'startDate' => $request->start_date_new,
+                    'costCenterCode' => $request->cost_center_code_new,
+                    'locationCode' => $request->work_location_new,
+                    'gradeCode' => $request->grade_code_new,
+                    'positionCode' =>$request->position_new ,
+                    'rankingCode' => $request->ranking_new,
+                    'workNatureCode' => $request->nature_of_work_new,
+                    'groupCode' => $request->group_code_new,
+                    'level' => $data_level,
+                    'remarks' => $request->remarks,
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }else if($request->mutation_type == "O"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'startDate' => $request->contract_start_date_new,
+                    'employmentStatus' => $request->employment_status_new,
+                    'contractStartDate' => $request->contract_start_date_new,
+                    'contractEndDate' => $request->contract_end_date_new,
+                    'effectivePermanentDate' => $request->effective_permanent_date_new,
+                    'remarks' => $request->remarks,
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }else if($request->mutation_type == "T"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'terminationDate' => $request->termination_date_new,
+                    'terminationRemarks' => $request->termination_reason_new,
+                    'effectiveTerminationDate' => $request->effective_termination_date_new,
+                    'remarks' => $request->remarks,
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
+            }
+
+            $response = $client->post(env('API_URL') . '/mutationemployee/mutation',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -9898,14 +10052,14 @@ class PersonelController extends Controller
                 $param['location'] = $data_location;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL').'/employeecard/getemployeecard', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -9916,8 +10070,6 @@ class PersonelController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('personel.personel_export_employee_card', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
@@ -10517,6 +10669,29 @@ class PersonelController extends Controller
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
             $import = new PersonalDataImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function importUpdatePersonalDataPersonel(Request $request)
+    {
+        try{
+            $file = $request->file('import_update');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new PersonalDataUpdateImport;
             Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
             File::delete('file_excel/'.$nama_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {

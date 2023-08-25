@@ -26,6 +26,7 @@ return [
     'label_show_type' => 'Tipe Tampilan',
     'label_input_type_show_code' => 'Tampilkan Kode',
     'label_input_type_show_description' => 'Tampilkan Deskripsi',
+    'field_required' => 'Data Harus Diisi',
     'btn_print' => 'Cetak'
 
 ];

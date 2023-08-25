@@ -124,3 +124,6 @@ a .div-dropdown-title .dropdown-triangle {
 	display: block;
 	overflow: hidden;
 }
+.modal-content {
+	border-radius: 1rem;
+}

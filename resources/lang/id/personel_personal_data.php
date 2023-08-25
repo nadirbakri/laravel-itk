@@ -48,6 +48,7 @@ return [
     'label_bpjs_number' => 'No BPJS',
     'label_join' => 'Gabung',
     'label_joining_date' => 'Tanggal Bergabung',
+    'label_office_location' => 'Lokasi Kantor',
     'label_payment_period_start_date' => 'Tanggal Mulai Periode Pembayaran',
     'label_non_accidental_death_insurance' => 'Asuransi Kematian Non-Kecelakaan',
     'label_pension_by_employer' => 'Pensiun oleh Pemberi Kerja',

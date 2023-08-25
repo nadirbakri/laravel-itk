@@ -28,23 +28,23 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -127,7 +127,7 @@
             </a>
         </div>
         <div class="div-title">
-            <a href="<?php echo e(url('/personnel')); ?>" target="iframe_dashboard">
+            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('personel_employee_mutation.list')); ?></span>
             </a>
@@ -152,6 +152,45 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label
+                                for="attachment_code"><?php echo e(__('personel_employee_mutation.label_attachment_code')); ?></label>
+                            <select class="form-control" id="attachment_code" name="attachment_code" disabled>
+                                <option value=""><?php echo e(__('personel_employee_mutation.label_attachment_code')); ?>
+
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label
+                                for="attachment_no"><?php echo e(__('personel_employee_mutation.label_attachment_no')); ?></label>
+                            <input type="text" class="form-control" id="attachment_no" name="attachment_no"
+                                placeholder="<?php echo e(__('personel_employee_mutation.label_attachment_no')); ?>" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label
+                                for="attachment_date"><?php echo e(__('personel_employee_mutation.label_attachment_date')); ?></label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="attachment_date"
+                                    name="attachment_date"
+                                    placeholder="<?php echo e(__('personel_employee_mutation.label_attachment_date')); ?>">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
@@ -172,66 +211,27 @@
                     <div class="col-5">
                         <span class="div-title-text"><?php echo e(__('personel_employee_mutation.label_current')); ?></span>
                         <div class="row">
-                            <div id="div-mutation-npwp-current" style="display: none;">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label
-                                            for="npwp_code_current"><?php echo e(__('personel_employee_mutation.label_npwp_code')); ?></label>
-                                        <input type="text" class="form-control" id="npwp_code_current"
-                                            name="npwp_code_current"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_npwp_code')); ?>"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label
-                                            for="company_code_current"><?php echo e(__('personel_employee_mutation.label_company_code')); ?></label>
-                                        <input type="text" class="form-control" id="company_code_current"
-                                            name="company_code_current"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_company_code')); ?>"
-                                            disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label
-                                            for="employee_no_current"><?php echo e(__('personel_employee_mutation.label_employee_no')); ?></label>
-                                        <input type="text" class="form-control" id="employee_no_current"
-                                            name="employee_no_current"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_employee_no')); ?>"
-                                            disabled>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_npwp_code_current" style="display: none;">
                                 <div class="form-group">
                                     <label
-                                        for="decree_code_current"><?php echo e(__('personel_employee_mutation.label_decree_code')); ?></label>
-                                    <input type="text" class="form-control" id="decree_code_current"
-                                        name="decree_code_current"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_decree_code')); ?>" disabled>
+                                        for="npwp_code_current"><?php echo e(__('personel_employee_mutation.label_npwp_code')); ?></label>
+                                    <input type="text" class="form-control" id="npwp_code_current"
+                                        name="npwp_code_current"
+                                        placeholder="<?php echo e(__('personel_employee_mutation.label_npwp_code')); ?>"
+                                        disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_company_code_current" style="display: none;">
                                 <div class="form-group">
                                     <label
-                                        for="decree_no_current"><?php echo e(__('personel_employee_mutation.label_decree_no')); ?></label>
-                                    <input type="text" class="form-control" id="decree_no_current"
-                                        name="decree_no_current"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_decree_no')); ?>" disabled>
+                                        for="company_code_current"><?php echo e(__('personel_employee_mutation.label_company_code')); ?></label>
+                                    <input type="text" class="form-control" id="company_code_current"
+                                        name="company_code_current"
+                                        placeholder="<?php echo e(__('personel_employee_mutation.label_company_code')); ?>"
+                                        disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label
-                                        for="decree_date_current"><?php echo e(__('personel_employee_mutation.label_decree_date')); ?></label>
-                                    <input type="text" class="form-control" id="decree_date_current"
-                                        name="decree_date_current"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_decree_date')); ?>" disabled>
-                                </div>
-                            </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_work_location_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="work_location_current"><?php echo e(__('personel_employee_mutation.label_work_location')); ?></label>
@@ -241,7 +241,7 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_group_code_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="group_code_current"><?php echo e(__('personel_employee_mutation.label_group_code')); ?></label>
@@ -250,7 +250,7 @@
                                         placeholder="<?php echo e(__('personel_employee_mutation.label_group_code')); ?>" disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_grade_code_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="grade_code_current"><?php echo e(__('personel_employee_mutation.label_grade_code')); ?></label>
@@ -259,7 +259,7 @@
                                         placeholder="<?php echo e(__('personel_employee_mutation.label_grade_code')); ?>" disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_position_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="position_current"><?php echo e(__('personel_employee_mutation.label_position')); ?></label>
@@ -268,7 +268,7 @@
                                         placeholder="<?php echo e(__('personel_employee_mutation.label_position')); ?>" disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_ranking_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="ranking_current"><?php echo e(__('personel_employee_mutation.label_ranking')); ?></label>
@@ -276,7 +276,7 @@
                                         placeholder="<?php echo e(__('personel_employee_mutation.label_ranking')); ?>" disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_nature_of_work_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="nature_of_work_current"><?php echo e(__('personel_employee_mutation.label_nature_of_work')); ?></label>
@@ -286,7 +286,7 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_cost_center_code_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="cost_center_code_current"><?php echo e(__('personel_employee_mutation.label_cost_center_code')); ?></label>
@@ -296,16 +296,25 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label
-                                        for="start_date_current"><?php echo e(__('personel_employee_mutation.label_start_date')); ?></label>
-                                    <input type="text" class="form-control" id="start_date_current"
-                                        name="start_date_current"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_start_date')); ?>" disabled>
+                            <div class="col-12" id="div_level_current" style="display: none;">
+                                <span class="div-title-text">Level</span>
+                                <div class="row" id="div-level-current">
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_initial_date_current" style="display: none;">
+                                <div class="form-group">
+                                    <label for="initial_date_current"><?php echo e(__('personel_employee_mutation.label_initial_date')); ?></label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="initial_date_current"
+                                            name="initial_date_current"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_initial_date')); ?>">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_employment_status_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="employment_status_current"><?php echo e(__('personel_employee_mutation.label_employment_status')); ?></label>
@@ -315,29 +324,31 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="col-5">
-                                <div class="form-group">
-                                    <label
-                                        for="contract_start_date_current"><?php echo e(__('personel_employee_mutation.label_contract_start_date')); ?></label>
-                                    <input type="text" class="form-control" id="contract_start_date_current"
-                                        name="contract_start_date_current"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_contract_start_date')); ?>"
-                                        disabled>
+                            <div class="row" id="div_contract_date_current" style="display: none;">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="contract_start_date_current"><?php echo e(__('personel_employee_mutation.label_initial_contract_date')); ?></label>
+                                        <input type="text" class="form-control" id="contract_start_date_current"
+                                            name="contract_start_date_current"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_contract_start_date')); ?>"
+                                            disabled>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-1">
-                                <div class="form-group">
-                                    <label for="contract_date_current">&nbsp;</label>
-                                    <hr class="horizontal" />
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <label for="contract_start_date_current">&nbsp;</label>
+                                        <hr class="horizontal" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="contract_end_date_current">&nbsp;</label>
-                                    <input type="text" class="form-control" id="contract_end_date_current"
-                                        name="contract_end_date_current"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_contract_end_date')); ?>"
-                                        disabled>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="contract_end_date_current">&nbsp;</label>
+                                        <input type="text" class="form-control" id="contract_end_date_current"
+                                            name="contract_end_date_current"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_contract_end_date')); ?>"
+                                            disabled>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -348,113 +359,103 @@
                     <div class="col-5">
                         <span class="div-title-text"><?php echo e(__('personel_employee_mutation.label_new')); ?></span>
                         <div class="row">
-                            <div id="div-mutation-npwp-new" style="width: 100%; display: none;">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="npwp_code_new">&nbsp;</label>
-                                        <select class="form-control select2" id="npwp_code_new" name="npwp_code_new"
-                                            disabled></select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="company_code_new">&nbsp;</label>
-                                        <select class="form-control select2" id="company_code_new"
-                                            name="company_code_new" disabled></select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="employee_no_new">&nbsp;</label>
-                                        <input type="text" class="form-control" id="employee_no_new"
-                                            name="employee_no_new"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_employee_no')); ?>"
-                                            disabled>
-                                    </div>
+                            <div class="col-12" id="div_npwp_code_new" style="display: none;">
+                                <div class="form-group">
+                                    <label for="npwp_code_new"><?php echo e(__('personel_employee_mutation.label_npwp_code')); ?></label>
+                                    <select class="form-control select2" id="npwp_code_new" name="npwp_code_new"></select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_period_start_date_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="decree_code_new">&nbsp;</label>
-                                    <select class="form-control" id="decree_code_new" name="decree_code_new" disabled>
-                                        <option value=""><?php echo e(__('personel_employee_mutation.label_select_decree_code')); ?>
-
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="decree_no_new">&nbsp;</label>
-                                    <input type="text" class="form-control" id="decree_no_new" name="decree_no_new"
-                                        placeholder="<?php echo e(__('personel_employee_mutation.label_decree_no')); ?>" disabled>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="decree_date_new">&nbsp;</label>
+                                    <label for="period_start_date_new"><?php echo e(__('personel_employee_mutation.label_period_start_date')); ?></label>
                                     <div class='input-group'>
-                                        <input type="text" class="form-control" id="decree_date_new"
-                                            name="decree_date_new"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_decree_date')); ?>">
+                                        <input type="text" class="form-control" id="period_start_date_new"
+                                            name="period_start_date_new"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_period_start_date')); ?>">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_company_code_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="work_location_new">&nbsp;</label>
-                                    <select class="form-control select2" id="work_location_new" name="work_location_new"
-                                        disabled></select>
+                                    <label for="company_code_new"><?php echo e(__('personel_employee_mutation.label_company_code')); ?></label>
+                                    <select class="form-control select2" id="company_code_new"
+                                        name="company_code_new"></select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_change_employee_no_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="group_code_new">&nbsp;</label>
-                                    <select class="form-control select2" id="group_code_new" name="group_code_new"
-                                        disabled></select>
+                                    <label for="change_employee_no_new"><?php echo e(__('personel_employee_mutation.label_change_employee_no')); ?></label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="change_employee_no_new"
+                                            name="change_employee_no_new" value="true">
+                                        <label
+                                            for="change_employee_no_new"><?php echo e(__('personel_employee_mutation.label_change_employee_no')); ?></label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_updated_employee_no_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="grade_code_new">&nbsp;</label>
-                                    <select class="form-control select2" id="grade_code_new" name="grade_code_new"
-                                        disabled></select>
+                                    <label for="updated_employee_no_new"><?php echo e(__('personel_employee_mutation.label_updated_employee_no')); ?></label>
+                                    <input type="text" class="form-control" id="updated_employee_no_new"
+                                        name="updated_employee_no_new"
+                                        placeholder="<?php echo e(__('personel_employee_mutation.label_updated_employee_no')); ?>">
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_work_location_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="position_new">&nbsp;</label>
-                                    <select class="form-control select2" id="position_new" name="position_new"
-                                        disabled></select>
+                                    <label for="work_location_new"><?php echo e(__('personel_employee_mutation.label_work_location')); ?></label>
+                                    <select class="form-control select2" id="work_location_new" name="work_location_new"></select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_group_code_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="ranking_new">&nbsp;</label>
-                                    <select class="form-control select2" id="ranking_new" name="ranking_new"
-                                        disabled></select>
+                                    <label for="group_code_new"><?php echo e(__('personel_employee_mutation.label_group_code')); ?></label>
+                                    <select class="form-control select2" id="group_code_new" name="group_code_new"></select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_grade_code_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="nature_of_work_new">&nbsp;</label>
+                                    <label for="grade_code_new"><?php echo e(__('personel_employee_mutation.label_grade_code')); ?></label>
+                                    <select class="form-control select2" id="grade_code_new" name="grade_code_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_position_new" style="display: none;">
+                                <div class="form-group">
+                                    <label for="position_new"><?php echo e(__('personel_employee_mutation.label_position')); ?></label>
+                                    <select class="form-control select2" id="position_new" name="position_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_ranking_new" style="display: none;">
+                                <div class="form-group">
+                                    <label for="ranking_new"><?php echo e(__('personel_employee_mutation.label_ranking')); ?></label>
+                                    <select class="form-control select2" id="ranking_new" name="ranking_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_nature_of_work_new" style="display: none;">
+                                <div class="form-group">
+                                    <label for="nature_of_work_new"><?php echo e(__('personel_employee_mutation.label_nature_of_work')); ?></label>
                                     <select class="form-control select2" id="nature_of_work_new"
-                                        name="nature_of_work_new" disabled></select>
+                                        name="nature_of_work_new"></select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_cost_center_code_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="cost_center_code_new">&nbsp;</label>
+                                    <label for="cost_center_code_new"><?php echo e(__('personel_employee_mutation.label_cost_center_code')); ?></label>
                                     <select class="form-control select2" id="cost_center_code_new"
-                                        name="cost_center_code_new" disabled></select>
+                                        name="cost_center_code_new"></select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_level_new" style="display: none;">
+                                <span class="div-title-text">Level</span>
+                                <div class="row" id="div-level-new">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_start_date_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="start_date_new">&nbsp;</label>
+                                    <label for="start_date_new"><?php echo e(__('personel_employee_mutation.label_start_date')); ?></label>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="start_date_new"
                                             name="start_date_new"
@@ -465,11 +466,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="div_employment_status_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="employment_status_new">&nbsp;</label>
-                                    <select class="form-control" id="employment_status_new" name="employment_status_new"
-                                        disabled>
+                                    <label for="employment_status_new"><?php echo e(__('personel_employee_mutation.label_employment_status')); ?></label>
+                                    <select class="form-control" id="employment_status_new" name="employment_status_new">
                                         <option value="">
                                             <?php echo e(__('personel_employee_mutation.label_select_employment_status')); ?>
 
@@ -477,56 +477,90 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-5">
+                            <div class="row" id="div_contract_date_new" style="display: none;">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="contract_start_date_new"><?php echo e(__('personel_employee_mutation.label_contract_date')); ?></label>
+                                        <div class='input-group'>
+                                            <input type="text" class="form-control" id="contract_start_date_new"
+                                                name="contract_start_date_new"
+                                                placeholder="<?php echo e(__('personel_employee_mutation.label_contract_start_date')); ?>">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <label for="contract_date_current">&nbsp;</label>
+                                        <hr class="horizontal" />
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="contract_end_date_new">&nbsp;</label>
+                                        <div class='input-group'>
+                                            <input type="text" class="form-control" id="contract_end_date_new"
+                                                name="contract_end_date_new"
+                                                placeholder="<?php echo e(__('personel_employee_mutation.label_contract_end_date')); ?>">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_effective_permanent_date_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="contract_start_date_new">&nbsp;</label>
+                                    <label for="effective_permanent_date_new"><?php echo e(__('personel_employee_mutation.label_effective_permanent_date')); ?></label>
                                     <div class='input-group'>
-                                        <input type="text" class="form-control" id="contract_start_date_new"
-                                            name="contract_start_date_new"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_contract_start_date')); ?>">
+                                        <input type="text" class="form-control" id="effective_permanent_date_new"
+                                            name="effective_permanent_date_new"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_effective_permanent_date')); ?>">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-1">
+                            <div class="col-12" id="div_termination_reason_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="contract_date_current">&nbsp;</label>
-                                    <hr class="horizontal" />
+                                    <label for="termination_reason_new"><?php echo e(__('personel_employee_mutation.label_termination_reason')); ?></label>
+                                    <select class="form-control" id="termination_reason_new" name="termination_reason_new">
+                                        <option value="">
+                                            <?php echo e(__('personel_employee_mutation.label_termination_reason')); ?>
+
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12" id="div_termination_date_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="contract_end_date_new">&nbsp;</label>
+                                    <label for="termination_date_new"><?php echo e(__('personel_employee_mutation.label_termination_date')); ?></label>
                                     <div class='input-group'>
-                                        <input type="text" class="form-control" id="contract_end_date_new"
-                                            name="contract_end_date_new"
-                                            placeholder="<?php echo e(__('personel_employee_mutation.label_contract_end_date')); ?>">
+                                        <input type="text" class="form-control" id="termination_date_new"
+                                            name="termination_date_new"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_termination_date')); ?>">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <hr class="horizontal" />
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <span class="div-title-text">Level</span>
-                        <div class="row" id="div-level-current">
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <hr class="vertical" />
-                    </div>
-                    <div class="col-5">
-                        <span class="div-title-text">&nbsp;</span>
-                        <div class="row" id="div-level-new">
+                            <div class="col-12" id="div_effective_termination_date_new" style="display: none;">
+                                <div class="form-group">
+                                    <label for="effective_termination_date_new"><?php echo e(__('personel_employee_mutation.label_effective_termination_date')); ?></label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="effective_termination_date_new"
+                                            name="effective_termination_date_new"
+                                            placeholder="<?php echo e(__('personel_employee_mutation.label_effective_termination_date')); ?>">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -598,8 +632,25 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var employmentStatus;
 
-        let pickerDecreeDate = $('#decree_date_new').flatpickr({
+        // let pickerAttachmentDate = $('#attachment_date').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: "today",
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         console.log(flatPickrInstance);
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings(".input-group-prepend").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
+
+        let pickerPeriodStartDate = $('#period_start_date_new').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -631,7 +682,7 @@
             }
         });
 
-        let pickerContractStartDate = $('#contract_start_date_new').flatpickr({
+        let pickerInitialDate = $('#initial_date_current').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -647,7 +698,7 @@
             }
         });
 
-        let pickerContractEndDate = $('#contract_end_date_new').flatpickr({
+        let pickerContractStartDateCurrent = $('#contract_start_date_current').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -663,10 +714,76 @@
             }
         });
 
-        pickerContractEndDate._input.setAttribute("disabled", "disabled");
-        pickerContractStartDate._input.setAttribute("disabled", "disabled");
-        pickerStartDate._input.setAttribute("disabled", "disabled");
-        pickerDecreeDate._input.setAttribute("disabled", "disabled");
+        let pickerContractEndDateCurrent = $('#contract_end_date_current').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerContractStartDateNew = $('#contract_start_date_new').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerContractEndDateNew = $('#contract_end_date_new').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerEffectivePermanentDate = $('#effective_permanent_date_new').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        // pickerAttachmentDate._input.setAttribute("disabled", "disabled");
+        pickerInitialDate._input.setAttribute("disabled", "disabled");
+        pickerContractEndDateCurrent._input.setAttribute("disabled", "disabled");
+        pickerContractStartDateCurrent._input.setAttribute("disabled", "disabled");
+        // pickerStartDate._input.setAttribute("disabled", "disabled");
+        // pickerEffectivePermanentDate._input.setAttribute("disabled", "disabled");
 
         function htmlDecode(value) {
     	    return $("<textarea/>").html(value).text();
@@ -684,9 +801,9 @@
             });
         });
 
-        $.get("<?php echo e(url('decree/api')); ?>", function (data) {
+        $.get("<?php echo e(url('termination/reason/api')); ?>", function (data) {
             $.each(data, function (k, v) {
-                $('#decree_code_new').append("<option value=" + v.comGenCode +
+                $('#termination_reason_new').append("<option value=" + v.comGenCode +
                     ">" + v
                     .value + "</option>");
             });
@@ -711,28 +828,238 @@
         loadDataNatureofWork();
         loadDataCostCenter();
 
+        $('#mutation_type').on('change', function () {
+            if(this.value == "N"){
+                $('#div_npwp_code_current').show();
+                $('#div_npwp_code_new').show();
+                $('#div_period_start_date_new').show();
+                $('#div_company_code_current').hide();
+                $('#div_company_code_new').hide();
+                $('#div_work_location_current').hide();
+                $('#div_work_location_new').hide();
+                $('#div_group_code_current').hide();
+                $('#div_group_code_new').hide();
+                $('#div_grade_code_current').hide();
+                $('#div_grade_code_new').hide();
+                $('#div_position_current').hide();
+                $('#div_position_new').hide();
+                $('#div_ranking_current').hide();
+                $('#div_ranking_new').hide();
+                $('#div_nature_of_work_current').hide();
+                $('#div_nature_of_work_new').hide();
+                $('#div_cost_center_code_current').hide();
+                $('#div_cost_center_code_new').hide();
+                $('#div_level_current').hide();
+                $('#div_level_new').hide();
+                $('#div_employment_status_current').hide();
+                $('#div_employment_status_new').hide();
+                $('#div_contract_date_current').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_initial_date_current').hide();
+                $('#div_start_date_new').hide();
+                $('#div_effective_permanent_date_new').hide();
+                $('#div_change_employee_no_new').hide();
+                $('#div_updated_employee_no_new').hide();
+                $('#div_termination_reason_new').hide();
+                $('#div_termination_date_new').hide();
+                $('#div_effective_termination_date_new').hide();
+            }else if(this.value == "M"){
+                $('#div_company_code_current').show();
+                $('#div_company_code_new').show();
+                $('#div_start_date_new').show();
+                $('#div_change_employee_no_new').show();
+                $('#div_updated_employee_no_new').show();
+                $('#div_work_location_current').show();
+                $('#div_work_location_new').show();
+                $('#div_group_code_current').show();
+                $('#div_group_code_new').show();
+                $('#div_grade_code_current').show();
+                $('#div_grade_code_new').show();
+                $('#div_position_current').show();
+                $('#div_position_new').show();
+                $('#div_ranking_current').show();
+                $('#div_ranking_new').show();
+                $('#div_nature_of_work_current').show();
+                $('#div_nature_of_work_new').show();
+                $('#div_cost_center_code_current').show();
+                $('#div_cost_center_code_new').show();
+                $('#div_level_current').show();
+                $('#div_level_new').show();
+                $('#div_npwp_code_current').hide();
+                $('#div_npwp_code_new').hide();
+                $('#div_period_start_date_new').hide();
+                $('#div_employment_status_current').hide();
+                $('#div_employment_status_new').hide();
+                $('#div_contract_date_current').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_initial_date_current').hide();
+                $('#div_effective_permanent_date_new').hide();
+                $('#div_termination_reason_new').hide();
+                $('#div_termination_date_new').hide();
+                $('#div_effective_termination_date_new').hide();
+            }else if(this.value == "P" || this.value == "D"){
+                $('#div_start_date_new').show();
+                $('#div_initial_date_current').show();
+                $('#div_work_location_current').show();
+                $('#div_work_location_new').show();
+                $('#div_group_code_current').show();
+                $('#div_group_code_new').show();
+                $('#div_grade_code_current').show();
+                $('#div_grade_code_new').show();
+                $('#div_position_current').show();
+                $('#div_position_new').show();
+                $('#div_ranking_current').show();
+                $('#div_ranking_new').show();
+                $('#div_nature_of_work_current').show();
+                $('#div_nature_of_work_new').show();
+                $('#div_cost_center_code_current').show();
+                $('#div_cost_center_code_new').show();
+                $('#div_level_current').show();
+                $('#div_level_new').show();
+                $('#div_company_code_current').hide();
+                $('#div_company_code_new').hide();
+                $('#div_change_employee_no_new').hide();
+                $('#div_updated_employee_no_new').hide();
+                $('#div_npwp_code_current').hide();
+                $('#div_npwp_code_new').hide();
+                $('#div_period_start_date_new').hide();
+                $('#div_employment_status_current').hide();
+                $('#div_employment_status_new').hide();
+                $('#div_contract_date_current').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_effective_permanent_date_new').hide();
+                $('#div_termination_reason_new').hide();
+                $('#div_termination_date_new').hide();
+                $('#div_effective_termination_date_new').hide();
+            }else if(this.value == "O"){
+                $('#div_employment_status_current').show();
+                $('#div_employment_status_new').show();
+                if(employmentStatus == 'C'){
+                    $('#div_contract_date_current').show();
+                } else if(employmentStatus == 'P'){
+                    $('#div_contract_date_current').show();
+                } else{
+                    $('#div_contract_date_current').hide();
+                }
+                $('#div_start_date_new').hide();
+                $('#div_initial_date_current').hide();
+                $('#div_work_location_current').hide();
+                $('#div_work_location_new').hide();
+                $('#div_group_code_current').hide();
+                $('#div_group_code_new').hide();
+                $('#div_grade_code_current').hide();
+                $('#div_grade_code_new').hide();
+                $('#div_position_current').hide();
+                $('#div_position_new').hide();
+                $('#div_ranking_current').hide();
+                $('#div_ranking_new').hide();
+                $('#div_nature_of_work_current').hide();
+                $('#div_nature_of_work_new').hide();
+                $('#div_cost_center_code_current').hide();
+                $('#div_cost_center_code_new').hide();
+                $('#div_level_current').hide();
+                $('#div_level_new').hide();
+                $('#div_company_code_current').hide();
+                $('#div_company_code_new').hide();
+                $('#div_change_employee_no_new').hide();
+                $('#div_updated_employee_no_new').hide();
+                $('#div_npwp_code_current').hide();
+                $('#div_npwp_code_new').hide();
+                $('#div_period_start_date_new').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_effective_permanent_date_new').hide();
+                $('#div_termination_reason_new').hide();
+                $('#div_termination_date_new').hide();
+                $('#div_effective_termination_date_new').hide();
+            }else if(this.value == "T"){
+                $('#div_employment_status_current').show();
+                $('#div_termination_reason_new').show();
+                $('#div_termination_date_new').show();
+                $('#div_effective_termination_date_new').show();
+                $('#div_employment_status_new').hide();
+                $('#div_start_date_new').hide();
+                $('#div_initial_date_current').hide();
+                $('#div_work_location_current').hide();
+                $('#div_work_location_new').hide();
+                $('#div_group_code_current').hide();
+                $('#div_group_code_new').hide();
+                $('#div_grade_code_current').hide();
+                $('#div_grade_code_new').hide();
+                $('#div_position_current').hide();
+                $('#div_position_new').hide();
+                $('#div_ranking_current').hide();
+                $('#div_ranking_new').hide();
+                $('#div_nature_of_work_current').hide();
+                $('#div_nature_of_work_new').hide();
+                $('#div_cost_center_code_current').hide();
+                $('#div_cost_center_code_new').hide();
+                $('#div_level_current').hide();
+                $('#div_level_new').hide();
+                $('#div_company_code_current').hide();
+                $('#div_company_code_new').hide();
+                $('#div_change_employee_no_new').hide();
+                $('#div_updated_employee_no_new').hide();
+                $('#div_npwp_code_current').hide();
+                $('#div_npwp_code_new').hide();
+                $('#div_period_start_date_new').hide();
+                $('#div_contract_date_current').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_effective_permanent_date_new').hide();
+            }else{
+                $('#div_start_date_new').hide();
+                $('#div_initial_date_current').hide();
+                $('#div_work_location_current').hide();
+                $('#div_work_location_new').hide();
+                $('#div_group_code_current').hide();
+                $('#div_group_code_new').hide();
+                $('#div_grade_code_current').hide();
+                $('#div_grade_code_new').hide();
+                $('#div_position_current').hide();
+                $('#div_position_new').hide();
+                $('#div_ranking_current').hide();
+                $('#div_ranking_new').hide();
+                $('#div_nature_of_work_current').hide();
+                $('#div_nature_of_work_new').hide();
+                $('#div_cost_center_code_current').hide();
+                $('#div_cost_center_code_new').hide();
+                $('#div_level_current').hide();
+                $('#div_level_new').hide();
+                $('#div_company_code_current').hide();
+                $('#div_company_code_new').hide();
+                $('#div_change_employee_no_new').hide();
+                $('#div_updated_employee_no_new').hide();
+                $('#div_npwp_code_current').hide();
+                $('#div_npwp_code_new').hide();
+                $('#div_period_start_date_new').hide();
+                $('#div_employment_status_current').hide();
+                $('#div_employment_status_new').hide();
+                $('#div_contract_date_current').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_effective_permanent_date_new').hide();
+                $('#div_termination_reason_new').hide();
+                $('#div_termination_date_new').hide();
+                $('#div_effective_termination_date_new').hide();
+            }
+        });
+        
+        $('#employment_status_new').on('change', function () {
+            if(this.value == "C"){
+                $('#div_contract_date_new').show();
+                $('#div_effective_permanent_date_new').hide();
+            }else{
+                $('#div_contract_date_new').hide();
+                $('#div_effective_permanent_date_new').show();
+            }
+        });
+
         $("#toolbar-new").on('click', function () {
             $("#toolbar-save").show();
             $("#toolbar-new").hide();
             $('#employee_no').prop('disabled', false);
             $('#mutation_type').prop('disabled', false);
-            $('#npwp_code_new').prop('disabled', false);
-            $('#company_code_new').prop('disabled', false);
-            $('#employee_no_new').prop('disabled', false);
-            $('#decree_code_new').prop('disabled', false);
-            $('#decree_no_new').prop('disabled', false);
-            pickerDecreeDate._input.removeAttribute('disabled');
-            $('#work_location_new').prop('disabled', false);
-            $('#group_code_new').prop('disabled', false);
-            $('#grade_code_new').prop('disabled', false);
-            $('#position_new').prop('disabled', false);
-            $('#ranking_new').prop('disabled', false);
-            $('#nature_of_work_new').prop('disabled', false);
-            $('#cost_center_code_new').prop('disabled', false);
-            pickerStartDate._input.removeAttribute('disabled');
-            $('#employment_status_new').prop('disabled', false);
-            pickerContractStartDate._input.removeAttribute('disabled');
-            pickerContractEndDate._input.removeAttribute('disabled');
+            $('#attachment_code').prop('disabled', false);
+            $('#attachment_no').prop('disabled', false);
+            // pickerAttachmentDate._input.removeAttribute('disabled');
             $('#remarks').prop('disabled', false);
         });
 
@@ -747,13 +1074,8 @@
                     'employeeNo': data[0].id
                 },
                 success: function (response) {
-                    console.log(response);
                     $('#npwp_code_current').val(htmlDecode(response[0].mutationView.groupNPWP));
                     $('#company_code_current').val(htmlDecode(response[0].mutationView.companyCode));
-                    $('#employee_no_current').val(htmlDecode(response[0].mutationView.employeeNo));
-                    $('#decree_code_current').val(htmlDecode(response[0].mutationView.decreeCode));
-                    $('#decree_no_current').val(htmlDecode(response[0].mutationView.decreeNo));
-                    $('#decree_date_current').val(htmlDecode(response[0].mutationView.decreeDate));
                     $('#work_location_current').val(htmlDecode(response[0].mutationView.locationName));
                     $('#group_code_current').val(htmlDecode(response[0].mutationView.groupName));
                     $('#grade_code_current').val(htmlDecode(response[0].mutationView.gradeName));
@@ -763,9 +1085,17 @@
                         .workNatureName));
                     $('#cost_center_code_current').val(htmlDecode(response[0].mutationView
                         .costCenterDescription));
-                    $('#start_date_current').val(htmlDecode(response[0].mutationView.startDate));
+                    $('#initial_date_current').val(htmlDecode(response[0].mutationView.startDate));
                     $('#employment_status_current').val(htmlDecode(response[0].mutationView
                         .employmentStatusVal));
+                    employmentStatus = response[0].mutationView.employmentStatus;
+                    if(employmentStatus == 'C' && $('#mutation_type').val() == 'O'){
+                        $('#div_contract_date_current').show();
+                    } else if(employmentStatus == 'P' && $('#mutation_type').val() == 'O'){
+                        $('#div_contract_date_current').show();
+                    } else{
+                        $('#div_contract_date_current').hide();
+                    }
                     $('#contract_start_date_current').val(htmlDecode(response[0].mutationView
                         .contractStartDate));
                     $('#contract_end_date_current').val(htmlDecode(response[0].mutationView
@@ -786,23 +1116,35 @@
                             '</div></div>'
                         );
 
-                        $('#div-level-new').append(
-                            '<div class="col-12">' +
-                            '<div class="form-group">' +
-                            '<label for="level' + (k + 1) +
-                            '_new">&nbsp;</label>' +
-                            '<select class="form-control select2" id="level' + v
-                            .levelType + '_new" name="level_new[]"></select>' +
-                            '<input type="hidden" class="form-control" id="level_type' +
-                            (k + 1) +
-                            '" name="level_type[]" value="' + v
-                            .levelType + '">' +
-                            '</div></div>'
-                        );
-
                         loadDataLevelCode('#level' + v.levelType + '_new', v
                             .levelType);
                     });
+                },
+                error: function (response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo e(url('personnel/report/level/check')); ?>",
+                type: "GET",
+                success: function (response) {
+                    for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                        $('#div-level-new').append(
+                            '<div class="col-12">' +
+                            '<div class="form-group">' +
+                            '<label for="level' + i +
+                            '_new">Level ' + i + ' Code</label>' +
+                            '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]"></select>' +
+                            '<input type="hidden" class="form-control" id="level_type' +
+                            i +
+                            '" name="level_type_new[]" value="' + response.data_level[i - 1].levelType + '">' +
+                            '</div></div>'
+                        );
+
+                        loadDataLevelCode('#level' + response.data_level[i - 1].levelType + '_new', response.data_level[i - 1].levelType);
+                    }
                 },
                 error: function (response) {
                     $('#notification_error').modal('show');
@@ -813,16 +1155,6 @@
 
         $('#employee_no').on("select2:unselecting", function (e) {
             $('#employee_name').val('');
-        });
-
-        $('#mutation_type').on('change', function () {
-            if(this.value == "N"){
-                $('#div-mutation-npwp-current').show();
-                $('#div-mutation-npwp-new').show();
-            }else{
-                $('#div-mutation-npwp-current').hide();
-                $('#div-mutation-npwp-new').hide();
-            }
         });
 
         function loadDataNPWPCode() {

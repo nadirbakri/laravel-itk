@@ -59,6 +59,9 @@
 	display: flex;
     align-items: center;
 }
+.modal-content {
+	border-radius: 1rem;
+}
 .div-dropdown-title .dropdown-logo {
 	max-width: 6%;
 	margin-left: 1.5%;

@@ -10,7 +10,7 @@ return [
     'table_field_name' => 'Nama Bidang',
     'table_description' => 'Deskripsi',
     'table_amount' => 'Jumlah',
-    'header_password_form' => 'Formulir Kata Sandi',
+    'header_password_form' => 'Formulir Validasi',
     'label_user_id' => 'ID Pengguna',
     'label_password' => 'Kata Sandi',
     'btn_save' => 'Simpan',

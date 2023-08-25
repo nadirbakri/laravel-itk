@@ -34,12 +34,12 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .select2-results__option[aria-selected=true] {
@@ -482,7 +482,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            module: 'PE'
+                            module: 'PE',
+                            isRange: false
                         };
                     },
                     processResults: function (data) {
@@ -694,22 +695,34 @@
 
         if ($("#custom_report_employee_form").length > 0) {
             $("#custom_report_employee_form").validate({
-                // rules: {
-                //     field_name: {
-                //         required: true,
-                //     }, 
-                //     column_header: {
-                //         required: true,
-                //     },
-                // },
-                // messages: {
-                //     field_name: {
-                //         required: "{{ __('personel_custom_report_employee.field_name_required') }}",
-                //     },
-                //     column_header: {
-                //         required: "{{ __('personel_custom_report_employee.column_header_required') }}",
-                //     },
-                // },
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    },
+                    employee_no_to: {
+                        required: true,
+                    },
+                    group_authorize_from: {
+                        required: true,
+                    },
+                    group_authorize_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                    group_authorize_from: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                    group_authorize_to: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                },
                 highlight: function (element) {
                     $(element).addClass('is-invalid');
                 },
@@ -718,9 +731,9 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $("#btn-save").prop("disabled", false);
-                    $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_custom_report_employee.btn_save") }}'
+                    $("#btn-print-data").prop("disabled", false);
+                    $("#btn-print-data").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
                     );
 
                     error.addClass('invalid-feedback');

@@ -33,34 +33,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -122,7 +122,7 @@
             @csrf
             <div class="div-trans-medical">
                 <div class="div-title">
-                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_transport.judul') }}</span>
                     </a>
@@ -160,7 +160,7 @@
                         <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('trans_transport.label_transport_type') }}</label>
                         </div>
-                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
+                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type"></select>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
@@ -252,177 +252,176 @@
     </div>
 
     <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_mass_leave">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_transport.luser') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body table-responsive">
-                        <table id="example" class="display">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ __('trans_transport.employee') }}</th>
-                                    <th>{{ __('trans_transport.fname') }}</th>
-                                    <th>{{ __('trans_transport.division') }}</th>
-                                    <th>{{ __('trans_transport.ranking') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    {{-- <td>#</td>         --}}
-                                    <td>
-                                        
-                                    </td>        
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>        
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                   </div>
-
-                    
+        <div class="modal fade" id="modal_list_mass_leave">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-little">{{ __('trans_transport.luser') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body table-responsive">
+                    <table id="example" class="display">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ __('trans_transport.employee') }}</th>
+                                <th>{{ __('trans_transport.fname') }}</th>
+                                <th>{{ __('trans_transport.division') }}</th>
+                                <th>{{ __('trans_transport.ranking') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {{-- <td>#</td>         --}}
+                                <td>
+                                    
+                                </td>        
+                                <td></td>        
+                                <td></td>        
+                                <td></td>        
+                                <td></td>        
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+
+                
             </div>
-        </form>
+        </div>
     </div>
 
-    <div class="div-form">
-        <form id="update_approval_medical_history_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_detail">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_transport.dtransport') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row detailstatus">
-                                    <div class="col-3  ">
-                                        <h5>{{ __('trans_transport.reqdate') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.rdate') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from"readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.tnom') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from"readonly>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.status') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.label_business_unit') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.type') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.ename') }}</h5>                                    </div>
-                                    <div class="col">
-                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.pname') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name" readonly>
-                                    </div>
-                                </div>
-                            
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.treq') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" readonly>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.dname') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent" readonly>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.status') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                            <select name="" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">{{ __('trans_transport.approve') }}</option>
-                                                <option value="REJECTED">{{ __('trans_transport.reject') }}</option>
-                                                <option value="PAID">{{ __('trans_transport.paid') }}</option>
-                                            </select>
-                                    </div>
-                                </div>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.tpaid') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
-                                    </div>
-                                </div>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_transport.remarks') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" >
-                                    </div>
-                                </div>
-                                <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_transport.update') }}</button>
+    <div class="modal fade" id="modal_list_detail">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-little">{{ __('trans_transport.dtransport') }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="update_approval_medical_history_form" method="post">
+                @csrf
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row detailstatus">
+                            <div class="col-3  ">
+                                <h5>{{ __('trans_transport.reqdate') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input id="reqdate" name="reqdate" type="hidden" class="form-control" readonly>
+                                <input id="directsuperior" name="directsuperior" type="hidden" class="form-control" readonly>
+                                <span id="reqdate_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.rdate') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input id="recdate" name="recdate" type="hidden" class="form-control" readonly><span id="recdate_val"></span>
                             </div>
                         </div>
+
+                        <div class="row detailstatus">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.tnom') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input id="tiketno" name="tiketno" type="hidden" class="form-control" readonly><span id="tiketno_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.status') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input id="status" name="status" type="hidden" class="form-control" readonly><span id="status_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row detailstatus">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.label_business_unit') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input id="b_unit" name="b_unit" type="hidden" class="form-control" readonly><span id="b_unit_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.type') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input id="c_type" name="c_type" type="hidden" class="form-control" readonly><span id="c_type_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row detailstatus">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.ename') }}</h5>                                    
+                            </div>
+                            <div class="col-3">
+                                <input id="employee_no" name="employee_no" type="hidden" class="form-control" readonly><span id="employee_no_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.pname') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input type="hidden" class="form-control" id="project_name" name="project_name" readonly><span id="project_name_val"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="row detailstatus">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.treq') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input type="hidden" id="totalclaim" name="totalclaim" class="form-control" readonly><span id="totalclaim_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.dname') }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <input type="hidden" class="form-control" id="dependent" name="dependent" readonly><span id="dependent_val"></span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.status') }}</h5>
+                            </div>
+                            <div class="col-5">
+                                    <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
+                                        <option value="APPROVED">{{ __('trans_transport.approve') }}</option>
+                                        <option value="REJECTED">{{ __('trans_transport.reject') }}</option>
+                                        <option value="PAID">{{ __('trans_transport.paid') }}</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.tpaid') }}</h5>
+                            </div>
+                            <div class="col-5">
+                                <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.remarks') }}</h5>
+                            </div>
+                            <div class="col-5">
+                                <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" >
+                            </div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_transport.update') }}</button>
                     </div>
-                   </div>
                 </div>
+                </form>
             </div>
-        </form>
+            </div>
+        </div>
     </div>
+        
 
     <div class="div-form">
         <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
@@ -550,6 +549,7 @@
     }
 </script>
 <script type="text/javascript">
+    var table = null;
     function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit,processed_date) {
         // console.log(claim_date_from)
             table = $('#medical_table').DataTable({
@@ -648,43 +648,30 @@
             load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit,processed_date);
     })
     const klikdetail = (element) => {
-        let requestDate = $(element).parent().siblings('.sorting_1').text()
-        let status = $(element).parent().siblings('td').eq(1).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
-        let totalClaim = $(element).parent().siblings('td').eq(6).text()
-        var direct_superior = $("#direct_superior").val();
-        var reimbursement_type = $("#reimbursement_type").val();
-        let approvalremarks = $(element).parent().siblings('td').eq(10).text()
-        let totalpaid = $(element).parent().siblings('td').eq(9).text()
-        var business_unit = $("#business_unit").val();        
-        
-        // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
-        // let projectname = $(element).parent().siblings('td').eq(5).text()
-        // let employeename = $(element).parent().siblings('td').eq(3).text()
-        // let totalpaid = $(element).parent().siblings('td').eq(6).text()
-        // var reimbursement_type = $("#reimbursement_type").val();
+        let data = table.row($(element).parent()).data().transportEntity;
 
-        $('#reqdate').val(requestDate)
-        $('#recdate').val(requestDate)
-        $('#tiketno').val(tikcetNo)
-        $('#status').val(status)
-        $('#b_unit').val(business_unit)
-        $('#employee_no').val(direct_superior)
-        $('#c_type').val(reimbursement_type)
-        $('#totalclaim').val(totalClaim)
-
-        $('#approvalremarks').val(approvalremarks)
-        $('#totalpaid').val(totalpaid)
-        
-        // $('#status').val(reimbursement_status)
-        // $('#tiketno').val(tikcetNo)
-        // $('#c_type').val(reimbursement_type)
-        // $('#employeeno').val(employeename)
-        // $('#projectname').val(projectname)
-        // $('#totalpaid').val(totalpaid)
-        // $('#direct_superior').val(employee_id)
-
-        // alert(reimbursement_type);
+        $('#reqdate').val(data.createdDate)
+        $('#reqdate_val').html(data.createdDate)
+        $('#recdate').val(data.receiptDate)
+        $('#recdate_val').html(data.receiptDate)
+        $('#tiketno').val(data.ticketNo)
+        $('#tiketno_val').html(data.ticketNo)
+        $('#status').val(data.status)
+        $('#status_val').html(data.status)
+        $('#b_unit').val(data.business_unit)
+        $('#b_unit_val').html(data.business_unit)
+        $('#employee_no').val(data.employeeNo)
+        $('#employee_no_val').html(data.fullnameRequester + '(' + data.employeeNo + ')')
+        $('#c_type').val(data.type)
+        $('#c_type_val').html(data.type)
+        $('#totalclaim').val(data.totalAmount)
+        $('#totalclaim_val').html(data.totalAmount)
+        $('#approvalremarks').val(data.approvalRemarks)
+        $('#totalpaid').val(data.paidAmount)
+        $('#reimbursement_status').val(data.status).trigger('change')
+        $('#project_name').val(data.projectName)
+        $('#project_name_val').html(data.projectName)
+        $('#directsuperior').val(data.directSuperiorID)
     }
 
     $('#btn-list').click(()=> {
@@ -737,7 +724,7 @@
         let reimbursement_status = $('#reimbursement_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#direct_superior").val();
+        let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         $('.close').click();
@@ -756,36 +743,36 @@
                 'approvalRemarks' : approvalremarks
             },
             success: function (response) {
-                               if (response.status == "true") {
-                                   $("#btn-update").prop("disabled", false);
-                                   $("#btn-update").html(
-                                       // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
-                                       'Update'
-                                   );
-                                   
-                                   $('#notification_success').modal('show');
-                                   $('#message-notification-success').html(response
-                                       .message);
-                                   setTimeout(function () {
-                                       window.location =
-                                           "{{ url('transaction/transaction_transport') }}";
-                                   }, 3000);
-                               } else{
-                                $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_update_data_fail').modal('show');
-                               $('#message-notification-update-data-fail').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_transport') }}";
-                               }, 3000);
-                           }
-                       },
+                        if (response.status == "true") {
+                            $("#btn-update").prop("disabled", false);
+                            $("#btn-update").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
+                                'Update'
+                            );
+                            
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            setTimeout(function () {
+                                window.location =
+                                    "{{ url('transaction/transaction_transport') }}";
+                            }, 3000);
+                        } else{
+                        $("#btn-update").prop("disabled", false);
+                        $("#btn-update").html(
+                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                            'Update'
+                        );
+                        
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response
+                            .message);
+                        setTimeout(function () {
+                            window.location =
+                                "{{ url('transaction/transaction_transport') }}";
+                        }, 3000);
+                    }
+                },
                 error: function (response) {
                 $("#btn-update").prop("disabled", false);
                 $("#btn-update").html(
@@ -798,348 +785,6 @@
             }
         });
     }
-</script>
-<script type="text/javascript">
-
-// loadDataExportTransport();
-// loadDataBusinessUnit();
-// loadDataStatusTransaction();
-// loadDataFirstLastAllBusinessUnit();
-// loadDataAllTransport();
-
-//     $.get("{{ url('reimbursement_type/transport/api') }}", function (data) {
-//             $.each(data, function (k, v) {
-//                 $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
-//                     "</option>");
-//             });
-//         });
-//         $.get("{{ url('level/api') }}", function (data) {
-//             $.each(data, function (k, v) {
-//                 $('#business_unit').append("<option value=" + v.levelName + ">" + v.levelCode +
-//                     "</option>");
-//             });
-//         });
-//         $.get("{{ url('status_trans/api') }}", function (data) {
-//             $.each(data, function (k, v) {
-//                 $('#status').append("<option value=" + v.variable + ">" + v.value +
-//                     "</option>");
-//             });
-//         });
-
-//         $('#select').focus(function (event) {
-//                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-//                 $searchfield.prop('disabled', true);
-//         });
-
-//         $('#select').click(function (event) {
-//             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-//             $searchfield.prop('disabled', true);
-//         });
-
-//         $('#select').change(function (event) {
-//             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-//             $searchfield.prop('disabled', true);
-//         });
-
-//         $('select').on('select2:close', function (e) {
-//             $('.header-select').remove();
-//         });
-
-        // function loadDataExportTransport(){
-        //     function formatSelect(data) {
-        //         if (data.loading) {
-        //             return $search
-        //         }
-
-        //         if (data.id) {
-        //             var $result2 = $('<div class="row">' + 
-        //                 '<div class="col-6">' + data.data.value + '<div>' +
-        //                 '</div>');
-
-        //             return $result2;
-        //         }
-        //     }
-
-        //     var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-        //     $('#reimbursement_type').select2({
-        //         width: '100%',
-        //         placeholder: 'Choose Reimbursement Type',
-        //         allowClear: true,
-        //         // multiple: true,
-        //         // tags: true,
-        //         closeOnSelect: true,
-        //         language: {
-        //             errorLoading: function () {
-        //                 return $search;
-        //             },
-        //             searching: function () {
-        //                 return $search;
-        //             }
-        //         },
-        //         ajax: {
-        //             url: "{{ url('/reimbursement_type/transport/api') }}",
-        //             dataType: 'json',
-        //             delay: 250,
-        //             type: "GET",
-        //             data: function (params) {
-        //                 return {
-        //                     _token: $('meta[name="csrf-token"]').attr('content'),
-        //                     search: params.term
-        //                 };
-        //             },
-        //             processResults: function (data) {
-        //                 return {
-        //                     results: $.map(data, function (item) {
-        //                         return {
-        //                             text: item.value,
-        //                             id: item.comGenCode,
-        //                             data: item
-        //                         }
-        //                     })
-        //                 };
-        //             },
-        //             cache: true,
-        //         },
-        //         templateResult: formatSelect
-        //     });
-        // }
-
-        // function loadDataAllTransport() {
-        //     $('#transport_type').addClass('spinner-border');
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: "{{ url('/reimbursement_type/transport/all/api') }}",
-        //     }).then(function (data) {
-        //         if (!$('#transport_type').find('option:contains(' + data.value + ')').length) {
-        //             $('#transport_type').append($('<option>').val(data.comGenCode).text(data.value));
-        //         }
-        //         $('#transport_type').val(data.comGenCode);
-        //         $('#transport_type').removeClass('loading');
-        //     });
-        // }
-        // function loadDataBusinessUnit(){
-        //     function formatSelect(data) {
-        //         if (data.loading) {
-        //             return $search
-        //         }
-
-        //         if (data.id) {
-        //             var $result2 = $('<div class="row">' + 
-        //                 '<div class="col-6">' + data.data.levelName + '<div>' +
-        //                 '</div>');
-
-        //             return $result2;
-        //         }
-        //     }
-
-        //     var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-        //     $('#business_unit').select2({
-        //         width: '100%',
-        //         placeholder: 'Choose Business Unit',
-        //         allowClear: true,
-        //         // multiple: true,
-        //         // tags: true,
-        //         closeOnSelect: true,
-        //         language: {
-        //             errorLoading: function () {
-        //                 return $search;
-        //             },
-        //             searching: function () {
-        //                 return $search;
-        //             }
-        //         },
-        //         ajax: {
-        //             url: "{{ url('/level/api') }}",
-        //             dataType: 'json',
-        //             delay: 250,
-        //             type: "GET",
-        //             data: function (params) {
-        //                 return {
-        //                     _token: $('meta[name="csrf-token"]').attr('content'),
-        //                     search: params.term, 'levelType' : '1'
-        //                 };
-        //             },
-        //             processResults: function (data) {
-        //                 return {
-        //                     results: $.map(data, function (item) {
-        //                         return {
-        //                             text: item.levelName,
-        //                             id: item.levelCode,
-        //                             data: item
-        //                         }
-        //                     })
-        //                 };
-        //             },
-        //             cache: true,
-        //         },
-        //         templateResult: formatSelect
-        //     });
-        // }
-        // function loadDataFirstLastAllBusinessUnit () {
-        //     $('#business_unit').addClass('spinner-border');
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: "{{ url('/level/func/api') }}",
-        //     }).then(function (data) {
-        //         if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-        //             $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
-        //         }
-        //         $('#business_unit').val(data.levelCode);
-        //         $('#business_unit').removeClass('loading');
-        //     });
-        // }
-        // function loadDataStatusTransaction(){
-        //     function formatSelect(data) {
-        //         if (data.loading) {
-        //             return $search
-        //         }
-
-        //         if (data.id) {
-        //             var $result2 = $('<div class="row">' + 
-        //                 '<div class="col-6">' + data.data.value + '<div>' +
-        //                 '</div>');
-
-        //             return $result2;
-        //         }
-        //     }
-
-        //     var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-        //     $('#status').select2({
-        //         width: '100%',
-        //         placeholder: 'Choose Status',
-        //         allowClear: true,
-        //         // multiple: true,
-        //         // tags: true,
-        //         closeOnSelect: true,
-        //         language: {
-        //             errorLoading: function () {
-        //                 return $search;
-        //             },
-        //             searching: function () {
-        //                 return $search;
-        //             }
-        //         },
-        //         ajax: {
-        //             url: "{{ url('/status_trans/api') }}",
-        //             dataType: 'json',
-        //             delay: 250,
-        //             type: "GET",
-        //             data: function (params) {
-        //                 return {
-        //                     _token: $('meta[name="csrf-token"]').attr('content'),
-        //                     search: params.term
-        //                 };
-        //             },
-        //             processResults: function (data) {
-        //                 return {
-        //                     results: $.map(data, function (item) {
-        //                         return {
-        //                             text: item.value,
-        //                             id: item.comGenCode,
-        //                             data: item
-        //                         }
-        //                     })
-        //                 };
-        //             },
-        //             cache: true,
-        //         },
-        //         templateResult: formatSelect
-        //     });
-        // }
-
-    const klikdetail = (element) => {
-        let requestDate = $(element).parent().siblings('.sorting_1').text()
-        let status = $(element).parent().siblings('td').eq(1).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
-        let totalClaim = $(element).parent().siblings('td').eq(8).text()
-        var direct_superior = $("#direct_superior").val();
-        var reimbursement_type = $("#reimbursement_type").val();
-        let approvalremarks = $(element).parent().siblings('td').eq(10).text()
-        let totalpaid = $(element).parent().siblings('td').eq(9).text()
-        var business_unit = $("#business_unit").val();        
-        
-        // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
-        // let projectname = $(element).parent().siblings('td').eq(5).text()
-        // let employeename = $(element).parent().siblings('td').eq(3).text()
-        // let totalpaid = $(element).parent().siblings('td').eq(6).text()
-        // var reimbursement_type = $("#reimbursement_type").val();
-
-        $('#reqdate').val(requestDate)
-        $('#recdate').val(requestDate)
-        $('#tiketno').val(tikcetNo)
-        $('#status').val(status)
-        $('#b_unit').val(business_unit)
-        $('#employee_no').val(direct_superior)
-        $('#c_type').val(reimbursement_type)
-        $('#totalclaim').val(totalClaim)
-
-        $('#approvalremarks').val(approvalremarks)
-        $('#totalpaid').val(totalpaid)
-        
-        // $('#status').val(reimbursement_status)
-        // $('#tiketno').val(tikcetNo)
-        // $('#c_type').val(reimbursement_type)
-        // $('#employeeno').val(employeename)
-        // $('#projectname').val(projectname)
-        // $('#totalpaid').val(totalpaid)
-        // $('#direct_superior').val(employee_id)
-
-        // alert(reimbursement_type);
-    }
-
-    $('#btn-list').click(()=> {
-        $('#example').DataTable().destroy();
-        table2 = $('#example').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: {
-                url : "{{ url('transaction/list/table') }}"             
-            },
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lfrtip',
-            'sPaginationType': 'full_numbers',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
-                             }
-                },
-                {data: 'employeeNo', name: 'employeeNo'},
-                {data: 'fullName', name: 'fullName'},
-                {data: 'positionName', name: 'positionName'},
-                {data: 'rankingName', name: 'rankingName'},
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }, 
-            
-        });        
-    })
-    
-    const klik = (element) => {
-        let employee_id = $(element).parent().siblings('.sorting_1').text()
-        $('#direct_superior').val(employee_id)
-
-        $('.close').click();
-        // let fullname = $(element).parent().siblings('td').eq(1).text()
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
-    }
-
 </script>
 <script>
 $("#btn-process").click(function () {
@@ -1220,22 +865,21 @@ if ($("#upload_paid_overtime_form").length > 0) {
 }
 </script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
 
     loadDataExportReimbrusement();
     loadDataFirstLastAllReimbursement();
     loadDataBusinessUnit();
     loadDataFirstLastAllBusinessUnit();
-    // loadDataFirstLastAllReimbursmentType();
     
-        $.get("{{ url('reimbursement_type/transport/api') }}", function (data) {
+            $.get("{{ url('reimbursement_type/transport/api') }}", function (data) {
                 $.each(data, function (k, v) {
-                    $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+                    $('#reimbursement_type').append("<option value=" + v.comGenCode + ">" + v.value +
                         "</option>");
                 });
             });
     
-        $.get("{{ url('level/api') }}", function (data) {      
+            $.get("{{ url('level/api') }}", function (data) {      
                 $.each(data, function (k, v) {
                     $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
                         "</option>");
@@ -1327,28 +971,15 @@ if ($("#upload_paid_overtime_form").length > 0) {
     
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/reimbursement_type/transport/all/api') }}",
+                    url: "{{ url('/reimbursement_type/transport/func/api') }}",
                 }).then(function (data) {
-                    if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
-                        $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
+                    if (!$('#reimbursement_type').find('option:contains(' + data[0].value + ')').length) {
+                        $('#reimbursement_type').append($('<option>').val(data[0].comGenCode).text(data[0].value));
                     }
-                    $('#reimbursement_type').val(data.comGenCode);
+                    $('#reimbursement_type').val(data[0].comGenCode);
                     $('#reimbursement_type').removeClass('loading');
                 });
             }
-    
-    
-            // buat ALL
-            // function loadDataFirstLastAllReimbursement() {
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "{{ url('/reimbursement_type/all/api') }}"reimbursement_type/all/api',
-            //     }).then(function (data) {
-            //         if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length)
-            //         $('#reimbursement_type').val(data.value);
-            //     });
-            // }
-    
     
             function loadDataBusinessUnit(){
                 function formatSelect(data) {
@@ -1426,198 +1057,6 @@ if ($("#upload_paid_overtime_form").length > 0) {
                     $('#business_unit').removeClass('loading');
                 });
             }
-    </script> --}}
-
-<script>
-    loadDataBusinessUnit();
-    loadDataFirstLastAllBusinessUnit();
-    loadDataReimbursement();
-    loadDataReimbursementAll();
-
-    $.get("{{ url('level/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#business_unit').append("<option value=" + v.levelName + ">" + v.levelCode +
-                    "</option>");
-            });
-        });
-
-    $.get("{{ url('transport_type/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
-                        "</option>");
-                });
-        });
-
-        $('#select').focus(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-        });
-
-        $('#select').click(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
-
-        function loadDataBusinessUnit(){
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.levelName + '<div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-            $('#business_unit').select2({
-                width: '100%',
-                placeholder: 'Choose Business Unit',
-                allowClear: true,
-                // multiple: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: "{{ url('/level/api') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.levelName,
-                                    id: item.levelCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataFirstLastAllBusinessUnit () {
-            $('#business_unit').addClass('spinner-border');
-
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/level/func/api') }}",
-            }).then(function (data) {
-                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
-                }
-                $('#business_unit').val(data.levelCode);
-                $('#business_unit').removeClass('loading');
-            });
-        }
-
-        function loadDataReimbursementAll () {
-                $('#reimbursement_type').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    // url: "{{ url('/reimbursement_type_medical/all/api') }}",
-                    url: "{{ url('/transport_type/all/api') }}",
-                }).then(function (data) {
-                    if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
-                        $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
-                    }
-                    $('#reimbursement_type').val(data.comGenCode);
-                    $('#reimbursement_type').removeClass('loading');
-                });
-            }
-
-        function loadDataReimbursement(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
-                }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#reimbursement_type').select2({
-                    width: '100%',
-                    placeholder: 'Choose Reimbursement Type',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
-                    },
-                    ajax: {
-                        url: "{{ url('/transport_type/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.value,
-                                        id: item.comGenCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
-            }
-
-</script>
+    </script>
 
  </html>

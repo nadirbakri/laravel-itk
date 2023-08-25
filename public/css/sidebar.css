@@ -33,6 +33,9 @@
 	background-color: unset;
 	border-bottom: unset;
 }
+.modal-content {
+  border-radius: 1rem;
+}
 
 .navbar {
   padding: 0 2rem 0 1rem;

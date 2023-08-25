@@ -33,34 +33,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -122,7 +122,7 @@
             @csrf
             <div class="div-trans-medical">
                 <div class="div-title">
-                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_medical.list') }}</span>
                     </a>
@@ -308,6 +308,7 @@
                                     </div>
                                     <div class="col">
                                         <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.redate') }}</h5>
@@ -382,7 +383,7 @@
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col-5">
-                                            <select name="" id="reimbursement_status" class="custom-select">
+                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
                                                 <option value="APPROVED">{{ __('trans_medical.acc') }}</option>
                                                 <option value="REJECTED">{{ __('trans_medical.reject') }}</option>
                                                 <option value="PAID">{{ __('trans_medical.paid') }}</option>
@@ -627,7 +628,7 @@
         let reimbursement_status = $('#reimbursement_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#direct_superior").val();
+        let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         $('.close').click();
@@ -788,43 +789,21 @@
             load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
     })
     const klikdetail = (element) => {
-        let requestDate = $(element).parent().siblings('.sorting_1').text()
-        let status = $(element).parent().siblings('td').eq(2).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(1).text()
-        let totalClaim = $(element).parent().siblings('td').eq(6).text()
-        var direct_superior = $("#direct_superior").val();
-        var reimbursement_type = $("#reimbursement_type").val();
-        let approvalremarks = $(element).parent().siblings('td').eq(7).text()
-        let totalpaid = $(element).parent().siblings('td').eq(8).text()
-        var business_unit = $("#business_unit").val();        
-        
-        // let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
-        // let projectname = $(element).parent().siblings('td').eq(5).text()
-        // let employeename = $(element).parent().siblings('td').eq(3).text()
-        // let totalpaid = $(element).parent().siblings('td').eq(6).text()
-        // var reimbursement_type = $("#reimbursement_type").val();
+        let data = table.row($(element).parent()).data().reimbursementEntity;
 
-        $('#reqdate').val(requestDate)
-        $('#recdate').val(requestDate)
-        $('#tiketno').val(tikcetNo)
-        $('#status').val(status)
-        $('#b_unit').val(business_unit)
-        $('#employee_no').val(direct_superior)
-        $('#c_type').val(reimbursement_type)
-        $('#totalclaim').val(totalClaim)
+        $('#reqdate').val(data.createdDate)
+        $('#recdate').val(data.receiptDate)
+        $('#tiketno').val(data.ticketNo)
+        $('#status').val(data.reimbursementStatus)
+        $('#b_unit').val(data.businessUnit)
+        $('#employee_no').val(data.employeeNo)
+        $('#c_type').val(data.medicalType1 + ' (' + data.medicalType2 + ')')
+        $('#totalclaim').val(data.totalClaimAmount)
+        $('#project_name').val(data.projectName)
 
-        $('#approvalremarks').val(approvalremarks)
-        $('#totalpaid').val(totalpaid)
-        
-        // $('#status').val(reimbursement_status)
-        // $('#tiketno').val(tikcetNo)
-        // $('#c_type').val(reimbursement_type)
-        // $('#employeeno').val(employeename)
-        // $('#projectname').val(projectname)
-        // $('#totalpaid').val(totalpaid)
-        // $('#direct_superior').val(employee_id)
-
-        // alert(reimbursement_type);
+        $('#approvalremarks').val(data.approvalRemarks)
+        $('#totalpaid').val(data.paidAmount)
+        $('#directsuperior').val(data.directSuperiorID)
     }
 
     $('#btn-list').click(()=> {
@@ -885,7 +864,7 @@
     loadDataFirstLastAllBusinessUnit();
     // loadDataFirstLastAllReimbursmentType();
     
-        $.get("{{ url('reimbursement_type/func/api') }}", function (data) {
+        $.get("{{ url('reimbursement_type/medical/api') }}", function (data) {
                 $.each(data, function (k, v) {
                     $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
                         "</option>");
@@ -952,7 +931,7 @@
                         }
                     },
                     ajax: {
-                        url: "{{ url('/reimbursement_type/func/api') }}",
+                        url: "{{ url('/reimbursement_type/medical/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",
@@ -984,7 +963,7 @@
     
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/reimbursement_type_medical/all/api') }}",
+                    url: "{{ url('/reimbursement_type/medical/all/api') }}",
                 }).then(function (data) {
                     if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
                         $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));

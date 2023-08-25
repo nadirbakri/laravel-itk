@@ -32,34 +32,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -124,30 +124,31 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="output_file">{{ __('payroll_transfer_data_to_bank.label_output_file') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <select class="form-control select2" id="output_file" name="output_file">
-                            <option value="BANK CENTRAL ASIA">Bank Central Asia</option>
-                            <option value="BANK INA">Bank Ina</option>
-                            <option value="BTPN">BTPN</option>
-                            <option value="BANK INA MULTI ACCOUNT">Bank Ina Multi Account</option>
-                            <option value="MCM">MCM Bank Mandiri</option>
-                            <!-- <option value="MANDIRI">Bank Mandiri</option> -->
-                            <option value="BOT">BOT</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
                             <label for="source_bank">{{ __('payroll_transfer_data_to_bank.label_source_bank') }}</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <select class="form-control select2" id="source_bank" name="source_bank"></select>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="output_file">{{ __('payroll_transfer_data_to_bank.label_output_file') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-control select2" id="output_file" name="output_file">
+                            <!-- <option value="BANK CENTRAL ASIA">Bank Central Asia</option>
+                            <option value="BANK INA">Bank Ina</option>
+                            <option value="BTPN">BTPN</option>
+                            <option value="BANK INA MULTI ACCOUNT">Bank Ina Multi Account</option>
+                            <option value="MCM">MCM Bank Mandiri</option>
+                            <option value="MANDIRI">Bank Mandiri</option>
+                            <option value="BOT">BOT</option> -->
+                        </select>
+                    </div>
+                    <input type="hidden" class="form-control" id="format_file" name="format_file">
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -420,6 +421,7 @@
         loadDataGroupAuthorize('#group_authorized_code_from');
         loadDataGroupAuthorize('#group_authorized_code_to');
         loadDataSourceBank();
+        loadDataOutputFile();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
@@ -484,11 +486,22 @@
             // console.log(data);
             $('#account_number').val(data[0].data.accountNo);
             $('#transfer_code').val(data[0].data.description);
+            loadDataOutputFile(data[0].data.bankCode);
         });
 
         $('#source_bank').on("select2:unselecting", function (e) {
             $('#account_number').val('');
             $('#transfer_code').val('');
+        });
+
+        $('#output_file').on("select2:select", function (e) {
+            var data = $('#output_file').select2('data');
+            console.log(data);
+            $('#format_file').val(data[0].data.format);
+        });
+
+        $('#output_file').on("select2:unselecting", function (e) {
+            $('#format_file').val('');
         });
 
         function loadDataEmployeeNo(field = '') {
@@ -574,6 +587,68 @@
                 var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
                     data.fullName);
                 $(field).append($newOption).trigger('change');
+            });
+        }
+
+        function loadDataOutputFile(bankCode = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.bankCode + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#output_file').select2({
+                width: '100%',
+                placeholder: 'Choose Output File',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/output_file/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            bankCode: bankCode
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.bankCode,
+                                    id: item.bankCode,
+                                    data: item
+                                }
+                                // console.log(data);
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
             });
         }
 
@@ -774,7 +849,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            module: 'PY'
+                            module: 'PY',
+                            isRange: false
                         };
                     },
                     processResults: function (data) {

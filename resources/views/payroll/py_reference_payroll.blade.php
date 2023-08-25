@@ -32,23 +32,35 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        .modal-header-authentication {
+            border-bottom: 1px solid #eee;
+            background-color: #004883;
+            color: white;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -142,7 +154,7 @@
             </a>
         </div>
         <div class="div-title">
-			<a href="{{ url('/payroll') }}" target="iframe_dashboard">
+			<a href="{{ url()->previous() }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('payroll_reference_payroll.list') }}</span>
 			</a>
@@ -1275,6 +1287,54 @@
             </form>
         </div>
     </div>
+    <div class="modal fade" id="modal_authentication"  role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-authentication text-center">
+                    <h5 class="modal-title w-100 title-text-authentication">{{ __('payroll_salary_accumulation_data.header_password_form') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="authentication_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label
+                                        for="user_id">{{ __('payroll_salary_accumulation_data.label_user_id') }}</label>
+                                    <input type="text" class="form-control" id="user_id" name="user_id"
+                                        placeholder="{{ __('payroll_salary_accumulation_data.label_user_id') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="password">{{ __('payroll_salary_accumulation_data.label_password') }}</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="{{ __('payroll_salary_accumulation_data.label_password') }}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary rounded-right" type="button" id="show_password"><i id="icon_show_password"
+                                                class="fa fa-eye" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" id="btn-ok" name="btn-ok" class="btn btn-primary w-25"><i>
+                                </i> {{ __('payroll_salary_accumulation_data.btn_ok') }}</button>
+                            <button type="button" id="btn-cncl" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                class="fa fa-times-circle"></i> {{ __('payroll_salary_accumulation_data.btn_cancel') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -1699,10 +1759,116 @@
 
         $('#toolbar-edit').on('click', function () {
             $('#toolbar-save').show();
+            $('#modal_authentication').modal('show');
+            // $('#record_function').val("Edit");
+            // $('#process_period_month').prop('readonly', false);
+            // $('#process_period_year').prop('readonly', false);
+            // $('#process_status').prop('disabled', false);
+            // $('#payroll_payment_period').prop('readonly', false);
+            // $('#company_name').prop('readonly', true);
+            // $('#address').prop('readonly', true);
+            // $('#city').prop('readonly', true);
+            // $('#tax_registered_no').prop('readonly', false);
+            // $('#jamsostek_no').prop('readonly', false);
+            // $('#pension_no').prop('readonly', false);
+            // $('#retirement_age_limit').prop('readonly', false);
+            // $('#prorate_method').prop('disabled', false);
+            // $('#maximum_dependents').prop('readonly', false);
+            // $('#take_home_pay_rounded_from').prop('readonly', false);
+            // $('#take_home_pay_rounded_become').prop('readonly', false);
+            // $('#transaction_rate_type').prop('disabled', false);
+            // $('#tax_rate_type').prop('disabled', false);
+            // $('#rounding_method_report').prop('disabled', false);
+            // $('#rounding_decimal_report').prop('readonly', false);
+            // $('#rounding_method_spt').prop('disabled', false);
+            // $('#rounding_decimal_spt').prop('readonly', false);
+            // $('#rounding_method_spt').prop('disabled', false);
+            // $('#check_appreciation_and_employee_service').prop('disabled', false);
+            // $('#bonus_cooficient').prop('readonly', false);
+            // $('#check_tax_allowance_bonus').prop('disabled', false);
+            // $('#check_tax_allowance_thr').prop('disabled', false);
+            // $('#pension_contribution_employee').prop('readonly', false);
+            // $('#pension_contribution_employer').prop('readonly', false);
+            // $('#work_related_accident_insurance_one').prop('readonly', false);
+            // $('#work_related_accident_insurance_two').prop('readonly', false);
+            // $('#work_related_accident_insurance_three').prop('readonly', false);
+            // $('#non_accidental_death_insurance').prop('readonly', false);
+            // $('#health_insurance_company').prop('readonly', false);
+            // $('#health_insurance_employee').prop('readonly', false);
+            // $('#min_calculation_health_insurance').prop('readonly', false);
+            // $('#max_calculation_health_insurance').prop('readonly', false);
+            // $('#pension_insurance_company').prop('readonly', false);
+            // $('#pension_insurance_employee').prop('readonly', false);
+            // $('#min_calculation_pension_insurance').prop('readonly', false);
+            // $('#max_calculation_pension_insurance').prop('readonly', false);
+            // $('#multiplication_factor_daily_worker').prop('readonly', false);
+            // $('#calculation_method_actual').prop('disabled', false);
+            // $('#calculation_method_basic').prop('disabled', false);
+            // $('#check_all_period_jamsostek').prop('disabled', false);
+            // $('#check_on_period_jamsostek').prop('disabled', false);
+            // $('#check_nearest_taxable_income').prop('disabled', false);
+            // $('#work_insurance_remision_payment_percentage').prop('readonly', false);
+            // pickerEndPeriod._input.removeAttribute("disabled");
+            // $('#tax_calculation_method_annualized').prop('disabled', false);
+            // $('#tax_calculation_method_prorated').prop('disabled', false);
+            // $('#non_taxable_income_employee').prop('readonly', false);
+            // $('#non_taxable_income_each_dependent').prop('readonly', false);
+            // $('#occupational_percentage').prop('readonly', false);
+            // $('#occupational_maximum').prop('readonly', false);
+            // for (var i = 1; i < 7; i++) {
+            //     $('#tax_rate' + i).prop('readonly', false);
+            //     $('#taxable_income_from' + i).prop('readonly', false);
+            // }
+            // $('#time_test').prop('readonly', false);
+            // $('#tax_rate_with_time_test').prop('readonly', false);
+            // $('#max_gross_income').prop('readonly', false);
+            // $('#tax_by_government_tk').prop('readonly', false);
+            // $('#tax_by_government_k0').prop('readonly', false);
+            // $('#tax_by_government_k1').prop('readonly', false);
+            // $('#tax_by_government_k2').prop('readonly', false);
+            // $('#tax_by_government_k3').prop('readonly', false);
+            // $('#check_all_period_tax_calculation_table').prop('disabled', false);
+            // $('#check_on_period_tax_calculation_table').prop('disabled', false);
+            // $('#tax_penalties_salary').prop('readonly', false);
+            // $('#tax_penalties_bonus').prop('readonly', false);
+            // $('#tax_penalties_thr').prop('readonly', false);
+            // for (var i = 0; i < 6; i++) {
+            //     $('#severance_payment_from' + i).prop('readonly', false);
+            //     $('#severance_payment_rate' + i).prop('readonly', false);
+            // }
+            // if (typeof arrDataPR[0].deductedOnPeriod !== 'undefined' && arrDataPR[0].deductedOnPeriod === 0) {
+            //     $('#check_all_period_jamsostek').prop('checked', true);
+            // }
+            // else {
+            //     $('#check_on_period_jamsostek').prop('checked', true);
+            //     $('#on_period_jamsostek').prop('readonly', false);
+            // }
+            // if (typeof arrDataPR[0].flagtaxableIncomeRounded !== 'undefined' && arrDataPR[0].flagtaxableIncomeRounded == true) {
+            //     $('#check_nearest_taxable_income').prop('checked', true);
+            //     $('#nearest_taxable_income').prop('readonly', false);
+            // }
+            // if (typeof arrDataPR[0].taxDeductedOnPeriod !== 'undefined' && arrDataPR[0].taxDeductedOnPeriod === 0) {
+            //     $('#check_all_period_tax_calculation_table').prop('checked', true);
+            // }
+            // else {
+            //     $('#check_on_period_tax_calculation_table').prop('checked', true);
+            //     $('#on_period_tax_calculation_table').prop('readonly', false);
+            // }
+        });
+
+        $("#btn-ok").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#authentication_form").submit();
+        });
+
+        $("#btn-cncl").click(function () {
             $('#record_function').val("Edit");
-            $('#process_period_month').prop('readonly', false);
-            $('#process_period_year').prop('readonly', false);
-            $('#process_status').prop('disabled', false);
+            // $('#process_period_month').prop('readonly', false);
+            // $('#process_period_year').prop('readonly', false);
+            // $('#process_status').prop('disabled', false);
             $('#payroll_payment_period').prop('readonly', false);
             $('#company_name').prop('readonly', true);
             $('#address').prop('readonly', true);
@@ -1794,6 +1960,184 @@
                 $('#on_period_tax_calculation_table').prop('readonly', false);
             }
         });
+
+        if ($("#authentication_form").length > 0) {
+            $("#authentication_form").validate({
+                rules: {
+                    user_id: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    user_id: {
+                        required: "{{ __('payroll_salary_accumulation_data.userid_required') }}",
+                    },
+                    password: {
+                        required: "{{ __('payroll_salary_accumulation_data.password_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    jQuery(element).closest('.form-control').addClass('is-invalid');
+                    $('#show_password').addClass('danger');
+                },
+                unhighlight: function (element) {
+                    jQuery(element).closest('.form-control').removeClass('is-invalid');
+                    $('#show_password').removeClass('danger');
+                },
+                errorElement: 'label',
+                errorClass: 'text-danger',
+                errorPlacement: function (error, element) {
+					$("#btn-ok").prop("disabled", false);
+                    $("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+					$("#btn-ok").prop("disabled", true);
+                    $("#btn-ok").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                    );
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        url: "{{ url('authentication/proses') }}",
+                        type: "POST",
+                        data: $('#authentication_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+								$("#btn-ok").prop("disabled", false);
+								$("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+                                $('#modal_authentication').modal('hide');
+								$('#record_function').val("Edit");
+                                $('#process_period_month').prop('readonly', false);
+                                $('#process_period_year').prop('readonly', false);
+                                $('#process_status').prop('disabled', false);
+                                $('#payroll_payment_period').prop('readonly', false);
+                                $('#company_name').prop('readonly', true);
+                                $('#address').prop('readonly', true);
+                                $('#city').prop('readonly', true);
+                                $('#tax_registered_no').prop('readonly', false);
+                                $('#jamsostek_no').prop('readonly', false);
+                                $('#pension_no').prop('readonly', false);
+                                $('#retirement_age_limit').prop('readonly', false);
+                                $('#prorate_method').prop('disabled', false);
+                                $('#maximum_dependents').prop('readonly', false);
+                                $('#take_home_pay_rounded_from').prop('readonly', false);
+                                $('#take_home_pay_rounded_become').prop('readonly', false);
+                                $('#transaction_rate_type').prop('disabled', false);
+                                $('#tax_rate_type').prop('disabled', false);
+                                $('#rounding_method_report').prop('disabled', false);
+                                $('#rounding_decimal_report').prop('readonly', false);
+                                $('#rounding_method_spt').prop('disabled', false);
+                                $('#rounding_decimal_spt').prop('readonly', false);
+                                $('#rounding_method_spt').prop('disabled', false);
+                                $('#check_appreciation_and_employee_service').prop('disabled', false);
+                                $('#bonus_cooficient').prop('readonly', false);
+                                $('#check_tax_allowance_bonus').prop('disabled', false);
+                                $('#check_tax_allowance_thr').prop('disabled', false);
+                                $('#pension_contribution_employee').prop('readonly', false);
+                                $('#pension_contribution_employer').prop('readonly', false);
+                                $('#work_related_accident_insurance_one').prop('readonly', false);
+                                $('#work_related_accident_insurance_two').prop('readonly', false);
+                                $('#work_related_accident_insurance_three').prop('readonly', false);
+                                $('#non_accidental_death_insurance').prop('readonly', false);
+                                $('#health_insurance_company').prop('readonly', false);
+                                $('#health_insurance_employee').prop('readonly', false);
+                                $('#min_calculation_health_insurance').prop('readonly', false);
+                                $('#max_calculation_health_insurance').prop('readonly', false);
+                                $('#pension_insurance_company').prop('readonly', false);
+                                $('#pension_insurance_employee').prop('readonly', false);
+                                $('#min_calculation_pension_insurance').prop('readonly', false);
+                                $('#max_calculation_pension_insurance').prop('readonly', false);
+                                $('#multiplication_factor_daily_worker').prop('readonly', false);
+                                $('#calculation_method_actual').prop('disabled', false);
+                                $('#calculation_method_basic').prop('disabled', false);
+                                $('#check_all_period_jamsostek').prop('disabled', false);
+                                $('#check_on_period_jamsostek').prop('disabled', false);
+                                $('#check_nearest_taxable_income').prop('disabled', false);
+                                $('#work_insurance_remision_payment_percentage').prop('readonly', false);
+                                pickerEndPeriod._input.removeAttribute("disabled");
+                                $('#tax_calculation_method_annualized').prop('disabled', false);
+                                $('#tax_calculation_method_prorated').prop('disabled', false);
+                                $('#non_taxable_income_employee').prop('readonly', false);
+                                $('#non_taxable_income_each_dependent').prop('readonly', false);
+                                $('#occupational_percentage').prop('readonly', false);
+                                $('#occupational_maximum').prop('readonly', false);
+                                for (var i = 1; i < 7; i++) {
+                                    $('#tax_rate' + i).prop('readonly', false);
+                                    $('#taxable_income_from' + i).prop('readonly', false);
+                                }
+                                $('#time_test').prop('readonly', false);
+                                $('#tax_rate_with_time_test').prop('readonly', false);
+                                $('#max_gross_income').prop('readonly', false);
+                                $('#tax_by_government_tk').prop('readonly', false);
+                                $('#tax_by_government_k0').prop('readonly', false);
+                                $('#tax_by_government_k1').prop('readonly', false);
+                                $('#tax_by_government_k2').prop('readonly', false);
+                                $('#tax_by_government_k3').prop('readonly', false);
+                                $('#check_all_period_tax_calculation_table').prop('disabled', false);
+                                $('#check_on_period_tax_calculation_table').prop('disabled', false);
+                                $('#tax_penalties_salary').prop('readonly', false);
+                                $('#tax_penalties_bonus').prop('readonly', false);
+                                $('#tax_penalties_thr').prop('readonly', false);
+                                for (var i = 0; i < 6; i++) {
+                                    $('#severance_payment_from' + i).prop('readonly', false);
+                                    $('#severance_payment_rate' + i).prop('readonly', false);
+                                }
+                                if (typeof arrDataPR[0].deductedOnPeriod !== 'undefined' && arrDataPR[0].deductedOnPeriod === 0) {
+                                    $('#check_all_period_jamsostek').prop('checked', true);
+                                }
+                                else {
+                                    $('#check_on_period_jamsostek').prop('checked', true);
+                                    $('#on_period_jamsostek').prop('readonly', false);
+                                }
+                                if (typeof arrDataPR[0].flagtaxableIncomeRounded !== 'undefined' && arrDataPR[0].flagtaxableIncomeRounded == true) {
+                                    $('#check_nearest_taxable_income').prop('checked', true);
+                                    $('#nearest_taxable_income').prop('readonly', false);
+                                }
+                                if (typeof arrDataPR[0].taxDeductedOnPeriod !== 'undefined' && arrDataPR[0].taxDeductedOnPeriod === 0) {
+                                    $('#check_all_period_tax_calculation_table').prop('checked', true);
+                                }
+                                else {
+                                    $('#check_on_period_tax_calculation_table').prop('checked', true);
+                                    $('#on_period_tax_calculation_table').prop('readonly', false);
+                                }
+                            } else {
+								$("#btn-ok").prop("disabled", false);
+								$("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response.message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+							$("#btn-ok").prop("disabled", false);
+							$("#btn-ok").html('{{ __("payroll_salary_accumulation_data.btn_ok") }}');
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
 
         for (var i = 0; i < 6; i++) {
             if(i%10 == 0){

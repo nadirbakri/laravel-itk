@@ -23,8 +23,49 @@ use App\Imports\UpdateBusinessTrip;
 
 class TransactionController extends Controller
 {
-    public function pageTransaction(){
-        return view('transaction.trc_main');
+    public function pageTransaction(Request $request){
+        try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ],
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => Session::get('groupAccessID'),
+                        'moduleID' => $request->moduleID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
+
+        } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+			// var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return view ('transaction.trc_main', ['dataMenu' => [], 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess([], null)]);
+        }else{
+            return view ('transaction.trc_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, 16)]);
+        }
+
+        // return view('transaction.trc_main');
     }
 
     public function pageTransactionReimbursement(){
@@ -127,20 +168,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'medicalType1'=> $request->medicalType1,
-            //         'businessUnit' => $request->businessUnit,
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
-            //     ]
-            //     ));
             $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementhistoryall',
                 ['body' => json_encode(
                     [
@@ -159,6 +186,7 @@ class TransactionController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -433,20 +461,6 @@ class TransactionController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
     
-                // var_dump(json_encode(
-                //     [
-                //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //             'businessUnit' => $request->businessUnit,
-                //             'exportMenu' => false,
-                //             'companyCode' => Session::get('companyCode'), 
-                //             'workflowType' => "ER",
-                //             'languageCode' => App::getLocale(), 
-                //             'employeeNo'=> $request->employeeNo,
-                //             'sessionID' => 0, 
-                //             'sessionUserID' => Session::get('userID'),
-                //     ]
-                //     ));
                 $response = $client->post(env('API_URL') . '/tmpermit/gettmpermitdetailList',
                     ['body' => json_encode(
                         [
@@ -475,7 +489,6 @@ class TransactionController extends Controller
             }
     
             $arrResult = json_decode($response->getBody()->getContents());
-            // var_dump($arrResult->dataListSet);
     
             if($arrResult->dataListSet == null){
                 return Datatables::of([])->make(true);
@@ -1012,22 +1025,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
-            //         'status'=> $request->status,
-            //         'paidAmount'=> (int) $request->paidAmount,
-            //         'ticketNo' => $request->ticketNo,
-            //         'approvalRemarks' => $request->approvalRemarks
-            //     ]
-            //     ));
-
             $response = $client->put(env('API_URL') . '/transport/updatetransportapproval',
                 ['body' => json_encode(
                     [
@@ -1074,22 +1071,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'approvalRemarks'=> 'string',
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
-            //         'status'=> $request->status,
-            //         'paidAmount'=>(int) $request->paidAmount,
-            //         'ticketNo' => $request->ticketNo,
-            //         'approvalRemarks' => $request->approvalRemarks,
-            //         'employeeNo'=> $request->employeeNos
-            //     ]
-            //     ));
-
             $response = $client->put(env('API_URL') . '/businesstrip/updatebusinesstripapproval',
                 ['body' => json_encode(
                     [
@@ -1119,14 +1100,8 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
-        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
 
-        // if($arrResult->dataListSet == null){
-        //     return Datatables::of([])->make(true);
-        // }else{
-        //     return Datatables::of($arrResult->dataListSet)->make(true);
-        // }
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function prosesTransactionActiveDocument(Request $request)

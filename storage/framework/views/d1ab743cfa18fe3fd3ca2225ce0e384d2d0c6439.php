@@ -12,6 +12,11 @@
 		.toogle-icon img {
 			max-width: 45%;
 		}
+		.rounded-image {
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: cover;
+		}
 		.sidebar-heading {
 			margin-top: 2%;
 			display:flex;
@@ -60,8 +65,13 @@
 			max-height: 60%;
 		}
 		.dropdown-profile img {
-			max-width: 60%;
-			max-height: 60%;
+			width: 1.6rem;
+			height: 1.6rem;
+			overflow: hidden;
+		}
+		.dropdown-profile-content img {
+			width: 60%;
+			height: 60%;
 		}
 		#modal-header-change-language {
 			border-bottom: 0 none;
@@ -105,22 +115,22 @@
 		.modal-header-notification-error {
             border-bottom:1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
         .modal-header-notification-success {
             border-bottom:1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 		.div-title-notification {
 			margin: 1.5%;
@@ -165,18 +175,6 @@
 				</a>
 			</div>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-			<?php $__currentLoopData = Session::get('menuListMob'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-			<div class="list-group list-group-flush">
-				<a href="<?php echo e(url($menu['link'])); ?>" target="iframe_dashboard" class="list-group-item list-group-item-action">
-					<div class="color-active"></div>
-					<img src="<?php echo e(url('/icons/mob/sidebar/' . $menu['icon'])); ?>" alt="Home">
-					<img src="<?php echo e(url('/icons/mob/sidebar/' . $menu['icon-name'] . '-bg.svg')); ?>" class="image-hover" alt="<?php echo e($menu['title']); ?>">
-					<span><?php echo e($menu['title']); ?></span>
-					<span class="tooltiptext"><?php echo e($menu['title']); ?></span>
-				</a>
-			</div>
-			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			
 			<footer class="footer" id="footer">
 				<div class="container">
@@ -203,14 +201,14 @@
 				<div class="navbar-collapse right-link">
 					<span class="navbar-divide-complete">|</span>
 					<?php if(Session::has('haveUtilities')): ?>
-					<div class="img-setting-link"><a href="<?php echo e(url('/utilities')); ?>" target="iframe_dashboard"><img src="<?php echo e(url('/pictures/setting-white.png')); ?>" alt="Setting"></a></div>
+					<div class="img-setting-link"><a role="button" data-url="<?php echo e(url('/utilities')); ?>" class="menu" data-idd="UTI" target="iframe_dashboard"><img src="<?php echo e(url('/pictures/setting-white.png')); ?>" alt="Setting"></a></div>
 					<span class="navbar-divide">|</span>
 					<?php endif; ?>
 					<div class="dropdown-profile">
 						<?php if(Session::get('photo') == NULL): ?>
-						<img class="rounded-circle" src="<?php echo e(url('/pictures/default-profile.png')); ?>" style="width: 2.5rem;" alt="Profile">
+						<img class="rounded-circle" src="<?php echo e(url('/pictures/default-profile.png')); ?>" alt="Profile">
 						<?php else: ?>
-						<img class="rounded-circle" src="data:image/png;base64, <?php echo e(Session::get('photo')); ?>" style="width: 2.5rem;" alt="Profile">
+						<img class="rounded-circle" src="data:image/png;base64, <?php echo e(Session::get('photo')); ?>" alt="Profile">
 						<?php endif; ?>
 						<div class="dropdown-profile-content dropdown-menu">
 							<p><?php echo e(__('main.hello')); ?>, <?php echo e(Session::get('userName')); ?></p>
@@ -375,6 +373,22 @@
 		$('#web-collapse').on('hidden.bs.collapse', function () {
 			$("#footer").css("padding-top", "0");
 		});
+
+		function setRoundedImage() {
+			const images = document.querySelectorAll('.rounded-image');
+			
+			images.forEach((image) => {
+				const width = image.naturalWidth;
+				const height = image.naturalHeight;
+				
+				const minDimension = Math.min(width, height);
+				const radius = minDimension / 2;
+				
+				image.style.borderRadius = `${radius}px`;
+			});
+		}
+
+		setRoundedImage();
 
 		$(".menu").on('click', function() {
             var data = $(this).data("idd");

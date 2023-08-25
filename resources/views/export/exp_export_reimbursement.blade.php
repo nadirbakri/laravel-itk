@@ -32,34 +32,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -111,7 +111,7 @@
             @csrf
             <div class="div-export-reimbursement">
                 <div class="div-title">
-                    <a href="{{ url('export') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('export_reimbursement.list') }}</span>
                     </a>
@@ -263,19 +263,19 @@ loadDataBusinessUnit();
 loadDataFirstLastAllReimbursmentType();
 loadDataFirstLastAllBusinessUnit ();
 
-    $.get("{{ url('reimbursement_type/export/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
-                    "</option>");
-            });
-        });
+        // $.get("{{ url('reimbursement_type/export/api') }}", function (data) {
+        //     $.each(data, function (k, v) {
+        //         $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+        //             "</option>");
+        //     });
+        // });
 
-    $.get("{{ url('level/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                    "</option>");
-            });
-        });
+    // $.get("{{ url('level/api') }}", function (data) {
+    //         $.each(data, function (k, v) {
+    //             $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+    //                 "</option>");
+    //         });
+    //     });
 
         $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -404,7 +404,7 @@ loadDataFirstLastAllBusinessUnit ();
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}",
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -473,7 +473,7 @@ loadDataFirstLastAllBusinessUnit ();
                         success: function (result, status, xhr) {
                             $("#btn-preview").prop("disabled", false);
                             $("#btn-preview").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-download"></i> {{ __("export_reimbursement.btn_export") }}'
                             );
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
@@ -497,7 +497,7 @@ loadDataFirstLastAllBusinessUnit ();
                         error: function (response) {
                             $("#btn-preview").prop("disabled", false);
                             $("#btn-preview").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-download"></i> {{ __("export_reimbursement.btn_export") }}'
                             );
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);

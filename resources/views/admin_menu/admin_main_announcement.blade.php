@@ -19,34 +19,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
             -moz-bord er-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -138,7 +138,7 @@
 <body>
     <div class="div-form">
         <div class="div-title">
-            <a href="{{ url('utilities') }}" target="iframe_dashboard">
+            <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('admin_main_announcement.judul') }}</span>
             </a>
@@ -160,7 +160,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control" id="t_announcement" name="t_announcement">
                             <input type="hidden" value="new" class="form-control" id="status" name="status">
-                            <input type="hidden" class="form-control" id="sysno" name="sysno">
+                            <input type="hidden" class="form-control" id="seq_no" name="seq_no">
                         </div>
                     </div>
                 </div>
@@ -292,11 +292,6 @@
         </div>
     </div>
 </body>
-<script>
-    $(document).ready(function () {
-        $('table.display').DataTable();
-    });
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -332,8 +327,8 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
-                             }
+                        return '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>';
+                    }
                 },
                 {data: 'title', name: 'title'},
                 {data: 'category', name: 'category'},
@@ -343,11 +338,7 @@
                         return moment(data).format('YYYY-MM-DD');
                     }
                 },
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }, 
+            ]
             
         });        
     })
@@ -367,157 +358,157 @@
             type: 'GET',
             url: "{{ url('/announcement_category/detail/api') }}",
             data: {
-                'categoryName' : announcementcategory
+                'categoryCode' : announcementcategory
             }
         }).then(function (data2) {
+            console.log(data2);
             var $newOption = $("<option selected='selected'></option>").val(data2[0]
-                .categoryName).text(data2[0].categoryName);
-            $("#announcement_category").append($newOption).trigger('change');
+                .categoryCode).text(data2[0].categoryName);
+            $("#n_announcement").append($newOption).trigger('change');
         });
         $('.close').click();
     }
-</script>
-<script>
-    $("#btn-save").click(function () {
-          $(this).prop("disabled", true);
-          $(this).html(
-              '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-          );
-          $("#admin_menu_announcement").submit();
-      });
 
-      if ($("#admin_menu_announcement").length > 0) {
-              $("#admin_menu_announcement").validate({
-                  submitHandler: function (form) {
-                      $.ajaxSetup({
-                          headers: {
-                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                          }
-                      });
+    $(document).ready(function () {
+        // $('table.display').DataTable();
+        loadDataAnnouncementCategory()
 
-                      var myForm = document.getElementById('admin_menu_announcement');
-                      var formdata = new FormData(myForm);
+        $("#btn-save").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#admin_menu_announcement").submit();
+        });
 
-                      $.ajax({
-                          url: "{{ url('admin_menu/news_master/proses') }}",
-                          type: "POST",
-                          processData: false,
-                          contentType: false,
-                          data: formdata,
-                          success: function (response) {
-                              if (response.status == "true"){
-                                  $("#btn-save").prop("disabled", false);
-                                  $("#btn-save").html(
-                                      'Save'
-                                  );
-                                  
-                                  $('#notification_success').modal('show');
-                                  $('#message-notification-success').html(response
-                                  .message);
-                                  setTimeout(function () {
-                                  window.location =
-                                      "{{ url('admin_menu/news_master') }}";
-                                  }, 3000);
-                              } else {
-                              $("#btn-save").prop("disabled", false);
-                              $("#btn-save").html(
-                                  ' Save'
-                              );
-                              $('#notification_error').modal('show');
-                              if (response.message == null || response.message ==
-                                  '') {
-                                  $('#message-notification-error').html(
-                                      "{{ __('login.error') }}");
-                              } else {
-                                  $('#message-notification-error').html(response
-                                      .message);
-                              }
-                          }
-                      },
-                      error: function (response) {
-                          $("#btn-save").prop("disabled", false);
-                          $("#btn-save").html(
-                              '{{ __("md_claim_transaction.btn_save") }}'
-                          );
+        if ($("#admin_menu_announcement").length > 0) {
+            $("#admin_menu_announcement").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
 
-                          $('#notification').modal('show');
-                          $('#message-notification').html(response);
-                      }
-                  });
-              }
-          })
-      }
-    
-</script>
-<script>
-    loadDataAnnouncementCategory();
+                    var myForm = document.getElementById('admin_menu_announcement');
+                    var formdata = new FormData(myForm);
 
-    $.get("{{ url('announcement_category/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#announcement_category').append("<option value=" + v.categoryName + ">" + v.categoryName +
-                        "</option>");
-                });
-            });
-
-            function loadDataAnnouncementCategory(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.categoryName + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
-                }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#announcement_category').select2({
-                    width: '100%',
-                    placeholder: 'Choose Category',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
+                    $.ajax({
+                        url: "{{ url('admin_menu/announcement/proses') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            if (response.status == "true"){
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    'Save'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                .message);
+                                setTimeout(function () {
+                                window.location =
+                                    "{{ url('utilities/announcement') }}";
+                                }, 3000);
+                            } else {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                ' Save'
+                            );
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response
+                                    .message);
+                            }
                         }
                     },
-                    ajax: {
-                        url: "{{ url('/announcement_category/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.categoryName,
-                                        id: item.categoryName,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
+                    error: function (response) {
+                        $("#btn-save").prop("disabled", false);
+                        $("#btn-save").html(
+                            '{{ __("md_claim_transaction.btn_save") }}'
+                        );
+
+                        $('#notification').modal('show');
+                        $('#message-notification').html(response);
+                    }
                 });
             }
-    
+        })
+    }
+
+        $.get("{{ url('announcement_category/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                $('#n_announcement').append("<option value=" + v.categoryCode + ">" + v.categoryName +
+                    "</option>");
+            });
+        });
+
+        function loadDataAnnouncementCategory(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-12">' + data.data.categoryName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            var $announcementCat = $('#n_announcement').select2({
+                width: '100%',
+                placeholder: 'Choose Category',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/announcement_category/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.categoryName,
+                                    id: item.categoryCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+    });
 </script>
 </html>

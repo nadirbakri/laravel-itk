@@ -47,44 +47,48 @@ class PayrollController extends Controller
 {
     public function pagePayroll(Request $request) 
     {
-        // try {
-	    // 	$client = new Client([
-	    // 		'headers' => [ 'Content-Type' => 'application/json',
-        //         'Authorization' => 'Bearer ' . Session::get('token') ],
-	    // 	]);
+        try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ],
+	    	]);
 
-	    // 	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
-	    // 		['body' => json_encode(
-	    // 			[
-	    // 				'companyCode' => Session::get('companyCode'),
-        //                 'groupAccessID' => Session::get('groupAccessID'),
-        //                 'moduleID' => $request->moduleID,
-        //                 'userID' => Session::get('userID'),
-        //                 'logActionUserID' => Session::get('userID'),
-        //                 'logActionUsername' => Session::get('userName')
-	    // 			]
-	    // 		)]
-	    // 	);
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => Session::get('groupAccessID'),
+                        'moduleID' => $request->moduleID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
 
-        // } catch (RequestException $e) {
-	    // 	$response = $e->getResponse();
-		// 	// var_dump($response);
-        //     if($response->getStatusCode() == 401){
-        //         return view('error.login');
-        //     }else if($response->getStatusCode() == 404){
-        //         return view('error.not_found');
-        //     }else{
-        //         return view('error.bad_request');
-        //     }
-	    // }
+        } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+			// var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
 
-	    // $arrResult = json_decode($response->getBody()->getContents());
+	    $arrResult = json_decode($response->getBody()->getContents());
 
-        // // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
-        // return view ('payroll.py_main', ['dataMenu' => $arrResult->dataListSet]);
-
-        return view ('payroll.py_main');
+        if($arrResult->dataListSet == null){
+            return view ('payroll.py_main', ['dataMenu' => [], 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess([], null)]);
+        }else{
+            return view ('payroll.py_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, null)]);
+        }
+        
+        // return view ('payroll.py_main');
     }
 
     public function pageAccount()
@@ -139,7 +143,7 @@ class PayrollController extends Controller
                 $data = $arrResult_tm->dataListSet;
             }
 
-            if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
+            if($arrResult_tm->dataListSet[0]->statusProcess > '0' && Session::pull('accessReference') != "true"){
                 return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
             } else {
                 $arrResult_tm = json_decode($response_tm->getBody()->getContents());
@@ -938,7 +942,8 @@ class PayrollController extends Controller
             $response = $client->post(env('API_URL') . '/prsalarymaster/getprsalarymaster',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'groupAuthorizeCode' => Session::get('groupAuthorizePayroll')
                     ]
                 )]
             );
@@ -1006,7 +1011,8 @@ class PayrollController extends Controller
             $response = $client->post(env('API_URL') . '/prtariffmaster/getprtariffmaster',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'groupAuthorizeCode' => Session::get('groupAuthorizePayroll')
                     ]
                 )]
             );
@@ -2642,7 +2648,7 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return response()->json('');
@@ -4216,7 +4222,7 @@ public function dataDetailReportFormatPY(Request $request)
                 return Excel::download(new CSVTransferBankBOTExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->output_file == 'BTPN'){
                 return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
-            }else if($request->output_file == 'BANK INA' || $request->output_file == 'BANK INA MULTI ACCOUNT'){
+            }else if($request->output_file == 'BANK INA' || $request->output_file == 'BANK INA MULTI ACCOUNT' || $request->output_file == 'BNI'){
                 return Excel::download(new CSVTransferBankINAExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }
         }
@@ -5489,7 +5495,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'slipName' => $request->slip_name_custom,
             ];
 
-            if($request->record_function == 'New'){
+            if($request->record_function_custom == 'New'){
                 $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
                     ['body' => json_encode($param)]
                 );
@@ -5563,9 +5569,9 @@ public function dataDetailReportFormatPY(Request $request)
                 'slipName' => $request->slip_name_allowance,
             ];
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
-            if($request->record_function == 'New'){
+            if($request->record_function_allowance == 'New'){
                 $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
                     ['body' => json_encode($param)]
                 );
@@ -5641,9 +5647,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'slipName' => $request->slip_name_deduction,
             ];
 
-            // var_dump(json_encode($param));
-
-            if($request->record_function == 'New'){
+            if($request->record_function_deduction == 'New'){
                 $response = $client->post(env('API_URL') . '/prslipformat/insertslipformat',
                     ['body' => json_encode($param)]
                 );
@@ -5687,7 +5691,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         "companyCode" => Session::get('companyCode'),
             //         "employeeNoFrom" => $request->employee_no_from,
@@ -5763,6 +5767,26 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // dd(json_encode(
+            //     [
+            //         "companyCode" => Session::get('companyCode'),
+            //         "periodMonth" => (int) $request->process_period_month_hidden,
+            //         "periodYear" => (int) $request->process_period_year,
+            //         "employeeNoFrom" => $request->employee_no_from,
+            //         "employeeNoTo" => $request->employee_no_to,
+            //         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+            //         "languageCode" => App::getLocale(),
+            //         "changedBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userID'),
+            //         "logActionUserID" => Session::get('userName') 
+            //     ]
+            //     ));
+
             $response = $client->post(env('API_URL') . '/absenteeismcalculationprocess/inserttmfixedcomponent',
                 ['body' => json_encode(
                     [
@@ -5809,34 +5833,12 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump((int) $request->period_month);
-            // var_dump(Session::get('token'));
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "periodMonth" => (int) $request->process_period_month_hidden,
-            //         "periodYear" => (int) $request->process_period_year,
-            //         "employeeNoFrom" => $request->employee_no_from,
-            //         "employeeNoTo" => $request->employee_no_to,
-            //         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
-            //         "languageCode" => App::getLocale(),
-            //         "changedBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
-
             $response = $client->post(env('API_URL') . '/prmonthlyclosingprocess/insertprmonthlyclosing',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
-                        "periodMonth" => (int) $request->process_period_month_hidden,
-                        "periodYear" => (int) $request->process_period_year,
+                        "periodMonth" => (int) $request->period_month,
+                        "periodYear" => (int) $request->period_year,
                         "employeeNoFrom" => $request->employee_no_from,
                         "employeeNoTo" => $request->employee_no_to,
                         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
@@ -5938,8 +5940,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump(Session::get('token'));
 
             $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
                 ['body' => json_encode(

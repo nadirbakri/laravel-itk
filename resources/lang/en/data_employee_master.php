@@ -6,7 +6,7 @@ return [
     'status' => 'Status',
     'userid' => 'User ID',
     'label_claim_date_join' => 'Join Date',
-    'employeeid' => 'Employee ID',
+    'employeeno' => 'Employee No',
     'companycode' => 'Company Code',
     'name' => 'Full Name',
     'password' => 'Password',

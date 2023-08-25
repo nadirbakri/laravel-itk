@@ -42,6 +42,9 @@ h5 {
     padding-top: 0;
     text-align: unset;
 }
+.modal-content {
+  border-radius: 1rem;
+}
 .carousel-caption p, .carousel-caption-card p{
     margin-bottom: 0;
 }

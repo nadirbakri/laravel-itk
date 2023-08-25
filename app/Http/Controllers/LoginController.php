@@ -31,27 +31,18 @@ class LoginController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
-			$promises = [
-				'response1' => $client->postAsync(env('API_URL') . '/auth', [
-					'body' => json_encode(
-						[
-							'username' => $request->username_login,
-							'password' => $request->password_login,
-							'languageCode' => App::getLocale()
-						]
-					)
-				])
-			];
-
-			Promise\all($promises)
-				->then(function ($responses) {
-					$this->arrResult = json_decode($responses['response1']->getBody()->getContents());
-				})
-				->wait();
-			
+			$response = $client->post(env('API_URL') . '/auth',
+                ['body' => json_encode(
+                    [
+                        'username' => $request->username_login,
+						'password' => $request->password_login,
+						'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
-			// var_dump($response);
+			// dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -61,37 +52,43 @@ class LoginController extends Controller
             }
 	    }
 
-		// var_dump($this->arrResult->dataListSet);
+		$arrResult = json_decode($response->getBody()->getContents());
 
-		if(!isset($this->arrResult->dataListSet[0]->userAccess) || $this->arrResult->dataListSet[0]->userAccess == '' || $this->arrResult->dataListSet[0]->userAccess == null){
+		// dd($arrResult->dataListSet);
+
+		if(!isset($arrResult->dataListSet[0]->userAccess) || $arrResult->dataListSet[0]->userAccess == '' || $arrResult->dataListSet[0]->userAccess == null){
 			$menuList = [];
 		}else{
-			$menuList = $this->arrResult->dataListSet[0]->userAccess;
+			$menuList = $arrResult->dataListSet[0]->userAccess;
 		}
 
-	    if($this->arrResult->status == "true"){
+	    if($arrResult->status == "true"){
 	    	Session::flush();
 	    	
-	    	Session::put('userID', $this->arrResult->dataListSet[0]->userID);
-	    	Session::put('userName', $this->arrResult->dataListSet[0]->userName);
-	    	Session::put('employeeNo', $this->arrResult->dataListSet[0]->employeeNo);
-	    	Session::put('email', $this->arrResult->dataListSet[0]->email);
-	    	Session::put('companyCode', $this->arrResult->dataListSet[0]->companyCode);
-	    	Session::put('companyName', $this->arrResult->dataListSet[0]->companyName);
-	    	Session::put('token', $this->arrResult->dataListSet[0]->token);
-	    	Session::put('defaultCompany', $this->arrResult->dataListSet[0]->defaultCompany);
-	    	Session::put('photo', $this->arrResult->dataListSet[0]->photo);
-	    	Session::put('officeLocation', $this->arrResult->dataListSet[0]->officeLocation);
-	    	Session::put('userType', $this->arrResult->dataListSet[0]->userType);
-			Session::put('groupAccessID', $this->arrResult->dataListSet[0]->groupAccessID);
+	    	Session::put('userID', $arrResult->dataListSet[0]->userID);
+	    	Session::put('userName', $arrResult->dataListSet[0]->userName);
+	    	Session::put('employeeNo', $arrResult->dataListSet[0]->employeeNo);
+	    	Session::put('email', $arrResult->dataListSet[0]->email);
+	    	Session::put('companyCode', $arrResult->dataListSet[0]->companyCode);
+	    	Session::put('companyName', $arrResult->dataListSet[0]->companyName);
+	    	Session::put('token', $arrResult->dataListSet[0]->token);
+	    	Session::put('defaultCompany', $arrResult->dataListSet[0]->defaultCompany);
+	    	Session::put('photo', $arrResult->dataListSet[0]->photo);
+	    	Session::put('officeLocation', $arrResult->dataListSet[0]->officeLocation);
+	    	Session::put('userType', $arrResult->dataListSet[0]->userType);
+			Session::put('groupAccessID', $arrResult->dataListSet[0]->groupAccessID);
 
 			foreach($menuList as $key => $value){
 				if($value->moduleID == 'UTI'){
 					Session::put('haveUtilities', true);
+					Session::put('moduleUtilities', $value->moduleID);
+					Session::put('groupAuthorizeUtilities', $value->groupAuthorizeCode);
 					unset($menuList[$key]);
 				}
 				if($value->moduleID == 'HOME'){
 					Session::put('haveHome', true);
+					Session::put('moduleHome', $value->moduleID);
+					Session::put('groupAuthorizeHome', $value->groupAuthorizeCode);
 					$value->{"moduleName"} = 'HOME';
 					$value->{"sort"} = 1;
 					$value->{"icon"} = 'home.svg';
@@ -99,6 +96,8 @@ class LoginController extends Controller
 					$value->{"link"} = '/home';
 				}
 				if($value->moduleID == 'TM'){
+					Session::put('moduleTimeManagement', $value->moduleID);
+					Session::put('groupAuthorizeTimeManagement', $value->groupAuthorizeCode);
 					$value->{"moduleName"} = 'TIME MANAGEMENT';
 					$value->{"sort"} = 3;
 					$value->{"icon"} = 'time_management.svg';
@@ -106,6 +105,8 @@ class LoginController extends Controller
 					$value->{"link"} = '/time_management';
 				}
 				if($value->moduleID == 'PE'){
+					Session::put('modulePersonnel', $value->moduleID);
+					Session::put('groupAuthorizePersonnel', $value->groupAuthorizeCode);
 					$value->{"moduleName"} = 'PERSONNEL';
 					$value->{"sort"} = 2;
 					$value->{"icon"} = 'personel.svg';
@@ -113,6 +114,8 @@ class LoginController extends Controller
 					$value->{"link"} = '/personnel';
 				}
 				if($value->moduleID == 'PY'){
+					Session::put('modulePayroll', $value->moduleID);
+					Session::put('groupAuthorizePayroll', $value->groupAuthorizeCode);
 					$value->{"moduleName"} = 'PAYROLL';
 					$value->{"sort"} = 4;
 					$value->{"icon"} = 'payroll.svg';
@@ -120,6 +123,8 @@ class LoginController extends Controller
 					$value->{"link"} = '/payroll';
 				}
 				if($value->moduleID == 'MD'){
+					Session::put('moduleMedical', $value->moduleID);
+					Session::put('groupAuthorizeMedical', $value->groupAuthorizeCode);
 					$value->{"moduleName"} = 'MEDICAL';
 					$value->{"sort"} = 6;
 					$value->{"icon"} = 'medical.svg';
@@ -127,32 +132,50 @@ class LoginController extends Controller
 					$value->{"link"} = '/medical';
 				}
 				if($value->moduleID == 'REP'){
+					Session::put('moduleReport', $value->moduleID);
+					Session::put('groupAuthorizeReport', $value->groupAuthorizeCode);
 					$value->{"moduleName"} = 'REPORT';
 					$value->{"sort"} = 5;
 					$value->{"icon"} = 'report.svg';
 					$value->{"icon_name"} = 'report';
 					$value->{"link"} = '/report';
 				}
+				if($value->moduleID == 'RPT'){
+					Session::put('moduleExport', $value->moduleID);
+					Session::put('groupAuthorizeExport', $value->groupAuthorizeCode);
+					$value->{"moduleName"} = 'EXPORT REPORT';
+					$value->{"sort"} = 7;
+					$value->{"icon"} = 'export-data.svg';
+					$value->{"icon_name"} = 'export-data';
+					$value->{"link"} = '/export';
+				}
+				if($value->moduleID == 'TRX'){
+					Session::put('moduleTransaction', $value->moduleID);
+					Session::put('groupAuthorizeTransaction', $value->groupAuthorizeCode);
+					$value->{"moduleName"} = 'TRANSACTION';
+					$value->{"sort"} = 8;
+					$value->{"icon"} = 'transaction-data.svg';
+					$value->{"icon_name"} = 'transaction-data';
+					$value->{"link"} = '/transaction';
+				}
+				if($value->moduleID == 'MOB'){
+					Session::put('moduleMasterData', $value->moduleID);
+					Session::put('groupAuthorizeMasterData', $value->groupAuthorizeCode);
+					$value->{"moduleName"} = 'MOBILE MASTER DATA';
+					$value->{"sort"} = 9;
+					$value->{"icon"} = 'master-data.svg';
+					$value->{"icon_name"} = 'master-data';
+					$value->{"link"} = '/master_data';
+				}
 			}
 
 			usort($menuList, function($a, $b) {return strcmp($a->sort, $b->sort);});
 
 			Session::put('menuList', $menuList);
-	    	// Session::put('menuList', [
-			// 	[ 'moduleName' => 'Home', 'icon' => 'home.svg', 'icon_name' => 'home', 'link' => '/home' ],
-			// 	[ 'moduleName' => 'Personel', 'icon' => 'personel.svg', 'icon_name' => 'personel', 'link' => '/personel' ],
-			// 	[ 'moduleName' => 'Time Management', 'icon' => 'time_management.svg', 'icon_name' => 'time_management', 'link' => '/time_management' ], 
-			// 	[ 'moduleName' => 'Payroll', 'icon' => 'payroll.svg', 'icon_name' => 'payroll', 'link' => '/payroll' ],  
-			// 	[ 'moduleName' => 'Report', 'icon' => 'report.svg', 'icon_name' => 'report', 'link' => '/report' ],  
-			// 	[ 'moduleName' => 'Medical', 'icon' => 'medical.svg', 'icon_name' => 'medical', 'link' => '/medical' ]]);
-			Session::put('menuListMob', [
-				[ 'title' => 'Export', 'icon' => 'streammobportal-navbar-export.svg', 'icon-name' => 'streammobportal-navbar-export', 'link' => '/export' ], 
-				[ 'title' => 'Transaction', 'icon' => 'streammobportal-navbar-transaction.svg', 'icon-name' => 'streammobportal-navbar-transaction', 'link' => '/transaction' ], 
-				[ 'title' => 'Master Data', 'icon' => 'streammobportal-navbar-masterdata.svg', 'icon-name' => 'streammobportal-navbar-masterdata', 'link' => '/master_data' ]]);
 				
-	    	return response()->json(["status" => $this->arrResult->status, "message" => "/main"]);
+	    	return response()->json(["status" => $arrResult->status, "message" => "/main"]);
 	    }else{
-	    	return response()->json(["status" => $this->arrResult->status, "message" => $this->arrResult->message]);
+	    	return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
 	    }
     }
 
@@ -190,6 +213,8 @@ class LoginController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		Session::put('accessReference', $arrResult->status);
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }

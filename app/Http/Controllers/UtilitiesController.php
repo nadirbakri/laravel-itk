@@ -15,9 +15,48 @@ use Excel;
 
 class UtilitiesController extends Controller
 {
-    public function pageUtilitiesMain()
+    public function pageUtilitiesMain(Request $request)
     {
-    	return view('utilities.utilities_main');
+        try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ],
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => Session::get('groupAccessID'),
+                        'moduleID' => $request->moduleID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
+
+        } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+			// var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return view ('utilities.utilities_main', ['dataMenu' => [], 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess([], null)]);
+        }else{
+            return view ('utilities.utilities_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, 42)]);
+        }
+
+    	// return view('utilities.utilities_main');
     }
 
     public function pageOrganizationStructureUtilities()
@@ -1281,7 +1320,12 @@ class UtilitiesController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'userID' => Session::get('userID'),
+                        'sessionID' => 0,
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
                         "languageCode" => App::getLocale(),
+                        "groupAccessID" => $request->group_id_configure_menu[0],
+                        "moduleID" => $request->module_id_configure_menu[0],
                         "list" => $data_menu
                     ]
                 )]

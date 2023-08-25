@@ -24,7 +24,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="<?php echo e(url('utilities')); ?>" target="iframe_dashboard">
+            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('utilities_user_security_maintenance.list')); ?></span>
             </a>

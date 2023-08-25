@@ -24,9 +24,50 @@ use PDF;
 
 class MedicalController extends Controller
 {
-    public function pageMedical() 
+    public function pageMedical(Request $request) 
     {
-        return view ('medical.md_main');
+        try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ],
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => Session::get('groupAccessID'),
+                        'moduleID' => $request->moduleID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
+
+        } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+			// var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return view ('medical.md_main', ['dataMenu' => [], 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess([], null)]);
+        }else{
+            return view ('medical.md_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, null)]);
+        }
+
+        // return view ('medical.md_main');
     }
 
     public function pageClaimCode() 

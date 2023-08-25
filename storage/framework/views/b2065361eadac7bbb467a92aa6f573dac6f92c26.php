@@ -600,11 +600,12 @@
  			type: 'GET',
  			dataType: 'JSON',
  			success: function (response) {
+				console.log(response);
 				var totalPresent = 0;
 				var totalLate = 0;
 				var totalAbsent = 0;
 				var totalLeave = 0;
-				if(!isEmpty(response.dataAbsent)){
+				if(response.dataAbsent.length > 0){
 					$.each(response.dataAbsent, function (key, val) {
 						if(val.description == "ABSENT"){
 							totalAbsent += val.amount;
@@ -628,22 +629,28 @@
 					});
 				}
 
-				totalPresent = response.totalEmployee - (totalLate + totalAbsent + totalLeave);
-
-				$('#total_present').html(totalPresent);
-				$('#total_late').html(totalLate);
-				$('#total_absent').html(totalAbsent);
-				$('#total_leave').html(totalLeave);
-				if(response.totalEmployee > 0){
+				if(response.totalEmployee > 0 && response.dataAbsent.length > 0){
+					totalPresent = response.totalEmployee - (totalLate + totalAbsent + totalLeave);
+					
 					$('#persentage_present').html(Math.round((totalPresent / response.totalEmployee) * 100) + '%');
 					$('#persentage_late').html(Math.round((totalLate / response.totalEmployee) * 100) + '%');
 					$('#persentage_absent').html(Math.round((totalAbsent / response.totalEmployee) * 100) + '%');
 					$('#persentage_leave').html(Math.round((totalLeave / response.totalEmployee) * 100) + '%');
+
+					$('#total_present').html(totalPresent);
+					$('#total_late').html(totalLate);
+					$('#total_absent').html(totalAbsent);
+					$('#total_leave').html(totalLeave);
 				}else{
 					$('#persentage_present').html('0%');
 					$('#persentage_late').html('0%');
-					$('#persentage_absent').html('0%');
+					$('#persentage_absent').html('100%');
 					$('#persentage_leave').html('0%');
+
+					$('#total_present').html("0");
+					$('#total_late').html("0");
+					$('#total_absent').html(response.totalEmployee);
+					$('#total_leave').html("0");
 				}
 				
 

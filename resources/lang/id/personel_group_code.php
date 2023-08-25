@@ -12,9 +12,9 @@ return [
     |
     */
 
-    'judul' => 'Halaman Grup',
+    'judul' => 'Halaman Grup Approval',
     'list' => 'Daftar Menu Personel',
-    'list_detail' => 'Daftar Grup',
+    'list_detail' => 'Daftar Grup Approval',
     'label_record_status' => 'Status Data',
     'label_group_code' => 'Kode Grup',
     'label_group_name' => 'Nama Grup',

@@ -42,7 +42,6 @@ class TransportExport implements FromView, ShouldAutoSize
                 'type' =>  $this->reimbursementType,
                 'businessUnit'=> $this->businessUnit,
             ];
-            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
                 ['body' => json_encode($param)]
@@ -59,8 +58,6 @@ class TransportExport implements FromView, ShouldAutoSize
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('export.transport_export', [

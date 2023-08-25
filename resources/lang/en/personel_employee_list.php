@@ -26,6 +26,7 @@ return [
     'label_show_type' => 'Show Type',
     'label_input_type_show_code' => 'Show Code',
     'label_input_type_show_description' => 'Show Description',
+    'field_required' => 'Field is Required',
     'btn_print' => 'Print'
 
 ];

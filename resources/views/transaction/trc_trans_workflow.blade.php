@@ -33,34 +33,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -118,7 +118,7 @@
             @csrf
             <div class="div-trans-workflow">
                 <div class="div-title">
-                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_workflow.judul') }}</span>
                     </a>
@@ -127,11 +127,11 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('trans_workflow.label_claim_date_start') }}</label>
+                            <label for="claim_date_from">{{ __('trans_workflow.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('trans_workflow.label_claim_date_start') }}">
+                                placeholder="{{ __('trans_workflow.label_claim_date_start') }}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -140,11 +140,11 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_to form-check-label">{{ __('trans_workflow.label_claim_date_end') }}</label>
+                            <label for="claim_date_to">{{ __('trans_workflow.label_claim_date_end') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                                placeholder="{{ __('trans_workflow.label_claim_date_end') }}">
+                                placeholder="{{ __('trans_workflow.label_claim_date_end') }}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -156,22 +156,26 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="bu form-check-label">{{ __('trans_workflow.label_bu') }}</label>
+                            <label for="business_unit">{{ __('trans_workflow.label_bu') }}</label>
                         </div>
-                        <select class="form-control select2" id="business_unit" name="business_unit"></select>
+                        <div class="input-group">
+                            <select class="form-control select2" id="business_unit" name="business_unit" required></select>
+                        </div>    
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="workflow_type form-check-label">{{ __('trans_workflow.label_workflow_type') }}</label>
+                            <label for="workflow_type">{{ __('trans_workflow.label_workflow_type') }}</label>
                         </div>
-                        <select class="form-control select2" id="workflow_type" name="workflow_type"></select>
+                        <div class="input-group">
+                            <select class="form-control select2" id="workflow_type" name="workflow_type" required></select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="employee_no form-check-label">{{ __('trans_workflow.employee') }}</label>
+                            <label for="employee_no">{{ __('trans_workflow.employee') }}</label>
                         </div>
                         <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder="employee-no">
                     </div>
@@ -179,7 +183,7 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
+                        <button type="submit" class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
                             <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('trans_workflow.btn_search') }}
                         </button>
                     </div>
@@ -204,6 +208,7 @@
                             <table id="workflow_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>{{ __('trans_workflow.rdate') }}</th>
                                         <th>{{ __('trans_workflow.employee') }}</th>
                                         <th>{{ __('trans_workflow.ename') }}</th>
@@ -265,85 +270,114 @@
             </div>
         </form>
     </div>
-    {{-- <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_detail">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">Detail Reimbursement</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row detailstatus">
-                                    <div class="col-3  ">
-                                        <h5>Request Date</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Receipt Date</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Ticket Number</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Status</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Business Unit</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Total Claim </h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Dependent Name</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-                            
-                                <br>
-                                <hr>
+    <div class="modal fade" id="modal_list_detail">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-little">Detail Workflow</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="payroll_calculation_detail_modal_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Request Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <input type="hidden" class="form-control" id="reqdate" name="reqdate">
+                                <input type="hidden" class="form-control" id="directsuperior" name="directsuperior">
+                                <span id="reqdate_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Receipt Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="recdate" name="recdate" type="hidden" class="form-control"><span id="recdate_val"></span>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Ticket Number</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="tiketno" name="tiketno" type="hidden" class="form-control"><span id="tiketno_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Status</h6>
+                            </div>
+                            <div class="col">
+                                <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Business Unit</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Total Claim </h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Dependent Name</h6>
+                            </div>
+                            <div class="col-3">
+                                <input type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>Status</h5>
+                            </div>
+                            <div class="col-5">
+                                    <select name="workflow_status" id="workflow_status" class="custom-select">
+                                        <option value="APPROVED">APPROVE</option>
+                                        <option value="REJECTED">REJECT</option>
+                                        <option value="CANCELED">CANCEL</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>Total Paid</h5>
+                            </div>
+                            <div class="col-5">
+                                <input id="totalpaid" name="totalpaid"  type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>Approval Remarks</h5>
+                            </div>
+                            <div class="col-5">
+                                <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                            </div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                        </form>
                     </div>
-                   </div>
                 </div>
             </div>
-        </form>
-    </div> --}}
+            </div>
+        </div>
+    </div>
+        
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -424,7 +458,32 @@
 </script>
 
 <script>
-     function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type) {
+    const klikdetail = (element) => {
+        $('#modal_list_detail').modal('show')
+        let type = $("#workflow_type").val();
+        if(type == "ER"){
+            let data = table.row($(element).parent()).data().permitEntity;
+        }else{
+            let data = table.row($(element).parent()).data().leaveEntity;
+        }
+
+        $('#reqdate').val(data.createdBy)
+        $('#reqdate_val').html(data.createdBy)
+        $('#recdate').val(data.receiptDate)
+        $('#recdate_val').html(data.receiptDate)
+        $('#tiketno').val(data.ticketNo)
+        $('#tiketno_val').html(data.ticketNo)
+        $('#status').val(data.status)
+        $('#status_val').html(data.status)
+        $('#b_unit').val(data.businessUnit)
+        $('#b_unit_val').html(data.businessUnit)
+        $('#approvalremarks').val(data.approvalRemarks)
+        $('#directsuperior').val(data.directSuperiorID)
+
+        $('.close').click();
+    }
+
+    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type) {
         
         if(workflow_type == "ER"){
             table = $('#workflow_table').DataTable({
@@ -449,14 +508,14 @@
                 'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
-                    // {
-                    //     orderable: false,
-                    //     targets: 0, 
-                    //     "defaultContent": '',
-                    //     render: function(data, type) {
-                    //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                    //     }
-                    // },
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                        }
+                    },
                     {data: 'permitEntity.createdDate', name: 'createdDate', 
                                 render: function (data, type, row) {
                                 if (data == null){
@@ -473,122 +532,92 @@
                     {data: 'permitEntity.time', name: 'permitEntity.time'},
                     {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
                     {data: 'permitEntity.ticketNo', name: 'permitEntity.ticketNo'},
-                    {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
-                    // {data: 'permitEntity.fullnameRequester', name: 'fullnameRequester'},
-                    // {
-                    //     data: 'leaveBalanceBeforeExpiredDate', 
-                    //     name: 'leaveBalanceBeforeExpiredDate',
-                    //     render: function (data, type, row) {
-                    //         return moment(data).format('DD-MMM-YYYY');
-                    //     }
-                    // }
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });      
+                    {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'}
+                ]
+            });   
         }else{
             table = $('#workflow_table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    orderCellsTop: true,
-                    ajax: {
-                        url : "{{ url('trans/workflow/table') }}",
-                        data: {
-                            'startDate': claim_date_from,
-                            'endDate': claim_date_to,
-                            'employeeNo' : employee_no,
-                            'businessUnit' : business_unit,
-                            'workflowType' : workflow_type
-    
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('trans/workflow/table') }}",
+                    data: {
+                        'startDate': claim_date_from,
+                        'endDate': claim_date_to,
+                        'employeeNo' : employee_no,
+                        'businessUnit' : business_unit,
+                        'workflowType' : workflow_type
+
+                    }
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'full_numbers',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
-                    error: function(jqXHR, ajaxOptions, thrownError) {
-                        alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                    },
-                    "sDom": 'lfrtip',
-                    'sPaginationType': 'full_numbers',
-                    "order": [[ 1, "asc" ]],
-                    columns: [
-                        // {
-                        //     orderable: false,
-                        //     targets: 0, 
-                        //     "defaultContent": '',
-                        //     render: function(data, type) {
-                        //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        //     }
-                        // },
-                        {data: 'leaveEntity.createdDate', name: 'createdDate', 
-                                render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
+                    {data: 'leaveEntity.createdDate', name: 'createdDate', 
+                            render: function (data, type, row) {
+                            if (data == null){
+                                return '-'
+                            }else {
+                                return moment(data).format('YYYY-MM-DD');
                             }
-                        },
-                        {data: 'leaveEntity.employeeNo', name: 'leaveEntity.employeeNo'},
-                        {data: 'leaveEntity.fullnameRequester', name: 'leaveEntity.fullnameRequester'},
-                        {data: 'leaveEntity.status', name: 'leaveEntity.status'},
-                        {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
-                        {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
-                        {data: 'leaveEntity.createdBy', name: 'leaveEntity.createdBy'},
-                        {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
-                        {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
-                        // {
-                        //     data: 'leaveBalanceBeforeExpiredDate', 
-                        //     name: 'leaveBalanceBeforeExpiredDate',
-                        //     render: function (data, type, row) {
-                        //         return moment(data).format('DD-MMM-YYYY');
-                        //     }
-                        // }
-                    ], 
-                    select: {
-                        style:    'multi',
-                        selector: 'td:first-child'
-                    }
-                });
+                        }
+                    },
+                    {data: 'leaveEntity.employeeNo', name: 'leaveEntity.employeeNo'},
+                    {data: 'leaveEntity.fullnameRequester', name: 'leaveEntity.fullnameRequester'},
+                    {data: 'leaveEntity.status', name: 'leaveEntity.status'},
+                    {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
+                    {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
+                    {data: 'leaveEntity.createdBy', name: 'leaveEntity.createdBy'},
+                    {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
+                    {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
+                ]
+            });
         }
             // dari sini
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
-            );
-       
+        );
+    
 
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
+
+    $("#trans_workflow_form").submit((e)=>{
+        e.preventDefault();
+
+        var claim_date_from = $("#claim_date_from").val();
+        var claim_date_to = $("#claim_date_to").val();
+        var employee_no = $("#employee_no").val();
+        var business_unit = $("#business_unit").val();
+        var workflow_type = $("#workflow_type").val();
+        
+        $('#workflow_table').DataTable().destroy();
+        load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type);
+    })
 
 
 
-        }
 
-        $("#trans_workflow_form").submit((e)=>{
-            e.preventDefault();
-
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var employee_no = $("#employee_no").val();
-            var business_unit = $("#business_unit").val();
-            var workflow_type = $("#workflow_type").val();
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
-
-            $('#workflow_table').DataTable().destroy();
-            load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type);
-            })
-
-  
-  
-  
-        $('#btn-list').click(()=> {
+    $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
         table2 = $('#example').DataTable({
             processing: true,
@@ -610,7 +639,7 @@
                     "defaultContent": '',
                     render: function(data, type) {
                         return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
-                             }
+                                }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
                 {data: 'fullName', name: 'fullName'},
@@ -635,25 +664,71 @@
         // let rankingname = $(element).parent().siblings('td').eq(3).text()
         // alert(data1)
     }
-   
-    const klikdetail = (element) => {
-        let request_date = $(element).parent().siblings('.sorting_1').text()
-        let ticket_number = $(element).parent().siblings('td').eq(9).text()
-        let status = $(element).parent().siblings('td').eq(3).text()
-        let approvalremarks = $(element).parent().siblings('td').eq(10).text()
-        var business_unit = $("#business_unit").val();
 
-        $('#reqdate').val(request_date)
-        $('#recdate').val(request_date)
-        $('#tiketno').val(ticket_number)
-        $('#status').val(status)
-        $('#b_unit').val(business_unit)
-        $('#approvalremarks').val(approvalremarks)
-
+    $('#btn-update').click(()=>{
+        let reimbursement_status = $('#reimbursement_status').val();
+        let totalpaid = $('#totalpaid').val();
+        let ticketNo = $('#tiketno').val();
+        let direct_superior = $("#directsuperior").val();
+        let approvalremarks = $("#approvalremarks").val();
+        // alert(totalpaid)
         $('.close').click();
-        // let division = $(elemt).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+    })
+
+    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
+        $.ajax({
+            url: "{{ url('trans/update/table') }}",
+            type: "get",
+            data: {
+                'status': reimbursement_status,
+                'paidAmount': totalpaid,
+                'ticketNo' : ticketNo,
+                'employeeNo' : direct_superior,
+                'approvalRemarks': approvalremarks
+            },
+            success: function (response) {
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_reimbursement') }}";
+                    }, 3000);
+                } else{
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_update_data_fail').modal('show');
+                    $('#message-notification-update-data-fail').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_reimbursement') }}";
+                    }, 3000);
+                }
+            },
+            error: function (response) {
+                $("#btn-update").prop("disabled", false);
+                $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
+
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
     }
 </script>
 <script type="text/javascript">

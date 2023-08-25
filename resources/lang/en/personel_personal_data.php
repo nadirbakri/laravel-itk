@@ -48,6 +48,7 @@ return [
     'label_bpjs_number' => 'BPJS Number',
     'label_join' => 'Join',
     'label_joining_date' => 'Joining Date',
+    'label_office_location' => 'Office Location',
     'label_payment_period_start_date' => 'Payment Period Start Date',
     'label_non_accidental_death_insurance' => 'Non-Accidental Death Insurance',
     'label_pension_by_employer' => 'Pension by Employer',

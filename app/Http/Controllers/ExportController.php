@@ -7,12 +7,13 @@ use App\Exports\MultipleChecking;
 use App\Exports\WorkflowLeaveExport;
 use App\Exports\ReimbursementExport;
 use App\Exports\MedicalExport;
+use App\Exports\AttendanceExport;
 use App\Exports\TransportExport;
 use App\Exports\OvertimeExport;
 use App\Exports\BusinessTripExport;
 use App\Exports\BusinessTripAllExport;
 use App\Exports\BusinessTripSeattleExport;
-use App\Exports\ BusinessTripExportPDF;
+use App\Exports\BusinessTripExportPDF;
 // use App\Exports\ BusinessTripSeattleExportPDF;
 use App\Exports\BusinessTripSeattleExportPDF;
 use Illuminate\Http\Request;
@@ -29,8 +30,49 @@ use PhpParser\Node\NullableType;
 
 class ExportController extends Controller
 {
-    public function pageExport(){
-        return view('export.exp_main');
+    public function pageExport(Request $request){
+        try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ],
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+                        'groupAccessID' => Session::get('groupAccessID'),
+                        'moduleID' => $request->moduleID,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+	    			]
+	    		)]
+	    	);
+
+        } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+			// var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return view ('export.exp_main', ['dataMenu' => [], 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess([], null)]);
+        }else{
+            return view ('export.exp_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, 15)]);
+        }
+
+        // return view('export.exp_main');
     }
 
     public function pageExportMedical(){
@@ -149,9 +191,9 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        if ($request->travel_type[0] == "TTA"){
+        if ($request->travel_type == "TTA"){
             return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel), 'Employee List Business Advance Trip Report.xlsx');
-        } elseif ($request->travel_type[0] == "TTB"){
+        } elseif ($request->travel_type == "TTB"){
             return Excel::download(new BusinessTripSeattleExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel), 'Employee List Business Seattle Trip Report.xlsx');
         }else{
             return Excel::download(new BusinessTripAllExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel), 'Employee List Business Seattle Trip Report.xlsx');
@@ -195,6 +237,7 @@ class ExportController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         
+        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
@@ -238,7 +281,7 @@ class ExportController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        dd(json_encode($param));
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('export.exp_businesstripsettlementpdf', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
@@ -274,16 +317,16 @@ class ExportController extends Controller
 
     }
     
-    // public function printAttendanceExport(Request $request)
-    // {
-    //     // dd($request);
-    //     $dataLevel = [];
+    public function printAttendanceExport(Request $request)
+    {
+        // dd($request);
+        $dataLevel = [];
 
-    //     for($i = 0; $i < $request->level_format; $i++){
-    //         $dataLevel[] = $request->{'level' . ($i+1)};
-    //     }
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
 
-    //     return Excel::download(new AttendanceExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $dataLevel), 'Employee List Attendance Report.xlsx');
+        return Excel::download(new AttendanceExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->employee_status, $dataLevel), 'Employee List Attendance Report.xlsx');
     
-    // }
+    }
 }
