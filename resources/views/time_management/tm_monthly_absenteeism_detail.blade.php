@@ -34,12 +34,12 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .select2-results__option[aria-selected=true] {
@@ -52,7 +52,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url('/time_management') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_monthly_absenteeism_detail.list') }}</span>
             </a>
@@ -742,7 +742,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            module: 'TM'
+                            module: 'TM',
+                            isRange: false
                         };
                     },
                     processResults: function (data) {
@@ -1167,6 +1168,50 @@
 
         if ($("#monthly_absenteeism_detail_form").length > 0) {
             $("#monthly_absenteeism_detail_form").validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    },
+                    employee_no_to: {
+                        required: true,
+                    },
+                    group_authorize_from: {
+                        required: true,
+                    },
+                    group_authorize_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                    group_authorize_from: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                    group_authorize_to: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-print-data").prop("disabled", false);
+                    $("#btn-print-data").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
                 submitHandler: function (form) {
                     var arrData = table.rows().data().toArray();
                     

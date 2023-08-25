@@ -10,7 +10,7 @@ return [
     'table_field_name' => 'Field Name',
     'table_description' => 'Description',
     'table_amount' => 'Amount',
-    'header_password_form' => 'Password Form',
+    'header_password_form' => 'Validation Form',
     'label_user_id' => 'User ID',
     'label_password' => 'Password',
     'btn_save' => 'Save',

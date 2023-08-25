@@ -32,34 +32,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -111,7 +111,7 @@
             @csrf
             <div class="div-export-attendance">
                 <div class="div-title">
-                    <a href="{{ url('export') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('export_attendance.list') }}</span>
                     </a>
@@ -164,8 +164,8 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-export.svg') }}" alt="export"> {{ __('export_attendance.btn_export') }}
+                        <button type="button" class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
+                            <i class="fa fa-download"></i> {{ __('export_attendance.btn_export') }}
                         </button>
                     </div>
                 </div>
@@ -252,19 +252,19 @@ loadDataFirstLastAllBusinessUnit();
 loadDataEmployeeStatus();
 loadDataFirstLastAllEmployeeStatus();
 
-    $.get("{{ url('level/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                    "</option>");
-            });
-        });
+    // $.get("{{ url('level/api') }}", function (data) {
+    //         $.each(data, function (k, v) {
+    //             $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+    //                 "</option>");
+    //         });
+    //     });
    
-        $.get("{{ url('employee/status/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#employee_status').append("<option value=" + v.variable + ">" + v.value +
-                    "</option>");
-            });
-        });
+        // $.get("{{ url('employee/status/api') }}", function (data) {
+        //     $.each(data, function (k, v) {
+        //         $('#employee_status').append("<option value=" + v.comGenCode + ">" + v.value +
+        //             "</option>");
+        //     });
+        // });
 
         $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -318,14 +318,15 @@ loadDataFirstLastAllEmployeeStatus();
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}",
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term
+                            search: params.term,
+                            levelType : '1' 
                         };
                     },
                     processResults: function (data) {
@@ -358,65 +359,66 @@ loadDataFirstLastAllEmployeeStatus();
                 $('#business_unit').removeClass('loading');
             });
         }
-        // $("#btn-preview").click(function () {
-        //     $(this).prop("disabled", true);
-        //     $(this).html(
-        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-        //     );
-        //     $("#export_attendance_form").submit();
-        // });
+        $("#btn-preview").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#export_attendance_form").submit();
+        });
 
-        // if ($("#export_attendance_form").length > 0) {
-        //     $("#export_attendance_form").validate({
-        //         submitHandler: function (form) {
-        //             $.ajaxSetup({
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-        //             $.ajax({
-        //                 xhrFields: {
-        //                     responseType: 'blob',
-        //                 },
-        //                 url: "{{ url('export/export_attendance/print') }}",
-        //                 type: "POST",
-        //                 data: $('#export_attendance_form').serialize(),
-        //                 success: function (result, status, xhr) {
-        //                     $("#btn-preview").prop("disabled", false);
-        //                     $("#btn-preview").html(
-        //                         '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
-        //                     );
-        //                     var disposition = xhr.getResponseHeader(
-        //                         'content-disposition');
-        //                     var matches = /"([^"]*)"/.exec(disposition);
-        //                     var filename = (matches != null && matches[1] ? matches[1] :
-        //                         'audit_trail.xlsx');
+        if ($("#export_attendance_form").length > 0) {
+            $("#export_attendance_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        },
+                        url: "{{ url('/export_attendance/print') }}",
+                        type: "POST",
+                        data: $('#export_attendance_form').serialize(),
+                        success: function (result, status, xhr) {
+                            $("#btn-preview").prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-download"></i> {{ __("export_reimbursement.btn_export") }}'
+                            );
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /"([^"]*)"/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1] :
+                                'audit_trail.xlsx');
 
-        //                     // The actual download
-        //                     var blob = new Blob([result], {
-        //                         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        //                     });
-        //                     var link = document.createElement('a');
-        //                     link.href = window.URL.createObjectURL(blob);
-        //                     link.download = filename;
+                            // The actual download
+                            var blob = new Blob([result], {
+                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            });
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
 
-        //                     document.body.appendChild(link);
+                            document.body.appendChild(link);
 
-        //                     link.click();
-        //                     document.body.removeChild(link);
-        //                 },
-        //                 error: function (response) {
-        //                     $("#btn-preview").prop("disabled", false);
-        //                     $("#btn-preview").html(
-        //                         '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
-        //                     );
-        //                     $('#notification_error').modal('show');
-        //                     $('#message-notification-error').html(response);
-        //                 }
-        //             });
-        //         }
-        //     })
-        // }
+                            link.click();
+                            document.body.removeChild(link);
+                        },
+                        error: function (response) {
+                            $("#btn-preview").prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-download"></i> {{ __("export_reimbursement.btn_export") }}'
+                            );
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
+
         function loadDataEmployeeStatus(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -450,7 +452,7 @@ loadDataFirstLastAllEmployeeStatus();
                     }
                 },
                 ajax: {
-                    url: "{{ url('/employee/status/api') }}",
+                    url: "{{ url('/employee/status/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -464,7 +466,7 @@ loadDataFirstLastAllEmployeeStatus();
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.variable,
+                                    text: item.value,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -484,10 +486,10 @@ loadDataFirstLastAllEmployeeStatus();
                 type: 'GET',
                 url: "{{ url('/employee/status/all/api') }}",
             }).then(function (data) {
-                if (!$('#employee_status').find('option:contains(' + data.value + ')').length) {
-                    $('#employee_status').append($('<option>').val(data.comGenCode).text(data.value));
+                if (!$('#employee_status').find('option:contains(' + data[0].value + ')').length) {
+                    $('#employee_status').append($('<option>').val(data[0].comGenCode).text(data[0].value));
                 }
-                $('#employee_status').val(data.comGenCode);
+                $('#employee_status').val(data[0].comGenCode);
                 $('#employee_status').removeClass('loading');
             });
         }

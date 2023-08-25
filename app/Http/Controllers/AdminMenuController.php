@@ -256,7 +256,6 @@ class AdminMenuController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
@@ -280,12 +279,10 @@ class AdminMenuController extends Controller
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'title' => $request->t_announcement,
-                'category' => $request->announcement_category,
+                'category' => $request->n_announcement,
                 'content' => $request->c_announcement,
                 'pinned' => isset($request->pinned_announcement) ? (bool) $request->pinned_announcement : false
             ];
-
-            // var_dump(json_encode($param));
 
             if ($request->status == "new"){
                 $response = $client->post(env('API_URL') . '/announcement/insertannouncement',

@@ -25,126 +25,27 @@
 		</div>
 
 		<div class="div-menu">
-			<div class="row div-child-data">
-				<div class="col col-4">
-					<a href="<?php echo e(url('utilities/organization_chart')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.organization_chart')); ?></span>
-					</a>
+			<?php
+				$menuChunks = array_chunk($dataParent, 2);
+			?>
+			<?php $__currentLoopData = $menuChunks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				<div class="row div-child-data">
+					<div class="col col-4">
+						<a href="<?php echo e(url($value[0]->pageURL)); ?>" target="iframe_dashboard">
+							<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Utilities">
+							<span class="child-title-text"><?php echo e($value[0]->menuName); ?></span>
+						</a>
+					</div>
+					<?php if(count($value) > 1): ?>
+					<div class="col col-6">
+						<a href="<?php echo e(url($value[1]->pageURL)); ?>" target="iframe_dashboard">
+							<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Utilities">
+							<span class="child-title-text"><?php echo e($value[1]->menuName); ?></span>
+						</a>
+					</div>
+					<?php endif; ?>
 				</div>
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/user_log')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.user_log')); ?></span>
-					</a>
-				</div>
-			</div>
-			<div class="row div-child-data">
-				<div class="col col-4">
-					<a href="<?php echo e(url('utilities/user_security_maintenance')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.user_security_maintenance')); ?></span>
-					</a>
-				</div>
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/audit_trail')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.audit_trail')); ?></span>
-					</a>
-				</div>
-			</div>
-			<div class="row div-child-data">
-				<div class="col col-4">
-					<a href="<?php echo e(url('utilities/menu_master')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.menu_master')); ?></span>
-					</a>
-				</div>
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/change_employee_no')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.change_employee_no')); ?></span>
-					</a>
-				</div>
-			</div>
-			<div class="row div-child-data">
-				<div class="col col-4">
-					<a href="<?php echo e(url('utilities/group_authorization')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.group_authorization')); ?></span>
-					</a>
-				</div>
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/news_master')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.news_master')); ?></span>
-					</a>
-				</div>
-			</div>
-			<div class="row div-child-data">
-				<div class="col col-4">
-					<a href="<?php echo e(url('utilities/group_user_access')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.group_user_access')); ?></span>
-					</a>
-				</div>
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/announcement')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.announcement')); ?></span>
-					</a>
-				</div>
-			</div>
-			<!-- <div class="row div-child-data">
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/change_password')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.change_password')); ?></span>
-					</a>
-				</div>
-			</div> -->
-			<div class="row div-child-data">
-				<div class="col col-4">
-					<a href="<?php echo e(url('utilities/company')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" style="max-width: 7.5%;" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.company_master')); ?></span>
-					</a>
-				</div>
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/process_user_id')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.process_user_id')); ?></span>
-					</a>
-				</div>
-			</div>
-			<div class="row div-child-data">
-				
-			</div>
-			<div class="row div-child-data">
-				
-			</div>
-			<div class="row div-child-data">
-				
-			</div>
-			<div class="row div-child-data">
-				
-			</div>
-			<!-- <div class="row div-child-data">
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/export_personal_data')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.export_personal_data')); ?></span>
-					</a>
-				</div>
-			</div> -->
-			<!-- <div class="row div-child-data">
-				<div class="col col-6">
-					<a href="<?php echo e(url('utilities/dashboard_admin_ess')); ?>" target="iframe_dashboard">
-						<img src="<?php echo e(url('/icons/utilities/submenu-utilities.png')); ?>" alt="Child Personel">
-						<span class="child-title-text"><?php echo e(__('utilities.dashboard_admin_ess')); ?></span>
-					</a>
-				</div>
-			</div> -->
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</div>
 	</div>
 </body>

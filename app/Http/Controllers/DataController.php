@@ -1358,7 +1358,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->workPatternCode) {
+		if ($arrResult->dataListSet == null) {
 			return response()->json([]);
 		}
 		else {
@@ -2089,7 +2089,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
-	    				'recordStatus' => 'A'
+						'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
 	    	);
@@ -2120,6 +2120,58 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+        return response()->json($company);
+	}
+
+	public function dataCompanyUnderHoldingAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    		['body' => json_encode(
+	    			[
+						'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet == null){
+			$company = [];
+		}else{
+			if($search == ''){
+				$company = $arrResult->dataListSet[0]->companyUnderHolding;
+			}else{
+				$company    = array_filter(
+					$arrResult->dataListSet[0]->companyUnderHolding,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->companyCode)){
+							return preg_match('/' . $search . '/i', $value->companyCode);
+						}else if(preg_match('/' . $search . '/i', $value->companyName)){
+							return preg_match('/' . $search . '/i', $value->companyName);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($company);
 	}
@@ -2183,10 +2235,14 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/User/getuserholdingcompany',
 	    		['body' => json_encode(
 	    			[
-						'holdingCompany' => $request->company
+						'userName' => Session::get('userID'),
+						"sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
 	    			]
 	    		)]
 	    	);
@@ -2275,13 +2331,18 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
+			$param = [
+				'recordStatus' => 'A',
+	    		'companyCode' => Session::get('companyCode'),
+				'isRange' => (bool) $request->isRange
+			];
+
+			if(isset($request->isRange) && $request->isRange == true){
+				$param['groupAuthorizeCode'] = Session::get('groupAuthorizeUtilities');
+			}
+
 	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
-	    		['body' => json_encode(
-	    			[
-	    				'recordStatus' => 'A',
-	    				'companyCode' => Session::get('companyCode')
-	    			]
-	    		)]
+	    		['body' => json_encode($param)]
 	    	);
 
 			if(isset($request->module)){
@@ -3708,6 +3769,7 @@ class DataController extends Controller
 
 	public function dataFieldNameListAPI(Request $request)
     {
+		$search = $request->search;
 
     	try {
 	    	$client = new Client([
@@ -3735,7 +3797,19 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet);
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value)){
+	    				return preg_match('/' . $search . '/i', $value);
+	    			}
+				});
+	    }
+
+        return response()->json($data);
 	}
 
 	public function dataLevelTypeAPI(Request $request)
@@ -5119,6 +5193,7 @@ class DataController extends Controller
 
         return response()->json($data);
 	}
+
 	public function dataEmployeeStatusAPI(Request $request)
     {
     	$search = $request->search;
@@ -5165,6 +5240,60 @@ class DataController extends Controller
 	    }
 
         return response()->json($data);
+	}
+
+	public function dataEmployeeStatusAllAPI(Request $request)
+    {
+    	$search = $request->search;
+
+		$employee_status[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+    	];
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'RecordStatus_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$employee_status = array_merge($employee_status, $arrResult->dataListSet);
+	    }else{
+			$employee_status = array_merge($employee_status, $arrResult->dataListSet);
+	    	$employee_status = array_filter(
+	    		$employee_status,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($employee_status);
 	}
 
 	public function dataEmploymentStatusAllAPI(Request $request)
@@ -5284,7 +5413,40 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-	    				'variable' => 'MutationType_',
+	    				'variable' => 'TransactionType_',
+	    				'languageCode' => App::getLocale()
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    return response()->json($arrResult->dataListSet);
+	}
+
+	public function dataTerminationReasonAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'TerminationCode_',
 	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
@@ -6383,7 +6545,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-						'variable' => 'AbsenteeismType_',
+						'variable' => 'PeMasterAbsenteeismType_',
 	    				'comGenCode' => $request->absenteeismType,
 	    				'languageCode' => App::getLocale()
 	    			]
@@ -8535,45 +8697,67 @@ class DataController extends Controller
 		return response()->json($data, $reimbursement_type[0]);
 	}
 
-	// ini buat ALL
-	// public function dataReimbursementTypeAllAPI(Request $request)
-    // {
-    // 	$reimb[] = (object) [
-    // 		'value' => 'ALL'
-	// 	];
+	public function dataReimbursementTypeMedicalAPI(Request $request)
+	{
+		$search = $request->search;
 
-    // 	try {
-	//     	$client = new Client([
-	//     		'headers' => [ 'Content-Type' => 'application/json',
-	//     						'Authorization' => 'Bearer ' . Session::get('token') ]
-	//     	]);
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
 
-	//     	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
-	//     		['body' => json_encode(
-	//     			[
-	//     				'companyCode' => Session::get('companyCode'),
-	// 					"variable" => "Export_Medical_",
-	// 					"languageCode" => App::getLocale(),
-	//     			]
-	//     		)]
-	//     	);
-	//     } catch (RequestException $e) {
-	//     	$response = $e->getResponse();
-    //         if($response->getStatusCode() == 401){
-    //             return view('error.login');
-    //         }else if($response->getStatusCode() == 404){
-    //             return view('error.not_found');
-    //         }else{
-    //             return view('error.bad_request');
-    //         }
-	//     }
+    	try {
+			$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "MedicalType_",
+					"languageCode" => App::getLocale(),
+	    			]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
 
-	//     $arrResult = json_decode($response->getBody()->getContents());
+			$arrData = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) {
+	    			if($value->comGenCode != 'FRM' && $value->comGenCode != 'ROO'){
+	    				return $value;
+	    			}
+	    		}
+	    	);
 
-	//     $location = array_merge($location, $arrResult->dataListSet);
+			$reimbursement_type = array_merge($reimbursement_type, $arrData);
 
-    //     return response()->json($location[0]);
-	// }
+			if($search == ''){
+				$data = $reimbursement_type;
+			}else{
+				$data    = array_filter(
+	    		$reimbursement_type,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+		return response()->json($data);
+	}
 
 	// Export Reimbursement 
 	public function dataReimbursementTypeFunctionAPI (Request $request)
@@ -8619,6 +8803,105 @@ class DataController extends Controller
 			}else{
 				$data    = array_filter(
 				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->value)){
+						return preg_match('/' . $search . '/i', $value->value);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataReimbursementTypeReimbursementAPI (Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "List_ReimbursementExport_", 
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->value)){
+						return preg_match('/' . $search . '/i', $value->value);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataReimbursementTypeReimbursementFunctionAPI (Request $request)
+	{
+		$search = $request->search;
+
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "List_ReimbursementExport_", 
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+
+			if($search == ''){
+				$data = $reimbursement_type;
+			}else{
+				$data    = array_filter(
+				$reimbursement_type,
 				function($value) use ($search){
 					if(preg_match('/' . $search . '/i', $value->value)){
 						return preg_match('/' . $search . '/i', $value->value);
@@ -8778,37 +9061,26 @@ class DataController extends Controller
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
-					'categoryName' => $request->categoryName,
+					'categoryCode' => $request->categoryCode,
 					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
-			} catch (RequestException $e) {
-				$response = $e->getResponse();
-				if($response->getStatusCode() == 401){
-					return view('error.login');
-				}else if($response->getStatusCode() == 404){
-					return view('error.not_found');
-				}else{
-					return view('error.bad_request');
-				}
-			}
-			
-			$arrResult = json_decode($response->getBody()->getContents());
-
-			if($search == ''){
-				$data = $arrResult->dataListSet;
+		} catch (RequestException $e) {
+			$response = $e->getResponse();
+			if($response->getStatusCode() == 401){
+				return view('error.login');
+			}else if($response->getStatusCode() == 404){
+				return view('error.not_found');
 			}else{
-				$data    = array_filter(
-				$arrResult->dataListSet,
-				function($value) use ($search){
-					if(preg_match('/' . $search . '/i', $value->categoryName)){
-						return preg_match('/' . $search . '/i', $value->categoryName);
-					}
-				}
-			);
+				return view('error.bad_request');
+			}
 		}
-		return response()->json($data);
+			
+		$arrResult = json_decode($response->getBody()->getContents());
+
+		return response()->json($arrResult->dataListSet);
+		
 	}
 
 	public function dataReimbursementTypeExportAPI (Request $request)
@@ -8944,47 +9216,6 @@ class DataController extends Controller
         return response()->json($reimbursement_type[0]);
 	}
 
-	public function dataEmployeeStatusAllAPI()
-    {
-    	$employee_status[] = (object) [
-    		'comGenCode' => 'ALL',
-    		'value' => 'ALL'
-		];
-
-    	try {
-	    	$client = new Client([
-	    		'headers' => [ 'Content-Type' => 'application/json',
-	    						'Authorization' => 'Bearer ' . Session::get('token') ]
-	    	]);
-
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
-	    		['body' => json_encode(
-	    			[
-	    				'companyCode' => Session::get('companyCode'),
-						"variable" => "RecordStatus_",
-						"languageCode" => App::getLocale(),
-	    			]
-	    		)]
-	    	);
-	    } catch (RequestException $e) {
-	    	$response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-	    }
-
-	    $arrResult = json_decode($response->getBody()->getContents());
-
-	    $employee_status = array_merge($employee_status, $arrResult->dataListSet);
-
-        return response()->json($employee_status[0]);
-	}
-	
-
 	// Export Reimbursement Transport
 	public function dataReimbursementTypeTransportAPI(Request $request)
 	{
@@ -8999,7 +9230,7 @@ class DataController extends Controller
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
-					"variable" => "ReimbursementTransport_",
+					"variable" => "List_ReimbursementTransport_",
 					"languageCode" => App::getLocale(),
 					]
 					)]
@@ -9022,6 +9253,58 @@ class DataController extends Controller
 			}else{
 				$data    = array_filter(
 				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->value)){
+						return preg_match('/' . $search . '/i', $value->value);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataReimbursementTypeTransportFunctionAPI(Request $request)
+	{
+		$search = $request->search;
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "List_ReimbursementTransport_",
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+
+			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			
+			if($search == ''){
+				$data = $reimbursement_type;
+			}else{
+				$data    = array_filter(
+				$reimbursement_type,
 				function($value) use ($search){
 					if(preg_match('/' . $search . '/i', $value->value)){
 						return preg_match('/' . $search . '/i', $value->value);
@@ -9175,6 +9458,10 @@ class DataController extends Controller
 	public function dataBusinessUnitFunctionAPI(Request $request)
 	{
 		$search = $request->search;
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
 
 		try {
 			$client = new Client([
@@ -9202,12 +9489,14 @@ class DataController extends Controller
 			}
 			
 			$arrResult = json_decode($response->getBody()->getContents());
+
+			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
 			
 			if($search == ''){
-				$data = $arrResult->dataListSet;
+				$data = $reimbursement_type;
 			}else{
 				$data    = array_filter(
-				$arrResult->dataListSet,
+				$reimbursement_type,
 				function($value) use ($search){
 					if(preg_match('/' . $search . '/i', $value->value)){
 						return preg_match('/' . $search . '/i', $value->value);
@@ -9578,109 +9867,191 @@ class DataController extends Controller
 		return response()->json($data);
 	}
 
-		// Dropdown Master Data MOB 
-	
-		public function dataEmployeeCompanyCodeAPI(Request $request)
-		{
-			$search = $request->search;
-	
-			try {
-				$client = new Client([
-					'headers' => [ 'Content-Type' => 'application/json',
-									'Authorization' => 'Bearer ' . Session::get('token') ]
-				]);
-	
-				$response = $client->post(env('API_URL') . '/comgen/getcomGen',
+	// Dropdown Master Data MOB 
+
+	public function dataEmployeeCompanyCodeAPI(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+
+			$response = $client->post(env('API_URL') . '/comgen/getcomGen',
+			['body' => json_encode(
+				[
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "CompanyCode_",
+					"languageCode" => App::getLocale(),
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->value)){
+						return preg_match('/' . $search . '/i', $value->value);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataOfficeLocationAPI(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+
+			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode')
+					]
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->officeDesc)){
+						return preg_match('/' . $search . '/i', $value->officeDesc);
+					}
+				}
+			);
+		}
+		return response()->json($data);
+	}
+
+	public function dataOfficeLocationFunctionAPI(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+
+			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode'),
-						"variable" => "CompanyCode_",
-						"languageCode" => App::getLocale(),
-						]
-						)]
-					);
-				} catch (RequestException $e) {
-					$response = $e->getResponse();
-					if($response->getStatusCode() == 401){
-						return view('error.login');
-					}else if($response->getStatusCode() == 404){
-						return view('error.not_found');
-					}else{
-						return view('error.bad_request');
-					}
-				}
-				
-				$arrResult = json_decode($response->getBody()->getContents());
-				
-				
-				if($search == ''){
-					$data = $arrResult->dataListSet;
-				}else{
-					$data    = array_filter(
-					$arrResult->dataListSet,
-					function($value) use ($search){
-						if(preg_match('/' . $search . '/i', $value->value)){
-							return preg_match('/' . $search . '/i', $value->value);
-						}
-					}
+						'officeCode' => $request->officeCode
+					]
+					)]
 				);
+		} catch (RequestException $e) {
+			$response = $e->getResponse();
+			if($response->getStatusCode() == 401){
+				return view('error.login');
+			}else if($response->getStatusCode() == 404){
+				return view('error.not_found');
+			}else{
+				return view('error.bad_request');
 			}
-			return response()->json($data);
 		}
-	
-		public function dataOfficeLocationAPI(Request $request)
-		{
-			$search = $request->search;
-	
-			try {
-				$client = new Client([
-					'headers' => [ 'Content-Type' => 'application/json',
-									'Authorization' => 'Bearer ' . Session::get('token') ]
-				]);
-	
-				$response = $client->post(env('API_URL') . '/comgen/getcomGen',
-				['body' => json_encode(
+			
+		$arrResult = json_decode($response->getBody()->getContents());
+
+		return response()->json($arrResult->dataListSet);
+	}
+
+	public function dataOutputFileAPI(Request $request)
+	{
+		$search = $request->search;
+
+		try {
+			$client = new Client([
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+
+			$response = $client->post(env('API_URL') . '/PrTransferBank/GetTransferBankFormatbyCompanyCodeBankCode',
 					[
-						'companyCode' => Session::get('companyCode'),
-						"variable" => "Office_Location_",
-						"languageCode" => App::getLocale(),
+						'body' => json_encode([
+							'companyCode' => Session::get('companyCode'),
+							'bankCode' => $request->bankCode,
+							"languageCode" => App::getLocale(),
 						]
-						)]
-					);
-				} catch (RequestException $e) {
-					$response = $e->getResponse();
-					if($response->getStatusCode() == 401){
-						return view('error.login');
-					}else if($response->getStatusCode() == 404){
-						return view('error.not_found');
-					}else{
-						return view('error.bad_request');
+					)]
+				);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data    = array_filter(
+				$arrResult->dataListSet,
+				function($value) use ($search){
+					if(preg_match('/' . $search . '/i', $value->bankCode)){
+						return preg_match('/' . $search . '/i', $value->bankCode);
 					}
 				}
-				
-				$arrResult = json_decode($response->getBody()->getContents());
-				
-				
-				if($search == ''){
-					$data = $arrResult->dataListSet;
-				}else{
-					$data    = array_filter(
-					$arrResult->dataListSet,
-					function($value) use ($search){
-						if(preg_match('/' . $search . '/i', $value->value)){
-							return preg_match('/' . $search . '/i', $value->value);
-						}
-					}
-				);
-			}
-			return response()->json($data);
+			);
 		}
+		return response()->json($data);
+	}
 	
 	
 	// business unit
 	public function dataBusinessUnitAPI(Request $request)
 	{
 		$search = $request->search;
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
 
     	try {
 			$client = new Client([
@@ -9709,13 +10080,14 @@ class DataController extends Controller
 			}
 			
 			$arrResult = json_decode($response->getBody()->getContents());
-		
+
+			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
 			
 			if($search == ''){
-				$data = $arrResult->dataListSet;
+				$data = $reimbursement_type;
 			}else{
 				$data    = array_filter(
-	    		$arrResult->dataListSet,
+	    		$reimbursement_type,
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->value)){
 	    				return preg_match('/' . $search . '/i', $value->value);
@@ -9726,7 +10098,7 @@ class DataController extends Controller
 		return response()->json($data);
 	}
 	
-// get All reimbursement Type 
+	// get All reimbursement Type 
 	public function dataReimbursementTypeAllAPI(Request $request)
     {
     	$reimbursement_type[] = (object) [
@@ -9744,7 +10116,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-						'variable' => "Export_Medical_",
+						'variable' => "Export_Reimbursement_",
 						'languageCode' => App::getLocale(),
 	    			]
 	    		)]
@@ -9763,6 +10135,55 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+
+        return response()->json($reimbursement_type[0]);
+	}
+
+	public function dataReimbursementTypeMedicalAllAPI(Request $request)
+    {
+    	$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
+
+    	try {
+	    	$client = new Client([
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'variable' => "MedicalType_",
+						'languageCode' => App::getLocale(),
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		$arrData = array_filter(
+			$arrResult->dataListSet,
+			function($value) {
+				if($value->comGenCode != 'FRM' && $value->comGenCode != 'ROO'){
+					return $value;
+				}
+			}
+		);
+
+	    $reimbursement_type = array_merge($reimbursement_type, $arrData);
 
         return response()->json($reimbursement_type[0]);
 	}

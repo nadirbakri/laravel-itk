@@ -32,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 0; ?>
+            <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
@@ -40,14 +40,11 @@
 				<td>{{ $value->leaveEntity->fullnameRequester}}</td>
 				<td>{{ $value->leaveEntity->leaveName }}</td>
 				<td>{{ $value->leaveEntity->leaveTime }}</td>
-				{{-- <td>{{\Carbon\Carbon::parse($value->leaveEntity->leaveDate)->format('Y-m-d')}}</td> --}}
-				<td>{{ $value->leaveEntity->leaveDateFrom }}</td>
-				<td>{{ $value->leaveEntity->leaveDateTo }}</td>
+				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->leaveDateFrom)) }}</td>
+				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->leaveDateTo)) }}</td>
 				<td>{{ $value->leaveEntity->leaveDuration }}</td>
-				<td></td>
-				<td></td>
-				{{-- <td>{{ $value->leaveEntity->permitHourTo}}</td>
-				<td>{{ $value->leaveEntity->customerName}}</td> --}}
+				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->changedDate)) }}</td>
+				<td>{{ $value->leaveEntity->leaveRemarks }}</td>
 			</tr>
 			@endforeach
 		</tbody>

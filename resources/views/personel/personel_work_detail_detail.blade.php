@@ -33,22 +33,22 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
             border-top-right-radius: 5px;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
             border-top-right-radius: 5px;
         }
 
@@ -88,7 +88,7 @@
                     <div class="col-2 subdiv-profile-image">
                         <!-- <img src="{{ isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png') }}"
                             alt="Profile"> -->
-                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo" id="photo" name="photo">
+                        <img src="{{ '../../photo_profile/' . $photo }}" alt="Profile" class="photo rounded-circle" id="photo" name="photo">
                         <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                             {{ __('personel_work_detail.btn_change_picture') }}
                             <input type="file" class="form-control" id="photo_profile" name="photo_profile" value="true" hidden>
@@ -889,6 +889,8 @@
                     arrLevel.push(response.data_level[i].levelDescription);
                 }
 
+                console.log(arrLevel);
+
                 var strLevel = arrLevel.join(", ");
                 $('#div-table-level').html(strLevel);
             },
@@ -1218,7 +1220,7 @@
         loadDataGroupCode();
         loadDataNatureofWork();
         loadDataCompanyCode('#company_job_history');
-        loadDataCompanyCode('#approved_by');
+        loadDataEmployeeNo();
         loadDataFreeFormat();
 
         $('body').on('click', '#btn-edit-job-history', function () {
@@ -1292,13 +1294,13 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/company/detail/api') }}",
+                    url: "{{ url('/employee_no/req_detail/api') }}",
                     data: {
-                        'companyCode': data[0].approvedBy
+                        'employeeNo' : data[0].approvedBy
                     }
-                }).then(function (response) {
-                    var $newOption = $("<option selected='selected'></option>").val(response[0]
-                        .companyCode).text(response[0].companyName);
+                }).then(function (data2) {
+                    var $newOption = $("<option selected='selected'></option>").val(data2
+                        .employeeNo).text(data2.fullName);
                     $("#approved_by").append($newOption).trigger('change');
                 });
 
@@ -1530,6 +1532,78 @@
                 $('#message-notification-error').html('No Data Selected');
             }
         });
+
+        function loadDataEmployeeNo() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#approved_by').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $employeeNo = $('#approved_by').select2({
+                width: '100%',
+                placeholder: 'Choose Employee',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/employee_no/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.fullName,
+                                    id: item.employeeNo,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         function loadDataPositionCode() {
             function formatSelect(data) {

@@ -23,23 +23,23 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -115,7 +115,8 @@
                                 <tr>
                                     <th></th>
                                     <th>User ID</th>
-                                    <!-- <th>User Name</th> -->
+                                    <th>Employee No</th>
+                                    <th>Full Name</th>
                                 </tr>
                             </thead>
                         </table>
@@ -284,7 +285,9 @@
                 $.each(arrData2, function(k, v) {
                     table.row.add([
                         '<input class="chk-select" type="checkbox">',
-                        '<input type="hidden" class="form-control" name="userid_group[]" value="' + v.userID + '">' + v.userID
+                        '<input type="hidden" class="form-control" name="userid_group[]" value="' + v.userID + '">' + v.userID,
+                        '<input type="hidden" class="form-control" name="employeeno_group[]" value="' + v.employeeNo + '">' + v.employeeNo,
+                        '<input type="hidden" class="form-control" name="fullname_group[]" value="' + v.fullName + '">' + v.fullName
                     ]).draw();
                 });
 
@@ -414,17 +417,17 @@
                 }
             }
 
-            var headerIsAppend = false;
-            $('#user_id').on('select2:open', function (e) {
-                if (!headerIsAppend) {
-                    html = '<div class="row">' +
-                        '<div class="col-6"><b>Employee No</b></div>' +
-                        '<div class="col-6"><b>Full Name</b></div>' +
-                        '</div>';
-                    $('.select2-search--dropdown').append(html);
-                    headerIsAppend = true;
-                }
-            });
+            // var headerIsAppend = false;
+            // $('#user_id').on('select2:open', function (e) {
+            //     if (!headerIsAppend) {
+            //         html = '<div class="row">' +
+            //             '<div class="col-6"><b>Employee No</b></div>' +
+            //             '<div class="col-6"><b>Full Name</b></div>' +
+            //             '</div>';
+            //         $('.select2-search--dropdown').append(html);
+            //         headerIsAppend = true;
+            //     }
+            // });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -455,9 +458,9 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.userID,
+                                    text: item.employeeNo,
                                     id: item.userID,
-                                    title: item.userName,
+                                    title: item.fullName,
                                     data: item
                                 }
                             })
@@ -499,9 +502,13 @@
             // );
             // $("#user_form").submit();
             var userID = $('#user_id').val();
+            var employeeNo = $('#user_id option:selected').text();
+            var fullName = $('#user_name').val();
             table.row.add([
                 '<input class="chk-select" type="checkbox">',
-                '<input type="hidden" class="form-control" name="userid_group[]" value="' + userID + '">' + userID
+                '<input type="hidden" class="form-control" name="userid_group[]" value="' + userID + '">' + userID,
+                '<input type="hidden" class="form-control" name="employeeno_group[]" value="' + employeeNo + '">' + employeeNo,
+                '<input type="hidden" class="form-control" name="fullname_group[]" value="' + fullName + '">' + fullName
             ]).draw();
             $('#user_id').val(null).trigger('change');
             $('#user_name').val(null);

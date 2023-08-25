@@ -17,12 +17,12 @@
 		.modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 	</style>
 </head>
@@ -34,78 +34,30 @@
 			<span class="title-text">{{ __('master_data.judul') }}</span>
 		</div>
         <div class="card">
-            <a class="collapsed" data-toggle="collapse"  href="#master_data-master_data-data" aria-expanded="true" aria-controls="master_data-master_data-data">
-                <div class="card-header">
-                    <div class="div-dropdown-title">
-                        <img class="dropdown-logo" src="{{ url('icons/mob/sidebar/streammobportal-navbar-masterdata.svg') }}" alt="master_data">
-                        <span class="dropdown-title-text">{{__('master_data.master_data_data')}}</span>
-                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-                    </div>
-                </div>
-            </a>
-            <div id="master_data-master_data-data" class="collapse">
-                <div class="card-block">
-                    <div class="row div-child-data">
-                        <!-- <div class="col col-3">
-                            <a href="{{ url('master_data/employee_master') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_master') }}</span>
-                            </a>
-                        </div> -->
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/employee_group') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group') }}</span>
-                            </a>
-                        </div>
-                       {{-- employee group leave --}}
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/employee_group_leave') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_leave') }}</span>
-                            </a>
-                        </div>
-                      {{-- employee group overtime --}}
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/employee_group_overtime') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_overtime') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/employee_group_detail') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_detail') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/employee_group_reimbursement') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_reimbursement') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/holiday_calender') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.holiday_calendar') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('master_data/bussines_trip') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_business_trip') }}</span>
-                            </a>
-                        </div>
-                        {{-- <div class="col col-3">
-                            <a href="{{ url('master_data/bussines_trip_detail') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-masterdata.svg') }}" alt="Child master_data">
-                                <span class="child-title-text">{{ __('master_data.employee_group_business_trip_detail') }}</span>
-                            </a>
-                        </div> --}}
-                    </div>
-                </div>
-            </div>
-        </div>
+			<a class="collapsed" data-toggle="collapse" href="#master-data" aria-expanded="true" aria-controls="master-data">
+				<div class="card-header">
+					<div class="div-dropdown-title">
+						<img class="dropdown-logo" src="{{ url('/icons/master_data/master-data.svg') }}" alt="master data">
+						<span class="dropdown-title-text">Master Data</span>
+						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+					</div>
+				</div>
+			</a>
+			<div id="master-data" class="collapse">
+				<div class="card-block">
+					<div class="row div-child-data">
+					@foreach($dataParent as $key2 => $value2)
+						<div class="col col-3">
+							<a href="{{ url($value2->pageURL) }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/master_data/submenu-master-data.svg') }}" alt="Child master data">
+								<span class="child-title-text">{{ $value2->menuName }}</span>
+							</a>
+						</div>
+					@endforeach
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 
     @if($errors->any())

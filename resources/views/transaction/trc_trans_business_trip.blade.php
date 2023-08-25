@@ -36,34 +36,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -124,7 +124,7 @@
             @csrf
             <div class="div-trans-business-trip">
                 <div class="div-title">
-                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_business_trip.list') }}</span>
                     </a>
@@ -258,47 +258,42 @@
     </div>
 
     <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_mass_leave">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_business_trip.luser') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body table-responsive">
-                        <table id="example" class="display">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{{ __('trans_business_trip.employee') }}</th>
-                                    <th>{{ __('trans_business_trip.name') }}</th>
-                                    <th>{{ __('trans_business_trip.division') }}</th>
-                                    <th>{{ __('trans_business_trip.ranking') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>        
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                   </div>
+        <div class="modal fade" id="modal_list_mass_leave">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-little">{{ __('trans_business_trip.luser') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <table id="example" class="display">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ __('trans_business_trip.employee') }}</th>
+                                <th>{{ __('trans_business_trip.name') }}</th>
+                                <th>{{ __('trans_business_trip.division') }}</th>
+                                <th>{{ __('trans_business_trip.ranking') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>        
+                                <td></td>        
+                                <td></td>        
+                                <td></td>        
+                                <td></td>        
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
     <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
             <div class="modal fade" id="modal_list_detail">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
@@ -311,13 +306,15 @@
                     <div class="modal-body">
                         <div class="card">
                             <div class="card-body">
-
+                            <form id="payroll_calculation_detail_modal_form" method="post">
+                                @csrf
                                 <div class="row detailstatus">
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.tnom') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="tiketno" name="tiketno" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.status') }}</h5>
@@ -356,14 +353,13 @@
                                         <input style="border: none" style="outline: none" type="text" class="form-control" id="type" name="type" disabled>
                                     </div>
                                 </div>
-                            
                                 <br>
                                 <div class="row approve">
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.status') }}</h5>
                                     </div>
                                     <div class="col-5">
-                                            <select name="" id="reimbursement_status" class="custom-select">
+                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
                                                 <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
                                                 <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
                                                 <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
@@ -375,7 +371,7 @@
                                         <h5>{{ __('trans_business_trip.tpaid') }}</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="totalpaid" name="totalpaid"  type="number" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="row approve">
@@ -383,18 +379,18 @@
                                         <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" required>
                                     </div>
                                 </div>
                                 <hr>
                                 <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_business_trip.update') }}</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                    </div>
                 </div>
             </div>
-        </form>
     </div>
     {{-- modal upload excel --}}
     <div class="div-form">
@@ -524,10 +520,7 @@
         });
     }
 
-</script>
-
-<script>
- function load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
+    function load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
             table = $('#business_trip_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -650,21 +643,17 @@
 
 
     const klikdetail = (element) => {
-        let ticket_number = $(element).parent().siblings('.sorting_1').text()
-        let status = $(element).parent().siblings('td').eq(3).text()
-        let totalclaim = $(element).parent().siblings('td').eq(8).text()
-        let totalpaid = $(element).parent().siblings('td').eq(7).text()
-        var business_unit = $("#business_unit").val();
-        var direct_superior = $("#direct_superior").val();
-        var reimbursement_type = $("#reimbursement_type").val();
+        let data = table.row($(element).parent()).data();
 
-        $('#tiketno').val(ticket_number)
-        $('#totalpaid').val(totalpaid)
-        $('#status').val(status)
-        $('#b_unit').val(business_unit)
-        $('#employeeno').val(direct_superior)
-        $('#c_type').val(totalclaim)
-        $('#type').val(reimbursement_type)
+        $('#tiketno').val(data.ticketNo)
+        $('#totalpaid').val(data.paidAmount)
+        $('#status').val(data.status)
+        $('#b_unit').val(data.businessUnit)
+        $('#employeeno').val(data.employeeNo)
+        $('#c_type').val(data.totalClaimAmount)
+        $('#approvalremarks').val(data.approvalRemarks)
+        $('#type').val(data.purpose)
+        $('#directsuperior').val(data.directSuperiorID)
     }
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
@@ -672,13 +661,8 @@
         $('#direct_superior').val(employee_id)
 
         $('.close').click();
-        // let fullname = $(element).parent().siblings('td').eq(1).text()
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
     }
-</script>
-<script>
+
     $("#btn-process").click(function () {
         $(this).prop("disabled", true);
         $(this).html(
@@ -688,7 +672,14 @@
     });
     
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('transaction/transaction_business_trip') }}";
+        var claim_date_from = $("#claim_date_from").val();
+        var claim_date_to = $("#claim_date_to").val();
+        var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        var business_unit = $("#business_unit").val();
+
+        $('#business_trip_table').DataTable().destroy();
+        load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
     });
     
     if ($("#upload_paid_overtime_form").length > 0) {
@@ -719,10 +710,15 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response[0]
                                 .message);
-                            setTimeout(function () {
-                                window.location =
-                                    "{{ url('transaction/transaction_business_trip') }}";
-                            }, 3000);
+
+                            var claim_date_from = $("#claim_date_from").val();
+                            var claim_date_to = $("#claim_date_to").val();
+                            var direct_superior = $("#direct_superior").val();
+                            var reimbursement_type = $("#reimbursement_type").val();
+                            var business_unit = $("#business_unit").val();
+
+                            $('#business_trip_table').DataTable().destroy();
+                            load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
                         } else {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
@@ -755,15 +751,13 @@
             }
         })
     }
-    </script>
-<script type="text/javascript">
 
-loadDataBusinessUnit();
-loadDataTravelType();
-loadDataFirstLastAllTravelType();
-loadDataFirstLastAllBusinessUnit();
+    loadDataBusinessUnit();
+    loadDataTravelType();
+    loadDataFirstLastAllTravelType();
+    loadDataFirstLastAllBusinessUnit();
 
-$.get("{{ url('level/api') }}", function (data) {
+    $.get("{{ url('level/api') }}", function (data) {
             $.each(data, function (k, v) {
                 $('#business_unit').append("<option value=" + v.levelName + ">" + v.levelCode +
                     "</option>");
@@ -775,13 +769,6 @@ $.get("{{ url('level/api') }}", function (data) {
                     "</option>");
             });
         });
-
-        // $.get("{{ url('status/func/api') }}", function (data) {
-        //     $.each(data, function (k, v) {
-        //         $('#status').append("<option value=" + v.variable + ">" + v.value +
-        //             "</option>");
-        //     });
-        // });
 
 
         $('#select').focus(function (event) {
@@ -953,14 +940,11 @@ $.get("{{ url('level/api') }}", function (data) {
             });
         }
 
-</script>
-
-<script>
-    $('#btn-update').click(()=>{
+    $("#btn-update").on( "click", function() {
         let reimbursement_status = $('#reimbursement_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#direct_superior").val();
+        let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
 
         $('.close').click();
@@ -979,47 +963,47 @@ $.get("{{ url('level/api') }}", function (data) {
                 'approvalRemarks' : approvalremarks
             },
             success: function (response) {
-                // console.log(response);
-                           if (response.status == "true") {
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_business_trip') }}";
-                               }, 3000);
-                           } else{
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_update_data_fail').modal('show');
-                               $('#message-notification-update-data-fail').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_business_trip') }}";
-                               }, 3000);
-                           }
-                       },
-                           error: function (response) {
-                           $("#btn-update").prop("disabled", false);
-                           $("#btn-update").html(
-                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                               'Update'
-                           );
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
 
-                           $('#notification_error').modal('show');
-                           $('#message-notification-error').html(response);
-                       }
+                    var claim_date_from = $("#claim_date_from").val();
+                    var claim_date_to = $("#claim_date_to").val();
+                    var direct_superior = $("#direct_superior").val();
+                    var reimbursement_type = $("#reimbursement_type").val();
+                    var business_unit = $("#business_unit").val();
+
+                    $('#business_trip_table').DataTable().destroy();
+                    load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
+                } else{
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_update_data_fail').modal('show');
+                    $('#message-notification-update-data-fail').html(response
+                        .message);
+                }
+            },
+                error: function (response) {
+                $("#btn-update").prop("disabled", false);
+                $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
+
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
         });
              
     }

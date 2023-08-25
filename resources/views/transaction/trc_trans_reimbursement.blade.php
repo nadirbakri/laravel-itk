@@ -33,34 +33,34 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-warning {
             border-bottom: 1px solid #eee;
             background-color: #f0bd18;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -122,7 +122,7 @@
             @csrf
             <div class="div-trans-medical">
                 <div class="div-title">
-                    <a href="{{ url('transaction') }}" target="iframe_dashboard">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_reimbursement.list') }}</span>
                     </a>
@@ -301,13 +301,15 @@
                                         <h5>Request Date</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="reqdate" name="reqdate" type="hidden" class="form-control">
+                                        <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
+                                        <span id="reqdate_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>Receipt Date</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="recdate" name="recdate" type="hidden" class="form-control"><span id="recdate_val"></span>
                                     </div>
                                 </div>
 
@@ -316,13 +318,13 @@
                                         <h5>Ticket Number</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="tiketno" name="tiketno" type="hidden" class="form-control"><span id="tiketno_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
                                     </div>
                                 </div>
 
@@ -331,13 +333,13 @@
                                         <h5>Business Unit</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>Claim Type</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
                                     </div>
                                 </div>
 
@@ -346,13 +348,13 @@
                                         <h5>Employee Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>Project Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name" disabled>
+                                        <input type="hidden" class="form-control" id="project_name" name="project_name"><span id="project_name_val"></span>
                                     </div>
                                 </div>
                             
@@ -361,13 +363,13 @@
                                         <h5>Total Claim</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="totalclaim" name="totalclaim" type="hidden" class="form-control"><span id="totalclaim_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>Dependent Name</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent" disabled>
+                                        <input type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
                                     </div>
                                 </div>
                                 <br>
@@ -376,7 +378,7 @@
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col-5">
-                                            <select name="" id="reimbursement_status" class="custom-select">
+                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
                                                 <option value="APPROVED">APPROVE</option>
                                                 <option value="REJECTED">REJECT</option>
                                                 <option value="PAID">PAID</option>
@@ -396,7 +398,7 @@
                                         <h5>Approval Remarks</h5>
                                     </div>
                                     <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
+                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control">
                                     </div>
                                 </div>
                                 <hr>
@@ -557,7 +559,7 @@
         let reimbursement_status = $('#reimbursement_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#direct_superior").val();
+        let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         $('.close').click();
@@ -699,7 +701,7 @@
 
             var claim_date_from = $("#claim_date_from").val();
             var claim_date_to = $("#claim_date_to").val();
-            var direct_superior = $("#direct_superior").val();
+            var direct_superior = $("#directsuperior").val();
             var reimbursement_type = $("#reimbursement_type").val();
             var business_unit = $("#business_unit").val();
 
@@ -712,29 +714,30 @@
             load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
     })
     const klikdetail = (element) => {
-        let requestDate = $(element).parent().siblings('.sorting_1').text()
-        let status = $(element).parent().siblings('td').eq(1).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
-        let totalClaim = $(element).parent().siblings('td').eq(7).text()
-        var direct_superior = $("#direct_superior").val();
-        var reimbursement_type = $("#reimbursement_type").val();
-        let approvalremarks = $(element).parent().siblings('td').eq(8).text()
-        let totalpaid = $(element).parent().siblings('td').eq(9).text()
-        let pname = $(element).parent().siblings('td').eq(6).text()
-        var business_unit = $("#business_unit").val();        
+        let data = table.row($(element).parent()).data().reimbursementEntity;
 
-        $('#reqdate').val(requestDate)
-        $('#project_name').val(pname)
-        $('#recdate').val(requestDate)
-        $('#tiketno').val(tikcetNo)
-        $('#status').val(status)
-        $('#b_unit').val(business_unit)
-        $('#employee_no').val(direct_superior)
-        $('#c_type').val(reimbursement_type)
-        $('#totalclaim').val(totalClaim)
-
-        $('#approvalremarks').val(approvalremarks)
-        $('#totalpaid').val(totalpaid)
+        $('#reqdate').val(data.createdBy)
+        $('#reqdate_val').html(data.createdBy)
+        $('#project_name').val(data.projectName)
+        $('#project_name_val').html(data.projectName)
+        $('#recdate').val(data.receiptDate)
+        $('#recdate_val').html(data.receiptDate)
+        $('#tiketno').val(data.ticketNo)
+        $('#tiketno_val').html(data.ticketNo)
+        $('#status').val(data.status)
+        $('#status_val').html(data.status)
+        $('#b_unit').val(data.businessUnit)
+        $('#b_unit_val').html(data.businessUnit)
+        $('#employee_no').val(data.employeeNo)
+        $('#employee_no_val').html(data.employeeNo)
+        $('#c_type').val(data.reimbursementType)
+        $('#c_type_val').html(data.reimbursementType)
+        $('#totalclaim').val(data.totalClaimAmount)
+        $('#totalclaim_val').html(data.totalClaimAmount)
+        $('#approvalremarks').val(data.approvalRemarks)
+        $('#totalpaid').val(data.paidAmount)
+        $('#directsuperior').val(data.directSuperiorID)
+        $('#reimbursement_status').val(data.status).trigger('change')
     }
 
     $('#btn-list').click(()=> {
@@ -872,11 +875,10 @@ if ($("#upload_paid_overtime_form").length > 0) {
     loadDataFirstLastAllReimbursement();
     loadDataBusinessUnit();
     loadDataFirstLastAllBusinessUnit();
-    // loadDataFirstLastAllReimbursmentType();
     
-        $.get("{{ url('reimbursement_type/func/api') }}", function (data) {
+        $.get("{{ url('reimbursement_type/reimbursement/api') }}", function (data) {
                 $.each(data, function (k, v) {
-                    $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+                    $('#reimbursement_type').append("<option value=" + v.comGenCode + ">" + v.value +
                         "</option>");
                 });
             });
@@ -941,7 +943,7 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         }
                     },
                     ajax: {
-                        url: "{{ url('/reimbursement_type/func/api') }}",
+                        url: "{{ url('/reimbursement_type/reimbursement/api') }}",
                         dataType: 'json',
                         delay: 250,
                         type: "GET",
@@ -973,12 +975,12 @@ if ($("#upload_paid_overtime_form").length > 0) {
     
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/reimbursement_type_medical/all/api') }}",
+                    url: "{{ url('/reimbursement_type/reimbursement/func/api') }}",
                 }).then(function (data) {
-                    if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
-                        $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
+                    if (!$('#reimbursement_type').find('option:contains(' + data[0].value + ')').length) {
+                        $('#reimbursement_type').append($('<option>').val(data[0].comGenCode).text(data[0].value));
                     }
-                    $('#reimbursement_type').val(data.comGenCode);
+                    $('#reimbursement_type').val(data[0].comGenCode);
                     $('#reimbursement_type').removeClass('loading');
                 });
             }

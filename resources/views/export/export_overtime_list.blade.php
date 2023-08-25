@@ -24,7 +24,6 @@
 				<th>Ticket No</th>
                 <th>Name</th>
 				<th>Employee No</th>
-				{{-- <th>Business Unit</th> --}}
 				<th>Project Name</th>
 				<th>Overtime Date</th>
                 <th>Overtime Hour From</th>
@@ -36,23 +35,22 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 0; ?>
+            <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->overtimeEntity->status}}</td>
 				<td>{{ $value->overtimeEntity->ticketNo }}</td>
 				<td>{{ $value->overtimeEntity->fullnameRequester }}</td>
-				{{-- <td>{{ $value->overtimeEntity->businessUnit }}</td> --}}
 				<td>{{ $value->overtimeEntity->employeeNo}}</td>
 				<td>{{ $value->overtimeEntity->projectName}}</td>
-				{{-- <td>{{ $value->overtimeEntity->overtimeDate }}</td> --}}
 				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeDate)->format('Y-m-d') }}</td>
-				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('Y-m-d')}}</td>
-				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('Y-m-d')}}</td>
+				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('H:i:s')}}</td>
+				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('H:i:s')}}</td>
 				<td>{{ $value->overtimeEntity->overtimeRemarks}}</td>
 				<td>{{ $value->overtimeEntity->projectName}}</td>
 				<td>{{ $value->overtimeEntity->customerName}}</td>
+				<td></td>
 			</tr>
 			@endforeach
 		</tbody>

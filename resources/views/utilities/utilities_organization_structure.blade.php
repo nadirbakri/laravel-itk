@@ -25,7 +25,7 @@
 <body>
 	<div class="div-utilities">
 		<div class="div-title">
-			<a href="{{ url('utilities') }}" target="iframe_dashboard">
+			<a href="{{ url()->previous() }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('utilities_user_security_maintenance.list') }}</span>
 			</a>

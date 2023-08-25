@@ -55,6 +55,9 @@
   color: #106DA7;
   font-weight: 700;
 }
+.modal-content {
+	border-radius: 1rem;
+}
 .div-dropdown-title {
 	display: flex;
     align-items: center;

@@ -22,22 +22,22 @@
         .modal-header-notification-error {
             border-bottom:1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
         .modal-header-notification-success {
             border-bottom:1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
         .div-title-notification {
             margin: 1.5%;
@@ -672,6 +672,54 @@
                                     class="fa fa-floppy-o"></i> <?php echo e(__('tm_reference_time_management.btn_save')); ?></button>
                             <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
                                     class="fa fa-times-circle"></i> <?php echo e(__('tm_reference_time_management.btn_cancel')); ?></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_authentication"  role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-authentication text-center">
+                    <h5 class="modal-title w-100 title-text-authentication"><?php echo e(__('payroll_salary_accumulation_data.header_password_form')); ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="authentication_form" method="post">
+                        <?php echo csrf_field(); ?>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label
+                                        for="user_id"><?php echo e(__('payroll_salary_accumulation_data.label_user_id')); ?></label>
+                                    <input type="text" class="form-control" id="user_id" name="user_id"
+                                        placeholder="<?php echo e(__('payroll_salary_accumulation_data.label_user_id')); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="password"><?php echo e(__('payroll_salary_accumulation_data.label_password')); ?></label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="<?php echo e(__('payroll_salary_accumulation_data.label_password')); ?>">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary rounded-right" type="button" id="show_password"><i id="icon_show_password"
+                                                class="fa fa-eye" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" id="btn-ok" name="btn-ok" class="btn btn-primary w-25"><i>
+                                </i> <?php echo e(__('payroll_salary_accumulation_data.btn_ok')); ?></button>
+                            <button type="button" id="btn-cncl" class="btn btn-primary w-25" data-dismiss="modal"><i
+                                class="fa fa-times-circle"></i> <?php echo e(__('payroll_salary_accumulation_data.btn_cancel')); ?></button>
                         </div>
                     </form>
                 </div>
@@ -1524,11 +1572,57 @@
         });
 
         $("#toolbar-edit").on('click', function() {
+            $('#modal_authentication').modal('show');
+            // $('#record_function').val("Edit");
+            // $('#processing_period_month').prop('disabled', false);
+            // $('#processing_period_year').prop('disabled', false);
+            // $('#period_status').prop('disabled', false);
+            // $('#process_status').prop('disabled', false);
+            // $('#template_preparation_process_shift').prop('disabled', false).trigger('change');
+            // $('#template_preparation_process_blank').prop('disabled', false).trigger('change');
+            // $('#not_clock_in').prop('disabled', false);
+            // $('#late').prop('disabled', false);
+            // $('#not_clock_out').prop('disabled', false);
+            // $('#early_back').prop('disabled', false);
+            // $('#not_clock_in_early_back').prop('disabled', false);
+            // $('#late_early_back').prop('disabled', false);
+            // $('#not_clock_out_late').prop('disabled', false);
+            // $('#unpaid_leave').prop('disabled', false);
+            // $('#absent').prop('disabled', false);
+            // $('#overtime').prop('disabled', false);
+            // $('#late_hour_normal_in').prop('disabled', false).trigger('change');
+            // $('#late_hour_tolerance').prop('disabled', false).trigger('change');
+            // $('#early_back_normal_out').prop('disabled', false).trigger('change');
+            // $('#early_back_hour_tolerance').prop('disabled', false).trigger('change');
+            // $('#default_calculation_blank').prop('disabled', false).trigger('change');
+            // $('#default_calculation_system').prop('disabled', false).trigger('change');
+            // $('#overtime_before_from_normal').prop('disabled', false).trigger('change');
+            // $('#overtime_before_from_overtime').prop('disabled', false).trigger('change');
+            // $('#overtime_after_from_normal').prop('disabled', false).trigger('change');
+            // $('#overtime_after_from_overtime').prop('disabled', false).trigger('change');
+            // $('#btn-add-minutes-rounded').prop('disabled', false);
+            // $('#btn-remove-minutes-rounded').prop('disabled', false);
+            // $('#btn-add-reference-time-management').prop('disabled', false);
+            // $('#btn-remove-data').prop('disabled', false);
+            // $("#toolbar-save").show();
+            // $('#reference_time_management_table').DataTable().destroy();
+            // load_data_table_reference_time_management();
+        });
+
+        $("#btn-ok").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#authentication_form").submit();
+        });
+
+        $("#btn-cncl").click(function () {
             $('#record_function').val("Edit");
-            $('#processing_period_month').prop('disabled', false);
-            $('#processing_period_year').prop('disabled', false);
-            $('#period_status').prop('disabled', false);
-            $('#process_status').prop('disabled', false);
+            // $('#processing_period_month').prop('disabled', false);
+            // $('#processing_period_year').prop('disabled', false);
+            // $('#period_status').prop('disabled', false);
+            // $('#process_status').prop('disabled', false);
             $('#template_preparation_process_shift').prop('disabled', false).trigger('change');
             $('#template_preparation_process_blank').prop('disabled', false).trigger('change');
             $('#not_clock_in').prop('disabled', false);
@@ -1559,6 +1653,124 @@
             $('#reference_time_management_table').DataTable().destroy();
             load_data_table_reference_time_management();
         });
+
+		if ($("#authentication_form").length > 0) {
+            $("#authentication_form").validate({
+                rules: {
+                    user_id: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    user_id: {
+                        required: "<?php echo e(__('payroll_salary_accumulation_data.userid_required')); ?>",
+                    },
+                    password: {
+                        required: "<?php echo e(__('payroll_salary_accumulation_data.password_required')); ?>",
+                    },
+                },
+                highlight: function (element) {
+                    jQuery(element).closest('.form-control').addClass('is-invalid');
+                    $('#show_password').addClass('danger');
+                },
+                unhighlight: function (element) {
+                    jQuery(element).closest('.form-control').removeClass('is-invalid');
+                    $('#show_password').removeClass('danger');
+                },
+                errorElement: 'label',
+                errorClass: 'text-danger',
+                errorPlacement: function (error, element) {
+					$("#btn-ok").prop("disabled", false);
+                    $("#btn-ok").html('<?php echo e(__("payroll_salary_accumulation_data.btn_ok")); ?>');
+
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+					$("#btn-ok").prop("disabled", true);
+                    $("#btn-ok").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                    );
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        url: "<?php echo e(url('authentication/proses')); ?>",
+                        type: "POST",
+                        data: $('#authentication_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+								$("#btn-ok").prop("disabled", false);
+								$("#btn-ok").html('<?php echo e(__("payroll_salary_accumulation_data.btn_ok")); ?>');
+                                $('#modal_authentication').modal('hide');
+								$('#record_function').val("Edit");
+                                $('#processing_period_month').prop('disabled', false);
+                                $('#processing_period_year').prop('disabled', false);
+                                $('#period_status').prop('disabled', false);
+                                $('#process_status').prop('disabled', false);
+                                $('#template_preparation_process_shift').prop('disabled', false).trigger('change');
+                                $('#template_preparation_process_blank').prop('disabled', false).trigger('change');
+                                $('#not_clock_in').prop('disabled', false);
+                                $('#late').prop('disabled', false);
+                                $('#not_clock_out').prop('disabled', false);
+                                $('#early_back').prop('disabled', false);
+                                $('#not_clock_in_early_back').prop('disabled', false);
+                                $('#late_early_back').prop('disabled', false);
+                                $('#not_clock_out_late').prop('disabled', false);
+                                $('#unpaid_leave').prop('disabled', false);
+                                $('#absent').prop('disabled', false);
+                                $('#overtime').prop('disabled', false);
+                                $('#late_hour_normal_in').prop('disabled', false).trigger('change');
+                                $('#late_hour_tolerance').prop('disabled', false).trigger('change');
+                                $('#early_back_normal_out').prop('disabled', false).trigger('change');
+                                $('#early_back_hour_tolerance').prop('disabled', false).trigger('change');
+                                $('#default_calculation_blank').prop('disabled', false).trigger('change');
+                                $('#default_calculation_system').prop('disabled', false).trigger('change');
+                                $('#overtime_before_from_normal').prop('disabled', false).trigger('change');
+                                $('#overtime_before_from_overtime').prop('disabled', false).trigger('change');
+                                $('#overtime_after_from_normal').prop('disabled', false).trigger('change');
+                                $('#overtime_after_from_overtime').prop('disabled', false).trigger('change');
+                                $('#btn-add-minutes-rounded').prop('disabled', false);
+                                $('#btn-remove-minutes-rounded').prop('disabled', false);
+                                $('#btn-add-reference-time-management').prop('disabled', false);
+                                $('#btn-remove-data').prop('disabled', false);
+                                $("#toolbar-save").show();
+                                $('#reference_time_management_table').DataTable().destroy();
+                                load_data_table_reference_time_management();
+                            } else {
+								$("#btn-ok").prop("disabled", false);
+								$("#btn-ok").html('<?php echo e(__("payroll_salary_accumulation_data.btn_ok")); ?>');
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "<?php echo e(__('login.error')); ?>");
+                                } else {
+                                    $('#message-notification-error').html(response.message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+							$("#btn-ok").prop("disabled", false);
+							$("#btn-ok").html('<?php echo e(__("payroll_salary_accumulation_data.btn_ok")); ?>');
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
 
         $("#toolbar-save").on('click', function () {
             $(this).prop("disabled", true);

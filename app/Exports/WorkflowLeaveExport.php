@@ -68,7 +68,8 @@ class WorkflowLeaveExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        var_dump($arrResult->dataListSet);
+        exit;
 
         if($arrResult->dataListSet == null){
             return view('export.exp_workflow_list_leave', [

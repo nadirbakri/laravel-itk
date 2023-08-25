@@ -25,12 +25,10 @@
 				<th>Status</th>
 				<th>Ticket Number</th>
 				<th>Claim Type</th>
-                {{-- <th>Receipt Date</th> --}}
                 <th>Company Customer</th>
                 <th>Remarks</th>
                 <th>Start Location</th>
                 <th>End Location</th>
-                {{-- <th>Destination</th> --}}
                 <th>Total Request (Rp)</th>
                 <th>Total per Employee (Rp)</th>
                 <th>No Rekening</th>
@@ -41,7 +39,7 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 0; ?>
+            <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
@@ -59,9 +57,8 @@
 				<td></td>
 				<td>{{ $value->transportEntity->paidAmount}}</td>
 				<td>{{ $value->transportEntity->paidRemarks}}</td>
-				<td>{{ $value->transportEntity->amountToll}}</td>
 				<td>{{ $value->transportEntity->amountParkir}}</td>
-				{{-- <td>{{ \Carbon\Carbon::parse($value->transportEntity->receiptDate)->format('Y-m-d') }}</td> --}}
+				<td>{{ $value->transportEntity->amountToll}}</td>
 			</tr>
 			@endforeach
 		</tbody>

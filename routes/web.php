@@ -43,6 +43,7 @@ Route::get('login', 'LoginController@pageLogin')->name('login');
 Route::post('login/proses', 'LoginController@prosesLogin');
 Route::get('logout', 'LoginController@prosesLogout');
 Route::post('authentication/proses', 'LoginController@prosesAuthentication');
+Route::post('authentication/import_payroll/proses', 'LoginController@prosesAuthenticationImportPayroll');
 Route::get('login-sso', 'LoginController@redirectToAzure');
 Route::get('auth/sso', 'LoginController@handleAzureCallback');
 
@@ -75,6 +76,7 @@ Route::get('personnel/employee_approval', 'PersonelController@pageEmployeeApprov
 Route::get('personnel/employee_attachment', 'PersonelController@pageEmployeeAttachmentPersonel');
 Route::get('personnel/import_export_personal_data', 'PersonelController@pageImportExportPersonel');
 Route::get('personnel/import_master_data', 'PersonelController@pageImportMasterDataPersonel');
+Route::get('personnel/import_update_personal_data', 'PersonelController@pageImportUpdatePersonel');
 Route::get('personnel/employee_mutation', 'PersonelController@pageEmployeeMutationPersonel');
 Route::get('personnel/npwp_mutation', 'PersonelController@pageNPWPMutationPersonel');
 Route::get('personnel/termination_data_entry', 'PersonelController@pageTerminationDataEntryPersonel');
@@ -395,6 +397,7 @@ Route::post('personnel/employee_dependents/print', 'PersonelController@printEmpl
 Route::post('personnel/personal_data/template', 'PersonelController@templatePersonalDataPersonel');
 Route::post('personnel/personal_data/export', 'PersonelController@exportPersonalDataPersonel');
 Route::post('personnel/personal_data/import', 'PersonelController@importPersonalDataPersonel');
+Route::post('personnel/personal_data/import_update', 'PersonelController@importUpdatePersonalDataPersonel');
 Route::get('personnel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personnel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
 Route::get('personnel/performance/result/check', 'PersonelController@checkResultPerformancePersonel');
@@ -915,7 +918,7 @@ Route::post('export/export_overtime/print', 'ExportController@printExportOvertim
 Route::post('export/export_businesstrip/print', 'ExportController@printExportBusinessTrip');
 Route::post('export/export_businesstrip_pdf/print', 'ExportController@printExportBusinessTripPDF');
 Route::post('export/business_trip_checking/print', 'ExportController@printExportBusinessTripChecking');
-// Route::post('export/export_attendance/print', 'ExportController@printAttendanceExport');
+Route::post('export_attendance/print', 'ExportController@printAttendanceExport');
 
 /* Route Untuk Proses Menu Export MOB */
 Route::post('export/company_working_calendar/proses','ExportController@prosesCompanyWorkingCalendar');
@@ -948,6 +951,7 @@ Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataH
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
+Route::get('master_data/employee_list/table', 'MasterDataController@tabelDetailEmployeeMaster');
 Route::get('master_data_leave/list/table', 'MasterDataController@tabelDetailEmployeeLeave');
 Route::get('master_data_overtime/list/table', 'MasterDataController@tabelDetailEmployeeOvertime');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
@@ -960,6 +964,7 @@ Route::get('master_data/tambah_user/table', 'MasterDataController@tableEmployeeG
 Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHolidayCalendar');
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
 Route::get('master_data/get', 'MasterDataController@getMasterData');
+Route::get('master_data/employee_master/get', 'MasterDataController@getEmployeeMasterData');
 Route::get('master_data/employee_group_detail/get', 'MasterDataController@getMasterDataEmployeeGroupDetail');
 Route::get('master_data/leave/get', 'MasterDataController@getLeaveMasterData');
 Route::get('master_data/overtime/get', 'MasterDataController@getOvertimeMasterData');
@@ -1032,11 +1037,13 @@ Route::get('religion/all/api', 'DataController@dataReligionAllAPI');
 Route::get('religion/func/api', 'DataController@dataReligionFunctionAPI');
 Route::get('religion_code/api', 'DataController@dataReligionCodeAPI');
 Route::get('reimbursement_type/api', 'DataController@dataReimbursementTypeAPI');
+Route::get('reimbursement_type/medical/api', 'DataController@dataReimbursementTypeMedicalAPI');
 Route::get('reimbursement_type/export/api', 'DataController@dataReimbursementTypeExportAPI');
 // buat bikin select ALL     
-Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI');
 Route::get('reimbursement_type/all/api', 'DataController@dataReimbursementTypeAllAPI');
-Route::get('reimbursement_type/func/api', 'DataController@dataReimbursementTypeFunctionAPI');
+Route::get('reimbursement_type/medical/all/api', 'DataController@dataReimbursementTypeMedicalAllAPI');
+Route::get('reimbursement_type/reimbursement/api', 'DataController@dataReimbursementTypeReimbursementAPI');
+Route::get('reimbursement_type/reimbursement/func/api', 'DataController@dataReimbursementTypeReimbursementFunctionAPI');
 Route::get('news_category/api', 'DataController@dataNewsCategory');
 Route::get('news_category/detail/api', 'DataController@dataNewsCategoryDetail');
 Route::get('announcement_category/api', 'DataController@dataAnnouncementCategory');
@@ -1046,6 +1053,7 @@ Route::get('transport_type/all/api', 'DataController@dataTransportAll');
 Route::get('travel_type/all/api', 'DataController@dataTravelTypeAllAPI');
 // diatas buat bikin select ALL
 Route::get('reimbursement_type/transport/api', 'DataController@dataReimbursementTypeTransportAPI');
+Route::get('reimbursement_type/transport/func/api', 'DataController@dataReimbursementTypeTransportFunctionAPI');
 Route::get('transport_type/api', 'DataController@dataTransportType');
 Route::get('reimbursement_type/transport/all/api', 'DataController@dataReimbursementTypeTransportAllAPI');
 Route::get('reimbursement_type/overtime/api', 'DataController@dataReimbursementTypeOvertimeAPI');
@@ -1069,6 +1077,7 @@ Route::get('employee_no_term_date/api', 'DataController@dataEmployeeNoTermDateNo
 Route::get('employee_no_full_partial_loan_payment/api', 'DataController@dataEmployeeNoFullPartialLoanPaymentAPI');
 Route::get('employee_no_loan_payment/api', 'DataController@dataEmployeeNoLoanPaymentAPI');
 Route::get('company/api', 'DataController@dataCompanyAPI');
+Route::get('company_under_holding/api', 'DataController@dataCompanyUnderHoldingAPI');
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
 Route::get('session_company/api', 'DataController@dataSessionCompanyAPI');
 Route::post('session_company/change', 'DataController@changeSessionCompanyAPI');
@@ -1135,6 +1144,7 @@ Route::get('employment_status/func/api', 'DataController@dataEmploymentStatusFun
 Route::get('employment/status/api', 'DataController@dataEmploymentStatusAPI');
 Route::get('employment/type/api', 'DataController@dataEmploymentTypeAPI');
 Route::get('mutation/type/api', 'DataController@dataMutationTypeAPI');
+Route::get('termination/reason/api', 'DataController@dataTerminationReasonAPI');
 Route::get('npwp/api', 'DataController@dataNPWPAPI');
 Route::get('npwp/personal_data/api', 'DataController@dataNPWPPersonalDataAPI');
 Route::get('bpjs/api', 'DataController@dataBPJSAPI');
@@ -1212,7 +1222,10 @@ Route::get('disease_code/func2/api', 'DataController@dataDiseaseCodeFunction2API
 Route::get('report_code/api', 'DataController@dataReportCodeAPI');
 Route::get('employee_company_code/api', 'DataController@dataEmployeeCompanyCodeAPI');
 Route::get('employee/status/api', 'DataController@dataEmployeeStatusAPI');
+Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI');
 Route::get('office_location/api', 'DataController@dataOfficeLocationAPI');
+Route::get('office_location/func/api', 'DataController@dataOfficeLocationFunctionAPI');
+Route::get('output_file/api', 'DataController@dataOutputFileAPI');
 Route::get('sasa', 'DataController@dataBusinessUnitAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */

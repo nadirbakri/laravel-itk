@@ -14,7 +14,7 @@ use App;
 
 class ReimbursementExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimDateFrom, $claimDateTo, $reimbursementType,$businessUnit,$dataLevel)
+    public function __construct($claimDateFrom, $claimDateTo, $reimbursementType, $businessUnit, $dataLevel)
     {
         $this->claimDateFrom = $claimDateFrom;
         $this->claimDateTo = $claimDateTo;
@@ -30,37 +30,11 @@ class ReimbursementExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-        //    var_dump(json_encode(
-        //     [
-        //             'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
-        //             'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
-        //             // 'endDate' => $this->claimDateTo,
-        //             'reimbursementType' => $this->reimbursementType,
-        //             'businessUnit'=> $this->businessUnit,
-        //             'exportMenu' => true,
-        //             'companyCode' => Session::get('companyCode'), 
-        //             'languageCode' => App::getLocale(), 
-        //             'sessionID' => 0, 
-        //             'sessionUserID' => Session::get('userID'),
-        //     ]
-        //     ));
-            
-            // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
-            //     $param['permitDateFrom'] = $this->permitDateFrom;
-            //     $param['permitDateTo'] = $this->permitDateTo;
-            // }
-
-            // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
-            //     $param['businessUnit'] = $this->businessUnit;
-            // }
-            // var_dump(json_encode($param));
-
             $response = $client->post(env('API_URL') . '/tmreimbursement/getreimbursementdetaillistall',
                 ['body' => json_encode(
                     [
                             'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
                             'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
-                            // 'endDate' => $this->claimDateTo,
                             'reimbursementType' => $this->reimbursementType,
                             'businessUnit'=> $this->businessUnit,
                             'exportMenu' => true,
@@ -84,7 +58,7 @@ class ReimbursementExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('export.export_reimbursement_list', [

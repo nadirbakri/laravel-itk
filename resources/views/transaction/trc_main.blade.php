@@ -17,12 +17,12 @@
 		.modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 	</style>
 </head>
@@ -33,89 +33,32 @@
 			<img src="{{ url('icons/mob/sidebar/streammobportal-navbar-transaction.svg') }}" alt="Title">
 			<span class="title-text">{{ __('transaction.judul') }}</span>
 		</div>
-        <div class="card">
-            <a class="collapsed" data-toggle="collapse"  href="#transaction-transaction-data" aria-expanded="true" aria-controls="transaction-transaction-data">
-                <div class="card-header">
-                    <div class="div-dropdown-title">
-                        <img class="dropdown-logo" src="{{ url('icons/mob/sidebar/streammobportal-navbar-transaction.svg') }}" alt="transaction">
-                        <span class="dropdown-title-text">{{__('transaction.transaction_data')}}</span>
-                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
-                    </div>
-                </div>
-            </a>
-            <div id="transaction-transaction-data" class="collapse">
-                <div class="card-block">
-                    <div class="row div-child-data">
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_reimbursement') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.reimbursement') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_mass_leave') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.mass_leave') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_workflow') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.workflow') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_transport') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.transport') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_medical_history') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.medical_history') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_attendance') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.attendance') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_business_trip') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.business_trip') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_overtime') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.overtime') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/transaction_active_document') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.paid_active_document') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/checkin_list') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">{{ __('transaction.multiplecheck_in_list') }}</span>
-                            </a>
-                        </div>
-                        <div class="col col-3">
-                            <a href="{{ url('transaction/mapscheckin_list') }}" target="iframe_dashboard">
-                                <img src="{{ url('/icons/mob/submenu/submenu-transaction.svg') }}" alt="Child transaction">
-                                <span class="child-title-text">CheckIn List</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+		<div class="card">
+			<a class="collapsed" data-toggle="collapse" href="#transaction-data" aria-expanded="true" aria-controls="transaction-data">
+				<div class="card-header">
+					<div class="div-dropdown-title">
+						<img class="dropdown-logo" src="{{ url('/icons/transaction/transaction-data.svg') }}" alt="transaction">
+						<span class="dropdown-title-text">Transaction Data</span>
+						<img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+					</div>
+				</div>
+			</a>
+			<div id="transaction-data" class="collapse">
+				<div class="card-block">
+					<div class="row div-child-data">
+					@foreach($dataParent as $key2 => $value2)
+						<div class="col col-3">
+							<a href="{{ url($value2->pageURL) }}" target="iframe_dashboard">
+								<img src="{{ url('/icons/transaction/submenu-transaction-data.svg') }}" alt="Child transaction">
+								<span class="child-title-text">{{ $value2->menuName }}</span>
+							</a>
+						</div>
+					@endforeach
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 
     @if($errors->any())

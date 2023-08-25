@@ -32,23 +32,23 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -81,7 +81,7 @@
 <body>
     <div class="div-utilities">
         <div class="div-title">
-            <a href="{{ url('utilities') }}" target="iframe_dashboard">
+            <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('utilities_menu_master.list') }}</span>
             </a>
@@ -475,8 +475,10 @@
                             return '<input type="hidden" class="form-control" name="menu_id_configure_menu[]" value="' +
                                 $('<div />').text(row.menuID).html() +
                                 '"><input type="hidden" class="form-control" name="group_id_configure_menu[]" value="' +
-                                $('<div />').text(row.groupAccessID).html() + '">' + $(
-                                    '<div />').text(row.moduleName).html();
+                                $('<div />').text(row.groupAccessID).html() +
+                                '"><input type="hidden" class="form-control" name="module_id_configure_menu[]" value="' +
+                                $('<div />').text(row.moduleID).html() + '">' + 
+                                $('<div />').text(row.moduleName).html();
                         }
                     },
                     // {data: 'subModuleName', name: 'subModuleName'},

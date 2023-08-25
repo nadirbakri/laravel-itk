@@ -33,23 +33,23 @@
         .modal-header-notification-error {
             border-bottom: 1px solid #eee;
             background-color: #f44336;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .modal-header-notification-success {
             border-bottom: 1px solid #eee;
             background-color: #00a862;
-            -webkit-border-top-left-radius: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -moz-border-radius-topright: 5px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
         }
 
         .div-title-notification {
@@ -98,7 +98,7 @@
                         <div class="col-2 subdiv-profile-image">
                             <!-- <img src="<?php echo e(isset($data[0]->photo) ? $photo : url('/pictures/profile-picture.png')); ?>"
                                 alt="Profile"> -->
-                            <img src="<?php echo e('../../photo_profile/' . $photo); ?>" alt="Profile" class="photo" id="photo" name="photo">
+                            <img src="<?php echo e('../../photo_profile/' . $photo); ?>" alt="Profile" class="photo rounded-circle" id="photo" name="photo">
                             <label class="btn btn-primary" id=""><i class="fa fa-edit"></i>
                                 <?php echo e(__('personel_personal_data.btn_change_picture')); ?>
 
@@ -910,6 +910,15 @@
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="office_location_employment"><?php echo e(__('personel_personal_data.label_office_location')); ?></label>
+                                    <select class="form-control" id="office_location_employment"
+                                        name="office_location_employment">
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -2693,6 +2702,7 @@
         loadDataRelation();
         loadDataEmploymentStatus();
         loadDataEmploymentType();
+        loadDataOfficeLocation();
         loadDataTerminationCode();
         loadDataBenefits();
         loadDataAbsenteeismType();
@@ -2804,6 +2814,7 @@
             $('#employment_status_employment').val(null).trigger('change');
             $('#employment_type_employment').val(null).trigger('change');
             $('#termination_code_employment').val(null).trigger('change');
+            $('#office_location_employment').val(null).trigger('change');
             $('#special_reason_resign_employment').prop('checked', false);
             $('#termination_remarks_employment').val("");
             $('#expatriat_employment').prop('checked', true);
@@ -2944,7 +2955,7 @@
             });
 
             pickerBirthDate.setDate(((typeof arrData2[0].birthDate !== 'undefined') ? arrData2[0].birthDate : ''));
-
+            // console.log(arrData2[0].absenteeismType);
             $.ajax({
                 type: 'GET',
                 url: "<?php echo e(url('/comgen/api')); ?>",
@@ -3502,6 +3513,32 @@
                         }
                     });
                 });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "<?php echo e(url('/office_location/func/api')); ?>",
+                    data: {
+                        'officeLocationCode': ((typeof arrData2[0].peMasterInfo.officeCode !== 'undefined') ? arrData2[0].peMasterInfo.officeCode : ''),
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data[0].officeCode,
+                        title: data[0].officeDesc,
+                        text: data[0].officeDesc
+                    });
+
+                    // console.log(data);
+                    $("#office_location_employment").append(option1).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#office_location_employment").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].officeCode,
+                            text: data[0].officeDesc,
+                            data: data[0]
+                        }
+                    });
+                });
                 
                 $('#id_no_info').val(((typeof arrData2[0].peMasterInfo.idNo !== 'undefined') ? arrData2[0].peMasterInfo.idNo : ''));
                 $('#passport_no_info').val(((typeof arrData2[0].peMasterInfo.passportNo !== 'undefined') ? arrData2[0].peMasterInfo.passportNo : ''));
@@ -3964,6 +4001,45 @@
                 });
                 }
             }
+
+            if (typeof arrData[0].level !== 'undefined' || arrData[0].level !== null) {
+                $.each(arrData[0].level, function (k, v) {
+                    $('#div-level').append(
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<label for="level' + k + '">' + k + '</label>' +
+                        '<input type="text" class="form-control" id="level' + k + '" name="level' +
+                        k + '[]" value="' + v + '" disabled>' +
+                        '</div></div>'
+                    );
+                });
+            }
+
+            // $.ajax({
+            //     url: "<?php echo e(url('personnel/report/level/check')); ?>",
+            //     type: "GET",
+            //     success: function (response) {
+            //         $('#level_format').val(response.data[0].levelFormat);
+            //         for (var i = 1; i <= response.data[0].levelFormat; i++) {
+            //             $('#div-level').append(
+            //                 '<div class="col-6">' +
+            //                 '<div class="form-group">' +
+            //                 '<label for="level' + i + '">' + response.data_level[i - 1]
+            //                 .levelDescription + '</label>' +
+            //                 '<select class="form-control select2" id="level' + i + '" name="level' +
+            //                 i + '[]" multiple="multiple"></select>' +
+            //                 '</div></div>'
+            //             );
+
+            //             loadDataLevelCode('#level' + i, i);
+            //             loadDataFirstLastAllLevel('#level' + i, i);
+            //         }
+            //     },
+            //     error: function (response) {
+            //         $('#notification_error').modal('show');
+            //         $('#message-notification-error').html(response);
+            //     }
+            // });
 
             $('#family_dependent_data_table').DataTable().destroy();
             load_table_family_dependent_data();
@@ -5357,6 +5433,66 @@
             });
         }
 
+        function loadDataOfficeLocation(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.officeDesc + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#office_location_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Office Location',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "<?php echo e(url('/office_location/api')); ?>",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.officeDesc,
+                                    id: item.officeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataTerminationCode(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -5987,7 +6123,8 @@
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            isRange: false
                         };
                     },
                     processResults: function (data) {
@@ -6691,7 +6828,7 @@
                 $('#include_tax_family_dependent_data').val('false');
             }
 
-            console.log($("#gender_family_dependent_data").val());
+            // console.log($("#gender_family_dependent_data").val());
             
             arrayFamilyDependent.push({
                 "seqNoFamilyDependent": $("#seq_no_family_dependent_data").val(),
