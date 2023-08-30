@@ -5620,6 +5620,7 @@ class PersonelController extends Controller
                 "terminationCode" => $request->termination_code_employment,
                 "terminationRemarks" => $request->termination_remarks_employment,
                 "effectiveTerminationDate" => $request->effective_terminated_employment,
+                "officeCode" => $request->office_location_employment,
                 "pensionDate" => null,
                 "serviceYear" => 0,
                 "employmentType" => $request->employment_type_employment,
@@ -5937,7 +5938,8 @@ class PersonelController extends Controller
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
 
-            // dd(json_encode($param));
+            // var_dump(json_encode($param));
+            // exit;
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
@@ -5952,6 +5954,7 @@ class PersonelController extends Controller
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
+            // exit;
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -8719,11 +8722,13 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            foreach($request->level_new as $key => $value){
-                $data_level[] = [
-                    'levelType' => $request->level_type_new[$key],
-                    'levelCode' => $value
-                ];
+            if(!empty($request->level_new)){
+                foreach($request->level_new as $key => $value){
+                    $data_level[] = [
+                        'levelType' => $request->level_type_new[$key],
+                        'levelCode' => $value
+                    ];
+                }
             }
 
             if($request->mutation_type == "N"){
@@ -8844,11 +8849,16 @@ class PersonelController extends Controller
                 ];
             }
 
+            // var_dump(json_encode($param));
+            // exit;
+
             $response = $client->post(env('API_URL') . '/mutationemployee/mutation',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // var_dump($response);
+            // exit;
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

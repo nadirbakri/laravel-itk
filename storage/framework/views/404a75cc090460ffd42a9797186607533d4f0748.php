@@ -64,7 +64,7 @@
 <body>
 	<div class="div-payroll">
         <div class="div-title">
-			<a href="<?php echo e(url('/payroll')); ?>" target="iframe_dashboard">
+			<a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
 				<img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
 				<span class="title-text"><?php echo e(__('payroll_monthly_payroll_closing_process.list')); ?></span>
 			</a>
@@ -198,7 +198,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "<?php echo e(url('payroll/py_monthly_closing_process')); ?>";
+                                        "<?php echo e(url('payroll/monthly_payroll_closing_process')); ?>";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);

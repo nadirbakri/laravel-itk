@@ -197,6 +197,14 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="flag_absent_mobile" name="flag_absent_mobile" value="true">
+                            <label for="flag_absent_mobile">{{ __('tm_reference_time_management.label_flag_absent_mobile') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="not_clock_in">{{ __('tm_reference_time_management.label_not_clock_in') }}</label>
                             <select class="form-control select2" id="not_clock_in" name="not_clock_in" disabled></select>
@@ -961,6 +969,14 @@
                     $('#template_preparation_process_shift').prop('checked', true).trigger('change');
                 } else if(arrData[0].templatePreparation.toLowerCase() == "blank") {
                     $('#template_preparation_process_blank').prop('checked', true).trigger('change');
+                }
+            }
+            if (typeof arrData[0].flagAbsentMobile !== 'undefined') {
+                if (arrData[0].flagAbsentMobile === true) {
+                    $('#flag_absent_mobile').prop('checked', true).trigger('change');
+                }
+                else {
+                    $('#flag_absent_mobile').prop('checked', false).trigger('change');
                 }
             }
             $.ajax({

@@ -4607,21 +4607,23 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$level = array_merge($level, $arrResult->dataListSet);
-	    }else{
-			$level = array_merge($level, $arrResult->dataListSet);
-	    	$level = array_filter(
-	    		$level,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->levelName)){
-	    				return preg_match('/' . $search . '/i', $value->levelName);
-	    			}else if(preg_match('/' . $search . '/i', $value->levelCode)){
-	    				return preg_match('/' . $search . '/i', $value->levelCode);
-	    			}
-	    		}
-	    	);
-	    }
+		if($arrResult->dataListSet != null){
+			if($search == ''){
+				$level = array_merge($level, $arrResult->dataListSet);
+			}else{
+				$level = array_merge($level, $arrResult->dataListSet);
+				$level = array_filter(
+					$level,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->levelName)){
+							return preg_match('/' . $search . '/i', $value->levelName);
+						}else if(preg_match('/' . $search . '/i', $value->levelCode)){
+							return preg_match('/' . $search . '/i', $value->levelCode);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($level);
 	}

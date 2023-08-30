@@ -20,6 +20,7 @@ return [
     'label_by_shift' => 'Dengan Shift',
     'label_blank' => 'Kosong',
     'label_attendance' => 'Kehadiran',
+    'label_flag_absent_mobile' => 'Absent via Mobile',
     'label_not_clock_in' => 'Tidak Masuk',
     'label_late' => 'Terlambat',
     'label_not_clock_out' => 'Tidak Keluar',
