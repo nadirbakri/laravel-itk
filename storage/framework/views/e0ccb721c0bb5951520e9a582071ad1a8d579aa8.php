@@ -2817,7 +2817,7 @@
             $('#office_location_employment').val(null).trigger('change');
             $('#special_reason_resign_employment').prop('checked', false);
             $('#termination_remarks_employment').val("");
-            $('#expatriat_employment').prop('checked', true);
+            $('#expatriat_employment').prop('checked', false);
             $('#license_no_employment').val("");
             $('#commisioner_employment').prop('checked', false);
             $('#fringe_benefit_data_table').DataTable().destroy();
@@ -2896,7 +2896,7 @@
                             '<label for="level' + i + '">' + response.data_level[i - 1]
                             .levelDescription + '</label>' +
                             '<select class="form-control select2" id="level' + i + '" name="level' +
-                            i + '[]" multiple="multiple"></select>' +
+                            i + '"></select>' +
                             '</div></div>'
                         );
 

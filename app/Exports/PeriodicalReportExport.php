@@ -152,7 +152,8 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
+        // var_dump($arrResult->dataListSet);
+        // exit;
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [

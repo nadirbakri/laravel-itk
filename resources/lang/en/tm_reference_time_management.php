@@ -20,6 +20,7 @@ return [
     'label_by_shift' => 'By Shift',
     'label_blank' => 'Blank',
     'label_attendance' => 'Attendance',
+    'label_flag_absent_mobile' => 'Absent Mobile',
     'label_not_clock_in' => 'Not Clock In',
     'label_late' => 'Late',
     'label_not_clock_out' => 'Not Clock Out',

@@ -197,7 +197,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/py_monthly_closing_process') }}";
+                                        "{{ url('payroll/monthly_payroll_closing_process') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);

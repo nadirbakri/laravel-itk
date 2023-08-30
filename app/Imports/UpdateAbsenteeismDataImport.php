@@ -90,7 +90,8 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 ];
             }
 
-            // dd(json_encode($param));
+            // var_dump(json_encode($param));
+            // exit;
 
             $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]

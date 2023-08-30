@@ -1710,6 +1710,7 @@ class PayrollController extends Controller
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
                         'statusPeriod' => $request->statusPeriod,
+                        'groupAuthorizeCode' => Session::get('groupAuthorizePayroll'),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -5691,7 +5692,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
+            // var_dump(json_encode(
             //     [
             //         "companyCode" => Session::get('companyCode'),
             //         "employeeNoFrom" => $request->employee_no_from,
@@ -5715,6 +5716,7 @@ public function dataDetailReportFormatPY(Request $request)
             //         "logActionUserID" => Session::get('userName') 
             //     ]
             //     ));
+            // exit;
 
             $response = $client->put(env('API_URL') . '/salarycalculation/updatesalarycalculation',
                 ['body' => json_encode(
@@ -5767,7 +5769,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
+            // var_dump(json_encode(
             //     [
             //         "companyCode" => Session::get('companyCode'),
             //         "periodMonth" => (int) $request->process_period_month_hidden,
@@ -5786,6 +5788,7 @@ public function dataDetailReportFormatPY(Request $request)
             //         "logActionUserID" => Session::get('userName') 
             //     ]
             //     ));
+            //     exit;
 
             $response = $client->post(env('API_URL') . '/absenteeismcalculationprocess/inserttmfixedcomponent',
                 ['body' => json_encode(

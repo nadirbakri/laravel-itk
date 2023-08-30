@@ -86,7 +86,59 @@ class TimeManagementController extends Controller
 
     public function pageUpdateAbsenteeismProcess()
     {
-        return view ('time_management.tm_update_absenteeism_process');
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $arrResult = json_decode($response->getBody()->getContents());
+
+            if(!empty($arrResult->dataListSet)){
+                $response_tm = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            "periodMonth" => $arrResult->dataListSet[0]->periodMonth,
+                            "periodYear" => $arrResult->dataListSet[0]->periodYear,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult_tm = json_decode($response_tm->getBody()->getContents());
+
+                $data = $arrResult_tm->dataListSet;
+            }else{
+                $data = null;
+            }
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        return view ('time_management.tm_update_absenteeism_process', ['data' => $data]);
     }
 
     public function pageAbsenteeismDataEntryByEmployeeNo()
@@ -1975,6 +2027,7 @@ class TimeManagementController extends Controller
             //         "languageCode" => App::getLocale()
             //     ]
             //     ));
+            // exit;
             
             $response = $client->post(env('API_URL') . '/updateabsenteeismprocess/updateabsenteeismprocess',
                 ['body' => json_encode(
@@ -2150,6 +2203,26 @@ class TimeManagementController extends Controller
                 $file->move('file_excel', $filename);
                 $path = public_path('file_excel\\');
 
+                // var_dump(json_encode(
+                //     [
+                //         'companyCode' => Session::get('companyCode'),
+                //         'fileLocation' =>  $path . '' . $filename,
+                //         'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
+                //         'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                //         "changedNo" => 0,
+                //         "createdDate" => date("Y-m-d\TH:i:s"),
+                //         "createdBy" => Session::get('userID'),
+                //         "changedDate" => date("Y-m-d\TH:i:s"),
+                //         "changedBy" => Session::get('userID'),
+                //         "languageCode" => App::getLocale(),
+                //         'sessionID' => 0,
+                //         'sessionUserID' => Session::get('userID'),
+                //         'logActionUsername' => Session::get('userName'),
+                //         'logActionUserID' => Session::get('userID')
+                //     ]
+                //     ));
+                // exit;
+
                 $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
                     ['body' => json_encode(
                         [
@@ -2174,6 +2247,7 @@ class TimeManagementController extends Controller
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
+            // exit;
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2267,6 +2341,7 @@ class TimeManagementController extends Controller
                 'statusProcess' => $arrData['process_status'],
                 'statusPeriod' => $arrData['period_status'],
                 'templatePreparation' => $arrData['template_preparation_process'],
+                'flagAbsentMobile' => isset($request->flag_absent_mobile) ? (bool) $request->flag_absent_mobile : false,
                 'calculateLateHour' => $arrData['late_hour'],
                 'calculateEarlyBackHour' => $arrData['early_back_hour'],
                 'calculateOvertime' => $arrData['default_calculation'],
