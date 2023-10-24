@@ -120,7 +120,7 @@
             </a>
         </div>
         <div class="div-title">
-            <a href="{{ url()->previous() }}" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_work_detail.list') }}</span>
             </a>
@@ -190,6 +190,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
         //addClass = disabled first;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');

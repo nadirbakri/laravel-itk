@@ -88,13 +88,29 @@
             text-align: center;
             vertical-align: middle;
         }
+
+        .row {
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .select2-dropdown .select2-results__option {
+            font-size: 11px; /* Adjust the desired font size */
+        }
+
+        .select2-dropdown {
+            width: 30rem !important; /* Adjust the desired width */
+        }
     </style>
 </head>
 
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url()->previous() }}" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_absenteeism_data_entry_by_employee_no.list') }}</span>
             </a> 
@@ -103,14 +119,14 @@
             <form id="tm_absenteeism_data_entry_by_employee_no_form" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label
                                 for="employee_no">{{ __('tm_absenteeism_data_entry_by_employee_no.label_employee_no') }}</label>
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label
                                 for="employee_name">{{ __('tm_absenteeism_data_entry_by_employee_no.label_employee_name') }}</label>
@@ -118,25 +134,17 @@
                                 placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_employee_name') }}" readonly>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="ranking">{{ __('tm_absenteeism_data_entry_by_employee_no.label_ranking') }}</label>
-                            <input type="text" class="form-control" id="ranking" name="ranking"
-                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_ranking') }}" readonly>
+                                for="cost_center">{{ __('tm_absenteeism_data_entry_by_employee_no.label_cost_center') }}</label>
+                            <input type="text" class="form-control" id="cost_center" name="cost_center"
+                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_cost_center') }}" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label
-                                for="position">{{ __('tm_absenteeism_data_entry_by_employee_no.label_position') }}</label>
-                            <input type="text" class="form-control" id="position" name="position"
-                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_position') }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label
                                 for="period">{{ __('tm_absenteeism_data_entry_by_employee_no.label_period') }}</label>
@@ -149,17 +157,59 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="position">{{ __('tm_absenteeism_data_entry_by_employee_no.label_position') }}</label>
+                            <input type="text" class="form-control" id="position" name="position"
+                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_position') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="location">{{ __('tm_absenteeism_data_entry_by_employee_no.label_location') }}</label>
+                            <input type="text" class="form-control" id="location" name="location"
+                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_location') }}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="work_pattern">{{ __('tm_absenteeism_data_entry_by_employee_no.label_work_pattern') }}</label>
+                            <input type="text" class="form-control" id="work_pattern" name="work_pattern"
+                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_work_pattern') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="ranking">{{ __('tm_absenteeism_data_entry_by_employee_no.label_ranking') }}</label>
+                            <input type="text" class="form-control" id="ranking" name="ranking"
+                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_ranking') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label
+                                for="level1">{{ __('tm_absenteeism_data_entry_by_employee_no.label_level1') }}</label>
+                            <input type="text" class="form-control" id="level1" name="level1"
+                                placeholder="{{ __('tm_absenteeism_data_entry_by_employee_no.label_level1') }}" readonly>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
         <div class="row">
-            <div class="col-3">
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary" name="btn-edit" id="btn-edit"
                     style="width: 100%;">
                     <i class="fa fa-pencil"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_edit') }}
                 </button>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                     style="width: 100%;" disabled>
                     <i class="fa fa-floppy-o"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_save') }}
@@ -168,38 +218,33 @@
         </div>
         <form id="absenteeism_data_entry_by_employee_no_table_form" method="post">
             <div class="div-table" width="100%">
-                <table id="absenteeism_data_entry_by_employee_no_table" class="table hover">
+                <table id="absenteeism_data_entry_by_employee_no_table" class="table hover" style="font-size: 0.8rem;">
                     <thead>
                         <tr>
-                            <th rowspan="2">Absent Date</th>
-                            <th rowspan="2">Period</th>
+                            <th rowspan="2" class="middle">Absent Date</th>
+                            
+                            <th rowspan="2" class="middle">Period</th>
                             <th rowspan="2" class="middle">Day</th>
                             <th rowspan="2" class="middle">Shift Code</th>
-                            <th rowspan="2" class="middle">Cost Center Code</th>
+                            <!-- <th rowspan="2" class="middle">Cost Center Code</th> -->
                             <th colspan="2" class="middle">Actual In</th>
                             <th colspan="2"class="middle">Actual Out</th>
                             <th rowspan="2" class="middle">Total Actual Hour</th>
-                            <th colspan="3" class="middle">Finger Absent</th>
-                            <th colspan="3" class="middle">Absent</th>
                             <th colspan="8" class="middle">Overtime</th>
-                            <th rowspan="2" class="middle">Total Normal Hour</th>
-                            <th colspan="2" class="middle">Normal Hour</th>
-                            <th colspan="2" class="middle">Overtime</th>
-                            <th rowspan="2" class="middle">Position</th>
+                            <th colspan="3" class="middle">Summary Absent Code</th>
+                            <th colspan="2" class="middle">Shift Hour</th>
+                            <th rowspan="2" class="middle">Total Shift Hour</th>
+                            <th colspan="2" class="middle">Overtime Shift Hour</th>
+                            <!-- <th colspan="3" class="middle">Absent</th> -->
+                            <!-- <th rowspan="2" class="middle">Position</th>
                             <th rowspan="2" class="middle">Location</th>
-                            <th rowspan="2" class="middle">Grade</th>
+                            <th rowspan="2" class="middle">Grade</th> -->
                         </tr>
                         <tr>
                             <th class="middle">Date</th>
                             <th class="middle">Time</th>
                             <th class="middle">Date</th>
                             <th class="middle">Time</th>
-                            <th class="middle">Code</th>
-                            <th class="middle">Hour</th>
-                            <th class="middle">Description</th>
-                            <th class="middle">Code</th>
-                            <th class="middle">Hour</th>
-                            <th class="middle">Description</th>
                             <th class="middle">Code</th>
                             <th class="middle">Before</th>
                             <th class="middle">Start</th>
@@ -208,10 +253,16 @@
                             <th class="middle">Convert</th>
                             <th class="middle">BOT</th>
                             <th class="middle">Description</th>
+                            <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th>
                             <th class="middle">In</th>
                             <th class="middle">Out</th>
                             <th class="middle">Before</th>
                             <th class="middle">After</th>
+                            <!-- <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th> -->
                         </tr>
                     </thead>
                 </table>
@@ -273,7 +324,26 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
 
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
         var table = null;
 
@@ -363,10 +433,15 @@
 
         function load_data(){
             var data = $('#employee_no').select2('data');
+            // console.log(data[0]);
             var data2 = $('#period').val();
             $('#employee_name').val(htmlDecode(data[0].title));
             $('#ranking').val(data[0].data.rankingName);
             $('#position').val(data[0].data.positionName);
+            $('#location').val(data[0].data.locationName);
+            $('#work_pattern').val(data[0].data.patternCodeDescription);
+            $('#cost_center').val(data[0].data.costCenterDescription);
+            $('#level1').val(data[0].data.levelName1);
             // console.log(data);
 
             // var filter_employee_no_table = $('#employee_no').val();
@@ -387,7 +462,7 @@
                                 '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
                                 '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" disabled></select>',
                                 '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" disabled></select>',
-                                '<select class="form-control select2 select_cost_center_code" name="cost_center_code[]" id="cost_center_code'+ (k+1) +'" disabled></select>',
+                                // '<select class="form-control select2 select_cost_center_code" name="cost_center_code[]" id="cost_center_code'+ (k+1) +'" disabled></select>',
                                 '<div class="input-group">' +
                                     '<input type="text" class="form-control actual_date_in" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
                                     '<div class="input-group-prepend" id="actual_date_in_calendar">' +
@@ -403,12 +478,6 @@
                                 '</div>',
                                 '<input type="text" class="form-control actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" data-no="'+ (k+1) +'" disabled>',
                                 '<input type="text" class="form-control total_actual_hour" name="total_actual_hour[]" id="total_actual_hour" readonly>',
-                                '<select class="form-control select2 select_finger_absent_code" name="finger_absent_code[]" id="finger_absent_code'+ (k+1) +'" disabled></select>',
-                                '<input type="text" class="form-control finger_absent_hour" name="finger_absent_hour[]" id="finger_absent_hour'+ (k+1) +'" readonly>',
-                                '<input type="text" class="form-control finger_absent_description" name="finger_absent_description[]" id="finger_absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
-                                '<select class="form-control select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" disabled></select>',
-                                '<input type="text" class="form-control absent_hour" name="absent_hour[]" id="absent_hour" readonly>',
-                                '<input type="text" class="form-control absent_description" name="absent_description[]" id="absent_description" value="'+ ((typeof v.descriptionAbsent2 !== 'undefined' && v.descriptionAbsent2 !== null) ? v.descriptionAbsent2 : '') +'" readonly>',
                                 '<select class="form-control select2 select_overtime_code" name="overtime_code[]" id="overtime_code'+ (k+1) +'" disabled></select>',
                                 '<input type="text" class="form-control overtime_before" name="overtime_before[]" id="overtime_before" readonly>',
                                 '<input type="text" class="form-control overtime_start" name="overtime_start[]" id="overtime_start" readonly>',
@@ -417,14 +486,20 @@
                                 '<input type="text" class="form-control overtime_convert" name="overtime_convert[]" id="overtime_convert" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" readonly>',
                                 '<input type="text" class="form-control overtime_bot" name="overtime_bot[]" id="overtime_bot" readonly>',
                                 '<input type="text" class="form-control overtime_description" name="overtime_description[]" id="overtime_description" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" readonly>',
-                                '<input type="text" class="form-control total_normal_hour" name="total_normal_hour[]" id="total_normal_hour" readonly>',
+                                '<select class="form-control select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" disabled></select>',
+                                '<input type="text" class="form-control absent_hour" name="absent_hour[]" id="absent_hour" readonly>',
+                                '<input type="text" class="form-control absent_description" name="absent_description[]" id="absent_description" value="'+ ((typeof v.descriptionAbsent2 !== 'undefined' && v.descriptionAbsent2 !== null) ? v.descriptionAbsent2 : '') +'" readonly>',
                                 '<input type="text" class="form-control normal_hour_in" name="normal_hour_in[]" id="normal_hour_in" readonly>',
                                 '<input type="text" class="form-control normal_hour_out" name="normal_hour_out[]" id="normal_hour_out" readonly>',
+                                '<input type="text" class="form-control total_normal_hour" name="total_normal_hour[]" id="total_normal_hour" readonly>',
                                 '<input type="text" class="form-control normal_overtime_before" name="normal_overtime_before[]" id="normal_overtime_before" readonly>',
                                 '<input type="text" class="form-control normal_overtime_after" name="normal_overtime_after[]" id="normal_overtime_after" readonly>',
-                                '<select class="form-control select2 select_position" name="position[]" id="position'+ (k+1) +'" disabled></select>',
-                                '<select class="form-control select2 select_location" name="location[]" id="location'+ (k+1) +'" disabled></select>',
-                                '<select class="form-control select2 select_grade" name="grade[]" id="grade'+ (k+1) +'" disabled></select>'
+                                // '<select class="form-control select2 select_finger_absent_code" name="finger_absent_code[]" id="finger_absent_code'+ (k+1) +'" disabled></select>',
+                                // '<input type="text" class="form-control finger_absent_hour" name="finger_absent_hour[]" id="finger_absent_hour'+ (k+1) +'" readonly>',
+                                // '<input type="text" class="form-control finger_absent_description" name="finger_absent_description[]" id="finger_absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
+                                // '<select class="form-control select2 select_position" name="position[]" id="position'+ (k+1) +'" disabled></select>',
+                                // '<select class="form-control select2 select_location" name="location[]" id="location'+ (k+1) +'" disabled></select>',
+                                // '<select class="form-control select2 select_grade" name="grade[]" id="grade'+ (k+1) +'" disabled></select>'
                             ]);
                         });
 
@@ -438,13 +513,13 @@
 
                         loadDataDay(".select_day");
                         loadDataShiftCode(".select_shift_code");
-                        loadDataCostCenterCode(".select_cost_center_code");
-                        loadDataAbsentCode('.select_finger_absent_code');
+                        // loadDataCostCenterCode(".select_cost_center_code");
+                        // loadDataAbsentCode('.select_finger_absent_code');
                         loadDataAbsentCode('.select_absent_code');
                         loadDataOvertimeCode('.select_overtime_code');
-                        loadDataPosition('.select_position');
-                        loadDataLocation('.select_location');
-                        loadDataGrade('.select_grade');
+                        // loadDataPosition('.select_position');
+                        // loadDataLocation('.select_location');
+                        // loadDataGrade('.select_grade');
 
                         pickrActualDateIn = initDatePicker('.actual_date_in');
                         pickrActualDateOut = initDatePicker('.actual_date_out');
@@ -452,7 +527,7 @@
                         pickrActualTimeIn = initTimePicker('.actual_time_in');
                         pickrActualTimeOut = initTimePicker('.actual_time_out');
                         pickrTotalActualHour = initTimePicker('.total_actual_hour');
-                        pickrFingerAbsentHour = initTimePicker('.finger_absent_hour');
+                        // pickrFingerAbsentHour = initTimePicker('.finger_absent_hour');
                         pickrAbsentHour = initTimePicker('.absent_hour');
                         pickrOvertimeBefore = initTimePicker('.overtime_before');
                         pickrOvertimeStart = initTimePicker('.overtime_start');
@@ -478,7 +553,7 @@
                             const difference = moment(DateOut, "DD/MM/YYYY HH:mm").diff(moment(DateIn, "DD/MM/YYYY HH:mm"));
                             const diff = moment.utc(difference).format("HH:mm");
 
-                            $('#finger_absent_hour'+noTmp).val(diff);
+                            // $('#finger_absent_hour'+noTmp).val(diff);
                             $('#total_actual_hour'+noTmp).val(diff);
                         });
 
@@ -492,34 +567,34 @@
                                 var newOptionShift = new Option(v.shiftName, v.shiftCode, true, true);
                                 $('#shift_code' + (k+1)).append(newOptionShift).trigger('change');
                             }
-                            if(v.costCenterCode != null && v.costCenterDescription != null){
-                                var newOptionCostCenter = new Option(v.costCenterDescription, v.costCenterCode, true, true);
-                                $('#cost_center_code' + (k+1)).append(newOptionCostCenter).trigger('change');
-                            }
+                            // if(v.costCenterCode != null && v.costCenterDescription != null){
+                            //     var newOptionCostCenter = new Option(v.costCenterDescription, v.costCenterCode, true, true);
+                            //     $('#cost_center_code' + (k+1)).append(newOptionCostCenter).trigger('change');
+                            // }
                             if(v.ovtCode != null && v.ovtDescription != null){
                                 var newOptionOvertime = new Option(v.ovtDescription, v.ovtCode, true, true);
                                 $('#overtime_code' + (k+1)).append(newOptionOvertime).trigger('change');
                             }
-                            if(v.absentCode != null && v.absentCodeDescription != null){
-                                var newOptionFinger = new Option(v.absentCodeDescription, v.absentCode, true, true);
-                                $('#finger_absent_code' + (k+1)).append(newOptionFinger).trigger('change');
-                            }
+                            // if(v.absentCode != null && v.absentCodeDescription != null){
+                            //     var newOptionFinger = new Option(v.absentCodeDescription, v.absentCode, true, true);
+                            //     $('#finger_absent_code' + (k+1)).append(newOptionFinger).trigger('change');
+                            // }
                             if(v.absentCode2 != null && v.absentCode2Description != null){
                                 var newOptionAbsent = new Option(v.absentCode2Description, v.absentCode2, true, true);
                                 $('#absent_code' + (k+1)).append(newOptionAbsent).trigger('change');
                             }
-                            if(v.positionCode != null && v.positionName != null){
-                                var newOptionPosition = new Option(v.positionName, v.positionCode, true, true);
-                                $('#position' + (k+1)).append(newOptionPosition).trigger('change');
-                            }
-                            if(v.locationCode != null && v.locationName != null){
-                                var newOptionLocation = new Option(v.locationName, v.locationCode, true, true);
-                                $('#location' + (k+1)).append(newOptionLocation).trigger('change');
-                            }
-                            if(v.gradeCode != null && v.gradeName != null){
-                                var newOptionGrade = new Option(v.gradeName, v.gradeCode, true, true);
-                                $('#grade' + (k+1)).append(newOptionGrade).trigger('change');
-                            }
+                            // if(v.positionCode != null && v.positionName != null){
+                            //     var newOptionPosition = new Option(v.positionName, v.positionCode, true, true);
+                            //     $('#position' + (k+1)).append(newOptionPosition).trigger('change');
+                            // }
+                            // if(v.locationCode != null && v.locationName != null){
+                            //     var newOptionLocation = new Option(v.locationName, v.locationCode, true, true);
+                            //     $('#location' + (k+1)).append(newOptionLocation).trigger('change');
+                            // }
+                            // if(v.gradeCode != null && v.gradeName != null){
+                            //     var newOptionGrade = new Option(v.gradeName, v.gradeCode, true, true);
+                            //     $('#grade' + (k+1)).append(newOptionGrade).trigger('change');
+                            // }
                             // loadDataDetailDayCode('#day' + (k+1), ((typeof v.day !== 'undefined' && v.day !== null) ? v.day : ''));
                             // loadDataDetailShiftCode('#shift_code' + (k+1), ((typeof v.shiftCode !== 'undefined' && v.shiftCode !== null) ? v.shiftCode : ''));
                             // loadDataDetailCostCenterCode('#cost_center_code' + (k+1), ((typeof v.costCenterCode !== 'undefined' && v.costCenterCode !== null) ? v.costCenterCode : ''));
@@ -535,7 +610,7 @@
                             pickrActualTimeIn[k].setDate(((typeof v.actualDateIn !== 'undefined' && v.actualDateIn !== null) ? moment(v.actualDateIn).format('HH:mm:ss') : ''));
                             pickrActualTimeOut[k].setDate(((typeof v.actualDateOut !== 'undefined' && v.actualDateOut !== null) ? moment(v.actualDateOut).format('HH:mm:ss') : ''));
                             pickrTotalActualHour[k].setDate(((typeof v.totalActualHour !== 'undefined' && v.totalActualHour !== null) ? moment(v.totalActualHour).format('HH:mm:ss') : ''));
-                            pickrFingerAbsentHour[k].setDate(((typeof v.hourAbsent !== 'undefined' && v.hourAbsent !== null) ? moment(v.hourAbsent).format('HH:mm:ss') : ''));
+                            // pickrFingerAbsentHour[k].setDate(((typeof v.hourAbsent !== 'undefined' && v.hourAbsent !== null) ? moment(v.hourAbsent).format('HH:mm:ss') : ''));
                             pickrAbsentHour[k].setDate(((typeof v.absentHour !== 'undefined' && v.absentHour !== null) ? moment(v.hourAbsent2).format('HH:mm:ss') : ''));
                             pickrOvertimeBefore[k].setDate(((typeof v.ovtBeforeIn !== 'undefined' && v.ovtBeforeIn !== null) ? moment(v.ovtBeforeIn).format('HH:mm:ss') : ''));
                             pickrOvertimeStart[k].setDate(((typeof v.ovtIn !== 'undefined' && v.ovtIn !== null) ? moment(v.ovtIn).format('HH:mm:ss') : ''));
@@ -556,15 +631,15 @@
         $('#btn-edit').on('click', function () {
             $('.select_day').prop('disabled', false);
             $('.select_shift_code').prop('disabled', false);
-            $('.select_cost_center_code').prop('disabled', false);
+            // $('.select_cost_center_code').prop('disabled', false);
             $('.actual_date_in').prop('disabled', false);
             $('.actual_time_in').prop('disabled', false);
             $('.actual_date_out').prop('disabled', false);
             $('.actual_time_out').prop('disabled', false);
             $('.total_actual_hour').prop('readonly', false);
-            $('.select_finger_absent_code').prop('disabled', false);
-            $('.finger_absent_hour').prop('readonly', false);
-            $('.finger_absent_description').prop('readonly', false);
+            // $('.select_finger_absent_code').prop('disabled', false);
+            // $('.finger_absent_hour').prop('readonly', false);
+            // $('.finger_absent_description').prop('readonly', false);
             $('.select_absent_code').prop('disabled', false);
             $('.absent_hour').prop('readonly', false);
             $('.absent_description').prop('readonly', false);
@@ -576,9 +651,9 @@
             $('.overtime_convert').prop('readonly', false);
             $('.overtime_bot').prop('readonly', false);
             $('.overtime_description').prop('readonly', false);
-            $('.select_position').prop('disabled', false);
-            $('.select_location').prop('disabled', false);
-            $('.select_grade').prop('disabled', false);
+            // $('.select_position').prop('disabled', false);
+            // $('.select_location').prop('disabled', false);
+            // $('.select_grade').prop('disabled', false);
             $('#btn-save').prop('disabled', false);
         });
 
@@ -586,6 +661,10 @@
             $('#employee_name').val('');
             $('#ranking').val('');
             $('#position').val('');
+            $('#level1').val('');
+            $('#location').val('');
+            $('#cost_center').val('');
+            $('#work_pattern').val('');
             $('#absenteeism_data_entry_by_employee_no_table').DataTable().destroy();
         });
 
@@ -602,32 +681,29 @@
                 orderCellsTop: true,
                 paging: false,
                 "sDom": 'lrtip',
-                scrollY: 400,
+                scrollY: 2000,
                 scrollX: 400,
                 scrollCollapse: true,
                 aoColumns : [
-                    { "sWidth": '110px' },
+                    { "sWidth": '130px' },
                     { "sWidth": '50px' },
-                    { "sWidth": '100px' },
-                    { "sWidth": '100px' },
-                    { "sWidth": '200px' },
+                    { "sWidth": '150px' },
+                    { "sWidth": '300px' },
+                    // { "sWidth": '200px' },
                     { "sWidth": '150px' },
                     { "sWidth": '70px' },
                     { "sWidth": '150px' },
                     { "sWidth": '70px' },
                     { "sWidth": '70px' },
+                    { "sWidth": '300px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
+                    { "sWidth": '70px' },
                     { "sWidth": '200px' },
-                    { "sWidth": '70px' },
-                    { "sWidth": '200px' },
-                    { "sWidth": '200px' },
-                    { "sWidth": '70px' },
-                    { "sWidth": '200px' },
-                    { "sWidth": '200px' },
-                    { "sWidth": '70px' },
-                    { "sWidth": '70px' },
-                    { "sWidth": '70px' },
-                    { "sWidth": '70px' },
-                    { "sWidth": '50px' },
+                    { "sWidth": '300px' },
                     { "sWidth": '70px' },
                     { "sWidth": '200px' },
                     { "sWidth": '70px' },
@@ -635,9 +711,12 @@
                     { "sWidth": '70px' },
                     { "sWidth": '70px' },
                     { "sWidth": '70px' },
-                    { "sWidth": '100px' },
-                    { "sWidth": '100px' },
-                    { "sWidth": '100px' }
+                    // { "sWidth": '300px' },
+                    // { "sWidth": '70px' },
+                    // { "sWidth": '70px' },
+                    // { "sWidth": '100px' },
+                    // { "sWidth": '100px' },
+                    // { "sWidth": '100px' }
                 ],
                 drawCallback: function(settings){
                     // loadDataDay(".select_day");
@@ -652,19 +731,19 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
-                        '<div class="col-6">' + data.data.fullName + '</div>' +
-                        '</div>');
+                    var $row = $('<tr class="custom-row">' +
+                        '<td>' + data.data.employeeNo + '</td>' +
+                        '<td>' + data.data.fullName + '</td>' +
+                        '</tr>');
 
-                    return $result2;
+                    return $row;
                 }
             }
 
             var headerIsAppend = false;
             $('#employee_no').on('select2:open', function (e) {
                 if (!headerIsAppend) {
-                    html = '<div class="row">' +
+                    html = '<div class="row" style="font-size: 11px;">' +
                         '<div class="col-6"><b>Employee No</b></div>' +
                         '<div class="col-6"><b>Full Name</b></div>' +
                         '</div>';

@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personnel/nationality_code') }}" target="iframe_dashboard">
+			<a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Nationality Code List</span>
 			</a>
@@ -115,5 +115,25 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script type="text/javascript">
+	function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURLTwo')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURLTwo', previousURL);
+        }
+    }
 
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURLTwo');
+
+        sessionStorage.removeItem('previousURLTwo');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+</script>
 </html>

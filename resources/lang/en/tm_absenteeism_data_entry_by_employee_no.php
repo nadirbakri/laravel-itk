@@ -8,6 +8,10 @@ return [
     'label_ranking' => 'Ranking',
     'label_position' => 'Position',
     'label_period' => 'Period',
+    'label_cost_center' => 'Cost Center',
+    'label_location' => 'Location',
+    'label_work_pattern' => 'Work Pattern',
+    'label_level1' => 'Level 1 Name',
     'btn_edit' => 'Edit',
     'btn_save' => 'Save',
     'alert_success' => 'Success'

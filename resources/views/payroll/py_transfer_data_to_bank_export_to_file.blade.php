@@ -32,7 +32,7 @@
 <body>
 <div class="div-payroll">
 		<div class="div-title">
-			<a href="{{ url('payroll/transfer_data_to_bank') }}" target="iframe_dashboard">
+			<a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('payroll_transfer_data_to_bank.judul') }}</span>
 			</a>
@@ -99,6 +99,26 @@
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 
 <script type="text/javascript">
+	function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURLTwo')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURLTwo', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURLTwo');
+
+        sessionStorage.removeItem('previousURLTwo');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+	
     $(document).ready(function () {
 		$(".bank").on('click', function() {
             var data = $(this).data("bank");

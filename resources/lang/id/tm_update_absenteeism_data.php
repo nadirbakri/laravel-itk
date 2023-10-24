@@ -5,7 +5,7 @@
         'label_select_file_location' => 'Letakkan file Anda disini',
         'label_notes' => 'Catatan :',
         'label_column_a' => 'Column A : No Karyawan',
-        'label_column_b' => 'Column B : Tanggal (MM/DD/YYYY)',
+        'label_column_b' => 'Column B : ',
         'label_column_c' => 'Column C : Kode Absen',
         'label_column_d' => 'Column D : Jam & Menit Masuk (HH:MM)',
         'label_column_e' => 'Column E : Jam & Menit Keluar (HH:MM)',

@@ -116,7 +116,7 @@
             <?php echo csrf_field(); ?>
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
+                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                         <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                         <span class="title-text"><?php echo e(__('payroll_payment_slip.list')); ?></span>
                     </a>
@@ -340,6 +340,26 @@
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
 
         $("input[name$='sort_by']").click(function(){
@@ -987,6 +1007,54 @@
 
         if($('#payment_slip_form').length > 0){
             $('#payment_slip_form').validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    },
+                    employee_no_to: {
+                        required: true,
+                    },
+                    group_authorized_from: {
+                        required: true,
+                    },
+                    group_authorized_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                    employee_no_to: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                    group_authorized_from: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                    group_authorized_to: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $('#btn-send-to').prop("disabled", false);
+                    $('#btn-send-to').html(
+                        '<i class="fa fa-print"></i> <?php echo e(__("payroll_payment_slip.btn_send_to")); ?>'
+                    );
+                    $('#btn-preview').prop("disabled", false);
+                    $('#btn-preview').html(
+                        '<i class="fa fa-eye"></i> <?php echo e(__("payroll_payment_slip.btn_preview")); ?>'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
                 submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {

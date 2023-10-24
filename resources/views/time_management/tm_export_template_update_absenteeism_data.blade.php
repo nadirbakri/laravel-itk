@@ -18,8 +18,8 @@
 <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
     <thead>
         <tr>
-            <th>Employee No</th>
-            <th>Date (MM/DD/YYYY)</th>
+            <th>EmployeeNo</th>
+            <th>Absent Date</th>
             <th>Absent Code</th>
             <th>Hour and Minute In (HH:MM)</th>
             <th>Hour and Minute Out (HH:MM)</th>

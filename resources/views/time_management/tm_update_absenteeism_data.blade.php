@@ -89,7 +89,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="{{ url()->previous() }}" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_update_absenteeism_data.list') }}</span>
             </a> 
@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-6">
                         <u><p>{{ __('tm_update_absenteeism_data.label_notes') }}</p></u>
                         <p>{{ __('tm_update_absenteeism_data.label_column_a') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_b') }}</p>
@@ -193,6 +193,26 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
         $('input[type="file"]').change(function (e) {
             var fileName = e.target.files[0].name;

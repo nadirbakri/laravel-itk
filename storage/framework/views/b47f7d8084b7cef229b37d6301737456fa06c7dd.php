@@ -24,7 +24,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('utilities_user_security_maintenance.list')); ?></span>
             </a>
@@ -53,6 +53,26 @@
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
   $(document).ready(function() {
     $('#user_security_maintenance_table thead tr').clone(true).appendTo('#user_security_maintenance_table thead');
     $('#user_security_maintenance_table thead tr:eq(1) th').each( function (i) {

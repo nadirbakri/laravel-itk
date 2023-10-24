@@ -32,7 +32,10 @@ return [
     'seq_no_required' => 'No Urut Harus Diisi',
     'claim_date_required' => 'Tanggal Klaim Harus Diisi',
     'btn_save' => 'Simpan',
-    'btn_cancel' => 'Bata;',
+    'btn_add_to_list' => 'Tambahkan ke List',
+    'btn_clear' => 'Bersihkan',
+    'btn_show' => 'Lihat',
+    'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'
 
 ];

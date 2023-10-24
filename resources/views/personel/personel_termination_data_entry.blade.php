@@ -69,7 +69,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url()->previous() }}" target="iframe_dashboard">
+			<a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">{{ __('personel_termination_data_entry.list') }}</span>
 			</a>
@@ -204,6 +204,26 @@
 </script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
   $(document).ready(function() {
     var table = null;
     $('#termination_data_entry_table thead tr').clone(true).appendTo('#termination_data_entry_table thead');

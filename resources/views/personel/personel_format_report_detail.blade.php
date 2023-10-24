@@ -68,7 +68,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="{{ url('personnel/format_report') }}" target="iframe_dashboard">
+			<a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
 				<span class="title-text">Free Format Field List</span>
 			</a>
@@ -379,6 +379,26 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURLTwo')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURLTwo', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURLTwo');
+
+        sessionStorage.removeItem('previousURLTwo');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
   $(document).ready(function() {
     var table = null;
     $('#report_format_data_table thead tr').clone(true).appendTo('#report_format_data_table thead');

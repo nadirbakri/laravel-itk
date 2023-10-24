@@ -106,7 +106,7 @@
             </a>
         </div>
 		<div class="div-title">
-			<a href="<?php echo e(url('/personnel')); ?>" target="iframe_dashboard">
+			<a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
 				<img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
 				<span class="title-text"><?php echo e(__('personel_competency.list')); ?></span>
 			</a>

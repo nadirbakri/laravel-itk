@@ -101,6 +101,10 @@ class MasterDataController extends Controller
         return view('master_data.master_data_reimbursement_detail');
     }
 
+    public function pageMasterDataEmployeeGroupMultipleCheckin(){
+        return view('master_data.master_data_employee_group_multiple_checkin');
+    }
+
     public function tabelDetailEmployee(Request $request)
     {
         try {
@@ -278,6 +282,47 @@ class MasterDataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tabelEmployeeGroupMultipleCheckin(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/PeMasterESS/GetESSWFA',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'levelType' => $request->levelType,
+                        'levelCode' => $request->levelCode,
+                        'languageCode' => App::getLocale(),
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+        // exit;
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
@@ -928,6 +973,19 @@ class MasterDataController extends Controller
                 $b = [];
             }
 
+            // dd(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'groupCode' => $request->group_code,
+            //         'groupName' => $request->group_name,
+            //         'directApproval' => $a,
+            //         'emailSetting' =>$b,
+            //         "sessionID" => 0,
+            //         "sessionUserID" => Session::get('userID'),
+            //         "languageCode" => App::getLocale()
+            //     ]
+            //     ));
+
             $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcode',
                 ['body' => json_encode(
                     [
@@ -1339,6 +1397,78 @@ class MasterDataController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
+
+    public function selectLevelEmployeeGroupMultipleCheckin(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            for($i = 0; $i < $request->level_format; $i++){
+                if(isset($request->{'level' . ($i+1)})){
+                    $dataLevel = $request->{'level' . ($i+1)};
+                    $noLevel = ($i+1);
+                }
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        return response()->json(['dataLevel' => $dataLevel, 'noLevel' => $noLevel]);
+    }
     
-   
+    public function prosesEmployeeGroupMultipleCheckin(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->employeeNo)){
+                foreach($request->employeeNo as $key => $value){
+                    $a[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNo" => $value,
+                        "wfa" => isset($request->wfa[$key]) ? true : false,
+                        "createdBy" => Session::get('userID'),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale()
+                    ];
+                }
+            }else{
+                $a = [];
+            }
+
+            $response = $client->post(env('API_URL') . '/PeMasterESS/BulkUpdateWFA',
+                [
+                    'body' => json_encode($a)
+                ]
+            );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
 }

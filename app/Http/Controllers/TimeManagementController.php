@@ -12,8 +12,10 @@ use App\Exports\DetailAbsenteeismReportExport;
 use App\Exports\DetailAbsenteeismReasonReportExport;
 use App\Exports\DetailRateOvertimeReportExport;
 use App\Exports\UpdateAbsenteeismDataTemplateExport;
+use App\Exports\ChangeDataShiftTemplateExcel;
 
 use App\Imports\UpdateAbsenteeismDataImport;
+use App\Imports\ChangeDataShiftImport;
 use App\Imports\TimeRecordingProcessFormImport;
 
 use Illuminate\Http\Request;
@@ -82,6 +84,11 @@ class TimeManagementController extends Controller
     public function pageUpdateAbsenteeismData()
     {
         return view ('time_management.tm_update_absenteeism_data');
+    }
+
+    public function pageChangeDataShift()
+    {
+        return view ('time_management.tm_change_data_shift');
     }
 
     public function pageUpdateAbsenteeismProcess()
@@ -1383,6 +1390,34 @@ class TimeManagementController extends Controller
         return Excel::download(new UpdateAbsenteeismDataTemplateExport, 'Template Update Absenteeism Data.xlsx');
     }
 
+    public function importChangeDataShift(Request $request)
+    {
+        try{
+            $file = $request->file('file_location');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new ChangeDataShiftImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function templateChangeDataShift()
+    {
+        return Excel::download(new ChangeDataShiftTemplateExcel, 'Template Change Data Shift.xlsx');
+    }
+
     public function prosesUpdateShiftByDateTM(Request $request)
     {
         $dataLevel = [];
@@ -2497,9 +2532,12 @@ class TimeManagementController extends Controller
                     'actualDateIn' => isset($request->actual_date_in[$key]) ? $request->actual_date_in[$key] . "T" . $request->actual_time_in[$key] : null,
                     'actualDateOut' => isset($request->actual_date_out[$key]) ? $request->actual_date_out[$key] . "T" . $request->actual_time_out[$key] : null,
                     'totalActualHour' => isset($request->total_actual_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_actual_hour[$key] : null,
-                    'absentCode' => isset($request->finger_absent_code[$key]) ? $request->finger_absent_code[$key] : null,
-                    'hourAbsent' => isset($request->finger_absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->finger_absent_hour[$key] : null,
-                    'descriptionAbsent' => isset($request->finger_absent_description[$key]) ? $request->finger_absent_description[$key] : null,
+                    'absentCode' => null,
+                    'hourAbsent' => null,
+                    'descriptionAbsent' => null,
+                    // 'absentCode' => isset($request->finger_absent_code[$key]) ? $request->finger_absent_code[$key] : null,
+                    // 'hourAbsent' => isset($request->finger_absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->finger_absent_hour[$key] : null,
+                    // 'descriptionAbsent' => isset($request->finger_absent_description[$key]) ? $request->finger_absent_description[$key] : null,
                     'absentCode2' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
                     'hourAbsent2' => isset($request->absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->absent_hour[$key] : null,
                     'descriptionAbsent2' => isset($request->absent_hour[$key]) ? $request->absent_hour[$key] : null,
@@ -2519,10 +2557,10 @@ class TimeManagementController extends Controller
                     'totalNormalHour' => isset($request->total_normal_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_normal_hour[$key] : null,
                     'ovtBefore' => isset($request->normal_overtime_before[$key]) ? $request->absent_date[$key] . "T" . $request->normal_overtime_before[$key] : null,
                     'ovtAfter' => isset($request->normal_overtime_after[$key]) ? $request->absent_date[$key] . "T" . $request->normal_overtime_after[$key] : null,
-                    'costCenterCode' => isset($request->cost_center_code[$key]) ? $request->cost_center_code[$key] : null,
-                    'locationCode' => isset($request->location[$key]) ? $request->location[$key] : null,
-                    'positionCode' => isset($request->position[$key]) ? $request->position[$key] : null,
-                    'gradeCode' => isset($request->grade[$key]) ? $request->grade[$key] : null,
+                    // 'costCenterCode' => isset($request->cost_center_code[$key]) ? $request->cost_center_code[$key] : null,
+                    // 'locationCode' => isset($request->location[$key]) ? $request->location[$key] : null,
+                    // 'positionCode' => isset($request->position[$key]) ? $request->position[$key] : null,
+                    // 'gradeCode' => isset($request->grade[$key]) ? $request->grade[$key] : null,
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),

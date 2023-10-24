@@ -8,6 +8,10 @@ return [
     'label_ranking' => 'Peringkat',
     'label_position' => 'Posisi',
     'label_period' => 'Periode',
+    'label_cost_center' => 'Pusat Biaya',
+    'label_location' => 'Lokasi',
+    'label_work_pattern' => 'Pola Kerja',
+    'label_level1' => 'Nama Level 1',
     'btn_edit' => 'Ubah',
     'btn_save' => 'Simpan',
     'alert_success' => 'Sukses'

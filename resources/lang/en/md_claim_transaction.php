@@ -32,6 +32,9 @@ return [
     'seq_no_required' => 'Seq No Must Be Filled',
     'claim_date_required' => 'Claim Date Must Be Filled',
     'btn_save' => 'Save',
+    'btn_show' => 'Show',
+    'btn_add_to_list' => 'Add to List',
+    'btn_clear' => 'Clear',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'
 

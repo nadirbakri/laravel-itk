@@ -116,7 +116,7 @@
             <?php echo csrf_field(); ?>
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="<?php echo e(url('payroll')); ?>" target="iframe_dashboard">
+                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                         <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                         <span class="title-text"><?php echo e(__('payroll_transfer_data_to_bank.list')); ?></span>
                     </a>
@@ -148,6 +148,7 @@
                             <option value="BOT">BOT</option> -->
                         </select>
                     </div>
+                    <input type="hidden" class="form-control" id="format_file" name="format_file">
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -398,6 +399,26 @@
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -850,7 +871,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            module: 'PY'
+                            module: 'PY',
+                            isRange: false
                         };
                     },
                     processResults: function (data) {

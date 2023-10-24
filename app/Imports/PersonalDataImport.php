@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Session;
 use App;
 
-class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
+class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithChunkReading
 {
     /**
     * @param Collection $collection
@@ -384,6 +385,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
             }
 
             // dd(json_encode($param));
+            // exit;
 
             $response = $client->post(env('API_URL') . '/pemaster/importpemaster',
                 ['body' => json_encode($param)]
@@ -412,6 +414,11 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
     public function startRow(): int
     {
         return 2;
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 
     public function getArrResult(): array

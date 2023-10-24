@@ -5,7 +5,7 @@
         'label_select_file_location' => 'Drop your file here',
         'label_notes' => 'Notes :',
         'label_column_a' => 'Column A : Employee No',
-        'label_column_b' => 'Column B : Date (MM/DD/YYYY)',
+        'label_column_b' => 'Column B : ',
         'label_column_c' => 'Column C : Absent Code',
         'label_column_d' => 'Column D : Hour & Minute In (HH:MM)',
         'label_column_e' => 'Column E : Hour & Minute Out (HH:MM)',

@@ -134,7 +134,7 @@
 <body>
     <div class="div-form">
         <div class="div-title">
-            <a href="{{ url()->previous() }}" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('data_employee_group.judul_holiday_calendar') }}</span>
             </a>
@@ -292,41 +292,61 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script>
-        let dateHoliday = $('.input-group input').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
-                    flatPickrInstance.toggle();
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+
+    let dateHoliday = $('.input-group input').flatpickr({
+        altInput: true,
+        allowInput: true,
+        altFormat: "j-M-y",
+        dateFormat: "Y-m-d",
+        onReady: function () {
+            var flatPickrInstance = this;
+            var $flatPickrInput = $(flatPickrInstance.element);
+            $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                flatPickrInstance.toggle();
+            });
+        },
+        onChange: function(selectedDates, dateStr, instance) {
+            console.log(dateStr);
+            if(dateStr != null && dateStr != ''){
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/master_data/holiday_calendar/get') }}",
+                    data: {
+                        'calendar': dateStr
+                    }
+                }).then(function (data) {
+                    if(data.length > 0){
+                        dateHoliday.setDate(data[0].calendar);
+                        dateHoliday.prop('readonly', true);
+                        $('#description_date').val(data[0].description);
+                    }else{
+                        dateHoliday.setDate('');
+                        dateHoliday.prop('readonly', false);
+                        $('#description_date').val('');
+                    }
                 });
-            },
-            onChange: function(selectedDates, dateStr, instance) {
-                console.log(dateStr);
-                if(dateStr != null && dateStr != ''){
-                    $.ajax({
-                        type: 'GET',
-                        url: "{{ url('/master_data/holiday_calendar/get') }}",
-                        data: {
-                            'calendar': dateStr
-                        }
-                    }).then(function (data) {
-                        if(data.length > 0){
-                            dateHoliday.setDate(data[0].calendar);
-                            dateHoliday.prop('readonly', true);
-                            $('#description_date').val(data[0].description);
-                        }else{
-                            dateHoliday.setDate('');
-                            dateHoliday.prop('readonly', false);
-                            $('#description_date').val('');
-                        }
-                    });
-                }
-            },
-        });
+            }
+        },
+    });
 
       $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();

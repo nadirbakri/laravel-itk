@@ -135,7 +135,7 @@
 <body>
     <div class="div-form">
         <div class="div-title">
-            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('data_employee_group.judul_employee_group_permit')); ?></span>
             </a>
@@ -424,17 +424,6 @@
         </div>
     </div>
 </body>
-<script>
-    $(document).ready(function () {
-        $('table.display').DataTable();
-        // $('#exampletwo').DataTable().destroy();
-        // load_data_approval_table();
-    });
-    
-    // $('#btn-add').click(e=>{
-    //     e.prefentDefault()
-    // })
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -449,6 +438,37 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
+<script>
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
+    $(document).ready(function () {
+        $('table.display').DataTable();
+        // $('#exampletwo').DataTable().destroy();
+        // load_data_approval_table();
+    });
+    
+    // $('#btn-add').click(e=>{
+    //     e.prefentDefault()
+    // })
+</script>
 <script>
     var table3 = null;
     var table5 = null;
@@ -794,7 +814,7 @@
                                     .message);
                                     setTimeout(function () {
                                     window.location =
-                                        "<?php echo e(url('master_data/employee_group')); ?>";
+                                        "<?php echo e(url('master_data/employee_group_permit')); ?>";
                                     }, 3000);
                                 } else {
                                 $("#btn-save").prop("disabled", false);

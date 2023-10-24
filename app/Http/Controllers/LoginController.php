@@ -31,6 +31,10 @@ class LoginController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
+			// // info(env('API_URL') . '/auth');
+			// $output = new \Symfony\Component\Console\Output\ConsoleOutput();
+			// $output->writeln(env('API_URL') . '/auth');
+
 			$response = $client->post(env('API_URL') . '/auth',
                 ['body' => json_encode(
                     [
@@ -68,6 +72,7 @@ class LoginController extends Controller
 	    	Session::put('userID', $arrResult->dataListSet[0]->userID);
 	    	Session::put('userName', $arrResult->dataListSet[0]->userName);
 	    	Session::put('employeeNo', $arrResult->dataListSet[0]->employeeNo);
+			Session::put('fullName', $arrResult->dataListSet[0]->fullname);
 	    	Session::put('email', $arrResult->dataListSet[0]->email);
 	    	Session::put('companyCode', $arrResult->dataListSet[0]->companyCode);
 	    	Session::put('companyName', $arrResult->dataListSet[0]->companyName);

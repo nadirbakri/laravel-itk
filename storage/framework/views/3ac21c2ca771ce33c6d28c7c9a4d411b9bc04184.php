@@ -89,7 +89,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="<?php echo e(url('/time_management')); ?>" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('tm_update_absenteeism_data.list')); ?></span>
             </a> 
@@ -123,22 +123,22 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-6">
                         <u><p><?php echo e(__('tm_update_absenteeism_data.label_notes')); ?></p></u>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_a')); ?></p>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_b')); ?></p>
-                        <p><?php echo e(__('tm_update_absenteeism_data.label_column_c')); ?></p>
+                        <!-- <p><?php echo e(__('tm_update_absenteeism_data.label_column_c')); ?></p>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_d')); ?></p>
-                        <p><?php echo e(__('tm_update_absenteeism_data.label_column_e')); ?></p>
+                        <p><?php echo e(__('tm_update_absenteeism_data.label_column_e')); ?></p> -->
                     </div>
-                    <div class="col-3">
+                    <!-- <div class="col-3">
                         <br/>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_f')); ?></p>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_g')); ?></p>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_h')); ?></p>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_i')); ?></p>
                         <p><?php echo e(__('tm_update_absenteeism_data.label_column_j')); ?></p>
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>

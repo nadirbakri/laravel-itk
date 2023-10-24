@@ -111,7 +111,7 @@
             <?php echo csrf_field(); ?>
             <div class="div-export-business-trip-checking">
                 <div class="div-title">
-                    <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
+                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                         <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                         <span class="title-text"><?php echo e(__('export_business_trip_checking.list')); ?></span>
                     </a>
@@ -236,6 +236,26 @@
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(function () {
         initDatePicker();
     });

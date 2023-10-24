@@ -281,7 +281,7 @@ class ExportController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        dd(json_encode($param));
+        // dd(json_encode($param));
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('export.exp_businesstripsettlementpdf', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);

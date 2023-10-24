@@ -127,7 +127,7 @@
             </a>
         </div>
         <div class="div-title">
-            <a href="{{ url('utilities/user_security_maintenance') }}" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('utilities_user_security_maintenance.list_detail') }}</span>
             </a>
@@ -601,6 +601,26 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURLTwo')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURLTwo', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURLTwo');
+
+        sessionStorage.removeItem('previousURLTwo');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
         var level_table = null;
         var company_table = null;

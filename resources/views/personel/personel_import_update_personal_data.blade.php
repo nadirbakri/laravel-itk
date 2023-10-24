@@ -85,7 +85,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="{{ url('/personnel') }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_import_update_personal_data.list') }}</span>
             </a>
@@ -168,6 +168,26 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 

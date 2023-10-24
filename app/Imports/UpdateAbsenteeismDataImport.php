@@ -44,8 +44,8 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
 
     public function collection(Collection $rows)
     {
+        $keys = null;
         $param = [];
-        $date_ovt = date("Y-m-d\TH:i:s");
 
         date_default_timezone_set('Asia/Jakarta');
         try {
@@ -127,21 +127,21 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
         return $this->arrResult;
     }
 
-    // public function map($invoice): array
-    // {
-    //     $date_ovt = date("Y-m-d\TH:i:s");
+    public function map($invoice): array
+    {
+        $date_ovt = date("Y-m-d\TH:i:s");
         
-    //     return [
-    //         (string) $invoice[0],
-    //         $this->transformDate($invoice[1]),
-    //         (string) $invoice[2],
-    //         $this->transformDateTime($invoice[3]),
-    //         $this->transformDateTime($invoice[4]),
-    //         (string) $invoice[5],
-    //         (string) $invoice[6],
-    //         (string) $invoice[7],
-    //         (string) $invoice[8],
-    //         $this->transformDateTime($invoice[9])
-    //     ];
-    // }
+        return [
+            (string) $invoice[0],
+            $this->transformDate($invoice[1]),
+            (string) $invoice[2],
+            $this->transformDateTime($invoice[3]),
+            $this->transformDateTime($invoice[4]),
+            (string) $invoice[5],
+            (string) $invoice[6],
+            (string) $invoice[7],
+            (string) $invoice[8],
+            $this->transformDateTime($invoice[9])
+        ];
+    }
 }

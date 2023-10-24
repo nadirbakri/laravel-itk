@@ -32,6 +32,7 @@ class ChangePasswordController extends Controller
                 ['body' => json_encode(
                     [
                         'email' => Session::get('email'),
+                        'userID' => Session::get('userID'),
                         'password' => $request->new_password,
                         'confirmpassword' => $request->confirm_new_password,
                         'oldpassword' => $request->old_password

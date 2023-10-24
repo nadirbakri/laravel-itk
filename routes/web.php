@@ -409,6 +409,7 @@ Route::post('personnel/import_master_data/import', 'PersonelController@importMas
 Route::get('time_management', 'TimeManagementController@pageTimeManagement');
 Route::get('time_management/time_recording_process_form', 'TimeManagementController@pageTimeRecordingProcessForm');
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
+Route::get('time_management/change_data_shift', 'TimeManagementController@pageChangeDataShift');
 Route::get('time_management/update_absenteeism_process', 'TimeManagementController@pageUpdateAbsenteeismProcess');
 Route::get('time_management/template_preparation', 'TimeManagementController@pageTemplatePreparation');
 Route::get('time_management/absenteeism_data_entry_by_employee_no', 'TimeManagementController@pageAbsenteeismDataEntryByEmployeeNo');
@@ -515,6 +516,8 @@ Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagement
 
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 Route::post('time_management/update_absenteeism_data/download', 'TimeManagementController@templateUpdateAbsenteeismData');
+Route::post('time_management/change_data_shift/import', 'TimeManagementController@importChangeDataShift');
+Route::post('time_management/change_data_shift/download', 'TimeManagementController@templateChangeDataShift');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll');
@@ -941,10 +944,11 @@ Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactio
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData');
 Route::get('master_data/employee_master', 'MasterDataController@pageMasterDataEmployeeMaster');
-Route::get('master_data/employee_group', 'MasterDataController@pageMasterDataEmployeeGroup');
+Route::get('master_data/employee_group_permit', 'MasterDataController@pageMasterDataEmployeeGroup');
 Route::get('master_data/employee_group_leave', 'MasterDataController@pageMasterDataEmployeeGroupLeave');
 Route::get('master_data/employee_group_overtime', 'MasterDataController@pageMasterDataEmployeeGroupOvertime');
 Route::get('master_data/employee_group_detail', 'MasterDataController@pageMasterDataEmployeeGroupDetail');
+Route::get('master_data/employee_group_multiple_checkin', 'MasterDataController@pageMasterDataEmployeeGroupMultipleCheckin');
 Route::get('master_data/employee_group_reimbursement', 'MasterDataController@pageMasterDataEmployeeGroupReimbursement');
 Route::get('master_data/employee_group_reimbursement_detail', 'MasterDataController@pageMasterDataEmployeeGroupReimbursementDetail');
 Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataHolidayCalender');
@@ -955,6 +959,7 @@ Route::get('master_data/employee_list/table', 'MasterDataController@tabelDetailE
 Route::get('master_data_leave/list/table', 'MasterDataController@tabelDetailEmployeeLeave');
 Route::get('master_data_overtime/list/table', 'MasterDataController@tabelDetailEmployeeOvertime');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
+Route::get('master_data/employee_group_multiple_checkin/table', 'MasterDataController@tabelEmployeeGroupMultipleCheckin');
 Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
 Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
 Route::get('master_data/list_email/table', 'MasterDataController@tabelDetailEmail');
@@ -979,6 +984,8 @@ Route::post('master_data/employee_reimbursement/proses', 'MasterDataController@p
 Route::post('master_data/holiday_calendar/proses', 'MasterDataController@prosesEmployeeHolidayCalendar');
 Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@prosesEmployeeBusinessTrip');
 Route::post('master_data/employee_group_detail/proses', 'MasterDataController@prosesEmployeeGroupDetail');
+Route::post('master_data/employee_group_multiple_checkin/select_level', 'MasterDataController@selectLevelEmployeeGroupMultipleCheckin');
+Route::post('master_data/employee_group_multiple_checkin/proses', 'MasterDataController@prosesEmployeeGroupMultipleCheckin');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');

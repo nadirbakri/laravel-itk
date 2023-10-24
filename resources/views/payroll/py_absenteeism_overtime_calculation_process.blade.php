@@ -133,7 +133,7 @@
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
+                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('payroll_absenteeism_overtime_calculation_process.list') }}</span>
                     </a>
@@ -259,13 +259,33 @@
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrData = @json($data);
 
         if (arrData) {
-            $('#process_period_month').val(moment(arrData[0].periodMonth.toString()).format('MMMM'));
+            $('#process_period_month').val(moment(arrData[0].periodMonth.toString(), '2023-MM-01').format('MMMM'));
             $('#process_period_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
             $('#process_period_year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         }
