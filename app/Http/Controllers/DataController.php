@@ -19,7 +19,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -54,7 +54,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -102,7 +102,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -151,7 +151,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -199,7 +199,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -245,7 +245,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -278,7 +278,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -313,7 +313,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -361,7 +361,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -407,7 +407,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -440,7 +440,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -475,7 +475,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -523,7 +523,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -571,7 +571,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -620,7 +620,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -668,7 +668,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -717,7 +717,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -765,7 +765,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -813,7 +813,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -861,7 +861,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -968,7 +968,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1014,7 +1014,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1023,7 +1023,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response2 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1032,7 +1032,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response3 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1041,7 +1041,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response4 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response4 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1050,7 +1050,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response5 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response5 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1059,7 +1059,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response6 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response6 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1068,7 +1068,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response7 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response7 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1077,7 +1077,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response8 = $client->post(env('API_URL') . '/zipcode/getzipcode',
+			$response8 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1129,7 +1129,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1196,7 +1196,7 @@ class DataController extends Controller
 	//     						'Authorization' => 'Bearer ' . Session::get('token') ]
 	//     	]);
 
-	//     	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+	//     	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	//     		['body' => json_encode(
 	//     			[
 	//     				'companyCode' => Session::get('companyCode'),
@@ -1235,7 +1235,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1292,7 +1292,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+	    	$response = $client->post(env('API_URL') . '/personel/TmWorkPattern/getTmWorkPatternService',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1337,7 +1337,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+	    	$response = $client->post(env('API_URL') . '/personel/TmWorkPattern/getTmWorkPatternService',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1376,7 +1376,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/companybank/getcompanybank',
+	    	$response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1426,7 +1426,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/companybank/getcompanybank',
+	    	$response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1435,7 +1435,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/companybank/getcompanybank',
+			$response2 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1444,7 +1444,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/companybank/getcompanybank',
+			$response3 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1488,7 +1488,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmbank/getgmbank',
+	    	$response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1536,7 +1536,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmbank/getgmbank',
+	    	$response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1545,7 +1545,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/gmbank/getgmbank',
+			$response2 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1554,7 +1554,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/gmbank/getgmbank',
+			$response3 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1601,7 +1601,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -1641,7 +1641,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1694,7 +1694,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -1791,7 +1791,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1826,7 +1826,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -1890,7 +1890,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemasterleave/getpemasterleave',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMasterLeave/getPeMasterLeave',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1940,7 +1940,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemasterleave/getpemasterleave',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMasterLeave/getPeMasterLeave',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1987,7 +1987,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2086,7 +2086,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
 	    		['body' => json_encode(
 	    			[
 						'companyCode' => Session::get('companyCode')
@@ -2134,7 +2134,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
 	    		['body' => json_encode(
 	    			[
 						'companyCode' => Session::get('companyCode')
@@ -2186,7 +2186,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2235,7 +2235,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/User/getuserholdingcompany',
+	    	$response = $client->post(env('API_URL') . '/personel/User/getuserholdingcompany',
 	    		['body' => json_encode(
 	    			[
 						'userName' => Session::get('userID'),
@@ -2280,7 +2280,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/module/getmodule',
+	    	$response = $client->post(env('API_URL') . '/personel/Module/getModule',
 	    		['body' => json_encode(
 	    			[
 	    				'' => ''
@@ -2341,12 +2341,12 @@ class DataController extends Controller
 				$param['groupAuthorizeCode'] = Session::get('groupAuthorizeUtilities');
 			}
 
-	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
 	    		['body' => json_encode($param)]
 	    	);
 
 			if(isset($request->module)){
-				$response2 = $client->post(env('API_URL') . '/user/getuseraccessview',
+				$response2 = $client->post(env('API_URL') . '/personel/User/getUserAccessView',
 					['body' => json_encode(
 						[
 							'companyCode' => Session::get('companyCode'),
@@ -2405,7 +2405,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2415,7 +2415,7 @@ class DataController extends Controller
 	    	);
 
 			if(isset($request->module)){
-				$response2 = $client->post(env('API_URL') . '/user/getuseraccessview',
+				$response2 = $client->post(env('API_URL') . '/personel/User/getUserAccessView',
 					['body' => json_encode(
 						[
 							'companyCode' => Session::get('companyCode'),
@@ -2467,7 +2467,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2521,7 +2521,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -2560,7 +2560,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/position/getposition',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2609,7 +2609,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/position/getposition',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2668,7 +2668,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/position/getposition',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2716,7 +2716,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/position/getposition',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2751,7 +2751,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2801,7 +2801,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2851,7 +2851,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
+	    	$response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -2899,7 +2899,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
+	    	$response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -2948,7 +2948,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/user/getuserview',
+	    	$response = $client->post(env('API_URL') . '/personel/User/getUserView',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3042,7 +3042,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3075,7 +3075,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3108,7 +3108,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3141,7 +3141,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3174,7 +3174,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3209,7 +3209,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
+	    	$response = $client->post(env('API_URL') . '/personel/GmInstitution/getgmInstitution',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3257,7 +3257,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
+	    	$response = $client->post(env('API_URL') . '/personel/GmMajor/getgmMajor',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3303,7 +3303,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3338,7 +3338,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
+	    	$response = $client->post(env('API_URL') . '/personel/GmTitle/getgmTitle',
 	    		['body' => json_encode(
 	    			[
 						'companyCode' => Session::get('companyCode'),
@@ -3386,7 +3386,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/city/getcity',
+	    	$response = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3434,7 +3434,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/city/getcity',
+	    	$response = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3443,7 +3443,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/city/getcity',
+			$response2 = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3452,7 +3452,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/city/getcity',
+			$response3 = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3461,7 +3461,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response4 = $client->post(env('API_URL') . '/city/getcity',
+			$response4 = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3470,7 +3470,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response5 = $client->post(env('API_URL') . '/city/getcity',
+			$response5 = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3479,7 +3479,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response6 = $client->post(env('API_URL') . '/city/getcity',
+			$response6 = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3488,7 +3488,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response7 = $client->post(env('API_URL') . '/city/getcity',
+			$response7 = $client->post(env('API_URL') . '/personel/City/getCity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3538,7 +3538,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmskill/getgmskill',
+	    	$response = $client->post(env('API_URL') . '/personel/GmSkill/getgmSkill',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3634,7 +3634,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/audittrail/getaudittrail',
+	    	$response = $client->post(env('API_URL') . '/audittrail/UserLog/getUserLog',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3822,7 +3822,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
+	    	$response = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3869,7 +3869,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
+	    	$response = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -3904,7 +3904,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/user/getmodulelist',
+	    	$response = $client->post(env('API_URL') . '/personel/User/getModuleList',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3955,7 +3955,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -3998,7 +3998,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/position/getposition',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4037,7 +4037,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4074,7 +4074,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/location/getlocation',
+	    	$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4131,7 +4131,7 @@ class DataController extends Controller
 									'Authorization' => 'Bearer ' . Session::get('token') ]
 				]);
 	
-				$response = $client->post(env('API_URL') . '/location/getlocation',
+				$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 					['body' => json_encode(
 						[
 							'recordStatus' => 'A',
@@ -4191,7 +4191,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/location/getlocation',
+	    	$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4245,7 +4245,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/location/getlocation',
+	    	$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4281,7 +4281,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4330,7 +4330,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4390,7 +4390,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4443,7 +4443,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4479,7 +4479,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/level/getlevel',
+	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4529,7 +4529,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/level/getlevel',
+	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4585,7 +4585,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/level/getlevel',
+	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4641,7 +4641,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/level/getlevel',
+	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4680,7 +4680,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
+	    	$response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationForm',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4727,7 +4727,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetailpoint',
+	    	$response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetailPoint',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -4762,7 +4762,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/grade/getgrade',
+	    	$response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4811,7 +4811,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/grade/getgrade',
+	    	$response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4861,7 +4861,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/group/getgroup',
+	    	$response = $client->post(env('API_URL') . '/personel/Group/getGroup',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4910,7 +4910,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/group/getgroup',
+	    	$response = $client->post(env('API_URL') . '/personel/Group/getGroup',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4960,7 +4960,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/worknature/getworknature',
+	    	$response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5009,7 +5009,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/worknature/getworknature',
+	    	$response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5158,7 +5158,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5206,7 +5206,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5259,7 +5259,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5313,7 +5313,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5365,7 +5365,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5411,7 +5411,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5444,7 +5444,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5477,7 +5477,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5510,7 +5510,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5543,7 +5543,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5579,7 +5579,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/npwp/getnpwp',
+	    	$response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5628,7 +5628,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/npwp/getnpwp',
+	    	$response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5667,7 +5667,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+	    	$response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5714,7 +5714,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+	    	$response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5754,7 +5754,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+	    	$response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5793,7 +5793,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+	    	$response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5840,7 +5840,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+	    	$response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5878,7 +5878,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+	    	$response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5916,7 +5916,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5952,7 +5952,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
+	    	$response = $client->post(env('API_URL') . '/personel/TmShiftCode/getTmShiftCode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5999,7 +5999,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
+	    	$response = $client->post(env('API_URL') . '/personel/TmShiftCode/getTmShiftCode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6034,7 +6034,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
+	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 						'absentType' => 'L',
@@ -6081,7 +6081,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
+	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 	    				'absentType' => 'O',
@@ -6130,7 +6130,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
+	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -6176,7 +6176,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6211,7 +6211,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6250,7 +6250,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
+	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6290,7 +6290,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6338,7 +6338,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6386,7 +6386,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6427,7 +6427,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6466,7 +6466,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6477,7 +6477,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response2 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6488,7 +6488,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response3 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6499,7 +6499,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response4 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response4 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6510,7 +6510,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response5 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response5 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6521,7 +6521,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response6 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response6 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6532,7 +6532,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response7 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response7 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6543,7 +6543,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response8 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response8 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6554,7 +6554,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response9 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response9 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6565,7 +6565,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response10 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response10 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6576,7 +6576,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response11 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response11 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6587,7 +6587,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response12 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response12 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6598,7 +6598,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response13 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response13 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6609,7 +6609,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response14 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response14 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6620,7 +6620,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response15 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response15 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6631,7 +6631,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response16 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response16 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6642,7 +6642,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response17 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response17 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6653,7 +6653,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response18 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response18 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6664,7 +6664,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response19 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response19 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6675,7 +6675,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			// $response20 = $client->post(env('API_URL') . '/comgen/getcomgen',
+			// $response20 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    	// 	['body' => json_encode(
 	    	// 		[
 	    	// 			'companyCode' => Session::get('companyCode'),
@@ -6754,7 +6754,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -6798,7 +6798,7 @@ class DataController extends Controller
 	    			'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6836,7 +6836,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pemaster/gettermdatenotnull',
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getTermDateNotNull',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6980,7 +6980,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+	    	$response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7261,7 +7261,7 @@ class DataController extends Controller
 
 			// var_dump($request->fieldName);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -7300,7 +7300,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7428,7 +7428,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'MedicalLimitType_',
@@ -7476,7 +7476,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7624,7 +7624,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'LimitEligible_',
@@ -7672,7 +7672,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7721,7 +7721,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'MinimumServiceLength_',
@@ -7769,7 +7769,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7818,7 +7818,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'DefaultMedicalPaymentBankType_',
@@ -7866,7 +7866,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7915,7 +7915,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'RateType_',
@@ -7963,7 +7963,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8012,7 +8012,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'RoundingMethod_',
@@ -8060,7 +8060,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8109,7 +8109,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8157,7 +8157,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8206,7 +8206,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
+	    	$response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8291,7 +8291,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8324,7 +8324,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8358,7 +8358,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8391,7 +8391,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8427,7 +8427,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/pedependents/getpedependents',
+	    	$response = $client->post(env('API_URL') . '/personel/PeDependents/getPeDependents',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8475,7 +8475,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
+	    	$response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8523,7 +8523,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
+	    	$response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8570,7 +8570,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
+	    	$response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8661,7 +8661,7 @@ class DataController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -8713,7 +8713,7 @@ class DataController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -8771,7 +8771,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -8824,7 +8824,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -8875,7 +8875,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9094,7 +9094,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9151,7 +9151,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -9191,7 +9191,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -9228,7 +9228,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9278,7 +9278,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9326,7 +9326,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9373,7 +9373,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9420,7 +9420,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9470,7 +9470,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9518,7 +9518,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9567,7 +9567,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -9603,7 +9603,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9648,7 +9648,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9693,7 +9693,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9738,7 +9738,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9783,7 +9783,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9832,7 +9832,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9881,7 +9881,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/comgen/getcomGen',
+			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -10061,7 +10061,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomGen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -10114,7 +10114,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -10154,7 +10154,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -10203,7 +10203,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -10240,7 +10240,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A'
@@ -10288,7 +10288,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/company/getcompany',
+			$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
 				['body' => json_encode(
 					[
 						'recordStatus' => 'A',

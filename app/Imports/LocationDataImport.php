@@ -65,7 +65,7 @@ class LocationDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/location/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/Location/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

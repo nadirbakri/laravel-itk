@@ -246,7 +246,7 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',

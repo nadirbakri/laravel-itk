@@ -21,7 +21,7 @@ class PersonalDataExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/exportpemaster',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/ExportPeMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

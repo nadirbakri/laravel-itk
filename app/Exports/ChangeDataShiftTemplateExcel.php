@@ -22,7 +22,7 @@ class ChangeDataShiftTemplateExcel implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
+            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

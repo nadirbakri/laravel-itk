@@ -387,7 +387,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
             // dd(json_encode($param));
             // exit;
 
-            $response = $client->post(env('API_URL') . '/pemaster/importpemaster',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/ImportPeMaster',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

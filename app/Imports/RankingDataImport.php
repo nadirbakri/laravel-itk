@@ -61,7 +61,7 @@ class RankingDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/ranking/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/Ranking/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

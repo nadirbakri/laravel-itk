@@ -2,18 +2,21 @@
 <html>
 
 <head>
-    <title>{{ __('personel_final_performance_result_code.judul') }}</title>
+    <title><?php echo e(__('tm_input_balance_leave.judul')); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="<?php echo e(asset('pictures/favicon.png')); ?>" type="image/x-icon" />
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/time_management_detail_data.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/jquery.inputpicker.css')); ?>">
     <style type="text/css">
-        .div-personel {
+        .div-time_management {
             max-width: 100%;
             margin: auto;
             /*margin-top: 1%;*/
@@ -64,55 +67,73 @@
             font-size: 2.5vw;
             margin-left: 0.5%;
         }
-
     </style>
 </head>
 
 <body>
-    <div class="div-personel">
+    <div class="div-time_management">
         <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_final_performance_result_code.list_detail') }}</span>
+            <a href="javascript:void(0);" onclick="goBackWithModuleID('<?php echo e(url()->previous()); ?>')" target="iframe_dashboard">
+                <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
+                <span class="title-text"><?php echo e(__('tm_input_balance_leave.list_detail')); ?></span>
             </a>
         </div>
         <div class="div-form">
-            <form id="final_performance_result_form" method="post">
-                @csrf
+            <form id="input_balance_leave_form" method="post">
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="number">{{ __('personel_final_performance_result_code.label_no') }}</label>
-                            <input type="text" class="form-control" id="number" name="number"
-                                placeholder="{{ __('personel_final_performance_result_code.label_no') }}" readonly>
-                        </div>
-                        <input type="hidden" class="form-control" id="record_function" name="record_function">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="value">{{ __('personel_final_performance_result_code.label_value') }}</label>
-                            <input type="text" class="form-control" id="value" name="value"
-                                placeholder="{{ __('personel_final_performance_result_code.label_value') }}">
+                            <div class="form-group">
+                                <label
+                                    for="employee_no"><?php echo e(__('tm_input_balance_leave.label_employee_no')); ?></label>
+                                <input type="text" class="form-control select2" id="employee_no" name="employee_no"
+                                    placeholder= "<?php echo e(__('tm_input_balance_leave.label_employee_no')); ?>" readonly>
+                            </div>
+                            
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="from">{{ __('personel_final_performance_result_code.label_from') }}</label>
-                            <input type="text" class="form-control" id="from" name="from"
-                                placeholder="{{ __('personel_final_performance_result_code.label_from') }}">
+                            <div class="form-group">
+                                <label
+                                    for="leave_code"><?php echo e(__('tm_input_balance_leave.label_leave_code')); ?></label>
+                                <input type="text" class="form-control" id="leave_code"
+                                    name="leave_code"
+                                    placeholder="<?php echo e(__('tm_input_balance_leave.label_leave_code')); ?>" readonly>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="to">{{ __('personel_final_performance_result_code.label_to') }}</label>
-                            <input type="text" class="form-control" id="to" name="to"
-                                placeholder="{{ __('personel_final_performance_result_code.label_to') }}">
+                            <label
+                                for="leave_balance"><?php echo e(__('tm_input_balance_leave.label_leave_balance')); ?></label>
+                            <input type="number" class="form-control" id="leave_balance" name="leave_balance">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="leave_balance_before"><?php echo e(__('tm_input_balance_leave.label_leave_balance_before')); ?></label>
+                            <input type="number" class="form-control" id="leave_balance_before" name="leave_balance_before"> 
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="expired_date"><?php echo e(__('tm_input_balance_leave.label_expired_date')); ?></label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="expired_date" name="expired_date"
+                                    placeholder="<?php echo e(__('tm_input_balance_leave.label_expired_date')); ?>">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -120,13 +141,15 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('personel_final_performance_result_code.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> <?php echo e(__('tm_input_balance_leave.btn_save')); ?>
+
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('personnel/final_performance_result') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="<?php echo e(url('time_management/input_balance_leave')); ?>" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('personel_final_performance_result_code.btn_cancel') }}
+                            <i class="fa fa-times-circle"></i> <?php echo e(__('tm_input_balance_leave.btn_cancel')); ?>
+
                         </a>
                     </div>
                 </div>
@@ -143,7 +166,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                    <span id="message-notification-error"><?php echo e($errors->first()); ?></span>
                 </div>
             </div>
         </div>
@@ -158,8 +181,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="div-title-notification">
-                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('personel_final_performance_result_code.alert_success') }}</span>
+                        <img src="<?php echo e(url('/pictures/checklist-green-confirm-password.svg')); ?>" alt="Password">
+                        <span class="title-text-notification"><?php echo e(__('tm_input_balance_leave.alert_success')); ?></span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -171,13 +194,17 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
+<script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
     function savePreviousURL() {
@@ -201,92 +228,42 @@
     }
     
     $(document).ready(function () {
-        var func = "{{ $func }}";
+        let pickerExpiredDate = $('#expired_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
 
-        if (func == 'new') {
-            $('#record_function').val("New");
-            $('#number').val("");
-            $('#value').val("");
-            $('#from').val("");
-            $('#to').val("");
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-            $.ajax({
-                url: "{{ url('personnel/number/check') }}",
-                type: "GET",
-                data: {
-                    'url': '/personel/GmPerformanceResult/getGmPerformanceResult'
-                },
-                success: function (response) {
-                    $('#number').val(response);
-                },
-                error: function (response) {
-                    $('#notification_error').modal('show');
-                    $('#message-notification-error').html(response);
-                }
-            });
-        } else if (func == 'edit') {
-            $('#record_function').val("Edit");
-            $('#number').val("{{ isset($data[0]->sequenceNo) ? $data[0]->sequenceNo : '' }}");
-            $('#value').val("{{ isset($data[0]->value) ? $data[0]->value : '' }}");
-            $('#from').val("{{ isset($data[0]->from) ? $data[0]->from : '' }}");
-            $('#to').val("{{ isset($data[0]->to) ? $data[0]->to : '' }}");
-        }
+        $('#employee_no').val("<?php echo e(isset($data[0]->employeeNo) ? $data[0]->employeeNo : ''); ?>");
+        $('#leave_code').val("<?php echo e(isset($data[0]->leaveCode) ? $data[0]->leaveCode : ''); ?>");
+        $('#leave_balance').val("<?php echo e(isset($data[0]->leaveBalance) ? $data[0]->leaveBalance : ''); ?>");
+        $('#leave_balance_before').val("<?php echo e(isset($data[0]->leaveBalanceBefore) ? $data[0]->leaveBalanceBefore : ''); ?>");
+        // $('#leave_name').val("<?php echo e(isset($data[0]->leaveName) ? $data[0]->leaveName : ''); ?>");
 
-        $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personnel/final_performance_result') }}";
-        })
+        pickerExpiredDate.setDate("<?php echo e(isset($data[0]->leaveBalanceBeforeExpiredDate) ? $data[0]->leaveBalanceBeforeExpiredDate : ''); ?>");
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#final_performance_result_form").submit();
+            $("#input_balance_leave_form").submit();
         });
 
-        $.validator.addMethod("greaterThan",
-            function (value, element, param) {
-                var $min = $(param);
-                if (this.settings.onfocusout) {
-                    $min.off(".validate-greaterThan").on("blur.validate-greaterThan", function () {
-                        $(element).valid();
-                    });
-                }
-                return parseInt(value) > parseInt($min.val());
-            }, "To must be greater than From");
-
-        if ($("#final_performance_result_form").length > 0) {
-            $("#final_performance_result_form").validate({
-                rules: {
-                    number: {
-                        required: true,
-                    },
-                    value: {
-                        required: true,
-                    },
-                    from: {
-                        required: true,
-                    },
-                    to: {
-                        required: true,
-                        greaterThan: '#from'
-                    },
-                },
-                messages: {
-                    number: {
-                        required: "{{ __('personel_final_performance_result_code.no_required') }}",
-                    },
-                    value: {
-                        required: "{{ __('personel_final_performance_result_code.value_required') }}",
-                    },
-                    from: {
-                        required: "{{ __('personel_final_performance_result_code.from_required') }}",
-                    },
-                    to: {
-                        required: "{{ __('personel_final_performance_result_code.to_required') }}",
-                        greaterThan: "{{ __('personel_final_performance_result_code.to_greater_than') }}",
-                    },
-                },
+        if ($("#input_balance_leave_form").length > 0) {
+            $("#input_balance_leave_form").validate({
                 highlight: function (element) {
                     $(element).addClass('is-invalid');
                 },
@@ -297,7 +274,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_final_performance_result_code.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> <?php echo e(__("tm_input_balance_leave.btn_save")); ?>'
                     );
 
                     error.addClass('invalid-feedback');
@@ -310,14 +287,14 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personnel/final_performance_result/proses') }}",
+                        url: "<?php echo e(url('time_management/input_balance_leave/proses')); ?>",
                         type: "POST",
-                        data: $('#final_performance_result_form').serialize(),
+                        data: $('#input_balance_leave_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_final_performance_result_code.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> <?php echo e(__("tm_input_balance_leave.btn_save")); ?>'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -325,19 +302,19 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personnel/final_performance_result') }}";
+                                        "<?php echo e(url('time_management/input_balance_leave')); ?>";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_final_performance_result_code.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> <?php echo e(__("tm_input_balance_leave.btn_save")); ?>'
                                 );
 
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
                                     $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
+                                        "<?php echo e(__('login.error')); ?>");
                                 } else {
                                     $('#message-notification-error').html(response
                                         .message);
@@ -347,18 +324,16 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("personel_final_performance_result_code.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> <?php echo e(__("tm_input_balance_leave.btn_save")); ?>'
                             );
 
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }
+
                     });
                 }
             })
         }
     });
-
-</script>
-
-</html>
+</script><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/time_management/tm_input_balance_leave_detail.blade.php ENDPATH**/ ?>

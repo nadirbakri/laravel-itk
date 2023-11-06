@@ -322,7 +322,7 @@
             url: "{{ url('personnel/number/check') }}",
             type: "GET",
             data: {
-                'url': '/peattachment/getpeattachment',
+                'url': '/personel/PeAttachment/getPeAttachment',
                 'employeeNo': empNo
             },
             success: function (response) {

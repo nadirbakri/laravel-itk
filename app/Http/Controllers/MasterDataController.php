@@ -23,7 +23,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -149,7 +149,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
                 ['body' => json_encode(
                     [
                         'recordStatus' => 'A',
@@ -724,7 +724,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),

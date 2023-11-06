@@ -133,7 +133,7 @@ class MedicalClaimReportExport implements FromView, ShouldAutoSize
                 'body' => json_encode($param)
             ]);
 
-            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
         }catch (RequestException $e){

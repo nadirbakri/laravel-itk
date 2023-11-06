@@ -65,7 +65,7 @@ class LevelDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/level/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/Level/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

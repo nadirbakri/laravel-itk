@@ -2036,7 +2036,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/peeducation/getpeeducation',
+                    'url': '/personel/PeEducation/getPeEducation',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -2054,7 +2054,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/pelanguage/getpelanguage',
+                    'url': '/personel/PeLanguage/getPeLanguage',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -2072,7 +2072,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/peorganization/getpeorganization',
+                    'url': '/personel/PeOrganization/getPeOrganization',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -2090,7 +2090,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/pereference/getpereference',
+                    'url': '/personel/PeReference/getPeReference',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -2108,7 +2108,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/peskill/getpeskill',
+                    'url': '/personel/PeSkill/getPeSkill',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -2126,7 +2126,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/peprojectexperience/getpeprojectexperience',
+                    'url': '/personel/PeProjectExperience/getPeProjectExperience',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -2144,7 +2144,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/petraining/getpetraining',
+                    'url': '/personel/PeTraining/getPeTraining',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {

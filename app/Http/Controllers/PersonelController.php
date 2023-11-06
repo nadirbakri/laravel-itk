@@ -54,7 +54,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -190,7 +190,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
+            $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel/getReferencePersonnel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -201,7 +201,7 @@ class PersonelController extends Controller
                 )]
             );
 
-            $response_level = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
+            $response_level = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -518,7 +518,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -557,7 +557,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -596,7 +596,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -635,7 +635,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -754,7 +754,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peattachment/getpeattachment',
+            $response = $client->post(env('API_URL') . '/personel/PeAttachment/getPeAttachment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -923,7 +923,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/level/getlevel',
+            $response = $client->post(env('API_URL') . '/personel/Level/getLevel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1021,7 +1021,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+            $response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1059,7 +1059,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/location/getlocation',
+            $response = $client->post(env('API_URL') . '/personel/Location/getLocation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1097,7 +1097,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/position/getposition',
+            $response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1135,7 +1135,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+            $response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1173,7 +1173,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/grade/getgrade',
+            $response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1211,7 +1211,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/group/getgroup',
+            $response = $client->post(env('API_URL') . '/personel/Group/getGroup',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1249,7 +1249,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/worknature/getworknature',
+            $response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1287,7 +1287,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+            $response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1325,7 +1325,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/npwp/getnpwp',
+            $response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1363,7 +1363,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmbank/getgmbank',
+            $response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1401,7 +1401,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/companybank/getcompanybank',
+            $response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1547,7 +1547,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
+            $response = $client->post(env('API_URL') . '/personel/GmInstitution/getgmInstitution',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1585,7 +1585,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
+            $response = $client->post(env('API_URL') . '/personel/GmMajor/getgmMajor',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1623,7 +1623,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmcoursetype/getgmcoursetype',
+            $response = $client->post(env('API_URL') . '/personel/GmCourseType/getgmCourseType',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1699,7 +1699,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/city/getcity',
+            $response = $client->post(env('API_URL') . '/personel/City/getCity',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -1736,7 +1736,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+            $response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1864,7 +1864,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
+            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationForm',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1902,7 +1902,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
+            $response = $client->post(env('API_URL') . '/personel/GmTitle/getgmTitle',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -2006,7 +2006,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+            $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2044,7 +2044,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmskill/getgmskill',
+            $response = $client->post(env('API_URL') . '/personel/GmSkill/getgmSkill',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2187,7 +2187,7 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $response2 = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+                $response2 = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2445,7 +2445,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/level/getlevel',
+            $response = $client->post(env('API_URL') . '/personel/Level/getLevel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2529,7 +2529,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+            $response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2564,7 +2564,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/location/getlocation',
+            $response = $client->post(env('API_URL') . '/personel/Location/getLocation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2599,7 +2599,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/position/getposition',
+            $response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2634,7 +2634,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
+            $response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2670,7 +2670,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/grade/getgrade',
+            $response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2705,7 +2705,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/group/getgroup',
+            $response = $client->post(env('API_URL') . '/personel/Group/getGroup',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2740,7 +2740,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/worknature/getworknature',
+            $response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2775,7 +2775,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/bpjs/getbpjs',
+            $response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2811,7 +2811,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/npwp/getnpwp',
+            $response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2846,7 +2846,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmbank/getgmbank',
+            $response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2881,7 +2881,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/companybank/getcompanybank',
+            $response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2959,7 +2959,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
+            $response = $client->post(env('API_URL') . '/personel/GmInstitution/getgmInstitution',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2993,7 +2993,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
+            $response = $client->post(env('API_URL') . '/personel/GmMajor/getgmMajor',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3028,7 +3028,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmcoursetype/getgmcoursetype',
+            $response = $client->post(env('API_URL') . '/personel/GmCourseType/getgmCourseType',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3075,7 +3075,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/city/getcity',
+            $response = $client->post(env('API_URL') . '/personel/City/getCity',
                 ['body' => json_encode(
                     [
                         'cityCode' => $request->cityCode,
@@ -3109,7 +3109,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+            $response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3174,7 +3174,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
+            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationForm',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3209,7 +3209,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
+            $response = $client->post(env('API_URL') . '/personel/GmTitle/getgmTitle',
                 ['body' => json_encode(
                     [
                         'titleCode' => $request->titleCode,
@@ -3267,7 +3267,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmskill/getgmskill',
+            $response = $client->post(env('API_URL') . '/personel/GmSkill/getgmSkill',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3355,7 +3355,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
+            $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3429,7 +3429,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/city/getcity',
+            $response = $client->post(env('API_URL') . '/personel/City/getCity',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3468,7 +3468,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
+            $response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3516,7 +3516,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pedependents/getpedependents',
+            $response = $client->post(env('API_URL') . '/personel/PeDependents/getPeDependents',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3554,7 +3554,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peaward/getpeaward',
+            $response = $client->post(env('API_URL') . '/personel/PeAward/getPeAward',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3593,7 +3593,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pesanction/getpesanction',
+            $response = $client->post(env('API_URL') . '/personel/PeSanction/getPeSanction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3633,7 +3633,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peevaluation/getpeevaluation',
+            $response = $client->post(env('API_URL') . '/personel/PeEvaluation/getPeEvaluation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3672,7 +3672,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetail',
+            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3715,7 +3715,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pemasterhistoryjob/getpemasterhistoryjob',
+            $response = $client->post(env('API_URL') . '/personel/PeMasterHistoryJob/getPeMasterHistoryJob',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3754,7 +3754,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peworkexperience/getpeworkexperience',
+            $response = $client->post(env('API_URL') . '/personel/PeWorkExperience/getPeWorkExperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3793,7 +3793,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pefreeformat/getpefreeformat',
+            $response = $client->post(env('API_URL') . '/personel/PeFreeFormat/getPeFreeFormat',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3832,7 +3832,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peeducation/getcompetencyeducationgridview',
+            $response = $client->post(env('API_URL') . '/personel/PeEducation/getCompetencyEducationGridView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3872,7 +3872,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pelanguage/getcompetencylanguagegridview',
+            $response = $client->post(env('API_URL') . '/personel/PeLanguage/getCompetencyLanguageGridView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3912,7 +3912,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peorganization/getpeorganization',
+            $response = $client->post(env('API_URL') . '/personel/PeOrganization/getPeOrganization',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3951,7 +3951,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pereference/getpereference',
+            $response = $client->post(env('API_URL') . '/personel/PeReference/getPeReference',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3990,7 +3990,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peskill/getcompetencyskillgridview',
+            $response = $client->post(env('API_URL') . '/personel/PeSkill/getCompetencySkillGridView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4030,7 +4030,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peprojectexperience/getpeprojectexperience',
+            $response = $client->post(env('API_URL') . '/personel/PeProjectExperience/getPeProjectExperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4069,7 +4069,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/petraining/getpetraining',
+            $response = $client->post(env('API_URL') . '/personel/PeTraining/getPeTraining',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4232,7 +4232,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetail',
+            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4275,7 +4275,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetailpoint',
+            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetailPoint',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4474,7 +4474,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/worknature',
+            $response = $client->put(env('API_URL') . '/personel/WorkNature',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4515,7 +4515,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/grade',
+            $response = $client->put(env('API_URL') . '/personel/Grade',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4556,7 +4556,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/position',
+            $response = $client->put(env('API_URL') . '/personel/GmPosition',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4596,7 +4596,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/location',
+            $response = $client->put(env('API_URL') . '/personel/Location',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4637,7 +4637,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/level',
+            $response = $client->put(env('API_URL') . '/personel/Level',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4679,7 +4679,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/costcenter',
+            $response = $client->put(env('API_URL') . '/personel/CostCenter',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4719,7 +4719,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/pemaster',
+            $response = $client->put(env('API_URL') . '/personel/PeMaster/PutPeMaster',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4760,7 +4760,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/pemaster',
+            $response = $client->put(env('API_URL') . '/personel/PeMaster/PutPeMaster',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4801,7 +4801,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmbank',
+            $response = $client->put(env('API_URL') . '/personel/GmBank/updateGmBank',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4842,7 +4842,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/companybank',
+            $response = $client->put(env('API_URL') . '/personel/CompanyBank',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4883,7 +4883,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/group',
+            $response = $client->put(env('API_URL') . '/personel/Group',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4924,7 +4924,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/zipcode',
+            $response = $client->put(env('API_URL') . '/personel/ZipCode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4964,7 +4964,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/bpjs',
+            $response = $client->put(env('API_URL') . '/personel/BPJS',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5005,7 +5005,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/npwp',
+            $response = $client->put(env('API_URL') . '/personel/NPWP',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5045,7 +5045,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmranking',
+            $response = $client->put(env('API_URL') . '/personel/GmRanking',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5086,7 +5086,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gminstitution',
+            $response = $client->put(env('API_URL') . '/personel/GmInstitution',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5127,7 +5127,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmmajor',
+            $response = $client->put(env('API_URL') . '/personel/GmMajor',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5168,7 +5168,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmcoursetype/updategmcoursetype',
+            $response = $client->put(env('API_URL') . '/personel/GmCourseType/UpdategmCourseType',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5209,7 +5209,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmskill/updategmskill',
+            $response = $client->put(env('API_URL') . '/personel/GmSkill/UpdategmSkill',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5293,7 +5293,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/evaluationform',
+            $response = $client->put(env('API_URL') . '/personel/EvaluationForm',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5417,7 +5417,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/city',
+            $response = $client->put(env('API_URL') . '/personel/City',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5456,7 +5456,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmtitle/updategmtitle',
+            $response = $client->put(env('API_URL') . '/personel/GmTitle/UpdategmTitle',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5501,7 +5501,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/gmperformanceresult',
+            $response = $client->put(env('API_URL') . '/personel/GmPerformanceResult',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5544,7 +5544,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/pemaster/updaterecordstatus',
+            $response = $client->put(env('API_URL') . '/personel/PeMaster/UpdateRecordStatus',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5942,12 +5942,12 @@ class PersonelController extends Controller
             // exit;
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
+                $response = $client->post(env('API_URL') . '/personel/PeMaster/insertPeMaster',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
+                $response = $client->put(env('API_URL') . '/personel/PeMaster/PutPeMaster',
                     ['body' => json_encode($param)]
                 );
             }  
@@ -6025,7 +6025,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/worknature',
+                $response = $client->post(env('API_URL') . '/personel/WorkNature',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6045,7 +6045,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/worknature',
+                $response = $client->put(env('API_URL') . '/personel/WorkNature',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6088,7 +6088,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/grade',
+                $response = $client->post(env('API_URL') . '/personel/Grade',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6109,7 +6109,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/grade',
+                $response = $client->put(env('API_URL') . '/personel/Grade',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6155,7 +6155,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/position',
+                $response = $client->post(env('API_URL') . '/personel/GmPosition',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6176,7 +6176,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/position',
+                $response = $client->put(env('API_URL') . '/personel/GmPosition',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6220,7 +6220,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/location',
+                $response = $client->post(env('API_URL') . '/personel/Location',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6245,7 +6245,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/location',
+                $response = $client->put(env('API_URL') . '/personel/Location',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6289,7 +6289,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/level',
+                $response = $client->post(env('API_URL') . '/personel/Level',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6310,7 +6310,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/level',
+                $response = $client->put(env('API_URL') . '/personel/Level',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6354,7 +6354,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/costcenter',
+                $response = $client->post(env('API_URL') . '/personel/CostCenter',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6376,7 +6376,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/costcenter',
+                $response = $client->put(env('API_URL') . '/personel/CostCenter',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6420,7 +6420,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peaward',
+            $response = $client->post(env('API_URL') . '/personel/PeAward',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6467,7 +6467,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pesanction',
+            $response = $client->post(env('API_URL') . '/personel/PeSanction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6537,7 +6537,7 @@ class PersonelController extends Controller
                 }
             }
 
-            $response = $client->post(env('API_URL') . '/peevaluation/insertpeevaluation',
+            $response = $client->post(env('API_URL') . '/personel/PeEvaluation/InsertPeEvaluation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6587,7 +6587,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peeducation',
+            $response = $client->post(env('API_URL') . '/personel/PeEducation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6638,7 +6638,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pelanguage',
+            $response = $client->post(env('API_URL') . '/personel/PeLanguage',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6685,7 +6685,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peorganization',
+            $response = $client->post(env('API_URL') . '/personel/PeOrganization',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6732,7 +6732,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pereference',
+            $response = $client->post(env('API_URL') . '/personel/PeReference',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6778,7 +6778,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peskill',
+            $response = $client->post(env('API_URL') . '/personel/PeSkill',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6824,7 +6824,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peprojectexperience/insertpeprojectexperience',
+            $response = $client->post(env('API_URL') . '/personel/PeProjectExperience/InsertPeProjectExperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6880,7 +6880,7 @@ class PersonelController extends Controller
                 $path = public_path('certificate/');
             }
 
-            $response = $client->post(env('API_URL') . '/petraining',
+            $response = $client->post(env('API_URL') . '/personel/PeTraining',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6934,7 +6934,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmbank',
+                $response = $client->post(env('API_URL') . '/personel/GmBank/insertGmBank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6956,7 +6956,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmbank',
+                $response = $client->put(env('API_URL') . '/personel/GmBank/updateGmBank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7001,7 +7001,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/companybank',
+                $response = $client->post(env('API_URL') . '/personel/CompanyBank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7022,7 +7022,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/companybank',
+                $response = $client->put(env('API_URL') . '/personel/CompanyBank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7066,7 +7066,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/group',
+                $response = $client->post(env('API_URL') . '/personel/Group',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7086,7 +7086,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/group',
+                $response = $client->put(env('API_URL') . '/personel/Group',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7129,7 +7129,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/zipcode',
+                $response = $client->post(env('API_URL') . '/personel/ZipCode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7152,7 +7152,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/zipcode',
+                $response = $client->put(env('API_URL') . '/personel/ZipCode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7198,7 +7198,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/bpjs',
+                $response = $client->post(env('API_URL') . '/personel/BPJS',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7220,7 +7220,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/bpjs',
+                $response = $client->put(env('API_URL') . '/personel/BPJS',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7265,7 +7265,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/npwp',
+                $response = $client->post(env('API_URL') . '/personel/NPWP',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7291,7 +7291,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/npwp',
+                $response = $client->put(env('API_URL') . '/personel/NPWP',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7340,7 +7340,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmranking',
+                $response = $client->post(env('API_URL') . '/personel/GmRanking',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7360,7 +7360,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmranking',
+                $response = $client->put(env('API_URL') . '/personel/GmRanking',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7403,7 +7403,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gminstitution',
+                $response = $client->post(env('API_URL') . '/personel/GmInstitution',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7423,7 +7423,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gminstitution',
+                $response = $client->put(env('API_URL') . '/personel/GmInstitution',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7466,7 +7466,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmmajor',
+                $response = $client->post(env('API_URL') . '/personel/GmMajor',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7486,7 +7486,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmmajor',
+                $response = $client->put(env('API_URL') . '/personel/GmMajor',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7529,7 +7529,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmcoursetype/insertgmcoursetype',
+                $response = $client->post(env('API_URL') . '/personel/GmCourseType/InsertgmCourseType',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7549,7 +7549,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmcoursetype/updategmcoursetype',
+                $response = $client->put(env('API_URL') . '/personel/GmCourseType/UpdategmCourseType',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7592,7 +7592,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmskill/insertgmskill',
+                $response = $client->post(env('API_URL') . '/personel/GmSkill/InsertgmSkill',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7612,7 +7612,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmskill/updategmskill',
+                $response = $client->put(env('API_URL') . '/personel/GmSkill/UpdategmSkill',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7921,7 +7921,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmperformanceresult',
+                $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult',
                     ['body' => json_encode(
                         [
                             'recordStatus' => "A",
@@ -7943,7 +7943,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmperformanceresult',
+                $response = $client->put(env('API_URL') . '/personel/GmPerformanceResult',
                     ['body' => json_encode(
                         [
                             'recordStatus' => "A",
@@ -8006,7 +8006,7 @@ class PersonelController extends Controller
             //     ));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/evaluationform',
+                $response = $client->post(env('API_URL') . '/personel/EvaluationForm',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8026,7 +8026,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/evaluationform',
+                $response = $client->put(env('API_URL') . '/personel/EvaluationForm',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8068,7 +8068,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/evaluationform/detail',
+            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/Detail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8109,7 +8109,7 @@ class PersonelController extends Controller
                     ];
                 }
 
-                $response_point = $client->post(env('API_URL') . '/evaluationform/detailpoint',
+                $response_point = $client->post(env('API_URL') . '/personel/EvaluationForm/DetailPoint',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8147,7 +8147,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/referencepersonnel',
+                $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8171,7 +8171,7 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $response_delete_level = $client->delete(env('API_URL') . '/levelmaster',
+                $response_delete_level = $client->delete(env('API_URL') . '/personel/LevelMaster',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8201,7 +8201,7 @@ class PersonelController extends Controller
                         ];
                     }
 
-                    $response_level = $client->post(env('API_URL') . '/levelmaster',
+                    $response_level = $client->post(env('API_URL') . '/personel/LevelMaster',
                         ['body' => json_encode(
                             [
                                 'companyCode' => Session::get('companyCode'),
@@ -8213,7 +8213,7 @@ class PersonelController extends Controller
                     );
                 }
             }else{
-                $response = $client->put(env('API_URL') . '/referencepersonnel',
+                $response = $client->put(env('API_URL') . '/personel/ReferencePersonnel',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8236,7 +8236,7 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $response_delete_level = $client->delete(env('API_URL') . '/levelmaster',
+                $response_delete_level = $client->delete(env('API_URL') . '/personel/LevelMaster',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8266,7 +8266,7 @@ class PersonelController extends Controller
                         ];
                     }
 
-                    $response_level = $client->post(env('API_URL') . '/levelmaster',
+                    $response_level = $client->post(env('API_URL') . '/personel/LevelMaster',
                         ['body' => json_encode(
                             [
                                 'companyCode' => Session::get('companyCode'),
@@ -8420,7 +8420,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/city',
+                $response = $client->post(env('API_URL') . '/personel/City',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8440,7 +8440,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/city',
+                $response = $client->put(env('API_URL') . '/personel/City',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8484,7 +8484,7 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/gmtitle/insertgmtitle',
+                $response = $client->post(env('API_URL') . '/personel/GmTitle/InsertgmTitle',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8505,7 +8505,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/gmtitle/updategmtitle',
+                $response = $client->put(env('API_URL') . '/personel/GmTitle/UpdategmTitle',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8549,7 +8549,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/pefreeformat/insertpefreeformat',
+            $response = $client->post(env('API_URL') . '/personel/PeFreeFormat/InsertPeFreeFormat',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8594,7 +8594,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peworkexperience/insertpeworkexperience',
+            $response = $client->post(env('API_URL') . '/personel/PeWorkExperience/InsertPeWorkExperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8656,7 +8656,7 @@ class PersonelController extends Controller
                 $data_level = [];
             }
 
-            $response = $client->put(env('API_URL') . '/pemasterhistoryjob',
+            $response = $client->put(env('API_URL') . '/personel/PeMasterHistoryJob',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8882,7 +8882,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/gmperformanceresult',
+            $response = $client->delete(env('API_URL') . '/personel/GmPerformanceResult',
                 ['body' => json_encode(
                     [
                         'recordStatus' => "A",
@@ -8928,7 +8928,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/evaluationform/detail',
+            $response = $client->delete(env('API_URL') . '/personel/EvaluationForm/Detail',
                 ['body' => json_encode(
                     [
                         'recordStatus' => "A",
@@ -8972,7 +8972,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/peaward',
+            $response = $client->delete(env('API_URL') . '/personel/PeAward',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9016,7 +9016,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/pesanction',
+            $response = $client->delete(env('API_URL') . '/personel/PeSanction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9060,7 +9060,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/peevaluation/deletepeevaluation',
+            $response = $client->delete(env('API_URL') . '/personel/PeEvaluation/deletePeEvaluation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9117,7 +9117,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/peeducation/bulkdeletepeeducation',
+            $response = $client->delete(env('API_URL') . '/personel/PeEducation/BulkDeletePeEducation',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9158,7 +9158,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/pelanguage/bulkdeletepelanguage',
+            $response = $client->delete(env('API_URL') . '/personel/PeLanguage/BulkDeletePeLanguage',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9199,7 +9199,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/peorganization/bulkdeletepeorganization',
+            $response = $client->delete(env('API_URL') . '/personel/PeOrganization/BulkDeletePeOrganization',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9240,7 +9240,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/pereference/bulkdeletepereference',
+            $response = $client->delete(env('API_URL') . '/personel/PeReference/BulkDeletePeReference',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9281,7 +9281,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/peskill/bulkdeletepeskill',
+            $response = $client->delete(env('API_URL') . '/personel/PeSkill/BulkDeletePeSkill',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9322,7 +9322,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/peprojectexperience/bulkdeletepeprojectexperience',
+            $response = $client->delete(env('API_URL') . '/personel/PeProjectExperience/BulkDeletePeProjectExperience',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9363,7 +9363,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/petraining/bulkdeletepetraining',
+            $response = $client->delete(env('API_URL') . '/personel/PeTraining/BulkDeletePeTraining',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9404,7 +9404,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/peworkexperience/deletepeworkexperience',
+            $response = $client->delete(env('API_URL') . '/personel/PeWorkExperience/DeletePeWorkExperience',
                 ['body' => json_encode(
                     [
                         "workExperienceList" => $data,
@@ -9456,7 +9456,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/pefreeformat/deletepefreeformat',
+            $response = $client->delete(env('API_URL') . '/personel/PeFreeFormat/DeletePeFreeFormat',
                 ['body' => json_encode(
                     [
                         "freeFormatList" => $data,
@@ -9708,7 +9708,7 @@ class PersonelController extends Controller
                 File::delete('attachment/'.$filename);
             }
 
-            $response = $client->delete(env('API_URL') . '/peattachment/bulkdeletepeattachment',
+            $response = $client->delete(env('API_URL') . '/personel/PeAttachment/bulkDeletePeAttachment',
                 ['body' => json_encode($data)]
             );
 
@@ -9859,7 +9859,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
+            $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel/getReferencePersonnel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9870,7 +9870,7 @@ class PersonelController extends Controller
                 )]
             );
 
-            $response_level = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
+            $response_level = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9910,7 +9910,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
+            $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel/getReferencePersonnel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10223,7 +10223,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmperformanceresult/getresult',
+            $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/GetResult',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10516,7 +10516,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/peattachment/getpeattachment',
+            $response = $client->post(env('API_URL') . '/personel/PeAttachment/getPeAttachment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10569,7 +10569,7 @@ class PersonelController extends Controller
                 $path = public_path('attachment/');
             }
 
-            $response = $client->post(env('API_URL') . '/peattachment',
+            $response = $client->post(env('API_URL') . '/personel/PeAttachment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

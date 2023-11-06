@@ -63,7 +63,7 @@ class CostCenterDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/costcenter/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/CostCenter/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

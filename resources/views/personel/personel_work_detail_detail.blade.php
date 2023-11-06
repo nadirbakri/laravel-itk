@@ -1406,7 +1406,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/peworkexperience/getpeworkexperience',
+                    'url': '/personel/PeWorkExperience/getPeWorkExperience',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {

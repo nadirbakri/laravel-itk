@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ __('tm_input_balance_leave.judul') }}</title>
+    <title><?php echo e(__('tm_input_balance_leave.judul')); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="<?php echo e(asset('pictures/favicon.png')); ?>" type="image/x-icon" />
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/style.css">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/time_management_detail_data.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/jquery.inputpicker.css')); ?>">
     <style type="text/css">
         .div-time_management {
             max-width: 97%;
@@ -83,26 +83,26 @@
     <div class="time_management">
         <div class="div-title">
             <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('tm_input_balance_leave.list') }}</span>
+                <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
+                <span class="title-text"><?php echo e(__('tm_input_balance_leave.list')); ?></span>
             </a> 
         </div>
         <div class="div-form">
             <form id="tm_input_balance_leave" method="post">
-                @csrf
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no">{{ __('tm_input_balance_leave.label_employee_no') }}</label>
+                                for="employee_no"><?php echo e(__('tm_input_balance_leave.label_employee_no')); ?></label>
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period">{{ __('tm_input_balance_leave.period') }}</label>
+                            <label for="period"><?php echo e(__('tm_input_balance_leave.period')); ?></label>
                             <input type="text" class="form-control" id="period" name="period"
-                                placeholder="{{ __('tm_input_balance_leave.period') }}" disabled>
+                                placeholder="<?php echo e(__('tm_input_balance_leave.period')); ?>" disabled>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,8 @@
         <div class="col-2">
             <button type="submit" class="btn btn-primary" name="btn-edit" id="btn-edit"
                 style="width: 100%;">
-                <i class="fa fa-pencil"></i> {{ __('tm_input_balance_leave.btn_edit') }}
+                <i class="fa fa-pencil"></i> <?php echo e(__('tm_input_balance_leave.btn_edit')); ?>
+
             </button>
         </div>
     </div>
@@ -140,7 +141,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                    <span id="message-notification-error"><?php echo e($errors->first()); ?></span>
                 </div>
             </div>
         </div>
@@ -155,8 +156,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="div-title-notification">
-                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('personel_position.alert_success') }}</span>
+                        <img src="<?php echo e(url('/pictures/checklist-green-confirm-password.svg')); ?>" alt="Password">
+                        <span class="title-text-notification"><?php echo e(__('personel_position.alert_success')); ?></span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -179,7 +180,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
+<script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
     function savePreviousURL() {
@@ -204,7 +205,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "{{ url('/time_management/period/data/detail') }}",
+            url: "<?php echo e(url('/time_management/period/data/detail')); ?>",
             type: "GET",
             success: function (response) {
                 $('#period').val(response[0].periodYear);
@@ -237,7 +238,7 @@
         //     serverSide: true,
         //     orderCellsTop: true,
         //     ajax: { 
-        //         url: "{{ url('time_management/input_balance_leave/table') }}"
+        //         url: "<?php echo e(url('time_management/input_balance_leave/table')); ?>"
         //         // data: {
         //         //     'employeeNo' : employee_no
         //         // }  
@@ -276,7 +277,7 @@
                 serverSide: true,
                 orderCellsTop: true,
                 ajax: {
-                    url : "{{ url('time_management/input_balance_leave/table') }}",
+                    url : "<?php echo e(url('time_management/input_balance_leave/table')); ?>",
                     data: {
                         'employeeNo' : employee_no
                     }
@@ -399,7 +400,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/employee_no/api2') }}",
+                    url: "<?php echo e(url('/employee_no/api2')); ?>",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -443,7 +444,7 @@
             var data = table.rows('.selected').data();
             if(data.count() > 0 && $('#employee_no') != null){
                 // console.log(data[0].employeeNo);
-                $.redirect("{{ url('time_management/input_balance_leave/detail') }}", { 'employeeNo' : data[0].employeeNo, 'leaveCode' : data[0].leaveCode }, "GET", "iframe_dashboard");
+                $.redirect("<?php echo e(url('time_management/input_balance_leave/detail')); ?>", { 'employeeNo' : data[0].employeeNo, 'leaveCode' : data[0].leaveCode }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -451,4 +452,4 @@
         });
     });
 </script>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/time_management/tm_input_balance_leave.blade.php ENDPATH**/ ?>

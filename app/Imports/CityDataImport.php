@@ -61,7 +61,7 @@ class CityDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/city/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/City/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

@@ -61,7 +61,7 @@ class GradeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/grade/bulkInsert',
+            $response = $client->post(env('API_URL') . '/personel/Grade/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

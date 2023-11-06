@@ -74,7 +74,7 @@ class PersonalDataUpdateImport implements ToCollection, SkipsEmptyRows, WithStar
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/BulkSendEmail/BulkUpdateEmail',
+            $response = $client->post(env('API_URL') . '/personel/BulkSendEmail/BulkUpdateEmail',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

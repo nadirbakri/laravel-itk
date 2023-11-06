@@ -61,7 +61,7 @@ class MajorDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/gmmajor/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/GmMajor/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

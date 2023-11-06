@@ -59,7 +59,7 @@ class GroupDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            $response = $client->post(env('API_URL') . '/group/bulkinsert',
+            $response = $client->post(env('API_URL') . '/personel/Group/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

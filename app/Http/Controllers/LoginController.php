@@ -35,7 +35,7 @@ class LoginController extends Controller
 			// $output = new \Symfony\Component\Console\Output\ConsoleOutput();
 			// $output->writeln(env('API_URL') . '/auth');
 
-			$response = $client->post(env('API_URL') . '/auth',
+			$response = $client->post(env('API_URL') . '/personel/Login',
                 ['body' => json_encode(
                     [
                         'username' => $request->username_login,
@@ -197,7 +197,7 @@ class LoginController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/auth',
+	    	$response = $client->post(env('API_URL') . '/personel/Login',
 	    		['body' => json_encode(
 	    			[
 	    				'username' => $request->user_id,

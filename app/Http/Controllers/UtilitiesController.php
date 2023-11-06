@@ -23,7 +23,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -137,7 +137,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/user/getuserview',
+            $response = $client->post(env('API_URL') . '/personel/User/getUserView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -172,7 +172,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
+            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -211,7 +211,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+            $response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -249,7 +249,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/company/getcompany',
+            $response = $client->post(env('API_URL') . '/personel/Company/getcompany',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -286,7 +286,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
+            $response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -324,7 +324,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/userlog/getuserlog',
+            $response = $client->post(env('API_URL') . '/personel/UserLog/getUserLog',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -377,7 +377,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/user/getuserview',
+            $response = $client->post(env('API_URL') . '/personel/User/getUserView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -411,7 +411,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+            $response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -446,7 +446,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/company/getcompany',
+            $response = $client->post(env('API_URL') . '/personel/Company/getcompany',
                 ['body' => json_encode(
                     [
                         'companyCode' => $request->companyCode,
@@ -480,7 +480,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
+            $response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -492,7 +492,7 @@ class UtilitiesController extends Controller
                 )]
             );
 
-            $response2 = $client->post(env('API_URL') . '/groupuseraccessdetail/getgroupuseraccessdetail',
+            $response2 = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail/getGroupUserAccessDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -527,7 +527,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/user/getuserlevellist',
+            $response = $client->post(env('API_URL') . '/personel/User/getUserLevelList',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -565,7 +565,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/user/getuserdetailview',
+            $response = $client->post(env('API_URL') . '/personel/User/getUserDetail',
                 ['body' => json_encode(
                     [
                         'userID' => $request->userID,
@@ -602,7 +602,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/user/getuseraccessview',
+            $response = $client->post(env('API_URL') . '/personel/User/getUserAccessView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -648,7 +648,7 @@ class UtilitiesController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
 
-                $response = $client->post(env('API_URL') . '/level/getlevel',
+                $response = $client->post(env('API_URL') . '/personel/Level/getLevel',
                     ['body' => json_encode(
                         [
                             'recordStatus' => 'A',
@@ -689,7 +689,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupuseraccessdetail/getgroupuseraccessdetail',
+            $response = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail/getGroupUserAccessDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -727,7 +727,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/menumasterweb/getconfiguremenu',
+            $response = $client->post(env('API_URL') . '/personel/MenuMasterWeb/getConfigureMenu',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -768,7 +768,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/groupauthorize',
+            $response = $client->put(env('API_URL') . '/personel/GroupAuthorize',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -809,7 +809,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/groupuseraccess',
+            $response = $client->put(env('API_URL') . '/personel/GroupUserAccess',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -850,7 +850,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/user',
+            $response = $client->put(env('API_URL') . '/personel/User',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -891,7 +891,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/company',
+            $response = $client->put(env('API_URL') . '/personel/Company',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -936,7 +936,7 @@ class UtilitiesController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/groupauthorize',
+                $response = $client->post(env('API_URL') . '/personel/GroupAuthorize',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -957,7 +957,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/groupauthorize',
+                $response = $client->put(env('API_URL') . '/personel/GroupAuthorize',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1003,7 +1003,7 @@ class UtilitiesController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/company',
+                $response = $client->post(env('API_URL') . '/personel/Company',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1027,7 +1027,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/company',
+                $response = $client->put(env('API_URL') . '/personel/Company',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1077,7 +1077,7 @@ class UtilitiesController extends Controller
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/groupuseraccess',
+                $response = $client->post(env('API_URL') . '/personel/GroupUserAccess',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1118,14 +1118,14 @@ class UtilitiesController extends Controller
                         ];
                     }
 
-                    $response2 = $client->post(env('API_URL') . '/groupuseraccessdetail',
+                    $response2 = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail',
                         ['body' => json_encode($param)]
                     );
 
                     $arrResult2 = json_decode($response2->getBody()->getContents());
                 }
             }else{
-                $response = $client->put(env('API_URL') . '/groupuseraccess',
+                $response = $client->put(env('API_URL') . '/personel/GroupUserAccess',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1164,7 +1164,7 @@ class UtilitiesController extends Controller
 
                     // var_dump(json_encode($param));
 
-                    $response2 = $client->put(env('API_URL') . '/groupuseraccessdetail',
+                    $response2 = $client->put(env('API_URL') . '/personel/GroupUserAccessDetail',
                         ['body' => json_encode($param)]
                     );
 
@@ -1203,7 +1203,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupuseraccessdetail',
+            $response = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail',
                 ['body' => json_encode(
                     [
                         'recordStatus' => 'A',
@@ -1250,7 +1250,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/menumasterwebdetail',
+            $response = $client->put(env('API_URL') . '/personel/MenuMasterWebDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1315,7 +1315,7 @@ class UtilitiesController extends Controller
 
             // var_dump($data_menu);
 
-            $response = $client->post(env('API_URL') . '/menumasterwebdetail',
+            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1356,7 +1356,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/menumasterwebdetail/copytoanother',
+            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/CopytoAnother',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1398,7 +1398,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/user',
+            $response = $client->put(env('API_URL') . '/personel/User',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->record_status,
@@ -1419,7 +1419,7 @@ class UtilitiesController extends Controller
                 )]
             );
 
-            $response = $client->put(env('API_URL') . '/user/updatedetail',
+            $response = $client->put(env('API_URL') . '/personel/User/UpdateDetail',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->record_status,
@@ -1509,7 +1509,7 @@ class UtilitiesController extends Controller
 
             $dataLevel = implode(",", $arrLevel);
 
-            $response = $client->put(env('API_URL') . '/user/updatelevel',
+            $response = $client->put(env('API_URL') . '/personel/User/UpdateLevel',
                 ['body' => json_encode(
                     [
                         'userID' => $request->user_id_level,
@@ -1553,7 +1553,7 @@ class UtilitiesController extends Controller
             ]);
 
             if($request->record_function_company == 'New'){
-                $response = $client->post(env('API_URL') . '/user/detail',
+                $response = $client->post(env('API_URL') . '/personel/User/Detail',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->status,
@@ -1578,7 +1578,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/user/updatedetail',
+                $response = $client->put(env('API_URL') . '/personel/User/UpdateDetail',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->status,
@@ -1629,7 +1629,7 @@ class UtilitiesController extends Controller
             ]);
 
             if($request->record_function_module == 'New'){
-                $response = $client->post(env('API_URL') . '/user/access',
+                $response = $client->post(env('API_URL') . '/personel/User/Access',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1649,7 +1649,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/user/updateakses',
+                $response = $client->put(env('API_URL') . '/personel/User/UpdateAkses',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1694,7 +1694,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/BulkSendEmail/SendEmails',
+            $response = $client->post(env('API_URL') . '/personel/BulkSendEmail/SendEmails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1738,7 +1738,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/groupuseraccessdetail',
+            $response = $client->delete(env('API_URL') . '/personel/GroupUserAccessDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1781,7 +1781,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/user/deleteakses',
+            $response = $client->delete(env('API_URL') . '/personel/User/DeleteAkses',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

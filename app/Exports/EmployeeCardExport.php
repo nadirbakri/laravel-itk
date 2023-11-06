@@ -94,7 +94,7 @@ class EmployeeCardExport implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

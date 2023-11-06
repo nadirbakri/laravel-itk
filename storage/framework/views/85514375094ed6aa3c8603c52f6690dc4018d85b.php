@@ -1112,7 +1112,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/peaward/getpeaward',
+                    'url': '/personel/PeAward/getPeAward',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -1130,7 +1130,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/pesanction/getpesanction',
+                    'url': '/personel/PeSanction/getPeSanction',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {
@@ -1148,7 +1148,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/peevaluation/getpeevaluation',
+                    'url': '/personel/PeEvaluation/getPeEvaluation',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {

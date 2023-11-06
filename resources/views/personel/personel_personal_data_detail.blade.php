@@ -2751,7 +2751,7 @@
                 url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/pemaster/getpemastergrid'
+                    'url': '/personel/PeMaster/getPeMasterGrid'
                 },
                 success: function (response) {
                     $('#employee_no_info').val(response);
@@ -6721,7 +6721,7 @@
                     url: "{{ url('personel_data_detail/number/check') }}",
                     type: "GET",
                     data: {
-                        'url': '/pemaster/getpemasterdetail',
+                        'url': '/personel/PeMaster/getPeMasterDetail',
                         'pemasterType' : 'peMasterFringeBenefit',
                         'employeeNo': arrData2[0].peMasterFringeBenefit.employeeNo
                     },
@@ -6765,7 +6765,7 @@
                     url: "{{ url('personel_data_detail/number/check') }}",
                     type: "GET",
                     data: {
-                        'url': '/pemaster/getpemasterdetail',
+                        'url': '/personel/PeMaster/getPeMasterDetail',
                         'pemasterType' : 'peMasterFamily',
                         'employeeNo': arrData2[0].employeeNo
                     },

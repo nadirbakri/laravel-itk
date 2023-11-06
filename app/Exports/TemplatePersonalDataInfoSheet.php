@@ -22,7 +22,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/comgen/getcomgen',
+            $response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
                 ['body' => json_encode(
                     [
                         'languageCode' => App::getLocale()
@@ -30,7 +30,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response2 = $client->post(env('API_URL') . '/costcenter/getcostcenter',
+            $response2 = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -40,7 +40,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response3 = $client->post(env('API_URL') . '/location/getlocation',
+            $response3 = $client->post(env('API_URL') . '/personel/Location/getLocation',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -50,7 +50,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response4 = $client->post(env('API_URL') . '/grade/getgrade',
+            $response4 = $client->post(env('API_URL') . '/personel/Grade/getGrade',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -60,7 +60,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response5 = $client->post(env('API_URL') . '/position/getposition',
+            $response5 = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -70,7 +70,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response6 = $client->post(env('API_URL') . '/gmranking/getgmranking',
+            $response6 = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -80,7 +80,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response7 = $client->post(env('API_URL') . '/worknature/getworknature',
+            $response7 = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -90,7 +90,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response8 = $client->post(env('API_URL') . '/group/getgroup',
+            $response8 = $client->post(env('API_URL') . '/personel/Group/getGroup',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -100,7 +100,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response9 = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
+            $response9 = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -110,7 +110,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response10 = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
+            $response10 = $client->post(env('API_URL') . '/personel/TmWorkPattern/getTmWorkPatternService',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -120,7 +120,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response11 = $client->post(env('API_URL') . '/npwp/getnpwp',
+            $response11 = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -130,7 +130,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response12 = $client->post(env('API_URL') . '/bpjs/getbpjs',
+            $response12 = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -140,7 +140,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response13 = $client->post(env('API_URL') . '/gmbank/getgmbank',
+            $response13 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -150,7 +150,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response14 = $client->post(env('API_URL') . '/companybank/getcompanybank',
+            $response14 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
