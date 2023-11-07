@@ -28,7 +28,7 @@ class ChangePasswordController extends Controller
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/password/update',
+            $response = $client->put(env('API_URL') . '/mobile/Password/update',
                 ['body' => json_encode(
                     [
                         'email' => Session::get('email'),

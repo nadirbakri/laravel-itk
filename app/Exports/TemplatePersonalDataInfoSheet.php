@@ -110,7 +110,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
-            $response10 = $client->post(env('API_URL') . '/personel/TmWorkPattern/getTmWorkPatternService',
+            $response10 = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),

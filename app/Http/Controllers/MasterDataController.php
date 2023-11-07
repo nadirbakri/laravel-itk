@@ -457,7 +457,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/groupapproval/getgroupapproval',
+            $response = $client->post(env('API_URL') . '/mobile/GroupApproval/GetGroupApproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -613,7 +613,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
+            $response = $client->post(env('API_URL') . '/mobile/TmCalendar/getTmCalendar',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -886,7 +886,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
+            $response = $client->post(env('API_URL') . '/mobile/TmCalendar/getTmCalendar',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -1233,7 +1233,7 @@ class MasterDataController extends Controller
                 //         'description' => $request->description_date
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/tmcalendar',
+                $response = $client->post(env('API_URL') . '/mobile/TmCalendar',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),

@@ -1292,7 +1292,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmWorkPattern/getTmWorkPatternService',
+	    	$response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1337,7 +1337,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmWorkPattern/getTmWorkPatternService',
+	    	$response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -6034,7 +6034,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 						'absentType' => 'L',
@@ -6081,7 +6081,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 	    				'absentType' => 'O',
@@ -6130,7 +6130,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -6250,7 +6250,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -8923,7 +8923,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/news/getnewscat',
+			$response = $client->post(env('API_URL') . '/mobile/News/getNewsCat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -8968,7 +8968,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/news/getnewscat',
+			$response = $client->post(env('API_URL') . '/mobile/News/getNewsCat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9014,7 +9014,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/announcement/getannouncementcat',
+			$response = $client->post(env('API_URL') . '/payroll/Announcement/getAnnouncementCat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9059,7 +9059,7 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/announcement/getannouncementcat',
+			$response = $client->post(env('API_URL') . '/payroll/Announcement/getAnnouncementCat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9929,7 +9929,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
+			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode')
@@ -9974,7 +9974,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
+			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode'),

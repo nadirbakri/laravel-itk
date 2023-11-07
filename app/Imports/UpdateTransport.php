@@ -65,7 +65,7 @@ class UpdateTransport implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/transport/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/mobile/Transport/UpdateListTicketNo',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

@@ -66,7 +66,7 @@ class UpdateReimbursement implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/tmreimbursement/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateListTicketNo',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

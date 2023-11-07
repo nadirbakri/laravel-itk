@@ -124,7 +124,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -169,7 +169,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -274,7 +274,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -329,7 +329,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -369,7 +369,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -429,7 +429,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -508,7 +508,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -550,7 +550,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -590,7 +590,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -630,7 +630,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -670,7 +670,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -715,7 +715,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -760,7 +760,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -805,7 +805,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -865,7 +865,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -939,7 +939,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1027,7 +1027,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -5026,7 +5026,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -5212,7 +5212,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -5316,7 +5316,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

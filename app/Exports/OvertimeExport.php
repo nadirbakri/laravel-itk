@@ -51,7 +51,7 @@ class OvertimeExport implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
+            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

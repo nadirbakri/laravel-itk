@@ -43,7 +43,7 @@ class TransportExport implements FromView, ShouldAutoSize
                 'businessUnit'=> $this->businessUnit,
             ];
 
-            $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
+            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

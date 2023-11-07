@@ -62,7 +62,7 @@ class AdminMenuController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/news/getnews',
+            $response = $client->post(env('API_URL') . '/mobile/News/getNews',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -142,7 +142,7 @@ class AdminMenuController extends Controller
             // var_dump(json_encode($param));
 
             if ($request->t_news2 == "new"){
-                $response = $client->post(env('API_URL') . '/news/insertnews',
+                $response = $client->post(env('API_URL') . '/mobile/News/insertNews',
                     ['body' => json_encode($param)]
                 );
             }else {
@@ -150,7 +150,7 @@ class AdminMenuController extends Controller
                     $param['sysNo'] = (int) $request->sysno;
                 }
 
-                $response = $client->put(env('API_URL') . '/news/updatenews',
+                $response = $client->put(env('API_URL') . '/mobile/News/updateNews',
                     ['body' => json_encode($param)]
                 );
             }
@@ -187,7 +187,7 @@ class AdminMenuController extends Controller
             $filename = $value['companyCode'] . '_' . $value['employeeNo'] . '_' . $value['attachmentCode'] . '_' . $value['fileName'] . '.' . $mime_map[$mime_type];
             File::delete('attachment/'.$filename);
 
-            $response = $client->delete(env('API_URL') . '/news/deletenewscategory',
+            $response = $client->delete(env('API_URL') . '/mobile/News/deleteNewsCategory',
                 ['body' => json_encode(
                     [
                         'recordStatus' => "A",
@@ -234,7 +234,7 @@ class AdminMenuController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/announcement/getannouncement',
+            $response = $client->post(env('API_URL') . '/payroll/Announcement/getAnnouncement',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -285,7 +285,7 @@ class AdminMenuController extends Controller
             ];
 
             if ($request->status == "new"){
-                $response = $client->post(env('API_URL') . '/announcement/insertannouncement',
+                $response = $client->post(env('API_URL') . '/payroll/Announcement/insertAnnouncement',
                     ['body' => json_encode($param)]
                 );
             }else {
@@ -293,7 +293,7 @@ class AdminMenuController extends Controller
                     $param['seqNo'] = (int) $request->seq_no;
                 }
 
-                $response = $client->put(env('API_URL') . '/announcement/updateannouncement',
+                $response = $client->put(env('API_URL') . '/payroll/Announcement/updateAnnouncement',
                     ['body' => json_encode($param)]
                 );
             }

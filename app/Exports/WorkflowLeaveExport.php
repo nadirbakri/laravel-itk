@@ -52,7 +52,7 @@ class WorkflowLeaveExport implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/tmleave/getleavedetaillist',
+            $response = $client->post(env('API_URL') . '/mobile/TmLeave/getLeaveDetailList',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

@@ -52,7 +52,7 @@ class MultipleChecking implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
+            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

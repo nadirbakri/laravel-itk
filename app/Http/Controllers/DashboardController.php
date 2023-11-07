@@ -28,7 +28,7 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_Get = $client->post(env('API_URL') . '/firebase/getfirebase',
+            $response_Get = $client->post(env('API_URL') . '/mobile/Firebase/getFirebase',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -59,7 +59,7 @@ class DashboardController extends Controller
             ]);
 
             if(empty($arrResult_Get)){
-                $response = $client->post(env('API_URL') . '/firebase',
+                $response = $client->post(env('API_URL') . '/mobile/Firebase',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -81,7 +81,7 @@ class DashboardController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/firebase',
+                $response = $client->put(env('API_URL') . '/mobile/Firebase',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -126,7 +126,7 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/firebase/getfirebase',
+            $response = $client->post(env('API_URL') . '/mobile/Firebase/getFirebase',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -195,7 +195,7 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
+            $response = $client->post(env('API_URL') . '/mobile/TmCalendar/getTmCalendar',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -255,7 +255,7 @@ class DashboardController extends Controller
 	    		)]
 	    	);
 
-            $response2 = $client->post(env('API_URL') . '/tmabsence/getbyspecificdate',
+            $response2 = $client->post(env('API_URL') . '/mobile/TmAbsence/getBySpecificDate',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -446,7 +446,7 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/TmOvertime/getOvertimeHourDashboard',
+            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/getOvertimeHourDashboard',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -461,7 +461,7 @@ class DashboardController extends Controller
 	    		)]
 	    	);
 
-            $response2 = $client->post(env('API_URL') . '/TmOvertime/getOvertimeCostDashboard',
+            $response2 = $client->post(env('API_URL') . '/mobile/TmOvertime/getOvertimeCostDashboard',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),

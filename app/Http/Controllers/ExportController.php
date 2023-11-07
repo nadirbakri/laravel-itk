@@ -221,7 +221,7 @@ class ExportController extends Controller
                 'sessionUserID' => Session::get('userID')
             ];
 
-            $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
             ['body' => json_encode($param)]
         );
         } catch (RequestException $e) {
@@ -265,7 +265,7 @@ class ExportController extends Controller
                 'sessionUserID' => Session::get('userID')
             ];
 
-            $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

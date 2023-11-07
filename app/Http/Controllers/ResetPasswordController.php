@@ -42,7 +42,7 @@ class ResetPasswordController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json' ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/password',
+            $response = $client->post(env('API_URL') . '/mobile/Password',
                 ['body' => json_encode(
                     [
                         'email' => $request->email_reset_password,
@@ -79,7 +79,7 @@ class ResetPasswordController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json' ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/password/reset',
+            $response = $client->put(env('API_URL') . '/mobile/Password/reset',
                 ['body' => json_encode(
                     [
                         'email' => $request->email_otp,

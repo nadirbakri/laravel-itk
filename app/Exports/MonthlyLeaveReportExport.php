@@ -36,7 +36,7 @@ class MonthlyLeaveReportExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
-            $dataabsent = $client->post(env('API_URL') . '/personel/TmAbsentCode/getAbsentCode',
+            $dataabsent = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

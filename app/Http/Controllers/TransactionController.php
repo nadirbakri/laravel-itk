@@ -119,7 +119,7 @@ class TransactionController extends Controller
     //             'Authorization' => 'Bearer ' . Session::get('token') ]
     //         ]);
 
-    //         $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
+    //         $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
     //             ['body' => json_encode(
     //                 [
     //                     // 'companyCode' => Session::get('companyCode'),
@@ -229,7 +229,7 @@ class TransactionController extends Controller
                 //             'sessionUserID' => Session::get('userID')
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
                     ['body' => json_encode(
                         [
                             // 'companyCode' => Session::get('companyCode'),
@@ -289,7 +289,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -351,7 +351,7 @@ class TransactionController extends Controller
                 //             'sessionUserID' => Session::get('userID'),
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
                     ['body' => json_encode(
                         [
                             // 'companyCode' => Session::get('companyCode'),
@@ -415,7 +415,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
+            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -461,7 +461,7 @@ class TransactionController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
     
-                $response = $client->post(env('API_URL') . '/tmpermit/gettmpermitdetailList',
+                $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailList',
                     ['body' => json_encode(
                         [
                             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -515,7 +515,7 @@ class TransactionController extends Controller
                 //         'sessionUserID' => Session::get('userID'),
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/tmleave/getleavedetaillist',
+                $response = $client->post(env('API_URL') . '/mobile/TmLeave/getLeaveDetailList',
                     ['body' => json_encode(
                         [
                             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -573,7 +573,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/tmreimbursement/getreimbursementdetaillistall',
+            $response = $client->post(env('API_URL') . '/mobile/TmReimbursement/getReimbursementDetailListAll',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -638,7 +638,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
+            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -694,7 +694,7 @@ class TransactionController extends Controller
             //             'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/checkIn/getcheckin',
+            $response = $client->post(env('API_URL') . '/mobile/CheckIn/getCheckIn',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -750,7 +750,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
+            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -838,7 +838,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
+            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
                 ['body' => json_encode(
                     [
                         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -972,7 +972,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->put(env('API_URL') . '/tmreimbursement/updatereimbursementapproval',
+            $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateReimbursementApproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1025,7 +1025,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/transport/updatetransportapproval',
+            $response = $client->put(env('API_URL') . '/mobile/Transport/UpdateTransportApproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1071,7 +1071,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/businesstrip/updatebusinesstripapproval',
+            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateBusinessTripApproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1124,7 +1124,7 @@ class TransactionController extends Controller
                         "paidAmount" => (int)$request->paidAmount[$key]
                     ];
                 }
-                $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
+                $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
                     ['body' => json_encode($param)]
                 );
                 // var_dump(json_encode($param));
@@ -1172,7 +1172,7 @@ class TransactionController extends Controller
             }
             
 
-            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -1216,7 +1216,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimeapproval',
+            $response = $client->put(env('API_URL') . '/mobile/TmOvertime/UpdateOvertimeApproval',
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
@@ -1326,7 +1326,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/tmabsence/gettmabsence',
+            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),

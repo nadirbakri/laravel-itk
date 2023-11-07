@@ -1694,7 +1694,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/BulkSendEmail/SendEmails',
+            $response = $client->post(env('API_URL') . '/mobile/BulkSendEmail/SendEmails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

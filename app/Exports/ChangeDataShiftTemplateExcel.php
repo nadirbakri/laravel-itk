@@ -22,7 +22,7 @@ class ChangeDataShiftTemplateExcel implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -36,7 +36,7 @@ class ChangeDataShiftTemplateExcel implements FromView, ShouldAutoSize
             $arrResult = json_decode($response->getBody()->getContents());
 
             if(!empty($arrResult->dataListSet)){
-                $response_tm = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
+                $response_tm = $client->post(env('API_URL') . '/mobile/TmPeriod/getTmPeriod',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),

@@ -65,7 +65,7 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

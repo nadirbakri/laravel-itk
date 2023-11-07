@@ -42,7 +42,7 @@ class AttendanceExport implements FromView, ShouldAutoSize
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/tmabsence/gettmabsence',
+            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
