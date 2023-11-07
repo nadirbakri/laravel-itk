@@ -33,6 +33,7 @@ class ExportController extends Controller
     public function pageExport(Request $request){
         try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
@@ -205,6 +206,7 @@ class ExportController extends Controller
       if ($request->travel_type == "TTA"){
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -249,6 +251,7 @@ class ExportController extends Controller
       }else{
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

@@ -46,6 +46,7 @@ class UpdateTransport implements ToCollection, WithStartRow
 
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

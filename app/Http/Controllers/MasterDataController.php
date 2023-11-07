@@ -19,6 +19,7 @@ class MasterDataController extends Controller
     public function pageMasterData(Request $request){
         try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
@@ -109,6 +110,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -145,6 +147,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -182,6 +185,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -219,6 +223,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -255,6 +260,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -294,6 +300,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -335,6 +342,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -374,6 +382,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -412,6 +421,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -453,6 +463,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -493,6 +504,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -532,6 +544,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -570,6 +583,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -609,6 +623,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -648,6 +663,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -688,6 +704,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -720,6 +737,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -754,6 +772,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -786,6 +805,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -818,6 +838,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -850,6 +871,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -882,6 +904,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -914,6 +937,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -946,6 +970,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1021,6 +1046,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1082,6 +1108,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1144,6 +1171,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1219,6 +1247,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1269,6 +1298,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1342,6 +1372,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1402,6 +1433,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1431,6 +1463,7 @@ class MasterDataController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

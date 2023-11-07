@@ -15,6 +15,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -50,6 +51,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -98,6 +100,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -147,6 +150,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -195,6 +199,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -241,6 +246,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -274,6 +280,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -309,6 +316,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -357,6 +365,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -403,6 +412,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -436,6 +446,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -471,6 +482,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -519,6 +531,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -567,6 +580,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -616,6 +630,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -664,6 +679,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -713,6 +729,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -761,6 +778,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -809,6 +827,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -857,6 +876,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -896,6 +916,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -929,6 +950,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -964,6 +986,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1010,6 +1033,7 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1125,6 +1149,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1231,6 +1256,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1288,6 +1314,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1333,6 +1360,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1372,6 +1400,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1422,6 +1451,7 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1484,6 +1514,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1532,6 +1563,7 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1597,6 +1629,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1637,6 +1670,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1690,6 +1724,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1742,6 +1777,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1787,6 +1823,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1822,6 +1859,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1886,6 +1924,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1936,6 +1975,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -1983,6 +2023,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2033,6 +2074,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2082,6 +2124,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2130,6 +2173,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2182,6 +2226,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2231,6 +2276,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2276,6 +2322,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2327,6 +2374,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2401,6 +2449,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2463,6 +2512,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2517,6 +2567,7 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2556,6 +2607,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2605,6 +2657,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2664,6 +2717,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2712,6 +2766,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2747,6 +2802,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2797,6 +2853,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2847,6 +2904,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2895,6 +2953,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2944,6 +3003,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2992,6 +3052,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3038,6 +3099,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3071,6 +3133,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3104,6 +3167,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3137,6 +3201,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3170,6 +3235,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3205,6 +3271,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3253,6 +3320,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3299,6 +3367,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3334,6 +3403,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3382,6 +3452,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3430,6 +3501,7 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3534,6 +3606,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3582,6 +3655,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3630,6 +3704,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3681,6 +3756,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3727,6 +3803,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3773,6 +3850,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3818,6 +3896,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3865,6 +3944,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3900,6 +3980,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3951,6 +4032,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3994,6 +4076,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4033,6 +4116,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4070,6 +4154,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4127,6 +4212,7 @@ class DataController extends Controller
 		}else{
 			try {
 				$client = new Client([
+                'verify' => false,
 					'headers' => [ 'Content-Type' => 'application/json',
 									'Authorization' => 'Bearer ' . Session::get('token') ]
 				]);
@@ -4187,6 +4273,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4241,6 +4328,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4277,6 +4365,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4326,6 +4415,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4386,6 +4476,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4439,6 +4530,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4475,6 +4567,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4525,6 +4618,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4581,6 +4675,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4637,6 +4732,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4676,6 +4772,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4723,6 +4820,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4758,6 +4856,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4807,6 +4906,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4857,6 +4957,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4906,6 +5007,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -4956,6 +5058,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5005,6 +5108,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5055,6 +5159,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5104,6 +5209,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5154,6 +5260,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5202,6 +5309,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5255,6 +5363,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5309,6 +5418,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5361,6 +5471,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5407,6 +5518,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5440,6 +5552,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5473,6 +5586,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5506,6 +5620,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5539,6 +5654,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5575,6 +5691,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5624,6 +5741,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5663,6 +5781,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5710,6 +5829,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5750,6 +5870,7 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5789,6 +5910,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5836,6 +5958,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5874,6 +5997,7 @@ class DataController extends Controller
     {	
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5912,6 +6036,7 @@ class DataController extends Controller
 	{
 		try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5948,6 +6073,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5995,6 +6121,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6030,6 +6157,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6077,6 +6205,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6126,6 +6255,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6172,6 +6302,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6207,6 +6338,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6246,6 +6378,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6286,6 +6419,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6334,6 +6468,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6382,6 +6517,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6423,6 +6559,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6462,6 +6599,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6750,6 +6888,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6794,6 +6933,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    			'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6832,6 +6972,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6877,6 +7018,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6910,6 +7052,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6943,6 +7086,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -6976,6 +7120,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7016,6 +7161,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7064,6 +7210,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7111,6 +7258,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7150,6 +7298,7 @@ class DataController extends Controller
 
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7181,6 +7330,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7215,6 +7365,7 @@ class DataController extends Controller
 
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7255,6 +7406,7 @@ class DataController extends Controller
 
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7296,6 +7448,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7342,6 +7495,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7377,6 +7531,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7424,6 +7579,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7472,6 +7628,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7521,6 +7678,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7570,6 +7728,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7620,6 +7779,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7668,6 +7828,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7717,6 +7878,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7765,6 +7927,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7814,6 +7977,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7862,6 +8026,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7911,6 +8076,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -7959,6 +8125,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8008,6 +8175,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8056,6 +8224,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8105,6 +8274,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8153,6 +8323,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8202,6 +8373,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8241,6 +8413,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8287,6 +8460,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8320,6 +8494,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8354,6 +8529,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8387,6 +8563,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8423,6 +8600,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8471,6 +8649,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8519,6 +8698,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8566,6 +8746,7 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8605,6 +8786,7 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8658,6 +8840,7 @@ class DataController extends Controller
 
     	try {
 			$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8710,6 +8893,7 @@ class DataController extends Controller
 
     	try {
 			$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -8768,6 +8952,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -8821,6 +9006,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -8872,6 +9058,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -8920,6 +9107,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -8965,6 +9153,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9011,6 +9200,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9056,6 +9246,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9091,6 +9282,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9147,6 +9339,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -9187,6 +9380,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -9225,6 +9419,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9275,6 +9470,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9323,6 +9519,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9370,6 +9567,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9417,6 +9615,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9467,6 +9666,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9515,6 +9715,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9563,6 +9764,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -9600,6 +9802,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9645,6 +9848,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9690,6 +9894,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9735,6 +9940,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9780,6 +9986,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9829,6 +10036,7 @@ class DataController extends Controller
 		
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9877,6 +10085,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9925,6 +10134,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -9970,6 +10180,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -10004,6 +10215,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
@@ -10057,6 +10269,7 @@ class DataController extends Controller
 
     	try {
 			$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -10110,6 +10323,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -10150,6 +10364,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -10199,6 +10414,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -10236,6 +10452,7 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -10284,6 +10501,7 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);

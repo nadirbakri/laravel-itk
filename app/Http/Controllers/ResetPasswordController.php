@@ -39,6 +39,7 @@ class ResetPasswordController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json' ]
             ]);
 
@@ -76,6 +77,7 @@ class ResetPasswordController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json' ]
             ]);
 

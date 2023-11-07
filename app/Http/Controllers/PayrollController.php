@@ -49,6 +49,7 @@ class PayrollController extends Controller
     {
         try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
@@ -120,6 +121,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -165,6 +167,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -270,6 +273,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -325,6 +329,7 @@ class PayrollController extends Controller
     public function pageYearEndProcess () {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -365,6 +370,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -425,6 +431,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -504,6 +511,7 @@ class PayrollController extends Controller
     public function pageMonthlyJamsostekReport(){
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -546,6 +554,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -586,6 +595,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -626,6 +636,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -666,6 +677,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -711,6 +723,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -756,6 +769,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -801,6 +815,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -861,6 +876,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -901,6 +917,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -935,6 +952,7 @@ class PayrollController extends Controller
     public function tableSalaryMasterPY() {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -989,6 +1007,7 @@ class PayrollController extends Controller
     public function tableSeveranceDataEntryPY() {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1023,6 +1042,7 @@ class PayrollController extends Controller
     public function tableTariffMasterPY() {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1077,6 +1097,7 @@ class PayrollController extends Controller
     public function tableTariffMasterDetailPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1113,6 +1134,7 @@ class PayrollController extends Controller
     public function tableSalaryAccumulationDataPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1148,6 +1170,7 @@ class PayrollController extends Controller
     public function tableTHRDataEntryPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1186,6 +1209,7 @@ class PayrollController extends Controller
     public function tableBonusDataEntryPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1224,6 +1248,7 @@ class PayrollController extends Controller
     public function tableLoanMasterPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1258,6 +1283,7 @@ class PayrollController extends Controller
     public function tableLoanDataEntryPY() {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1292,6 +1318,7 @@ class PayrollController extends Controller
     public function tableFullPartialLoanPaymentPY() {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1326,6 +1353,7 @@ class PayrollController extends Controller
     public function tableLoanPaymentPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1363,6 +1391,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1398,6 +1427,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1432,6 +1462,7 @@ class PayrollController extends Controller
     public function tableTHRFormulaPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1471,6 +1502,7 @@ class PayrollController extends Controller
     public function tableTHRFormulaDetailPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1512,6 +1544,7 @@ class PayrollController extends Controller
     public function tableBonusFormulaDetailPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1553,6 +1586,7 @@ class PayrollController extends Controller
     public function tableBonusFormulaPY(Request $request) {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1592,6 +1626,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1627,6 +1662,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1662,6 +1698,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1704,6 +1741,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1739,6 +1777,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1782,6 +1821,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1825,6 +1865,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1868,6 +1909,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1910,6 +1952,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1968,6 +2011,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2026,6 +2070,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2067,6 +2112,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2126,6 +2172,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2185,6 +2232,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2221,6 +2269,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2263,6 +2312,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2322,6 +2372,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2380,6 +2431,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2419,6 +2471,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2469,6 +2522,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2502,6 +2556,7 @@ class PayrollController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2543,6 +2598,7 @@ public function dataDetailReportFormatPY(Request $request)
 {
     try {
         $client = new Client([
+                'verify' => false,
             'headers' => [ 'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . Session::get('token') ]
         ]);
@@ -2578,6 +2634,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2619,6 +2676,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2664,6 +2722,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2708,6 +2767,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2772,6 +2832,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2827,6 +2888,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2929,6 +2991,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3032,6 +3095,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3116,6 +3180,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3179,6 +3244,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3240,6 +3306,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3314,6 +3381,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3390,6 +3458,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3466,6 +3535,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3512,6 +3582,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3557,6 +3628,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3635,6 +3707,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3777,6 +3850,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3984,6 +4058,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4108,6 +4183,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4193,6 +4269,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4313,6 +4390,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4361,6 +4439,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4408,6 +4487,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4455,6 +4535,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4503,6 +4584,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4549,6 +4631,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4599,6 +4682,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4647,6 +4731,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4687,6 +4772,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4722,6 +4808,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4770,6 +4857,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4817,6 +4905,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4854,6 +4943,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4901,6 +4991,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4952,6 +5043,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5022,6 +5114,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5079,6 +5172,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5208,6 +5302,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5268,6 +5363,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5312,6 +5408,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5459,6 +5556,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5522,6 +5620,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5616,6 +5715,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5692,6 +5792,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5767,6 +5868,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5844,6 +5946,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5911,6 +6014,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5956,6 +6060,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6019,6 +6124,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6058,6 +6164,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6103,6 +6210,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6155,6 +6263,7 @@ public function dataDetailReportFormatPY(Request $request)
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6259,6 +6368,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6317,6 +6427,7 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6372,6 +6483,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printSeveranceReportPayroll(Request $request){
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6468,6 +6580,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printJournalReportPayroll(Request $request){
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6548,6 +6661,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $data->token ]
             ]);
@@ -6666,6 +6780,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . (isset($request->token) ? $request->token : Session::get('token')) ]
             ]);
@@ -6829,6 +6944,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             // var_dump(json_encode($request->all()));
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . (isset($request->token) ? $request->token : Session::get('token')) ]
             ]);
@@ -6946,6 +7062,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7028,6 +7145,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7122,6 +7240,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printDUMTKPayroll(Request $request){
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7214,6 +7333,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printSalaryHistoricalReportPayroll(Request $request){
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7303,6 +7423,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printBonusTHRReportPayroll(Request $request){
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7394,6 +7515,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7517,6 +7639,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printRetroactiveReportPayroll(Request $request){
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7633,6 +7756,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7792,6 +7916,7 @@ public function dataDetailReportFormatPY(Request $request)
         // return Excel::download(new ExportSIPPOnlineExcel($request->group_bpjs_code)), 'Severance Report.xlsx');
         try{
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

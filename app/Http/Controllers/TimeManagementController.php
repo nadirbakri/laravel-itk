@@ -34,6 +34,7 @@ class TimeManagementController extends Controller
     {
         try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
@@ -95,6 +96,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -217,6 +219,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -297,6 +300,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -335,6 +339,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -372,6 +377,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -408,6 +414,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -448,6 +455,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -485,6 +493,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -523,6 +532,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -564,6 +574,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -602,6 +613,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -660,6 +672,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -698,6 +711,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -732,6 +746,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -796,6 +811,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -835,6 +851,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -870,6 +887,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -905,6 +923,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -941,6 +960,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -980,6 +1000,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1020,6 +1041,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1059,6 +1081,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1100,6 +1123,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1139,6 +1163,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1172,6 +1197,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1205,6 +1231,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1429,6 +1456,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1488,6 +1516,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1535,6 +1564,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1594,6 +1624,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1664,6 +1695,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1742,6 +1774,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1822,6 +1855,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1868,6 +1902,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1935,6 +1970,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2044,6 +2080,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2102,6 +2139,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2228,6 +2266,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2302,6 +2341,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2365,6 +2405,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2457,6 +2498,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2508,6 +2550,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2599,6 +2642,7 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2638,6 +2682,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2690,6 +2735,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2737,6 +2783,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2774,6 +2821,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2813,6 +2861,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2857,6 +2906,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2907,6 +2957,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2948,6 +2999,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2993,6 +3045,7 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

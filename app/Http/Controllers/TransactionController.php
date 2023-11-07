@@ -26,6 +26,7 @@ class TransactionController extends Controller
     public function pageTransaction(Request $request){
         try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
@@ -164,6 +165,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -211,6 +213,7 @@ class TransactionController extends Controller
         if ($request->reimbursement_type == "TTA"){
             try {
                 $client = new Client([
+                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -272,6 +275,7 @@ class TransactionController extends Controller
     }else if ($request->reimbursement_type == "TTB"){
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -333,6 +337,7 @@ class TransactionController extends Controller
     }else{
          try {
                 $client = new Client([
+                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -397,6 +402,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -457,6 +463,7 @@ class TransactionController extends Controller
         if($request->workflowType == "ER"){
             try {
                 $client = new Client([
+                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -498,6 +505,7 @@ class TransactionController extends Controller
         }else{
             try {
                 $client = new Client([
+                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -555,6 +563,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -623,6 +632,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -680,6 +690,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -735,6 +746,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -808,6 +820,7 @@ class TransactionController extends Controller
                 $isNullenddate = true;
             }
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -819,6 +832,7 @@ class TransactionController extends Controller
                 $isNullprocessDate = true;
             }
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -881,6 +895,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -945,6 +960,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1021,6 +1037,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1067,6 +1084,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1108,6 +1126,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1150,6 +1169,7 @@ class TransactionController extends Controller
         $param = [];
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1201,6 +1221,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1249,6 +1270,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1308,6 +1330,7 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

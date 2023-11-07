@@ -28,6 +28,7 @@ class LoginController extends Controller
 		$arrResult = null;
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
@@ -194,6 +195,7 @@ class LoginController extends Controller
     {
     	try {
 	    	$client = new Client([
+                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
@@ -242,6 +244,7 @@ class LoginController extends Controller
     {
 		// try {
 			$client = new Client([
+                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json' ],
 				'verify' => false
 			]);

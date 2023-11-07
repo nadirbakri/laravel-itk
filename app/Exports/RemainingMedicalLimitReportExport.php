@@ -35,6 +35,7 @@ class RemainingMedicalLimitReportExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
+                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
