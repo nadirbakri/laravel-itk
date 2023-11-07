@@ -62,7 +62,7 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/exportcsvspt/getexportcsvspt', [
+            $response = $client->post(env('API_URL').'/payroll/ExportCSVSPT/ASDP/v1/getExportCSVSPT', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

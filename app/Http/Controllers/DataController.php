@@ -900,7 +900,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/ASDP/v1/getLoanEmployee',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -933,7 +933,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/ASDP/v1/getPrLoanPayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -1746,7 +1746,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prformulathr/getprformulathr',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrFormulaTHR/ASDP/v1/getPrFormulaTHR',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -2037,7 +2037,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloandataentry/loanlookup',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/ASDP/v1/LoanLookUp',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6881,7 +6881,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prpensionseverance/getprpensionseverance',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrPensionSeverance/ASDP/v1/getPrPensionSeverance',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6914,7 +6914,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/ASDP/v1/getLoanEmployee',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6947,7 +6947,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/ASDP/v1/getPrLoanPayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7020,7 +7020,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prformulathr/gettablefield',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrFormulaTHR/ASDP/v1/getTableField',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7068,7 +7068,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanMaster/ASDP/v1/getLoanMaster',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7115,7 +7115,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanMaster/ASDP/v1/getLoanMaster',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7154,7 +7154,7 @@ class DataController extends Controller
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/salarycomponentdata/getsalarycomponentdata',
+            $response = $client->post(env('API_URL') . '/payroll/PRSalaryComponentData/ASDP/v1/getSalaryComponentData',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -7185,7 +7185,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/ASDP/v1/getLoanEmployee',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7221,7 +7221,7 @@ class DataController extends Controller
 
 			// var_dump($request->fieldName);
 
-            $response = $client->post(env('API_URL') . '/salarycomponentdata/getsalarycomponentdata',
+            $response = $client->post(env('API_URL') . '/payroll/PRSalaryComponentData/ASDP/v1/getSalaryComponentData',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -7346,7 +7346,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/ASDP/v1/getPrLoanPayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7381,7 +7381,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/importfromexcel/getsalaryyearly',
+	    	$response = $client->post(env('API_URL') . '/payroll/ImportDataFromExcel/ASDP/v1/getSalaryYearly',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7525,7 +7525,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrAccount/ASDP/v1/getgmAccount',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -7574,7 +7574,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 	    	
-	    	$response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrAccount/ASDP/v1/getgmAccount',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -8245,7 +8245,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrReportFormat/ASDP/v1/getReportFormatList',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8609,7 +8609,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
+	    	$response = $client->post(env('API_URL') . '/payroll/PrReportFormat/ASDP/v1/getReportFormatList',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -10008,7 +10008,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/PrTransferBank/GetTransferBankFormatbyCompanyCodeBankCode',
+			$response = $client->post(env('API_URL') . '/payroll/PrTransferBank/ASDP/v1/GetTransferBankFormatbyCompanyCodeBankCode',
 					[
 						'body' => json_encode([
 							'companyCode' => Session::get('companyCode'),

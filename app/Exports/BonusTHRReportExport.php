@@ -65,7 +65,7 @@ class BonusTHRReportExport implements FromView, ShouldAutoSize
                 $param['paymentDateTo'] = $this->paymentDateTo;
             }
 
-            $response = $client->post(env('API_URL').'/prbonusthrreport/getbonusthrreport', [
+            $response = $client->post(env('API_URL').'/payroll/PrBonusTHRReport/ASDP/v1/getBonusTHRReport', [
                 'body' => json_encode($param)
             ]);
 

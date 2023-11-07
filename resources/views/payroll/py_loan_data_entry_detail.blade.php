@@ -555,7 +555,7 @@
                 url: "{{ url('payroll_loan_no/number/check') }}",
                 type: "GET",
                 data: {
-                    'url':'/prloandataentry/getloanemployee'
+                    'url':'/payroll/PrLoanDataEntry/ASDP/v1/getLoanEmployee'
                 },
                 success: function (response) {
                     $('#loan_no').val(response);

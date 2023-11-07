@@ -855,7 +855,7 @@
                         url: "{{ url('payroll/payroll_calculation_number/check') }}",
                         type: "GET",
                         data: {
-                            'url': '/prcalculation/getprcalculationdetail',
+                            'url': '/payroll/PrCalculation/ASDP/v1/getPrCalculationDetail',
                             'seqNo': arrData2[0].seqNo
                         },
                         success: function (response) {
