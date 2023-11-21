@@ -64,7 +64,7 @@ class SeveranceReportExcel implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/payroll/PrSeveranceSlipReport/ASDP/v1/GetSeveranceReport',
+            $response = $client->post(env('API_URL') . '/payroll/PrSeveranceSlipReport/GetSeveranceReport',
                 ['body' => json_encode($param)]
             );
 

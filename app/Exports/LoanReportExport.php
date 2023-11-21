@@ -114,7 +114,7 @@ class LoanReportExport implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/PrLoanReport/ASDP/v1/PrLoanReport', [
+            $response = $client->post(env('API_URL').'/payroll/PrLoanReport/PrLoanReport', [
                 'body' => json_encode($param)
             ]);
 

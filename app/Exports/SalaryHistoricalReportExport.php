@@ -49,7 +49,7 @@ class SalaryHistoricalReportExport implements FromView, ShouldAutoSize
                 $param['groupAuthorizedTo'] = (int) $this->groupAuthorizedCodeTo;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/PrSalaryHistoricalReport/ASDP/v1/GetPrSalaryHistoricalReport', [
+            $response = $client->post(env('API_URL').'/payroll/PrSalaryHistoricalReport/GetPrSalaryHistoricalReport', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

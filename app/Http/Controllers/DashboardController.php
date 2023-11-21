@@ -533,7 +533,7 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrSalaryCalculation/ASDP/v1/getBasicSalaryDashboardEntity',
+            $response = $client->post(env('API_URL') . '/payroll/PrSalaryCalculation/getBasicSalaryDashboardEntity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),

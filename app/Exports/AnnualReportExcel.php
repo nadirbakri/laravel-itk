@@ -105,7 +105,7 @@ class AnnualReportExcel implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/AnnualReport/ASDP/v1/getAnnualReport', [
+            $response = $client->post(env('API_URL').'/payroll/AnnualReport/getAnnualReport', [
                 'body' => json_encode($param)
             ]);
 
