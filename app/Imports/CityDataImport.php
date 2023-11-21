@@ -45,8 +45,8 @@ class CityDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "cityCode" => (isset($row[0])) ? $row[0] : null,
-                    "cityName" => (isset($row[1])) ? $row[1] : null,
+                    "cityCode" => (isset($row[0])) ? (string) $row[0] : null,
+                    "cityName" => (isset($row[1])) ? (string) $row[1] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),

@@ -50,7 +50,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
+            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('tm_monthly_absenteeism_analysis.list')); ?></span>
             </a>
@@ -186,6 +186,26 @@
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURL')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURL', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURL');
+
+        sessionStorage.removeItem('previousURL');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(function () {
         initDatePicker();
     });
@@ -841,6 +861,50 @@
 
         if ($("#monthly_absenteeism_analysis_form").length > 0) {
             $("#monthly_absenteeism_analysis_form").validate({
+                rules: {
+                    employee_no_from: {
+                        required: true,
+                    },
+                    employee_no_to: {
+                        required: true,
+                    },
+                    group_authorize_from: {
+                        required: true,
+                    },
+                    group_authorize_to: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no_from: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                    employee_no_to: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                    group_authorize_from: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                    group_authorize_to: {
+                        required: "<?php echo e(__('personel_employee_list.field_required')); ?>",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-print-data").prop("disabled", false);
+                    $("#btn-print-data").html(
+                        '<i class="fa fa-floppy-o"></i> <?php echo e(__("personel_employee_list.btn_print")); ?>'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {

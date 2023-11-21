@@ -45,8 +45,8 @@ class InstitutionDataImport implements ToCollection, SkipsEmptyRows, WithStartRo
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "institutionCode" => (isset($row[0])) ? $row[0] : null,
-                    "institutionName" => (isset($row[1])) ? $row[1] : null,
+                    "institutionCode" => (isset($row[0])) ? (string) $row[0] : null,
+                    "institutionName" => (isset($row[1])) ? (string) $row[1] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),

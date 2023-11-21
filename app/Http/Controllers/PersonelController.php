@@ -2207,7 +2207,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/getuserdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2287,7 +2287,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/user/getuserdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2326,6 +2326,7 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
