@@ -1470,7 +1470,7 @@ class PayrollController extends Controller
             $response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode'),
+                        // 'companyCode' => Session::get('companyCode'),
                         "variable" => "religion_",
                         "languageCode" => App::getLocale(),
                         'userID' => Session::get('userID'),
@@ -2320,7 +2320,7 @@ class PayrollController extends Controller
             $response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode'),
+                        // 'companyCode' => Session::get('companyCode'),
                         'variable' => 'religion_',
                         'comGenCode' => $request->religionCode,
                         'languageCode' => App::getLocale(),
