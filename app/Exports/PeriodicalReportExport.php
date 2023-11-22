@@ -131,7 +131,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
 
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/payroll/PrPeriodicalReport/GetPeriodicalReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPeriodicalReport', [
                 'body' => json_encode($param)
             ]);
 

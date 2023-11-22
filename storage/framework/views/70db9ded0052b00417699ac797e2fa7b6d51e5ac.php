@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo e(__('payroll_tariff_master.judul')); ?></title>
+	<title><?php echo e(__('payroll_loan_payment.judul')); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="<?php echo e(asset('pictures/favicon.png')); ?>" type="image/x-icon"/>
 	<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -82,7 +82,7 @@
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-new-white.svg')); ?>" class="functionbar-hover" alt="New">
                 <span>New</span>
             </a>
-            <a href="javascript:void(0)" id="toolbar-edit">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-edit-blue.svg')); ?>" alt="Edit">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-edit-white.svg')); ?>" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
@@ -107,7 +107,7 @@
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-list-white.svg')); ?>" class="functionbar-hover" alt="List">
                 <span>List</span>
             </a>
-            <a class="list-functionbar-sm" style="display: none;" href="javascript:void(0)" id="toolbar-delete">
+            <a class="list-functionbar-sm" href="javascript:void(0)" id="toolbar-delete">
                 <img src="<?php echo e(url('/icons/functionbar/remove.svg')); ?>" alt="Delete">
                 <img src="<?php echo e(url('/icons/functionbar/remove.svg')); ?>" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
@@ -121,25 +121,23 @@
         <div class="div-title">
 			<a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
 				<img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
-				<span class="title-text"><?php echo e(__('payroll_tariff_master.list')); ?></span>
+				<span class="title-text"><?php echo e(__('payroll_loan_payment.list')); ?></span>
 			</a>
 		</div>
         <div class="div-table">
-			<table id="tariff_master_table" class="table hover" style="width:100%">
+			<table id="loan_payment_table" class="table hover" style="width: 100%">
 				<thead>
 					<tr>
                         <th></th>
-						<th>Employee No</th>
-						<th>Employee Name</th>
-                        <th>Month</th>
-                        <th>Year</th>
-						<th>Period</th>
+						<th class="text-center">Employee No</th>
+						<th class="text-center">Employee Name</th>
+                        <th class="text-center">Loan No</th>
+                        <th class="text-center">Seq</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
-
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -166,7 +164,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="<?php echo e(url('/pictures/checklist-green-confirm-password.svg')); ?>" alt="Password">
-                        <span class="title-text-notification"><?php echo e(__('payroll_tariff_master.alert_success')); ?></span>
+                        <span class="title-text-notification"><?php echo e(__('payroll_loan_payment.alert_success')); ?></span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -216,8 +214,8 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#tariff_master_table thead tr').clone(true).appendTo('#tariff_master_table thead');
-        $('#tariff_master_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#loan_payment_table thead tr').clone(true).appendTo('#loan_payment_table thead');
+        $('#loan_payment_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
 
@@ -231,16 +229,16 @@
             } );
         });
 
-        load_data_table_tariff_master();
+        load_data_table_loan_payment();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_tariff_master() {
-            table = $('#tariff_master_table').DataTable({
+        function load_data_table_loan_payment() {
+            table = $('#loan_payment_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "<?php echo e(url('payroll/tariff_master/table')); ?>",
+                ajax: "<?php echo e(url('payroll/loan_payment/table')); ?>",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -250,32 +248,28 @@
                 columns: [
                     {
                         orderable: false,
-                        targets: 0, 
+                        targets: 0,
                         "defaultContent": '',
                         render: function(data, type) {
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    { data: 'employeeNo', name: 'employeeNo' },
-                    { data: 'fullName', name: 'fullName' },
-                    { 
-                        data: 'periodMonth', 
-                        name: 'periodMonth',
-                        render: function (data, type, row) {
-                            return moment(data).format('MMMM');
-                        }
-                    },
-                    { data: 'periodYear', name: 'periodYear' },
-                    { data: 'statusPeriod', name: 'statusPeriod' },
+                    {data: 'employeeNo', name: 'employeeNo'},
+                    {data: 'employeeName', name: 'employeeName'},
+                    {data: 'loanNo', name: 'loanNo'},
+                    {data: 'paymentSeq', name: 'paymentSeq'},
                 ],
                 select: {
                     style:    'multi',
                     selector: 'td:first-child'
-                }
+                },
+                columnDefs: [
+                    { className: 'text-center', targets: [1, 2, 3, 4] },
+                ],
             });
         }
 
-        $('#tariff_master_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        $('#loan_payment_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
             if(this.checked){
@@ -288,17 +282,59 @@
             e.stopPropagation();
         });
 
-        $('#tariff_master_table').on('click', 'tr td:first-child', function(e){
+        $('#loan_payment_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
 
-        $("#toolbar-edit").on('click', function() {
+        $("#toolbar-delete").on('click', function () {
+            var data = table.rows('.selected').data().toArray();
+
+            if (data.length > 0) {
+                $.ajax({
+                    url: "<?php echo e(url('payroll/loan_payment/remove')); ?>",
+                    type: "GET",
+                    data: {
+                        'data' : data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            $('#loan_payment_table').DataTable().destroy();
+                            load_data_table_loan_payment();
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "<?php echo e(__('login.error')); ?>");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#toolbar-delete").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("<?php echo e(url('payroll/tariff_master/detail_data')); ?>", 
+                $.redirect("<?php echo e(url('payroll/loan_payment/detail_data')); ?>", 
                 { 
                     'employeeNo' : data[0].employeeNo,
-                    'statusPeriod' : data[0].statusPeriod
+                    'loanNo' : data[0].loanNo,
+                    'paymentSeq' : data[0].paymentSeq
                 }, 
                 "GET", "iframe_dashboard");
             }else{
@@ -307,16 +343,16 @@
             }
         });
 
-        $('#tariff_master_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#loan_payment_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("<?php echo e(url('payroll/tariff_master/detail_data')); ?>", 
-            {   
-                'employeeNo' : data.employeeNo,
-                'statusPeriod' : data.statusPeriod,
+            $.redirect("<?php echo e(url('payroll/loan_payment/detail_data')); ?>", 
+            {   'employeeNo' : data.employeeNo, 
+                'loanNo' : data.loanNo,
+                'paymentSeq' : data.paymentSeq
             }, 
             "GET", "iframe_dashboard");
         });
     })
 </script>
 
-</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/payroll/py_tariff_master.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/payroll/py_loan_payment.blade.php ENDPATH**/ ?>

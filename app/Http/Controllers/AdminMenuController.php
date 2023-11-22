@@ -238,7 +238,7 @@ class AdminMenuController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/payroll/Announcement/getAnnouncement',
+            $response = $client->post(env('API_URL') . '/mobile/Announcement/getAnnouncement',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -290,7 +290,7 @@ class AdminMenuController extends Controller
             ];
 
             if ($request->status == "new"){
-                $response = $client->post(env('API_URL') . '/payroll/Announcement/insertAnnouncement',
+                $response = $client->post(env('API_URL') . '/mobile/Announcement/insertAnnouncement',
                     ['body' => json_encode($param)]
                 );
             }else {
@@ -298,7 +298,7 @@ class AdminMenuController extends Controller
                     $param['seqNo'] = (int) $request->seq_no;
                 }
 
-                $response = $client->put(env('API_URL') . '/payroll/Announcement/updateAnnouncement',
+                $response = $client->put(env('API_URL') . '/mobile/Announcement/updateAnnouncement',
                     ['body' => json_encode($param)]
                 );
             }

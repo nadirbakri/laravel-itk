@@ -82,7 +82,7 @@ class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithSta
                 ];
             }
 
-            $response = $client->put(env('API_URL') . '/payroll/ImportDataFromExcel/UpdateBonusTHR',
+            $response = $client->put(env('API_URL') . '/payroll/UpdateBonusTHR',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

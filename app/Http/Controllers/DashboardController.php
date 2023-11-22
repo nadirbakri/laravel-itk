@@ -533,7 +533,21 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrSalaryCalculation/getBasicSalaryDashboardEntity',
+            dd(json_encode(
+                [
+                    'companyCode' => Session::get('companyCode'),
+                    'periodYear' => (int) date('Y'),
+                    'periodMonth' => (int) date('n'),
+                    // 'periodYear' => 2022,
+                    'languageID' => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ]
+                ));
+
+            $response = $client->post(env('API_URL') . '/payroll/getBasicSalaryDashboardEntity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),

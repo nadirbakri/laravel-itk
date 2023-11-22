@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo e(__('payroll_tariff_master.judul')); ?></title>
+	<title><?php echo e(__('payroll_journal_template.judul')); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="<?php echo e(asset('pictures/favicon.png')); ?>" type="image/x-icon"/>
 	<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -9,11 +9,8 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="<?php echo e(asset('css/payroll_detail.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/jquery.inputpicker.css')); ?>">
+	<link rel="stylesheet" href="<?php echo e(asset('css/time_management_detail.css')); ?>">
 	<style type="text/css">
 		.div-payroll {
 			max-width: 97%;
@@ -70,76 +67,65 @@
             <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-back-blue.svg')); ?>" alt="Back">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-back-white.svg')); ?>" class="functionbar-hover" alt="Back">
-                <span>Back</span>
+                <span><?php echo e(__('payroll_journal_template.label_back')); ?></span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-next-blue.svg')); ?>" alt="Next">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-next-white.svg')); ?>" class="functionbar-hover" alt="Next">
-                <span>Next</span>
+                <span><?php echo e(__('payroll_journal_template.label_next')); ?></span>
             </a>
-            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
+            <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-new-blue.svg')); ?>" alt="New">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-new-white.svg')); ?>" class="functionbar-hover" alt="New">
-                <span>New</span>
+                <span><?php echo e(__('payroll_journal_template.label_new')); ?></span>
             </a>
             <a href="javascript:void(0)" id="toolbar-edit">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-edit-blue.svg')); ?>" alt="Edit">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-edit-white.svg')); ?>" class="functionbar-hover" alt="Edit">
-                <span>Edit</span>
+                <span><?php echo e(__('payroll_journal_template.label_edit')); ?></span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-save-blue.svg')); ?>" alt="Save">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-save-white.svg')); ?>" class="functionbar-hover" alt="Save">
-                <span>Save</span>
+                <span><?php echo e(__('payroll_journal_template.btn_save')); ?></span>
             </a>
-            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-active">
+            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-active">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-checklist-blue.svg')); ?>" alt="Activate">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-checklist-white.svg')); ?>" class="functionbar-hover" alt="Activate">
-                <span>Activate</span>
+                <span><?php echo e(__('payroll_journal_template.label_activate')); ?></span>
             </a>
-            <a class="list-functionbar-lg" style="display: none;" href="javascript:void(0)" id="toolbar-deactive">
+            <a class="list-functionbar-lg" href="javascript:void(0)" id="toolbar-deactive">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-deactivate-blue.svg')); ?>" alt="Deactivate">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-deactivate-white.svg')); ?>" class="functionbar-hover" alt="Deactivate">
-                <span>Deactivate</span>
+                <span><?php echo e(__('payroll_journal_template.label_deactivate')); ?></span>
             </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-list-blue.svg')); ?>" alt="List">
                 <img src="<?php echo e(url('/icons/functionbar/functionbar-list-white.svg')); ?>" class="functionbar-hover" alt="List">
-                <span>List</span>
-            </a>
-            <a class="list-functionbar-sm" style="display: none;" href="javascript:void(0)" id="toolbar-delete">
-                <img src="<?php echo e(url('/icons/functionbar/remove.svg')); ?>" alt="Delete">
-                <img src="<?php echo e(url('/icons/functionbar/remove.svg')); ?>" class="functionbar-hover" alt="Delete">
-                <span>Delete</span>
-            </a>
-            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process">
-                <img src="<?php echo e(url('/icons/functionbar/process.svg')); ?>" alt="Process">
-                <img src="<?php echo e(url('/icons/functionbar/process.svg')); ?>" class="functionbar-hover" alt="Process">
-                <span>Process</span>
+                <span><?php echo e(__('payroll_journal_template.label_list')); ?></span>
             </a>
         </div>
         <div class="div-title">
 			<a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
 				<img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
-				<span class="title-text"><?php echo e(__('payroll_tariff_master.list')); ?></span>
+				<span class="title-text"><?php echo e(__('payroll_journal_template.list')); ?></span>
 			</a>
 		</div>
         <div class="div-table">
-			<table id="tariff_master_table" class="table hover" style="width:100%">
+			<table id="journal_template_table" class="table hover" style="width:100%">
 				<thead>
 					<tr>
                         <th></th>
-						<th>Employee No</th>
-						<th>Employee Name</th>
-                        <th>Month</th>
-                        <th>Year</th>
-						<th>Period</th>
+						<th><?php echo e(__('payroll_journal_template.label_journal_code')); ?></th>
+						<th><?php echo e(__('payroll_journal_template.label_description')); ?></th>
+                        <th><?php echo e(__('payroll_journal_template.label_debit_kredit')); ?></th>
+                        <th><?php echo e(__('payroll_journal_template.label_account')); ?></th>
+                        <th><?php echo e(__('payroll_journal_template.label_record_status')); ?></th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
-
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -166,7 +152,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="<?php echo e(url('/pictures/checklist-green-confirm-password.svg')); ?>" alt="Password">
-                        <span class="title-text-notification"><?php echo e(__('payroll_tariff_master.alert_success')); ?></span>
+                        <span class="title-text-notification"><?php echo e(__('payroll_journal_template.alert_success')); ?></span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -178,18 +164,11 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
     function savePreviousURL() {
@@ -216,11 +195,11 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#tariff_master_table thead tr').clone(true).appendTo('#tariff_master_table thead');
-        $('#tariff_master_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#journal_template_table thead tr').clone(true).appendTo('#journal_template_table thead');
+        $('#journal_template_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
-
+    
             $('input', this).on('keyup change', function () {
                 if (table.column(i + 1).search() !== this.value) {
                     table
@@ -231,16 +210,16 @@
             } );
         });
 
-        load_data_table_tariff_master();
+        load_data_table_journal_template();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_tariff_master() {
-            table = $('#tariff_master_table').DataTable({
+        function load_data_table_journal_template() {
+            table = $('#journal_template_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "<?php echo e(url('payroll/tariff_master/table')); ?>",
+                ajax: "<?php echo e(url('payroll/journal_template/table')); ?>",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -256,17 +235,11 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    { data: 'employeeNo', name: 'employeeNo' },
-                    { data: 'fullName', name: 'fullName' },
-                    { 
-                        data: 'periodMonth', 
-                        name: 'periodMonth',
-                        render: function (data, type, row) {
-                            return moment(data).format('MMMM');
-                        }
-                    },
-                    { data: 'periodYear', name: 'periodYear' },
-                    { data: 'statusPeriod', name: 'statusPeriod' },
+                    {data: 'journalCode', name: 'journalCode'},
+                    {data: 'description', name: 'description'},
+                    {data: 'debitKredit', name: 'debitKredit'},
+                    {data: 'account', name: 'account'},
+                    {data: 'recordStatus', name: 'recordStatus'}
                 ],
                 select: {
                     style:    'multi',
@@ -275,7 +248,7 @@
             });
         }
 
-        $('#tariff_master_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        $('#journal_template_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
             if(this.checked){
@@ -288,35 +261,116 @@
             e.stopPropagation();
         });
 
-        $('#tariff_master_table').on('click', 'tr td:first-child', function(e){
+        $('#journal_template_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $("#toolbar-new").on('click', function() {
+            $.redirect("<?php echo e(url('payroll/journal_template/detail_data')); ?>", { 'journalCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
         });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("<?php echo e(url('payroll/tariff_master/detail_data')); ?>", 
-                { 
-                    'employeeNo' : data[0].employeeNo,
-                    'statusPeriod' : data[0].statusPeriod
-                }, 
-                "GET", "iframe_dashboard");
+                $.redirect("<?php echo e(url('payroll/journal_template/detail_data')); ?>", { 'journalCode' : data[0].journalCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
         });
 
-        $('#tariff_master_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $("#toolbar-active").on('click', function() {
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                $.ajax({
+                    url: "<?php echo e(url('payroll/journal_template/status')); ?>",
+                    type: "GET",
+                    data: { 
+                        'journalCode' : data[0].journalCode,
+                        'description' : data[0].description,
+                        'debitKredit' : data[0].debitKredit,
+                        'account' : data[0].account,
+                        'costCenter' : data[0].costCenter,
+                        'fieldName' : data[0].fieldName,
+                        'func' : 'A' },
+                    success: function(response) {
+                        if(response.status == "true"){
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response.message);
+                            setTimeout(function(){ 
+                                window.location = "<?php echo e(url('payroll/journal_template')); ?>";
+                            }, 3000);
+                        }else{
+                            $('#notification_error').modal('show');
+                            if(response.message == null || response.message == ''){
+                                $('#message-notification-error').html("<?php echo e(__('login.error')); ?>");
+                            }else{
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                        var oTable = $('#journal_template_table').dataTable();
+                        oTable.fnDraw(false);
+                    },
+                    error: function(response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#toolbar-deactive").on('click', function() {
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                console.log(data[0]);
+                $.ajax({
+                    url: "<?php echo e(url('payroll/journal_template/status')); ?>",
+                    type: "GET",
+                    data: { 
+                        'journalCode' : data[0].journalCode,
+                        'description' : data[0].description,
+                        'debitKredit' : data[0].debitKredit,
+                        'account' : data[0].account,
+                        'costCenter' : data[0].costCenter,
+                        'fieldName' : data[0].fieldName,
+                        'func' : 'D' },
+                    success: function(response) {
+                        if(response.status == "true"){
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response.message);
+                            setTimeout(function(){ 
+                                window.location = "<?php echo e(url('payroll/journal_template')); ?>";
+                            }, 3000);
+                        }else{
+                            $('#notification_error').modal('show');
+                            if(response.message == null || response.message == ''){
+                                $('#message-notification-error').html("<?php echo e(__('login.error')); ?>");
+                            }else{
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                        var oTable = $('#journal_template_table').dataTable();
+                        oTable.fnDraw(false);
+                    },
+                    error: function(response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $('#journal_template_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("<?php echo e(url('payroll/tariff_master/detail_data')); ?>", 
-            {   
-                'employeeNo' : data.employeeNo,
-                'statusPeriod' : data.statusPeriod,
-            }, 
-            "GET", "iframe_dashboard");
+            $.redirect("<?php echo e(url('payroll/journal_template/detail_data')); ?>", { 'journalCode' : data.journalCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         });
     })
 </script>
 
-</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/payroll/py_tariff_master.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/payroll/py_journal_template.blade.php ENDPATH**/ ?>

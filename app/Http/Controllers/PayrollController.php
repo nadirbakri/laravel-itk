@@ -298,7 +298,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $response_pr = $client->post(env('API_URL') . '/payroll/ReferencePayroll/getReferencePR',
+            $response_pr = $client->post(env('API_URL') . '/payroll/getReferencePR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -922,7 +922,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrAccount/getgmAccount',
+            $response = $client->post(env('API_URL') . '/payroll/getgmAccount',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -973,7 +973,7 @@ class PayrollController extends Controller
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
             }else{
-                $response = $client->post(env('API_URL') . '/payroll/PrSalaryMaster/getPrSalaryMaster',
+                $response = $client->post(env('API_URL') . '/payroll/getPrSalaryMaster',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1012,7 +1012,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrPensionSeverance/getPrPensionSeverance',
+            $response = $client->post(env('API_URL') . '/payroll/getPrPensionSeverance',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1063,7 +1063,7 @@ class PayrollController extends Controller
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
             }else{
-                $response = $client->post(env('API_URL') . '/payroll/PrTariffMaster/getPrTariffMaster',
+                $response = $client->post(env('API_URL') . '/payroll/getPrTariffMaster',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1102,7 +1102,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrTariffMaster/getPrTariffMaster',
+            $response = $client->post(env('API_URL') . '/payroll/getPrTariffMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1139,7 +1139,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrYearly/getPrYearly',
+            $response = $client->post(env('API_URL') . '/payroll/getPrYearly',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1175,7 +1175,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/getPrBonusTHR',
+            $response = $client->post(env('API_URL') . '/payroll/getPrBonusTHR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1214,7 +1214,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/getPrBonusTHR',
+            $response = $client->post(env('API_URL') . '/payroll/getPrBonusTHR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1253,7 +1253,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanMaster/getLoanMaster',
+            $response = $client->post(env('API_URL') . '/payroll/getLoanMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1288,7 +1288,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/getLoanEmployee',
+            $response = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1323,7 +1323,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/getPrLoanPayment',
+            $response = $client->post(env('API_URL') . '/payroll/getPrLoanPayment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1358,7 +1358,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/getPrPayment',
+            $response = $client->post(env('API_URL') . '/payroll/getPrPayment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1396,7 +1396,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrMultiCostCenter/getPrMultiCost',
+            $response = $client->post(env('API_URL') . '/payroll/getPrMultiCost',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1432,7 +1432,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrReportFormat/getReportFormatList',
+            $response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1472,7 +1472,7 @@ class PayrollController extends Controller
                     [
                         // 'companyCode' => Session::get('companyCode'),
                         "variable" => "religion_",
-                        "languageCode" => App::getLocale(),
+                        "languageCode" => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -1509,7 +1509,7 @@ class PayrollController extends Controller
 
             // var_dump($request->religionCode);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrFormulaTHR/getPrFormulaTHR',
+            $response = $client->post(env('API_URL') . '/payroll/getPrFormulaTHR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1551,7 +1551,7 @@ class PayrollController extends Controller
 
             // var_dump($request->religionCode);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrFormulaBonus/getFormulaBonus',
+            $response = $client->post(env('API_URL') . '/payroll/getFormulaBonus',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1591,7 +1591,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrFormulaBonus/getListBonus',
+            $response = $client->post(env('API_URL') . '/payroll/getListBonus',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1631,7 +1631,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrCalculation/getPrCalculationProcess',
+            $response = $client->post(env('API_URL') . '/payroll/getPrCalculationProcess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1667,7 +1667,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PRSalaryComponentData/getSalaryComponentData',
+            $response = $client->post(env('API_URL') . '/payroll/getSalaryComponentData',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1705,7 +1705,7 @@ class PayrollController extends Controller
 
             // var_dump($request->religionCode);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrCalculation/getPrCalculationDetail',
+            $response = $client->post(env('API_URL') . '/payroll/getPrCalculationDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1746,7 +1746,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrJournalTemplate/getJournalTemplate',
+            $response = $client->post(env('API_URL') . '/payroll/getJournalTemplate',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -1782,7 +1782,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrSalaryMaster/getPrSalaryMaster',
+            $response = $client->post(env('API_URL') . '/payroll/getPrSalaryMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1826,7 +1826,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrPensionSeverance/getPrPensionSeverance',
+            $response = $client->post(env('API_URL') . '/payroll/getPrPensionSeverance',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1870,7 +1870,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrTariffMaster/getPrTariffMaster',
+            $response = $client->post(env('API_URL') . '/payroll/getPrTariffMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1914,7 +1914,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrYearly/getPrYearly',
+            $response = $client->post(env('API_URL') . '/payroll/getPrYearly',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1958,7 +1958,7 @@ class PayrollController extends Controller
             ]);
 
             if ($request->func == 'new') {
-                $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/getPrBonusTHR',
+                $response = $client->post(env('API_URL') . '/payroll/getPrBonusTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1971,7 +1971,7 @@ class PayrollController extends Controller
                 );
             }
             else {
-                $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/getPrBonusTHR',
+                $response = $client->post(env('API_URL') . '/payroll/getPrBonusTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2017,7 +2017,7 @@ class PayrollController extends Controller
             ]);
 
             if ($request->func == 'new') {
-                $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/getPrBonusTHR',
+                $response = $client->post(env('API_URL') . '/payroll/getPrBonusTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2030,7 +2030,7 @@ class PayrollController extends Controller
                 );
             }
             else {
-                $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/getPrBonusTHR',
+                $response = $client->post(env('API_URL') . '/payroll/getPrBonusTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2075,7 +2075,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanMaster/getLoanMaster',
+            $response = $client->post(env('API_URL') . '/payroll/getLoanMaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2117,7 +2117,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/getPrLoanPayment',
+            $response = $client->post(env('API_URL') . '/payroll/getPrLoanPayment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2131,7 +2131,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $response2 = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/getLoanEmployee',
+            $response2 = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2177,7 +2177,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/getEmployeeDetail',
+            $response = $client->post(env('API_URL') . '/payroll/getEmployeeDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2191,7 +2191,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $response2 = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/getLoanEmployee',
+            $response2 = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2237,7 +2237,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/getLoanEmployee',
+            $response = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2274,7 +2274,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/getLoanEmployee',
+            $response = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2323,7 +2323,7 @@ class PayrollController extends Controller
                         // 'companyCode' => Session::get('companyCode'),
                         'variable' => 'religion_',
                         'comGenCode' => $request->religionCode,
-                        'languageCode' => App::getLocale(),
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -2331,7 +2331,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $response_table = $client->post(env('API_URL') . '/payroll/PrFormulaTHR/getPrFormulaTHR',
+            $response_table = $client->post(env('API_URL') . '/payroll/getPrFormulaTHR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2378,7 +2378,7 @@ class PayrollController extends Controller
             ]);
 
             if ($request->func === 'new') {
-                $response = $client->post(env('API_URL') . '/payroll/PrFormulaBonus/getFormulaBonus',
+                $response = $client->post(env('API_URL') . '/payroll/getFormulaBonus',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2392,7 +2392,7 @@ class PayrollController extends Controller
             }
 
             else {
-                $response = $client->post(env('API_URL') . '/payroll/PrFormulaBonus/getFormulaBonus',
+                $response = $client->post(env('API_URL') . '/payroll/getFormulaBonus',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2436,7 +2436,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrAccount/getgmAccount',
+            $response = $client->post(env('API_URL') . '/payroll/getgmAccount',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2476,7 +2476,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrMultiCostCenter/getPrMultiCost',
+            $response = $client->post(env('API_URL') . '/payroll/getPrMultiCost',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2489,7 +2489,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $response_det = $client->post(env('API_URL') . '/payroll/PrMultiCostCenter/getPrMultiCostDetail',
+            $response_det = $client->post(env('API_URL') . '/payroll/getPrMultiCostDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2527,7 +2527,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrReportFormat/getReportFormatList',
+            $response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2561,7 +2561,7 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PRSalaryComponentData/getSalaryComponentData',
+            $response = $client->post(env('API_URL') . '/payroll/getSalaryComponentData',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2605,7 +2605,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         // var_dump($request->reportCode);
 
-        $response = $client->post(env('API_URL') . '/payroll/PrReportFormat/getReportFormatList',
+        $response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
             ['body' => json_encode(
                 [
                     'companyCode' => Session::get('companyCode'),
@@ -2639,7 +2639,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrJournalTemplate/getJournalTemplate',
+            $response = $client->post(env('API_URL') . '/payroll/getJournalTemplate',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2681,7 +2681,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrCalculation/getPrCalculationProcess',
+            $response = $client->post(env('API_URL') . '/payroll/getPrCalculationProcess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2691,7 +2691,7 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
 
-            $response_table = $client->post(env('API_URL') . '/payroll/PrCalculation/getPrCalculationDetail',
+            $response_table = $client->post(env('API_URL') . '/payroll/getPrCalculationDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2727,7 +2727,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrSlipFormat/getSlipFormat',
+            $response = $client->post(env('API_URL') . '/payroll/getSlipFormat',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2808,7 +2808,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             $param['grid'] = $data_grid;
 
-            $response = $client->put(env('API_URL') . '/payroll/PrSalaryMaster/updatePrSalaryMaster',
+            $response = $client->put(env('API_URL') . '/payroll/updatePrSalaryMaster',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -2859,11 +2859,11 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrAccount/InsertgmAccount',
+                $response = $client->post(env('API_URL') . '/payroll/InsertgmAccount',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/PrAccount/updategmAccount',
+                $response = $client->put(env('API_URL') . '/payroll/updategmAccount',
                     ['body' => json_encode($param)]
                 );
             }
@@ -2962,11 +2962,11 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrReportFormat/InsertReportFormat',
+                $response = $client->post(env('API_URL') . '/payroll/InsertReportFormat',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/PrReportFormat/UpdateReportFormat',
+                $response = $client->put(env('API_URL') . '/payroll/UpdateReportFormat',
                     ['body' => json_encode($param)]
                 );
             }
@@ -3021,7 +3021,7 @@ public function dataDetailReportFormatPY(Request $request)
             //     ));
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/payroll/PrPensionSeverance/insertPrPensionSeverance',
+                $response = $client->post(env('API_URL') . '/payroll/insertPrPensionSeverance',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3048,7 +3048,7 @@ public function dataDetailReportFormatPY(Request $request)
                 );
             }
             else {
-                $response = $client->put(env('API_URL') . '/payroll/PrPensionSeverance/UpdatePrPensionSeverance',
+                $response = $client->put(env('API_URL') . '/payroll/UpdatePrPensionSeverance',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3150,11 +3150,11 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrMultiCostCenter/InsertPrMultiCost',
+                $response = $client->post(env('API_URL') . '/payroll/InsertPrMultiCost',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/PrMultiCostCenter/UpdatePrMultiCost',
+                $response = $client->put(env('API_URL') . '/payroll/UpdatePrMultiCost',
                     ['body' => json_encode($param)]
                 );
             }
@@ -3220,7 +3220,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             $param['grid'] = $data_grid;
 
-            $response = $client->put(env('API_URL') . '/payroll/PrTariffMaster/updatePrTariffMaster',
+            $response = $client->put(env('API_URL') . '/payroll/updatePrTariffMaster',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -3282,7 +3282,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/payroll/PrYearly/updatePrYearly',
+            $response = $client->put(env('API_URL') . '/payroll/updatePrYearly',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -3312,7 +3312,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/payroll/PrFormulaTHR/insertPrFormulaTHR',
+                $response = $client->post(env('API_URL') . '/payroll/insertPrFormulaTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3337,7 +3337,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/payroll/PrFormulaTHR/UpdatePrFormulaTHR',
+                $response = $client->put(env('API_URL') . '/payroll/UpdatePrFormulaTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3387,7 +3387,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/payroll/PrFormulaBonus/insertFormulaBonus',
+                $response = $client->post(env('API_URL') . '/payroll/insertFormulaBonus',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3413,7 +3413,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/payroll/PrFormulaBonus/updateFormulaBonus',
+                $response = $client->put(env('API_URL') . '/payroll/updateFormulaBonus',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3464,7 +3464,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             if ($request->record_function == 'New') {
-                $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/InsertPrBonusTHR',
+                $response = $client->post(env('API_URL') . '/payroll/InsertPrBonusTHR',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3510,7 +3510,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "logActionUsername" => Session::get('userID')
                 ];
 
-                $response = $client->put(env('API_URL') . '/payroll/PrBonusTHR/UpdatePrBonusTHR',
+                $response = $client->put(env('API_URL') . '/payroll/UpdatePrBonusTHR',
                     ['body' => json_encode($param)]
                 );
             }
@@ -3540,7 +3540,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/ProcessBonusTHR',
+            $response = $client->post(env('API_URL') . '/payroll/ProcessBonusTHR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3587,7 +3587,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrBonusTHR/ProcessBonusTHR',
+            $response = $client->post(env('API_URL') . '/payroll/ProcessBonusTHR',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3634,7 +3634,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/payroll/PrLoanMaster/insertLoanMaster',
+                $response = $client->post(env('API_URL') . '/payroll/insertLoanMaster',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -3660,7 +3660,7 @@ public function dataDetailReportFormatPY(Request $request)
                     )]
                 );
             }else {
-                $response = $client->put(env('API_URL') . '/payroll/PrLoanMaster/updateLoanMaster',
+                $response = $client->put(env('API_URL') . '/payroll/updateLoanMaster',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -3730,7 +3730,7 @@ public function dataDetailReportFormatPY(Request $request)
                     $paramDetail[] = null;
                 }
 
-                $response = $client->post(env('API_URL') . '/payroll/PrLoanDataEntry/insertLoanEmployee',
+                $response = $client->post(env('API_URL') . '/payroll/insertLoanEmployee',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3788,7 +3788,7 @@ public function dataDetailReportFormatPY(Request $request)
                     $paramDetail[] = null;
                 }
 
-                $response = $client->put(env('API_URL') . '/payroll/PrLoanDataEntry/updateLoanEmployee',
+                $response = $client->put(env('API_URL') . '/payroll/updateLoanEmployee',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3887,7 +3887,7 @@ public function dataDetailReportFormatPY(Request $request)
                     $paramDetail[] = null;
                 }
 
-                $response = $client->post(env('API_URL') . '/payroll/PrLoanPayment/InsertPrLoanPayment',
+                $response = $client->post(env('API_URL') . '/payroll/InsertPrLoanPayment',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -3997,7 +3997,7 @@ public function dataDetailReportFormatPY(Request $request)
                 //     ]
                 //     ));
 
-                $response = $client->put(env('API_URL') . '/payroll/PrLoanPayment/UpdatePrLoanPayment',
+                $response = $client->put(env('API_URL') . '/payroll/UpdatePrLoanPayment',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -4153,11 +4153,11 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrCalculation/insertPrCalculationProcess',
+                $response = $client->post(env('API_URL') . '/payroll/insertPrCalculationProcess',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/PrCalculation/updatePrCalculationProcess',
+                $response = $client->put(env('API_URL') . '/payroll/updatePrCalculationProcess',
                     ['body' => json_encode($param)]
                 );
             }
@@ -4240,11 +4240,11 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump($param);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrJournalTemplate/InsertPrJournalTemplate',
+                $response = $client->post(env('API_URL') . '/payroll/InsertPrJournalTemplate',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/PrJournalTemplate/UpdatePrJournalTemplate',
+                $response = $client->put(env('API_URL') . '/payroll/UpdatePrJournalTemplate',
                     ['body' => json_encode($param)]
                 );
             }
@@ -4309,7 +4309,7 @@ public function dataDetailReportFormatPY(Request $request)
             //         'logActionUsername' => Session::get('userName')        
             //     ]));
 
-            $response = $client->post(env('API_URL') . '/payroll/PrTransferBank/TransferAmountProcess',
+            $response = $client->post(env('API_URL') . '/payroll/TransferAmountProcess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4415,7 +4415,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrBonusTHR/deletePrBonusTHR',
+            $response = $client->delete(env('API_URL') . '/payroll/deletePrBonusTHR',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -4444,7 +4444,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrPensionSeverance/DeletePrPensionSeverance',
+            $response = $client->delete(env('API_URL') . '/payroll/DeletePrPensionSeverance',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4492,7 +4492,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrFormulaTHR/deletePrFormulaTHR',
+            $response = $client->delete(env('API_URL') . '/payroll/deletePrFormulaTHR',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -4540,7 +4540,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrFormulaBonus/deleteFormulaBonus',
+            $response = $client->delete(env('API_URL') . '/payroll/deleteFormulaBonus',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -4589,7 +4589,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrCalculation/deletePrCalculationDetail',
+            $response = $client->delete(env('API_URL') . '/payroll/deletePrCalculationDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4658,7 +4658,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrMultiCostCenter/DeleteMultiCost',
+            $response = $client->delete(env('API_URL') . '/payroll/DeleteMultiCost',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -4689,7 +4689,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // var_dump((int) $request->column_no_hidden);
 
-            $response = $client->delete(env('API_URL') . '/payroll/PrFormatSPT/DeletePrFormatSPT',
+            $response = $client->delete(env('API_URL') . '/payroll/DeletePrFormatSPT',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4749,7 +4749,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/payroll/prloanpayment/deleteprpayment',
+            $response = $client->delete(env('API_URL') . '/payroll/deleteprpayment',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -4779,7 +4779,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // var_dump((int)$request->columnNo);
 
-            $response = $client->post(env('API_URL') . '/payroll/PrFormatSPT/getPrFormatSPT',
+            $response = $client->post(env('API_URL') . '/payroll/getPrFormatSPT',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4813,7 +4813,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/payroll/PrLoanMaster/updateLoanMaster',
+            $response = $client->put(env('API_URL') . '/payroll/updateLoanMaster',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4862,7 +4862,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/payroll/PrAccount/updategmAccount',
+            $response = $client->put(env('API_URL') . '/payroll/updategmAccount',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4910,7 +4910,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/payroll/PrReportFormat/UpdateStatus',
+            $response = $client->put(env('API_URL') . '/payroll/UpdateStatus',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4948,7 +4948,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/payroll/PrCalculation/updatePrCalculationProcess',
+            $response = $client->put(env('API_URL') . '/payroll/updatePrCalculationProcess',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4996,7 +4996,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/payroll/PrJournalTemplate/UpdatePrJournalTemplate',
+            $response = $client->put(env('API_URL') . '/payroll/UpdatePrJournalTemplate',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5085,11 +5085,11 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PRSalaryComponentData/InsertSalaryComponentData',
+                $response = $client->post(env('API_URL') . '/payroll/InsertSalaryComponentData',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/PRSalaryComponentData/UpdateSalaryComponentData',
+                $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryComponentData',
                     ['body' => json_encode($param)]
                 );
             }
@@ -5135,7 +5135,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
             }else{  
-                $response = $client->post(env('API_URL') . '/payroll/PRSalaryComponentData/ProcessComponent',
+                $response = $client->post(env('API_URL') . '/payroll/ProcessComponent',
                     ['body' => json_encode(
                         [
                             "companyCode" => Session::get('companyCode'),
@@ -5273,11 +5273,11 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/ReferencePayroll/InsertRefrencePayroll',
+                $response = $client->post(env('API_URL') . '/payroll/InsertRefrencePayroll',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/payroll/ReferencePayroll/UpdateRefrencePayroll',
+                $response = $client->put(env('API_URL') . '/payroll/UpdateRefrencePayroll',
                     ['body' => json_encode($param)]
                 );
             }
@@ -5323,7 +5323,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
             }else{  
-                $response = $client->post(env('API_URL') . '/payroll/YearEnd/YearEndProcess',
+                $response = $client->post(env('API_URL') . '/payroll/YearEndProcess',
                     ['body' => json_encode(
                         [
                             "companyCode" => Session::get('companyCode'),
@@ -5429,7 +5429,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
             } else{  
-                $response = $client->post(env('API_URL') . '/payroll/FinalTaxProcess/FinalTaxProcess',
+                $response = $client->post(env('API_URL') . '/payroll/FinalTaxProcess',
                     ['body' => json_encode(
                         [
                             "companyCode" => Session::get('companyCode'),
@@ -5584,17 +5584,17 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump(json_encode($param));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrFormatSPT/InsertPrFormatSPT',
+                $response = $client->post(env('API_URL') . '/payroll/InsertPrFormatSPT',
                     ['body' => json_encode($param)]
                 );
             }
             else if($request->record_function == 'Edit'){
-                $response = $client->post(env('API_URL') . '/payroll/PrFormatSPT/UpdatePrFormatSPT',
+                $response = $client->post(env('API_URL') . '/payroll/UpdatePrFormatSPT',
                     ['body' => json_encode($param)]
                 );
             }
             else if($request->record_function == 'Remove'){
-                $response = $client->delete(env('API_URL') . '/payroll/PrFormatSPT/DeletePrFormatSPT',
+                $response = $client->delete(env('API_URL') . '/payroll/DeletePrFormatSPT',
                     ['body' => json_encode([$param])]
                 );
             }
@@ -5675,17 +5675,17 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if($request->record_function_custom == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrSlipFormat/insertSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/payroll/PrSlipFormat/updateSlipFormat',
+                $response = $client->put(env('API_URL') . '/payroll/updateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
 
-            $response2 = $client->post(env('API_URL') . '/payroll/PrSlipFormat/getSlipFormat',
+            $response2 = $client->post(env('API_URL') . '/payroll/getSlipFormat',
                 ['body' => json_encode($param2)]
             );
         } catch (RequestException $e) {
@@ -5752,17 +5752,17 @@ public function dataDetailReportFormatPY(Request $request)
             // dd(json_encode($param));
 
             if($request->record_function_allowance == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrSlipFormat/insertSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/payroll/PrSlipFormat/updateSlipFormat',
+                $response = $client->put(env('API_URL') . '/payroll/updateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
 
-            $response2 = $client->post(env('API_URL') . '/payroll/PrSlipFormat/getSlipFormat',
+            $response2 = $client->post(env('API_URL') . '/payroll/getSlipFormat',
                 ['body' => json_encode($param2)]
             );
         } catch (RequestException $e) {
@@ -5829,17 +5829,17 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if($request->record_function_deduction == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/PrSlipFormat/insertSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/payroll/PrSlipFormat/updateSlipFormat',
+                $response = $client->put(env('API_URL') . '/payroll/updateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
 
-            $response2 = $client->post(env('API_URL') . '/payroll/PrSlipFormat/getSlipFormat',
+            $response2 = $client->post(env('API_URL') . '/payroll/getSlipFormat',
                 ['body' => json_encode($param2)]
             );
         } catch (RequestException $e) {
@@ -5899,7 +5899,7 @@ public function dataDetailReportFormatPY(Request $request)
             //     ));
             // exit;
 
-            $response = $client->put(env('API_URL') . '/payroll/PrSalaryCalculation/UpdateSalaryCalculation',
+            $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryCalculation',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -5972,7 +5972,7 @@ public function dataDetailReportFormatPY(Request $request)
             //     ));
             //     exit;
 
-            $response = $client->post(env('API_URL') . '/payroll/TmFixedComponent/insertTmFixedComponent',
+            $response = $client->post(env('API_URL') . '/payroll/insertTmFixedComponent',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -6019,7 +6019,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/PayrollMonthlyClosing/InsertPrMonthlyClosing',
+            $response = $client->post(env('API_URL') . '/payroll/InsertPrMonthlyClosing',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -6171,7 +6171,7 @@ public function dataDetailReportFormatPY(Request $request)
             
             // var_dump(Session::get('token'));
 
-            $response = $client->post(env('API_URL') . '/payroll/PayrollMonthlyClosing/InsertPrMonthlyClosing',
+            $response = $client->post(env('API_URL') . '/payroll/InsertPrMonthlyClosing',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -6285,7 +6285,7 @@ public function dataDetailReportFormatPY(Request $request)
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/payroll/PrTaxCalculation/PrTaxCalculationProcess',
+            $response = $client->post(env('API_URL') . '/payroll/PrTaxCalculationProcess',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -6520,11 +6520,11 @@ public function dataDetailReportFormatPY(Request $request)
             //  var_dump(json_encode($param));
 
             if($request->report_type == "report"){
-                $response = $client->post(env('API_URL').'/payroll/PrSeveranceSlipReport/GetSeveranceReport',[
+                $response = $client->post(env('API_URL').'/payroll/GetSeveranceReport',[
                     'body' => json_encode($param)
                 ]);
             }else{
-                $response = $client->post(env('API_URL').'/payroll/PrSeveranceSlipReport/GetSeveranceSlip',[
+                $response = $client->post(env('API_URL').'/payroll/GetSeveranceSlip',[
                     'body' => json_encode($param)
                 ]);
             }
@@ -6598,7 +6598,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['groupAuthorizeTo'] = $request->group_authorized_to;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/PrJournalReport/JournalReport', [
+            $response = $client->post(env('API_URL').'/payroll/JournalReport', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
@@ -6711,7 +6711,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/PrPaymentSlipReport/GetPaymentSlipReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPaymentSlipReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -6880,7 +6880,7 @@ public function dataDetailReportFormatPY(Request $request)
             // dd(json_encode($param));
             // exit;
 
-            $response = $client->post(env('API_URL').'/payroll/PrPaymentSlipReport/GetPaymentSlipReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPaymentSlipReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -6998,7 +6998,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/PrPaymentSlipReport/GetPaymentSlipReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPaymentSlipReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -7086,7 +7086,7 @@ public function dataDetailReportFormatPY(Request $request)
 
                 // var_dump(json_encode($param));
 
-                $response = $client->post(env('API_URL').'/payroll/AnnualReportSPT/getAnnualReportSPT', [
+                $response = $client->post(env('API_URL').'/payroll/getAnnualReportSPT', [
                     'body' => json_encode($param)
                 ]);
             }else{
@@ -7098,7 +7098,7 @@ public function dataDetailReportFormatPY(Request $request)
 
                 // var_dump(json_encode($param));
 
-                $response = $client->post(env('API_URL').'/payroll/ReportSPTPPH1721A1/getReportSPTPPH1721A1', [
+                $response = $client->post(env('API_URL').'/payroll/getReportSPTPPH1721A1', [
                     'body' => json_encode($param)
                 ]);
             }
@@ -7171,19 +7171,19 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if($request->jamsostek_report_type == 'formulir2'){
-                $response = $client->post(env('API_URL').'/payroll/MonthlyJamsostek/getRincianIuran', [
+                $response = $client->post(env('API_URL').'/payroll/getRincianIuran', [
                     'body' => json_encode($param)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $response = $client->post(env('API_URL').'/payroll/MonthlyJamsostek/getDaftarTenagaKerja', [
+                $response = $client->post(env('API_URL').'/payroll/getDaftarTenagaKerja', [
                     'body' => json_encode($param)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $response = $client->post(env('API_URL').'/payroll/MonthlyJamsostek/getDaftarTenagaKerjaKeluar', [
+                $response = $client->post(env('API_URL').'/payroll/getDaftarTenagaKerjaKeluar', [
                     'body' => json_encode($param)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $response = $client->post(env('API_URL').'/payroll/MonthlyJamsostek/getPerubahanUpahTenagaKerja', [
+                $response = $client->post(env('API_URL').'/payroll/getPerubahanUpahTenagaKerja', [
                     'body' => json_encode($param)
                 ]);
             }
@@ -7277,7 +7277,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['bpjsGroupTo'] = $request->bpjs_group_to;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/ASP/v1/getDUMTKReport', [
+            $response = $client->post(env('API_URL').'/payroll/getDUMTKReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -7357,7 +7357,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['groupAuthorizedTo'] = (int) $request->group_authorized_code_to;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/PrSalaryHistoricalReport/GetPrSalaryHistoricalReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPrSalaryHistoricalReport', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
@@ -7460,7 +7460,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['paymentDateTo'] = $request->payment_date_to;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/PrBonusTHRReport/getBonusTHRReport', [
+            $response = $client->post(env('API_URL').'/payroll/getBonusTHRReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -7716,7 +7716,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['levelMaster'] = $data_level;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/PrRetroactiveReport/GetRetroactiveReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetRetroactiveReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -7848,7 +7848,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/PrPeriodicalReport/GetPeriodicalReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPeriodicalReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -7931,7 +7931,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "logActionUserID" => Session::get('userID')
             ];
 
-            $response = $client->post(env('API_URL').'/payroll/ExportSIPPOnline/getExportSIPPOnline', [
+            $response = $client->post(env('API_URL').'/payroll/getExportSIPPOnline', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

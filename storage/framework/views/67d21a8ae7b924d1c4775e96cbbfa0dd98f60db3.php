@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo e(__('payroll_tariff_master.judul')); ?></title>
+	<title><?php echo e(__('payroll_thr_formula.judul')); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="<?php echo e(asset('pictures/favicon.png')); ?>" type="image/x-icon"/>
 	<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -112,7 +112,7 @@
                 <img src="<?php echo e(url('/icons/functionbar/remove.svg')); ?>" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
             </a>
-            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process">
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_bonus_data_entry">
                 <img src="<?php echo e(url('/icons/functionbar/process.svg')); ?>" alt="Process">
                 <img src="<?php echo e(url('/icons/functionbar/process.svg')); ?>" class="functionbar-hover" alt="Process">
                 <span>Process</span>
@@ -121,25 +121,41 @@
         <div class="div-title">
 			<a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
 				<img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
-				<span class="title-text"><?php echo e(__('payroll_tariff_master.list')); ?></span>
+				<span class="title-text"><?php echo e(__('payroll_thr_formula.list')); ?></span>
 			</a>
 		</div>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-check">
+                    <label for="formula_type"><?php echo e(__('payroll_thr_formula.label_formula_type')); ?></label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-check">
+                    <input type="radio" id="thr" name="radiobtn[]" value=true checked>
+                    <label for="thr"><?php echo e(__('payroll_thr_formula.label_thr')); ?></label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-check">
+                    <input type="radio" id="bonus" name="radiobtn[]" value=true>
+                    <label for="bonus"><?php echo e(__('payroll_thr_formula.label_bonus')); ?></label>
+                </div>
+            </div>
+        </div>
         <div class="div-table">
-			<table id="tariff_master_table" class="table hover" style="width:100%">
+			<table id="thr_formula_table" class="table hover" style="width: 100%">
 				<thead>
 					<tr>
                         <th></th>
-						<th>Employee No</th>
-						<th>Employee Name</th>
-                        <th>Month</th>
-                        <th>Year</th>
-						<th>Period</th>
+						<th>Religion Code</th>
+						<th>Religion Name</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
-
+    
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -166,7 +182,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="<?php echo e(url('/pictures/checklist-green-confirm-password.svg')); ?>" alt="Password">
-                        <span class="title-text-notification"><?php echo e(__('payroll_tariff_master.alert_success')); ?></span>
+                        <span class="title-text-notification"><?php echo e(__('payroll_thr_formula.alert_success')); ?></span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -216,8 +232,8 @@
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        $('#tariff_master_table thead tr').clone(true).appendTo('#tariff_master_table thead');
-        $('#tariff_master_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#thr_formula_table thead tr').clone(true).appendTo('#thr_formula_table thead');
+        $('#thr_formula_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
 
@@ -231,16 +247,25 @@
             } );
         });
 
-        load_data_table_tariff_master();
+        $('input[type="radio"]').on('change', function () {
+            if ($('#thr').is(':checked')) {
+                window.location.href = ("<?php echo e(url('payroll/thr_formula')); ?>");
+            }
+            else {
+                window.location.href = ("<?php echo e(url('payroll/bonus_formula')); ?>");
+            }
+        });
+
+        load_data_table_thr_formula();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        function load_data_table_tariff_master() {
-            table = $('#tariff_master_table').DataTable({
+        function load_data_table_thr_formula() {
+            table = $('#thr_formula_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "<?php echo e(url('payroll/tariff_master/table')); ?>",
+                ajax: "<?php echo e(url('payroll/thr_formula/table')); ?>",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -256,17 +281,8 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    { data: 'employeeNo', name: 'employeeNo' },
-                    { data: 'fullName', name: 'fullName' },
-                    { 
-                        data: 'periodMonth', 
-                        name: 'periodMonth',
-                        render: function (data, type, row) {
-                            return moment(data).format('MMMM');
-                        }
-                    },
-                    { data: 'periodYear', name: 'periodYear' },
-                    { data: 'statusPeriod', name: 'statusPeriod' },
+                    {data: 'comGenCode', name: 'comGenCode'},
+                    {data: 'value', name: 'value'}
                 ],
                 select: {
                     style:    'multi',
@@ -275,7 +291,7 @@
             });
         }
 
-        $('#tariff_master_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        $('#thr_formula_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
             if(this.checked){
@@ -288,17 +304,16 @@
             e.stopPropagation();
         });
 
-        $('#tariff_master_table').on('click', 'tr td:first-child', function(e){
+        $('#thr_formula_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
             if(data.count() > 0){
-                $.redirect("<?php echo e(url('payroll/tariff_master/detail_data')); ?>", 
+                $.redirect("<?php echo e(url('payroll/thr_formula/detail_data')); ?>", 
                 { 
-                    'employeeNo' : data[0].employeeNo,
-                    'statusPeriod' : data[0].statusPeriod
+                    'religionCode' : data[0].comGenCode 
                 }, 
                 "GET", "iframe_dashboard");
             }else{
@@ -307,16 +322,15 @@
             }
         });
 
-        $('#tariff_master_table tbody').on('click', 'tr td:not(:first-child)', function () {
+        $('#thr_formula_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
-            $.redirect("<?php echo e(url('payroll/tariff_master/detail_data')); ?>", 
+            $.redirect("<?php echo e(url('payroll/thr_formula/detail_data')); ?>", 
             {   
-                'employeeNo' : data.employeeNo,
-                'statusPeriod' : data.statusPeriod,
+                'religionCode' : data.comGenCode
             }, 
             "GET", "iframe_dashboard");
         });
     })
 </script>
 
-</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/payroll/py_tariff_master.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\laravel_project\resources\views/payroll/py_thr_formula.blade.php ENDPATH**/ ?>

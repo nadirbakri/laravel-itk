@@ -26,7 +26,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
             $response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
                 ['body' => json_encode(
                     [
-                        'languageCode' => App::getLocale()
+                        'languageCode' => strtoupper(App::getLocale())
                     ]
                 )]
             );
@@ -178,6 +178,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -186,6 +187,7 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 return view('error.bad_request');
             }
         }
+
 
         return view('personel.personel_export_template_personal_data_info_sheet', [
             'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : [],

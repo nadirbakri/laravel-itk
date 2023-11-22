@@ -101,7 +101,7 @@ class RetroactiveReportExport implements FromView, ShouldAutoSize
 
 
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/payroll/PrRetroactiveReport/GetRetroactiveReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetRetroactiveReport', [
                 'body' => json_encode($param)
             ]);
 
