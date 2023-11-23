@@ -161,6 +161,16 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 )]
             );
 
+            $response15 = $client->post(env('API_URL') . '/personel/Level/getLevel',
+                ['body' => json_encode(
+                    [
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
             $arrResult = json_decode($response->getBody()->getContents());
             $arrResult2 = json_decode($response2->getBody()->getContents());
             $arrResult3 = json_decode($response3->getBody()->getContents());
@@ -175,10 +185,10 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
             $arrResult12 = json_decode($response12->getBody()->getContents());
             $arrResult13 = json_decode($response13->getBody()->getContents());
             $arrResult14 = json_decode($response14->getBody()->getContents());
+            $arrResult15 = json_decode($response15->getBody()->getContents());
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -187,7 +197,6 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
                 return view('error.bad_request');
             }
         }
-
 
         return view('personel.personel_export_template_personal_data_info_sheet', [
             'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : [],
@@ -203,7 +212,8 @@ class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSi
             'data11' => ($arrResult11->dataListSet != null) ? $arrResult11->dataListSet : [],
             'data12' => ($arrResult12->dataListSet != null) ? $arrResult12->dataListSet : [],
             'data13' => ($arrResult13->dataListSet != null) ? $arrResult13->dataListSet : [],
-            'data14' => ($arrResult14->dataListSet != null) ? $arrResult14->dataListSet : []
+            'data14' => ($arrResult14->dataListSet != null) ? $arrResult14->dataListSet : [],
+            'data15' => ($arrResult15->dataListSet != null) ? $arrResult15->dataListSet : []
         ]);
     }
 

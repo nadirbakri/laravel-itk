@@ -298,5 +298,27 @@
 		</tbody>
 	</table>
 	@endif
+	<br>
+	@if(!empty($data15))
+	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
+		<tbody>
+            <tr>
+				<td>Table Level</td>
+			</tr>
+			<tr>
+				<th>Level Type</th>
+				<th>Level Code</th>
+				<th>Level Name</th>
+			</tr>
+			@foreach($data15 as $value)
+			<tr>
+				<td>{{ $value->levelType }}</td>
+				<td>{{ $value->levelCode }}</td>
+				<td>{{ $value->levelName }}</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+	@endif
 </body>
 </html>

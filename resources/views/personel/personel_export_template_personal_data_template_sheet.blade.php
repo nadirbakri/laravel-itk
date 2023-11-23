@@ -16,9 +16,13 @@
 
 <body>
 <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
+		@if(!empty($data))
 		<thead>
             <tr>
-				<th>Company Code *</th>
+				@foreach($data as $value)
+					<th>{{ $value }}</th>
+				@endforeach
+				<!-- <th>Company Code *</th>
 				<th>Employee No *</th>
 				<th>Employee Name *</th>
 				<th>Birth Place *</th>
@@ -147,9 +151,10 @@
 				<th>Insurance Start Date</th>
 				<th>Insurance End Date</th>
 				<th>Insurance Policy No</th>
-				<th>Leave Code *</th>
+				<th>Leave Code *</th> -->
 			</tr>
 		</thead>
+		@endif
 	</table>
 </body>
 </html>

@@ -11,7 +11,37 @@ class TemplatePersonalDataTemplateSheet implements FromView, WithTitle, ShouldAu
 {
     public function view(): View
     {
-        return view('personel.personel_export_template_personal_data_template_sheet');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+                ['body' => json_encode(
+                    [
+                        'languageCode' => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+
+            $arrResult = json_decode($response->getBody()->getContents());
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+            
+        return view('personel.personel_export_template_personal_data_template_sheet', [
+            'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : []
+        ]);
     }
 
     public function title(): string
