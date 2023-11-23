@@ -1103,7 +1103,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeAward/getPeAward',
+                    'url': '/peaward/getpeaward',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -1121,7 +1121,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeSanction/getPeSanction',
+                    'url': '/pesanction/getpesanction',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -1139,7 +1139,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeEvaluation/getPeEvaluation',
+                    'url': '/peevaluation/getpeevaluation',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {

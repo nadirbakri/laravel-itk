@@ -2751,7 +2751,7 @@
                 url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeMaster/getPeMasterGrid'
+                    'url': '/pemaster/getpemastergrid'
                 },
                 success: function (response) {
                     $('#employee_no_info').val(response);
@@ -2927,14 +2927,14 @@
         }
         else if (func == 'edit') {
             //Profile
-            $('#employee_name_profile').text(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
-            $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
+            $('#employee_name_profile').text(((typeof arrData2[0].fullName !== 'undefined') ? arrData2[0].fullName : ''));
+            $('#record_status').val(((typeof arrData2[0].recordStatus !== 'undefined') ? arrData2[0].recordStatus : ''));
             $('#record_function').val("Edit");
-            $('#employee_no_profile').text(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
-            $('#company_name_profile').text(((typeof arrData[0].companyName !== 'undefined') ? arrData[0].companyName : ''));
-            $('#position_name_profile').text(((typeof arrData[0].positionName !== 'undefined') ? arrData[0].positionName : ''));
-            $('#company_email_profile').text(((typeof arrData[0].companyEmailAddress !== 'undefined') ? arrData[0].companyEmailAddress : ''));
-            $('#phone_number_profile').text(((typeof arrData[0].personalHandphone !== 'undefined') ? arrData[0].personalHandphone : ''));
+            $('#employee_no_profile').text(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
+            $('#company_name_profile').text(((typeof arrData2[0].companyName !== 'undefined') ? arrData2[0].companyName : ''));
+            $('#position_name_profile').text(((typeof arrData2[0].positionName !== 'undefined') ? arrData2[0].positionName : ''));
+            $('#company_email_profile').text(((typeof arrData2[0].companyEmailAddress !== 'undefined') ? arrData2[0].companyEmailAddress : ''));
+            $('#phone_number_profile').text(((typeof arrData2[0].personalHandphone !== 'undefined') ? arrData2[0].personalHandphone : ''));
             $('#photo_employee').val(((typeof arrData2[0].photo !== 'undefined') ? arrData2[0].photo : ''));
 
             //Tab Info
@@ -6721,7 +6721,7 @@
                     url: "{{ url('personel_data_detail/number/check') }}",
                     type: "GET",
                     data: {
-                        'url': '/personel/PeMaster/getPeMasterDetail',
+                        'url': '/pemaster/getpemasterdetail',
                         'pemasterType' : 'peMasterFringeBenefit',
                         'employeeNo': arrData2[0].peMasterFringeBenefit.employeeNo
                     },
@@ -6765,7 +6765,7 @@
                     url: "{{ url('personel_data_detail/number/check') }}",
                     type: "GET",
                     data: {
-                        'url': '/personel/PeMaster/getPeMasterDetail',
+                        'url': '/pemaster/getpemasterdetail',
                         'pemasterType' : 'peMasterFamily',
                         'employeeNo': arrData2[0].employeeNo
                     },

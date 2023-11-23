@@ -24,12 +24,11 @@ class DashboardController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_Get = $client->post(env('API_URL') . '/mobile/Firebase/getFirebase',
+            $response_Get = $client->post(env('API_URL') . '/firebase/getfirebase',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -55,13 +54,12 @@ class DashboardController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if(empty($arrResult_Get)){
-                $response = $client->post(env('API_URL') . '/mobile/Firebase',
+                $response = $client->post(env('API_URL') . '/firebase',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -83,7 +81,7 @@ class DashboardController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/mobile/Firebase',
+                $response = $client->put(env('API_URL') . '/firebase',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -124,12 +122,11 @@ class DashboardController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/Firebase/getFirebase',
+            $response = $client->post(env('API_URL') . '/firebase/getfirebase',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -194,12 +191,11 @@ class DashboardController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmCalendar/getTmCalendar',
+            $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -246,12 +242,11 @@ class DashboardController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -260,7 +255,7 @@ class DashboardController extends Controller
 	    		)]
 	    	);
 
-            $response2 = $client->post(env('API_URL') . '/mobile/TmAbsence/getBySpecificDate',
+            $response2 = $client->post(env('API_URL') . '/tmabsence/getbyspecificdate',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -447,12 +442,11 @@ class DashboardController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/getOvertimeHourDashboard',
+            $response = $client->post(env('API_URL') . '/TmOvertime/getOvertimeHourDashboard',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -467,7 +461,7 @@ class DashboardController extends Controller
 	    		)]
 	    	);
 
-            $response2 = $client->post(env('API_URL') . '/mobile/TmOvertime/getOvertimeCostDashboard',
+            $response2 = $client->post(env('API_URL') . '/TmOvertime/getOvertimeCostDashboard',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -528,26 +522,11 @@ class DashboardController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            dd(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'periodYear' => (int) date('Y'),
-                    'periodMonth' => (int) date('n'),
-                    // 'periodYear' => 2022,
-                    'languageID' => App::getLocale(),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
-                ]
-                ));
-
-            $response = $client->post(env('API_URL') . '/payroll/getBasicSalaryDashboardEntity',
+            $response = $client->post(env('API_URL') . '/salarycalculation/getbasicsalarydashboardentity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),

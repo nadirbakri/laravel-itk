@@ -28,7 +28,6 @@ class LoginController extends Controller
 		$arrResult = null;
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
@@ -36,7 +35,7 @@ class LoginController extends Controller
 			// $output = new \Symfony\Component\Console\Output\ConsoleOutput();
 			// $output->writeln(env('API_URL') . '/auth');
 
-			$response = $client->post(env('API_URL') . '/personel/Login',
+			$response = $client->post(env('API_URL') . '/auth',
                 ['body' => json_encode(
                     [
                         'username' => $request->username_login,
@@ -195,11 +194,10 @@ class LoginController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json' ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Login',
+	    	$response = $client->post(env('API_URL') . '/auth',
 	    		['body' => json_encode(
 	    			[
 	    				'username' => $request->user_id,
@@ -244,7 +242,6 @@ class LoginController extends Controller
     {
 		// try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json' ],
 				'verify' => false
 			]);

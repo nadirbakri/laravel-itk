@@ -66,7 +66,6 @@ class PayrollDataImport implements ToCollection, WithStartRow
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -125,7 +124,7 @@ class PayrollDataImport implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryYearly',
+            $response = $client->put(env('API_URL') . '/importfromexcel/updatesalaryyearly',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

@@ -119,7 +119,7 @@
             </a>
         </div>
         <div class="div-title">
-			<a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+			<a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
 				<img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
 				<span class="title-text"><?php echo e(__('payroll_salary_master.list')); ?></span>
 			</a>
@@ -192,26 +192,6 @@
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
-    function savePreviousURL() {
-        if(!sessionStorage.getItem('previousURL')){
-            const previousURL = document.referrer;
-            sessionStorage.setItem('previousURL', previousURL);
-        }
-    }
-
-    // Fungsi untuk menangani navigasi mundur
-    function goBackWithModuleID() {
-        let newURL = sessionStorage.getItem('previousURL');
-
-        sessionStorage.removeItem('previousURL');
-
-        window.location.href = newURL;
-    }
-
-    window.onload = function() {
-        savePreviousURL();
-    }
-    
     $(document).ready(function () {
         var table = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');

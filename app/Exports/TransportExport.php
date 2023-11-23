@@ -27,7 +27,6 @@ class TransportExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -44,7 +43,7 @@ class TransportExport implements FromView, ShouldAutoSize
                 'businessUnit'=> $this->businessUnit,
             ];
 
-            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
+            $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

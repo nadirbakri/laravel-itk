@@ -19,12 +19,11 @@ class UtilitiesController extends Controller
     {
         try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -134,12 +133,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/User/getUserView',
+            $response = $client->post(env('API_URL') . '/user/getuserview',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -170,12 +168,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
+            $response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -210,12 +207,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
+            $response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -249,12 +245,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+            $response = $client->post(env('API_URL') . '/company/getcompany',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -287,12 +282,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
+            $response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -326,12 +320,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/UserLog/getUserLog',
+            $response = $client->post(env('API_URL') . '/userlog/getuserlog',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -380,12 +373,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/User/getUserView',
+            $response = $client->post(env('API_URL') . '/user/getuserview',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -415,12 +407,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
+            $response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -451,12 +442,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+            $response = $client->post(env('API_URL') . '/company/getcompany',
                 ['body' => json_encode(
                     [
                         'companyCode' => $request->companyCode,
@@ -486,12 +476,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
+            $response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -503,7 +492,7 @@ class UtilitiesController extends Controller
                 )]
             );
 
-            $response2 = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail/getGroupUserAccessDetail',
+            $response2 = $client->post(env('API_URL') . '/groupuseraccessdetail/getgroupuseraccessdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -534,12 +523,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/User/getUserLevelList',
+            $response = $client->post(env('API_URL') . '/user/getuserlevellist',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -573,12 +561,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/User/getUserDetail',
+            $response = $client->post(env('API_URL') . '/user/getuserdetailview',
                 ['body' => json_encode(
                     [
                         'userID' => $request->userID,
@@ -611,12 +598,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/User/getUserAccessView',
+            $response = $client->post(env('API_URL') . '/user/getuseraccessview',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -658,12 +644,11 @@ class UtilitiesController extends Controller
 
             try {
                 $client = new Client([
-                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
 
-                $response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+                $response = $client->post(env('API_URL') . '/level/getlevel',
                     ['body' => json_encode(
                         [
                             'recordStatus' => 'A',
@@ -700,12 +685,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail/getGroupUserAccessDetail',
+            $response = $client->post(env('API_URL') . '/groupuseraccessdetail/getgroupuseraccessdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -739,12 +723,11 @@ class UtilitiesController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/MenuMasterWeb/getConfigureMenu',
+            $response = $client->post(env('API_URL') . '/menumasterweb/getconfiguremenu',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -781,12 +764,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GroupAuthorize',
+            $response = $client->put(env('API_URL') . '/groupauthorize',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -823,12 +805,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GroupUserAccess',
+            $response = $client->put(env('API_URL') . '/groupuseraccess',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -865,12 +846,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/User',
+            $response = $client->put(env('API_URL') . '/user',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -907,12 +887,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/Company',
+            $response = $client->put(env('API_URL') . '/company',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -952,13 +931,12 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GroupAuthorize',
+                $response = $client->post(env('API_URL') . '/groupauthorize',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -979,7 +957,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GroupAuthorize',
+                $response = $client->put(env('API_URL') . '/groupauthorize',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1020,13 +998,12 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/Company',
+                $response = $client->post(env('API_URL') . '/company',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1050,7 +1027,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/Company',
+                $response = $client->put(env('API_URL') . '/company',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1095,13 +1072,12 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GroupUserAccess',
+                $response = $client->post(env('API_URL') . '/groupuseraccess',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1142,14 +1118,14 @@ class UtilitiesController extends Controller
                         ];
                     }
 
-                    $response2 = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail',
+                    $response2 = $client->post(env('API_URL') . '/groupuseraccessdetail',
                         ['body' => json_encode($param)]
                     );
 
                     $arrResult2 = json_decode($response2->getBody()->getContents());
                 }
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GroupUserAccess',
+                $response = $client->put(env('API_URL') . '/groupuseraccess',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1188,7 +1164,7 @@ class UtilitiesController extends Controller
 
                     // var_dump(json_encode($param));
 
-                    $response2 = $client->put(env('API_URL') . '/personel/GroupUserAccessDetail',
+                    $response2 = $client->put(env('API_URL') . '/groupuseraccessdetail',
                         ['body' => json_encode($param)]
                     );
 
@@ -1223,12 +1199,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GroupUserAccessDetail',
+            $response = $client->post(env('API_URL') . '/groupuseraccessdetail',
                 ['body' => json_encode(
                     [
                         'recordStatus' => 'A',
@@ -1271,12 +1246,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/MenuMasterWebDetail',
+            $response = $client->put(env('API_URL') . '/menumasterwebdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1318,7 +1292,6 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1342,7 +1315,7 @@ class UtilitiesController extends Controller
 
             // var_dump($data_menu);
 
-            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail',
+            $response = $client->post(env('API_URL') . '/menumasterwebdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1379,12 +1352,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/CopytoAnother',
+            $response = $client->post(env('API_URL') . '/menumasterwebdetail/copytoanother',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1422,12 +1394,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/User',
+            $response = $client->put(env('API_URL') . '/user',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->record_status,
@@ -1448,7 +1419,7 @@ class UtilitiesController extends Controller
                 )]
             );
 
-            $response = $client->put(env('API_URL') . '/personel/User/UpdateDetail',
+            $response = $client->put(env('API_URL') . '/user/updatedetail',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->record_status,
@@ -1489,7 +1460,6 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1529,7 +1499,6 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1540,7 +1509,7 @@ class UtilitiesController extends Controller
 
             $dataLevel = implode(",", $arrLevel);
 
-            $response = $client->put(env('API_URL') . '/personel/User/UpdateLevel',
+            $response = $client->put(env('API_URL') . '/user/updatelevel',
                 ['body' => json_encode(
                     [
                         'userID' => $request->user_id_level,
@@ -1579,13 +1548,12 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function_company == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/User/Detail',
+                $response = $client->post(env('API_URL') . '/user/detail',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->status,
@@ -1610,7 +1578,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/User/UpdateDetail',
+                $response = $client->put(env('API_URL') . '/user/updatedetail',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->status,
@@ -1656,13 +1624,12 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function_module == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/User/Access',
+                $response = $client->post(env('API_URL') . '/user/access',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1682,7 +1649,7 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/User/UpdateAkses',
+                $response = $client->put(env('API_URL') . '/user/updateakses',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1723,12 +1690,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/BulkSendEmail/SendEmails',
+            $response = $client->post(env('API_URL') . '/BulkSendEmail/SendEmails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1768,12 +1734,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/GroupUserAccessDetail',
+            $response = $client->delete(env('API_URL') . '/groupuseraccessdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1812,12 +1777,11 @@ class UtilitiesController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/User/DeleteAkses',
+            $response = $client->delete(env('API_URL') . '/user/deleteakses',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

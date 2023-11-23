@@ -27,7 +27,6 @@ class SeveranceReportExcel implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -64,11 +63,11 @@ class SeveranceReportExcel implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/payroll/GetSeveranceReport',
+            $response = $client->post(env('API_URL') . '/PrSeveranceSlipReport/getSeveranceReport',
                 ['body' => json_encode($param)]
             );
 
-            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/Company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
 

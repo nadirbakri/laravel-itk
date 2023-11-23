@@ -27,7 +27,6 @@ class ExportDataKepesertaanBPJSReportExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -82,7 +81,7 @@ class ExportDataKepesertaanBPJSReportExport implements FromView, ShouldAutoSize
 
 
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/personel/BPJS/getBPJSLIST', [
+            $response = $client->post(env('API_URL').'/bpjs/getbpjslist', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

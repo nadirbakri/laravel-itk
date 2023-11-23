@@ -50,7 +50,6 @@ class AdminMenuController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -63,7 +62,7 @@ class AdminMenuController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/News/getNews',
+            $response = $client->post(env('API_URL') . '/news/getnews',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -103,7 +102,6 @@ class AdminMenuController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -144,7 +142,7 @@ class AdminMenuController extends Controller
             // var_dump(json_encode($param));
 
             if ($request->t_news2 == "new"){
-                $response = $client->post(env('API_URL') . '/mobile/News/insertNews',
+                $response = $client->post(env('API_URL') . '/news/insertnews',
                     ['body' => json_encode($param)]
                 );
             }else {
@@ -152,7 +150,7 @@ class AdminMenuController extends Controller
                     $param['sysNo'] = (int) $request->sysno;
                 }
 
-                $response = $client->put(env('API_URL') . '/mobile/News/updateNews',
+                $response = $client->put(env('API_URL') . '/news/updatenews',
                     ['body' => json_encode($param)]
                 );
             }
@@ -178,7 +176,6 @@ class AdminMenuController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -190,7 +187,7 @@ class AdminMenuController extends Controller
             $filename = $value['companyCode'] . '_' . $value['employeeNo'] . '_' . $value['attachmentCode'] . '_' . $value['fileName'] . '.' . $mime_map[$mime_type];
             File::delete('attachment/'.$filename);
 
-            $response = $client->delete(env('API_URL') . '/mobile/News/deleteNewsCategory',
+            $response = $client->delete(env('API_URL') . '/news/deletenewscategory',
                 ['body' => json_encode(
                     [
                         'recordStatus' => "A",
@@ -225,7 +222,6 @@ class AdminMenuController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -238,7 +234,7 @@ class AdminMenuController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/Announcement/getAnnouncement',
+            $response = $client->post(env('API_URL') . '/announcement/getannouncement',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -272,7 +268,6 @@ class AdminMenuController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -290,7 +285,7 @@ class AdminMenuController extends Controller
             ];
 
             if ($request->status == "new"){
-                $response = $client->post(env('API_URL') . '/mobile/Announcement/insertAnnouncement',
+                $response = $client->post(env('API_URL') . '/announcement/insertannouncement',
                     ['body' => json_encode($param)]
                 );
             }else {
@@ -298,7 +293,7 @@ class AdminMenuController extends Controller
                     $param['seqNo'] = (int) $request->seq_no;
                 }
 
-                $response = $client->put(env('API_URL') . '/mobile/Announcement/updateAnnouncement',
+                $response = $client->put(env('API_URL') . '/announcement/updateannouncement',
                     ['body' => json_encode($param)]
                 );
             }

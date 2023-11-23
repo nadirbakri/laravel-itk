@@ -24,7 +24,6 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -51,7 +50,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailList',
+            $response = $client->post(env('API_URL') . '/tmpermit/gettmpermitdetaillist',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

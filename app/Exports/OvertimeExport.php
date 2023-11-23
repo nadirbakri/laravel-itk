@@ -26,7 +26,6 @@ class OvertimeExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -52,7 +51,7 @@ class OvertimeExport implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
+            $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

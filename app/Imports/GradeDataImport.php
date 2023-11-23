@@ -26,7 +26,6 @@ class GradeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -45,8 +44,8 @@ class GradeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "gradeCode" => (isset($row[0])) ? (string) $row[0] : null,
-                    "gradeName" => (isset($row[1])) ? (string) $row[1] : null,
+                    "gradeCode" => (isset($row[0])) ? $row[0] : null,
+                    "gradeName" => (isset($row[1])) ? $row[1] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),
@@ -62,7 +61,7 @@ class GradeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/personel/Grade/bulkInsert',
+            $response = $client->post(env('API_URL') . '/grade/bulkInsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

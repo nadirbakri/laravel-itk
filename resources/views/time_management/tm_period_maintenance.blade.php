@@ -95,7 +95,7 @@
             </a> 
         </div>
         <div class="div-table">
-            <table id="period_maintenance_table" class="table hover">
+            <table id="period_maintenance_table" class="table hover text-center">
                 <thead>
                     <tr>
                         <th></th>

@@ -32,7 +32,6 @@ class ChangeDataShiftImport implements ToCollection, SkipsEmptyRows, WithStartRo
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

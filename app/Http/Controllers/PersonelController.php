@@ -50,12 +50,11 @@ class PersonelController extends Controller
     {
         try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -187,12 +186,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel/getReferencePersonnel',
+            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -203,7 +201,7 @@ class PersonelController extends Controller
                 )]
             );
 
-            $response_level = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
+            $response_level = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -516,12 +514,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -556,12 +553,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -596,12 +592,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -636,12 +631,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -718,7 +712,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -757,12 +750,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeAttachment/getPeAttachment',
+            $response = $client->post(env('API_URL') . '/peattachment/getpeattachment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -883,7 +875,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -928,12 +919,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+            $response = $client->post(env('API_URL') . '/level/getlevel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -967,7 +957,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1028,12 +1017,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
+            $response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1067,12 +1055,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+            $response = $client->post(env('API_URL') . '/location/getlocation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1106,12 +1093,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+            $response = $client->post(env('API_URL') . '/position/getposition',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1145,12 +1131,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1184,12 +1169,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
+            $response = $client->post(env('API_URL') . '/grade/getgrade',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1223,12 +1207,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Group/getGroup',
+            $response = $client->post(env('API_URL') . '/group/getgroup',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1262,12 +1245,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
+            $response = $client->post(env('API_URL') . '/worknature/getworknature',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1301,12 +1283,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
+            $response = $client->post(env('API_URL') . '/bpjs/getbpjs',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1340,12 +1321,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
+            $response = $client->post(env('API_URL') . '/npwp/getnpwp',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1379,12 +1359,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
+            $response = $client->post(env('API_URL') . '/gmbank/getgmbank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1418,12 +1397,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
+            $response = $client->post(env('API_URL') . '/companybank/getcompanybank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1565,12 +1543,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmInstitution/getgmInstitution',
+            $response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1604,12 +1581,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmMajor/getgmMajor',
+            $response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1643,12 +1619,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmCourseType/getgmCourseType',
+            $response = $client->post(env('API_URL') . '/gmcoursetype/getgmcoursetype',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1720,12 +1695,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/City/getCity',
+            $response = $client->post(env('API_URL') . '/city/getcity',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -1758,12 +1732,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1887,12 +1860,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationForm',
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1926,12 +1898,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmTitle/getgmTitle',
+            $response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
                 ['body' => json_encode(
                     [
                         'userID' => Session::get('userID'),
@@ -2031,12 +2002,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
+            $response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2070,12 +2040,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmSkill/getgmSkill',
+            $response = $client->post(env('API_URL') . '/gmskill/getgmskill',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2126,7 +2095,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2201,13 +2169,12 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/personel/getuserdetail',
+                $response = $client->post(env('API_URL') . '/getuserdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2220,7 +2187,7 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $response2 = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+                $response2 = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2234,6 +2201,7 @@ class PersonelController extends Controller
 
                 $arrResult = json_decode($response->getBody()->getContents());
                 $arrResult2 = json_decode($response2->getBody()->getContents());  
+
 
                 if($arrResult->dataListSet == null){
                     $data = [];
@@ -2281,13 +2249,12 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/personel/user/getuserdetail',
+                $response = $client->post(env('API_URL') . '/getuserdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2326,7 +2293,6 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2351,7 +2317,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2411,7 +2376,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2478,12 +2442,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+            $response = $client->post(env('API_URL') . '/level/getlevel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2515,7 +2478,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2564,12 +2526,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
+            $response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2600,12 +2561,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+            $response = $client->post(env('API_URL') . '/location/getlocation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2636,12 +2596,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+            $response = $client->post(env('API_URL') . '/position/getposition',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2672,12 +2631,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2709,12 +2667,11 @@ class PersonelController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
+            $response = $client->post(env('API_URL') . '/grade/getgrade',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2745,12 +2702,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/Group/getGroup',
+            $response = $client->post(env('API_URL') . '/group/getgroup',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2781,12 +2737,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
+            $response = $client->post(env('API_URL') . '/worknature/getworknature',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2817,12 +2772,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
+            $response = $client->post(env('API_URL') . '/bpjs/getbpjs',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2854,12 +2808,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
+            $response = $client->post(env('API_URL') . '/npwp/getnpwp',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2890,12 +2843,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
+            $response = $client->post(env('API_URL') . '/gmbank/getgmbank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2926,12 +2878,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
+            $response = $client->post(env('API_URL') . '/companybank/getcompanybank',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3005,12 +2956,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmInstitution/getgmInstitution',
+            $response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3040,12 +2990,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmMajor/getgmMajor',
+            $response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3076,12 +3025,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmCourseType/getgmCourseType',
+            $response = $client->post(env('API_URL') . '/gmcoursetype/getgmcoursetype',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3124,12 +3072,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/City/getCity',
+            $response = $client->post(env('API_URL') . '/city/getcity',
                 ['body' => json_encode(
                     [
                         'cityCode' => $request->cityCode,
@@ -3159,12 +3106,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3225,12 +3171,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationForm',
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3261,12 +3206,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmTitle/getgmTitle',
+            $response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
                 ['body' => json_encode(
                     [
                         'titleCode' => $request->titleCode,
@@ -3320,12 +3264,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmSkill/getgmSkill',
+            $response = $client->post(env('API_URL') . '/gmskill/getgmskill',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3362,7 +3305,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3410,12 +3352,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
+            $response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3446,7 +3387,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3486,12 +3426,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/City/getCity',
+            $response = $client->post(env('API_URL') . '/city/getcity',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3526,12 +3465,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+            $response = $client->post(env('API_URL') . '/zipcode/getzipcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3575,12 +3513,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeDependents/getPeDependents',
+            $response = $client->post(env('API_URL') . '/pedependents/getpedependents',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3614,12 +3551,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeAward/getPeAward',
+            $response = $client->post(env('API_URL') . '/peaward/getpeaward',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3654,12 +3590,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeSanction/getPeSanction',
+            $response = $client->post(env('API_URL') . '/pesanction/getpesanction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3695,12 +3630,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeEvaluation/getPeEvaluation',
+            $response = $client->post(env('API_URL') . '/peevaluation/getpeevaluation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3735,12 +3669,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetail',
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3779,12 +3712,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMasterHistoryJob/getPeMasterHistoryJob',
+            $response = $client->post(env('API_URL') . '/pemasterhistoryjob/getpemasterhistoryjob',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3819,12 +3751,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeWorkExperience/getPeWorkExperience',
+            $response = $client->post(env('API_URL') . '/peworkexperience/getpeworkexperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3859,12 +3790,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeFreeFormat/getPeFreeFormat',
+            $response = $client->post(env('API_URL') . '/pefreeformat/getpefreeformat',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3899,12 +3829,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeEducation/getCompetencyEducationGridView',
+            $response = $client->post(env('API_URL') . '/peeducation/getcompetencyeducationgridview',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3940,12 +3869,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeLanguage/getCompetencyLanguageGridView',
+            $response = $client->post(env('API_URL') . '/pelanguage/getcompetencylanguagegridview',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3981,12 +3909,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeOrganization/getPeOrganization',
+            $response = $client->post(env('API_URL') . '/peorganization/getpeorganization',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4021,12 +3948,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeReference/getPeReference',
+            $response = $client->post(env('API_URL') . '/pereference/getpereference',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4061,12 +3987,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeSkill/getCompetencySkillGridView',
+            $response = $client->post(env('API_URL') . '/peskill/getcompetencyskillgridview',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4102,12 +4027,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeProjectExperience/getPeProjectExperience',
+            $response = $client->post(env('API_URL') . '/peprojectexperience/getpeprojectexperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4142,12 +4066,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeTraining/getPeTraining',
+            $response = $client->post(env('API_URL') . '/petraining/getpetraining',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4306,12 +4229,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetail',
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4350,12 +4272,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetailPoint',
+            $response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetailpoint',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -4395,7 +4316,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4464,7 +4384,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4508,7 +4427,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -4553,12 +4471,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/WorkNature',
+            $response = $client->put(env('API_URL') . '/worknature',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4595,12 +4512,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/Grade',
+            $response = $client->put(env('API_URL') . '/grade',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4637,12 +4553,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmPosition',
+            $response = $client->put(env('API_URL') . '/position',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4678,12 +4593,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/Location',
+            $response = $client->put(env('API_URL') . '/location',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4720,12 +4634,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/Level',
+            $response = $client->put(env('API_URL') . '/level',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4763,12 +4676,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/CostCenter',
+            $response = $client->put(env('API_URL') . '/costcenter',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4804,12 +4716,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/PeMaster/PutPeMaster',
+            $response = $client->put(env('API_URL') . '/pemaster',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4846,12 +4757,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/PeMaster/PutPeMaster',
+            $response = $client->put(env('API_URL') . '/pemaster',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4888,12 +4798,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmBank/updateGmBank',
+            $response = $client->put(env('API_URL') . '/gmbank',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4930,12 +4839,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/CompanyBank',
+            $response = $client->put(env('API_URL') . '/companybank',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -4972,12 +4880,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/Group',
+            $response = $client->put(env('API_URL') . '/group',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5014,12 +4921,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/ZipCode',
+            $response = $client->put(env('API_URL') . '/zipcode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5055,12 +4961,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/BPJS',
+            $response = $client->put(env('API_URL') . '/bpjs',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5097,12 +5002,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/NPWP',
+            $response = $client->put(env('API_URL') . '/npwp',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5138,12 +5042,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmRanking',
+            $response = $client->put(env('API_URL') . '/gmranking',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5180,12 +5083,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmInstitution',
+            $response = $client->put(env('API_URL') . '/gminstitution',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5222,12 +5124,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmMajor',
+            $response = $client->put(env('API_URL') . '/gmmajor',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5264,12 +5165,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmCourseType/UpdategmCourseType',
+            $response = $client->put(env('API_URL') . '/gmcoursetype/updategmcoursetype',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5306,12 +5206,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmSkill/UpdategmSkill',
+            $response = $client->put(env('API_URL') . '/gmskill/updategmskill',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5348,7 +5247,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5392,12 +5290,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/EvaluationForm',
+            $response = $client->put(env('API_URL') . '/evaluationform',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5434,7 +5331,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5477,7 +5373,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -5519,12 +5414,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/City',
+            $response = $client->put(env('API_URL') . '/city',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5559,12 +5453,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmTitle/UpdategmTitle',
+            $response = $client->put(env('API_URL') . '/gmtitle/updategmtitle',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5605,12 +5498,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/GmPerformanceResult',
+            $response = $client->put(env('API_URL') . '/gmperformanceresult',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5649,12 +5541,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/PeMaster/UpdateRecordStatus',
+            $response = $client->put(env('API_URL') . '/pemaster/updaterecordstatus',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -5692,7 +5583,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6053,12 +5943,12 @@ class PersonelController extends Controller
             // exit;
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/PeMaster/insertPeMaster',
+                $response = $client->post(env('API_URL') . '/pemaster/insertpemaster',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/personel/PeMaster/PutPeMaster',
+                $response = $client->put(env('API_URL') . '/pemaster/putpemaster',
                     ['body' => json_encode($param)]
                 );
             }  
@@ -6087,7 +5977,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6132,13 +6021,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/WorkNature',
+                $response = $client->post(env('API_URL') . '/worknature',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6158,7 +6046,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/WorkNature',
+                $response = $client->put(env('API_URL') . '/worknature',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6196,13 +6084,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/Grade',
+                $response = $client->post(env('API_URL') . '/grade',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6223,7 +6110,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/Grade',
+                $response = $client->put(env('API_URL') . '/grade',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6264,13 +6151,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmPosition',
+                $response = $client->post(env('API_URL') . '/position',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6291,7 +6177,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmPosition',
+                $response = $client->put(env('API_URL') . '/position',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6330,13 +6216,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/Location',
+                $response = $client->post(env('API_URL') . '/location',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6361,7 +6246,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/Location',
+                $response = $client->put(env('API_URL') . '/location',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6400,13 +6285,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/Level',
+                $response = $client->post(env('API_URL') . '/level',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6427,7 +6311,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/Level',
+                $response = $client->put(env('API_URL') . '/level',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6466,13 +6350,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/CostCenter',
+                $response = $client->post(env('API_URL') . '/costcenter',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6494,7 +6377,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/CostCenter',
+                $response = $client->put(env('API_URL') . '/costcenter',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -6534,12 +6417,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeAward',
+            $response = $client->post(env('API_URL') . '/peaward',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6582,12 +6464,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeSanction',
+            $response = $client->post(env('API_URL') . '/pesanction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6633,7 +6514,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -6658,7 +6538,7 @@ class PersonelController extends Controller
                 }
             }
 
-            $response = $client->post(env('API_URL') . '/personel/PeEvaluation/InsertPeEvaluation',
+            $response = $client->post(env('API_URL') . '/peevaluation/insertpeevaluation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6704,12 +6584,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeEducation',
+            $response = $client->post(env('API_URL') . '/peeducation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6756,12 +6635,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeLanguage',
+            $response = $client->post(env('API_URL') . '/pelanguage',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6804,12 +6682,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeOrganization',
+            $response = $client->post(env('API_URL') . '/peorganization',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6852,12 +6729,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeReference',
+            $response = $client->post(env('API_URL') . '/pereference',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6899,12 +6775,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeSkill',
+            $response = $client->post(env('API_URL') . '/peskill',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6946,12 +6821,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeProjectExperience/InsertPeProjectExperience',
+            $response = $client->post(env('API_URL') . '/peprojectexperience/insertpeprojectexperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -6996,7 +6870,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7008,7 +6881,7 @@ class PersonelController extends Controller
                 $path = public_path('certificate/');
             }
 
-            $response = $client->post(env('API_URL') . '/personel/PeTraining',
+            $response = $client->post(env('API_URL') . '/petraining',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -7057,13 +6930,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmBank/insertGmBank',
+                $response = $client->post(env('API_URL') . '/gmbank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7085,7 +6957,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmBank/updateGmBank',
+                $response = $client->put(env('API_URL') . '/gmbank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7125,13 +6997,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/CompanyBank',
+                $response = $client->post(env('API_URL') . '/companybank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7152,7 +7023,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/CompanyBank',
+                $response = $client->put(env('API_URL') . '/companybank',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7191,13 +7062,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/Group',
+                $response = $client->post(env('API_URL') . '/group',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7217,7 +7087,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/Group',
+                $response = $client->put(env('API_URL') . '/group',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7255,13 +7125,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/ZipCode',
+                $response = $client->post(env('API_URL') . '/zipcode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7284,7 +7153,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/ZipCode',
+                $response = $client->put(env('API_URL') . '/zipcode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7325,13 +7194,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/BPJS',
+                $response = $client->post(env('API_URL') . '/bpjs',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7353,7 +7221,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/BPJS',
+                $response = $client->put(env('API_URL') . '/bpjs',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7393,13 +7261,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/NPWP',
+                $response = $client->post(env('API_URL') . '/npwp',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7425,7 +7292,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/NPWP',
+                $response = $client->put(env('API_URL') . '/npwp',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7469,13 +7336,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmRanking',
+                $response = $client->post(env('API_URL') . '/gmranking',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7495,7 +7361,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmRanking',
+                $response = $client->put(env('API_URL') . '/gmranking',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7533,13 +7399,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmInstitution',
+                $response = $client->post(env('API_URL') . '/gminstitution',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7559,7 +7424,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmInstitution',
+                $response = $client->put(env('API_URL') . '/gminstitution',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7597,13 +7462,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmMajor',
+                $response = $client->post(env('API_URL') . '/gmmajor',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7623,7 +7487,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmMajor',
+                $response = $client->put(env('API_URL') . '/gmmajor',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7661,13 +7525,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmCourseType/InsertgmCourseType',
+                $response = $client->post(env('API_URL') . '/gmcoursetype/insertgmcoursetype',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7687,7 +7550,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmCourseType/UpdategmCourseType',
+                $response = $client->put(env('API_URL') . '/gmcoursetype/updategmcoursetype',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7725,13 +7588,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmSkill/InsertgmSkill',
+                $response = $client->post(env('API_URL') . '/gmskill/insertgmskill',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7751,7 +7613,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmSkill/UpdategmSkill',
+                $response = $client->put(env('API_URL') . '/gmskill/updategmskill',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -7789,7 +7651,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7913,7 +7774,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -7958,7 +7818,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -8003,7 +7862,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -8059,13 +7917,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult',
+                $response = $client->post(env('API_URL') . '/gmperformanceresult',
                     ['body' => json_encode(
                         [
                             'recordStatus' => "A",
@@ -8087,7 +7944,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmPerformanceResult',
+                $response = $client->put(env('API_URL') . '/gmperformanceresult',
                     ['body' => json_encode(
                         [
                             'recordStatus' => "A",
@@ -8127,7 +7984,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -8151,7 +8007,7 @@ class PersonelController extends Controller
             //     ));
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/EvaluationForm',
+                $response = $client->post(env('API_URL') . '/evaluationform',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8171,7 +8027,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/EvaluationForm',
+                $response = $client->put(env('API_URL') . '/evaluationform',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8209,12 +8065,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/EvaluationForm/Detail',
+            $response = $client->post(env('API_URL') . '/evaluationform/detail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8255,7 +8110,7 @@ class PersonelController extends Controller
                     ];
                 }
 
-                $response_point = $client->post(env('API_URL') . '/personel/EvaluationForm/DetailPoint',
+                $response_point = $client->post(env('API_URL') . '/evaluationform/detailpoint',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8288,13 +8143,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel',
+                $response = $client->post(env('API_URL') . '/referencepersonnel',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8318,7 +8172,7 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $response_delete_level = $client->delete(env('API_URL') . '/personel/LevelMaster',
+                $response_delete_level = $client->delete(env('API_URL') . '/levelmaster',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8348,7 +8202,7 @@ class PersonelController extends Controller
                         ];
                     }
 
-                    $response_level = $client->post(env('API_URL') . '/personel/LevelMaster',
+                    $response_level = $client->post(env('API_URL') . '/levelmaster',
                         ['body' => json_encode(
                             [
                                 'companyCode' => Session::get('companyCode'),
@@ -8360,7 +8214,7 @@ class PersonelController extends Controller
                     );
                 }
             }else{
-                $response = $client->put(env('API_URL') . '/personel/ReferencePersonnel',
+                $response = $client->put(env('API_URL') . '/referencepersonnel',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8383,7 +8237,7 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $response_delete_level = $client->delete(env('API_URL') . '/personel/LevelMaster',
+                $response_delete_level = $client->delete(env('API_URL') . '/levelmaster',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -8413,7 +8267,7 @@ class PersonelController extends Controller
                         ];
                     }
 
-                    $response_level = $client->post(env('API_URL') . '/personel/LevelMaster',
+                    $response_level = $client->post(env('API_URL') . '/levelmaster',
                         ['body' => json_encode(
                             [
                                 'companyCode' => Session::get('companyCode'),
@@ -8446,7 +8300,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -8517,7 +8370,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -8564,13 +8416,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/City',
+                $response = $client->post(env('API_URL') . '/city',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8590,7 +8441,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/City',
+                $response = $client->put(env('API_URL') . '/city',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8629,13 +8480,12 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/GmTitle/InsertgmTitle',
+                $response = $client->post(env('API_URL') . '/gmtitle/insertgmtitle',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8656,7 +8506,7 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/personel/GmTitle/UpdategmTitle',
+                $response = $client->put(env('API_URL') . '/gmtitle/updategmtitle',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -8696,12 +8546,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeFreeFormat/InsertPeFreeFormat',
+            $response = $client->post(env('API_URL') . '/pefreeformat/insertpefreeformat',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8742,12 +8591,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeWorkExperience/InsertPeWorkExperience',
+            $response = $client->post(env('API_URL') . '/peworkexperience/insertpeworkexperience',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8794,7 +8642,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -8810,7 +8657,7 @@ class PersonelController extends Controller
                 $data_level = [];
             }
 
-            $response = $client->put(env('API_URL') . '/personel/PeMasterHistoryJob',
+            $response = $client->put(env('API_URL') . '/pemasterhistoryjob',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -8872,7 +8719,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9033,12 +8879,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/GmPerformanceResult',
+            $response = $client->delete(env('API_URL') . '/gmperformanceresult',
                 ['body' => json_encode(
                     [
                         'recordStatus' => "A",
@@ -9080,12 +8925,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/EvaluationForm/Detail',
+            $response = $client->delete(env('API_URL') . '/evaluationform/detail',
                 ['body' => json_encode(
                     [
                         'recordStatus' => "A",
@@ -9125,12 +8969,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/PeAward',
+            $response = $client->delete(env('API_URL') . '/peaward',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9170,12 +9013,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/PeSanction',
+            $response = $client->delete(env('API_URL') . '/pesanction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9215,12 +9057,11 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/personel/PeEvaluation/deletePeEvaluation',
+            $response = $client->delete(env('API_URL') . '/peevaluation/deletepeevaluation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9259,7 +9100,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9278,7 +9118,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeEducation/BulkDeletePeEducation',
+            $response = $client->delete(env('API_URL') . '/peeducation/bulkdeletepeeducation',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9302,7 +9142,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9320,7 +9159,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeLanguage/BulkDeletePeLanguage',
+            $response = $client->delete(env('API_URL') . '/pelanguage/bulkdeletepelanguage',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9344,7 +9183,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9362,7 +9200,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeOrganization/BulkDeletePeOrganization',
+            $response = $client->delete(env('API_URL') . '/peorganization/bulkdeletepeorganization',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9386,7 +9224,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9404,7 +9241,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeReference/BulkDeletePeReference',
+            $response = $client->delete(env('API_URL') . '/pereference/bulkdeletepereference',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9428,7 +9265,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9446,7 +9282,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeSkill/BulkDeletePeSkill',
+            $response = $client->delete(env('API_URL') . '/peskill/bulkdeletepeskill',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9470,7 +9306,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9488,7 +9323,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeProjectExperience/BulkDeletePeProjectExperience',
+            $response = $client->delete(env('API_URL') . '/peprojectexperience/bulkdeletepeprojectexperience',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9512,7 +9347,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9530,7 +9364,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeTraining/BulkDeletePeTraining',
+            $response = $client->delete(env('API_URL') . '/petraining/bulkdeletepetraining',
                 ['body' => json_encode($data)]
             );
         } catch (RequestException $e) {
@@ -9554,7 +9388,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9572,7 +9405,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeWorkExperience/DeletePeWorkExperience',
+            $response = $client->delete(env('API_URL') . '/peworkexperience/deletepeworkexperience',
                 ['body' => json_encode(
                     [
                         "workExperienceList" => $data,
@@ -9606,7 +9439,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9625,7 +9457,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeFreeFormat/DeletePeFreeFormat',
+            $response = $client->delete(env('API_URL') . '/pefreeformat/deletepefreeformat',
                 ['body' => json_encode(
                     [
                         "freeFormatList" => $data,
@@ -9846,7 +9678,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9878,7 +9709,7 @@ class PersonelController extends Controller
                 File::delete('attachment/'.$filename);
             }
 
-            $response = $client->delete(env('API_URL') . '/personel/PeAttachment/bulkDeletePeAttachment',
+            $response = $client->delete(env('API_URL') . '/peattachment/bulkdeletepeattachment',
                 ['body' => json_encode($data)]
             );
 
@@ -9902,7 +9733,6 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -9962,7 +9792,6 @@ class PersonelController extends Controller
         // $pemasterType = 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -10027,12 +9856,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel/getReferencePersonnel',
+            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10043,7 +9871,7 @@ class PersonelController extends Controller
                 )]
             );
 
-            $response_level = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
+            $response_level = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10079,12 +9907,11 @@ class PersonelController extends Controller
         $number = "";
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ReferencePersonnel/getReferencePersonnel',
+            $response = $client->post(env('API_URL') . '/referencepersonnel/getreferencepersonnel',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10186,7 +10013,6 @@ class PersonelController extends Controller
     public function printEmployeeCardPersonel(Request $request){
         try{
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -10274,7 +10100,6 @@ class PersonelController extends Controller
         }
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -10395,12 +10220,11 @@ class PersonelController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/GetResult',
+            $response = $client->post(env('API_URL') . '/gmperformanceresult/getresult',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10432,7 +10256,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -10690,12 +10513,11 @@ class PersonelController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeAttachment/getPeAttachment',
+            $response = $client->post(env('API_URL') . '/peattachment/getpeattachment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10737,7 +10559,6 @@ class PersonelController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -10749,7 +10570,7 @@ class PersonelController extends Controller
                 $path = public_path('attachment/');
             }
 
-            $response = $client->post(env('API_URL') . '/personel/PeAttachment',
+            $response = $client->post(env('API_URL') . '/peattachment',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

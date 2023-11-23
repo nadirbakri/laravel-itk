@@ -26,12 +26,11 @@ class TransactionController extends Controller
     public function pageTransaction(Request $request){
         try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -120,7 +119,7 @@ class TransactionController extends Controller
     //             'Authorization' => 'Bearer ' . Session::get('token') ]
     //         ]);
 
-    //         $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
+    //         $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
     //             ['body' => json_encode(
     //                 [
     //                     // 'companyCode' => Session::get('companyCode'),
@@ -165,7 +164,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -213,7 +211,6 @@ class TransactionController extends Controller
         if ($request->reimbursement_type == "TTA"){
             try {
                 $client = new Client([
-                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -232,7 +229,7 @@ class TransactionController extends Controller
                 //             'sessionUserID' => Session::get('userID')
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+                $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
                     ['body' => json_encode(
                         [
                             // 'companyCode' => Session::get('companyCode'),
@@ -275,7 +272,6 @@ class TransactionController extends Controller
     }else if ($request->reimbursement_type == "TTB"){
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -293,7 +289,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+            $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -337,7 +333,6 @@ class TransactionController extends Controller
     }else{
          try {
                 $client = new Client([
-                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -356,7 +351,7 @@ class TransactionController extends Controller
                 //             'sessionUserID' => Session::get('userID'),
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+                $response = $client->post(env('API_URL') . '/businesstrip/getbusinesstripandsettlement',
                     ['body' => json_encode(
                         [
                             // 'companyCode' => Session::get('companyCode'),
@@ -402,7 +397,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -421,7 +415,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID'),
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
+            $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -463,12 +457,11 @@ class TransactionController extends Controller
         if($request->workflowType == "ER"){
             try {
                 $client = new Client([
-                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
     
-                $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailList',
+                $response = $client->post(env('API_URL') . '/tmpermit/gettmpermitdetailList',
                     ['body' => json_encode(
                         [
                             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -505,7 +498,6 @@ class TransactionController extends Controller
         }else{
             try {
                 $client = new Client([
-                'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
@@ -523,7 +515,7 @@ class TransactionController extends Controller
                 //         'sessionUserID' => Session::get('userID'),
                 //     ]
                 //     ));
-                $response = $client->post(env('API_URL') . '/mobile/TmLeave/getLeaveDetailList',
+                $response = $client->post(env('API_URL') . '/tmleave/getleavedetaillist',
                     ['body' => json_encode(
                         [
                             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -563,7 +555,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -582,7 +573,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/TmReimbursement/getReimbursementDetailListAll',
+            $response = $client->post(env('API_URL') . '/tmreimbursement/getreimbursementdetaillistall',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -632,7 +623,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -648,7 +638,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
+            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -690,7 +680,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -705,7 +694,7 @@ class TransactionController extends Controller
             //             'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/CheckIn/getCheckIn',
+            $response = $client->post(env('API_URL') . '/checkIn/getcheckin',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -746,7 +735,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -762,7 +750,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
+            $response = $client->post(env('API_URL') . '/multiplecheckin/getmultiplecheckin',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -820,7 +808,6 @@ class TransactionController extends Controller
                 $isNullenddate = true;
             }
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -832,7 +819,6 @@ class TransactionController extends Controller
                 $isNullprocessDate = true;
             }
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -852,7 +838,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
+            $response = $client->post(env('API_URL') . '/transport/gettransportdetaillistall',
                 ['body' => json_encode(
                     [
                         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -895,7 +881,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -916,7 +901,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -960,7 +945,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -988,7 +972,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateReimbursementApproval',
+            $response = $client->put(env('API_URL') . '/tmreimbursement/updatereimbursementapproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1037,12 +1021,11 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/Transport/UpdateTransportApproval',
+            $response = $client->put(env('API_URL') . '/transport/updatetransportapproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1084,12 +1067,11 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateBusinessTripApproval',
+            $response = $client->put(env('API_URL') . '/businesstrip/updatebusinesstripapproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1126,7 +1108,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1143,7 +1124,7 @@ class TransactionController extends Controller
                         "paidAmount" => (int)$request->paidAmount[$key]
                     ];
                 }
-                $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
+                $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                     ['body' => json_encode($param)]
                 );
                 // var_dump(json_encode($param));
@@ -1169,7 +1150,6 @@ class TransactionController extends Controller
         $param = [];
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1192,7 +1172,7 @@ class TransactionController extends Controller
             }
             
 
-            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
+            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -1221,7 +1201,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1237,7 +1216,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->put(env('API_URL') . '/mobile/TmOvertime/UpdateOvertimeApproval',
+            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimeapproval',
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
@@ -1270,7 +1249,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1330,7 +1308,6 @@ class TransactionController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1349,7 +1326,7 @@ class TransactionController extends Controller
             //         'sessionUserID' => Session::get('userID')
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
+            $response = $client->post(env('API_URL') . '/tmabsence/gettmabsence',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),

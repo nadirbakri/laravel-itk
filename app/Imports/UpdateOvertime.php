@@ -28,7 +28,6 @@ class UpdateOvertime implements ToCollection, WithStartRow
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -48,7 +47,7 @@ class UpdateOvertime implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/mobile/TmOvertime/UpdateOvertimeMultipleApproval',
+            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimemultipleapproval',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

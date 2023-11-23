@@ -46,7 +46,6 @@ class UpdateReimbursement implements ToCollection, WithStartRow
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -67,7 +66,7 @@ class UpdateReimbursement implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateListTicketNo',
+            $response = $client->put(env('API_URL') . '/tmreimbursement/updatelistticketno',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

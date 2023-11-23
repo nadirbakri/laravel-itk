@@ -39,7 +39,6 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -131,11 +130,11 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
 
             // var_dump(json_encode($param));
-            $response = $client->post(env('API_URL').'/payroll/GetPeriodicalReport', [
+            $response = $client->post(env('API_URL').'/prperiodicalreport/getperiodicalreport', [
                 'body' => json_encode($param)
             ]);
 
-            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
         }catch (RequestException $e){
@@ -153,7 +152,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
         // exit;
 
         if($arrResult->dataListSet == null){

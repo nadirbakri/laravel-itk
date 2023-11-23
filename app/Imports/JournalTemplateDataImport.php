@@ -26,7 +26,6 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -86,7 +85,7 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/payroll/bulkInsert',
+            $response = $client->post(env('API_URL') . '/prjournaltemplate/bulkinsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

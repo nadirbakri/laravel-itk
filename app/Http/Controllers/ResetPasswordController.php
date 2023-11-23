@@ -39,11 +39,10 @@ class ResetPasswordController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json' ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/Password',
+            $response = $client->post(env('API_URL') . '/password',
                 ['body' => json_encode(
                     [
                         'email' => $request->email_reset_password,
@@ -77,11 +76,10 @@ class ResetPasswordController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json' ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/Password/reset',
+            $response = $client->put(env('API_URL') . '/password/reset',
                 ['body' => json_encode(
                     [
                         'email' => $request->email_otp,

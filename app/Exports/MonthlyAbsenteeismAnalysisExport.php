@@ -30,7 +30,6 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -96,7 +95,7 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 
             // var_dump($param['levelMaster']);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/GetMonthlyAbsenteeismAnalysisReport',
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/getmonthlyabsenteeismanalysisreport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

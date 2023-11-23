@@ -29,7 +29,6 @@ class BonusTHRReportExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -66,11 +65,11 @@ class BonusTHRReportExport implements FromView, ShouldAutoSize
                 $param['paymentDateTo'] = $this->paymentDateTo;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/getBonusTHRReport', [
+            $response = $client->post(env('API_URL').'/prbonusthrreport/getbonusthrreport', [
                 'body' => json_encode($param)
             ]);
 
-            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
         }catch (RequestException $e){

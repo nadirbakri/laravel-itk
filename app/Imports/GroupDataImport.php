@@ -26,7 +26,6 @@ class GroupDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -60,7 +59,7 @@ class GroupDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            $response = $client->post(env('API_URL') . '/personel/Group/bulkInsert',
+            $response = $client->post(env('API_URL') . '/group/bulkinsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

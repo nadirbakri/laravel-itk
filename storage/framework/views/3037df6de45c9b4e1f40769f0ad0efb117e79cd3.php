@@ -1396,7 +1396,7 @@
                 url: "<?php echo e(url('personnel/number/check')); ?>",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeWorkExperience/getPeWorkExperience',
+                    'url': '/peworkexperience/getpeworkexperience',
                     'employeeNo': "<?php echo e($data[0]->employeeNo); ?>"
                 },
                 success: function (response) {

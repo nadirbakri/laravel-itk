@@ -26,7 +26,6 @@ class ZipCodeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -54,11 +53,11 @@ class ZipCodeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "propinsi" => (isset($row[0])) ? (string) $row[0] : null,
-                    "kabupaten" => (isset($row[1])) ? (string) $row[1] : null,
-                    "kecamatan" => (isset($row[2])) ? (string) $row[2] : null,
-                    "kelurahan" => (isset($row[3])) ? (string) $row[3] : null,
-                    "zipCode" => (isset($row[4])) ? (string) $row[4] : null,
+                    "propinsi" => (isset($row[0])) ? $row[0] : null,
+                    "kabupaten" => (isset($row[1])) ? $row[1] : null,
+                    "kecamatan" => (isset($row[2])) ? $row[2] : null,
+                    "kelurahan" => (isset($row[3])) ? $row[3] : null,
+                    "zipCode" => (isset($row[4])) ? $row[4] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),
@@ -72,9 +71,9 @@ class ZipCodeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            // dd(json_encode($param));
+            // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/personel/ZipCode/bulkInsert',
+            $response = $client->post(env('API_URL') . '/zipcode/bulkinsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

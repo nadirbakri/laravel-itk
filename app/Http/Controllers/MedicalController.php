@@ -28,12 +28,11 @@ class MedicalController extends Controller
     {
         try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -95,12 +94,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/controller/getReferenceMedical',
+            $response = $client->post(env('API_URL') . '/referencemedical/getreferencemedical',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -205,12 +203,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
+            $response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -241,12 +238,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+            $response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -277,7 +273,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -313,7 +308,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -349,7 +343,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -385,7 +378,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -421,7 +413,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -457,7 +448,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -496,12 +486,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
+            $response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -538,12 +527,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+            $response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -580,7 +568,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -622,7 +609,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -664,12 +650,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_ref = $client->post(env('API_URL') . '/personel/controller/getReferenceMedical',
+            $response_ref = $client->post(env('API_URL') . '/referencemedical/getreferencemedical',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -730,7 +715,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -773,12 +757,11 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_ref = $client->post(env('API_URL') . '/personel/controller/getReferenceMedical',
+            $response_ref = $client->post(env('API_URL') . '/referencemedical/getreferencemedical',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -838,7 +821,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -883,13 +865,12 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/personel/ClaimCode/InsertClaimCode',
+                $response = $client->post(env('API_URL') . '/claimcode/insertclaimcode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -920,7 +901,7 @@ class MedicalController extends Controller
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/personel/ClaimCode/UpdateClaimCode',
+                $response = $client->put(env('API_URL') . '/claimcode/updateclaimcode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -970,13 +951,12 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/personel/DiseaseCode/InsertDiseaseCode',
+                $response = $client->post(env('API_URL') . '/diseasecode/insertdiseasecode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -999,7 +979,7 @@ class MedicalController extends Controller
             }
 
             else {
-                $response = $client->put(env('API_URL') . '/personel/DiseaseCode/UpdateDiseaseCode',
+                $response = $client->put(env('API_URL') . '/diseasecode/updatediseasecode',
                     ['body' => json_encode(
                         [
                             'recordStatus' => $request->record_status,
@@ -1042,7 +1022,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1113,7 +1092,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1186,13 +1164,12 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if ($request->record_function === 'New') {
-                $response = $client->post(env('API_URL') . '/personel/controller/InsertReferenceMedical',
+                $response = $client->post(env('API_URL') . '/referencemedical/insertreferencemedical',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1236,7 +1213,7 @@ class MedicalController extends Controller
                 );
             }
             else {
-                $response = $client->put(env('API_URL') . '/personel/controller/UpdateReferenceMedical',
+                $response = $client->put(env('API_URL') . '/referencemedical/updatereferencemedical',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1301,7 +1278,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1418,7 +1394,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1523,7 +1498,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1605,7 +1579,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1667,7 +1640,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1761,7 +1733,6 @@ class MedicalController extends Controller
 
         try{
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1913,7 +1884,6 @@ class MedicalController extends Controller
 
         try{
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2009,7 +1979,7 @@ class MedicalController extends Controller
                 'body' => json_encode($param)
             ]);
 
-            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
         }catch (RequestException $e){
@@ -2077,7 +2047,6 @@ class MedicalController extends Controller
 
         try{
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2178,7 +2147,7 @@ class MedicalController extends Controller
                 'body' => json_encode($param)
             ]);
 
-            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
         }catch (RequestException $e){
@@ -2291,7 +2260,6 @@ class MedicalController extends Controller
 
         try{
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2398,7 +2366,7 @@ class MedicalController extends Controller
                 'body' => json_encode($param)
             ]);
 
-            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+            $responseGetCompany = $client->post(env('API_URL').'/company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
         }catch (RequestException $e){
@@ -2501,12 +2469,11 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/ClaimCode/UpdateClaimCode',
+            $response = $client->put(env('API_URL') . '/claimcode/updateclaimcode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -2548,12 +2515,11 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/DiseaseCode/UpdateDiseaseCode',
+            $response = $client->put(env('API_URL') . '/diseasecode/updatediseasecode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -2595,7 +2561,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2641,7 +2606,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2687,7 +2651,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2736,7 +2699,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2783,7 +2745,6 @@ class MedicalController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2830,7 +2791,6 @@ class MedicalController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);

@@ -34,12 +34,11 @@ class TimeManagementController extends Controller
     {
         try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ],
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/getMenuMasterWebDetail',
+	    	$response = $client->post(env('API_URL') . '/menumasterwebdetail/getmenumasterwebdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -96,12 +95,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -115,7 +113,7 @@ class TimeManagementController extends Controller
             $arrResult = json_decode($response->getBody()->getContents());
 
             if(!empty($arrResult->dataListSet)){
-                $response_tm = $client->post(env('API_URL') . '/mobile/TmPeriod/getTmPeriod',
+                $response_tm = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -219,12 +217,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -300,12 +297,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmCalendar/getTmCalendar',
+            $response = $client->post(env('API_URL') . '/tmcalendar/gettmcalendar',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -339,12 +335,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -377,12 +372,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/TmShiftCode/getTmShiftCode',
+            $response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -414,12 +408,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTMDetail',
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetmdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -455,12 +448,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -493,12 +485,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMasterLeave/getPeMasterLeave',
+            $response = $client->post(env('API_URL') . '/pemasterleave/getpemasterleave',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -532,12 +523,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmOvtSPL/getTmOvtSPLGrid',
+            $response = $client->post(env('API_URL') . '/tmovtspl/gettmovtsplgrid',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -574,12 +564,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -613,7 +602,6 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -640,7 +628,7 @@ class TimeManagementController extends Controller
             }
             $param['workPatternDetailList'] = $data_work_pattern_detail_list;
 
-            $response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
                     ['body' => json_encode($param)]
             );
 
@@ -672,12 +660,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmPeriod/getTmPeriod',
+            $response = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -711,12 +698,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTimeRecord/getReferenceTimeRecord',
+            $response = $client->post(env('API_URL') . '/referencetimerecord/getreferencetimerecord',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -746,12 +732,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response_tm = $client->post(env('API_URL') . '/mobile/TmPeriod/getTmPeriod',
+            $response_tm = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -788,7 +773,7 @@ class TimeManagementController extends Controller
 
             // var_dump(json_encode($param));
             
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/getTmAbsentEmployeeDataEntry',
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployeedataentry',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -811,7 +796,6 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -827,7 +811,7 @@ class TimeManagementController extends Controller
 
             // var_dump(json_encode($param));
             
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/getTmAbsentEmployeeDataEntry',
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/gettmabsentemployeedataentry',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -851,12 +835,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+            $response = $client->post(env('API_URL') . '/gmranking/getgmranking',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -887,12 +870,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTMDetail',
+            $response = $client->post(env('API_URL') . '/referencetm/getreferencetm',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -923,12 +905,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMasterLeave/getPeMasterLeave',
+            $response = $client->post(env('API_URL') . '/pemasterleave/getpemasterleave',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -960,7 +941,6 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1000,7 +980,6 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1041,12 +1020,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmPeriod/getTmPeriod',
+            $response = $client->post(env('API_URL') . '/tmperiod/gettmperiod',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1081,12 +1059,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
+            $response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1123,12 +1100,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1163,12 +1139,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+            $response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1197,12 +1172,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/TmShiftCode/getTmShiftCode',
+            $response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1231,12 +1205,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1456,7 +1429,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1491,7 +1463,7 @@ class TimeManagementController extends Controller
                 $param['level'] = $data_level;
             }
 
-            $response = $client->put(env('API_URL') . '/mobile/TempAbsentMachine/UpdateShiftbyDate',
+            $response = $client->put(env('API_URL') . '/tempabsentmachine/updateshiftbydate',
                 ['body' => json_encode($param)]
             );
 
@@ -1516,12 +1488,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/PeMasterLeave',
+            $response = $client->put(env('API_URL') . '/pemasterleave',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
@@ -1564,12 +1535,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmOvtSPL/InsertTmOvtSPL',
+            $response = $client->post(env('API_URL') . '/tmovtspl/inserttmovtspl',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1624,13 +1594,12 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
             if($request->record_function == 'Add'){
-                $response = $client->post(env('API_URL') . '/mobile/TmCalendar',
+                $response = $client->post(env('API_URL') . '/tmcalendar',
                     ['body' => json_encode(
                         [
                             "companyCode" => Session::get('companyCode'),
@@ -1652,7 +1621,7 @@ class TimeManagementController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/mobile/TmCalendar',
+                $response = $client->put(env('API_URL') . '/tmcalendar',
                     ['body' => json_encode(
                         [
                             "companyCode" => Session::get('companyCode'),
@@ -1695,7 +1664,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1745,11 +1713,11 @@ class TimeManagementController extends Controller
             $param['workPatternDetailList'] = $data_work_pattern_detail_list;
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/mobile/TmWorkPattern',
+                $response = $client->post(env('API_URL') . '/tmworkpattern',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/mobile/TmWorkPattern',
+                $response = $client->put(env('API_URL') . '/tmworkpattern',
                     ['body' => json_encode($param)]
                 );
             }
@@ -1774,13 +1742,12 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/mobile/TmPeriod',
+                $response = $client->post(env('API_URL') . '/tmperiod',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1807,7 +1774,7 @@ class TimeManagementController extends Controller
                     )]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/mobile/TmPeriod',
+                $response = $client->put(env('API_URL') . '/tmperiod',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -1855,7 +1822,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1902,7 +1868,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -1941,11 +1906,11 @@ class TimeManagementController extends Controller
             }
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/mobile/TmAbsentCode',
+                $response = $client->post(env('API_URL') . '/tmabsentcode',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/mobile/TmAbsentCode',
+                $response = $client->put(env('API_URL') . '/tmabsentcode',
                     ['body' => json_encode($param)]
                 );
             }
@@ -1970,13 +1935,12 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
             if ($request->record_function == 'New') {
-                $response = $client->post(env('API_URL') . '/mobile/ReferenceTimeRecord',
+                $response = $client->post(env('API_URL') . '/referencetimerecord',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2018,7 +1982,7 @@ class TimeManagementController extends Controller
                 );
             }
             else {
-                $response = $client->put(env('API_URL') . '/mobile/ReferenceTimeRecord',
+                $response = $client->put(env('API_URL') . '/referencetimerecord',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2080,7 +2044,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2139,7 +2102,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2231,7 +2193,7 @@ class TimeManagementController extends Controller
             ];
 
             if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/TmShiftCode',
+                $response = $client->post(env('API_URL') . '/tmshiftcode',
                     ['body' => json_encode($param)]
 
                 );
@@ -2240,7 +2202,7 @@ class TimeManagementController extends Controller
                 return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
 
             }else{
-                $response = $client->put(env('API_URL') . '/personel/TmShiftCode',
+                $response = $client->put(env('API_URL') . '/tmshiftcode',
                     ['body' => json_encode($param)]
                 );
                 $arrResult = json_decode($response->getBody()->getContents());
@@ -2266,7 +2228,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2297,7 +2258,7 @@ class TimeManagementController extends Controller
                 //     ));
                 // exit;
 
-                $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
+                $response = $client->post(env('API_URL') . '/tempabsentmachine/inserttempabsentmachine',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2341,7 +2302,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2363,7 +2323,7 @@ class TimeManagementController extends Controller
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/CreateTemplate',
+            $response = $client->post(env('API_URL') . '/tmabsentemployee/createtemplate',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2405,7 +2365,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2469,11 +2428,11 @@ class TimeManagementController extends Controller
             }
 
             if($arrData['record_function'] == 'New'){
-                $response = $client->post(env('API_URL') . '/mobile/ReferenceTM',
+                $response = $client->post(env('API_URL') . '/referencetm',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $response = $client->put(env('API_URL') . '/mobile/ReferenceTM',
+                $response = $client->put(env('API_URL') . '/referencetm',
                     ['body' => json_encode($param)]
                 );
             }
@@ -2498,12 +2457,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/insertDetail',
+            $response = $client->post(env('API_URL') . '/referencetm/insertdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2550,7 +2508,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2619,7 +2576,7 @@ class TimeManagementController extends Controller
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/BulkUpdateTmAbsentEmployee',
+            $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -2642,12 +2599,11 @@ class TimeManagementController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/User/getUserDetail',
+            $response = $client->post(env('API_URL') . '/user/getuserdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2682,7 +2638,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2711,7 +2666,7 @@ class TimeManagementController extends Controller
                 }
             }
 
-            $response = $client->put(env('API_URL') . '/mobile/TmOvtSPL/UpdateTmOvtSPL',
+            $response = $client->put(env('API_URL') . '/tmovtspl/updatetmovtspl',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -2735,12 +2690,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/TmWorkPattern',
+            $response = $client->put(env('API_URL') . '/tmworkpattern',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -2783,12 +2737,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/TmAbsentCode',
+            $response = $client->put(env('API_URL') . '/tmabsentcode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -2821,12 +2774,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/TmShiftCode',
+            $response = $client->put(env('API_URL') . '/tmshiftcode',
                 ['body' => json_encode(
                     [
                         'recordStatus' => $request->func,
@@ -2861,7 +2813,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2882,7 +2833,7 @@ class TimeManagementController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/mobile/TmOvtSPL/deleteTmOvtSPL',
+            $response = $client->delete(env('API_URL') . '/tmovtspl/deletetmovtspl',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -2906,7 +2857,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -2933,7 +2883,7 @@ class TimeManagementController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/mobile/TmPeriod',
+            $response = $client->delete(env('API_URL') . '/tmperiod',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -2957,12 +2907,11 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->delete(env('API_URL') . '/mobile/TempAbsentMachine/DeleteTempAbsentMachine',
+            $response = $client->delete(env('API_URL') . '/tempabsentmachine/deletetempabsentmachine',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2999,7 +2948,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3021,7 +2969,7 @@ class TimeManagementController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/mobile/TmCalendar',
+            $response = $client->delete(env('API_URL') . '/tmcalendar',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -3045,7 +2993,6 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -3065,7 +3012,7 @@ class TimeManagementController extends Controller
                 ];
             }
 
-            $response = $client->delete(env('API_URL') . '/mobile/ReferenceTM/insertDetail',
+            $response = $client->delete(env('API_URL') . '/referencetm/removedetail',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

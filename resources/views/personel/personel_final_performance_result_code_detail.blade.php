@@ -214,7 +214,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/GmPerformanceResult/getGmPerformanceResult'
+                    'url': '/gmperformanceresult/getgmperformanceresult'
                 },
                 success: function (response) {
                     $('#number').val(response);

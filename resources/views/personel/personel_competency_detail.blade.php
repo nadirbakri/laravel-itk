@@ -2037,7 +2037,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeEducation/getPeEducation',
+                    'url': '/peeducation/getpeeducation',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -2055,7 +2055,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeLanguage/getPeLanguage',
+                    'url': '/pelanguage/getpelanguage',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -2073,7 +2073,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeOrganization/getPeOrganization',
+                    'url': '/peorganization/getpeorganization',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -2091,7 +2091,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeReference/getPeReference',
+                    'url': '/pereference/getpereference',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -2109,7 +2109,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeSkill/getPeSkill',
+                    'url': '/peskill/getpeskill',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -2127,7 +2127,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeProjectExperience/getPeProjectExperience',
+                    'url': '/peprojectexperience/getpeprojectexperience',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {
@@ -2145,7 +2145,7 @@
                 url: "{{ url('personnel/number/check') }}",
                 type: "GET",
                 data: {
-                    'url': '/personel/PeTraining/getPeTraining',
+                    'url': '/petraining/getpetraining',
                     'employeeNo': "{{ $data[0]->employeeNo }}"
                 },
                 success: function (response) {

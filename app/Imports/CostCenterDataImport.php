@@ -26,7 +26,6 @@ class CostCenterDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -45,10 +44,10 @@ class CostCenterDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "costCenterCode" => (isset($row[0])) ? (string) $row[0] : null,
-                    "costCenterDescription" => (isset($row[1])) ? (string) $row[1] : null,
-                    "accountNo" => (isset($row[2])) ? (string) $row[2] : null,
-                    "contraAccountNo" => (isset($row[3])) ? (string) $row[3] : null,
+                    "costCenterCode" => (isset($row[0])) ? $row[0] : null,
+                    "costCenterDescription" => (isset($row[1])) ? $row[1] : null,
+                    "accountNo" => (isset($row[2])) ? $row[2] : null,
+                    "contraAccountNo" => (isset($row[3])) ? $row[3] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),
@@ -64,7 +63,7 @@ class CostCenterDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/personel/CostCenter/bulkInsert',
+            $response = $client->post(env('API_URL') . '/costcenter/bulkinsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

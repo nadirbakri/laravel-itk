@@ -26,12 +26,11 @@ class ReimbursementExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmReimbursement/getReimbursementDetailListAll',
+            $response = $client->post(env('API_URL') . '/tmreimbursement/getreimbursementdetaillistall',
                 ['body' => json_encode(
                     [
                             'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),

@@ -15,17 +15,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'gender_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -51,17 +50,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'ProcessStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -100,18 +98,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'ProcessStatus_',
 						'comGenCode' => $request->processStatus,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -150,17 +147,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'DeductOvt_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -199,17 +195,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'BloodType_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -246,17 +241,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'MaritalStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -280,17 +274,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Nationality_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -316,17 +309,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'DrivingLicense_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -365,17 +357,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Relation_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -412,17 +403,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TerminationCode_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -446,17 +436,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'FringeBenefit_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -482,17 +471,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TaxStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -531,17 +519,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'PeMasterAbsenteeismType_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -580,18 +567,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'PeMasterAbsenteeismType_',
 						'comGenCode' => $request->absentType,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -630,17 +616,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'DeductLeave_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -679,18 +664,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'DeductLeave_',
 						'comGenCode' => $request->deductLeave,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -729,17 +713,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TaxOffice_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -778,17 +761,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TaxMethod_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -827,17 +809,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Currency_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -876,17 +857,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Currency_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -916,12 +896,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -950,12 +929,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getPrLoanPayment',
+	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -986,12 +964,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1033,12 +1010,11 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1047,7 +1023,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response2 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1056,7 +1032,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response3 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1065,7 +1041,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response4 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response4 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1074,7 +1050,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response5 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response5 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1083,7 +1059,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response6 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response6 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1092,7 +1068,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response7 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response7 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1101,7 +1077,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response8 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+			$response8 = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1149,12 +1125,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1221,7 +1196,7 @@ class DataController extends Controller
 	//     						'Authorization' => 'Bearer ' . Session::get('token') ]
 	//     	]);
 
-	//     	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+	//     	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	//     		['body' => json_encode(
 	//     			[
 	//     				'companyCode' => Session::get('companyCode'),
@@ -1256,12 +1231,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
+	    	$response = $client->post(env('API_URL') . '/zipcode/getzipcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1314,12 +1288,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
+	    	$response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1360,12 +1333,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
+	    	$response = $client->post(env('API_URL') . '/tmworkpattern/gettmworkpatternservice',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1400,12 +1372,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
+	    	$response = $client->post(env('API_URL') . '/companybank/getcompanybank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1451,12 +1422,11 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
+	    	$response = $client->post(env('API_URL') . '/companybank/getcompanybank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1465,7 +1435,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
+			$response2 = $client->post(env('API_URL') . '/companybank/getcompanybank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1474,7 +1444,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
+			$response3 = $client->post(env('API_URL') . '/companybank/getcompanybank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1514,12 +1484,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
+	    	$response = $client->post(env('API_URL') . '/gmbank/getgmbank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1563,12 +1532,11 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
+	    	$response = $client->post(env('API_URL') . '/gmbank/getgmbank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1577,7 +1545,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
+			$response2 = $client->post(env('API_URL') . '/gmbank/getgmbank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1586,7 +1554,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
+			$response3 = $client->post(env('API_URL') . '/gmbank/getgmbank',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1629,18 +1597,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
 						'variable' => 'Religion_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -1670,17 +1637,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'religion_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -1724,18 +1690,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
 						'variable' => 'Religion_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -1777,12 +1742,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getPrFormulaTHR',
+	    	$response = $client->post(env('API_URL') . '/prformulathr/getprformulathr',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -1823,17 +1787,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
-	    				'variable' => 'RecordStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+	    				'variable' => 'recordstatus_',
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -1859,12 +1822,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -1924,12 +1886,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMasterLeave/getPeMasterLeave',
+	    	$response = $client->post(env('API_URL') . '/pemasterleave/getpemasterleave',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -1975,12 +1936,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMasterLeave/getPeMasterLeave',
+	    	$response = $client->post(env('API_URL') . '/pemasterleave/getpemasterleave',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -2023,12 +1983,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2074,12 +2033,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/LoanLookUp',
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/loanlookup',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2124,12 +2082,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
 						'companyCode' => Session::get('companyCode')
@@ -2173,12 +2130,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
 						'companyCode' => Session::get('companyCode')
@@ -2226,12 +2182,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2276,12 +2231,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/User/getuserholdingcompany',
+	    	$response = $client->post(env('API_URL') . '/User/getuserholdingcompany',
 	    		['body' => json_encode(
 	    			[
 						'userName' => Session::get('userID'),
@@ -2322,12 +2276,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Module/getModule',
+	    	$response = $client->post(env('API_URL') . '/module/getmodule',
 	    		['body' => json_encode(
 	    			[
 	    				'' => ''
@@ -2374,7 +2327,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -2389,12 +2341,12 @@ class DataController extends Controller
 				$param['groupAuthorizeCode'] = Session::get('groupAuthorizeUtilities');
 			}
 
-	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
+	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
 	    		['body' => json_encode($param)]
 	    	);
 
 			if(isset($request->module)){
-				$response2 = $client->post(env('API_URL') . '/personel/User/getUserAccessView',
+				$response2 = $client->post(env('API_URL') . '/user/getuseraccessview',
 					['body' => json_encode(
 						[
 							'companyCode' => Session::get('companyCode'),
@@ -2449,12 +2401,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
+	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2464,7 +2415,7 @@ class DataController extends Controller
 	    	);
 
 			if(isset($request->module)){
-				$response2 = $client->post(env('API_URL') . '/personel/User/getUserAccessView',
+				$response2 = $client->post(env('API_URL') . '/user/getuseraccessview',
 					['body' => json_encode(
 						[
 							'companyCode' => Session::get('companyCode'),
@@ -2512,12 +2463,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
+	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2567,12 +2517,11 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
+	    	$response = $client->post(env('API_URL') . '/groupauthorize/getgroupauthorize',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -2607,12 +2556,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+	    	$response = $client->post(env('API_URL') . '/position/getposition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2657,12 +2605,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+	    	$response = $client->post(env('API_URL') . '/position/getposition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2717,12 +2664,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+	    	$response = $client->post(env('API_URL') . '/position/getposition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2766,12 +2712,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+	    	$response = $client->post(env('API_URL') . '/position/getposition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2802,12 +2747,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2853,12 +2797,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -2904,12 +2847,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
+	    	$response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -2953,12 +2895,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GroupUserAccess/getGroupUserAccess',
+	    	$response = $client->post(env('API_URL') . '/groupuseraccess/getgroupuseraccess',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3003,12 +2944,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/User/getUserView',
+	    	$response = $client->post(env('API_URL') . '/user/getuserview',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3052,12 +2992,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/getuserdetail',
+	    	$response = $client->post(env('API_URL') . '/getuserdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3099,17 +3038,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Decree_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -3133,17 +3071,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Sanction_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -3167,17 +3104,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Language_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -3201,17 +3137,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'SkillProficiency_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -3235,17 +3170,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'Education_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -3271,12 +3205,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmInstitution/getgmInstitution',
+	    	$response = $client->post(env('API_URL') . '/gminstitution/getgminstitution',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3320,12 +3253,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmMajor/getgmMajor',
+	    	$response = $client->post(env('API_URL') . '/gmmajor/getgmmajor',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3367,17 +3299,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'EduStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -3403,12 +3334,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmTitle/getgmTitle',
+	    	$response = $client->post(env('API_URL') . '/gmtitle/getgmtitle',
 	    		['body' => json_encode(
 	    			[
 						'companyCode' => Session::get('companyCode'),
@@ -3452,12 +3382,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/City/getCity',
+	    	$response = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3501,12 +3430,11 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/City/getCity',
+	    	$response = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3515,7 +3443,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/personel/City/getCity',
+			$response2 = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3524,7 +3452,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/personel/City/getCity',
+			$response3 = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3533,7 +3461,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response4 = $client->post(env('API_URL') . '/personel/City/getCity',
+			$response4 = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3542,7 +3470,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response5 = $client->post(env('API_URL') . '/personel/City/getCity',
+			$response5 = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3551,7 +3479,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response6 = $client->post(env('API_URL') . '/personel/City/getCity',
+			$response6 = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3560,7 +3488,7 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			$response7 = $client->post(env('API_URL') . '/personel/City/getCity',
+			$response7 = $client->post(env('API_URL') . '/city/getcity',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3606,12 +3534,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmSkill/getgmSkill',
+	    	$response = $client->post(env('API_URL') . '/gmskill/getgmskill',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3655,7 +3582,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3704,12 +3630,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/audittrail/UserLog/getUserLog',
+	    	$response = $client->post(env('API_URL') . '/audittrail/getaudittrail',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -3756,7 +3681,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3803,7 +3727,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3850,7 +3773,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -3896,12 +3818,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
+	    	$response = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -3944,12 +3865,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/LevelMaster/getLevelMaster',
+	    	$response = $client->post(env('API_URL') . '/levelmaster/getlevelmaster',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -3980,12 +3900,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/User/getModuleList',
+	    	$response = $client->post(env('API_URL') . '/user/getmodulelist',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -4032,12 +3951,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemastergrid',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4076,12 +3994,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPosition/getgmPosition',
+	    	$response = $client->post(env('API_URL') . '/position/getposition',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4116,18 +4033,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
 						'variable' => 'EmploymentStatus_',
-						'languageCode' => strtoupper(App::getLocale())
-	    				// 'companyCode' => Session::get('companyCode')
+	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
 	    	);
@@ -4155,12 +4070,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+	    	$response = $client->post(env('API_URL') . '/location/getlocation',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4213,12 +4127,11 @@ class DataController extends Controller
 		}else{
 			try {
 				$client = new Client([
-                'verify' => false,
 					'headers' => [ 'Content-Type' => 'application/json',
 									'Authorization' => 'Bearer ' . Session::get('token') ]
 				]);
 	
-				$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+				$response = $client->post(env('API_URL') . '/location/getlocation',
 					['body' => json_encode(
 						[
 							'recordStatus' => 'A',
@@ -4274,12 +4187,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+	    	$response = $client->post(env('API_URL') . '/location/getlocation',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4329,12 +4241,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+	    	$response = $client->post(env('API_URL') . '/location/getlocation',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4366,12 +4277,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4416,12 +4326,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4477,12 +4386,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4531,12 +4439,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+	    	$response = $client->post(env('API_URL') . '/gmranking/getgmranking',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4568,12 +4475,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+	    	$response = $client->post(env('API_URL') . '/level/getlevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4619,12 +4525,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+	    	$response = $client->post(env('API_URL') . '/level/getlevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4676,12 +4581,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+	    	$response = $client->post(env('API_URL') . '/level/getlevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4733,12 +4637,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+	    	$response = $client->post(env('API_URL') . '/level/getlevel',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4773,12 +4676,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationForm',
+	    	$response = $client->post(env('API_URL') . '/evaluationform/getevaluationform',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4821,12 +4723,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/EvaluationForm/getEvaluationDetailPoint',
+	    	$response = $client->post(env('API_URL') . '/evaluationform/getevaluationdetailpoint',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -4857,12 +4758,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
+	    	$response = $client->post(env('API_URL') . '/grade/getgrade',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4907,12 +4807,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
+	    	$response = $client->post(env('API_URL') . '/grade/getgrade',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -4958,12 +4857,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Group/getGroup',
+	    	$response = $client->post(env('API_URL') . '/group/getgroup',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5008,12 +4906,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Group/getGroup',
+	    	$response = $client->post(env('API_URL') . '/group/getgroup',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5059,12 +4956,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
+	    	$response = $client->post(env('API_URL') . '/worknature/getworknature',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5109,12 +5005,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/WorkNature/getWorkNature',
+	    	$response = $client->post(env('API_URL') . '/worknature/getworknature',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5160,7 +5055,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5210,7 +5104,6 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
@@ -5261,17 +5154,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'EmploymentStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5310,17 +5202,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 	    				// 'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'RecordStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5364,17 +5255,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'RecordStatus_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5419,18 +5309,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
 						'variable' => 'EmploymentStatus_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5472,17 +5361,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'EmploymentType_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5519,17 +5407,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TransactionType_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5553,17 +5440,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'TerminationCode_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5587,17 +5473,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'CalendarType_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5621,17 +5506,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'DayCode_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5655,18 +5539,17 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'DayCode_',
 						'comGenCode' => $request->dayCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -5692,12 +5575,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
+	    	$response = $client->post(env('API_URL') . '/npwp/getnpwp',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5742,12 +5624,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
+	    	$response = $client->post(env('API_URL') . '/npwp/getnpwp',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5782,12 +5663,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
+	    	$response = $client->post(env('API_URL') . '/BPJS/getBPJS',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5830,12 +5710,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
+	    	$response = $client->post(env('API_URL') . '/bpjs/getbpjs',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5871,12 +5750,11 @@ class DataController extends Controller
 		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/BPJS/getBPJS',
+	    	$response = $client->post(env('API_URL') . '/bpjs/getbpjs',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -5911,12 +5789,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
+	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -5959,12 +5836,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
+	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -5998,12 +5874,11 @@ class DataController extends Controller
     {	
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/CostCenter/getCostCenter',
+	    	$response = $client->post(env('API_URL') . '/costcenter/getcostcenter',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -6037,18 +5912,17 @@ class DataController extends Controller
 	{
 		try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'CalendarType_',
 	    				'comGenCode' => $request->flagType,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6074,12 +5948,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmShiftCode/getTmShiftCode',
+	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6122,12 +5995,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/TmShiftCode/getTmShiftCode',
+	    	$response = $client->post(env('API_URL') . '/tmshiftcode/gettmshiftcode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6158,12 +6030,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 						'absentType' => 'L',
@@ -6206,12 +6077,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 	    				'absentType' => 'O',
@@ -6256,12 +6126,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -6303,17 +6172,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'groupshift_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6339,18 +6207,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'groupshift_',
 						'comGenCode' => $request->groupShift,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6379,12 +6246,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
+	    	$response = $client->post(env('API_URL') . '/tmabsentcode/getabsentcode',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6420,17 +6286,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'InsuranceCode_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6469,17 +6334,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'InsuranceClass_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6518,17 +6382,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'InsuranceCode_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6560,17 +6423,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'InsuranceClass_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -6600,227 +6462,226 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Gender_',
 	    				'comGenCode' => $request->gender,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response2 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response2 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'MaritalStatus_',
 	    				'comGenCode' => $request->maritalStatus,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response3 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response3 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Religion_',
 	    				'comGenCode' => $request->religionCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response4 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response4 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Nationality_',
 	    				'comGenCode' => $request->nationality,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response5 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response5 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'EmploymentStatus_',
 	    				'comGenCode' => $request->employmentStatus,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response6 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response6 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'EmploymentType_',
 	    				'comGenCode' => $request->employmentType,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response7 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response7 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TerminationCode_',
 	    				'comGenCode' => $request->terminationCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response8 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response8 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'PeMasterAbsenteeismType_',
 	    				'comGenCode' => $request->absenteeismType,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response9 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response9 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxStatus_',
 	    				'comGenCode' => $request->taxStatus,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response10 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response10 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxStatus_',
 	    				'comGenCode' => $request->taxStatusNextYear,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response11 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response11 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxOffice_',
 	    				'comGenCode' => $request->taxOffice,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response12 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response12 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'TaxMethod_',
 	    				'comGenCode' => $request->taxCalculationMethod,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response13 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response13 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Currency_',
 	    				'comGenCode' => $request->currencyCode1,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response14 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response14 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Currency_',
 	    				'comGenCode' => $request->currencyCode2,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response15 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response15 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'Currency_',
 	    				'comGenCode' => $request->currencyCode3,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response16 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response16 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'BloodType_',
 	    				'comGenCode' => $request->bloodType,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response17 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response17 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'DrivingLicense_',
 	    				'comGenCode' => $request->drivingLicenseMobilType,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response18 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response18 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'InsuranceCode_',
 	    				'comGenCode' => $request->insuranceCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			$response19 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response19 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'InsuranceClass_',
 	    				'comGenCode' => $request->insuranceClassCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
 
-			// $response20 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			// $response20 = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    	// 	['body' => json_encode(
 	    	// 		[
 	    	// 			'companyCode' => Session::get('companyCode'),
 			// 			'variable' => 'Export_Rimbursement_',
 	    	// 			'comGenCode' => $request->insuranceClassCode,
-	    	// 			'languageCode' => strtoupper(App::getLocale())
+	    	// 			'languageCode' => App::getLocale()
 	    	// 		]
 	    	// 	)]
 	    	// );
@@ -6889,12 +6750,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
+	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -6934,12 +6794,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    			'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+	    	$response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -6973,12 +6832,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getTermDateNotNull',
+	    	$response = $client->post(env('API_URL') . '/pemaster/gettermdatenotnull',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7019,12 +6877,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getPrPensionSeverance',
+	    	$response = $client->post(env('API_URL') . '/prpensionseverance/getprpensionseverance',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7053,12 +6910,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7087,12 +6943,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getPrLoanPayment',
+	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7121,12 +6976,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/GmPerformanceResult/getGmPerformanceResult',
+	    	$response = $client->post(env('API_URL') . '/gmperformanceresult/getgmperformanceresult',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7162,12 +7016,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getTableField',
+	    	$response = $client->post(env('API_URL') . '/prformulathr/gettablefield',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7211,12 +7064,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getLoanMaster',
+	    	$response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7259,12 +7111,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getLoanMaster',
+	    	$response = $client->post(env('API_URL') . '/prloanmaster/getloanmaster',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7299,12 +7150,11 @@ class DataController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/getSalaryComponentData',
+            $response = $client->post(env('API_URL') . '/salarycomponentdata/getsalarycomponentdata',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -7331,12 +7181,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getLoanEmployee',
+	    	$response = $client->post(env('API_URL') . '/prloandataentry/getloanemployee',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7366,14 +7215,13 @@ class DataController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
 			// var_dump($request->fieldName);
 
-            $response = $client->post(env('API_URL') . '/payroll/getSalaryComponentData',
+            $response = $client->post(env('API_URL') . '/salarycomponentdata/getsalarycomponentdata',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -7407,14 +7255,13 @@ class DataController extends Controller
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
 			// var_dump($request->fieldName);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+            $response = $client->post(env('API_URL') . '/pemaster/getpemasterdetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -7449,17 +7296,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'AttachmentCode_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -7496,12 +7342,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getPrLoanPayment',
+	    	$response = $client->post(env('API_URL') . '/prloanpayment/getprloanpayment',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
@@ -7532,12 +7377,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getSalaryYearly',
+	    	$response = $client->post(env('API_URL') . '/importfromexcel/getsalaryyearly',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -7580,17 +7424,16 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'MedicalLimitType_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -7629,18 +7472,17 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'MedicalLimitType_',
 						'comGenCode' => $request->limitType,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -7679,12 +7521,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getgmAccount',
+	    	$response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -7729,12 +7570,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 	    	
-	    	$response = $client->post(env('API_URL') . '/payroll/getgmAccount',
+	    	$response = $client->post(env('API_URL') . '/gmaccount/getgmaccount',
 	    		['body' => json_encode(
 	    			[
 						'recordStatus' => 'A',
@@ -7780,17 +7620,16 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'LimitEligible_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale(),
 					]
 				)]
 			);
@@ -7829,18 +7668,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'LimitEligible_',
 						'comGenCode' => $request->limitEligible,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -7879,17 +7717,16 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'MinimumServiceLength_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -7928,18 +7765,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'MinimumServiceLength_',
 						'comGenCode' => $request->minServiceLengthBy,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -7978,17 +7814,16 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'DefaultMedicalPaymentBankType_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8027,18 +7862,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'DefaultMedicalPaymentBankType_',
 						'comGenCode' => $request->defaultMedicalPaymentBankType,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8077,17 +7911,16 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'RateType_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8126,18 +7959,17 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'RateType_',
 						'comGenCode' => $request->transactionRateTypeCode,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8176,17 +8008,16 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
 						'variable' => 'RoundingMethod_',
-	    				// 'companyCode' => Session::get('companyCode'),
-						'languageCode' => strtoupper(App::getLocale())
+	    				'companyCode' => Session::get('companyCode'),
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8225,18 +8056,17 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => 'RoundingMethod_',
 						'comGenCode' => $request->roundingMethod,
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8275,12 +8105,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
+	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8324,12 +8153,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
+	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8374,12 +8202,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ClaimCode/GetClaimCode',
+	    	$response = $client->post(env('API_URL') . '/claimcode/getclaimcode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8414,12 +8241,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
+	    	$response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8461,17 +8287,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'ClaimTo_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8495,18 +8320,17 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'ClaimTo_',
 						'comGenCode' => $request->dayCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8530,17 +8354,16 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'ClaimFor_',
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8564,18 +8387,17 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 	    				'variable' => 'ClaimFor_',
 						'comGenCode' => $request->dayCode,
-	    				'languageCode' => strtoupper(App::getLocale())
+	    				'languageCode' => App::getLocale()
 	    			]
 	    		)]
 	    	);
@@ -8601,12 +8423,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/PeDependents/getPeDependents',
+	    	$response = $client->post(env('API_URL') . '/pedependents/getpedependents',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8650,12 +8471,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8699,12 +8519,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8747,12 +8566,11 @@ class DataController extends Controller
     {
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+	    	$response = $client->post(env('API_URL') . '/diseasecode/getdiseasecode',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
@@ -8787,12 +8605,11 @@ class DataController extends Controller
 		
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
+	    	$response = $client->post(env('API_URL') . '/prreportformat/getreportformatlist',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -8841,16 +8658,15 @@ class DataController extends Controller
 
     	try {
 			$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Export_Medical_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 	    			]
 					)]
 				);
@@ -8894,16 +8710,15 @@ class DataController extends Controller
 
     	try {
 			$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "MedicalType_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 	    			]
 					)]
 				);
@@ -8953,16 +8768,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "MedicalType_", 
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9007,16 +8821,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "List_ReimbursementExport_", 
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9059,16 +8872,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "List_ReimbursementExport_", 
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9108,11 +8920,10 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/mobile/News/getNewsCat',
+			$response = $client->post(env('API_URL') . '/news/getnewscat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9154,11 +8965,10 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/mobile/News/getNewsCat',
+			$response = $client->post(env('API_URL') . '/news/getnewscat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9201,11 +9011,10 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/mobile/Announcement/getAnnouncementCat',
+			$response = $client->post(env('API_URL') . '/announcement/getannouncementcat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9247,11 +9056,10 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/mobile/Announcement/getAnnouncementCat',
+			$response = $client->post(env('API_URL') . '/announcement/getannouncementcat',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
@@ -9283,16 +9091,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "ReimbursementExport_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9340,17 +9147,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						"variable" => "MedicalType_",
-						"languageCode" => strtoupper(App::getLocale())
+						"languageCode" => App::getLocale(),
 	    			]
 	    		)]
 	    	);
@@ -9381,17 +9187,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						"variable" => "ReimbursementTransport_",
-						"languageCode" => strtoupper(App::getLocale())
+						"languageCode" => App::getLocale(),
 	    			]
 	    		)]
 	    	);
@@ -9420,16 +9225,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "List_ReimbursementTransport_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9471,16 +9275,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "List_ReimbursementTransport_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9520,16 +9323,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "ReimbursementTransport_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9568,16 +9370,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Transaction_Ovt",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9616,16 +9417,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Export_Workflow",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9667,16 +9467,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Business_Unit_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9716,16 +9515,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Travel_Type_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9765,17 +9563,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						"variable" => "Travel_Type_",
-						"languageCode" => strtoupper(App::getLocale())
+						"languageCode" => App::getLocale(),
 	    			]
 	    		)]
 	    	);
@@ -9803,16 +9600,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Status_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9849,16 +9645,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Status_Trans_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9895,16 +9690,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Leave_Type_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9941,16 +9735,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Leave_Time_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -9987,16 +9780,15 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Submit_Type_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -10037,16 +9829,15 @@ class DataController extends Controller
 		
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Transaction_Ovt",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -10086,17 +9877,16 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/comgen/getcomGen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "CompanyCode_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 					]
 					)]
 				);
@@ -10135,12 +9925,11 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
+			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode')
@@ -10181,12 +9970,11 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
+			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode'),
@@ -10216,12 +10004,11 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/payroll/GetTransferBankFormatbyCompanyCodeBankCode',
+			$response = $client->post(env('API_URL') . '/PrTransferBank/GetTransferBankFormatbyCompanyCodeBankCode',
 					[
 						'body' => json_encode([
 							'companyCode' => Session::get('companyCode'),
@@ -10270,17 +10057,16 @@ class DataController extends Controller
 
     	try {
 			$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomGen',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "Business_Unit_",
-					"languageCode" => strtoupper(App::getLocale())
+					"languageCode" => App::getLocale(),
 	    			]
 					)]
 				);
@@ -10324,17 +10110,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => "Export_Reimbursement_",
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale(),
 	    			]
 	    		)]
 	    	);
@@ -10365,17 +10150,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => "MedicalType_",
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale(),
 	    			]
 	    		)]
 	    	);
@@ -10415,17 +10199,16 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/comgen/getcomgen',
 	    		['body' => json_encode(
 	    			[
-	    				// 'companyCode' => Session::get('companyCode'),
+	    				'companyCode' => Session::get('companyCode'),
 						'variable' => "ReimbursementTransport_",
-						'languageCode' => strtoupper(App::getLocale())
+						'languageCode' => App::getLocale(),
 	    			]
 	    		)]
 	    	);
@@ -10453,12 +10236,11 @@ class DataController extends Controller
 
     	try {
 	    	$client = new Client([
-                'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+	    	$response = $client->post(env('API_URL') . '/company/getcompany',
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A'
@@ -10502,12 +10284,11 @@ class DataController extends Controller
 
 		try {
 			$client = new Client([
-                'verify' => false,
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/personel/Company/getcompany',
+			$response = $client->post(env('API_URL') . '/company/getcompany',
 				['body' => json_encode(
 					[
 						'recordStatus' => 'A',

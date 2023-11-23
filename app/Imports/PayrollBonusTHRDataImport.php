@@ -40,7 +40,6 @@ class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithSta
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -82,7 +81,7 @@ class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithSta
                 ];
             }
 
-            $response = $client->put(env('API_URL') . '/payroll/UpdateBonusTHR',
+            $response = $client->put(env('API_URL') . '/importfromexcel/updatebonusthr',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

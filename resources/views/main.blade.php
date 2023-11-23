@@ -239,7 +239,7 @@
                     	<div class="row">
                     		<div class="col-12">
 								<div class="form-check">
-									<input type="radio" id="change_language" name="change_language_english" value="en">
+									<input type="radio" id="change_language" name="change_language" value="en">
 									<label for="change_language_english">English</label>
 								</div>
                     		</div>
@@ -247,7 +247,7 @@
 						<div class="row">
                     		<div class="col-12">
 								<div class="form-check">
-									<input type="radio" id="change_language" name="change_language_bahasa_indonesia" value="id">
+									<input type="radio" id="change_language" name="change_language" value="id">
 									<label for="change_language_bahasa_indonesia">Bahasa Indonesia</label>
 								</div>
                     		</div>
@@ -393,7 +393,7 @@
 		$(".menu").on('click', function() {
             var data = $(this).data("idd");
 			var url = $(this).data('url');
-			// console.log(url);
+			console.log(url);
 			$.redirect(url, 
 			{ 
 				'moduleID' : data 
@@ -513,6 +513,7 @@
 							}
 						},
 						error: function(response) {
+							console.log($('#change_language_form').serialize());
 							$('#notification_error').modal('show');
 							$('#message-notification-error').html(response);
 						}

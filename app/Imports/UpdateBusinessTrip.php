@@ -46,7 +46,6 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
 
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -66,7 +65,7 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
+            $response = $client->put(env('API_URL') . '/businesstrip/updatelistticketno',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

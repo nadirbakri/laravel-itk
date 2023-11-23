@@ -26,7 +26,6 @@ class AttendanceExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -43,7 +42,7 @@ class AttendanceExport implements FromView, ShouldAutoSize
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
+            $response = $client->post(env('API_URL') . '/tmabsence/gettmabsence',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

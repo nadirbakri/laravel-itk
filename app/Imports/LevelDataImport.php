@@ -26,7 +26,6 @@ class LevelDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -48,9 +47,9 @@ class LevelDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "levelType" => (isset($row[0])) ? (string) $row[0] : null,
-                    "levelCode" => (isset($row[1])) ? (string) $row[1] : null,
-                    "levelName" => (isset($row[2])) ? (string) $row[2] : null,
+                    "levelType" => (isset($row[0])) ? $row[0] : null,
+                    "levelCode" => (isset($row[1])) ? $row[1] : null,
+                    "levelName" => (isset($row[2])) ? $row[2] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),
@@ -64,9 +63,9 @@ class LevelDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            // dd(json_encode($param));
+            // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/personel/Level/bulkInsert',
+            $response = $client->post(env('API_URL') . '/level/bulkinsert',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

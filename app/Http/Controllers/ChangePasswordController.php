@@ -24,12 +24,11 @@ class ChangePasswordController extends Controller
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/Password/update',
+            $response = $client->put(env('API_URL') . '/password/update',
                 ['body' => json_encode(
                     [
                         'email' => Session::get('email'),

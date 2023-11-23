@@ -25,7 +25,6 @@ class SalaryHistoricalReportExport implements FromView, ShouldAutoSize
     {
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -49,7 +48,7 @@ class SalaryHistoricalReportExport implements FromView, ShouldAutoSize
                 $param['groupAuthorizedTo'] = (int) $this->groupAuthorizedCodeTo;
             }
 
-            $response = $client->post(env('API_URL').'/payroll/GetPrSalaryHistoricalReport', [
+            $response = $client->post(env('API_URL').'/prsalaryhistoricalreport/getprsalaryhistoricalreport', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){

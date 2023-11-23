@@ -42,7 +42,6 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -388,7 +387,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
             // dd(json_encode($param));
             // exit;
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/ImportPeMaster',
+            $response = $client->post(env('API_URL') . '/pemaster/importpemaster',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

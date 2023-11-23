@@ -50,7 +50,6 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
-                'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
@@ -94,7 +93,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
             // var_dump(json_encode($param));
             // exit;
 
-            $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/BulkUpdateTmAbsentEmployee',
+            $response = $client->put(env('API_URL') . '/tmabsentemployee/bulkupdatetmabsentemployee',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {
