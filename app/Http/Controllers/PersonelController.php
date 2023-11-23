@@ -5939,7 +5939,7 @@ class PersonelController extends Controller
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
             // exit;
 
             if($request->record_function == 'New'){

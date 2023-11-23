@@ -66,7 +66,7 @@
 
         .table.dataTable tbody th, table.dataTable tbody td {
             padding: 4px 5px;
-            font-size: 9px;
+            /* font-size: 9px; */
             /* text-align: center;
             vertical-align: middle; */
         }
@@ -75,6 +75,15 @@
             padding: 5px 9px;
             /* text-align: center;
             vertical-align: middle; */
+        }
+
+        thead tr .middle {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+
+        .form-control {
+            height: 2rem;
         }
 
     </style>
@@ -144,14 +153,14 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Employee No</th>
-                        <th>Employee Name</th>
-                        <th>Position</th>
-                        <th>Ranking</th>
-                        <th>Group Authorization</th>
-                        <th>Record Status</th>
-                        <th id="div-table-level"></th>
-                        <th>Join Date</th>
+                        <th class="middle">Employee No</th>
+                        <th class="middle">Employee Name</th>
+                        <th class="middle">Position</th>
+                        <th class="middle">Ranking</th>
+                        <th class="middle">Group Authorization</th>
+                        <th class="middle">Record Status</th>
+                        <th class="middle" id="div-table-level"></th>
+                        <th class="middle">Join Date</th>
                     </tr>
                 </thead>
             </table>
