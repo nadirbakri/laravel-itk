@@ -421,7 +421,7 @@
                         return {
                             results: $.map(result, function (item) {
                                 return {
-                                    text: item.employeeNo,
+                                    text: item.employeeNo + ' - ' + item.employeeName,
                                     id: item.employeeNo,
                                     data: item
                                 };
@@ -430,7 +430,10 @@
                     },
                     cache: true,
                 },
-                templateResult: formatSelect
+                templateResult: formatSelect,
+                templateSelection: function (data) {
+                    return data.text;
+                }
             });
         }
 
