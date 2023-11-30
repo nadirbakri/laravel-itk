@@ -209,8 +209,7 @@
         <div class="spinner"></div>
     </div>
     <div>
-        {{-- <lottie-player class="img-login" src="{{ asset('pictures/login.json') }}"  background="transparent"  speed="1" loop autoplay></lottie-player> --}}
-        <img class="img-login" src="{{ asset('pictures/logo_hatten.png') }}" />
+        <lottie-player class="img-login" src="{{ asset('pictures/login.json') }}"  background="transparent"  speed="1" loop autoplay></lottie-player>
     </div>
     <div class='right-content'>
         <a class="image-logo">
