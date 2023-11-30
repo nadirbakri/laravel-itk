@@ -5,7 +5,12 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Validator;
+use Session;
+use App;
 
 class TemplatePersonalDataTemplateSheet implements FromView, WithTitle, ShouldAutoSize
 {

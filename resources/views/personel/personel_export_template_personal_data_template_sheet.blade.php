@@ -19,10 +19,7 @@
 		@if(!empty($data))
 		<thead>
             <tr>
-				@foreach($data as $value)
-					<th>{{ $value }}</th>
-				@endforeach
-				<!-- <th>Company Code *</th>
+				<th>Company Code *</th>
 				<th>Employee No *</th>
 				<th>Employee Name *</th>
 				<th>Birth Place *</th>
@@ -151,7 +148,7 @@
 				<th>Insurance Start Date</th>
 				<th>Insurance End Date</th>
 				<th>Insurance Policy No</th>
-				<th>Leave Code *</th> -->
+				<th>Leave Code *</th>
 			</tr>
 		</thead>
 		@endif
