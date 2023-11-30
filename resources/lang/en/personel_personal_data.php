@@ -166,5 +166,10 @@ return [
     'tax_office_required' => 'Tax Office is Required',
     'tax_calculation_method_required' => 'Tax Calculation Method is Required',
     'photo_profile_extension' => 'File Must in JPG, PNG, or JPEG Extension',
-    'alert_success' => 'Success !',
+    'alert_success' => 'Success !', 
+    'birth_place_info_required' => 'Birth Place is Required',
+    'birth_date_info_required' => 'Birth Date is Required',
+    'gender_info_required' => 'Gender is Required',
+    'marital_status_info_required' => 'Marital Status is Required',
+
 ];

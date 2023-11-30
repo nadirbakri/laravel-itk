@@ -228,16 +228,16 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label
-                                        for="birth_place_info">{{ __('personel_personal_data.label_birth_place') }}</label>
+                                    <label for="birth_place_info">{{ __('personel_personal_data.label_birth_place') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control select2" id="birth_place_info"
                                         name="birth_place_info"></select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label
-                                        for="birth_date_info">{{ __('personel_personal_data.label_birth_date') }}</label>
+                                    <label for="birth_date_info">{{ __('personel_personal_data.label_birth_date') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="birth_date_info"
                                             name="birth_date_info"
@@ -253,6 +253,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="gender_info">{{ __('personel_personal_data.label_gender') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control select2" id="gender_info" name="gender_info">
                                         {{-- <option value="">{{ __('personel_personal_data.label_gender') }}
                                         </option> --}}
@@ -271,8 +272,8 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label
-                                        for="marital_status_info">{{ __('personel_personal_data.label_marital_status') }}</label>
+                                    <label for="marital_status_info">{{ __('personel_personal_data.label_marital_status') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="marital_status_info" name="marital_status_info">
                                     </select>
                                 </div>
@@ -6979,6 +6980,18 @@
                     },
                     tax_calculation_method_payroll: {
                         required: true,
+                    },
+                    birth_place_info: {
+                        required: true,
+                    },
+                    birth_date_info: {
+                        required: true,
+                    },
+                    gender_info: {
+                        required: true,
+                    },
+                    marital_status_info: {
+                        required: true,
                     }
                 },
                 messages: {
@@ -7017,6 +7030,18 @@
                     },
                     tax_calculation_method_payroll: {
                         required: "{{ __('personel_personal_data.tax_calculation_method_required') }}",
+                    },
+                    birth_place_info: {
+                        required: "{{ __('personel_personal_data.birth_place_info_required') }}",
+                    },
+                    birth_date_info: {
+                        required: "{{ __('personel_personal_data.birth_date_info_required') }}",
+                    },
+                    gender_info: {
+                        required: "{{ __('personel_personal_data.gender_info_required') }}",
+                    },
+                    marital_status_info: {
+                        required: "{{ __('personel_personal_data.marital_status_info_required') }}",
                     }
                 },
                 highlight: function (element) {
