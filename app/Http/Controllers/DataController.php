@@ -24,7 +24,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				// 'companyCode' => Session::get('companyCode'),
-	    				'variable' => 'gender_',
+	    				'variable' => 'Gender_',
 	    				'languageCode' => strtoupper(App::getLocale())
 	    			]
 	    		)]
@@ -1679,7 +1679,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				// 'companyCode' => Session::get('companyCode'),
-	    				'variable' => 'religion_',
+	    				'variable' => 'Religion_',
 	    				'languageCode' => strtoupper(App::getLocale())
 	    			]
 	    		)]
