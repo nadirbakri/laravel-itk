@@ -2326,7 +2326,7 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            dd($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
