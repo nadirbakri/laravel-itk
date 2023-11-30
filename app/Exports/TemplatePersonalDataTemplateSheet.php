@@ -23,10 +23,10 @@ class TemplatePersonalDataTemplateSheet implements FromView, WithTitle, ShouldAu
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getTemplate',
                 ['body' => json_encode(
                     [
-                        'languageCode' => strtoupper(App::getLocale())
+                        'companyCode' => Session::get('companyCode')
                     ]
                 )]
             );
@@ -45,7 +45,7 @@ class TemplatePersonalDataTemplateSheet implements FromView, WithTitle, ShouldAu
         }
             
         return view('personel.personel_export_template_personal_data_template_sheet', [
-            'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : []
+            'data' => ($arrResult != null) ? $arrResult : []
         ]);
     }
 
