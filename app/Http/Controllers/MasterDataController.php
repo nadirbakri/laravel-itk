@@ -305,7 +305,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/PeMasterESS/GetESSWFA',
+            $response = $client->post(env('API_URL') . '/Mobile/PeMasterESS/GetESSWFA',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -549,7 +549,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getlistavailablemembergroup',
+            $response = $client->post(env('API_URL') . '/Mobile/GmGroup/getlistavailablemembergroup',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
