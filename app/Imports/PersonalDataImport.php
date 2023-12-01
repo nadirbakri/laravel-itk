@@ -47,33 +47,48 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $headerRow = $rows->shift();
+            $levelType = [];
+
+            foreach ($headerRow as $key => $value) {
+                if (strpos($value, 'Level Code') !== false) {
+                    $parts = explode("-", $value);
+                    $result = ltrim($parts[1]);    
+                    $levelType[] = [
+                        'levelType' => $result,
+                        'index' => $key
+                    ];
+                }            
+            }
+
             Validator::make($rows->toArray(), [
-                '*.0' => 'required|not_in:NULL',
-                '*.1' => 'required|not_in:NULL',
-                '*.2' => 'required|not_in:NULL',
-                '*.3' => 'required|not_in:NULL',
-                '*.4' => 'required|not_in:NULL',
-                '*.5' => 'required|not_in:NULL',
-                '*.6' => 'required|not_in:NULL',
-                '*.12' => 'required|not_in:NULL',
-                '*.28' => 'required|not_in:NULL',
-                '*.30' => 'required|not_in:NULL',
-                '*.32' => 'required|not_in:NULL',
-                '*.33' => 'required|not_in:NULL',
-                '*.38' => 'required|not_in:NULL',
-                '*.39' => 'required|not_in:NULL',
-                '*.40' => 'required|not_in:NULL',
-                '*.41' => 'required|not_in:NULL',
-                '*.42' => 'required|not_in:NULL',
-                '*.43' => 'required|not_in:NULL',
-                '*.44' => 'required|not_in:NULL',
-                '*.45' => 'required|not_in:NULL',
-                '*.46' => 'required|not_in:NULL',
-                '*.49' => 'required|not_in:NULL',
-                '*.53' => 'required|not_in:NULL',
-                '*.75' => 'required|not_in:NULL',
-                '*.34' => 'required|not_in:NULL',
-                '*.129' => 'required|not_in:NULL'
+                "*.0" => "required|not_in:NULL",
+                "*.1" => "required|not_in:NULL",
+                "*.2" => "required|not_in:NULL",
+                "*.3" => "required|not_in:NULL",
+                "*.4" => "required|not_in:NULL",
+                "*.5" => "required|not_in:NULL",
+                "*.6" => "required|not_in:NULL",
+                "*.11" => "required|not_in:NULL",
+                "*.12" => "required|not_in:NULL",
+                "*.16" => "required|not_in:NULL",
+                "*.28" => "required|not_in:NULL",
+                "*.30" => "required|not_in:NULL",
+                "*.32" => "required|not_in:NULL",
+                "*.33" => "required|not_in:NULL",
+                "*.34" => "required|not_in:NULL",
+                "*.38" => "required|not_in:NULL",
+                "*.39" => "required|not_in:NULL",
+                "*.40" => "required|not_in:NULL",
+                "*.41" => "required|not_in:NULL",
+                "*.42" => "required|not_in:NULL",
+                "*.43" => "required|not_in:NULL",
+                "*.44" => "required|not_in:NULL",
+                "*.45" => "required|not_in:NULL",
+                "*.46" => "required|not_in:NULL",
+                "*.49" => "required|not_in:NULL",
+                "*.53" => "required|not_in:NULL",
+                "*.75" => "required|not_in:NULL"
             ], [
                 '*.0.required' => 'Company Code is Required',
                 '*.0.not_in' => 'Company Code cannot be Null',
@@ -89,8 +104,12 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                 '*.5.not_in' => 'Gender cannot be Null',
                 '*.6.required' => 'Marital Status is Required',
                 '*.6.not_in' => 'Marital Status cannot be Null',
+                '*.11.required' => 'Employment Status is Required',
+                '*.11.not_in' => 'Employment Status cannot be Null',
                 '*.12.required' => 'Flag is Expat is Required',
                 '*.12.not_in' => 'Flag is Expat cannot be Null',
+                '*.16.required' => 'Join Date is Required',
+                '*.16.not_in' => 'Join Date cannot be Null',
                 '*.28.required' => 'Flag is Commissioner is Required',
                 '*.28.not_in' => 'Flag is Commissioner cannot be Null',
                 '*.30.required' => 'Absenteeism Type is Required',
@@ -99,6 +118,8 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                 '*.32.not_in' => 'Start At Day cannot be Null',
                 '*.33.required' => 'Flag Not Absent is Required',
                 '*.33.not_in' => 'Flag Not Absent cannot be Null',
+                '*.34.required' => 'Flag Not Finger is Required',
+                '*.34.not_in' => 'Flag Not Finger cannot be Null',
                 '*.38.required' => 'Flag Astek Death Not Accident is Required',
                 '*.38.not_in' => 'Flag Astek Death Not Accident cannot be Null',
                 '*.39.required' => 'Flag Astek Work Accident is Required',
@@ -122,14 +143,21 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                 '*.53.required' => 'Flag BPJS Tenaga Kerja is Required',
                 '*.53.not_in' => 'Flag BPJS Tenaga Kerja cannot be Null',
                 '*.75.required' => 'Flag Exclude Payroll is Required',
-                '*.75.not_in' => 'Flag Exclude Payroll cannot be Null',
-                '*.34.required' => 'Flag Not Finger is Required',
-                '*.34.not_in' => 'Flag Not Finger cannot be Null',
-                '*.129.required' => 'Leave Code is Required',
-                '*.129.not_in' => 'Leave Code cannot be Null'
+                '*.75.not_in' => 'Flag Exclude Payroll cannot be Null'
             ])->validate();
 
+
             foreach ($rows as $row) {
+                
+
+                foreach ($levelType as $type) {
+                    $peMasterLevel[] = [
+                        "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
+                        'levelType' => (!is_null($type['levelType']) && $type['levelType'] != "NULL") ? strval($type['levelType']) : null,
+                        'levelCode' => (!is_null($row[$type['index']]) && $row[$type['index']] != "NULL") ? strval($row[$type['index']]) : null,
+                        "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null
+                    ];
+                }
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
@@ -381,7 +409,8 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                         "changedBy" => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
-                    ]
+                    ],
+                    'peMasterLevel' => $peMasterLevel
                 ];
             }
 
@@ -414,7 +443,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
 
     public function startRow(): int
     {
-        return 2;
+        return 1;
     }
 
     public function chunkSize(): int
