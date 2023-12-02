@@ -33,15 +33,12 @@ class PositionDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             Validator::make($rows->toArray(), [
                 '*.0' => 'required|not_in:NULL',
-                '*.1' => 'required|not_in:NULL',
-                '*.2' => 'required|not_in:NULL'
+                '*.1' => 'required|not_in:NULL'
             ], [
                 '*.0.required' => 'Position Code is Required',
                 '*.0.not_in' => 'Position Code cannot be Null',
                 '*.1.required' => 'Position Name is Required',
-                '*.1.not_in' => 'Position Name cannot be Null',
-                '*.2.required' => 'Supervisor Position Code is Required',
-                '*.2.not_in' => 'Supervisor Position Code cannot be Null'
+                '*.1.not_in' => 'Position Name cannot be Null'
             ])->validate();
 
             foreach ($rows as $row) {

@@ -961,7 +961,6 @@
                                 <div class="form-group">
                                     <label
                                         for="contract_start_date_employment">{{ __('personel_personal_data.label_contract_start_date') }}</label>
-                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="contract_start_date_employment"
                                             name="contract_start_date_employment"
@@ -976,7 +975,6 @@
                                 <div class="form-group">
                                     <label
                                         for="contract_end_date_employment">{{ __('personel_personal_data.label_contract_end_date') }}</label>
-                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="contract_end_date_employment"
                                             name="contract_end_date_employment"
@@ -6562,6 +6560,14 @@
             });
         }
 
+        $('#employment_status_employment').on('change', function(){
+            if ($(this).val().includes('C')) {
+                $('#contract_start_date_employment').parent().parent().parent().parent().removeClass('d-none');
+            } else {
+                $('#contract_start_date_employment').parent().parent().parent().parent().addClass('d-none');
+            }
+        });
+
         $('#fringe_benefit_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
@@ -6954,12 +6960,6 @@
                     joining_date_employment: {
                         required: true,
                     },
-                    contract_start_date_employment: {
-                        required: true,
-                    },
-                    contract_end_date_employment: {
-                        required: true,
-                    },
                     absenteeism_type_absenteeism: {
                         required: true,
                     },
@@ -7003,12 +7003,6 @@
                     },
                     joining_date_employment: {
                         required: "{{ __('personel_personal_data.joining_date_required') }}",
-                    },
-                    contract_start_date_employment: {
-                        required: "{{ __('personel_personal_data.contract_start_date_required') }}",
-                    },
-                    contract_end_date_employment: {
-                        required: "{{ __('personel_personal_data.contract_end_date_required') }}",
                     },
                     absenteeism_type_absenteeism: {
                         required: "{{ __('personel_personal_data.absenteeism_type_required') }}",
