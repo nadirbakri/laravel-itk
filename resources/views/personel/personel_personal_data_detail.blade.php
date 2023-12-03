@@ -3535,9 +3535,9 @@
                     }
                 }).then(function (data) {
                     var option = $('<option/>', {
-                        id: data[0].officeCode,
-                        title: data[0].officeDesc,
-                        text: data[0].officeDesc
+                        id: data[0].locationCode,
+                        title: data[0].locationName,
+                        text: data[0].locationName
                     });
 
                     // console.log(data);
@@ -3546,8 +3546,8 @@
                     $("#office_location_employment").trigger({
                         type: 'select2:select',
                         params: {
-                            id: data[0].officeCode,
-                            text: data[0].officeDesc,
+                            id: data[0].locationCode,
+                            text: data[0].locationName,
                             data: data[0]
                         }
                     });
@@ -5454,7 +5454,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.officeDesc + '<div>' +
+                        '<div class="col-6">' + data.data.locationName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5492,9 +5492,10 @@
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
+                                console.log(item.locationCode);
                                 return {
-                                    text: item.officeDesc,
-                                    id: item.officeCode,
+                                    text: item.locationName,
+                                    id: item.locationCode,
                                     data: item
                                 }
                             })
