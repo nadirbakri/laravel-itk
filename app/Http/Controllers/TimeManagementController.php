@@ -1072,8 +1072,11 @@ class TimeManagementController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        $data = end($arrResult->dataListSet);
-
+        if($arrResult->status === "true")
+            $data = end($arrResult->dataListSet);
+        else
+            $data = [];
+        
         return response()->json($data);
     }
 
