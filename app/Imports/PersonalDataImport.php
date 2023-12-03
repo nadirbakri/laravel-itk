@@ -148,8 +148,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
 
 
             foreach ($rows as $row) {
-                
-
+                $peMasterLevel = [] ;
                 foreach ($levelType as $type) {
                     $peMasterLevel[] = [
                         "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
