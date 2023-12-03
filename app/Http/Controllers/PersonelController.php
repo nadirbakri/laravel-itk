@@ -972,7 +972,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/printletter/getlettertemplate',
+            $response = $client->post(env('API_URL') . '/Personel/printletter/getlettertemplate',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
