@@ -603,7 +603,7 @@ class UtilitiesController extends Controller
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            return Datatables::of($arrResult->dataListSet[0]->detailList)->make(true);
         }
     }
 

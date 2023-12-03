@@ -738,74 +738,32 @@
                         }
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].companyCode;
-                            }
-                            return '';
-                        }
+                        data: 'companyCode',
+                        name: 'companyCode'
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].companyName;
-                            }
-                            return '';
-                        }
+                        data: 'companyName',
+                        name: 'companyName'
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].defaultCompany;
-                            }
-                            return '';
-                        }
+                        data: 'defaultCompany',
+                        name: 'defaultCompany'
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].recordStatus;
-                            }
-                            return '';
-                        }
+                        data: 'recordStatus',
+                        name: 'recordStatus'
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].userType;
-                            }
-                            return '';
-                        }
+                        data: 'userType',
+                        name: 'userType'
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].flagAppLead;
-                            }
-                            return '';
-                        }
+                        data: 'flagAppLead',
+                        name: 'flagAppLead'
                     },
                     {
-                        data: 'detailList',
-                        name: 'detailList',
-                        render: function (data, type, row, meta) {
-                            if (type === 'display' && data.length > 0) {
-                                return data[0].flagAppHRD;
-                            }
-                            return '';
-                        }
+                        data: 'flagAppHRD',
+                        name: 'flagAppHRD'
                     },
                 ],
                 select: {
