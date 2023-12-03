@@ -157,7 +157,7 @@
                 <td>{{ $value->employeeNo }}</td>
                 <td>{{ $value->fullName }}</td>
                 <td>{{ $value->birthPlace }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->birthDate)) }}</td>
+				<td>{{ $value->birthDate ? date('Y-m-d', strtotime($value->birthDate)) : '' }}</td>
                 <td>{{ $value->gender }}</td>
                 <td>{{ $value->maritalStatus }}</td>
                 <td>{{ $value->taxRegisteredNo }}</td>
@@ -167,12 +167,12 @@
                 <td>{{ $value->employmentStatus }}</td>
                 <td>{{ ($value->flagIsExpat) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->expatLicenseNo }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->expatLicenseStartDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->expatLicenseEndDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->joinDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->probationEndDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->contractStartDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->contractEndDate)) }}</td>
+                <td>{{ $value->expatLicenseStartDate ? date('Y-m-d', strtotime($value->expatLicenseStartDate)) : '' }}</td>
+                <td>{{ $value->expatLicenseEndDate ? date('Y-m-d', strtotime($value->expatLicenseEndDate)) : '' }}</td>
+				<td>{{ $value->joinDate ? date('Y-m-d', strtotime($value->joinDate)) : '' }}</td>
+				<td>{{ $value->probationEndDate ? date('Y-m-d', strtotime($value->probationEndDate)) : '' }}</td>
+				<td>{{ $value->contractStartDate ? date('Y-m-d', strtotime($value->contractStartDate)) : '' }}</td>
+				<td>{{ $value->contractEndDate ? date('Y-m-d', strtotime($value->contractEndDate)) : '' }}</td>
                 <td>{{ $value->employmentType }}</td>
                 <td>{{ $value->locationCode }}</td>
                 <td>{{ $value->gradeCode }}</td>
@@ -204,12 +204,12 @@
                 <td>{{ $value->groupBpjs }}</td>
                 <td>{{ ($value->flagBPJSKesehatan) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->bpjsKesehatanNo }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->bpjsKesehatanJoinDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->bpjsKesehatanPeriodStartDate)) }}</td>
+                <td>{{ $value->bpjsKesehatanJoinDate ? date('Y-m-d', strtotime($value->bpjsKesehatanJoinDate)) : '' }}</td>
+				<td>{{ $value->bpjsKesehatanPeriodStartDate ? date('Y-m-d', strtotime($value->bpjsKesehatanPeriodStartDate)) : '' }}</td>
                 <td>{{ ($value->flagBPJSTenagaKerja) ? "TRUE" : "FALSE" }}</td>
                 <td>{{ $value->bpjsTenagaKerjaNo }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->bpjsTenagaKerjaJoinDate)) }}</td>
-                <td>{{ date('Y-m-d', strtotime($value->bpjsTenagaKerjaPeriodStartDate)) }}</td>
+				<td>{{ $value->bpjsTenagaKerjaJoinDate ? date('Y-m-d', strtotime($value->bpjsTenagaKerjaJoinDate)) : '' }}</td>
+				<td>{{ $value->bpjsTenagaKerjaPeriodStartDate ? date('Y-m-d', strtotime($value->bpjsTenagaKerjaPeriodStartDate)) : '' }}</td>
                 <td>{{ $value->employeeBankCode1 }}</td>
                 <td>{{ $value->bankAccountNo1 }}</td>
                 <td>{{ $value->beneficiaryName1 }}</td>
@@ -233,23 +233,23 @@
 					<td>{{ $value->peMasterInfo->nickName }}</td>
 					<td>{{ $value->peMasterInfo->bloodType }}</td>
 					<td>{{ $value->peMasterInfo->passportNo }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->passportDate)) }}</td>
+					<td>{{ $value->peMasterInfo->passportDate ? date('Y-m-d', strtotime($value->peMasterInfo->passportDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->passportPlaceRegistration }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->passportExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->passportExpiryDate ? date('Y-m-d', strtotime($value->peMasterInfo->passportExpiryDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->drivingLicenseMobilNo }}</td>
 					<td>{{ $value->peMasterInfo->drivingLicenseMobilType }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMobilNoDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMobilNoDate ? date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMobilNoDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->drivingLicenseMobilNoPlaceRegistration }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMobilNoExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMobilNoExpiryDate ? date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMobilNoExpiryDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->drivingLicenseMotorNo }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMotorNoDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMotorNoDate ? date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMotorNoDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->drivingLicenseMotorNoPlaceRegistration }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMotorNoExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->drivingLicenseMotorNoExpiryDate ? date('Y-m-d', strtotime($value->peMasterInfo->drivingLicenseMotorNoExpiryDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->employeeCardId }}</td>
 					<td>{{ $value->peMasterInfo->idNo }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->idNoDate)) }}</td>
+					<td>{{ $value->peMasterInfo->idNoDate ? date('Y-m-d', strtotime($value->peMasterInfo->idNoDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->idNoPlaceRegistration }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInfo->idNoExpiryDate)) }}</td>
+					<td>{{ $value->peMasterInfo->idNoExpiryDate ? date('Y-m-d', strtotime($value->peMasterInfo->idNoExpiryDate)) : '' }}</td>
 					<td>{{ $value->peMasterInfo->homeAddress }}</td>
 					<td>{{ $value->peMasterInfo->homeCityCode }}</td>
 					<td>{{ $value->peMasterInfo->homeZipCode }}</td>
@@ -331,8 +331,8 @@
 				@if(count((array) $value->peMasterInsurance) > 0)
 					<td>{{ $value->peMasterInsurance->insuranceCode }}</td>
 					<td>{{ $value->peMasterInsurance->insuranceClassCode }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInsurance->insuranceStartDate)) }}</td>
-					<td>{{ date('Y-m-d', strtotime($value->peMasterInsurance->insuranceEndDate)) }}</td>
+					<td>{{ $value->peMasterInsurance->insuranceStartDate ? date('Y-m-d', strtotime($value->peMasterInsurance->insuranceStartDate)) : '' }}</td>
+					<td>{{ $value->peMasterInsurance->insuranceEndDate ? date('Y-m-d', strtotime($value->peMasterInsurance->insuranceEndDate)) : '' }}</td>
 					<td>{{ $value->peMasterInsurance->insurancePolicyNo }}</td>
 				@else
 					<td></td>
