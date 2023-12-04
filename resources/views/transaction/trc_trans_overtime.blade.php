@@ -122,7 +122,7 @@
             @csrf
             <div class="div-trans-overtime">
                 <div class="div-title">
-                    <a href="{{ route('transaction', ['moduleID' => 'TRC']) }}" target="iframe_dashboard">
+                    <a href="{{ route('transaction', ['moduleID' => 'TRX']) }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_overtime.judul') }}</span>
                     </a>

@@ -111,7 +111,7 @@
             @csrf
             <div class="div-export-transport">
                 <div class="div-title">
-                    <a href="{{ route('transaction', ['moduleID' => 'TRC']) }}" target="iframe_dashboard">
+                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('export_transport.list') }}</span>
                     </a>
