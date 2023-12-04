@@ -50,7 +50,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+            <a href="{{ route('time_management', ['moduleID' => 'TM']) }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_monthly_absenteeism_analysis.list') }}</span>
             </a>

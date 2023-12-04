@@ -111,7 +111,7 @@
             @csrf
             <div class="div-payroll">
                 <div class="div-title">
-                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+                    <a href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('payroll_final_tax_process.list') }}</span>
                     </a>

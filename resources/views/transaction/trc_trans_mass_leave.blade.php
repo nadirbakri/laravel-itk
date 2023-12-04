@@ -112,7 +112,7 @@
             @csrf
             <div class="div-trans-mass-leave">
                 <div class="div-title">
-                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+                    <a href="{{ route('transaction', ['moduleID' => 'TRC']) }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('trans_mass_leave.list') }}</span>
                     </a>
