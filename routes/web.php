@@ -406,7 +406,7 @@ Route::post('personnel/import_master_data/download_template', 'PersonelControlle
 Route::post('personnel/import_master_data/import', 'PersonelController@importMasterDataPersonel');
 
 /* Route Untuk Menu Time Management */
-Route::get('time_management', 'TimeManagementController@pageTimeManagement');
+Route::get('time_management', 'TimeManagementController@pageTimeManagement')->name('time_management');
 Route::get('time_management/time_recording_process_form', 'TimeManagementController@pageTimeRecordingProcessForm');
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
 Route::get('time_management/change_data_shift', 'TimeManagementController@pageChangeDataShift');
