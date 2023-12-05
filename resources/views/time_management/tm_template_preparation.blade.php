@@ -235,7 +235,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            // defaultDate: "today",
+            defaultDate: "{{ $latest }}",
             plugins: [
                 new monthSelectPlugin({
                     shorthand: true, //defaults to false

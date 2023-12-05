@@ -162,7 +162,44 @@ class TimeManagementController extends Controller
 
     public function pageTemplatePreparation()
     {
-        return view ('time_management.tm_template_preparation');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        $latest = "";
+        
+        if($arrResult->dataListSet != null) {
+            $timestamps = array_map(function($date) {
+                return strtotime("{$date->periodYear}-{$date->periodMonth}-01");
+            }, $arrResult->dataListSet);
+            
+            $latest = date("Y-m-j",max($timestamps));
+        }
+        
+        return view ('time_management.tm_template_preparation', compact('latest'));
     }
 
     public function pageUpdateShiftByDate()
@@ -227,10 +264,7 @@ class TimeManagementController extends Controller
             $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode'),
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
+                        'companyCode' => Session::get('companyCode')
                     ]
                 )]
             );

@@ -2207,7 +2207,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/personel/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/pemasterview/getpemasterview',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
