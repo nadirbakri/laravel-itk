@@ -9652,11 +9652,11 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/comgen/getcomgen',
+			$response = $client->post(env('API_URL') . '/referencemobile/getreferencemobile',
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
-					"variable" => "Status_Trans_",
+					"variable" => "Status_",
 					"languageCode" => App::getLocale(),
 					]
 					)]

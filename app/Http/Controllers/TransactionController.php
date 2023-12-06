@@ -423,7 +423,6 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
                         'type' => "TOT",
-                        'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 

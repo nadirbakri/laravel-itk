@@ -14,13 +14,14 @@ use App;
 
 class OvertimeExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimDateFrom, $claimDateTo,$reimbursementType,$businessunit,$dataLevel)
+    public function __construct($claimDateFrom, $claimDateTo,$reimbursementType,$businessunit,$dataLevel,$overtime_status)
     {
         $this->claimDateFrom = $claimDateFrom;
         $this->claimDateTo = $claimDateTo;
         $this->reimbursementType = $reimbursementType;
         $this->businessUnit = $businessunit;
         $this->dataLevel = $dataLevel;
+        $this->overtime_status = ($overtime_status == 'ALL') ? null : $overtime_status;
     }
     public function view(): View
     {
@@ -38,7 +39,7 @@ class OvertimeExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'exportMenu'=> true
+                'status'=> $this->overtime_status
             ];
 
             // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
