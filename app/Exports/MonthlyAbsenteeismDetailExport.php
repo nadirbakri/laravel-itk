@@ -119,7 +119,7 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 
             // var_dump($param['levelMaster']);
 
-            $response = $client->post(env('API_URL') . '/monthlyabsenteeismdetailreport/getmonthlyabsenteeismdetailreport',
+            $response = $client->post(env('API_URL') . '/mobile/monthlyabsenteeismdetailreport/getmonthlyabsenteeismdetailreport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

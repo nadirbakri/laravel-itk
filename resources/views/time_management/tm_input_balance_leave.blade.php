@@ -279,7 +279,7 @@
                     url : "{{ url('time_management/input_balance_leave/table') }}",
                     data: {
                         'employeeNo' : employee_no
-                    }
+                    },
                 },
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -359,12 +359,13 @@
         function loadDataEmployeeNo() {
             function formatSelect(data) {
                 if (data.loading) {
-                    return $search
+                    return $search;
                 }
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
                         '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.employeeName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -375,7 +376,8 @@
             $('#employee_no').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
-                        '<div class="col-12"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Employee Name</b></div>' +
                         '</div>';
                     $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
@@ -411,25 +413,27 @@
                     },
                     processResults: function (data) {
                         var result = data.reduce((unique, o) => {
-                            if(!unique.some(obj => obj.employeeNo === o.employeeNo)) {
-                            unique.push(o);
+                            if (!unique.some(obj => obj.employeeNo === o.employeeNo)) {
+                                unique.push(o);
                             }
                             return unique;
-                        },[]);
+                        }, []);
                         return {
                             results: $.map(result, function (item) {
                                 return {
-                                    text: item.employeeNo,
+                                    text: item.employeeNo + ' - ' + item.employeeName,
                                     id: item.employeeNo,
                                     data: item
-                                }
-                            // console.log(item);
+                                };
                             })
                         };
                     },
                     cache: true,
                 },
-                templateResult: formatSelect
+                templateResult: formatSelect,
+                templateSelection: function (data) {
+                    return data.text;
+                }
             });
         }
 

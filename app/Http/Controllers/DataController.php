@@ -1956,16 +1956,20 @@ class DataController extends Controller
 	    if($search == ''){
 	    	$data = $arrResult->dataListSet;
 	    }else{
-	    	$data = array_filter(
+	    	$filteredData = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->employeeNo)){
 	    				return preg_match('/' . $search . '/i', $value->employeeNo);
+	    			} else if(preg_match('/' . $search . '/i', $value->employeeName)){
+	    				return preg_match('/' . $search . '/i', $value->employeeName);
 	    			}
 	    		}
 	    	);
+
+			$data = array_values($filteredData);
 	    }
-		// var_dump($arrResult);
+		// dd($data);
         return response()->json($data);
 	}
 
