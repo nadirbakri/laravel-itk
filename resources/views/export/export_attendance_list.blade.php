@@ -39,10 +39,10 @@
                 <td>{{ $value->employeeNo}}</td>
                 <td>{{ $value->absenceType}}</td>
                 <td>{{ $value->shiftCode}}</td>
-				<td>{{ \Carbon\Carbon::parse($value->date)->format('Y-m-d') }}</td>
+				<td>{{ $value->date ? \Carbon\Carbon::parse($value->date)->format('Y-m-d') : '' }}</td>
 				<td>{{ $value->duration }}</td>
-				<td>{{ date('Y-m-d H:i:s', strtotime($value->checkInDate)) }}</td>
-				<td>{{ date('Y-m-d H:i:s', strtotime($value->checkOutDate)) }}</td>
+				<td>{{ $value->checkInDate ? date('Y-m-d H:i:s', strtotime($value->checkInDate)) : '' }}</td>
+				<td>{{ $value->checkOutDate ? date('Y-m-d H:i:s', strtotime($value->checkOutDate)) : '' }}</td>
 				<td>{{ $value->address }}</td>
 				<td>{{ $value->addressOut }}</td>
 			</tr>

@@ -479,12 +479,13 @@
 
 <script>
     const klikdetail = (element) => {
+        let data;
         $('#modal_list_detail').modal('show')
         let type = $("#workflow_type").val();
         if(type == "ER"){
-            let data = table.row($(element).parent()).data().permitEntity;
+            data = table.row($(element).parents('tr')).data().permitEntity;
         }else{
-            let data = table.row($(element).parent()).data().leaveEntity;
+            data = table.row($(element).parents('tr')).data().leaveEntity;
         }
 
         $('#reqdate').val(data.createdBy)
