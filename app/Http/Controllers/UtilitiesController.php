@@ -1494,7 +1494,7 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/ChangeEmployeeNo/UpdateChangeEmployeeNo',
+            $response = $client->put(env('API_URL') . '/personel/ChangeEmployeeNo/UpdateChangeEmployeeNo',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
