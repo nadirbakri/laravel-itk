@@ -167,4 +167,9 @@ return [
     'tax_calculation_method_required' => 'Metode Pajak Kalkulasi Harus Diisi',
     'photo_profile_extension' => 'File Harus dalam ekstensi JPG, PNG, atau JPEG',
     'alert_success' => 'Sukses !',
+    'birth_place_info_required' => 'Tempat Lahir Harus Diisi',
+    'birth_date_info_required' => 'Tanggal Lahir Harus Diisi',
+    'birth_place_info_required' => 'Jenis Kelamin Harus Diisi',
+    'marital_status_info_required' => 'Status Pernikahan Harus Diisi',
+
 ];

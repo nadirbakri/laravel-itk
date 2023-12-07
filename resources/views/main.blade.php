@@ -165,6 +165,11 @@
 			</div>
 			
 			@foreach (Session::get('menuList') as $menu)
+
+			@if ($menu->companyCode != Session::get('companyName'))
+				@continue
+			@endif
+
 			<div class="list-group list-group-flush">
 				<a tabindex="0" role="button" data-url="{{ url($menu->link) }}" data-idd="{{ $menu->moduleID }}" class="list-group-item list-group-item-action menu">
 					<div class="color-active"></div>
