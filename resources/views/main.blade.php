@@ -166,7 +166,7 @@
 			
 			@foreach (Session::get('menuList') as $menu)
 
-			@if ($menu->companyCode != Session::get('companyName'))
+			@if ($menu->companyCode != Session::get('companyCode'))
 				@continue
 			@endif
 
