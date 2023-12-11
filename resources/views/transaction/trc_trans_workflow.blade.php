@@ -687,22 +687,27 @@
     }
 
     $('#btn-update').click(()=>{
-        let reimbursement_status = $('#reimbursement_status').val();
+        let workflow_status = $('#workflow_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
-        $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+        // $('.close').click();
+        $('#btn-update').prop("disabled", true);
+        $('#btn-update').html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        console.log(workflow_status);
+        update_data(workflow_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
+    function update_data(workflow_status, totalpaid, ticketNo,direct_superior,approvalremarks){
         $.ajax({
             url: "{{ url('trans/update/table') }}",
             type: "get",
             data: {
-                'status': reimbursement_status,
+                'status': workflow_status,
                 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
                 'employeeNo' : direct_superior,
@@ -721,7 +726,7 @@
                         .message);
                     setTimeout(function () {
                         window.location =
-                            "{{ url('transaction/transaction_reimbursement') }}";
+                            "{{ url('transaction/transaction_workflow') }}";
                     }, 3000);
                 } else{
                     $("#btn-update").prop("disabled", false);
@@ -730,13 +735,9 @@
                         'Update'
                     );
                     
-                    $('#notification_update_data_fail').modal('show');
-                    $('#message-notification-update-data-fail').html(response
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response
                         .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_reimbursement') }}";
-                    }, 3000);
                 }
             },
             error: function (response) {

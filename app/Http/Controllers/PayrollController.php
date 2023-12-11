@@ -4284,8 +4284,8 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
-        exit;
+        // var_dump($arrResult->dataListSet);
+        // exit;
 
         if($arrResult->dataListSet != null){
             if($request->output_file == 'BANK CENTRAL ASIA'){
