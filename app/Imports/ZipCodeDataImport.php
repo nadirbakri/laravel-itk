@@ -53,7 +53,7 @@ class ZipCodeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "propinsi" => (isset($row[0])) ? $row[0] : null,
+                    "propinsi" => (isset($row[0])) ? strval($row[0]) : null,
                     "kabupaten" => (isset($row[1])) ? $row[1] : null,
                     "kecamatan" => (isset($row[2])) ? $row[2] : null,
                     "kelurahan" => (isset($row[3])) ? $row[3] : null,

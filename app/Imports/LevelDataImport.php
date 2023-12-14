@@ -47,7 +47,7 @@ class LevelDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "levelType" => (isset($row[0])) ? $row[0] : null,
+                    "levelType" => (isset($row[0])) ? strval($row[0]) : null,
                     "levelCode" => (isset($row[1])) ? $row[1] : null,
                     "levelName" => (isset($row[2])) ? $row[2] : null,
                     "changedNo" => 0,

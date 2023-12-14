@@ -47,7 +47,7 @@ class LocationDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "locationCode" => (isset($row[0])) ? $row[0] : null,
+                    "locationCode" => (isset($row[0])) ? strval($row[0]) : null,
                     "locationName" => (isset($row[1])) ? $row[1] : null,
                     "bpjsLocationCode" => (isset($row[2])) ? $row[2] : null,
                     "changedNo" => 0,

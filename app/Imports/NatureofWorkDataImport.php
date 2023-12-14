@@ -44,7 +44,7 @@ class NatureofWorkDataImport implements ToCollection, SkipsEmptyRows, WithStartR
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "workNatureCode" => (isset($row[0])) ? $row[0] : null,
+                    "workNatureCode" => (isset($row[0])) ? strval($row[0]) : null,
                     "workNatureName" => (isset($row[1])) ? $row[1] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),

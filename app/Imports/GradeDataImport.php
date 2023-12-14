@@ -44,7 +44,7 @@ class GradeDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "gradeCode" => (isset($row[0])) ? $row[0] : null,
+                    "gradeCode" => (isset($row[0])) ? strval($row[0]) : null,
                     "gradeName" => (isset($row[1])) ? $row[1] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
