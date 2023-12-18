@@ -5623,7 +5623,9 @@ class DataController extends Controller
 
 	public function dataDayCodeAPI(Request $request)
     {
-    	try {
+		$search = $request->search;
+
+		try {
 	    	$client = new Client([
                 'verify' => false,
 	    		'headers' => [ 'Content-Type' => 'application/json',
@@ -5651,8 +5653,23 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+		
+		$data = [];
 
-	    return response()->json($arrResult->dataListSet);
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->value)){
+	    				return preg_match('/' . $search . '/i', $value->value);
+	    			}
+	    		}
+	    	);
+	    }
+
+	    return response()->json($data);
 	}
 
 	public function dataDayCodeFunctionAPI(Request $request)
