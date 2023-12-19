@@ -8,6 +8,7 @@ return [
     'label_claim_end' => 'Tanggal Pengajuan - Ke',
     'label_reimbursement_type' => 'Tipe Reimbursement',
     'label_business_unit' => 'Unit Bisnis',
+    'label_reimbursement_status' => 'Status Reimbursement',
     'label_to' => 'To',
     'btn_export' => 'Export',
     'label_slip' => 'Slip',
