@@ -13,12 +13,13 @@ use App;
 
 class WorkflowPermitExport implements FromView, ShouldAutoSize
 {
-    public function __construct($permitDateFrom, $permitDateTo,$businessunit,$dataLevel)
+    public function __construct($permitDateFrom, $permitDateTo,$businessunit,$dataLevel,$status)
     {
         $this->permitDateFrom = $permitDateFrom;
         $this->permitDateTo = $permitDateTo;
         $this->businessUnit = $businessunit;
         $this->dataLevel = $dataLevel;
+        $this->status = ($status == 'ALL') ? null : $status;
     }
     public function view(): View
     {
@@ -33,7 +34,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
                 'startDate' => $this->permitDateFrom,
                 'endDate' => $this->permitDateTo,
                 'businessUnit' =>$this->businessUnit,
-                'exportMenu' => true,
+                'status' => $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 

@@ -171,6 +171,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="workflow_status">{{ __('export_workflow.label_workflow_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="workflow_status" name="workflow_status"></select>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- BUTTON -->
                 <div class="row">
@@ -282,6 +294,8 @@
 loadDataBusinessUnit();
 loadDataWorkflowType();
 loadDataFirstLastAllBusinessUnit();
+loadDataStatus();
+loadDataFirstLastAllStatus();
 
     // $.get("{{ url('level/api') }}", function (data) {
     //         $.each(data, function (k, v) {
@@ -445,6 +459,79 @@ loadDataFirstLastAllBusinessUnit();
             });
         }
 
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#workflow_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#workflow_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#workflow_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#workflow_status option:contains("ALL")').not(':first').remove();
+                $('#workflow_status').val('ALL');
+                $('#workflow_status').removeClass('spinner-border');
+            });
+        }
 
         $("#btn-preview").click(function () {
             $(this).prop("disabled", true);

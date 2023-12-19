@@ -8,6 +8,7 @@ return [
     'label_claim_end' => 'Date - End',
     'label_workflow_type' => 'Workflow Type',
     'label_business_unit' => 'Business Unit',
+    'label_workflow_status' => 'Status Workflow',
     'label_to' => 'To',
     'btn_export' => 'Export',
     'label_slip' => 'Slip',
