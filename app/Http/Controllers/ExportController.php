@@ -165,7 +165,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new TransportExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel), 'Employee List Transport Report.xlsx');
+        return Excel::download(new TransportExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->transport_status), 'Employee List Transport Report.xlsx');
     
     }
     
