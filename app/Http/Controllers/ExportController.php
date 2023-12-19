@@ -139,7 +139,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MedicalExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->reimbursement_type, $dataLevel), 'Employee List Reimbursement Medical Report.xlsx');
+        return Excel::download(new MedicalExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->reimbursement_type, $dataLevel, $request->medical_status), 'Employee List Reimbursement Medical Report.xlsx');
     
     }
    
