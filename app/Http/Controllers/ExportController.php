@@ -178,7 +178,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new OvertimeExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel), 'Employee List Overtime Report.xlsx');
+        return Excel::download(new OvertimeExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->overtime_status), 'Employee List Overtime Report.xlsx');
     
     }
     

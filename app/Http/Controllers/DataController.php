@@ -9656,7 +9656,7 @@ class DataController extends Controller
 			['body' => json_encode(
 				[
 					'companyCode' => Session::get('companyCode'),
-					"variable" => "Status_Trans_",
+					"variable" => "Status_",
 					"languageCode" => App::getLocale(),
 					]
 					)]
