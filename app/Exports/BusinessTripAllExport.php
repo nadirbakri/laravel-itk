@@ -13,13 +13,14 @@ use App;
 
 class BusinessTripAllExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel)
+    public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel,$status)
     {
         $this->claimdateFrom = $claimdateFrom;
         $this->claimdateTo = $claimdateTo;
         // $this->travelAdvances = $travelAdvances;
         $this->businessUnit = $businessunit;
         $this->dataLevel = $dataLevel;
+        $this->status = ($status == 'ALL') ? null : $status;
     }
     public function view(): View
     {
@@ -35,7 +36,7 @@ class BusinessTripAllExport implements FromView, ShouldAutoSize
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
-                'exportMenu' => true,
+                'status' => $this->status,
                 'type' => 'ALL',
                 'businessUnit' =>$this->businessUnit,
                 'sessionUserID' => Session::get('userID')
