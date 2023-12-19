@@ -170,6 +170,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="medical_status">{{ __('export_medical.label_medical_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="medical_status" name="medical_status"></select>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- BUTTON -->
                 <div class="row">
@@ -285,6 +297,8 @@ loadDataExportReimbrusement();
 loadDataFirstLastAllReimbursement();
 loadDataBusinessUnit();
 loadDataFirstLastAllBusinessUnit();
+loadDataStatus();
+loadDataFirstLastAllStatus();
 // loadDataFirstLastAllReimbursmentType();
 
     // $.get("{{ url('reimbursement_type/medical/api') }}", function (data) {
@@ -546,6 +560,81 @@ loadDataFirstLastAllBusinessUnit();
             })
        
         }
+        
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#medical_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#medical_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#medical_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#medical_status option:contains("ALL")').not(':first').remove();
+                $('#medical_status').val('ALL');
+                $('#medical_status').removeClass('spinner-border');
+            });
+        }
+
 </script>
 
 

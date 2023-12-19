@@ -8,6 +8,7 @@ return [
     'label_claim_end' => 'Date - End',
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_business_unit' => 'Business Unit',
+    'label_medical_status' => 'Status Medical',
     'label_to' => 'To',
     'btn_export' => 'Export',
     'label_slip' => 'Slip',
