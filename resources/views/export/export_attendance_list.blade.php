@@ -21,6 +21,7 @@
 			<tr>
 				<th>No</th>
 				<th>Employee No</th>
+				<th>Full Name</th>
                 <th>AbsenceType</th>
                 <th>ShiftCode</th>
 				<th>Date</th>
@@ -37,6 +38,7 @@
 			<tr>
                 <td>{{ $no++ }}</td>
                 <td>{{ $value->employeeNo}}</td>
+				<td>{{ $value->fullName}}</td>
                 <td>{{ $value->absenceType}}</td>
                 <td>{{ $value->shiftCode}}</td>
 				<td>{{ $value->date ? \Carbon\Carbon::parse($value->date)->format('Y-m-d') : '' }}</td>
