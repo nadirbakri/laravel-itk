@@ -442,7 +442,7 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
@@ -1181,25 +1181,18 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'status'=> $request->status,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'ticketNo' => $request->ticketNo,
-            //         'employeeNo'=> $request->employeeNo,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'languageCode' => App::getLocale()
-            //     ]
-            //     ));
-
-            $response = $client->put(env('API_URL') . '/tmovertime/updateovertimeapproval',
+            $response = $client->put(env('API_URL') . '/tmovertime/updateovtapprovalbyadmin',
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
                         'companyCode' => Session::get('companyCode'),
+                        'listRefLeaveID' => null,
                         'ticketNo' => $request->ticketNo,
-                        'employeeNo'=> $request->employeeNo,
+                        'directSuperiorCode'=> $request->directSuperior,
                         'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'approvalRemarks' => $request->approvalRemarks,
                         'languageCode' => App::getLocale()
                     ]
                 )]

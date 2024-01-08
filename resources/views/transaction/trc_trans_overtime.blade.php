@@ -107,7 +107,7 @@
             font-size: 2.5vw;
         }
         .detailstatus h5{
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .detailstatus input{
@@ -280,102 +280,147 @@
             @csrf
             <div class="modal fade" id="modal_list_detail">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_overtime.dreimbursement') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.dname') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
-                                    </div>
-                                    {{-- <div class="col-3  ">
-                                        <h5>{{ __('trans_overtime.rdate') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div> --}}
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.employee') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">{{ __('trans_overtime.dreimbursement') }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="request_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_request_date') }}</label>
+                                        <h5 id="request_date"></h5>
                                     </div>
                                 </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.tnom') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.status') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="overtime_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_overtime_date') }}</label>
+                                        <h5 id="overtime_date"></h5>
                                     </div>
                                 </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.label_bu') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.label_reimbursement_type') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="ticket_no" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_ticket_no') }}</label>
+                                        <h5 id="ticket_no"></h5>
                                     </div>
                                 </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.name') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="employeename" name="employeename" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.pname') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="projectname" name="projectname" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from"disabled>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="status" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_status') }}</label>
+                                        <h5 id="status"></h5>
                                     </div>
                                 </div>
-
-                            
-                                <br>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_overtime.status') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">{{ __('trans_overtime.approve') }}</option>
-                                                <option value="REJECTED">{{ __('trans_overtime.reject') }}</option>
-                                                <option value="PAID">{{ __('trans_overtime.paid') }}</option>
-                                            </select>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="employee_name" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_employee_name') }}</label>
+                                        <h5 id="employee_name"></h5>
                                     </div>
                                 </div>
-                                <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_overtime.update') }}</button>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="business_unit" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_business_unit') }}</label>
+                                        <h5 id="business_unit"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="start_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_start_date') }}</label>
+                                        <h5 id="start_date"></h5>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="actual_overtime" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_actual_overtime') }}</label>
+                                        <h5 id="actual_overtime"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="end_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_end_date') }}</label>
+                                        <h5 id="end_date"></h5>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="next_day" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_next_day') }}</label>
+                                        <h5 id="next_day"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="task_name" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_task_name') }}</label>
+                                        <h5 id="task_name"></h5>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="location" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_location') }}</label>
+                                        <h5 id="location"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="description" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_description') }}</label>
+                                        <h5 id="description"></h5>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="customer" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_customer') }}</label>
+                                        <h5 id="customer"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="overtime_status" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_status') }}</label>
+                                        <select name="overtime_status" id="overtime_status" class="custom-select">
+                                            <option value="APPROVED">{{ __('trans_overtime.approve') }}</option>
+                                            <option value="REJECTED">{{ __('trans_overtime.reject') }}</option>
+                                            <option value="PAID">{{ __('trans_overtime.paid') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="last_approval_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_last_approval_date') }}</label>
+                                        <input type="text" name="last_approval_date" id="last_approval_date" class="form-control" readonly>
+                                        <input type="hidden" name="overtime_ticket_no" id="overtime_ticket_no" class="form-control" value="">
+                                        <input type="hidden" name="direct_superior" id="direct_superior" class="form-control" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="approval_remarks" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_approval_remarks') }}</label>
+                                        <textarea name="approval_remarks" id="approval_remarks" class="form-control"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btn-update" class="btn btn-primary w-25">{{ __('trans_overtime.btn_save') }}</button>
+                            <button type="button" class="btn btn-outline-primary w-25" data-dismiss="modal">{{ __('trans_overtime.btn_cancel') }}</button>
+                        </div>
                     </div>
-                   </div>
                 </div>
             </div>
         </form>
@@ -386,28 +431,28 @@
             @csrf
             <div class="modal fade" id="modal_upload">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_overtime.upaidovt') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body table-responsive">
-                        <div class="card">
-                            <div class="col-5">
-                                <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>{{ __('trans_overtime.fovt') }}</b></label>
-                                        <input type="file" name="file_overtime" id="file_overtime">
-                                    <br> <br>
-                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        {{ __('trans_overtime.btn_upload') }}
-                                    </button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">{{ __('trans_overtime.upaidovt') }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body table-responsive">
+                            <div class="card">
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="medical_history form-check-label"><b>{{ __('trans_overtime.fovt') }}</b></label>
+                                            <input type="file" name="file_overtime" id="file_overtime">
+                                        <br> <br>
+                                        <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
+                                            {{ __('trans_overtime.btn_upload') }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                   </div>
                 </div>
             </div>
         </form>
@@ -672,28 +717,26 @@
     })
     
     const klikdetail = (element) => {
-        let name = $(element).parent().siblings('.sorting_1').text()
-        let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
-        var business_unit = $("#business_unit").val();
-        var reimbursement_type = $("#reimbursement_type").val();
-        let employeename = $(element).parent().siblings('td').eq(8).text()
-        let projectname = $(element).parent().siblings('td').eq(3).text()
-        
-        let totalclaim = $(element).parent().siblings('td').eq(7).text()
-        let totalpaid = $(element).parent().siblings('td').eq(9).text()
-        var reimbursement_type = $("#reimbursement_type").val();
-        var business_unit = $("#business_unit").val();
-        var direct_superior = $("#direct_superior").val();
-        // $('#recdate').val(receiptDate)
-        // $('#reqdate').val(receiptDate)
-        $('#tiketno').val(tikcetNo)
-        $('#status').val(reimbursement_status)
-        $('#b_unit').val(business_unit)
-        $('#c_type').val(reimbursement_type)
-        $('#employeename').val(name)
-        $('#projectname').val(projectname)
-        $('#employeeno').val(direct_superior)
+        var data = table.row($(element).parents('tr')).data().overtimeEntity;
+        var duration = moment.duration(data.ovtDuration)
+
+        $('#request_date').html(moment(data.createdDate).format('YYYY-MM-DD'))
+        $('#overtime_date').html(moment(data.overtimeDate).format('YYYY-MM-DD'))
+        $('#ticket_no').html(data.ticketNo)
+        $('#status').html(data.status)
+        $('#employee_name').html(data.fullnameRequester)
+        $('#business_unit').html(data.businessUnit)
+        $('#start_date').html(moment(data.overtimeHourFrom).format('YYYY-MM-DD') + ', ' + moment(data.overtimeHourFrom).format('HH.mm'))
+        $('#actual_overtime').html(duration.hours() + ' hours ' + duration.minutes() + ' minutes')
+        $('#end_date').html(moment(data.overtimeHourTo).format('YYYY-MM-DD') + ', ' + moment(data.overtimeHourTo).format('HH.mm'))
+        $('#next_day').html(data.isNext)
+        $('#task_name').html(data.projectName)
+        $('#location').html(data.locationCode)
+        $('#description').html(data.overtimeRemarks)
+        $('#customer').html(data.customerName)
+        $('#overtime_status').val(data.status).trigger('chnage')
+        $('#last_approval_date').val(moment().format('YYYY-MM-DD'))
+        $('#approval_remarks').val(data.approvalRemarks)
 
         // $('#totalclaim').val(totalclaim)
         // $('#totalpaid').val(totalpaid)
@@ -718,24 +761,26 @@
 </script>
 <script>
     $('#btn-update').click(()=>{
-        let reimbursement_status = $('#reimbursement_status').val();
+        let status = $('#overtime_status').val();
         // let totalpaid = $('#totalpaid').val();
-        let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#direct_superior").val();
+        let ticketNo = $('#overtime_ticket_no').val();
+        let directSuperior = $("#direct_superior").val();
+        let approvalRemarks = $("#approval_remarks").val();
 
         $('.close').click();
-        update_data(reimbursement_status,ticketNo,direct_superior)
+        update_data(status, ticketNo, directSuperior, approvalRemarks)
     })
 
-    function update_data(reimbursement_status, ticketNo,direct_superior){
+    function update_data(status, ticketNo, directSuperior, approvalRemarks){
         $.ajax({
             url: "{{ url('trans/update_overtime/table') }}",
             type: "get",
             data: {
-                'status': reimbursement_status,
+                'status': status,
                 // 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior
+                'directSuperior' : directSuperior,
+                'approvalRemarks' : approvalRemarks
             },
             success: function (response) {
                 // console.log(response);

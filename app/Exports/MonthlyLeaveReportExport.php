@@ -103,7 +103,7 @@ class MonthlyLeaveReportExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/monthlyleavereport/getmonthlyleavereport',
                 ['body' => json_encode($param)]
