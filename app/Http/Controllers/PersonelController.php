@@ -2308,12 +2308,12 @@ class PersonelController extends Controller
                 else {
                     $data = $arrResult->dataListSet;
                     // var_dump($data[0]->photo);
-                    if ($data[0]->photo == null){
+                    if ($data[0]->detailList[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->detailList[0]->photo));
                     }
                 }
 
@@ -2357,7 +2357,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/user/getuserdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2378,12 +2378,12 @@ class PersonelController extends Controller
                 else {
                     $data = $arrResult->dataListSet;
                     // var_dump($data[0]->photo);
-                    if ($data[0]->photo == null){
+                    if ($data[0]->detailList[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->detailList[0]->photo));
                     }
                 }
 
@@ -2396,7 +2396,6 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -3797,6 +3796,7 @@ class PersonelController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

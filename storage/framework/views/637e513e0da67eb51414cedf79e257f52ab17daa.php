@@ -50,7 +50,7 @@
 									$dataSubSubMenu = \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($dataMenu, $value2->menuID)
 								?>
 								<?php $__currentLoopData = $dataSubSubMenu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key3 => $value3): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<div class="col col-3">
+								<div class="col col-4">
 									<a href="<?php echo e(url($value3->pageURL)); ?>" target="iframe_dashboard">
 										<img src="<?php echo e(url('/icons/personnel/submenu-' . $value->pageURL . '.svg')); ?>" alt="Child Personnel">
 										<span class="child-title-text"><?php echo e($value3->menuName); ?></span>

@@ -109,7 +109,7 @@
             </div>
         </form>
         <div class="div-title">
-            <a href="<?php echo e(url('personnel/work_detail')); ?>" target="iframe_dashboard">
+            <a href="<?php echo e(url()->previous()); ?>" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('personel_work_detail.list_detail')); ?></span>
             </a>
@@ -759,6 +759,26 @@
 <script src="<?php echo e(asset('js/jquery.inputpicker.js')); ?>"></script>
 
 <script type="text/javascript">
+    function savePreviousURL() {
+        if(!sessionStorage.getItem('previousURLTwo')){
+            const previousURL = document.referrer;
+            sessionStorage.setItem('previousURLTwo', previousURL);
+        }
+    }
+
+    // Fungsi untuk menangani navigasi mundur
+    function goBackWithModuleID() {
+        let newURL = sessionStorage.getItem('previousURLTwo');
+
+        sessionStorage.removeItem('previousURLTwo');
+
+        window.location.href = newURL;
+    }
+
+    window.onload = function() {
+        savePreviousURL();
+    }
+    
     $(document).ready(function () {
         let pickerStartDate = $('#start_date').flatpickr({
             altInput: true,
@@ -1234,7 +1254,6 @@
 
         $('body').on('click', '#btn-edit-job-history', function () {
             var data = table.rows('.selected').data();
-            console.log(data);
             if (data.count() > 0) {
                 console.log(moment(data[0].startDate).format('YYYY-MM-DD'));
                 $('#modal_add_job_history').modal('show');

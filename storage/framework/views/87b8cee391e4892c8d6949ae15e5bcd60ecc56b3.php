@@ -64,6 +64,15 @@
             margin-left: 0.5%;
         }
 
+        thead tr .middle {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+
+        .form-control {
+            height: 2rem;
+        }
+
     </style>
 </head>
 
@@ -120,7 +129,7 @@
             </a>
         </div>
         <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+            <a href="<?php echo e(route('personnel', ['moduleID' => 'PE'])); ?>" target="iframe_dashboard">
                 <img src="<?php echo e(url('/pictures/arrow-square-left.png')); ?>" alt="Back">
                 <span class="title-text"><?php echo e(__('personel_work_detail.list')); ?></span>
             </a>
@@ -131,14 +140,14 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Employee No</th>
-                        <th>Employee Name</th>
-                        <th>Position</th>
-                        <th>Ranking</th>
-                        <th>Group Authorization</th>
-                        <th>Record Status</th>
-                        <th id="div-table-level"></th>
-                        <th>Join Date</th>
+                        <th class="middle">Employee No</th>
+                        <th class="middle">Employee Name</th>
+                        <th class="middle">Position</th>
+                        <th class="middle">Ranking</th>
+                        <th class="middle">Group Authorization</th>
+                        <th class="middle">Record Status</th>
+                        <th class="middle" id="div-table-level"></th>
+                        <th class="middle">Join Date</th>
                     </tr>
                 </thead>
             </table>
