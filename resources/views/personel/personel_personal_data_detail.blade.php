@@ -1120,6 +1120,52 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="position_code_employment">{{ __('personel_personal_data.label_position') }}</label>
+                                    <select class="form-control" id="position_code_employment"
+                                        name="position_code_employment">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="ranking_code_employment">{{ __('personel_personal_data.label_ranking') }}</label>
+                                    <select class="form-control" id="ranking_code_employment"
+                                        name="ranking_code_employment">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="grade_code_employment">{{ __('personel_personal_data.label_grade') }}</label>
+                                    <select class="form-control" id="grade_code_employment"
+                                        name="grade_code_employment">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="location_code_employment">{{ __('personel_personal_data.label_location') }}</label>
+                                    <select class="form-control" id="location_code_employment"
+                                        name="location_code_employment">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span
+                                    class="div-title-text">{{ __('personel_personal_data.label_level') }}</span>
+                            </div>
+                        </div>
                         <div class="row" id="div-level">
                             <input type="hidden" class="form-control" id="level_format" name="level_format">
                         </div>
@@ -2717,6 +2763,10 @@
         loadDataEmploymentType();
         loadDataOfficeLocation();
         loadDataTerminationCode();
+        loadDataPosition();
+        loadDataRanking();
+        loadDataGrade();
+        loadDataLocation();
         loadDataBenefits();
         loadDataAbsenteeismType();
         loadDataWorkPatternCode();
@@ -2833,6 +2883,10 @@
             $('#expatriat_employment').prop('checked', false);
             $('#license_no_employment').val("");
             $('#commisioner_employment').prop('checked', false);
+            $('#position_employment').val(null).trigger('change');
+            $('#ranking_employment').val(null).trigger('change');
+            $('#grade_employment').val(null).trigger('change');
+            $('#location_employment').val(null).trigger('change');
             $('#fringe_benefit_data_table').DataTable().destroy();
             load_table_fringe_benefit();
 
@@ -3531,7 +3585,7 @@
                     type: 'GET',
                     url: "{{ url('/office_location/func/api') }}",
                     data: {
-                        'officeLocationCode': ((typeof arrData2[0].peMasterInfo.officeCode !== 'undefined') ? arrData2[0].peMasterInfo.officeCode : ''),
+                        'officeLocationCode': ((typeof arrData2[0].officeCode !== 'undefined') ? arrData2[0].officeCode : ''),
                     }
                 }).then(function (data) {
                     var option = $('<option/>', {
@@ -3541,9 +3595,113 @@
                     });
 
                     // console.log(data);
-                    $("#office_location_employment").append(option1).attr('data-alias', 'yourvalue').trigger(
+                    $("#office_location_employment").append(option).attr('data-alias', 'yourvalue').trigger(
                         'change');
                     $("#office_location_employment").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].locationCode,
+                            text: data[0].locationName,
+                            data: data[0]
+                        }
+                    });
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/position/detail/api') }}",
+                    data: {
+                        'positionCode': ((typeof arrData2[0].positionCode !== 'undefined') ? arrData2[0].positionCode : ''),
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data[0].positionCode,
+                        title: data[0].positionName,
+                        text: data[0].positionName
+                    });
+
+                    // console.log(data);
+                    $("#position_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#position_code_employment").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].positionCode,
+                            text: data[0].positionName,
+                            data: data[0]
+                        }
+                    });
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/ranking/detail/api') }}",
+                    data: {
+                        'rankingCode': ((typeof arrData2[0].rankingCode !== 'undefined') ? arrData2[0].rankingCode : ''),
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data[0].rankingCode,
+                        title: data[0].rankingName,
+                        text: data[0].rankingName
+                    });
+
+                    // console.log(data);
+                    $("#ranking_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#ranking_code_employment").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].rankingCode,
+                            text: data[0].rankingName,
+                            data: data[0]
+                        }
+                    });
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/grade/detail/api') }}",
+                    data: {
+                        'gradeCode': ((typeof arrData2[0].gradeCode !== 'undefined') ? arrData2[0].gradeCode : ''),
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data[0].gradeCode,
+                        title: data[0].gradeName,
+                        text: data[0].gradeName
+                    });
+
+                    // console.log(data);
+                    $("#grade_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#grade_code_employment").trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].gradeCode,
+                            text: data[0].gradeName,
+                            data: data[0]
+                        }
+                    });
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/location/detail/api') }}",
+                    data: {
+                        'locationCode': ((typeof arrData2[0].locationCode !== 'undefined') ? arrData2[0].locationCode : ''),
+                    }
+                }).then(function (data) {
+                    var option = $('<option/>', {
+                        id: data[0].locationCode,
+                        title: data[0].locationName,
+                        text: data[0].locationName
+                    });
+
+                    // console.log(data);
+                    $("#location_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
+                        'change');
+                    $("#location_code_employment").trigger({
                         type: 'select2:select',
                         params: {
                             id: data[0].locationCode,
@@ -5492,7 +5650,6 @@
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
-                                console.log(item.locationCode);
                                 return {
                                     text: item.locationName,
                                     id: item.locationCode,
@@ -5568,6 +5725,246 @@
                                 return {
                                     text: item.value,
                                     id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataPosition(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.positionName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#position_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Position',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/position/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.positionName,
+                                    id: item.positionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataRanking(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.rankingName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#ranking_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Ranking',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/ranking/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.rankingName,
+                                    id: item.rankingCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGrade(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.gradeName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#grade_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Grade',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/grade/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.gradeName,
+                                    id: item.gradeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLocation(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.locationName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#location_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Location',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/location/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.locationName,
+                                    id: item.locationCode,
                                     data: item
                                 }
                             })

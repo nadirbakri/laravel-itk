@@ -1139,6 +1139,7 @@ Route::get('level/func/api', 'DataController@dataLevelFunctionAPI');
 Route::get('evaluation_form/api', 'DataController@dataEvaluationFormAPI');
 Route::get('evaluation_form/detail/api/{formCode}', 'DataController@dataEvaluationFormDetailAPI');
 Route::get('grade/api', 'DataController@dataGradeAPI');
+Route::get('grade/func/api', 'DataController@dataGradeFunctionAPI');
 Route::get('grade/detail/api', 'DataController@dataGradeDetailAPI');
 Route::get('group/api', 'DataController@dataGroupAPI');
 Route::get('group/detail/api', 'DataController@dataGroupDetailAPI');

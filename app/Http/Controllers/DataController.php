@@ -2689,8 +2689,8 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($search == ''){
-			if($request->positionCode == ''){
-				$position = '';
+			if(empty($request->positionCode)){
+				$position = [];
 			}else{
 				$position = $arrResult->dataListSet;
 			}	    	
@@ -4448,8 +4448,8 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($search == ''){
-			if($request->rankingCode == ''){
-				$ranking = '';
+			if(empty($request->rankingCode)){
+				$ranking = [];
 			}else{
 				$ranking = $arrResult->dataListSet;
 			}
@@ -4858,6 +4858,59 @@ class DataController extends Controller
 	public function dataGradeAPI(Request $request)
     {
     	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$grade = $arrResult->dataListSet;
+	    }else{
+	    	$grade = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->gradeName)){
+	    				return preg_match('/' . $search . '/i', $value->gradeName);
+	    			}else if(preg_match('/' . $search . '/i', $value->gradeCode)){
+	    				return preg_match('/' . $search . '/i', $value->gradeCode);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($grade);
+	}
+
+	public function dataGradeFunctionAPI(Request $request)
+    {
+    	$grade[] = (object) [
+    		'gradeCode' => 'ALL',
+    		'gradeName' => 'ALL'
+		];
 
     	try {
 	    	$client = new Client([
@@ -5789,7 +5842,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->npwpCode = '') {
+		if (empty($request->npwpCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -5888,8 +5941,6 @@ class DataController extends Controller
 
 	public function dataBPJSPersonalDataAPI(Request $request)
     {
-
-		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
                 'verify' => false,
@@ -5918,7 +5969,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->bpjsCode = '') {
+		if (empty($request->bpjsCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -6007,7 +6058,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->costCenterCode = '') {
+		if (empty($request->costCenterCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -6388,7 +6439,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if ($request->groupShift = '') {
+	    if (empty($request->groupShift)) {
 			return response()->json([]);
 		}
 		else {
@@ -6427,7 +6478,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->absentCode = '') {
+		if (empty($request->absentCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -7415,7 +7466,7 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->absentCode = '') {
+		if (empty($request->absentCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -7456,7 +7507,7 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if ($request->absentCode = '') {
+        if (empty($request->absentCode)) {
             return response()->json([]);
         }
         else {
