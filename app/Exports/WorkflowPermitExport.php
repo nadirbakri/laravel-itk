@@ -49,7 +49,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
             // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
             //     $param['businessUnit'] = $this->businessUnit;
             // }
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/tmpermit/gettmpermitdetaillist',
                 ['body' => json_encode($param)]
@@ -67,7 +67,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('export.export_workflow_list', [

@@ -14,7 +14,7 @@ use App;
 
 class WorkflowLeaveExport implements FromView, ShouldAutoSize
 {
-    public function __construct($permitDateFrom, $permitDateTo,$businessunit,$dataLevel,$status)
+    public function __construct($permitDateFrom, $permitDateTo, $businessunit, $dataLevel, $status)
     {
         $this->permitDateFrom = $permitDateFrom;
         $this->permitDateTo = $permitDateTo;
@@ -69,7 +69,7 @@ class WorkflowLeaveExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
         // exit;
 
         if($arrResult->dataListSet == null){

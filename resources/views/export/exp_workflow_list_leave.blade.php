@@ -20,6 +20,7 @@
 		<thead>
 			<tr>
 				<th>No</th>
+				<th>Status</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
 				<th>Leave Type</th>
@@ -36,6 +37,7 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
+				<td>{{ $value->leaveEntity->status }}</td>
 				<td>{{ $value->leaveEntity->employeeNo }}</td>
 				<td>{{ $value->leaveEntity->fullnameRequester}}</td>
 				<td>{{ $value->leaveEntity->leaveName }}</td>

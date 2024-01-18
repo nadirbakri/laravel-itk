@@ -140,6 +140,7 @@ class AdminMenuController extends Controller
             }
 
             // var_dump(json_encode($param));
+            // exit;
 
             if ($request->t_news2 == "new"){
                 $response = $client->post(env('API_URL') . '/news/insertnews',

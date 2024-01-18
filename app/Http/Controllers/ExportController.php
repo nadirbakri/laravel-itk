@@ -124,7 +124,7 @@ class ExportController extends Controller
         if ($request->workflow_type === "ER") {
             return Excel::download(new WorkflowPermitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'Employee List Permit Report.xlsx');
         } else {
-            return Excel::download(new WorkflowLeaveExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->workflow_status), 'Employee List Leave Report.xlsx');
+            return Excel::download(new WorkflowLeaveExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'Employee List Leave Report.xlsx');
         }
     }
     

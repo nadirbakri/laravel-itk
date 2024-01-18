@@ -9674,6 +9674,8 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 			
+			// dd($arrResult->dataListSet);
+			
 			if($search == ''){
 				$data = $arrResult->dataListSet;
 			}else{
