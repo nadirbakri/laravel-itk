@@ -1150,12 +1150,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                                 <div class="form-group">
                                     <label
                                         for="location_code_employment">{{ __('personel_personal_data.label_location') }}</label>
                                     <select class="form-control" id="location_code_employment"
                                         name="location_code_employment">
+                                    </select>
+                                </div>
+                            </div> -->
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="cost_center_code_employment">{{ __('personel_personal_data.label_cost_center') }}</label>
+                                    <select class="form-control" id="cost_center_code_employment"
+                                        name="cost_center_code_employment">
                                     </select>
                                 </div>
                             </div>
@@ -1414,7 +1424,7 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label
-                                                    for="group_authorize_payroll">{{ __('personel_personal_data.label_group_authorize') }}</label>
+                                                    for="group_authorize_payroll">{{ __('personel_personal_data.label_group_authorize') }} <span class="required">*</span></label>
                                                 <select class="form-control select2" id="group_authorize_payroll"
                                                     name="group_authorize_payroll"></select>
                                             </div>
@@ -2766,7 +2776,8 @@
         loadDataPosition();
         loadDataRanking();
         loadDataGrade();
-        loadDataLocation();
+        // loadDataLocation();
+        loadDataCostCenter();
         loadDataBenefits();
         loadDataAbsenteeismType();
         loadDataWorkPatternCode();
@@ -2883,10 +2894,11 @@
             $('#expatriat_employment').prop('checked', false);
             $('#license_no_employment').val("");
             $('#commisioner_employment').prop('checked', false);
-            $('#position_employment').val(null).trigger('change');
-            $('#ranking_employment').val(null).trigger('change');
-            $('#grade_employment').val(null).trigger('change');
-            $('#location_employment').val(null).trigger('change');
+            $('#position_code_employment').val(null).trigger('change');
+            $('#ranking_code_employment').val(null).trigger('change');
+            $('#grade_code_employment').val(null).trigger('change');
+            // $('#location_code_employment').val(null).trigger('change');
+            $('#cost_center_code_employment').val(null).trigger('change');
             $('#fringe_benefit_data_table').DataTable().destroy();
             load_table_fringe_benefit();
 
@@ -3685,27 +3697,53 @@
                     });
                 });
 
+                // $.ajax({
+                //     type: 'GET',
+                //     url: "{{ url('/location/detail/api') }}",
+                //     data: {
+                //         'locationCode': ((typeof arrData2[0].locationCode !== 'undefined') ? arrData2[0].locationCode : ''),
+                //     }
+                // }).then(function (data) {
+                //     var option = $('<option/>', {
+                //         id: data[0].locationCode,
+                //         title: data[0].locationName,
+                //         text: data[0].locationName
+                //     });
+
+                //     // console.log(data);
+                //     $("#location_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
+                //         'change');
+                //     $("#location_code_employment").trigger({
+                //         type: 'select2:select',
+                //         params: {
+                //             id: data[0].locationCode,
+                //             text: data[0].locationName,
+                //             data: data[0]
+                //         }
+                //     });
+                // });
+
                 $.ajax({
                     type: 'GET',
-                    url: "{{ url('/location/detail/api') }}",
+                    url: "{{ url('/cost_center/func/api') }}",
                     data: {
-                        'locationCode': ((typeof arrData2[0].locationCode !== 'undefined') ? arrData2[0].locationCode : ''),
+                        'costCenterCode': ((typeof arrData2[0].costCenterCode !== 'undefined') ? arrData2[0].costCenterCode : ''),
                     }
                 }).then(function (data) {
                     var option = $('<option/>', {
-                        id: data[0].locationCode,
-                        title: data[0].locationName,
-                        text: data[0].locationName
+                        id: data[0].costCenterCode,
+                        title: data[0].costCenterDescription,
+                        text: data[0].costCenterDescription
                     });
 
                     // console.log(data);
-                    $("#location_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
+                    $("#cost_center_code_employment").append(option).attr('data-alias', 'yourvalue').trigger(
                         'change');
-                    $("#location_code_employment").trigger({
+                    $("#cost_center_code_employment").trigger({
                         type: 'select2:select',
                         params: {
                             id: data[0].locationCode,
-                            text: data[0].locationName,
+                            text: data[0].costCenterDescription,
                             data: data[0]
                         }
                     });
@@ -3929,14 +3967,14 @@
                     'groupAuthorizeCode': ((typeof arrData2[0].groupAuthorizeCode !== 'undefined') ? arrData2[0].groupAuthorizeCode : ''),
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.groupAuthorizeCode,
-                    title: data.groupAuthorizeDesc,
-                    text: data.groupAuthorizeCode
-                });
-                // console.log(data);
-                $("#group_authorize_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
+                // var option = $('<option/>', {
+                //     id: data.groupAuthorizeCode,
+                //     title: data.groupAuthorizeDesc,
+                //     text: data.groupAuthorizeDesc
+                // });
+
+                // $("#group_authorize_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
+                //     'change');
                 $("#group_authorize_payroll").trigger({
                     type: 'select2:select',
                     params: {
@@ -4642,7 +4680,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4703,7 +4741,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4765,7 +4803,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4826,7 +4864,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4887,7 +4925,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4947,7 +4985,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5008,7 +5046,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5068,7 +5106,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5128,7 +5166,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5188,7 +5226,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5249,7 +5287,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.zipCode + '<div>' +
+                        '<div class="col-12">' + data.data.zipCode + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5310,7 +5348,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.propinsi + '<div>' +
+                        '<div class="col-12">' + data.data.propinsi + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5371,7 +5409,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.kabupaten + '<div>' +
+                        '<div class="col-12">' + data.data.kabupaten + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5432,7 +5470,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5492,7 +5530,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5552,7 +5590,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5612,7 +5650,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.locationName + '<div>' +
+                        '<div class="col-12">' + data.data.locationName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5672,7 +5710,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5744,7 +5782,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.positionName + '<div>' +
+                        '<div class="col-12">' + data.data.positionName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5804,7 +5842,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.rankingName + '<div>' +
+                        '<div class="col-12">' + data.data.rankingName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5864,7 +5902,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.gradeName + '<div>' +
+                        '<div class="col-12">' + data.data.gradeName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5924,7 +5962,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.locationName + '<div>' +
+                        '<div class="col-12">' + data.data.locationName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5976,6 +6014,66 @@
             });
         }
 
+        function loadDataCostCenter(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-12">' + data.data.costCenterDescription + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#cost_center_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Cost Center',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/cost_center/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.costCenterDescription,
+                                    id: item.costCenterCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataBenefits(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -5984,7 +6082,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6044,7 +6142,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6104,7 +6202,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.patternCode + '<div>' +
+                        '<div class="col-12">' + data.data.patternCode + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6164,7 +6262,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6225,7 +6323,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6285,7 +6383,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6641,8 +6739,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-4">' + data.data.bankCode + '</div>' +
-                        '<div class="col-4">' + data.data.bankName + '</div>' +
+                        '<div class="col-6">' + data.data.bankCode + '</div>' +
+                        '<div class="col-6">' + data.data.bankName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -6717,7 +6815,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6778,7 +6876,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6838,7 +6936,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -7379,6 +7477,9 @@
                     tax_calculation_method_payroll: {
                         required: true,
                     },
+                    group_authorize_payroll: {
+                        required: true,
+                    },
                     birth_place_info: {
                         required: true,
                     },
@@ -7422,6 +7523,9 @@
                     },
                     tax_calculation_method_payroll: {
                         required: "{{ __('personel_personal_data.tax_calculation_method_required') }}",
+                    },
+                    group_authorize_payroll: {
+                        required: "{{ __('personel_personal_data.group_authorize_required') }}"
                     },
                     birth_place_info: {
                         required: "{{ __('personel_personal_data.birth_place_info_required') }}",

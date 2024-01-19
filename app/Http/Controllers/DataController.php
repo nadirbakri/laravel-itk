@@ -2423,6 +2423,8 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
+		// dd($arrResult->dataListSet);
+
 		if(isset($request->module)){
 			$arrResult2 = json_decode($response2->getBody()->getContents());
 
@@ -2567,8 +2569,6 @@ class DataController extends Controller
 
 	public function dataGroupAuthorizePersonalDataAPI(Request $request)
     {
-
-		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
                 'verify' => false,
@@ -2580,7 +2580,8 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-	    				'groupAuthorizeCode' => (int) $request->groupAuthorizeCode
+	    				'groupAuthorizeCode' => (int) $request->groupAuthorizeCode,
+						'isRange' => false
 	    			]
 	    		)]
 	    	);
