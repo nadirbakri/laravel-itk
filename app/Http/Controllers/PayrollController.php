@@ -140,13 +140,15 @@ class PayrollController extends Controller
             $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
 
             if($arrResult_tm->dataListSet == null){
-                $data = [];
+                return redirect()->back()->withErrors(['msg' => 'There is no TM Reference Data']);
             }else{
                 $data = $arrResult_tm->dataListSet;
             }
 
-            if($arrResult_tm->dataListSet[0]->statusProcess > '0' && Session::pull('accessReference') != "true"){
-                return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+            if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
+                if(!empty(Session::get('accessReference')) && Session::pull('accessReference') != "true"){
+                    return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+                }
             } else {
                 $arrResult_tm = json_decode($response_tm->getBody()->getContents());
                 return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);

@@ -3967,15 +3967,11 @@
                     'groupAuthorizeCode': ((typeof arrData2[0].groupAuthorizeCode !== 'undefined') ? arrData2[0].groupAuthorizeCode : ''),
                 }
             }).then(function (data) {
-                // var option = $('<option/>', {
-                //     id: data.groupAuthorizeCode,
-                //     title: data.groupAuthorizeDesc,
-                //     text: data.groupAuthorizeDesc
-                // });
+                var option = new Option(data.groupAuthorizeDesc, data.groupAuthorizeCode, true, true);
 
-                // $("#group_authorize_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
-                //     'change');
-                $("#group_authorize_payroll").trigger({
+                $('#group_authorize_payroll').append(option).trigger('change');
+
+                $('#group_authorize_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.groupAuthorizeCode,
