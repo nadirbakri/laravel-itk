@@ -7786,11 +7786,11 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
-            return $pdf->stream('Periodical Report.pdf');
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'report_name' => $request->report_name_detail, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream($request->report_name_detail . '.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
-            return $pdf->stream('Periodical Report.pdf');
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'report_name' => $request->report_name_detail, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            return $pdf->stream($request->report_name_detail . '.pdf');
         }
     }
 
@@ -7819,8 +7819,9 @@ public function dataDetailReportFormatPY(Request $request)
             $request->position, 
             $request->ranking,
             $request->location,
-            $dataLevel), 
-            'Periodical Report.xlsx'
+            $dataLevel,
+            $request->report_name_detail), 
+            $request->report_name_detail . '.xlsx'
         );
     }
 

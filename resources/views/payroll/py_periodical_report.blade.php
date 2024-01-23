@@ -126,6 +126,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="report_name" name="report_name"></select>
+                            <input type="hidden" id="report_name_detail" name="report_name_detail">
                         </div>
                     </div>
                 </div>
@@ -525,6 +526,10 @@
             }
         });
 
+        function htmlDecode(value) {
+    	    return $("<textarea/>").html(value).text();
+	    }
+
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
             $searchfield.prop('disabled', true);
@@ -542,6 +547,11 @@
 
         $('select').on('select2:close', function (e) {
             $('.header-select').remove();
+        });
+
+        $('#report_name').on("select2:select, change", function (e) {
+            var data = $('#report_name').select2('data');
+            $('#report_name_detail').val(htmlDecode(data[0].title));
         });
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
@@ -648,6 +658,7 @@
                                 return {
                                     text: item.reportCode,
                                     id: item.reportCode,
+                                    title: item.description,
                                     data: item
                                 }
                             })
@@ -1227,21 +1238,46 @@
         });
 
         $('#send-to-pdf').click(function (){
-            $("#send-to-report").prop("disabled", true);
-            $("#send-to-report").html(
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
-            $('#periodical_report_form').submit();
+
+            var reportNameDetailValue = $('#report_name_detail').val();
+            
+            if (reportNameDetailValue === null || reportNameDetailValue.trim() === '') {
+                $('#btn-send-to').prop("disabled", false);
+                $('#btn-send-to').html(
+                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                );
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("{{App::getLocale() == 'en' ? 'Oops! You Have to Choose Report Name' : 'Mohon Pilih Nama Laporan Terlebih Dahulu!'}}");
+            }
+            else
+                $('#periodical_report_form').submit();
         });
 
         $('#send-to-xls').click(function (){
-            $("#send-to-report").prop("disabled", true);
-            $("#send-to-report").html(
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
-            $('#periodical_report_form').submit();
+
+            var reportNameDetailValue = $('#report_name_detail').val();
+            console.log(reportNameDetailValue);
+
+            if (reportNameDetailValue === null || reportNameDetailValue.trim() === '') {
+                $('#btn-send-to').prop("disabled", false);
+                $('#btn-send-to').html(
+                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                );
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("{{App::getLocale() == 'en' ? 'Oops! You Have to Choose Report Name' : 'Mohon Pilih Nama Laporan Terlebih Dahulu!'}}");
+            }
+            else
+                $('#periodical_report_form').submit();
         });
 
         $('#btn-preview').click(function (){
@@ -1291,13 +1327,8 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $('#btn-send').prop("disabled", false);
-                    $("#btn-send").html(
-                        '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
-                    );
-
-                    $('#btn-send-to-report').prop("disabled", false);
-                    $("#btn-send-to-report").html(
+                    $('#btn-send-to').prop("disabled", false);
+                    $("#btn-send-to").html(
                         '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                     );
 
@@ -1324,8 +1355,8 @@
                             type: "POST",
                             data: $('#periodical_report_form').serialize(),
                             success: function(result, status, xhr){
-                                $('#send-to-report').prop("disabled", false);
-                                $("#send-to-report").html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
                                 
@@ -1351,8 +1382,8 @@
                                 }
                             },
                             error: function(response){
-                                $('#send-to-report').prop("disabled", false);
-                                $('#send-to-report').html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
                                 $('#notification_error').modal('show');
@@ -1370,13 +1401,8 @@
                             type: "POST",
                             data: $('#periodical_report_form').serialize(),
                             success: function(result, status, xhr){
-                                $('#btn-send').prop("disabled", false);
-                                $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
-                                );
-
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $("#btn-send-to-report").html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
 
@@ -1425,12 +1451,8 @@
                                 }
                             },
                             error: function(response){
-                                $('#btn-send').prop("disabled", false);
-                                $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
-                                );
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $('#btn-send-to-report').html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);

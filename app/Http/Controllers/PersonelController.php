@@ -542,6 +542,8 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        // dd($arrResult->dataListSet);
+
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
         }else{
@@ -2202,7 +2204,6 @@ class PersonelController extends Controller
                 $arrResult = json_decode($response->getBody()->getContents());
                 $arrResult2 = json_decode($response2->getBody()->getContents());  
 
-
                 if($arrResult->dataListSet == null){
                     $data = [];
                 }
@@ -2224,6 +2225,8 @@ class PersonelController extends Controller
                 }else{
                     $data2 = $arrResult2->dataListSet;
                 }
+
+                // dd($data);
 
                 return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
@@ -2409,9 +2412,17 @@ class PersonelController extends Controller
             $data = [];
         }else{
             $data = $arrResult->dataListSet;
+            // var_dump($data[0]->photo);
+            if ($data[0]->photo == null){
+                $filename = 'profile-picture.png';
+            }
+            else {
+                $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
+                file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+            }
         }
 
-        return view('personel.personel_competency_detail', ['data' => $data, 'photo' => '']);
+        return view('personel.personel_competency_detail', ['data' => $data, 'photo' => $filename]);
     }
 
     public function dataDetailOtherInformationPersonel(Request $request)

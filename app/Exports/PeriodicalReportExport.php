@@ -13,7 +13,7 @@ use App;
 
 class PeriodicalReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel, $reportNameDetail)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -33,6 +33,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $this->ranking = $ranking;
         $this->location = $location;
         $this->dataLevel = $dataLevel;
+        $this->reportNameDetail = $reportNameDetail;
     }
 
     public function view(): View
@@ -157,11 +158,11 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
-                'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
+                'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'report_name' => $this->reportNameDetail
             ]);
         }else{
             return view('payroll.py_export_periodical_report_excel', [
-                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
+                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'report_name' => $this->reportNameDetail
             ]); 
         }
     }

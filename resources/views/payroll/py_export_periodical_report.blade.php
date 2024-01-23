@@ -7,11 +7,11 @@
 	<style type="text/css">
 		* { box-sizing: border-box; }
 		body{
-			margin-left: 30px;
-			margin-right: 30px;
-			margin-bottom: 25px;
-			margin-top: 25px;
-            font-size: 14px;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-bottom: 15px;
+			margin-top: 15px;
+            font-size: 7px;
 		}
         .table_detail td{
             text-align:center;
@@ -32,7 +32,7 @@
 </head>
 <body>
     <h3>{{ $data_company[0]->companyName }} <br> {{ $data_company[0]->address }}</h3>
-    <h3 style="text-align:center">Periodical Report</h3>
+    <h3 style="text-align:center">{{ $report_name }}</h3>
     <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
     <?php
     $total = [];
@@ -70,11 +70,17 @@
                         $alignment = "right";
                     }
                     ?>
-                    @if($dataTable2->dataFormat == "#,##0")
+                    @if(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0")
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
-                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 0, ',', '.') }}</td>
+                    @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
+                        <?php
+                        $total[$dataTable2->field] += $dataTable2->value;
+                        ?>
+                        <td style="text-align:right; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                    
                     @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
                     @elseif($dataTable2->dataFormat == "dd MM YYYY")
@@ -89,7 +95,25 @@
             <tr>
                 <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</td>
                 @foreach($data[0]->detail[0]->field as $key3 => $dataTable3)
-                <td style="text-align:right; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                    <?php
+                    $alignment = "center";
+                    if($dataTable3->alignment == 1){
+                        $alignment = "left";
+                    }else if($dataTable3->alignment == 2){
+                        $alignment = "center";
+                    }else if($dataTable3->alignment == 3){
+                        $alignment = "right";
+                    }
+                    ?>
+                    @if($loop->iteration > 2)
+                        @if(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0")
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
+                        @elseif(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0.00")
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                        @else
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">-</td>
+                        @endif
+                    @endif
                 @endforeach
             </tr>
             @endif
