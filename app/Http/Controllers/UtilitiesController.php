@@ -1728,12 +1728,14 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/BulkSendEmail/SendEmails',
+            $response = $client->post(env('API_URL') . '/personel/BulkSendEmail/SendEmails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        "new" => isset($request->new) ? (bool) $request->new : false,
+                        "range" => isset($request->range) ? (bool) $request->range : false,
                         'employeeNoFrom' => $request->employee_no_from,
-                        'employeeNoTo' => $request->employee_no_to,
+                    'employeeNoTo' => $request->employee_no_to,
                         "sessionID" => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
@@ -1744,6 +1746,7 @@ class UtilitiesController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

@@ -14,6 +14,8 @@ return [
 
     'judul' => 'Process User ID and Password Page',
     'list' => 'Utilities Menu List',
+    'label_new' => 'New',
+    'label_range' => 'Range',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
     'employee_no_from_required' => 'Employee No From is Required',

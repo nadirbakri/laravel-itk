@@ -77,6 +77,11 @@
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
                 <span>Next</span>
             </a>
+            <a class="list-functionbar-xl" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_process_salary_component_data">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
+                <span>Process New Component / Employee</span>
+            </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
@@ -316,6 +321,77 @@
             }, 
             "GET", "iframe_dashboard");
         });
+
+        $("#toolbar-process").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span>Loading...</span>'
+            );
+            $("#salary_component_data_process_form").submit();
+        });
+
+        if ($("#salary_component_data_process_form").length > 0) {
+            $("#salary_component_data_process_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/salary_component_data_process/proses') }}",
+                        type: "POST",
+                        data: $('#salary_component_data_process_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#toolbar-process").prop("disabled", false);
+                                $("#toolbar-process").html(
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                    '<span>Process New Component / Employee</span>'
+                                );
+
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    $('#notification_success').modal('hide');
+                                }, 3000);
+                            } else {
+                                $("#toolbar-process").prop("disabled", false);
+                                $("#toolbar-process").html(
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                    '<span>Process New Component/Employee</span>'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#toolbar-process").prop("disabled", false);
+                            $("#toolbar-process").html(
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                '<span>Process New Component/Employee</span>'
+                            );
+
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
     })
 </script>
 

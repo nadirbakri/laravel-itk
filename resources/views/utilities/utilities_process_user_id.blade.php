@@ -82,17 +82,33 @@
             <form id="process_user_id_form" method="post">
                 @csrf
                 <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="new" name="new" value="true">
+                            <label for="new">{{ __('utilities_process_user_id.label_new') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="range" name="range" value="true">
+                            <label for="range">{{ __('utilities_process_user_id.label_range') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
                                 for="employee_no_from">{{ __('utilities_process_user_id.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no_to">{{ __('utilities_process_user_id.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
                         </div>
                     </div>
                 </div>
@@ -178,6 +194,16 @@
     
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $('#range').on('change', function () {
+            if ($('#range').is(':checked')) {
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+            } else {
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+            }
+        });
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');

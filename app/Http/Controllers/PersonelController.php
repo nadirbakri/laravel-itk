@@ -2257,6 +2257,8 @@ class PersonelController extends Controller
                     $data2 = $arrResult2->dataListSet;
                 }
 
+                // dd($arrResult2->dataListSet);
+
                 return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
 
@@ -3450,7 +3452,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mutation/getmutationview',
+            $response = $client->post(env('API_URL') . '/personel/MutationEmployee/getMutationView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -9003,17 +9005,51 @@ class PersonelController extends Controller
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName'),
                 ];
+            }else if($request->mutation_type == "PE"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'peMasterInfo' => [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no,
+                        'homeAddress' => $request->home_address_new,
+                        'homeCityCode' => $request->home_city_code_new,
+                        'homeZipCode' => $request->home_zip_code_new,
+                        'homePhone' => $request->home_phone_new,
+                        'otherAddress' => $request->other_address_new,
+                        'otherCityCode' => $request->other_city_code_new,
+                        'otherZipCode' => $request->other_zip_code_new,
+                        'otherPhone' => $request->other_phone_new,
+                        'emergencyName' => $request->emergency_contact_name_new,
+                        'emergencyAddress' => $request->emergency_contact_address_new,
+                        'emergencyPhone' => $request->emergency_contact_phone_new,
+                        'emergencyRelation' => $request->emergency_contact_relation_new,
+                        'personalEmailAddress' => $request->personal_email_address_new,
+                        'companyEmailAddress' => $request->company_email_address_new,
+                    ],
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
             }
 
             // dd(json_encode($param));
             // exit;
 
-            $response = $client->post(env('API_URL') . '/mutationemployee/mutation',
+            $response = $client->post(env('API_URL') . '/personel/mutationemployee/executemutation',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             // exit;
             if($response->getStatusCode() == 401){
                 return view('error.login');

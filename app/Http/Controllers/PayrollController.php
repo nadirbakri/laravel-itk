@@ -2563,6 +2563,16 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // dd(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'fieldName' => $request->fieldName,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName')
+            //     ]
+            //     ));
+
             $response = $client->post(env('API_URL') . '/payroll/getSalaryComponentData',
                 ['body' => json_encode(
                     [
@@ -2576,6 +2586,7 @@ class PayrollController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2734,7 +2745,12 @@ public function dataDetailReportFormatPY(Request $request)
                     [
                         'companyCode' => Session::get('companyCode'),
                         "slipCode" => $request->slipCode,
-                        "slipName" => $request->slipName
+                        "type" => $request->columnType,
+                        'languageCode' => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
                     ]
                 )]
             );
@@ -2961,7 +2977,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertReportFormat',
@@ -5084,7 +5100,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertSalaryComponentData',
@@ -5617,6 +5633,115 @@ public function dataDetailReportFormatPY(Request $request)
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesSlipFormatPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                if (isset($request->no)) {
+                    foreach ($request->no as $key => $value) {
+                        $data_detail [] = [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            "slipCode" => $request->slip_code,
+                            "type" => $request->column_type,
+                            "seqNo" => (int) $value,
+                            "columnName" => $request->column_name[$key],
+                            "header" => $request->header[$key],
+                            "changedNo" => 1,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => strtoupper(App::getLocale()),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ];
+                    }
+                }
+                else {
+                    $data_detail = null;
+                }
+
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')     
+                ];
+                $param['slipList'] = $data_detail;
+            }
+            else {
+                if (isset($request->no)) {
+                    foreach ($request->no as $key => $value) {
+                        $data_detail [] = [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            "slipCode" => $request->slip_code,
+                            "type" => $request->column_type,
+                            "seqNo" => (int) $value,
+                            "columnName" => $request->column_name[$key],
+                            "header" => $request->header[$key],
+                            "changedNo" => 1,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => strtoupper(App::getLocale()),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ];
+                    }
+                }
+                else {
+                    $data_detail = null;
+                }
+
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')     
+                ];
+                $param['slipList'] = $data_detail;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/PrFormatSlipDB/ASDP/v1/InsertOrUpdateFormatSlip',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesSlipFormatCustomPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -5677,12 +5802,12 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if($request->record_function_custom == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/insertSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertUpdateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/payroll/updateSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertUpdateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
@@ -5953,26 +6078,25 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "periodMonth" => (int) $request->process_period_month_hidden,
-            //         "periodYear" => (int) $request->process_period_year,
-            //         "employeeNoFrom" => $request->employee_no_from,
-            //         "employeeNoTo" => $request->employee_no_to,
-            //         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
-            //         "languageCode" => App::getLocale(),
-            //         "changedBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
-            //     exit;
+            dd(json_encode(
+                [
+                    "companyCode" => Session::get('companyCode'),
+                    "periodMonth" => (int) $request->process_period_month_hidden,
+                    "periodYear" => (int) $request->process_period_year,
+                    "employeeNoFrom" => $request->employee_no_from,
+                    "employeeNoTo" => $request->employee_no_to,
+                    "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+                    "languageCode" => App::getLocale(),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userName') 
+                ]
+                ));
 
             $response = $client->post(env('API_URL') . '/payroll/insertTmFixedComponent',
                 ['body' => json_encode(

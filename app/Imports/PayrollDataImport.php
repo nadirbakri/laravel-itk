@@ -123,7 +123,7 @@ class PayrollDataImport implements ToCollection, WithStartRow
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryYearly',
                 ['body' => json_encode($param)]

@@ -2383,23 +2383,6 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'newEmployee' => ($request->employee_type[0] == "new_employee") ? true : false,
-            //         'range' => ($request->employee_type[0] == "range") ? true : false,
-            //         'employeeNoFrom' => isset($request->employee_no_from) ? $request->employee_no_from : '',
-            //         'employeeNoTo' => isset($request->employee_no_to) ? $request->employee_no_to : '',
-            //         'periodMonth' => (int) date('n', strtotime($request->processing_period)),
-            //         'periodYear' => (int) date('Y', strtotime($request->processing_period)),
-            //         "languageCode" => App::getLocale(),
-            //         'sessionID' => 0,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'logActionUserID' => Session::get('userID'),
-            //         'logActionUsername' => Session::get('userName'),
-            //     ]
-            //     ));
-
             $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/CreateTemplate',
                 ['body' => json_encode(
                     [
