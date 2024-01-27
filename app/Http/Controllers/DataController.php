@@ -7293,7 +7293,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-	    				'tableName' => 'prSalaryActual'
+	    				'tableName' => 'PrSalaryActual'
 	    			]
 	    		)]
 	    	);

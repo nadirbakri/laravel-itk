@@ -2771,7 +2771,7 @@ public function dataDetailReportFormatPY(Request $request)
         if($arrResult->dataListSet == null){
             return response()->json('');
         }else{
-            return response()->json($arrResult->dataListSet[0]);
+            return response()->json($arrResult->dataListSet);
         }
     }
 
@@ -5724,7 +5724,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/PrFormatSlipDB/ASDP/v1/InsertOrUpdateFormatSlip',
+            $response = $client->post(env('API_URL') . '/payroll/insertUpdateSlipFormat',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -6001,32 +6001,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "employeeNoFrom" => $request->employee_no_from,
-            //         "employeeNoTo" => $request->employee_no_to,
-            //         "periodMonth" => (int) $request->process_period_month_hidden,
-            //         "periodYear" => (int) $request->process_period_year_hidden,
-            //         "loanPaymentProcess" => isset($request->loan_payment_process) ? (bool) $request->loan_payment_process : false,
-            //         "retroactiveProcess" => isset($request->retroactive_process) ? (bool) $request->retroactive_process : false,
-            //         "retroactive" => (int) $request->retroactive,
-            //         "includeProbationPerod" => isset($request->include_probation_period) ? (bool) $request->include_probation_period : false,
-            //         "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive) ? (bool) $request->include_jamsostek_retroactive : false,
-            //         "range" => isset($request->range) ? (bool) $request->range : false,
-            //         "languageCode" => App::getLocale(),
-            //         "changedBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
-            // exit;
 
             $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryCalculation',
                 ['body' => json_encode(
@@ -7696,7 +7670,6 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
         $customPaper = array(0,0,792.00,1224.00);
-        // var_dump($arrResult->dataListSet);
         
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);

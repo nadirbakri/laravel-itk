@@ -926,7 +926,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTMDetail',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

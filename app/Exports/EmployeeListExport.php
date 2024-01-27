@@ -102,14 +102,13 @@ class EmployeeListExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/employeelistreport/getemployeelist',
+            $response = $client->post(env('API_URL') . '/personel/employeelistreport/getemployeelist',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -122,7 +121,7 @@ class EmployeeListExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($this->inputType == "code");
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_employee_list', [

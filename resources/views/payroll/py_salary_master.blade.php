@@ -117,11 +117,6 @@
                 <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
                 <span>Delete</span>
             </a>
-            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-process">
-                <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
-                <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
-                <span>Process</span>
-            </a>
         </div>
         <div class="div-title">
 			<a href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard">
@@ -143,6 +138,14 @@
 				</thead>
 			</table>
 		</div>
+        <div class="div-form">
+            <form id="salary_component_data_process_form" method="post">
+                @csrf
+                <input type="text" class="form-control" id="period_month" name="period_month" hidden>
+                <input type="text" class="form-control" id="period_year" name="period_year" hidden>
+                <input type="text" class="form-control" id="period" name="period" hidden>
+            </form>
+        </div>
 	</div>
 
     <div class="modal fade" role="dialog" id="notification_error">

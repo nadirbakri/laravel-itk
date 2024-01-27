@@ -98,7 +98,7 @@ class ExportDataKepesertaanBPJSReportExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_kepesertaan_bpjs_tk_report_excel', [

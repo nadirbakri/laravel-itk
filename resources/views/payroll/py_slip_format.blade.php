@@ -439,6 +439,7 @@
                         'columnType' : data2[0].id
                     }
                 }).then(function (data) {
+                    console.log(data);
                     $.each(data, function (k, v) {
                         arraySlipFormat.push({
                             "seqNo": ((typeof v.seqNo !== 'undefined') ? v.seqNo : ''),
