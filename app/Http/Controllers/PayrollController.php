@@ -4170,6 +4170,8 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['detail'] = $data_detail;
             }
 
+            // dd(json_encode($param));
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/insertPrCalculationProcess',
                     ['body' => json_encode($param)]
@@ -6077,26 +6079,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            dd(json_encode(
-                [
-                    "companyCode" => Session::get('companyCode'),
-                    "periodMonth" => (int) $request->process_period_month_hidden,
-                    "periodYear" => (int) $request->process_period_year,
-                    "employeeNoFrom" => $request->employee_no_from,
-                    "employeeNoTo" => $request->employee_no_to,
-                    "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
-                    "languageCode" => App::getLocale(),
-                    "changedBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userName') 
-                ]
-                ));
 
             $response = $client->post(env('API_URL') . '/payroll/insertTmFixedComponent',
                 ['body' => json_encode(

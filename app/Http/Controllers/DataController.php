@@ -7421,6 +7421,7 @@ class DataController extends Controller
 
 	public function dataFieldNameSalaryComponentAPI(Request $request)
     {
+		$search = $request->search;
 
         try {
             $client = new Client([
@@ -7449,7 +7450,22 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet);
+		if($search == ''){
+	    	$field = $arrResult->dataListSet;
+	    }else{
+			$field    = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->description)){
+	    				return preg_match('/' . $search . '/i', $value->description);
+	    			}else if(preg_match('/' . $search . '/i', $value->fieldName)){
+	    				return preg_match('/' . $search . '/i', $value->fieldName);
+	    			}
+	    		}
+	    	);
+		}
+
+        return response()->json($field);
     }
 	
 	public function dataLoanCodeLoanDataEntryAPI(Request $request)
@@ -7519,7 +7535,7 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-		if (empty($request->absentCode)) {
+		if (empty($arrResult->dataListSet)) {
 			return response()->json([]);
 		}
 		else {
