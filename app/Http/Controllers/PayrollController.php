@@ -146,11 +146,16 @@ class PayrollController extends Controller
             }
 
             if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
-                if(!empty(Session::get('accessReference')) && Session::pull('accessReference') != "true"){
+                if(empty(Session::get('accessReference'))){
                     return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+                }else{
+                    if(Session::pull('accessReference') != "true"){
+                        return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+                    }else{
+                        return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
+                    }
                 }
             } else {
-                $arrResult_tm = json_decode($response_tm->getBody()->getContents());
                 return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
             }
         } catch (RequestException $e) {
