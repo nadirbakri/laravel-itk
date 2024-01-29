@@ -61,8 +61,8 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 '*.4' => 'date_format:H:i'
             ], [
                 '*.1.date_format' => 'Date Format Must Be (01/31/2000)',
-                '*.3.date_format' => 'Hour & Minute In Format Must Be (07:01)',
-                '*.4.date_format' => 'Hour & Minute Out Format Must Be (07:01)'
+                '*.3.date_format' => 'Hour & Minute In Format Must Be (07:01). Make Sure to Change Column Format to Text, not Time',
+                '*.4.date_format' => 'Hour & Minute Out Format Must Be (07:01). Make Sure to Change Column Format to Text, not Time'
             ])->validate();
 
             foreach ($rows as $row) {
@@ -91,8 +91,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 ];
             }
 
-            // var_dump(json_encode($param));
-            // exit;
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/BulkUpdateTmAbsentEmployee',
                 ['body' => json_encode($param)]
