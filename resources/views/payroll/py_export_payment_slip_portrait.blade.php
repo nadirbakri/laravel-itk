@@ -93,7 +93,7 @@
 						?>
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">Rp. {{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
 						</tr>
 					@endforeach
 					<tr>
@@ -101,7 +101,7 @@
 					</tr>
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Total Income (A)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">Rp. {{ number_format($totalIncome, 0, ',', '.')}},-</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome, 0, ',', '.')}},-</td>
 					</tr>
 				</table>
 			</td>
@@ -117,7 +117,7 @@
 						?>
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">Rp. {{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
 						</tr>
 					@endforeach
 					<tr>
@@ -125,7 +125,7 @@
 					</tr>
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Total Deduction (B)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">Rp. {{ number_format($totalDeduction, 0, ',', '.')}},-</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}},-</td>
 					</tr>
 					<tr>
 						<td colspan="2">&nbsp;</td>
@@ -136,7 +136,7 @@
 					@foreach($value->c as $key2 => $value2)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">Rp. {{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
 						</tr>
 					@endforeach
 				</table>
@@ -150,7 +150,7 @@
 				<table style="width:100%; border-collapse: collapse;">
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Take Home Pay (A - B)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">Rp. {{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}},-</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}},-</td>
 					</tr>
 				</table>
 			</td>

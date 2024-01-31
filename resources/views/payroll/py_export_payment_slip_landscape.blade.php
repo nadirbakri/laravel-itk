@@ -93,7 +93,7 @@
 						@if($value2->columnValue > 0)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">Rp. {{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
 						@endif
 					@endforeach
@@ -102,7 +102,7 @@
 					</tr>
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Total Income (A)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">Rp. {{ number_format($totalIncome, 0, ',', '.')}}</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome, 0, ',', '.')}}</td>
 					</tr>
 				</table>
 			</td>
@@ -119,7 +119,7 @@
 						@if($value2->columnValue > 0)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">Rp. {{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
 						@endif
 					@endforeach
@@ -128,7 +128,7 @@
 					</tr>
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Total Deduction (B)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">Rp. {{ number_format($totalDeduction, 0, ',', '.')}}</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
 					</tr>
 					<tr>
 						<td colspan="2">&nbsp;</td>
@@ -140,7 +140,7 @@
 						@if($value2->columnValue > 0)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">Rp. {{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
 						@endif
 					@endforeach
@@ -155,7 +155,7 @@
 				<table style="width:100%; border-collapse: collapse;">
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0; font-weight: 600;">Take Home Pay (A - B)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0; font-weight: 600;">Rp. {{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}}</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0; font-weight: 600;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}}</td>
 					</tr>
 				</table>
 			</td>

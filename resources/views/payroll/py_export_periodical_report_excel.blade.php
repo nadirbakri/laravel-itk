@@ -87,12 +87,12 @@
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
-                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 0, ',', '.') }}</td>
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 0, ',', '.') }}</td>
                     @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
-                        <td style="text-align:right; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                        <td style="text-align:right; border:1px solid #000;">{{ number_format($dataTable2->value, 2, ',', '.') }}</td>
                     
                     @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
@@ -120,9 +120,9 @@
                     ?>
                     @if($loop->iteration > 2)
                         @if(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
                         @elseif(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0.00")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
                         @else
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">-</td>
                         @endif

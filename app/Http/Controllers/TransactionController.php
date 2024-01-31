@@ -992,6 +992,46 @@ class TransactionController extends Controller
         //     return Datatables::of($arrResult->dataListSet)->make(true);
         // }
     }
+
+    public function tableUpdateTransLeave(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/TmLeave/UpdateByAdmin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'languageCode' => App::getLocale(), 
+                        'listRefLeaveID' => null,
+                        'sessionUserID' => Session::get('userID'),
+                        'directSuperiorCode'=> $request->directSuperiorCode,
+                        'approvalRemarks'=> $request->approvalRemarks,
+                        'logActionUserID'=> Session::get('userID'),
+                        'logActionUsername'=> Session::get('userName'),
+                        'status'=> $request->status,
+                        'ticketNo' => $request->ticketNo
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
   
     public function tableUpdateTransTransport(Request $request)
     {

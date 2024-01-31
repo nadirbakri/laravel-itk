@@ -487,14 +487,6 @@
                         </div>
                         <div class="row approve">
                             <div class="col-3">
-                                <h5>Total Paid</h5>
-                            </div>
-                            <div class="col-5">
-                                <input id="totalpaid_leave" name="totalpaid_leave"  type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row approve">
-                            <div class="col-3">
                                 <h5>Approval Remarks</h5>
                             </div>
                             <div class="col-5">
@@ -861,7 +853,6 @@
 
     $('#btn-update-leave').click(()=>{
         let workflow_status = $('#workflow_status_leave').val();
-        let totalpaid = $('#totalpaid_leave').val();
         let ticketNo = $('#tiketno_leave').val();
         let direct_superior = $("#directsuperior_leave").val();
         let approvalremarks = $("#approvalremarks_leave").val();
@@ -869,19 +860,18 @@
         $('#btn-update').html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
-        console.log(workflow_status);
-        update_data(workflow_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+
+        update_data(workflow_status, ticketNo, direct_superior, approvalremarks)
     })
 
-    function update_data(workflow_status, totalpaid, ticketNo,direct_superior,approvalremarks){
+    function update_data(workflow_status, ticketNo, direct_superior, approvalremarks){
         $.ajax({
-            url: "{{ url('trans/update/table') }}",
+            url: "{{ url('trans/update_leave/table') }}",
             type: "get",
             data: {
                 'status': workflow_status,
-                'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior,
+                'directSuperiorCode' : direct_superior,
                 'approvalRemarks': approvalremarks
             },
             success: function (response) {
@@ -891,6 +881,8 @@
                         // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
                         'Update'
                     );
+
+                    $('#modal_list_detail_leave').modal('hide');
                     
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response

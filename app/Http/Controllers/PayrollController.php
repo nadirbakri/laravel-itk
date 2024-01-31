@@ -6545,6 +6545,26 @@ public function dataDetailReportFormatPY(Request $request)
             $data = [];
         }
 
+        function tgl_indo($tanggal){
+            $bulan = array (
+                1 =>   'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+         
+            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+        }
+
         try{
             
             $client = new Client([
@@ -6564,7 +6584,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             if(!empty($data->period)){
-                $param['periode'] = $data->period;
+                $param['period'] = $data->period;
             }
 
             if(!empty($data->format_type)){
@@ -6586,14 +6606,25 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['sortByLevel'] = $data->sort_by == "by_level" ? true : false;
             }
 
-            if(!empty($data->group_authorized_from) || isset($data->group_authorized_to)){
-                $param['groupAuthorizedFrom'] = intval($data->group_authorized_from);
-                $param['groupAuthorizedTo'] = intval($data->group_authorized_to);
-            }
+            // if(!empty($data->group_authorized_from) || isset($data->group_authorized_to)){
+                $param['groupAuthorizedFrom'] = intval(100);
+                $param['groupAuthorizedTo'] = intval(900);
+            // }
 
-            if(!empty($data->display_logo)){
-                $param['displayCompanyLogo'] = $data->display_logo == "0" ? false : true;
-            }
+            // if(!empty($data->display_logo)){
+                $param['displayCompanyLogo'] = true;
+            // }
+
+            $firstDayOfPreviousMonth = date("Y-m-d", strtotime("$request->period first day of last month"));
+            $lastDayOfPreviousMonth = date("Y-m-d", strtotime("$request->period last day of last month"));
+
+            // Mendapatkan bulan sebelumnya dan tahun
+            $previousMonth = date("F", strtotime("$request->period last month"));
+            $previousYear = date("Y", strtotime("$request->period last month"));
+
+            // Mendapatkan jumlah hari di bulan sebelumnya
+            $daysInPreviousMonth = cal_days_in_month(CAL_GREGORIAN, date("n", strtotime("$request->period last month")), $previousYear);
+            $strLeaveTaken = "1 - $daysInPreviousMonth $previousMonth";
 
             // var_dump(json_encode($param));
 
@@ -6616,41 +6647,41 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            if($data->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+            if($request->format_type == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => true, 'period' => tgl_indo(date('Y-m-d', strtotime($data->period))), 'strLeaveTaken' => $strLeaveTaken])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    // $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => true, 'period' => tgl_indo(date('Y-m-d', strtotime($data->period))), 'strLeaveTaken' => $strLeaveTaken])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    // $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
         }else{
-            if($data->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+            if($request->format_type == "portrait"){
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => true, 'period' => tgl_indo(date('Y-m-d', strtotime($data->period))), 'strLeaveTaken' => $strLeaveTaken])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    // $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => true, 'period' => tgl_indo(date('Y-m-d', strtotime($data->period))), 'strLeaveTaken' => $strLeaveTaken])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                if($request->mobile){
+                    return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    // $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
