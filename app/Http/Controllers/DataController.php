@@ -1900,6 +1900,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($employees);
 	}
 
@@ -1969,6 +1973,11 @@ class DataController extends Controller
 
 			$data = array_values($filteredData);
 	    }
+
+		usort($data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
 		// dd($data);
         return response()->json($data);
 	}
@@ -2017,7 +2026,11 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
-		// var_dump($arrResult);
+
+		usort($data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+		
         return response()->json($data);
 	}
 
@@ -2069,6 +2082,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($employees);
 	}
 
@@ -2118,6 +2135,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
         return response()->json($employees);
 	}
@@ -2849,6 +2870,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($employees);
 	}
 
@@ -2899,6 +2924,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
         return response()->json($employees);
 	}
@@ -3048,6 +3077,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($user_data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($user_data);
 	}
 
@@ -3096,6 +3129,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		usort($user_data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
         return response()->json($user_data);
 	}
@@ -4062,6 +4099,10 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		usort($arrResult->dataListSet, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
 	    if($request->func == 'First'){
 	    	return response()->json($arrResult->dataListSet[0]);

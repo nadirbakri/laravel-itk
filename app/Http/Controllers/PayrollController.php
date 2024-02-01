@@ -6624,20 +6624,20 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($request->report_type == "report"){
-                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Report.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Slip.pdf');
             }
         }else{
             $arraySend[] = $arrResult->dataListSet[0];
 
             if($request->report_type == "report"){
-                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => [$arraySend]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => [$arraySend]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Report.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Slip.pdf');
             }
         }
@@ -6687,10 +6687,10 @@ public function dataDetailReportFormatPY(Request $request)
         // var_dump($arrResult->dataListSet[0]);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }
     }
@@ -7378,10 +7378,10 @@ public function dataDetailReportFormatPY(Request $request)
         $paramSend[] = (object) $param;
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('DUMTK Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => $arraySend, 'data2' => $paramSend])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => $arraySend, 'data2' => $paramSend])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('DUMTK Report.pdf');
         }
     }
@@ -7450,10 +7450,10 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Salary Historical Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Salary Historical Report.pdf');
         }
     }
@@ -7659,10 +7659,10 @@ public function dataDetailReportFormatPY(Request $request)
         $customPaper = array(0,0,792.00,1224.00);
         
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => $arrResult->dataListSet])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => $arrResult->dataListSet])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
         }
     }
@@ -7807,10 +7807,10 @@ public function dataDetailReportFormatPY(Request $request)
         $customPaper = array(0,0,792.00,1224.00);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Retroactive Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Retroactive Report.pdf');
         }
     }
@@ -7940,10 +7940,10 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }
     }

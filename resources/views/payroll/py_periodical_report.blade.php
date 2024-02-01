@@ -1217,18 +1217,9 @@
 
         var clicked = "";
 
-        $('#btn-send').click(function (){
-            $("#btn-send").prop("disabled", true);
-            $("#btn-send").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            clicked = "DOWNLOAD_PDF";
-            $('#periodical_report_form').submit();
-        });
-
         $('#send-to-pdf').click(function (){
-            $("#send-to-report").prop("disabled", true);
-            $("#send-to-report").html(
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
@@ -1236,8 +1227,8 @@
         });
 
         $('#send-to-xls').click(function (){
-            $("#send-to-report").prop("disabled", true);
-            $("#send-to-report").html(
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_XLS";
@@ -1324,8 +1315,8 @@
                             type: "POST",
                             data: $('#periodical_report_form').serialize(),
                             success: function(result, status, xhr){
-                                $('#send-to-report').prop("disabled", false);
-                                $("#send-to-report").html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
                                 
@@ -1351,8 +1342,8 @@
                                 }
                             },
                             error: function(response){
-                                $('#send-to-report').prop("disabled", false);
-                                $('#send-to-report').html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
                                 $('#notification_error').modal('show');
@@ -1370,13 +1361,8 @@
                             type: "POST",
                             data: $('#periodical_report_form').serialize(),
                             success: function(result, status, xhr){
-                                $('#btn-send').prop("disabled", false);
-                                $("#btn-send").html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
-                                );
-
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $("#btn-send-to-report").html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
 
@@ -1425,12 +1411,8 @@
                                 }
                             },
                             error: function(response){
-                                $('#btn-send').prop("disabled", false);
-                                $('#btn-send').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
-                                );
-                                $('#btn-send-to-report').prop("disabled", false);
-                                $('#btn-send-to-report').html(
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
                                 );
                                 $('#btn-preview').prop("disabled", false);
