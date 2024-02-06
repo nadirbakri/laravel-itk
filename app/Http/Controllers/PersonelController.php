@@ -723,7 +723,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/employeeapproval/getemployeeapprovallist',
+            $response = $client->post(env('API_URL') . '/personel/employeeapproval/getemployeeapprovallist',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
