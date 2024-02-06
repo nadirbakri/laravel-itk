@@ -187,7 +187,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
@@ -984,10 +984,18 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+
+                    var data = table1.$('input').serialize();
+                    data += '&' + table2.$('input').serialize();
+                    data += '&report_code=' + $('#report_code').val();
+                    data += '&record_function=' + $('#record_function').val();
+                    data += '&description=' + $('#description').val();
+                    data += '&font_size=' + $('#font_size').val();
+
                     $.ajax({
                         url: "{{ url('payroll/report_format/proses') }}",
                         type: "POST",
-                        data: $('#report_format_form').serialize(),
+                        data: data,
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
