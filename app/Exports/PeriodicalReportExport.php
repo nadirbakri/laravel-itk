@@ -153,7 +153,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
         // exit;
 
         if($arrResult->dataListSet == null){
@@ -161,6 +161,18 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
             ]);
         }else{
+            if(isset($arrResult->dataListSet[0]->detail)){
+                usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                    return (int) $a->employeeNo - (int) $b->employeeNo;
+                });
+            }
+
+            if(isset($arrResult->dataListSet[0]->summary)){
+                usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                    return (int) $a->employeeNo - (int) $b->employeeNo;
+                });
+            }
+
             return view('payroll.py_export_periodical_report_excel', [
                 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
             ]); 

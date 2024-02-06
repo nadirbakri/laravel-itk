@@ -8002,6 +8002,18 @@ public function dataDetailReportFormatPY(Request $request)
             $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
+            if(isset($arrResult->dataListSet[0]->detail)){
+                usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                    return (int) $a->employeeNo - (int) $b->employeeNo;
+                });
+            }
+
+            if(isset($arrResult->dataListSet[0]->summary)){
+                usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                    return (int) $a->employeeNo - (int) $b->employeeNo;
+                });
+            }
+            
             $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }
