@@ -239,6 +239,7 @@
                                         <option value="PrYearly">PrYearly</option>
                                         <option value="PeMaster">PeMaster</option>
                                         <option value="TmFixedComponent">TmFixedComponent</option>
+                                        <option value="GmLevel">GmLevel</option>
                                     </select>
                                 </div>
                             </div>
@@ -346,6 +347,7 @@
                                         <option value="PrYearly">PrYearly</option>
                                         <option value="PeMaster">PeMaster</option>
                                         <option value="TmFixedComponent">TmFixedComponent</option>
+                                        <option value="GmLevel">GmLevel</option>
                                     </select>
                                 </div>
                             </div>
@@ -725,7 +727,11 @@
 
             $('#table_name_detail').on('change', function () {
                 tableName = $('#table_name_detail').val();
-                loadDataFieldName();
+                if(tableName == 'GmLevel'){
+                    loadDataLevelType();
+                }else{
+                    loadDataFieldName();
+                }
             });
 
             $('#field_name_detail').on('change', function () {
@@ -742,7 +748,11 @@
 
             $('#table_name_condition').on('change', function () {
                 tableName = $('#table_name_condition').val();
-                loadDataFieldName();
+                if(tableName == 'GmLevel'){
+                    loadDataLevelType();
+                }else{
+                    loadDataFieldName();
+                }
             });
 
             $('#field_name_condition').on('change', function () {
@@ -802,6 +812,63 @@
                                 return {
                                     text: item,
                                     id: item,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLevelType() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.levelDescription + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#field_name_detail, #field_name_condition').select2({
+                width: '100%',
+                placeholder: 'Choose Field Name',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/level_type/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelDescription,
+                                    id: item.levelType,
                                     data: item
                                 }
                             })
