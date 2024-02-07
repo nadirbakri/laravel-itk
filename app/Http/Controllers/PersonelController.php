@@ -723,7 +723,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/employeeapproval/getemployeeapprovallist',
+            $response = $client->post(env('API_URL') . '/personel/employeeapproval/getemployeeapprovallist',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2257,6 +2257,8 @@ class PersonelController extends Controller
                     $data2 = $arrResult2->dataListSet;
                 }
 
+                // dd($arrResult2->dataListSet);
+
                 return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
 
@@ -2308,12 +2310,12 @@ class PersonelController extends Controller
                 else {
                     $data = $arrResult->dataListSet;
                     // var_dump($data[0]->photo);
-                    if ($data[0]->photo == null){
+                    if ($data[0]->detailList[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->detailList[0]->photo));
                     }
                 }
 
@@ -2357,7 +2359,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/user/getuserdetail',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2378,12 +2380,12 @@ class PersonelController extends Controller
                 else {
                     $data = $arrResult->dataListSet;
                     // var_dump($data[0]->photo);
-                    if ($data[0]->photo == null){
+                    if ($data[0]->detailList[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->detailList[0]->photo));
                     }
                 }
 
@@ -2396,7 +2398,6 @@ class PersonelController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -3451,7 +3452,7 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mutation/getmutationview',
+            $response = $client->post(env('API_URL') . '/personel/MutationEmployee/getMutationView',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -3789,6 +3790,7 @@ class PersonelController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
+                        'level' => [],
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -3797,6 +3799,7 @@ class PersonelController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -5717,7 +5720,7 @@ class PersonelController extends Controller
                 "taxRegisteredExpiryDate" => $request->tax_expiry_date_info,
                 "religionCode" => $request->religion_info,
                 "nationalityCode" => $request->nationality_info,
-                "costCenterCode" => null,
+                "costCenterCode" => $request->cost_center_code_employment,
                 "employmentStatus" => $request->employment_status_employment,
                 "flagIsExpat" => isset($request->expatriat_employment) ? (bool) $request->expatriat_employment : false,
                 "expatLicenseNo" => $request->license_no_employment,
@@ -5735,10 +5738,10 @@ class PersonelController extends Controller
                 "pensionDate" => null,
                 "serviceYear" => 0,
                 "employmentType" => $request->employment_type_employment,
-                "locationCode" => null,
-                "gradeCode" => null,
-                "positionCode" => null,
-                "rankingCode" => null,
+                // "locationCode" => $request->location_code_employment,
+                "gradeCode" => $request->grade_code_employment,
+                "positionCode" => $request->position_code_employment,
+                "rankingCode" => $request->ranking_code_employment,
                 "workNatureCode" => null,
                 "groupCode" => null,
                 "groupAuthorizeCode" => (int) $request->group_authorize_payroll,
@@ -6049,8 +6052,7 @@ class PersonelController extends Controller
                 $param['peMasterFamily'] = $datapeMasterFamily;
             }
 
-            // var_dump(json_encode($param));
-            // exit;
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/personel/PeMaster/insertPeMaster',
@@ -9002,17 +9004,51 @@ class PersonelController extends Controller
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName'),
                 ];
+            }else if($request->mutation_type == "PE"){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->employee_no,
+                    'transactionType' => $request->mutation_type,
+                    'peMasterInfo' => [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employee_no,
+                        'homeAddress' => $request->home_address_new,
+                        'homeCityCode' => $request->home_city_code_new,
+                        'homeZipCode' => $request->home_zip_code_new,
+                        'homePhone' => $request->home_phone_new,
+                        'otherAddress' => $request->other_address_new,
+                        'otherCityCode' => $request->other_city_code_new,
+                        'otherZipCode' => $request->other_zip_code_new,
+                        'otherPhone' => $request->other_phone_new,
+                        'emergencyName' => $request->emergency_contact_name_new,
+                        'emergencyAddress' => $request->emergency_contact_address_new,
+                        'emergencyPhone' => $request->emergency_contact_phone_new,
+                        'emergencyRelation' => $request->emergency_contact_relation_new,
+                        'personalEmailAddress' => $request->personal_email_address_new,
+                        'companyEmailAddress' => $request->company_email_address_new,
+                    ],
+                    'changedNo' => 0,
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
             // exit;
 
-            $response = $client->post(env('API_URL') . '/mutationemployee/mutation',
+            $response = $client->post(env('API_URL') . '/personel/mutationemployee/executemutation',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             // exit;
             if($response->getStatusCode() == 401){
                 return view('error.login');

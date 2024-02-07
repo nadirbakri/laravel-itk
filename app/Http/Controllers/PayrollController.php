@@ -140,15 +140,22 @@ class PayrollController extends Controller
             $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
 
             if($arrResult_tm->dataListSet == null){
-                $data = [];
+                return redirect()->back()->withErrors(['msg' => 'There is no TM Reference Data']);
             }else{
                 $data = $arrResult_tm->dataListSet;
             }
 
-            if($arrResult_tm->dataListSet[0]->statusProcess > '0' && Session::pull('accessReference') != "true"){
-                return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+            if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
+                if(empty(Session::get('accessReference'))){
+                    return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+                }else{
+                    if(Session::pull('accessReference') != "true"){
+                        return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
+                    }else{
+                        return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
+                    }
+                }
             } else {
-                $arrResult_tm = json_decode($response_tm->getBody()->getContents());
                 return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
             }
         } catch (RequestException $e) {
@@ -322,6 +329,8 @@ class PayrollController extends Controller
         $arrResult_tm = json_decode($response_tm->getBody()->getContents());
         $arrResult_cpy = json_decode($response_cpy->getBody()->getContents()); 
         $arrResult_pr = json_decode($response_pr->getBody()->getContents()); 
+
+        // dd($arrResult_pr->dataListSet);
 
         return view('payroll.py_reference_payroll', ['data_tm' => $arrResult_tm->dataListSet, 'data_cpy' => $arrResult_cpy->dataListSet, 'data_pr' => $arrResult_pr->dataListSet]);
     }
@@ -2561,6 +2570,16 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // dd(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'fieldName' => $request->fieldName,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName')
+            //     ]
+            //     ));
+
             $response = $client->post(env('API_URL') . '/payroll/getSalaryComponentData',
                 ['body' => json_encode(
                     [
@@ -2574,6 +2593,7 @@ class PayrollController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2732,7 +2752,12 @@ public function dataDetailReportFormatPY(Request $request)
                     [
                         'companyCode' => Session::get('companyCode'),
                         "slipCode" => $request->slipCode,
-                        "slipName" => $request->slipName
+                        "type" => $request->columnType,
+                        'languageCode' => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
                     ]
                 )]
             );
@@ -2753,7 +2778,7 @@ public function dataDetailReportFormatPY(Request $request)
         if($arrResult->dataListSet == null){
             return response()->json('');
         }else{
-            return response()->json($arrResult->dataListSet[0]);
+            return response()->json($arrResult->dataListSet);
         }
     }
 
@@ -2959,7 +2984,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertReportFormat',
@@ -4152,6 +4177,8 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['detail'] = $data_detail;
             }
 
+            // dd(json_encode($param));
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/insertPrCalculationProcess',
                     ['body' => json_encode($param)]
@@ -4361,8 +4388,8 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        var_dump($arrResult->dataListSet);
-        exit;
+        // var_dump($arrResult->dataListSet);
+        // exit;
 
         if($arrResult->dataListSet != null){
             if($request->output_file == 'BANK CENTRAL ASIA'){
@@ -5082,7 +5109,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertSalaryComponentData',
@@ -5615,6 +5642,115 @@ public function dataDetailReportFormatPY(Request $request)
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesSlipFormatPY(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                if (isset($request->no)) {
+                    foreach ($request->no as $key => $value) {
+                        $data_detail [] = [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            "slipCode" => $request->slip_code,
+                            "type" => $request->column_type,
+                            "seqNo" => (int) $value,
+                            "columnName" => $request->column_name[$key],
+                            "header" => $request->header[$key],
+                            "changedNo" => 1,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => strtoupper(App::getLocale()),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ];
+                    }
+                }
+                else {
+                    $data_detail = null;
+                }
+
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')     
+                ];
+                $param['slipList'] = $data_detail;
+            }
+            else {
+                if (isset($request->no)) {
+                    foreach ($request->no as $key => $value) {
+                        $data_detail [] = [
+                            'recordStatus' => 'A',
+                            'companyCode' => Session::get('companyCode'),
+                            "slipCode" => $request->slip_code,
+                            "type" => $request->column_type,
+                            "seqNo" => (int) $value,
+                            "columnName" => $request->column_name[$key],
+                            "header" => $request->header[$key],
+                            "changedNo" => 1,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => strtoupper(App::getLocale()),
+                            "sessionID" => 0,
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
+                        ];
+                    }
+                }
+                else {
+                    $data_detail = null;
+                }
+
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "languageCode" => strtoupper(App::getLocale()),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')     
+                ];
+                $param['slipList'] = $data_detail;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/payroll/insertUpdateSlipFormat',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesSlipFormatCustomPY(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -5675,12 +5811,12 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if($request->record_function_custom == 'New'){
-                $response = $client->post(env('API_URL') . '/payroll/insertSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertUpdateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
             else{
-                $response = $client->put(env('API_URL') . '/payroll/updateSlipFormat',
+                $response = $client->post(env('API_URL') . '/payroll/insertUpdateSlipFormat',
                     ['body' => json_encode($param)]
                 );
             }
@@ -5873,32 +6009,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "employeeNoFrom" => $request->employee_no_from,
-            //         "employeeNoTo" => $request->employee_no_to,
-            //         "periodMonth" => (int) $request->process_period_month_hidden,
-            //         "periodYear" => (int) $request->process_period_year_hidden,
-            //         "loanPaymentProcess" => isset($request->loan_payment_process) ? (bool) $request->loan_payment_process : false,
-            //         "retroactiveProcess" => isset($request->retroactive_process) ? (bool) $request->retroactive_process : false,
-            //         "retroactive" => (int) $request->retroactive,
-            //         "includeProbationPerod" => isset($request->include_probation_period) ? (bool) $request->include_probation_period : false,
-            //         "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive) ? (bool) $request->include_jamsostek_retroactive : false,
-            //         "range" => isset($request->range) ? (bool) $request->range : false,
-            //         "languageCode" => App::getLocale(),
-            //         "changedBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
-            // exit;
-
             $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryCalculation',
                 ['body' => json_encode(
                     [
@@ -5950,27 +6060,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "periodMonth" => (int) $request->process_period_month_hidden,
-            //         "periodYear" => (int) $request->process_period_year,
-            //         "employeeNoFrom" => $request->employee_no_from,
-            //         "employeeNoTo" => $request->employee_no_to,
-            //         "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
-            //         "languageCode" => App::getLocale(),
-            //         "changedBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
-            //     exit;
 
             $response = $client->post(env('API_URL') . '/payroll/insertTmFixedComponent',
                 ['body' => json_encode(
@@ -6268,23 +6357,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "periodProcess" => $request->process_period_det,
-            //         "recalculateTHRTax" => isset($request->recalculate_thr_tax) ? (bool) $request->recalculate_thr_tax : false,
-            //         "recalculateBonusTax" => isset($request->recalculate_bonus_tax) ? (bool) $request->recalculate_bonus_tax : false,
-            //         "range" => isset($request->range) ? (bool) $request->range : false,
-            //         "employeeNoFrom" => $request->employee_no_from,
-            //         "employeeNoTo" => $request->employee_no_to,
-            //         "languageCode" => App::getLocale(),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            //     ));
-
             $response = $client->post(env('API_URL') . '/payroll/PrTaxCalculationProcess',
                 ['body' => json_encode(
                     [
@@ -6554,20 +6626,20 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($request->report_type == "report"){
-                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Report.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Slip.pdf');
             }
         }else{
             $arraySend[] = $arrResult->dataListSet[0];
 
             if($request->report_type == "report"){
-                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => [$arraySend]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_report', ['data' => [$arraySend]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Report.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+                $pdf = PDF::loadView('payroll.py_export_severance_slip', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Severance Slip.pdf');
             }
         }
@@ -6617,10 +6689,10 @@ public function dataDetailReportFormatPY(Request $request)
         // var_dump($arrResult->dataListSet[0]);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }
     }
@@ -6772,6 +6844,26 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printPaymentSlipPayroll(Request $request){
+        function tgl_indo($tanggal){
+            $bulan = array (
+                1 =>   'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+         
+            return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+        }
+
         try{
             $dataLevel = [];
 
@@ -6801,7 +6893,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             if(!empty($request->period)){
-                $param['periode'] = $request->period;
+                $param['period'] = $request->period;
             }
 
             if(!empty($request->format_type)){
@@ -6898,12 +6990,22 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
-        // exit;
+        // dd($arrResult->dataListSet);
+
+        $firstDayOfPreviousMonth = date("01-M-Y", strtotime($request->period));
+        $lastDayOfPreviousMonth = date("t-M-Y", strtotime($request->period));
 
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo, 'period' => date('F Y', strtotime($request->period))])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', [
+                    'data' => [], 
+                    'display_logo' => $request->display_logo, 
+                    'no' => date('m', strtotime($request->period)), 
+                    'first_day' => $firstDayOfPreviousMonth,
+                    'last_day' => $lastDayOfPreviousMonth,
+                    'period' => date('d-M-Y', strtotime($request->period)),
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -6911,7 +7013,15 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo, 'period' => date('F Y', strtotime($request->period))])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', [
+                    'data' => [], 
+                    'display_logo' => $request->display_logo, 
+                    'no' => date('m', strtotime($request->period)), 
+                    'first_day' => $firstDayOfPreviousMonth,
+                    'last_day' => $lastDayOfPreviousMonth,
+                    'period' => date('d-M-Y', strtotime($request->period)),
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -6921,7 +7031,15 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo, 'period' => date('F Y', strtotime($request->period))])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', [
+                    'data' => $arrResult->dataListSet, 
+                    'display_logo' => $request->display_logo, 
+                    'no' => date('m', strtotime($request->period)), 
+                    'first_day' => $firstDayOfPreviousMonth,
+                    'last_day' => $lastDayOfPreviousMonth,
+                    'period' => date('d-M-Y', strtotime($request->period)),
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -6929,7 +7047,15 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo, 'period' => date('F Y', strtotime($request->period))])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', [
+                    'data' => $arrResult->dataListSet, 
+                    'display_logo' => $request->display_logo, 
+                    'no' => date('m', strtotime($request->period)), 
+                    'first_day' => $firstDayOfPreviousMonth,
+                    'last_day' => $lastDayOfPreviousMonth,
+                    'period' => date('d-M-Y', strtotime($request->period)),
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -7309,10 +7435,10 @@ public function dataDetailReportFormatPY(Request $request)
         $paramSend[] = (object) $param;
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('DUMTK Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => $arraySend, 'data2' => $paramSend])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_dumtk', ['data' => $arraySend, 'data2' => $paramSend])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('DUMTK Report.pdf');
         }
     }
@@ -7381,10 +7507,10 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Salary Historical Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_salary_historical_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Salary Historical Report.pdf');
         }
     }
@@ -7489,7 +7615,7 @@ public function dataDetailReportFormatPY(Request $request)
             $arraySend[] = [];
         }
 
-        $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled' => true]);
+        $pdf = PDF::loadView('payroll.py_export_bonus_thr_report', ['data' => $arraySend])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
         return $pdf->stream('Bonus & THR Report.pdf');
     }
 
@@ -7588,13 +7714,12 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
         $customPaper = array(0,0,792.00,1224.00);
-        // var_dump($arrResult->dataListSet);
         
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => $arrResult->dataListSet])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => $arrResult->dataListSet])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
         }
     }
@@ -7739,10 +7864,10 @@ public function dataDetailReportFormatPY(Request $request)
         $customPaper = array(0,0,792.00,1224.00);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Retroactive Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_retroactive_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->as_of_period, 'data_employee_no_from' => $request->employee_no_from, 'data_employee_no_to' => $request->employee_no_to])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Retroactive Report.pdf');
         }
     }
@@ -7858,7 +7983,7 @@ public function dataDetailReportFormatPY(Request $request)
             
         } catch (RequestException $e){
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -7874,10 +7999,22 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled' => true]);
+            if(isset($arrResult->dataListSet[0]->detail)){
+                usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                    return (int) $a->employeeNo - (int) $b->employeeNo;
+                });
+            }
+
+            if(isset($arrResult->dataListSet[0]->summary)){
+                usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                    return (int) $a->employeeNo - (int) $b->employeeNo;
+                });
+            }
+            
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }
     }

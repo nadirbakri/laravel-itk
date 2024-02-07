@@ -1448,19 +1448,16 @@
                     'processStatus': ((typeof arrDataTM[0].statusProcess !== 'undefined') ? arrDataTM[0].statusProcess : '')
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data[0].comGenCode,
-                    title: data[0].value,
-                    text: data[0].value
-                });
-                $("#process_status").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#process_status").trigger({
+                var option = new Option(data[0].value, data[0].comGenCode, true, true);
+
+                $('#process_status').append(option).trigger('change');
+
+                $('#process_status').trigger({
                     type: 'select2:select',
                     params: {
                         id: data[0].comGenCode,
                         text: data[0].value,
-                        data: data
+                        data: data[0]
                     }
                 });
             });

@@ -34,6 +34,14 @@ class PersonalDataExport implements FromView, ShouldAutoSize
                     ]
                 )]
             );
+
+            $response2 = $client->post(env('API_URL') . '/personel/PeMaster/getTemplate',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -46,16 +54,15 @@ class PersonalDataExport implements FromView, ShouldAutoSize
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
+        $arrResult2 = json_decode($response2->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_personal_data', [
-                'data' => []
+                'data' => [], 'header' => $arrResult2
             ]);
         }else{
             return view('personel.personel_export_personal_data', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'header' => $arrResult2
             ]);
         }
     }

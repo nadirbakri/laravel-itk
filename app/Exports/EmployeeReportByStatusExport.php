@@ -46,15 +46,15 @@ class EmployeeReportByStatusExport implements FromView, ShouldAutoSize
             // }
 
             if ($this->reportType=='contract') {
-                $URL = '/employeereportbystatus/getemployeereportcontract';
+                $URL = '/personel/employeereportbystatus/getemployeereportcontract';
             }
 
             else if ($this->reportType=='terminate') {
-                $URL = '/EmployeeReportByStatus/getEmployeeReportTerminate';
+                $URL = '/personel/EmployeeReportByStatus/getEmployeeReportTerminate';
             }
             
             else {
-                $URL = '/EmployeeReportByStatus/getEmployeeReportProbation';
+                $URL = '/personel/EmployeeReportByStatus/getEmployeeReportProbation';
             }
 
             // var_dump(json_encode(
@@ -70,6 +70,7 @@ class EmployeeReportByStatusExport implements FromView, ShouldAutoSize
             //     'includeResign' => $this->includeResign
             //     ]
             // ));
+            
 
             $response = $client->post(env('API_URL') . $URL,
                 ['body' => json_encode(
@@ -79,7 +80,7 @@ class EmployeeReportByStatusExport implements FromView, ShouldAutoSize
                     'employeeNoTo' => $this->employeeNoTo, 
                     'periodFrom' => $this->periodFrom,
                     'periodTo' => $this->periodTo,
-                    'languageCode' => App::getLocale(), 
+                    'languageID' => App::getLocale(), 
                     'sessionID' => 0, 
                     'sessionUserID' => Session::get('userID'),
                     'includeResign' => $this->includeResign
@@ -99,8 +100,6 @@ class EmployeeReportByStatusExport implements FromView, ShouldAutoSize
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_employee_report_by_status', [

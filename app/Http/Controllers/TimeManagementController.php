@@ -16,7 +16,7 @@ use App\Exports\ChangeDataShiftTemplateExcel;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
-use App\Imports\TimeRecordingProcessFormImport;
+use App\Imports\TimeRecordingImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -926,7 +926,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTMDetail',
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2301,76 +2301,25 @@ class TimeManagementController extends Controller
     public function prosesTimeRecordingProcessFormTM(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
-        try {
-            $client = new Client([
-                'verify' => false,
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            if($request->hasFile('file_location')) {
-                $file = $request->file('file_location');
-                $filename = rand().$file->getClientOriginalName();
-                $file->move('file_excel', $filename);
-                $path = public_path('file_excel\\');
-
-                // var_dump(json_encode(
-                //     [
-                //         'companyCode' => Session::get('companyCode'),
-                //         'fileLocation' =>  $path . '' . $filename,
-                //         'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
-                //         'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                //         "changedNo" => 0,
-                //         "createdDate" => date("Y-m-d\TH:i:s"),
-                //         "createdBy" => Session::get('userID'),
-                //         "changedDate" => date("Y-m-d\TH:i:s"),
-                //         "changedBy" => Session::get('userID'),
-                //         "languageCode" => App::getLocale(),
-                //         'sessionID' => 0,
-                //         'sessionUserID' => Session::get('userID'),
-                //         'logActionUsername' => Session::get('userName'),
-                //         'logActionUserID' => Session::get('userID')
-                //     ]
-                //     ));
-                // exit;
-
-                $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'fileLocation' =>  $path . '' . $filename,
-                            'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
-                            'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0,
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                            'logActionUserID' => Session::get('userID')
-                        ]
-                    )]
-                );
-            }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            // var_dump($response);
-            // exit;
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
+        try{
+            $file = $request->file('file_location');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new TimeRecordingImport($request->automatic);
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
     }
 
     public function prosesTemplatePreparationTM(Request $request)
@@ -2382,23 +2331,6 @@ class TimeManagementController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'newEmployee' => ($request->employee_type[0] == "new_employee") ? true : false,
-            //         'range' => ($request->employee_type[0] == "range") ? true : false,
-            //         'employeeNoFrom' => isset($request->employee_no_from) ? $request->employee_no_from : '',
-            //         'employeeNoTo' => isset($request->employee_no_to) ? $request->employee_no_to : '',
-            //         'periodMonth' => (int) date('n', strtotime($request->processing_period)),
-            //         'periodYear' => (int) date('Y', strtotime($request->processing_period)),
-            //         "languageCode" => App::getLocale(),
-            //         'sessionID' => 0,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'logActionUserID' => Session::get('userID'),
-            //         'logActionUsername' => Session::get('userName'),
-            //     ]
-            //     ));
 
             $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/CreateTemplate',
                 ['body' => json_encode(
@@ -2451,28 +2383,28 @@ class TimeManagementController extends Controller
                 'companyCode' => Session::get('companyCode'),
                 'periodMonth' => (int) $arrData['processing_period_month'],
                 'periodYear' => (int) $arrData['processing_period_year'],
-                'statusProcess' => $arrData['process_status'],
-                'statusPeriod' => $arrData['period_status'],
-                'templatePreparation' => $arrData['template_preparation_process'],
+                'statusProcess' => isset($arrData['process_status']) ? $arrData['process_status'] : null,
+                'statusPeriod' => isset($arrData['period_status']) ? $arrData['period_status'] : null,
+                'templatePreparation' => isset($arrData['template_preparation_process']) ? $arrData['template_preparation_process'] : null,
                 'flagAbsentMobile' => isset($request->flag_absent_mobile) ? (bool) $request->flag_absent_mobile : false,
-                'calculateLateHour' => $arrData['late_hour'],
-                'calculateEarlyBackHour' => $arrData['early_back_hour'],
-                'calculateOvertime' => $arrData['default_calculation'],
-                'ovtBeforeHourFrom' => $arrData['overtime_before_from'],
-                'ovtAfterHourFrom' => $arrData['overtime_after_from'],
+                'calculateLateHour' => isset($arrData['late_hour']) ? $arrData['late_hour'] : null,
+                'calculateEarlyBackHour' => isset($arrData['early_back_hour']) ? $arrData['early_back_hour'] : null,
+                'calculateOvertime' => isset($arrData['default_calculation']) ? $arrData['default_calculation'] : null,
+                'ovtBeforeHourFrom' => isset($arrData['overtime_before_from']) ? $arrData['overtime_before_from'] : null,
+                'ovtAfterHourFrom' => isset($arrData['overtime_after_from']) ? $arrData['overtime_after_from'] : null,
                 // 'ovtRoundedFrom' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_from) . ":00",
                 // 'ovtRoundedTo' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_to) . ":00",
                 // 'ovtRoundedBecome' => date("Y-m-d") . "T00:" . sprintf("%02d", $request->minute_rounded_become) . ":00",
-                'overtimeCode' => $arrData['overtime'],
-                'absentCode' => $arrData['absent'],
-                'unpaidLeaveCode' => $arrData['unpaid_leave'],
-                'lateCode' => $arrData['late'],
-                'earlybackCode' => $arrData['early_back'],
-                'lateEarlybackCode' => $arrData['late_early_back'],
-                'noTimeInCode' => $arrData['not_clock_in'],
-                'noTimeOutCode' => $arrData['not_clock_out'],
-                'noTimeInEarlybackCode' => $arrData['not_clock_in_early_back'],
-                'lateNoTimeOutCode' => $arrData['not_clock_out_late'],
+                'overtimeCode' => isset($arrData['overtime']) ? $arrData['overtime'] : null,
+                'absentCode' => isset($arrData['absent']) ? $arrData['absent'] : null,
+                'unpaidLeaveCode' => isset($arrData['unpaid_leave']) ? $arrData['unpaid_leave'] : null,
+                'lateCode' => isset($arrData['late']) ? $arrData['late'] : null,
+                'earlybackCode' => isset($arrData['early_back']) ? $arrData['early_back'] : null,
+                'lateEarlybackCode' => isset($arrData['late_early_back']) ? $arrData['late_early_back'] : null,
+                'noTimeInCode' => isset($arrData['not_clock_in']) ? $arrData['not_clock_in'] : null,
+                'noTimeOutCode' => isset($arrData['not_clock_out']) ? $arrData['not_clock_out'] : null,
+                'noTimeInEarlybackCode' => isset($arrData['not_clock_in_early_back']) ? $arrData['not_clock_in_early_back'] : null,
+                'lateNoTimeOutCode' => isset($arrData['not_clock_out_late']) ? $arrData['not_clock_out_late'] : null,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),

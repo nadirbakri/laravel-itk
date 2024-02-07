@@ -518,7 +518,7 @@
         }
 
         $('#btn-add').on('click', function () {
-            $('#no').val('');
+            $('#no').val(arrayPayrollCalculation.length);
             $('#func_detail').val('new');
             $('#table_chooser').val(null).trigger('change');
             $('#field_chooser').val(null).trigger('change');
@@ -565,7 +565,7 @@
             }
 
             if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                var formula = tableChooser + '.' + fieldChooser;
+                var formula = '"' + tableChooser + '"' + '.' + '"' + fieldChooser + '"';
                 $('#preview_formula').val($('#preview_formula').val() + ' ' + formula + ' ' + operator);
             } else {
                 $('#preview_formula').val($('#preview_formula').val() + ' ' + operator);
@@ -579,7 +579,7 @@
             }
 
             if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
-                var formula = tableChooser + '.' + fieldChooser;
+                var formula = '"' + tableChooser + '"' + '.' + '"' + fieldChooser + '"';
                 $('#preview_condition').val($('#preview_condition').val() + ' ' + formula + ' ' + operator);
             } else {
                 $('#preview_condition').val($('#preview_condition').val() + ' ' + operator);
@@ -623,7 +623,7 @@
                 placeholder: 'Choose Field Name',
                 allowClear: true,
                 // tags: true,
-                closeOnSelect: false,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -694,16 +694,14 @@
                         data: 'condition',
                         name: 'condition',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="condition[]" value="' +
-                                data + '">' + data;
+                            return '<textarea class="form-control" name="condition[]" style="display:none;">' + data + '</textarea>' + data;
                         }
                     },
                     {
                         data: 'formula',
                         name: 'formula',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="formula[]" value="' +
-                                data + '">' + data;
+                            return '<textarea class="form-control" name="formula[]" style="display:none;">' + data + '</textarea>' + data;
                         }
                     },
                 ],

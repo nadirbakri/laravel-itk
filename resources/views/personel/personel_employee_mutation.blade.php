@@ -349,6 +349,121 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12" id="div_home_address_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_address_current">{{ __('personel_employee_mutation.label_home_address') }}</label>
+                                    <textarea class="form-control" id="home_address_current" name="home_address_current"
+                                        rows="3"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_address') }}" disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_city_code_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_city_code_current">{{ __('personel_employee_mutation.label_home_city_code') }}</label>
+                                    <input type="text" class="form-control" id="home_city_code_current" name="home_city_code_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_city_code') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_zip_code_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_zip_code_current">{{ __('personel_employee_mutation.label_home_zip_code') }}</label>
+                                    <input type="text" class="form-control" id="home_zip_code_current" name="home_zip_code_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_zip_code') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_phone_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_phone_current">{{ __('personel_employee_mutation.label_home_phone') }}</label>
+                                    <input type="text" class="form-control" id="home_phone_current" name="home_phone_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_phone') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_name_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_name_current">{{ __('personel_employee_mutation.label_emergency_contact_name') }}</label>
+                                    <input type="text" class="form-control" id="emergency_contact_name_current" name="emergency_contact_name_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_name') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_address_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_address_current">{{ __('personel_employee_mutation.label_emergency_contact_address') }}</label>
+                                    <textarea class="form-control" id="emergency_contact_address_current" name="emergency_contact_address_current"
+                                        rows="3"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_address') }}" disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_phone_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_phone_current">{{ __('personel_employee_mutation.label_emergency_contact_phone') }}</label>
+                                    <input type="text" class="form-control" id="emergency_contact_phone_current" name="emergency_contact_phone_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_phone') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_relation_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_relation_current">{{ __('personel_employee_mutation.label_emergency_contact_relation') }}</label>
+                                    <input type="text" class="form-control" id="emergency_contact_relation_current" name="emergency_contact_relation_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_relation') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_address_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_address_current">{{ __('personel_employee_mutation.label_other_address') }}</label>
+                                    <textarea class="form-control" id="other_address_current" name="other_address_current"
+                                        rows="3"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_address') }}" disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_city_code_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_city_code_current">{{ __('personel_employee_mutation.label_other_city_code') }}</label>
+                                    <input type="text" class="form-control" id="other_city_code_current" name="other_city_code_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_city_code') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_zip_code_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_zip_code_current">{{ __('personel_employee_mutation.label_other_zip_code') }}</label>
+                                    <input type="text" class="form-control" id="other_zip_code_current" name="other_zip_code_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_zip_code') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_phone_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_phone_current">{{ __('personel_employee_mutation.label_other_phone') }}</label>
+                                    <input type="text" class="form-control" id="other_phone_current" name="other_phone_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_phone') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_personal_email_address_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="personal_email_address_current">{{ __('personel_employee_mutation.label_personal_email_address') }}</label>
+                                    <input type="text" class="form-control" id="personal_email_address_current" name="personal_email_address_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_personal_email_address') }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_company_email_address_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="company_email_address_current">{{ __('personel_employee_mutation.label_company_email_address') }}</label>
+                                    <input type="text" class="form-control" id="company_email_address_current" name="company_email_address_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_company_email_address') }}" disabled>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-1">
@@ -555,6 +670,118 @@
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_address_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_address_new">{{ __('personel_employee_mutation.label_home_address') }}</label>
+                                    <textarea class="form-control" id="home_address_new" name="home_address_new"
+                                        rows="3"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_address') }}"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_city_code_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_city_code_new">{{ __('personel_employee_mutation.label_home_city_code') }}</label>
+                                    <select class="form-control select2" id="home_city_code_new" name="home_city_code_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_zip_code_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_zip_code_new">{{ __('personel_employee_mutation.label_home_zip_code') }}</label>
+                                    <input type="text" class="form-control" id="home_zip_code_new" name="home_zip_code_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_zip_code') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_home_phone_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="home_phone_new">{{ __('personel_employee_mutation.label_home_phone') }}</label>
+                                    <input type="text" class="form-control" id="home_phone_new" name="home_phone_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_home_phone') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_name_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_name_new">{{ __('personel_employee_mutation.label_emergency_contact_name') }}</label>
+                                    <input type="text" class="form-control" id="emergency_contact_name_new" name="emergency_contact_name_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_name') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_address_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_address_new">{{ __('personel_employee_mutation.label_emergency_contact_address') }}</label>
+                                    <textarea class="form-control" id="emergency_contact_address_new" name="emergency_contact_address_new"
+                                        rows="3"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_address') }}"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_phone_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_phone_new">{{ __('personel_employee_mutation.label_emergency_contact_phone') }}</label>
+                                    <input type="text" class="form-control" id="emergency_contact_phone_new" name="emergency_contact_phone_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_emergency_contact_phone') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_emergency_contact_relation_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="emergency_contact_relation_new">{{ __('personel_employee_mutation.label_emergency_contact_relation') }}</label>
+                                    <select class="form-control select2" id="emergency_contact_relation_new" name="emergency_contact_relation_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_address_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_address_new">{{ __('personel_employee_mutation.label_other_address') }}</label>
+                                    <textarea class="form-control" id="other_address_new" name="other_address_new"
+                                        rows="3"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_address') }}"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_city_code_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_city_code_new">{{ __('personel_employee_mutation.label_other_city_code') }}</label>
+                                    <select class="form-control select2" id="other_city_code_new" name="other_city_code_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_zip_code_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_zip_code_new">{{ __('personel_employee_mutation.label_other_zip_code') }}</label>
+                                    <input type="text" class="form-control" id="other_zip_code_new" name="other_zip_code_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_zip_code') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_other_phone_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="other_phone_new">{{ __('personel_employee_mutation.label_other_phone') }}</label>
+                                    <input type="text" class="form-control" id="other_phone_new" name="other_phone_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_other_phone') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_personal_email_address_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="personal_email_address_new">{{ __('personel_employee_mutation.label_personal_email_address') }}</label>
+                                    <input type="text" class="form-control" id="personal_email_address_new" name="personal_email_address_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_personal_email_address') }}">
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_company_email_address_new" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="company_email_address_new">{{ __('personel_employee_mutation.label_company_email_address') }}</label>
+                                    <input type="text" class="form-control" id="company_email_address_new" name="company_email_address_new"
+                                        placeholder="{{ __('personel_employee_mutation.label_company_email_address') }}">
                                 </div>
                             </div>
                         </div>
@@ -875,6 +1102,8 @@
         loadDataRanking();
         loadDataNatureofWork();
         loadDataCostCenter();
+        loadDataCityCode();
+        loadDataRelation();
 
         $('#mutation_type').on('change', function () {
             if(this.value == "N"){
@@ -911,6 +1140,34 @@
                 $('#div_termination_reason_new').hide();
                 $('#div_termination_date_new').hide();
                 $('#div_effective_termination_date_new').hide();
+                $('#div_home_address_current').hide();
+                $('#div_home_city_code_current').hide();
+                $('#div_home_zip_code_current').hide();
+                $('#div_home_phone_current').hide();
+                $('#div_emergency_contact_name_current').hide();
+                $('#div_emergency_contact_address_current').hide();
+                $('#div_emergency_contact_phone_current').hide();
+                $('#div_emergency_contact_relation_current').hide();
+                $('#div_other_address_current').hide();
+                $('#div_other_city_code_current').hide();
+                $('#div_other_zip_code_current').hide();
+                $('#div_other_phone_current').hide();
+                $('#div_home_address_new').hide();
+                $('#div_home_city_code_new').hide();
+                $('#div_home_zip_code_new').hide();
+                $('#div_home_phone_new').hide();
+                $('#div_emergency_contact_name_new').hide();
+                $('#div_emergency_contact_address_new').hide();
+                $('#div_emergency_contact_phone_new').hide();
+                $('#div_emergency_contact_relation_new').hide();
+                $('#div_other_address_new').hide();
+                $('#div_other_city_code_new').hide();
+                $('#div_other_zip_code_new').hide();
+                $('#div_other_phone_new').hide();
+                $('#div_personal_email_address_new').hide();
+                $('#div_personal_email_address_current').hide();
+                $('#div_company_email_address_new').hide();
+                $('#div_company_email_address_current').hide();
             }else if(this.value == "M"){
                 $('#div_company_code_current').show();
                 $('#div_company_code_new').show();
@@ -945,6 +1202,34 @@
                 $('#div_termination_reason_new').hide();
                 $('#div_termination_date_new').hide();
                 $('#div_effective_termination_date_new').hide();
+                $('#div_home_address_current').hide();
+                $('#div_home_city_code_current').hide();
+                $('#div_home_zip_code_current').hide();
+                $('#div_home_phone_current').hide();
+                $('#div_emergency_contact_name_current').hide();
+                $('#div_emergency_contact_address_current').hide();
+                $('#div_emergency_contact_phone_current').hide();
+                $('#div_emergency_contact_relation_current').hide();
+                $('#div_other_address_current').hide();
+                $('#div_other_city_code_current').hide();
+                $('#div_other_zip_code_current').hide();
+                $('#div_other_phone_current').hide();
+                $('#div_home_address_new').hide();
+                $('#div_home_city_code_new').hide();
+                $('#div_home_zip_code_new').hide();
+                $('#div_home_phone_new').hide();
+                $('#div_emergency_contact_name_new').hide();
+                $('#div_emergency_contact_address_new').hide();
+                $('#div_emergency_contact_phone_new').hide();
+                $('#div_emergency_contact_relation_new').hide();
+                $('#div_other_address_new').hide();
+                $('#div_other_city_code_new').hide();
+                $('#div_other_zip_code_new').hide();
+                $('#div_other_phone_new').hide();
+                $('#div_personal_email_address_new').hide();
+                $('#div_personal_email_address_current').hide();
+                $('#div_company_email_address_new').hide();
+                $('#div_company_email_address_current').hide();
             }else if(this.value == "P" || this.value == "D"){
                 $('#div_start_date_new').show();
                 $('#div_initial_date_current').show();
@@ -979,6 +1264,34 @@
                 $('#div_termination_reason_new').hide();
                 $('#div_termination_date_new').hide();
                 $('#div_effective_termination_date_new').hide();
+                $('#div_home_address_current').hide();
+                $('#div_home_city_code_current').hide();
+                $('#div_home_zip_code_current').hide();
+                $('#div_home_phone_current').hide();
+                $('#div_emergency_contact_name_current').hide();
+                $('#div_emergency_contact_address_current').hide();
+                $('#div_emergency_contact_phone_current').hide();
+                $('#div_emergency_contact_relation_current').hide();
+                $('#div_other_address_current').hide();
+                $('#div_other_city_code_current').hide();
+                $('#div_other_zip_code_current').hide();
+                $('#div_other_phone_current').hide();
+                $('#div_home_address_new').hide();
+                $('#div_home_city_code_new').hide();
+                $('#div_home_zip_code_new').hide();
+                $('#div_home_phone_new').hide();
+                $('#div_emergency_contact_name_new').hide();
+                $('#div_emergency_contact_address_new').hide();
+                $('#div_emergency_contact_phone_new').hide();
+                $('#div_emergency_contact_relation_new').hide();
+                $('#div_other_address_new').hide();
+                $('#div_other_city_code_new').hide();
+                $('#div_other_zip_code_new').hide();
+                $('#div_other_phone_new').hide();
+                $('#div_personal_email_address_new').hide();
+                $('#div_personal_email_address_current').hide();
+                $('#div_company_email_address_new').hide();
+                $('#div_company_email_address_current').hide();
             }else if(this.value == "O"){
                 $('#div_employment_status_current').show();
                 $('#div_employment_status_new').show();
@@ -1019,6 +1332,34 @@
                 $('#div_termination_reason_new').hide();
                 $('#div_termination_date_new').hide();
                 $('#div_effective_termination_date_new').hide();
+                $('#div_home_address_current').hide();
+                $('#div_home_city_code_current').hide();
+                $('#div_home_zip_code_current').hide();
+                $('#div_home_phone_current').hide();
+                $('#div_emergency_contact_name_current').hide();
+                $('#div_emergency_contact_address_current').hide();
+                $('#div_emergency_contact_phone_current').hide();
+                $('#div_emergency_contact_relation_current').hide();
+                $('#div_other_address_current').hide();
+                $('#div_other_city_code_current').hide();
+                $('#div_other_zip_code_current').hide();
+                $('#div_other_phone_current').hide();
+                $('#div_home_address_new').hide();
+                $('#div_home_city_code_new').hide();
+                $('#div_home_zip_code_new').hide();
+                $('#div_home_phone_new').hide();
+                $('#div_emergency_contact_name_new').hide();
+                $('#div_emergency_contact_address_new').hide();
+                $('#div_emergency_contact_phone_new').hide();
+                $('#div_emergency_contact_relation_new').hide();
+                $('#div_other_address_new').hide();
+                $('#div_other_city_code_new').hide();
+                $('#div_other_zip_code_new').hide();
+                $('#div_other_phone_new').hide();
+                $('#div_personal_email_address_new').hide();
+                $('#div_personal_email_address_current').hide();
+                $('#div_company_email_address_new').hide();
+                $('#div_company_email_address_current').hide();
             }else if(this.value == "T"){
                 $('#div_employment_status_current').show();
                 $('#div_termination_reason_new').show();
@@ -1053,6 +1394,96 @@
                 $('#div_contract_date_current').hide();
                 $('#div_contract_date_new').hide();
                 $('#div_effective_permanent_date_new').hide();
+                $('#div_home_address_current').hide();
+                $('#div_home_city_code_current').hide();
+                $('#div_home_zip_code_current').hide();
+                $('#div_home_phone_current').hide();
+                $('#div_emergency_contact_name_current').hide();
+                $('#div_emergency_contact_address_current').hide();
+                $('#div_emergency_contact_phone_current').hide();
+                $('#div_emergency_contact_relation_current').hide();
+                $('#div_other_address_current').hide();
+                $('#div_other_city_code_current').hide();
+                $('#div_other_zip_code_current').hide();
+                $('#div_other_phone_current').hide();
+                $('#div_home_address_new').hide();
+                $('#div_home_city_code_new').hide();
+                $('#div_home_zip_code_new').hide();
+                $('#div_home_phone_new').hide();
+                $('#div_emergency_contact_name_new').hide();
+                $('#div_emergency_contact_address_new').hide();
+                $('#div_emergency_contact_phone_new').hide();
+                $('#div_emergency_contact_relation_new').hide();
+                $('#div_other_address_new').hide();
+                $('#div_other_city_code_new').hide();
+                $('#div_other_zip_code_new').hide();
+                $('#div_other_phone_new').hide();
+                $('#div_personal_email_address_new').hide();
+                $('#div_personal_email_address_current').hide();
+                $('#div_company_email_address_new').hide();
+                $('#div_company_email_address_current').hide();
+            }else if(this.value == "PE"){
+                $('#div_npwp_code_current').hide();
+                $('#div_npwp_code_new').hide();
+                $('#div_period_start_date_new').hide();
+                $('#div_company_code_current').hide();
+                $('#div_company_code_new').hide();
+                $('#div_work_location_current').hide();
+                $('#div_work_location_new').hide();
+                $('#div_group_code_current').hide();
+                $('#div_group_code_new').hide();
+                $('#div_grade_code_current').hide();
+                $('#div_grade_code_new').hide();
+                $('#div_position_current').hide();
+                $('#div_position_new').hide();
+                $('#div_ranking_current').hide();
+                $('#div_ranking_new').hide();
+                $('#div_nature_of_work_current').hide();
+                $('#div_nature_of_work_new').hide();
+                $('#div_cost_center_code_current').hide();
+                $('#div_cost_center_code_new').hide();
+                $('#div_level_current').hide();
+                $('#div_level_new').hide();
+                $('#div_employment_status_current').hide();
+                $('#div_employment_status_new').hide();
+                $('#div_contract_date_current').hide();
+                $('#div_contract_date_new').hide();
+                $('#div_initial_date_current').hide();
+                $('#div_start_date_new').hide();
+                $('#div_effective_permanent_date_new').hide();
+                $('#div_change_employee_no_new').hide();
+                $('#div_updated_employee_no_new').hide();
+                $('#div_termination_reason_new').hide();
+                $('#div_termination_date_new').hide();
+                $('#div_effective_termination_date_new').hide();
+                $('#div_home_address_current').show();
+                $('#div_home_city_code_current').show();
+                $('#div_home_zip_code_current').show();
+                $('#div_home_phone_current').show();
+                $('#div_emergency_contact_name_current').show();
+                $('#div_emergency_contact_address_current').show();
+                $('#div_emergency_contact_phone_current').show();
+                $('#div_emergency_contact_relation_current').show();
+                $('#div_other_address_current').show();
+                $('#div_other_city_code_current').show();
+                $('#div_other_zip_code_current').show();
+                $('#div_other_phone_current').show();
+                $('#div_home_address_new').show();
+                $('#div_home_city_code_new').show();
+                $('#div_home_zip_code_new').show();
+                $('#div_home_phone_new').show();
+                $('#div_emergency_contact_name_new').show();
+                $('#div_emergency_contact_address_new').show();
+                $('#div_emergency_contact_phone_new').show();
+                $('#div_emergency_contact_relation_new').show();
+                $('#div_other_address_new').show();
+                $('#div_other_city_code_new').show();
+                $('#div_other_zip_code_new').show();
+                $('#div_other_phone_new').show();
+                $('#div_personal_email_address_new').show();
+                $('#div_personal_email_address_current').show();
+                $('#div_company_email_address_new').show();
+                $('#div_company_email_address_current').show();
             }else{
                 $('#div_start_date_new').hide();
                 $('#div_initial_date_current').hide();
@@ -1087,6 +1518,35 @@
                 $('#div_termination_reason_new').hide();
                 $('#div_termination_date_new').hide();
                 $('#div_effective_termination_date_new').hide();
+                $('#div_home_address_current').hide();
+                $('#div_home_city_code_current').hide();
+                $('#div_home_zip_code_current').hide();
+                $('#div_home_phone_current').hide();
+                $('#div_emergency_contact_name_current').hide();
+                $('#div_emergency_contact_address_current').hide();
+                $('#div_emergency_contact_phone_current').hide();
+                $('#div_emergency_contact_relation_current').hide();
+                $('#div_other_address_current').hide();
+                $('#div_other_city_code_current').hide();
+                $('#div_other_zip_code_current').hide();
+                $('#div_other_phone_current').hide();
+                $('#div_home_address_new').hide();
+                $('#div_home_city_code_new').hide();
+                $('#div_home_zip_code_new').hide();
+                $('#div_home_phone_new').hide();
+                $('#div_emergency_contact_name_new').hide();
+                $('#div_emergency_contact_address_new').hide();
+                $('#div_emergency_contact_phone_new').hide();
+                $('#div_emergency_contact_relation_new').hide();
+                $('#div_other_address_new').hide();
+                $('#div_other_city_code_new').hide();
+                $('#div_other_zip_code_new').hide();
+                $('#div_other_phone_new').hide();
+                $('#div_personal_email_address_new').hide();
+                $('#div_personal_email_address_current').hide();
+                $('#div_company_email_address_new').hide();
+                $('#div_company_email_address_current').hide();
+                
             }
         });
         
@@ -1167,6 +1627,21 @@
                         loadDataLevelCode('#level' + v.levelType + '_new', v
                             .levelType);
                     });
+
+                    $('#home_address_current').val(htmlDecode(response[0].peMasterInfo.homeAddress));
+                    $('#home_city_code_current').val(htmlDecode(response[0].peMasterInfo.homeCityCode));
+                    $('#home_zip_code_current').val(htmlDecode(response[0].peMasterInfo.homeZipCode));
+                    $('#home_phone_current').val(htmlDecode(response[0].peMasterInfo.homePhone));
+                    $('#emergency_contact_name_current').val(htmlDecode(response[0].peMasterInfo.emergencyName));
+                    $('#emergency_contact_address_current').val(htmlDecode(response[0].peMasterInfo.emergencyAddress));
+                    $('#emergency_contact_phone_current').val(htmlDecode(response[0].peMasterInfo.emergencyPhone));
+                    $('#emergency_contact_relation_current').val(htmlDecode(response[0].peMasterInfo.emergencyRelation));
+                    $('#other_address_current').val(htmlDecode(response[0].peMasterInfo.otherAddress));
+                    $('#other_city_code_current').val(htmlDecode(response[0].peMasterInfo.otherCityCode));
+                    $('#other_zip_code_current').val(htmlDecode(response[0].peMasterInfo.otherZipCode));
+                    $('#other_phone_current').val(htmlDecode(response[0].peMasterInfo.otherPhone));
+                    $('#personal_email_address_current').val(htmlDecode(response[0].peMasterInfo.personalEmailAddress));
+                    $('#company_email_address_current').val(htmlDecode(response[0].peMasterInfo.companyEmailAddress));
                 },
                 error: function (response) {
                     $('#notification_error').modal('show');
@@ -1893,6 +2368,133 @@
                                 return {
                                     text: item.costCenterDescription,
                                     id: item.costCenterCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataCityCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.cityCode + '</div>' +
+                        '<div class="col-6">' + data.data.cityName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#home_city_code_new, #other_city_code_new').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>City Code</b></div>' +
+                        '<div class="col-6"><b>City Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#home_city_code_new, #other_city_code_new').select2({
+                width: '100%',
+                placeholder: 'Choose City',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/city/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.cityName,
+                                    id: item.cityCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataRelation() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#emergency_contact_relation_new').select2({
+                width: '100%',
+                placeholder: 'Choose Relation',
+                allowClear: true,
+                language: {
+                    errorLoading: function() {
+                        return $search;
+                    },
+                    searching: function() {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/relation/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
                                     data: item
                                 }
                             })

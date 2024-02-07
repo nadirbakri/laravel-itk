@@ -179,12 +179,15 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		var error = "{{ $errors->any() }}";
+        var msgError = "{{ $errors->first() }}";
 		if (error) {
 			$('#notification_error').modal('show');
 		}
 
 		$('#notification_error').on('hide.bs.modal', function () {
-            $('#modal_authentication').modal('show');
+            if(msgError !== "There is no TM Reference Data"){
+                $('#modal_authentication').modal('show');
+            }
         });
 
 		$("#btn-ok").click(function () {

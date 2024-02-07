@@ -1900,6 +1900,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($employees);
 	}
 
@@ -1969,6 +1973,11 @@ class DataController extends Controller
 
 			$data = array_values($filteredData);
 	    }
+
+		usort($data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
 		// dd($data);
         return response()->json($data);
 	}
@@ -2017,7 +2026,11 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
-		// var_dump($arrResult);
+
+		usort($data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+		
         return response()->json($data);
 	}
 
@@ -2069,6 +2082,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($employees);
 	}
 
@@ -2118,6 +2135,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
         return response()->json($employees);
 	}
@@ -2423,6 +2444,8 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
+		// dd($arrResult->dataListSet);
+
 		if(isset($request->module)){
 			$arrResult2 = json_decode($response2->getBody()->getContents());
 
@@ -2567,8 +2590,6 @@ class DataController extends Controller
 
 	public function dataGroupAuthorizePersonalDataAPI(Request $request)
     {
-
-		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
                 'verify' => false,
@@ -2580,7 +2601,8 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
-	    				'groupAuthorizeCode' => (int) $request->groupAuthorizeCode
+	    				'groupAuthorizeCode' => (int) $request->groupAuthorizeCode,
+						'isRange' => false
 	    			]
 	    		)]
 	    	);
@@ -2689,8 +2711,8 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($search == ''){
-			if($request->positionCode == ''){
-				$position = '';
+			if(empty($request->positionCode)){
+				$position = [];
 			}else{
 				$position = $arrResult->dataListSet;
 			}	    	
@@ -2848,6 +2870,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($employees);
 	}
 
@@ -2898,6 +2924,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		usort($employees, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
         return response()->json($employees);
 	}
@@ -3047,6 +3077,10 @@ class DataController extends Controller
 	    	);
 	    }
 
+		usort($user_data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
         return response()->json($user_data);
 	}
 
@@ -3095,6 +3129,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		usort($user_data, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
         return response()->json($user_data);
 	}
@@ -3859,7 +3897,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/reportformatemployee/getfieldnamelist',
+	    	$response = $client->post(env('API_URL') . '/personel/reportformatemployee/getfieldnamelist',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
@@ -4061,6 +4099,10 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+
+		usort($arrResult->dataListSet, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
 
 	    if($request->func == 'First'){
 	    	return response()->json($arrResult->dataListSet[0]);
@@ -4448,8 +4490,8 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 	    if($search == ''){
-			if($request->rankingCode == ''){
-				$ranking = '';
+			if(empty($request->rankingCode)){
+				$ranking = [];
 			}else{
 				$ranking = $arrResult->dataListSet;
 			}
@@ -4858,6 +4900,59 @@ class DataController extends Controller
 	public function dataGradeAPI(Request $request)
     {
     	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/Grade/getGrade',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$grade = $arrResult->dataListSet;
+	    }else{
+	    	$grade = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->gradeName)){
+	    				return preg_match('/' . $search . '/i', $value->gradeName);
+	    			}else if(preg_match('/' . $search . '/i', $value->gradeCode)){
+	    				return preg_match('/' . $search . '/i', $value->gradeCode);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($grade);
+	}
+
+	public function dataGradeFunctionAPI(Request $request)
+    {
+    	$grade[] = (object) [
+    		'gradeCode' => 'ALL',
+    		'gradeName' => 'ALL'
+		];
 
     	try {
 	    	$client = new Client([
@@ -5789,7 +5884,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->npwpCode = '') {
+		if (empty($request->npwpCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -5888,8 +5983,6 @@ class DataController extends Controller
 
 	public function dataBPJSPersonalDataAPI(Request $request)
     {
-
-		// var_dump($request->employeeNo);
     	try {
 	    	$client = new Client([
                 'verify' => false,
@@ -5918,7 +6011,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->bpjsCode = '') {
+		if (empty($request->bpjsCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -6007,7 +6100,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->costCenterCode = '') {
+		if (empty($request->costCenterCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -6388,7 +6481,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if ($request->groupShift = '') {
+	    if (empty($request->groupShift)) {
 			return response()->json([]);
 		}
 		else {
@@ -6427,7 +6520,7 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->absentCode = '') {
+		if (empty($request->absentCode)) {
 			return response()->json([]);
 		}
 		else {
@@ -7226,6 +7319,58 @@ class DataController extends Controller
         return response()->json($data);
 	}
 
+	public function dataFieldSlipAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+				'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/payroll/getTableField',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+	    				'tableName' => 'PrSalaryActual'
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value)){
+	    				return preg_match('/' . $search . '/i', $value);
+	    			}	    		
+				}
+	    	);
+	    }
+
+		usort($data, function ($a, $b) {
+			return strcmp($a, $b);
+		});
+
+        return response()->json($data);
+	}
+
 	public function dataLoanCodeAPI(Request $request)
     {
     	$search = $request->search;
@@ -7317,6 +7462,7 @@ class DataController extends Controller
 
 	public function dataFieldNameSalaryComponentAPI(Request $request)
     {
+		$search = $request->search;
 
         try {
             $client = new Client([
@@ -7345,7 +7491,22 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet);
+		if($search == ''){
+	    	$field = $arrResult->dataListSet;
+	    }else{
+			$field    = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->description)){
+	    				return preg_match('/' . $search . '/i', $value->description);
+	    			}else if(preg_match('/' . $search . '/i', $value->fieldName)){
+	    				return preg_match('/' . $search . '/i', $value->fieldName);
+	    			}
+	    		}
+	    	);
+		}
+
+        return response()->json($field);
     }
 	
 	public function dataLoanCodeLoanDataEntryAPI(Request $request)
@@ -7415,7 +7576,7 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-		if ($request->absentCode = '') {
+		if (empty($arrResult->dataListSet)) {
 			return response()->json([]);
 		}
 		else {
@@ -7456,7 +7617,7 @@ class DataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if ($request->absentCode = '') {
+        if (empty($request->absentCode)) {
             return response()->json([]);
         }
         else {

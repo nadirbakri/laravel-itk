@@ -14,6 +14,8 @@ return [
 
     'judul' => 'Halaman Proses Identitas Pengguna dan Kata Sandi',
     'list' => 'Daftar Menu Utilities',
+    'label_new' => 'Baru',
+    'label_range' => 'Rentang',
     'label_employee_no_from' => 'No Karyawan Dari',
     'label_employee_no_from' => 'No Karyawan Sampai',
     'employee_no_from_required' => 'No Karyawan Dari Harus Diisi',

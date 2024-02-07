@@ -104,13 +104,14 @@ class MonthlyLeaveReportExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/monthlyleavereport/getmonthlyleavereport',
+            $response = $client->post(env('API_URL') . '/mobile/getMonthlyLeaveReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
