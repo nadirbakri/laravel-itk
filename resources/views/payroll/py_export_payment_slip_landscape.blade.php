@@ -108,13 +108,11 @@
 						<?php
 							$totalIncome += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
 						<tr>
 							<td width="55%">{{ $value2->columnLabel }}</td>
 							<td width="3%">:</td>
 							<td width="42%" style="text-align:right; padding-right: 10px;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
-						@endif
 					@endforeach
 				</table>
 			</td>
@@ -130,13 +128,11 @@
 						<?php
 							$totalDeduction += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
 						<tr>
 							<td width="55%" style="padding-left: 10px;">{{ $value2->columnLabel }}</td>
 							<td width="3%">:</td>
 							<td width="42%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
-						@endif
 					@endforeach
 				</table>
 			</td>
