@@ -16,7 +16,7 @@ use App\Exports\ChangeDataShiftTemplateExcel;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
-use App\Imports\TimeRecordingProcessFormImport;
+use App\Imports\TimeRecordingImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -2301,76 +2301,25 @@ class TimeManagementController extends Controller
     public function prosesTimeRecordingProcessFormTM(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
-        try {
-            $client = new Client([
-                'verify' => false,
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            if($request->hasFile('file_location')) {
-                $file = $request->file('file_location');
-                $filename = rand().$file->getClientOriginalName();
-                $file->move('file_excel', $filename);
-                $path = public_path('file_excel\\');
-
-                // var_dump(json_encode(
-                //     [
-                //         'companyCode' => Session::get('companyCode'),
-                //         'fileLocation' =>  $path . '' . $filename,
-                //         'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
-                //         'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                //         "changedNo" => 0,
-                //         "createdDate" => date("Y-m-d\TH:i:s"),
-                //         "createdBy" => Session::get('userID'),
-                //         "changedDate" => date("Y-m-d\TH:i:s"),
-                //         "changedBy" => Session::get('userID'),
-                //         "languageCode" => App::getLocale(),
-                //         'sessionID' => 0,
-                //         'sessionUserID' => Session::get('userID'),
-                //         'logActionUsername' => Session::get('userName'),
-                //         'logActionUserID' => Session::get('userID')
-                //     ]
-                //     ));
-                // exit;
-
-                $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'fileLocation' =>  $path . '' . $filename,
-                            'automaticInOut' => isset($request->automatic) ? (bool) $request->automatic : false,
-                            'file64' => ($request->hasFile('file_location')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0,
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                            'logActionUserID' => Session::get('userID')
-                        ]
-                    )]
-                );
-            }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            // var_dump($response);
-            // exit;
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
+        try{
+            $file = $request->file('file_location');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new TimeRecordingImport($request->automatic);
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
     }
 
     public function prosesTemplatePreparationTM(Request $request)
