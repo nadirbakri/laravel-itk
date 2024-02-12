@@ -1649,6 +1649,7 @@ class PayrollController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2646,6 +2647,10 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     $arrResult = json_decode($response->getBody()->getContents());  
+
+    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+        return (int) $a->columnNo - (int) $b->columnNo;
+    });
 
     return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
 }
