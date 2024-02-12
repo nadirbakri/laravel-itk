@@ -175,6 +175,12 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
+                            <label for="overtime_status form-check-label">{{ __('trans_overtime.label_overtime_status') }}</label>
+                        </div>
+                        <select class="form-control select2" id="overtime_status" name="overtime_status"></select>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('trans_overtime.label_reimbursement_type') }}</label>
                         </div>
                         <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
@@ -576,7 +582,7 @@
 </script>
 
 <script type="text/javascript">
-    function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type) {
+    function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status) {
             table = $('#overtime_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -588,7 +594,8 @@
                         'endDate': claim_date_to,
                         'employeeNo' : direct_superior,
                         'businessUnit' : business_unit,
-                        'type': reimbursement_type
+                        'type': reimbursement_type,
+                        'status' : status
 
                     }
                 },
@@ -669,6 +676,7 @@
             var direct_superior = $("#direct_superior").val();
             var business_unit = $("#business_unit").val();
             var reimbursement_type = $("#reimbursement_type").val();
+            var status = $("#overtime_status").val();
            
             // $("#btn-search").prop("disabled", true);
             // $("#btn-search").html(
@@ -676,7 +684,7 @@
             // );
 
             $('#overtime_table').DataTable().destroy();
-            load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type);
+            load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status);
     })
 
     $('#btn-list').click(()=> {
@@ -928,259 +936,341 @@
     loadDataFirstLastAllOvertime();
     loadDataBusinessUnit();
     loadDataFirstLastAllBusinessUnit();
+    loadDataStatus();
+    loadDataFirstLastAllStatus();
     
         $.get("{{ url('reimbursement_type/overtime/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
-                        "</option>");
-                });
+            $.each(data, function (k, v) {
+                $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+                    "</option>");
             });
-    
-            $.get("{{ url('level/api') }}", function (data) {      
-                $.each(data, function (k, v) {
-                    $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                        "</option>");
-                });
+        });
+
+        $.get("{{ url('level/api') }}", function (data) {      
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
             });
-    
-            $('#select').focus(function (event) {
-                    var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                    $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').click(function (event) {
+        });
+
+        $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
                 $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').change(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-            });
-    
-            $('select').on('select2:close', function (e) {
-                $('.header-select').remove();
-            });
-    
-            function loadDataExportOvertime(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
+
+        function loadDataExportOvertime(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#reimbursement_type').select2({
-                    width: '100%',
-                    placeholder: 'Choose Reimbursement Type',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
-                    },
-                    ajax: {
-                        url: "{{ url('/reimbursement_type/overtime/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 
-                                levelType: '1'
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.value,
-                                        id: item.comGenCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
-            }
-           
-           
-            function loadDataBusinessUnit(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.levelName + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#business_unit').select2({
-                    width: '100%',
-                    placeholder: 'Choose Business Unit',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#reimbursement_type').select2({
+                width: '100%',
+                placeholder: 'Choose Reimbursement Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/reimbursement_type/overtime/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term, 
+                            levelType: '1'
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+        
+        
+        function loadDataBusinessUnit(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.levelName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#business_unit').select2({
+                width: '100%',
+                placeholder: 'Choose Business Unit',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/level/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term, 
+                            levelType: '1' 
+
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllBusinessUnit () {
+            $('#business_unit').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/level/func/api') }}",
+            }).then(function (data) {
+                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
+                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $('#business_unit').val(data.levelCode);
+                $('#business_unit').removeClass('loading');
+            });
+        }
+
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#overtime_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+
+                        return {
+                            results: $.map(filteredData, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#overtime_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#overtime_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#overtime_status option:contains("ALL")').not(':first').remove();
+                $('#overtime_status').val('ALL');
+                $('#overtime_status').removeClass('spinner-border');
+            });
+        }
+
+        $("#btn-preview").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#export_overtime_form").submit();
+        });
+        
+        function loadDataFirstLastAllOvertime() {
+            $('#reimbursement_type').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/reimbursement_type/overtime_all/api') }}",
+            }).then(function (data) {
+                if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
+                    $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
+                }
+                $('#reimbursement_type').val(data.comGenCode);
+                $('#reimbursement_type').removeClass('loading');
+            });
+        }
+        $("#btn-preview").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#export_overtime_form").submit();
+        });
+
+        if ($("#export_overtime_form").length > 0) {
+            $("#export_overtime_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
-                    },
-                    ajax: {
-                        url: "{{ url('/level/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 
-                                levelType: '1' 
-    
-                            };
+                    });
+                    $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        }, 
+                        url: "{{ url('export/export_overtime/print') }}",
+                        type: "POST",
+                        data: $('#export_overtime_form').serialize(),
+                        success: function (result, status, xhr) {
+                            $("#btn-preview").prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                            );
+                            var disposition = xhr.getResponseHeader(
+                                'content-disposition');
+                            var matches = /"([^"]*)"/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1] :
+                                'audit_trail.xlsx');
+
+                            // The actual download
+                            var blob = new Blob([result], {
+                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            });
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
+
+                            document.body.appendChild(link);
+
+                            link.click();
+                            document.body.removeChild(link);
                         },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.levelName,
-                                        id: item.levelCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
-            }
-    
-            function loadDataFirstLastAllBusinessUnit () {
-                $('#business_unit').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/level/func/api') }}",
-                }).then(function (data) {
-                    if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                        $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
-                    }
-                    $('#business_unit').val(data.levelCode);
-                    $('#business_unit').removeClass('loading');
-                });
-            }
-            $("#btn-preview").click(function () {
-                $(this).prop("disabled", true);
-                $(this).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-                );
-                $("#export_overtime_form").submit();
-            });
-           
-            function loadDataFirstLastAllOvertime() {
-                $('#reimbursement_type').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/reimbursement_type/overtime_all/api') }}",
-                }).then(function (data) {
-                    if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
-                        $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
-                    }
-                    $('#reimbursement_type').val(data.comGenCode);
-                    $('#reimbursement_type').removeClass('loading');
-                });
-            }
-            $("#btn-preview").click(function () {
-                $(this).prop("disabled", true);
-                $(this).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-                );
-                $("#export_overtime_form").submit();
-            });
-    
-            if ($("#export_overtime_form").length > 0) {
-                $("#export_overtime_form").validate({
-                    submitHandler: function (form) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            xhrFields: {
-                                responseType: 'blob',
-                            }, 
-                            url: "{{ url('export/export_overtime/print') }}",
-                            type: "POST",
-                            data: $('#export_overtime_form').serialize(),
-                            success: function (result, status, xhr) {
-                                $("#btn-preview").prop("disabled", false);
-                                $("#btn-preview").html(
-                                    '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
-                                );
-                                var disposition = xhr.getResponseHeader(
-                                    'content-disposition');
-                                var matches = /"([^"]*)"/.exec(disposition);
-                                var filename = (matches != null && matches[1] ? matches[1] :
-                                    'audit_trail.xlsx');
-    
-                                // The actual download
-                                var blob = new Blob([result], {
-                                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                                });
-                                var link = document.createElement('a');
-                                link.href = window.URL.createObjectURL(blob);
-                                link.download = filename;
-    
-                                document.body.appendChild(link);
-    
-                                link.click();
-                                document.body.removeChild(link);
-                            },
-                            error: function (response) {
-                                $("#btn-preview").prop("disabled", false);
-                                $("#btn-preview").html(
-                                    '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
-                                );
-                                $('#notification_error').modal('show');
-                                $('#message-notification-error').html(response);
-                            }
-                        });
-                    }
-                })
-            }
+                        error: function (response) {
+                            $("#btn-preview").prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                            );
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
     
     
     </script>

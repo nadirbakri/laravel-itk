@@ -11,6 +11,7 @@ return [
     'label_status' => 'Status',
     'label_reimbursement_type' => 'Tipe Reimbursement',
     'label_bu' => 'Unit Bisnis',
+    'label_reimbursement_status' => 'Status Reimbursement',
     'btn_upload' => 'Unggah',
     'btn_search' => 'Cari',
     'btn_list' => 'Daftar',

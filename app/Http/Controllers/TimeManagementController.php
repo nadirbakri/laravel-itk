@@ -2048,7 +2048,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         'companyCode' => Session::get('companyCode'),
             //         "employeeNoFrom" => $request->employee_no_from,
@@ -2062,7 +2062,6 @@ class TimeManagementController extends Controller
             //         "languageCode" => App::getLocale()
             //     ]
             //     ));
-            // exit;
             
             $response = $client->post(env('API_URL') . '/updateabsenteeismprocess/updateabsenteeismprocess',
                 ['body' => json_encode(

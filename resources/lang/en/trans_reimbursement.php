@@ -12,6 +12,7 @@ return [
     'label_status' => 'Status',
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_bu' => 'Business Unit',
+    'label_reimbursement_status' => 'Reimbursement Status',
     'btn_upload' => 'Upload',
     'btn_search' => 'Search',
     'btn_list' => 'List',

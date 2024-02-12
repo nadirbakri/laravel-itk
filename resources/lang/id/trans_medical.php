@@ -6,6 +6,7 @@ return [
     'label_claim_date_end' => 'Tanggal Pengajuan - Sampai',
     'label_reimbursement_type' => 'Tipe Pengajuan',
     'label_business_unit' => 'Unit Bisnis',
+    'label_medical_status' => 'Status Kesehatan',
     'employeeno' => 'ID Karyawan',
     'btn_search' => 'Cari',
     'btn_upload' => 'Unggah',

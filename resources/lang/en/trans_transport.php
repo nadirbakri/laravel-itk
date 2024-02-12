@@ -10,6 +10,7 @@ return [
     'label_status' => 'Status',
     'label_transport_type' => 'Transport Type',
     'label_bu' => 'Business Unit',
+    'label_transport_status' => 'Transport Status',
     'btn_upload' => 'Upload',
     'btn_list' => 'List',
     'btn_search' => 'Search',

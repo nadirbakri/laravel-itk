@@ -10,6 +10,7 @@ return [
     'label_status' => 'Status',
     'label_transport_type' => 'Tipe Kendaraan',
     'label_bu' => 'Business Unit',
+    'label_transport_status' => 'Status Transportasi',
     'btn_upload' => 'Unggah',
     'btn_search' => 'Cari',
     'label_slip' => 'Slip',

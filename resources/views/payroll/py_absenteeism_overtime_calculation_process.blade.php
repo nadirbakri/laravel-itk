@@ -285,7 +285,7 @@
         var arrData = @json($data);
 
         if (arrData) {
-            $('#process_period_month').val(moment(arrData[0].periodMonth.toString(), '2023-MM-01').format('MMMM'));
+            $('#process_period_month').val(moment('2023-' + arrData[0].periodMonth.toString() + '-01').format('MMMM'));
             $('#process_period_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
             $('#process_period_year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         }

@@ -175,6 +175,12 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
+                            <label for="workflow_status form-check-label">{{ __('trans_workflow.label_workflow_status') }}</label>
+                        </div>
+                        <select class="form-control select2" id="workflow_status" name="workflow_status"></select>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
                             <label for="employee_no">{{ __('trans_workflow.employee') }}</label>
                         </div>
                         <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder="employee-no">
@@ -653,7 +659,7 @@
         $('.close').click();
     }
 
-    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type) {
+    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status) {
         
         if(workflow_type == "ER"){
             table = $('#workflow_table').DataTable({
@@ -667,7 +673,8 @@
                         'endDate': claim_date_to,
                         'employeeNo' : employee_no,
                         'businessUnit' : business_unit,
-                        'workflowType' : workflow_type
+                        'workflowType' : workflow_type,
+                        'status' : status
 
                     }
                 },
@@ -717,7 +724,8 @@
                         'endDate': claim_date_to,
                         'employeeNo' : employee_no,
                         'businessUnit' : business_unit,
-                        'workflowType' : workflow_type
+                        'workflowType' : workflow_type,
+                        'status' : status
 
                     }
                 },
@@ -779,9 +787,10 @@
         var employee_no = $("#employee_no").val();
         var business_unit = $("#business_unit").val();
         var workflow_type = $("#workflow_type").val();
+        var status = $("#workflow_status").val();
         
         $('#workflow_table').DataTable().destroy();
-        load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type);
+        load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status);
     })
 
 
@@ -921,35 +930,35 @@
     loadDataBusinessUnit();
     loadDataWorkflowType();
     loadDataFirstLastAllBusinessUnit();
+    loadDataStatus();
+    loadDataFirstLastAllStatus();
     
         $.get("{{ url('level/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                        "</option>");
-                });
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
             });
-    
-            $('#select').focus(function (event) {
-                    var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                    $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').click(function (event) {
+        });
+
+        $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
                 $searchfield.prop('disabled', true);
-            });
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
     
-            $('#select').change(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-            });
-    
-            $('select').on('select2:close', function (e) {
-                $('.header-select').remove();
-            });
-    
-    
-          
         function loadDataBusinessUnit(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -1011,6 +1020,7 @@
                 templateResult: formatSelect
             });
         }
+
         function loadDataFirstLastAllBusinessUnit () {
             $('#business_unit').addClass('spinner-border');
 
@@ -1025,64 +1035,143 @@
                 $('#business_unit').removeClass('loading');
             });
         }
-            function loadDataWorkflowType(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+        function loadDataWorkflowType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#workflow_type').select2({
-                    width: '100%',
-                    placeholder: 'Choose Workflow Type',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#workflow_type').select2({
+                width: '100%',
+                placeholder: 'Choose Workflow Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
                     },
-                    ajax: {
-                        url: "{{ url('/workflow/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.value,
-                                        id: item.comGenCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/workflow/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
                     },
-                    templateResult: formatSelect
-                });
-            }  
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }  
+
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#workflow_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+
+                        return {
+                            results: $.map(filteredData, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#workflow_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#workflow_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#workflow_status option:contains("ALL")').not(':first').remove();
+                $('#workflow_status').val('ALL');
+                $('#workflow_status').removeClass('spinner-border');
+            });
+        }
     </script>
 </html>

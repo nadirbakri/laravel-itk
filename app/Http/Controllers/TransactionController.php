@@ -241,6 +241,7 @@ class TransactionController extends Controller
                             'employeeNo'=> $request->employeeNo,
                             'type'=> "REQUEST",
                             'businessUnit' => $request->businessUnit,
+                            'status' => $request->status,
                             // 'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => App::getLocale(), 
@@ -422,6 +423,7 @@ class TransactionController extends Controller
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'businessUnit' => $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
+                        'status' => $request->status,
                         'type' => "TOT",
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
@@ -471,6 +473,7 @@ class TransactionController extends Controller
                             'workflowType' => "ER",
                             'languageCode' => App::getLocale(), 
                             'employeeNo'=> $request->employeeNo,
+                            'status' => $request->status,
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -501,7 +504,7 @@ class TransactionController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
     
-                // var_dump(json_encode(
+                // dd(json_encode(
                 //     [
                 //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                 //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
@@ -521,6 +524,7 @@ class TransactionController extends Controller
                             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                             'employeeNo'=> $request->employeeNo,
                             'businessUnit' => $request->businessUnit,
+                            'status' => $request->status,
                             'workflowType' => "EW",
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => App::getLocale(), 
@@ -847,6 +851,7 @@ class TransactionController extends Controller
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
+                        'status' => $request->status,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 
@@ -1029,7 +1034,7 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
   
