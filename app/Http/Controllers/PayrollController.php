@@ -6223,7 +6223,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+            $response = $client->put(env('API_URL') . '/payroll/UpdatePrMonthlyEndProcess',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
