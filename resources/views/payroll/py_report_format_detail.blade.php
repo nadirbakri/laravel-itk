@@ -282,6 +282,7 @@
                                         for="data_format">{{ __('payroll_report_format.label_data_format') }}</label>
                                         <select class="form-control select2" id="data_format" name="data_format">
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_data_format') }}</option>
+                                        <option value="Text">No Format</option>
                                         <option value="#,##0.00">#,##0.00</option>
                                         <option value="#,##0">#,##0</option>
                                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
