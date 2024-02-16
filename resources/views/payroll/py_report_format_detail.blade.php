@@ -256,6 +256,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="column_header">{{ __('payroll_report_format.label_column_header') }}</label>
+                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="column_header" name="column_header"
                                             placeholder="{{ __('payroll_report_format.label_column_header') }}">                                        
@@ -282,7 +283,7 @@
                                         for="data_format">{{ __('payroll_report_format.label_data_format') }}</label>
                                         <select class="form-control select2" id="data_format" name="data_format">
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_data_format') }}</option>
-                                        <option value="Text">No Format</option>
+                                        <option value="null">No Format</option>
                                         <option value="#,##0.00">#,##0.00</option>
                                         <option value="#,##0">#,##0</option>
                                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
@@ -632,6 +633,41 @@
             e.stopPropagation();
         });
 
+        $('#report_format_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
+            var data = table1.row(this).data();
+            var count = table1.rows().count();
+            $('#modal_add_report_format_detail').modal('show');
+            $('#record_function').val("Edit");
+            data.columnNo !== undefined ? 
+                $('#column_no').val((data.columnNo)+1) 
+                : 
+                $('#column_no').val(count);
+            $('#table_name_detail').val(data.tableName);
+            $('#column_header').val(data.columnHeader);
+            $('#alignment').val(data.alignment);
+            $('#data_format').val(data.dataFormat);
+            $('#display').prop('checked', data.display);
+
+            tableName = $('#table_name_detail').val();
+            if(tableName == 'GmLevel'){
+                loadDataLevelType();
+            }else{
+                loadDataFieldName();
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/field/api') }}",
+                data: {
+                    'tableName' : tableName
+                }
+            }).then(function (data2) {
+                var index = data2.indexOf(data.fieldName)
+                var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
+                $("#field_name_detail").append($newOption).trigger('change');
+            });
+        });
+
         $('#report_format_detail_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
@@ -655,7 +691,6 @@
                         data: 'seqNo',
                         name: 'seqNo',
                         render: function (data, type, row, meta) {
-                            console.log(data);
                             return '<input type="hidden" class="form-control" name="seq_no[]" value="' +
                             meta.row + '">' + (meta.row + 1);
                         }
@@ -711,6 +746,37 @@
 
             // Prevent click event from propagating to parent
             e.stopPropagation();
+        });
+
+        $('#report_format_condition_table tbody').on('click', 'tr td:not(:first-child)', function () {
+            var data = table2.row(this).data();
+            var count = table2.rows().count();
+            $('#modal_add_report_format_condition').modal('show');
+            $('#record_function').val("Edit");
+            $('#seq_no').val(count)
+            $('#table_name_condition').val(data.tableName);
+            $('#field_name_condition').val(data.fieldName);
+            $('#criteria').val(data.criteria);
+            $('#value').val(data.value);
+
+            tableName = $('#table_name_condition').val();
+            if(tableName == 'GmLevel'){
+                loadDataLevelType();
+            }else{
+                loadDataFieldName();
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/field/api') }}",
+                data: {
+                    'tableName' : tableName
+                }
+            }).then(function (data2) {
+                var index = data2.indexOf(data.fieldName)
+                var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
+                $("#field_name_condition").append($newOption).trigger('change');
+            });
         });
 
         $('#report_format_condition_table').on('click', 'tr td:first-child', function(e){
