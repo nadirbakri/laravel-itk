@@ -8007,13 +8007,13 @@ public function dataDetailReportFormatPY(Request $request)
             $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
-            if(isset($arrResult->dataListSet[0]->detail)){
+            if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
                 usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
                     return (int) $a->employeeNo - (int) $b->employeeNo;
                 });
             }
 
-            if(isset($arrResult->dataListSet[0]->summary)){
+            if(isset($arrResult->dataListSet[0]->summary) && count($arrResult->dataListSet[0]->summary) > 1){
                 usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
                     return (int) $a->employeeNo - (int) $b->employeeNo;
                 });

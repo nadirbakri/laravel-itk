@@ -70,7 +70,7 @@
                         $alignment = "right";
                     }
                     ?>
-                    @if($dataTable2->dataFormat == "#,##0")
+                    @if($dataTable2->dataFormat == "#,##0" && (is_int($dataTable2->value) || (is_float($dataTable2->value))))
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
