@@ -1649,6 +1649,7 @@ class PayrollController extends Controller
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -2646,6 +2647,10 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     $arrResult = json_decode($response->getBody()->getContents());  
+
+    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+        return (int) $a->columnNo - (int) $b->columnNo;
+    });
 
     return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
 }
@@ -4392,21 +4397,21 @@ public function dataDetailReportFormatPY(Request $request)
         // exit;
 
         if($arrResult->dataListSet != null){
-            if($request->output_file == 'BANK CENTRAL ASIA'){
+            if($request->source_bank == 'BANK CENTRAL ASIA'){
                 $fullPath = storage_path('app/');
                 array_map('unlink', glob( "$fullPath*.txt"));
                 $arrDataBCA = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                 Storage::put($arrResult->dataListSet[0]->namaFile, $arrResult->dataListSet[0]->transferBank);
                 return Storage::download($arrResult->dataListSet[0]->namaFile);
-            }else if($request->output_file == 'MCM'){
+            }else if($request->source_bank == 'MCM'){
                 return Excel::download(new CSVTransferBankMCMExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
-            }else if($request->output_file == 'BOT'){
+            }else if($request->source_bank == 'BOT'){
                 return Excel::download(new CSVTransferBankBOTExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
-            }else if($request->output_file == 'BTPN'){
+            }else if($request->source_bank == 'BTPN'){
                 return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
-            }else if($request->output_file == 'BANK INA' || $request->output_file == 'BANK INA MULTI ACCOUNT'){
+            }else if($request->source_bank == 'BANK INA' || $request->source_bank == 'BANK INA MULTI ACCOUNT'){
                 return Excel::download(new CSVTransferBankINAExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
-            }else if($request->output_file == 'BNI'){
+            }else if($request->source_bank == 'BNI'){
                 return Excel::download(new CSVTransferBankBNIExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }
         }
@@ -6218,7 +6223,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+            $response = $client->put(env('API_URL') . '/payroll/UpdatePrMonthlyEndProcess',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),

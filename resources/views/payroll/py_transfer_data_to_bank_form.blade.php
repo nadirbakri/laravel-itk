@@ -618,7 +618,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-12">' + data.data.bankCode + '</div>' +
+                        '<div class="col-12">' + data.data.format + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -658,8 +658,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.bankCode,
-                                    id: item.bankCode,
+                                    text: item.format,
+                                    id: item.format,
                                     data: item
                                 }
                                 // console.log(data);

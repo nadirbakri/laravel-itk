@@ -10431,8 +10431,8 @@ class DataController extends Controller
 				$data    = array_filter(
 				$arrResult->dataListSet,
 				function($value) use ($search){
-					if(preg_match('/' . $search . '/i', $value->bankCode)){
-						return preg_match('/' . $search . '/i', $value->bankCode);
+					if(preg_match('/' . $search . '/i', $value->format)){
+						return preg_match('/' . $search . '/i', $value->format);
 					}
 				}
 			);
