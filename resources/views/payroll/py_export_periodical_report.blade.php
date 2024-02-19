@@ -48,7 +48,6 @@
                 @foreach($data[0]->detail[0]->field as $key => $dataTable)
                     @if(!is_string($dataTable->value))
                         <?php
-                        var_dump($dataTable->tableName);
                         $total[$dataTable->field] = 0;
                         ?>
                     @endif
