@@ -542,10 +542,9 @@
                 processing: true,
                 // orderCellsTop: true,
                 data: arrayReportFormatDetail,
-
+                "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
-
                 columns: [
                     {
                         orderable: false,
@@ -675,6 +674,7 @@
         function load_table_report_format_condition() {
             table2 = $('#report_format_condition_table').DataTable({
                 data: arrayReportFormatCondition,
+                "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
                 columns: [

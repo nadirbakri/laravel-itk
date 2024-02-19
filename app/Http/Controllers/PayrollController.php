@@ -2648,9 +2648,11 @@ public function dataDetailReportFormatPY(Request $request)
 
     $arrResult = json_decode($response->getBody()->getContents());  
 
-    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
-        return (int) $a->columnNo - (int) $b->columnNo;
-    });
+    // usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+    //     return (int) $a->columnNo - (int) $b->columnNo;
+    // });
+
+    // dd($arrResult->dataListSet);
 
     return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
 }
@@ -6815,7 +6817,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -6823,7 +6825,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -6833,7 +6835,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -6841,7 +6843,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($data->mobile){
                     return $pdf->stream('Payment Slip.pdf');
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7014,7 +7016,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7030,7 +7032,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7048,7 +7050,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7064,7 +7066,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7156,7 +7158,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7164,7 +7166,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7174,7 +7176,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7182,7 +7184,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption('Intikom11', 'Intikom11', array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
