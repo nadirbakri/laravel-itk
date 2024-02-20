@@ -3912,7 +3912,7 @@
             }).then(function (data) {
                 var option = $('<option/>', {
                     id: data.npwpCode,
-                    title: data.pemotongKuasa,
+                    title: data.npwpCode,
                     text: data.npwpCode
                 });
                 // console.log(option);
@@ -3937,8 +3937,8 @@
             }).then(function (data) {
                 var option = $('<option/>', {
                     id: data.bpjsCode,
-                    title: data.bpjsNo,
-                    text: data.bpjsNo
+                    title: data.bpjsCode,
+                    text: data.bpjsCode
                 });
                 // console.log(data);
                 $("#group_bpjs_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
@@ -3947,7 +3947,7 @@
                     type: 'select2:select',
                     params: {
                         id: data.bpjsCode,
-                        text: data.bpjsNo,
+                        text: data.bpjsCode,
                         data: data
                     }
                 });
@@ -6439,8 +6439,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.npwpCode + '<div>' +
-                        '<div class="col-6">' + data.data.pemotongKuasa + '<div>' +
+                        '<div class="col-6">' + data.data.npwpCode + '</div>' +
+                        '<div class="col-6">' + data.data.pemotongKuasa + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -6491,7 +6491,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.pemotongKuasa,
+                                    text: item.npwpCode,
                                     id: item.npwpCode,
                                     data: item
                                 }
@@ -6512,8 +6512,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.bpjsCode + '<div>' +
-                        '<div class="col-6">' + data.data.bpjsNo + '<div>' +
+                        '<div class="col-6">' + data.data.bpjsCode + '</div>' +
+                        '<div class="col-6">' + data.data.bpjsNo + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -6564,7 +6564,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.bpjsNo,
+                                    text: item.bpjsCode,
                                     id: item.bpjsCode,
                                     data: item
                                 }
