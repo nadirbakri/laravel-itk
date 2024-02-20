@@ -2226,7 +2226,7 @@ class PersonelController extends Controller
                     $data2 = $arrResult2->dataListSet;
                 }
 
-                // dd($data);
+                // dd($data2);
 
                 return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
@@ -5618,7 +5618,7 @@ class PersonelController extends Controller
                 "taxRegisteredExpiryDate" => $request->tax_expiry_date_info,
                 "religionCode" => $request->religion_info,
                 "nationalityCode" => $request->nationality_info,
-                "costCenterCode" => null,
+                "costCenterCode" => $request->cost_center_code_employment,
                 "employmentStatus" => $request->employment_status_employment,
                 "flagIsExpat" => isset($request->expatriat_employment) ? (bool) $request->expatriat_employment : false,
                 "expatLicenseNo" => $request->license_no_employment,
@@ -5637,9 +5637,9 @@ class PersonelController extends Controller
                 "serviceYear" => 0,
                 "employmentType" => $request->employment_type_employment,
                 "locationCode" => null,
-                "gradeCode" => null,
-                "positionCode" => null,
-                "rankingCode" => null,
+                "gradeCode" => $request->grade_code_employment,
+                "positionCode" => $request->position_code_employment,
+                "rankingCode" => $request->ranking_code_employment,
                 "workNatureCode" => null,
                 "groupCode" => null,
                 "groupAuthorizeCode" => (int) $request->group_authorize_payroll,
