@@ -2318,6 +2318,7 @@ class TimeManagementController extends Controller
             $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
             return array(0 => $objError);
         }else{
+            // dd($import->getArrResult());
             return $import->getArrResult();
         }
     }

@@ -471,14 +471,14 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
-                            if (response.status == "true") {
+                            if (response[0].status == "true") {
                                 $("#btn-process-upload").prop("disabled", false);
                                 $("#btn-process-upload").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_time_recording_process_form.btn_process_upload") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
+                                $('#message-notification-success').html(response[0]
                                     .message);
                                 setTimeout(function () {
                                     window.location =
@@ -491,12 +491,12 @@
                                 );
 
                                 $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
+                                if (response[0].message == null || response[0].message ==
                                     '') {
                                     $('#message-notification-error').html(
                                         "{{ __('login.error') }}");
                                 } else {
-                                    $('#message-notification-error').html(response
+                                    $('#message-notification-error').html(response[0]
                                         .message);
                                 }
                             }

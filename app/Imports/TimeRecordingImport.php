@@ -83,26 +83,26 @@ class TimeRecordingImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            dd(json_encode(
-                [
-                    'companyCode' => Session::get('companyCode'),
-                    'fileLocation' => null,
-                    'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
-                    'file64' => null,
-                    'data' => $param,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    'sessionID' => 0,
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    'logActionUserID' => Session::get('userID')
-                ]));
+            // dd(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'fileLocation' => null,
+            //         'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
+            //         'file64' => null,
+            //         'data' => $param,
+            //         "changedNo" => 0,
+            //         "createdDate" => date("Y-m-d\TH:i:s"),
+            //         "createdBy" => Session::get('userID'),
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "changedBy" => Session::get('userID'),
+            //         "languageCode" => App::getLocale(),
+            //         'sessionID' => 0,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName'),
+            //         'logActionUserID' => Session::get('userID')
+            //     ]));
 
-            $response = $client->put(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
+            $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -126,19 +126,13 @@ class TimeRecordingImport implements ToCollection, SkipsEmptyRows, WithStartRow
         } catch (ValidationException $e) {
             $validationErrors = $e->validator->errors()->messages();
             $errorValidate = array_shift($validationErrors);
-            $this->arrResult[]['message'] = array_shift($errorValidate);
+            $this->arrResult[0] = (object) ['status' => false, 'message' => array_shift($errorValidate)];
             return $this->arrResult;
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
-            $this->arrResult[]['message'] = $response;
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
+            // dd($response);
+            $this->arrResult[0] = (object) ['status' => false, 'message' => 'Something Went Wrong'];
+            return $this->arrResult;
         }
 
         $this->arrResult[] = json_decode($response->getBody()->getContents());
