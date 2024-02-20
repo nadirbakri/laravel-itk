@@ -229,7 +229,10 @@
                         <div class="form-group">
                             <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
                         </div>
+                        <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
+                </div>
+                <div class="row" id="div-level">
                 </div>
                 <div class="row">
                     <div class="col-10 box">
@@ -448,6 +451,43 @@
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
 
+        $.ajax({
+            url: "{{ url('personnel/report/level/check') }}",
+            type: "GET",
+            success: function (response) {
+                $('#level_format').val(response.data[0].levelFormat);
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    var col1 = 'col-3';
+                    var col2 = 'col-3';
+
+                    if (i % 2 === 0){
+                        col1 = 'col-2';
+                        col2 = 'col-3';
+                    }
+                    
+                    $('#div-level').append(
+                        '<div class="' + col1 + '">' +
+                        '<div class="form-group">'+
+                        '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '</div></div>'+
+                        '<div class="' + col2 + '">' +
+                        '<div class="form-group">' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
+
+                    loadDataLevelCode('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
+                }
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
             $searchfield.prop('disabled', true);
@@ -523,6 +563,21 @@
         $('#output_file').on("select2:unselecting", function (e) {
             $('#format_file').val('');
         });
+
+        function loadDataFirstLastAllLevel(field = '', levelType = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/level/func/api') }}",
+                data: {
+                    'levelType': levelType
+                }
+            }).then(function (data) {
+                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
+                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $(field).val(data.levelCode);
+            });
+        }
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
@@ -879,6 +934,77 @@
                                 return {
                                     text: item.groupAuthorizeDesc,
                                     id: item.groupAuthorizeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLevelCode(field = '', levelType = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.levelCode + '</div>' +
+                        '<div class="col-6">' + data.data.levelName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Level',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/level/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            levelType: levelType
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
                                     data: item
                                 }
                             })
