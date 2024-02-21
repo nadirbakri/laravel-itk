@@ -362,10 +362,10 @@
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('payroll/spt_process') }}";
-                                }, 3000);
+                                // setTimeout(function () {
+                                //     window.location =
+                                //         "{{ url('payroll/spt_process') }}";
+                                // }, 3000);
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
