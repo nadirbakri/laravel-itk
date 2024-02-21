@@ -543,7 +543,6 @@
 
         $('#source_bank').on("select2:select", function (e) {
             var data = $('#source_bank').select2('data');
-            // console.log(data);
             $('#account_number').val(data[0].data.accountNo);
             $('#transfer_code').val(data[0].data.description);
             loadDataOutputFile(data[0].data.bankCode);
@@ -556,7 +555,6 @@
 
         $('#output_file').on("select2:select", function (e) {
             var data = $('#output_file').select2('data');
-            console.log(data);
             $('#format_file').val(data[0].data.format);
         });
 
@@ -717,7 +715,6 @@
                                     id: item.format,
                                     data: item
                                 }
-                                // console.log(data);
                             })
                         };
                     },
@@ -778,7 +775,6 @@
                                     id: item.bankCode,
                                     data: item
                                 }
-                                // console.log(data);
                             })
                         };
                     },
@@ -1040,8 +1036,6 @@
                         type: "POST",
                         data: $('#transfer_data_form').serialize(),
                         success: function (result, status, xhr) {
-                            console.log(xhr.getResponseHeader(
-                                'content-disposition'));
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
                                 '<i class="fa fa-play-circle-o"></i> {{ __("payroll_transfer_data_to_bank.btn_process") }}'
