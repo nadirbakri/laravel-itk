@@ -1437,6 +1437,11 @@
 
         pickerEndPeriod._input.setAttribute("disabled", "disabled");
 
+        loadDataProcessStatus();
+        loadDataProrateMethod();
+        loadDataRateType();
+        loadDataRoundingMethod();
+
         if (arrDataTM) {
             $('#process_period_month').val((typeof arrDataTM[0].periodMonth !== 'undefined') ? arrDataTM[0].periodMonth : '');
             $('#process_period_year').val((typeof arrDataTM[0].periodYear !== 'undefined') ? arrDataTM[0].periodYear : '');
@@ -2246,11 +2251,6 @@
                 }
             });
         }
-
-        loadDataProcessStatus();
-        loadDataProrateMethod();
-        loadDataRateType();
-        loadDataRoundingMethod();
 
         function loadDataProcessStatus() {
             function formatSelect(data) {

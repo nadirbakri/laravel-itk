@@ -79,8 +79,7 @@
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
-                        <td style="text-align:right; border:1px solid #000;">{{ number_format($dataTable2->value, 2, ',', '.') }}</td>
-                    
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 2, ',', '.') }}</td>
                     @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
                     @elseif($dataTable2->dataFormat == "dd MM YYYY")
