@@ -224,6 +224,7 @@
                                     <input type="text" class="form-control" id="column_no" name="column_no"
                                         placeholder="{{ __('payroll_report_format.label_column_no') }}">
                                 </div>
+                                <input type="hidden" class="form-control" id="record_function_det" name="record_function_det">
                             </div>
                         </div>
                         <div class="row">
@@ -334,6 +335,7 @@
                                     <input type="text" class="form-control" id="seq_no" name="seq_no"
                                         placeholder="{{ __('payroll_report_format.label_seq_no') }}">
                                 </div>
+                                <input type="hidden" class="form-control" id="record_function_con" name="record_function_con">
                             </div>
                         </div>
                         <div class="row">
@@ -538,6 +540,10 @@
         }
 
         function load_table_report_format_detail() {
+            arrayReportFormatDetail.sort(function(a, b) {
+                return a.columnNo - b.columnNo;
+            });
+
             table1 = $('#report_format_detail_table').DataTable({
                 processing: true,
                 // orderCellsTop: true,
@@ -632,15 +638,21 @@
             e.stopPropagation();
         });
 
+        function getIndexByColumnNo(columnNoValue) {
+            for (var i = 0; i < arrayReportFormatDetail.length; i++) {
+                if (arrayReportFormatDetail[i].columnNo == columnNoValue) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         $('#report_format_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table1.row(this).data();
             var count = table1.rows().count();
             $('#modal_add_report_format_detail').modal('show');
-            $('#record_function').val("Edit");
-            data.columnNo !== undefined ? 
-                $('#column_no').val((data.columnNo)+1) 
-                : 
-                $('#column_no').val(count);
+            $('#record_function_det').val("Edit");
+            $('#column_no').val((data.columnNo + 1));
             $('#table_name_detail').val(data.tableName);
             $('#column_header').val(data.columnHeader);
             $('#alignment').val(data.alignment);
@@ -672,6 +684,10 @@
         });
 
         function load_table_report_format_condition() {
+            arrayReportFormatCondition.sort(function(a, b) {
+                return a.seqNo - b.seqNo;
+            });
+
             table2 = $('#report_format_condition_table').DataTable({
                 data: arrayReportFormatCondition,
                 "paging": false,
@@ -735,6 +751,15 @@
             });
         }
 
+        function getIndexBySeqNo(seqNoValue) {
+            for (var i = 0; i < arrayReportFormatCondition.length; i++) {
+                if (arrayReportFormatCondition[i].seqNo == seqNoValue) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         $('#report_format_condition_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
@@ -743,8 +768,7 @@
             } else {
                 $row.removeClass('selected');
             }
-
-            // Prevent click event from propagating to parent
+            
             e.stopPropagation();
         });
 
@@ -752,8 +776,8 @@
             var data = table2.row(this).data();
             var count = table2.rows().count();
             $('#modal_add_report_format_condition').modal('show');
-            $('#record_function').val("Edit");
-            $('#seq_no').val(count)
+            $('#record_function_con').val("Edit");
+            $('#seq_no').val((data.seqNo + 1));
             $('#table_name_condition').val(data.tableName);
             $('#field_name_condition').val(data.fieldName);
             $('#criteria').val(data.criteria);
@@ -784,6 +808,7 @@
         });
 
         $('#btn-add-report-format-detail').on('click', function () {
+            $('#record_function_det').val("New");
             $('#column_no').val("");
             $('#table_name_detail').val("");
             $('#field_name_detail').val("");
@@ -807,6 +832,7 @@
         });
 
         $('#btn-add-report-format-condition').on('click', function () {
+            $('#record_function_con').val("New");
             $('#seq_no').val("");
             $('#table_name_condition').val("");
             $('#field_name_condition').val("");
@@ -952,31 +978,41 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            // var arraypush = [];
-            // arraypush["fieldName"] = $("#field_name").val();
-            // arraypush["columnHeader"] = $("#column_header").val();
-            arrayReportFormatDetail.push({
-                "columnNo": $("#column_no").val() ? $("column_no").val() : "",
-                "tableName": $("#table_name_detail").val(),
-                "fieldName": $("#field_name_detail").val(),
-                "columnHeader": $("#column_header").val(),
-                "alignment": $("#alignment").val(),
-                "dataFormat": $("#data_format").val(),
-                "display": ($("#display").is(":checked") ? $("#display").val() : false)
-            });
-            // console.log($("#display").is(":checked"))
-            // console.log(arrayReportFormatDetail);
+
+            if($("#record_function_det").val() == "New"){
+                arrayReportFormatDetail.push({
+                    "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                    "tableName": $("#table_name_detail").val(),
+                    "fieldName": $("#field_name_detail").val(),
+                    "columnHeader": $("#column_header").val(),
+                    "alignment": $("#alignment").val(),
+                    "dataFormat": $("#data_format").val(),
+                    "display": ($("#display").is(":checked") ? $("#display").val() : false)
+                });
+            }else{
+                var indexToEdit = getIndexByColumnNo(parseInt($("#column_no").val()) - 1);
+
+                if (indexToEdit !== -1) {
+                    arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
+                    arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
+                    arrayReportFormatDetail[indexToEdit].fieldName = $("#field_name_detail").val();
+                    arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
+                    arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
+                    arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
+                    arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                } else {
+                    alert("Object with columnNo value " + $("#column_no").val() + " not found.");
+                }
+            }
 
             $(this).prop("disabled", false);
             $(this).html(
                 '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
             );
             $('#modal_add_report_format_detail').modal('hide');
-            // console.log(arrayReportFormatDetail);
             
             $('#report_format_detail_table').DataTable().destroy();
             load_table_report_format_detail();
-            //$("#field_name_form").submit();
         });
 
         $("#report_format_detail_form").on("submit", function(){
@@ -1012,13 +1048,27 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
 
-            arrayReportFormatCondition.push({
-                "seqNo": $("#seq_no").val(),
-                "tableName": $("#table_name_condition").val(),
-                "fieldName": $("#field_name_condition").val(),
-                "criteria": $("#criteria").val(),
-                "value": $("#value").val(),
-            });
+            if($("#record_function_con").val() == "New"){
+                arrayReportFormatCondition.push({
+                    "seqNo": $("#seq_no").val() ? parseInt($("#seq_no").val()) - 1 : "",
+                    "tableName": $("#table_name_condition").val(),
+                    "fieldName": $("#field_name_condition").val(),
+                    "criteria": $("#criteria").val(),
+                    "value": $("#value").val(),
+                });
+            }else{
+                var indexToEdit = getIndexBySeqNo(parseInt($("#seq_no").val()) - 1);
+
+                if (indexToEdit !== -1) {
+                    arrayReportFormatCondition[indexToEdit].seqNo = parseInt($("#seq_no").val()) - 1;
+                    arrayReportFormatCondition[indexToEdit].tableName = $("#table_name_condition").val();
+                    arrayReportFormatCondition[indexToEdit].fieldName = $("#field_name_condition").val();
+                    arrayReportFormatCondition[indexToEdit].criteria = $("#criteria").val();
+                    arrayReportFormatCondition[indexToEdit].value = $("#value").val();
+                } else {
+                    alert("Object with columnNo value " + $("#seq_no").val() + " not found.");
+                }
+            }
 
             $(this).prop("disabled", false);
             $(this).html(
