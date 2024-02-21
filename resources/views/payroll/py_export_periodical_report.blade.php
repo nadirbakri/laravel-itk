@@ -7,11 +7,11 @@
 	<style type="text/css">
 		* { box-sizing: border-box; }
 		body{
-			margin-left: 30px;
-			margin-right: 30px;
-			margin-bottom: 25px;
-			margin-top: 25px;
-            font-size: 14px;
+			margin-left: 0;
+			margin-right: 0;
+			margin-bottom: 0;
+			margin-top: 0;
+            font-size: 8px;
 		}
         .table_detail td{
             text-align:center;
@@ -70,11 +70,17 @@
                         $alignment = "right";
                     }
                     ?>
-                    @if($dataTable2->dataFormat == "#,##0" && (is_int($dataTable2->value) || (is_float($dataTable2->value))))
+                    @if(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0")
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
-                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">Rp {{ number_format($dataTable2->value, 2, ',', '.') }}</td>
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 0, '.', ',') }}</td>
+                    @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
+                        <?php
+                        $total[$dataTable2->field] += $dataTable2->value;
+                        ?>
+                        <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 2, '.', ',') }}</td>
+                    
                     @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
                     @elseif($dataTable2->dataFormat == "dd MM YYYY")
@@ -89,7 +95,7 @@
             <tr>
                 <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</td>
                 @foreach($data[0]->detail[0]->field as $key3 => $dataTable3)
-                <td style="text-align:right; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                <td style="text-align:right; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
                 @endforeach
             </tr>
             @endif
