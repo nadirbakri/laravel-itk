@@ -114,6 +114,82 @@
             @endif
         </tbody>
     </table>
+    @if($print_signature)
+    <br>
+    <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
+        <tbody>
+            @if($level1[0] == "ALL" || $level1[0] == "GIC" || $level1[0] == "NMDI")
+            <tr>
+                <td colspan="4">Jakarta, {{ date('d F Y') }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">Prepared By,</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Approved By,</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">Veronica Dian</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Evensius Go</td>
+            </tr>
+            @else
+            <tr>
+                <td colspan="7">Jakarta, {{ date('d F Y') }}</td>
+            </tr>
+            <tr>
+                <td colspan="7">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">Prepared By,</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Approved By,</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td colspan="2" style="text-align: center;">Approved By,</td>
+            </tr>
+            <tr>
+                <td colspan="7">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="7">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="7">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td colspan="2" style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">Veronica Dian</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Pius Edwin Pandu</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td colspan="2" style="text-align: center;">Evensius Go</td>
+            </tr>
+            @endif
+        </tbody>
+    </table>
+    @endif
     @endif
 </body>
 </html>

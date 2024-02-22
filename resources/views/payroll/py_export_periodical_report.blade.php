@@ -102,5 +102,88 @@
         </tbody>
     </table>
     @endif
+    @if($print_signature)
+    <br>
+    <br>
+    <br>
+    @if($level1[0] == "ALL" || $level1[0] == "GIC" || $level1[0] == "NMDI")
+    <table style="width: 40%;" class="table table-hover responsive">
+        <tbody>
+            <tr>
+                <td colspan="3">Jakarta, {{ date('d F Y') }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: center;">Prepared By,</td>
+                <td style="width: 5px; text-align: center;">&nbsp;</td>
+                <td style="width: 100px; text-align: center;">Approved By,</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">Veronica Dian</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Evensius Go</td>
+            </tr>
+        </tbody>
+    </table>
+    @else
+    <table style="width: 60%;" class="table table-hover responsive">
+        <tbody>
+            <tr>
+                <td colspan="5">Jakarta, {{ date('d F Y') }}</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: center;">Prepared By,</td>
+                <td style="width: 5px; text-align: center;">&nbsp;</td>
+                <td style="width: 100px; text-align: center;">Approved By,</td>
+                <td style="width: 5px; text-align: center;">&nbsp;</td>
+                <td style="width: 100px; text-align: center;">Approved By,</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center; border-bottom: 1px solid black">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">Veronica Dian</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Pius Edwin Pandu</td>
+                <td style="text-align: center;">&nbsp;</td>
+                <td style="text-align: center;">Evensius Go</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    @endif
+    @endif
 </body>
 </html>
