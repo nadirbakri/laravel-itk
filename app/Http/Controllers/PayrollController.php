@@ -4443,7 +4443,8 @@ public function dataDetailReportFormatPY(Request $request)
                 }
 
                 rewind($tempFile);
-                $csvContent = stream_get_contents($tempFile);
+                $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+                
                 fclose($tempFile);
 
                 return Response::make($csvContent, 200, [
