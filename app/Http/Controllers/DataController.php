@@ -4813,6 +4813,50 @@ class DataController extends Controller
         return response()->json($level[0]);
 	}
 
+	public function dataLevelSelectFunctionAPI(Request $request)
+    {
+    	$level[] = (object) [
+    		'levelCode' => 'ALL',
+    		'levelName' => 'ALL'
+		];
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/Level/getLevel',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode'),
+						'levelType' => $request->levelType,
+						'levelCode' => $request->levelCode
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet !== null){
+			return response()->json($arrResult->dataListSet[0]);
+		}else{
+			return response()->json([]);
+		}
+	}
+
 	public function dataEvaluationFormAPI(Request $request)
     {
     	$search = $request->search;

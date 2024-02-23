@@ -474,7 +474,7 @@
                         '<div class="' + col2 + '">' +
                         '<div class="form-group">' +
                         '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]" multiple="multiple"></select>' +
+                        i + '[]"></select>' +
                         '</div></div>'
                     );
 
@@ -546,6 +546,14 @@
             $('#account_number').val(data[0].data.accountNo);
             $('#transfer_code').val(data[0].data.description);
             loadDataOutputFile(data[0].data.bankCode);
+
+            if(data[0].data.bankCode.indexOf("GIC") !== -1){
+                loadDataSelectLevel('#level1', 1, "GIC");
+            }else if(data[0].data.bankCode.indexOf("IEI") !== -1){
+                loadDataSelectLevel('#level1', 1, "IEI");
+            }else{
+                loadDataSelectLevel('#level1', 1, "NMDI");
+            }
         });
 
         $('#source_bank').on("select2:unselecting", function (e) {
@@ -570,6 +578,23 @@
                     'levelType': levelType
                 }
             }).then(function (data) {
+                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
+                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $(field).val(data.levelCode);
+            });
+        }
+
+        function loadDataSelectLevel(field = '', levelType = '', value = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/level/select/func/api') }}",
+                data: {
+                    'levelType': levelType,
+                    'levelCode': value
+                }
+            }).then(function (data) {
+                console.log(data);
                 if (!$(field).find('option:contains(' + data.levelName + ')').length) {
                     $(field).append($('<option>').val(data.levelCode).text(data.levelName));
                 }
