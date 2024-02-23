@@ -42,6 +42,7 @@ use Zip;
 use ZipArchive;
 use PhpParser\Node\NullableType;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class PayrollController extends Controller
 {
@@ -4404,7 +4405,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
         // exit;
 
         if($arrResult->dataListSet != null){
@@ -4419,7 +4420,38 @@ public function dataDetailReportFormatPY(Request $request)
             }else if($request->source_bank == 'BOT'){
                 return Excel::download(new CSVTransferBankBOTExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if(str_contains($request->source_bank, 'BTPN')){
-                return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+                $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                foreach($array as $key => $value){
+                    $arrayTwo = explode(",", $value);
+                    if(count($arrayTwo) > 1){
+                        $array[$key] = $arrayTwo;
+                    }
+                }
+
+                $array = array_filter($array, function($value) {
+                    return !empty($value);
+                });
+
+                $csvHeader = $array[0];
+
+                $tempFile = fopen('php://temp', 'w+');
+
+                foreach ($array as $row) {
+                    $row = array_pad($row, count($csvHeader), '');
+
+                    fputcsv($tempFile, $row);
+                }
+
+                rewind($tempFile);
+                $csvContent = stream_get_contents($tempFile);
+                fclose($tempFile);
+
+                return Response::make($csvContent, 200, [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->namaFile . '"',
+                ]);
+
+                // return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BANK INA' || $request->source_bank == 'BANK INA MULTI ACCOUNT'){
                 return Excel::download(new CSVTransferBankINAExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BNI'){
