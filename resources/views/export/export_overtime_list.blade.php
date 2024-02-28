@@ -28,6 +28,7 @@
 				<th>Overtime Date</th>
                 <th>Overtime Hour From</th>
                 <th>Overtime Hour To</th>
+				<th>Total Overtime Hour</th>
                 <th>Overtime Remarks</th>
                 <th>Project Name</th>
                 <th>Customer Name</th>
@@ -37,6 +38,11 @@
 		<tbody>
             <?php $no = 1; ?>
 			@foreach($data as $value)
+			@php
+			$waktuAwal = strtotime($value->overtimeEntity->overtimeHourFrom);
+			$waktuAkhir = strtotime($value->overtimeEntity->overtimeHourTo);
+			$waktuSelisih = $waktuAkhir - $waktuAwal;
+			@endphp
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->overtimeEntity->status}}</td>
@@ -47,6 +53,7 @@
 				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeDate)->format('Y-m-d') }}</td>
 				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('H:i:s')}}</td>
 				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('H:i:s')}}</td>
+				<td>{{ \Carbon\Carbon::parse($waktuSelisih)->format('H:i:s')}}</td>
 				<td>{{ $value->overtimeEntity->overtimeRemarks}}</td>
 				<td>{{ $value->overtimeEntity->projectName}}</td>
 				<td>{{ $value->overtimeEntity->customerName}}</td>

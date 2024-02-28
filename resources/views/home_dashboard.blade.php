@@ -600,7 +600,7 @@
  			type: 'GET',
  			dataType: 'JSON',
  			success: function (response) {
-				console.log(response);
+				// console.log(response);
 				var totalPresent = 0;
 				var totalLate = 0;
 				var totalAbsent = 0;
