@@ -85,298 +85,295 @@
             padding: 5px;
         }
 
+        hr.vertical {
+            border: 0;
+            clear :both;
+            display: block;
+            width: 0.1vw;                
+            background-color: #707070;
+            height: 95%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="div-payroll">
-        <div class="div-title">
-            <a href="{{ url()->previous() }}" target="iframe_dashboard">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('payroll_salary_component_data.list_detail') }}</span>
-            </a>
-        </div>
-        <div class="div-form">
-            <form id="salary_component_data_form" method="post">
-                @csrf
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="field_name">{{ __('payroll_salary_component_data.label_field_name') }}</label>
-                            <span class="required">*</span>
-                            <input type="text" class="form-control" id="field_name" name="field_name"
-                                placeholder="{{ __('payroll_salary_component_data.label_field_name') }}" readonly>
-                        </div>
-                        <input type="text" class="form-control" id="record_function" name="record_function" hidden>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="description">{{ __('payroll_salary_component_data.label_description') }}</label>
-                            <input type="text" class="form-control" id="description" name="description"
-                                placeholder="{{ __('payroll_salary_component_data.label_description') }}">
+        <form id="salary_component_data_form" method="post">
+        @csrf
+            <div class="row" style="margin-left: 0; margin-right: 0;">
+                <div class="col-7 div-title">
+                    <a href="{{ url()->previous() }}" target="iframe_dashboard">
+                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                        <span class="title-text">{{ __('payroll_salary_component_data.list_detail') }}</span>
+                    </a>
+                </div>
+                <div class="col-2" style="margin-top: 2%; margin-bottom: 2%;">
+                    <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
+                        style="width: 100%;">
+                        <i class="fa fa-floppy-o"></i> {{ __('payroll_salary_component_data.btn_save') }}
+                    </button>
+                </div>
+                <div class="col-2" style="margin-top: 2%; margin-bottom: 2%;">
+                    <a class="btn btn-outline-primary" href="{{ url('payroll/salary_component_data') }}" target="iframe_dashboard"
+                        name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                        <i class="fa fa-times-circle"></i> {{ __('payroll_salary_component_data.btn_cancel') }}
+                    </a>
+                </div>  
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group box">
+                        <div class="row" style="margin: 0;">
+                            <div class="col-4 pr-0">
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="field_name">{{ __('payroll_salary_component_data.label_field_name') }}</label>
+                                            <span class="required">*</span>
+                                            <input type="text" class="form-control" id="field_name" name="field_name"
+                                                placeholder="{{ __('payroll_salary_component_data.label_field_name') }}" readonly>
+                                        </div>
+                                        <input type="text" class="form-control" id="record_function" name="record_function" hidden>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="field_width">{{ __('payroll_salary_component_data.label_field_width') }}</label>
+                                            <input type="number" class="form-control" id="field_width" name="field_width"
+                                                placeholder="{{ __('payroll_salary_component_data.label_field_width') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="description">{{ __('payroll_salary_component_data.label_description') }}</label>
+                                            <input type="text" class="form-control" id="description" name="description"
+                                                placeholder="{{ __('payroll_salary_component_data.label_description') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="decimal_point">{{ __('payroll_salary_component_data.label_decimal_point') }}</label>
+                                            <input type="number" class="form-control" id="decimal_point" name="decimal_point"
+                                                placeholder="{{ __('payroll_salary_component_data.label_decimal_point') }}">
+                                            <small id="decimal_point_rules" class="text-muted">{{ __('payroll_salary_component_data.label_decimal_point_rules') }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="spt_column">{{ __('payroll_salary_component_data.label_spt_column') }}</label>
+                                            <input type="text" class="form-control" id="spt_column" name="spt_column"
+                                                placeholder="{{ __('payroll_salary_component_data.label_spt_column') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="group_takehomepay">{{ __('payroll_salary_component_data.label_group_takehomepay') }}</label>
+                                            <select class="form-control select2" id="group_takehomepay" name="group_takehomepay">
+                                                <option value="" disabled selected>{{ __('payroll_salary_component_data.label_select_group_takehomepay') }}</option>
+                                                <option id="group_0" name="group_0" value=0 selected="selected">0</option>
+                                                <option id="group_1" name="group_1" value=1>1</option>
+                                                <option id="group_2" name="group_2" value=2>2</option>
+                                                <option id="group_3" name="group_3" value=3>3</option>
+                                                <option id="group_4" name="group_4" value=4>4</option>
+                                                <option id="group_5" name="group_5" value=5>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="include_prorate"
+                                                    name="include_prorate" value="true">
+                                                <label
+                                                    for="include_prorate">{{ __('payroll_salary_component_data.label_include_prorate') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1 p-0">
+                                <hr class="vertical" />
+                            </div>
+                            <div class="col-3 p-0">
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="display_in">{{ __('payroll_salary_component_data.label_display_in') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="salary_master" name="display_in" value="M" checked>
+                                                <label for="salary_master" style="font-family: Arial;">Salary Master</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="display_in_annual_data_entry" name="display_in" value="T">
+                                                <label for="display_in_annual_data_entry" style="font-family: Arial;">Display In Annual Data Entry</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="tariff_master" name="display_in" value="F">
+                                                <label for="tariff_master" style="font-family: Arial;">Tariff Master</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="not_display" name="display_in" value="N">
+                                                <label for="not_display" style="font-family: Arial;">Not Display</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="field_type">{{ __('payroll_salary_component_data.label_field_type') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="field_type" type="radio" id="fixed_allowance" name="field_type" value="T" checked>
+                                                <label for="fixed_allowance" style="font-family: Arial;">Fixed Allowance</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="field_type" type="radio" id="non_fixed_allowance" name="field_type" value="N">
+                                                <label for="non_fixed_allowance" style="font-family: Arial;">Non Fixed Allowance</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="field_type" type="radio" id="others" name="field_type" value="L">
+                                                <label for="others" style="font-family: Arial;">Others</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="field_type" type="radio" id="fixed_deduction" name="field_type" value="P">
+                                                <label for="fixed_deduction" style="font-family: Arial;">Fixed Deduction</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="field_type" type="radio" id="non_fixed_deduction" name="field_type" value="A">
+                                                <label for="non_fixed_deduction" style="font-family: Arial;">Non Fixed Deduction</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="field_type" type="radio" id="flag" name="field_type" value="F">
+                                                <label for="flag" style="font-family: Arial;">Flag</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="tax">{{ __('payroll_salary_component_data.label_tax') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="increase_tax" name="tax" value="T" checked>
+                                                <label for="increase_tax" style="font-family: Arial;">Increase Tax</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="non_taxable" name="tax" value="N">
+                                                <label for="non_taxable" style="font-family: Arial;">Non Taxable</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="radio" id="decrease_tax" name="tax" value="P">
+                                                <label for="decrease_tax" style="font-family: Arial;">Decrease Tax</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1 p-0">
+                                <hr class="vertical" />
+                            </div>
+                            <div class="col-3 p-0">
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="component_master_setup">{{ __('payroll_salary_component_data.label_component_master_setup') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="pension" name="pension" value="true">
+                                                <label for="pension" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_pension') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="yearly_update" name="yearly_update" value="true">
+                                                <label for="yearly_update" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_yearly_update') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="cummulative_update" name="cummulative_update" value="true">
+                                                <label for="cummulative_update" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_cummulative_update') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="retroactive" name="retroactive" value="true">
+                                                <label for="retroactive" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_retroactive') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="tax_custom_set_up">{{ __('payroll_salary_component_data.label_tax_custom_set_up') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="tax_allowance" name="tax_allowance" value="true">
+                                                <label for="tax_allowance" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_tax_allowance') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="tax_netto_calculation" name="tax_netto_calculation" value="true">
+                                                <label for="tax_netto_calculation" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_tax_netto_calculation') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="tax_custom_set_up">{{ __('payroll_salary_component_data.label_tax_custom_set_up') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="for_limit_medical" name="for_limit_medical" value="true">
+                                                <label for="for_limit_medical" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_for_limit_medical') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="jamsostek" name="jamsostek" value="true" disabled>
+                                                <label for="jamsostek" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_jamsostek') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="health_insurance" name="health_insurance" value="true" disabled>
+                                                <label for="health_insurance" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_health_insurance') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="pension_insurance" name="pension_insurance" value="true" disabled>
+                                                <label for="pension_insurance" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_pension_insurance') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="overtime_alternative_1" name="overtime_alternative_1" value="true" disabled>
+                                                <label for="overtime_alternative_1" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_overtime_alternative_1') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input class="form-check-input" type="checkbox" id="overtime_alternative_2" name="overtime_alternative_2" value="true" disabled>
+                                                <label for="overtime_alternative_2" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_overtime_alternative_2') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="field_width">{{ __('payroll_salary_component_data.label_field_width') }}</label>
-                            <input type="number" class="form-control" id="field_width" name="field_width"
-                                placeholder="{{ __('payroll_salary_component_data.label_field_width') }}">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="decimal_point">{{ __('payroll_salary_component_data.label_decimal_point') }}</label>
-                            <small id="decimal_point_rules" class="text-muted">{{ __('payroll_salary_component_data.label_decimal_point_rules') }}</small>
-                            <input type="number" class="form-control" id="decimal_point" name="decimal_point"
-                                placeholder="{{ __('payroll_salary_component_data.label_decimal_point') }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="include_prorate">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="include_prorate"
-                                    name="include_prorate" value="true">
-                                <label
-                                    for="include_prorate">{{ __('payroll_salary_component_data.label_include_prorate') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="group_takehomepay">{{ __('payroll_salary_component_data.label_group_takehomepay') }}</label>
-                            <select class="form-control select2" id="group_takehomepay" name="group_takehomepay">
-                                <option value="" disabled selected>{{ __('payroll_salary_component_data.label_select_group_takehomepay') }}</option>
-                                <option id="group_0" name="group_0" value=0 selected="selected">0</option>
-                                <option id="group_1" name="group_1" value=1>1</option>
-                                <option id="group_2" name="group_2" value=2>2</option>
-                                <option id="group_3" name="group_3" value=3>3</option>
-                                <option id="group_4" name="group_4" value=4>4</option>
-                                <option id="group_5" name="group_5" value=5>5</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group box">
-                            <div class="form-check">
-                                <label for="display_in">{{ __('payroll_salary_component_data.label_display_in') }}</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="salary_master" name="display_in" value="M" checked>
-                                <label for="salary_master">Salary Master</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="display_in_annual_data_entry" name="display_in" value="T">
-                                <label for="display_in_annual_data_entry">Display In Annual Data Entry</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="tariff_master" name="display_in" value="F">
-                                <label for="tariff_master">Tariff Master</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="not_display" name="display_in" value="N">
-                                <label for="not_display">Not Display</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group box">
-                            <div class="form-check">
-                                <label for="field_type">{{ __('payroll_salary_component_data.label_field_type') }}</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="field_type" type="radio" id="fixed_allowance" name="field_type" value="T" checked>
-                                <label for="fixed_allowance">Fixed Allowance</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="field_type" type="radio" id="non_fixed_allowance" name="field_type" value="N">
-                                <label for="non_fixed_allowance">Non Fixed Allowance</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="field_type" type="radio" id="others" name="field_type" value="L">
-                                <label for="others">Others</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="field_type" type="radio" id="fixed_deduction" name="field_type" value="P">
-                                <label for="fixed_deduction">Fixed Deduction</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="field_type" type="radio" id="non_fixed_deduction" name="field_type" value="A">
-                                <label for="non_fixed_deduction">Non Fixed Deduction</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="field_type" type="radio" id="flag" name="field_type" value="F">
-                                <label for="flag">Flag</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group box">
-                            <div class="form-check">
-                                <label for="tax">{{ __('payroll_salary_component_data.label_tax') }}</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="increase_tax" name="tax" value="T" checked>
-                                <label for="increase_tax">Increase Tax</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="non_taxable" name="tax" value="N">
-                                <label for="non_taxable">Non Taxable</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="decrease_tax" name="tax" value="P">
-                                <label for="decrease_tax">Decrease Tax</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="pension">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="pension"
-                                    name="pension" value="true">
-                                <label
-                                    for="pension">{{ __('payroll_salary_component_data.label_pension') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="yearly_update">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="yearly_update"
-                                    name="yearly_update" value="true">
-                                <label
-                                    for="yearly_update">{{ __('payroll_salary_component_data.label_yearly_update') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="cummulative_update">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="cummulative_update"
-                                    name="cummulative_update" value="true">
-                                <label
-                                    for="cummulative_update">{{ __('payroll_salary_component_data.label_cummulative_update') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-5"></div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="retroactive">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="retroactive"
-                                    name="retroactive" value="true">
-                                <label
-                                    for="retroactive">{{ __('payroll_salary_component_data.label_retroactive') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="tax_allowance">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="tax_allowance"
-                                    name="tax_allowance" value="true">
-                                <label
-                                    for="tax_allowance">{{ __('payroll_salary_component_data.label_tax_allowance') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="for_limit_medical">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="for_limit_medical"
-                                    name="for_limit_medical" value="true">
-                                <label
-                                    for="for_limit_medical">{{ __('payroll_salary_component_data.label_for_limit_medical') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6"></div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="jamsostek">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="jamsostek"
-                                    name="jamsostek" value="true" disabled>
-                                <label
-                                    for="jamsostek">{{ __('payroll_salary_component_data.label_jamsostek') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="health_insurance">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="health_insurance"
-                                    name="health_insurance" value="true" disabled>
-                                <label
-                                    for="health_insurance">{{ __('payroll_salary_component_data.label_health_insurance') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="pension_insurance">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="pension_insurance"
-                                    name="pension_insurance" value="true" disabled>
-                                <label
-                                    for="pension_insurance">{{ __('payroll_salary_component_data.label_pension_insurance') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="overtime_alternative_1">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="overtime_alternative_1"
-                                    name="overtime_alternative_1" value="true" disabled>
-                                <label
-                                    for="overtime_alternative_1">{{ __('payroll_salary_component_data.label_overtime_alternative_1') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="overtime_alternative_2">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="overtime_alternative_2"
-                                    name="overtime_alternative_2" value="true" disabled>
-                                <label
-                                    for="overtime_alternative_2">{{ __('payroll_salary_component_data.label_overtime_alternative_2') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
-                            style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('payroll_salary_component_data.btn_save') }}
-                        </button>
-                    </div>
-                    <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('payroll/salary_component_data') }}" target="iframe_dashboard"
-                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('payroll_salary_component_data.btn_cancel') }}
-                        </a>
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -465,6 +462,7 @@
             $('#description').val('');
             $('#field_width').val('');
             $('#decimal_point').val('');
+            $('#spt_column').val('');
             $('#include_prorate').prop('checked', false).trigger('change');
             $('#group_takehomepay').val(0).trigger('change');
             $('#pension').prop('checked', false).trigger('change');
@@ -472,6 +470,7 @@
             $('#cummulative_update').prop('checked', false).trigger('change');
             $('#retroactive').prop('checked', false).trigger('change');
             $('#tax_allowance').prop('checked', false).trigger('change');
+            $('#tax_netto_calculation').prop('checked', false).trigger('change');
             $('#for_limit_medical').prop('checked', false).trigger('change');
             $('#jamsostek').prop('checked', false).trigger('change');
             $('#health_insurance').prop('checked', false).trigger('change');
@@ -497,6 +496,7 @@
             $('#description').val((typeof arrData[0].description !== 'undefined') ? arrData[0].description : '');
             $('#field_width').val((typeof arrData[0].fieldWidth !== 'undefined') ? arrData[0].fieldWidth : '');
             $('#decimal_point').val((typeof arrData[0].decimalPoint !== 'undefined') ? arrData[0].decimalPoint : '');
+            $('#spt_column').val((typeof arrData[0].sptColumn !== 'undefined') ? arrData[0].sptColumn : '');
             if (typeof arrData[0].includeProrate !== 'undefined') {
                 if (arrData[0].includeProrate === true) {
                     $('#include_prorate').prop('checked', true).trigger('change');
@@ -601,6 +601,15 @@
                 }
                 else {
                     $('#tax_allowance').prop('checked', false).trigger('change');
+                }
+            }
+
+            if (typeof arrData[0].flagNetCalculation !== 'undefined') {
+                if (arrData[0].flagNetCalculation === true) {
+                    $('#tax_netto_calculation').prop('checked', true).trigger('change');
+                }
+                else {
+                    $('#tax_netto_calculation').prop('checked', false).trigger('change');
                 }
             }
 
