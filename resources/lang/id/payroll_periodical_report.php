@@ -10,6 +10,7 @@ return [
     'label_period' => 'Periode',
     'label_cost_center' => 'Pusat Biaya',
     'label_multi_cost_center' => 'Pusat Multi Biaya',
+    'label_group_department' => 'Grup Departemen',
     'label_report_status' => 'Status Laporan',
     'label_actual' => 'Aktual',
     'label_reconsiliation' => 'Rekonsiliasi',

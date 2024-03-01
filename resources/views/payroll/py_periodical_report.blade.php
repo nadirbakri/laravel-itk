@@ -221,6 +221,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" id="div-level">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="group_department"
+                                    name="group_department" value="true">
+                                <label
+                                    for="group_department">{{ __('payroll_periodical_report.label_group_department') }}</label>
+                            </div>
+                            <input type="hidden" class="form-control" id="level_format" name="level_format">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -330,7 +343,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" id="div-level">
+                <div class="row">
                     <div class="col-2">
                         <div class="form-group">
                             <label for="location form-check-label">{{ __('payroll_periodical_report.label_location') }}</label>
@@ -341,7 +354,6 @@
                             <select class="form-control select2" id="location" name="location[]"
                                 multiple="multiple"></select>
                         </div>
-                        <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
                 </div>
                 <!-- BUTTON -->
@@ -501,13 +513,8 @@
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                for (var i = 1; i <= 1; i++) {
                     $('#div-level').append(
-                        '<div class="col-2">' +
-                        '<div class="form-group">'+
-                        '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
-                        .levelDescription + '</label>' +
-                        '</div></div>'+
                         '<div class="col-4">' +
                         '<div class="form-group">' +
                         '<select class="form-control select2" id="level' + i + '" name="level' +

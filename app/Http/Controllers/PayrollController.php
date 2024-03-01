@@ -7927,7 +7927,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             $dataLevel = [];
 
-            for($i = 0; $i < $request->level_format; $i++){
+            for($i = 0; $i < 1; $i++){
                 $dataLevel[] = $request->{'level' . ($i+1)};
             }
 
@@ -7945,6 +7945,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "period" => $request->period,
                 "statusPeriod" => 0,
                 "multiCostCenter" => isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
+                "deptGroup" => isset($request->group_department) ? (bool) $request->group_department : false,
                 "reportStatus" => $request->report_status,
                 "reportType" => $request->report_type,
                 "displayLine" => isset($request->display_line) ? (bool) $request->display_line : false,
@@ -8047,7 +8048,7 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd($dataLevel[0]);
+        dd($arrResult->dataListSet);
 
         $customPaper = array(0,0,612,792);
         if($arrResult->dataListSet == null){
@@ -8074,7 +8075,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printPeriodicalReportPayrollExcel(Request $request){
         $dataLevel = [];
 
-        for($i = 0; $i < $request->level_format; $i++){
+        for($i = 0; $i < 1; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
@@ -8086,6 +8087,7 @@ public function dataDetailReportFormatPY(Request $request)
             $request->period, 
             $request->cost_center_code_from, 
             $request->cost_center_code_to, 
+            isset($request->group_department) ? (bool) $request->group_department : false,
             isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
             $request->report_status, 
             $request->report_type, 

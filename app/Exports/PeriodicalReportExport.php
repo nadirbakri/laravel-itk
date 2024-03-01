@@ -13,7 +13,7 @@ use App;
 
 class PeriodicalReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -22,6 +22,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $this->period = $period;
         $this->costCenterCodeFrom = $costCenterCodeFrom;
         $this->costCenterCodeTo = $costCenterCodeTo;
+        $this->groupDepartment = $groupDepartment;
         $this->multiCostCenter = $multiCostCenter;
         $this->reportStatus = $reportStatus;
         $this->reportType = $reportType;
@@ -51,6 +52,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 "employeeNoTo" => $this->employeeNoTo,
                 "period" => $this->period,
                 "statusPeriod" => 0,
+                "deptGroup" => $this->groupDepartment,
                 "multiCostCenter" => $this->multiCostCenter,
                 "reportStatus" => $this->reportStatus,
                 "reportType" => $this->reportType,

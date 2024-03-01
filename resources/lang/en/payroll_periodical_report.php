@@ -18,6 +18,7 @@ return [
     'label_period' => 'Period',
     'label_cost_center' => 'Cost Center',
     'label_multi_cost_center' => 'Multi Cost Center',
+    'label_group_department' => 'Group Department',
     'label_report_status' => 'Report Status',
     'label_actual' => 'Actual',
     'label_reconsiliation' => 'Reconsiliation',
