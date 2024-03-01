@@ -221,7 +221,7 @@
                         </button>
                     </div>   
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
+                        <button type="button" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
                             <i class="fa fa-floppy-o"></i> {{ __('md_claim_transaction.btn_save') }}
                         </button>

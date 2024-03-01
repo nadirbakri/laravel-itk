@@ -81,21 +81,21 @@
 
         .row .box {
             /* width: 300px; */
-            border: 1px solid #004883;
+            border: 1px solid #CED4DA;
             padding: 5px;
+            border-radius: 10px;
         }
 
         hr.vertical {
             border: 0;
             clear :both;
             display: block;
-            width: 0.1vw;                
-            background-color: #707070;
+            width: 1px;                
+            background-color: #E5E5E5;
             height: 95%;
             margin-top: 1rem;
             margin-bottom: 1rem;
         }
-
     </style>
 </head>
 
@@ -197,7 +197,7 @@
                                         <div class="form-group">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="include_prorate"
-                                                    name="include_prorate" value="true">
+                                                    name="include_prorate" value="true" style="background-color: blue;">
                                                 <label
                                                     for="include_prorate">{{ __('payroll_salary_component_data.label_include_prorate') }}</label>
                                             </div>
@@ -217,19 +217,19 @@
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="salary_master" name="display_in" value="M" checked>
-                                                <label for="salary_master" style="font-family: Arial;">Salary Master</label>
+                                                <label for="salary_master" style="font-family: Montserrat-Regular;">Salary Master</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="display_in_annual_data_entry" name="display_in" value="T">
-                                                <label for="display_in_annual_data_entry" style="font-family: Arial;">Display In Annual Data Entry</label>
+                                                <label for="display_in_annual_data_entry" style="font-family: Montserrat-Regular;">Display In Annual Data Entry</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="tariff_master" name="display_in" value="F">
-                                                <label for="tariff_master" style="font-family: Arial;">Tariff Master</label>
+                                                <label for="tariff_master" style="font-family: Montserrat-Regular;">Tariff Master</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="not_display" name="display_in" value="N">
-                                                <label for="not_display" style="font-family: Arial;">Not Display</label>
+                                                <label for="not_display" style="font-family: Montserrat-Regular;">Not Display</label>
                                             </div>
                                         </div>
                                     </div>
@@ -242,27 +242,27 @@
                                             </div>
                                             <div class="form-check p-0">
                                                 <input class="field_type" type="radio" id="fixed_allowance" name="field_type" value="T" checked>
-                                                <label for="fixed_allowance" style="font-family: Arial;">Fixed Allowance</label>
+                                                <label for="fixed_allowance" style="font-family: Montserrat-Regular;">Fixed Allowance</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input class="field_type" type="radio" id="non_fixed_allowance" name="field_type" value="N">
-                                                <label for="non_fixed_allowance" style="font-family: Arial;">Non Fixed Allowance</label>
+                                                <label for="non_fixed_allowance" style="font-family: Montserrat-Regular;">Non Fixed Allowance</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input class="field_type" type="radio" id="others" name="field_type" value="L">
-                                                <label for="others" style="font-family: Arial;">Others</label>
+                                                <label for="others" style="font-family: Montserrat-Regular;">Others</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input class="field_type" type="radio" id="fixed_deduction" name="field_type" value="P">
-                                                <label for="fixed_deduction" style="font-family: Arial;">Fixed Deduction</label>
+                                                <label for="fixed_deduction" style="font-family: Montserrat-Regular;">Fixed Deduction</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input class="field_type" type="radio" id="non_fixed_deduction" name="field_type" value="A">
-                                                <label for="non_fixed_deduction" style="font-family: Arial;">Non Fixed Deduction</label>
+                                                <label for="non_fixed_deduction" style="font-family: Montserrat-Regular;">Non Fixed Deduction</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input class="field_type" type="radio" id="flag" name="field_type" value="F">
-                                                <label for="flag" style="font-family: Arial;">Flag</label>
+                                                <label for="flag" style="font-family: Montserrat-Regular;">Flag</label>
                                             </div>
                                         </div>
                                     </div>
@@ -275,15 +275,15 @@
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="increase_tax" name="tax" value="T" checked>
-                                                <label for="increase_tax" style="font-family: Arial;">Increase Tax</label>
+                                                <label for="increase_tax" style="font-family: Montserrat-Regular;">Increase Tax</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="non_taxable" name="tax" value="N">
-                                                <label for="non_taxable" style="font-family: Arial;">Non Taxable</label>
+                                                <label for="non_taxable" style="font-family: Montserrat-Regular;">Non Taxable</label>
                                             </div>
                                             <div class="form-check p-0">
                                                 <input type="radio" id="decrease_tax" name="tax" value="P">
-                                                <label for="decrease_tax" style="font-family: Arial;">Decrease Tax</label>
+                                                <label for="decrease_tax" style="font-family: Montserrat-Regular;">Decrease Tax</label>
                                             </div>
                                         </div>
                                     </div>
@@ -300,37 +300,20 @@
                                                 <label for="component_master_setup">{{ __('payroll_salary_component_data.label_component_master_setup') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="pension" name="pension" value="true">
-                                                <label for="pension" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_pension') }}</label>
+                                                <input type="checkbox" id="pension" name="pension" value="true">
+                                                <label for="pension" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_pension') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="yearly_update" name="yearly_update" value="true">
-                                                <label for="yearly_update" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_yearly_update') }}</label>
+                                                <input type="checkbox" id="yearly_update" name="yearly_update" value="true">
+                                                <label for="yearly_update" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_yearly_update') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="cummulative_update" name="cummulative_update" value="true">
-                                                <label for="cummulative_update" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_cummulative_update') }}</label>
+                                                <input type="checkbox" id="cummulative_update" name="cummulative_update" value="true">
+                                                <label for="cummulative_update" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_cummulative_update') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="retroactive" name="retroactive" value="true">
-                                                <label for="retroactive" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_retroactive') }}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-left: 0; margin-right: 0;">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <div class="form-check p-0">
-                                                <label for="tax_custom_set_up">{{ __('payroll_salary_component_data.label_tax_custom_set_up') }}</label>
-                                            </div>
-                                            <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="tax_allowance" name="tax_allowance" value="true">
-                                                <label for="tax_allowance" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_tax_allowance') }}</label>
-                                            </div>
-                                            <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="tax_netto_calculation" name="tax_netto_calculation" value="true">
-                                                <label for="tax_netto_calculation" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_tax_netto_calculation') }}</label>
+                                                <input type="checkbox" id="retroactive" name="retroactive" value="true">
+                                                <label for="retroactive" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_retroactive') }}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -342,28 +325,45 @@
                                                 <label for="tax_custom_set_up">{{ __('payroll_salary_component_data.label_tax_custom_set_up') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="for_limit_medical" name="for_limit_medical" value="true">
-                                                <label for="for_limit_medical" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_for_limit_medical') }}</label>
+                                                <input type="checkbox" id="tax_allowance" name="tax_allowance" value="true">
+                                                <label for="tax_allowance" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_tax_allowance') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="jamsostek" name="jamsostek" value="true" disabled>
-                                                <label for="jamsostek" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_jamsostek') }}</label>
+                                                <input type="checkbox" id="tax_netto_calculation" name="tax_netto_calculation" value="true">
+                                                <label for="tax_netto_calculation" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_tax_netto_calculation') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0; margin-right: 0;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-check p-0">
+                                                <label for="tax_custom_set_up">{{ __('payroll_salary_component_data.label_tax_custom_set_up') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="health_insurance" name="health_insurance" value="true" disabled>
-                                                <label for="health_insurance" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_health_insurance') }}</label>
+                                                <input type="checkbox" id="for_limit_medical" name="for_limit_medical" value="true">
+                                                <label for="for_limit_medical" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_for_limit_medical') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="pension_insurance" name="pension_insurance" value="true" disabled>
-                                                <label for="pension_insurance" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_pension_insurance') }}</label>
+                                                <input type="checkbox" id="jamsostek" name="jamsostek" value="true" disabled>
+                                                <label for="jamsostek" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_jamsostek') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="overtime_alternative_1" name="overtime_alternative_1" value="true" disabled>
-                                                <label for="overtime_alternative_1" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_overtime_alternative_1') }}</label>
+                                                <input type="checkbox" id="health_insurance" name="health_insurance" value="true" disabled>
+                                                <label for="health_insurance" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_health_insurance') }}</label>
                                             </div>
                                             <div class="form-check p-0">
-                                                <input class="form-check-input" type="checkbox" id="overtime_alternative_2" name="overtime_alternative_2" value="true" disabled>
-                                                <label for="overtime_alternative_2" style="font-family: Arial;">{{ __('payroll_salary_component_data.label_overtime_alternative_2') }}</label>
+                                                <input type="checkbox" id="pension_insurance" name="pension_insurance" value="true" disabled>
+                                                <label for="pension_insurance" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_pension_insurance') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="checkbox" id="overtime_alternative_1" name="overtime_alternative_1" value="true" disabled>
+                                                <label for="overtime_alternative_1" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_overtime_alternative_1') }}</label>
+                                            </div>
+                                            <div class="form-check p-0">
+                                                <input type="checkbox" id="overtime_alternative_2" name="overtime_alternative_2" value="true" disabled>
+                                                <label for="overtime_alternative_2" style="font-family: Montserrat-Regular;">{{ __('payroll_salary_component_data.label_overtime_alternative_2') }}</label>
                                             </div>
                                         </div>
                                     </div>

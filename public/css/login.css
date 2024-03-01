@@ -6,6 +6,10 @@
 	font-family: Inter;
 	src: url(../fonts/Inter-SemiBold.ttf);
 }
+@font-face {
+	font-family: Montserrat-Regular;
+	src: url(../fonts/Montserrat-Regular.ttf);
+}
 body{
 	display: block;
 }

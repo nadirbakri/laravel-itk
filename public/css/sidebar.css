@@ -2,10 +2,13 @@
   font-family: Montserrat;
   src: url(../fonts/Montserrat-SemiBold.ttf);
 }
-
 @font-face {
   font-family: Inter;
   src: url(../fonts/Inter-SemiBold.ttf);
+}
+@font-face {
+	font-family: Montserrat-Regular;
+	src: url(../fonts/Montserrat-Regular.ttf);
 }
 
 #wrapper {

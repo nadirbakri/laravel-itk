@@ -154,7 +154,7 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_code" name="group_code">                        
+                            <input type="text" class="form-control" id="group_code" name="group_code">                        
                         </div>
                     </div>
                 </div>
@@ -166,8 +166,8 @@
                     </div>
                     <div class="">
                         <div class="form-group">
-                        <input type="text" class="form-control" id="group_name" name="group_name">                        
-                    </div>
+                            <input type="text" class="form-control" id="group_name" name="group_name">                        
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -255,7 +255,7 @@
                         </button>
                     </div>   
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
+                        <button type="button" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
                             <i class="fa fa-floppy-o"></i> {{ __('md_claim_transaction.btn_save') }}
                         </button>
@@ -565,7 +565,7 @@
         $('#group_code').val(employee_id);
         $('#group_name').val(fullname);
         $('#group_code').prop('readonly', true);
-        $('#group_name').prop('readonly', true);
+        // $('#group_name').prop('readonly', true);
 
         $('.close').click();
         arrApproval = table2.row($(element).parent()).data().directApproval;
@@ -603,7 +603,7 @@
                 $('#group_code').val(data[0].groupCode);
                 $('#group_name').val(data[0].groupName);
                 $('#group_code').prop('readonly', true);
-                $('#group_name').prop('readonly', true);
+                // $('#group_name').prop('readonly', true);
 
                 arrApproval = data[0].directApproval;
                 load_data_approval_table();

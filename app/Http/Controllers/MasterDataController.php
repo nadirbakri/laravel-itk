@@ -115,7 +115,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcode',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -190,7 +190,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodeleave',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodeleave',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -228,7 +228,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodeovertime',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodeovertime',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode')
@@ -265,7 +265,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodereimbursement',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodereimbursement',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -347,7 +347,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodebusinesstrip',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodebusinesstrip',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -387,7 +387,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getemployeegroupdetails',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getemployeegroupdetails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -428,7 +428,7 @@ class MasterDataController extends Controller
 
             
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getemployeegroupdetails',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getemployeegroupdetails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -509,7 +509,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroupapprovalmember/getgmgroupapprovalmember',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroupapprovalmember/getgmgroupapprovalmember',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -570,7 +570,7 @@ class MasterDataController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
@@ -588,7 +588,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroupapprovalmember/getpersonenoincludeapprovalmember',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroupapprovalmember/getpersonenoincludeapprovalmember',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -668,7 +668,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroupapprovalcc/getgroupapprovalcc',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroupapprovalcc/getgroupapprovalcc',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -709,7 +709,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcode',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -777,7 +777,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodeleave',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodeleave',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -810,7 +810,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodeovertime',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodeovertime',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -843,7 +843,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getemployeegroupdetails',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getemployeegroupdetails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -876,7 +876,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodereimbursement',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodereimbursement',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -942,7 +942,7 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/gmgroup/getgroupcodebusinesstrip',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodebusinesstrip',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'), 
@@ -1011,7 +1011,7 @@ class MasterDataController extends Controller
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcode',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcode',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1025,7 +1025,6 @@ class MasterDataController extends Controller
                     ]
                 )]
             );
-    
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
@@ -1073,7 +1072,7 @@ class MasterDataController extends Controller
                 $b = [];
             }
 
-            $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcodeleave',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodeleave',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1135,7 +1134,7 @@ class MasterDataController extends Controller
                 $b = [];
             }
 
-            $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcodeovertime',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodeovertime',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1211,7 +1210,7 @@ class MasterDataController extends Controller
             //             "languageCode" => App::getLocale()
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcodereimbursement',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodereimbursement',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1337,7 +1336,7 @@ class MasterDataController extends Controller
             //         "languageCode" => App::getLocale()
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/gmgroup/insertgroupcodebusinesstrip',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodebusinesstrip',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1399,7 +1398,7 @@ class MasterDataController extends Controller
             //         "languageCode" => App::getLocale()
             //     ]
             //     ));
-            $response = $client->post(env('API_URL') . '/gmgroup/insertemployeegroupdetails',
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertemployeegroupdetails',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

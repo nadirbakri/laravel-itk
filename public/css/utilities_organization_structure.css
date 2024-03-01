@@ -14,6 +14,10 @@
     font-family: Inter;
     src: url(../fonts/Inter-Regular.ttf);
 }
+@font-face {
+	font-family: Montserrat-Regular;
+	src: url(../fonts/Montserrat-Regular.ttf);
+}
 .show-neighbors {
   overflow: hidden;
 }
