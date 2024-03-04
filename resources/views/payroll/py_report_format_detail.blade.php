@@ -347,6 +347,7 @@
                                     <span class="required">*</span>
                                     <select class="form-control select2" id="table_name_condition" name="table_name_condition">
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
+                                        <option value="PeMasterInfo">PeMasterInfo</option>
                                         <option value="PrSalaryMaster">PrSalaryMaster</option>
                                         <option value="PrSalaryActual">PrSalaryActual</option>
                                         <option value="PrYearly">PrYearly</option>
@@ -667,6 +668,15 @@
                 loadDataFieldName();
             }
 
+            $('#table_name_detail').on('change', function () {
+                tableName = $('#table_name_detail').val();
+                if(tableName == 'GmLevel'){
+                    loadDataLevelType();
+                }else{
+                    loadDataFieldName();
+                }
+            });
+
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/field/api') }}",
@@ -790,6 +800,15 @@
             }else{
                 loadDataFieldName();
             }
+
+            $('#table_name_condition').on('change', function () {
+                tableName = $('#table_name_condition').val();
+                if(tableName == 'GmLevel'){
+                    loadDataLevelType();
+                }else{
+                    loadDataFieldName();
+                }
+            });
 
             $.ajax({
                 type: 'GET',
