@@ -235,6 +235,7 @@
                                     <span class="required">*</span>
                                     <select class="form-control select2" id="table_name_detail" name="table_name_detail">
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
+                                        <option value="PeMasterInfo">PeMasterInfo</option>
                                         <option value="PrSalaryMaster">PrSalaryMaster</option>
                                         <option value="PrSalaryActual">PrSalaryActual</option>
                                         <option value="PrYearly">PrYearly</option>
