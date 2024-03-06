@@ -7328,7 +7328,7 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             $param = [
-                // 'companyCode' => Session::get('companyCode'),
+                'companyCode' => Session::get('companyCode'),
                 // 'jamsostekPeriod' => $request->jamsostek_period_year . '-' . $request->jamsostek_period_month . '-01',
                 // 'iuranPeriod' => $request->kekurangan_kelebihan_period_year . '-' . $request->kekurangan_kelebihan_period_month . '-01',
                 // 'jkk' => $request->jkk,
@@ -7337,12 +7337,14 @@ public function dataDetailReportFormatPY(Request $request)
                 // 'jp' => $request->jp,
                 // 'jk' => $request->jk,
                 // 'jdi' => $request->jdi,
-                // 'groupAuthorizeFrom' => $request->group_authorize_code_from,
-                // 'groupAuthorizeTo' => $request->group_authorize_code_to,
-                // 'groupBPJSCode' => $request->group_bpjs_code,
+                'periodMonth' => (int) $request->jamsostek_period_month,
+                'periodYear' => (int) $request->jamsostek_period_year,
+                'gAuthFrom' => $request->group_authorize_code_from,
+                'gAuthTo' => $request->group_authorize_code_to,
+                'groupBPJS' => $request->group_bpjs_code,
                 'languageID' => App::getLocale(),
-                // 'sessionID' => 0,
-                // 'sessionUserID' => Session::get('userID'),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
                 // "logActionUsername" => Session::get('userName'),
                 // "logActionUserID" => Session::get('userID')
             ];
@@ -7357,7 +7359,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir1b'){
                 $response = $client->post(env('API_URL').'/payroll/getDaftarTenagaKerjaKeluar', [
-                    'body' => json_encode($param)
+                'body' => json_encode($param)
                 ]);
             }else if($request->jamsostek_report_type == 'formulir2a'){
                 $response = $client->post(env('API_URL').'/payroll/getPerubahanUpahTenagaKerja', [
