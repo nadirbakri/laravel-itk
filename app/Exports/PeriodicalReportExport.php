@@ -160,7 +160,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
-                'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
+                'param' => $param, 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal
             ]);
         }else{
             if(isset($arrResult->dataListSet[0]->detail)){
@@ -175,8 +175,27 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 });
             }
 
+            $total = [];
+            $branch = null;
+            
+            foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                foreach ($dept->data as $key => $value) {
+                    foreach ($value->field as $v) {
+                        if ($v->tableName === 'Company') {
+                            $branch = $v->value;
+                            if (!isset($total[$branch])) {
+                                $total[$branch] = [];
+                            }
+                        }
+                        if (!is_string($v->value)) {
+                            $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
+                        }
+                    }
+                }
+            }
+
             return view('payroll.py_export_periodical_report_excel', [
-                'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
+                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
             ]); 
         }
     }

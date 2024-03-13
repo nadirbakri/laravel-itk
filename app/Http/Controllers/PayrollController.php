@@ -8050,11 +8050,11 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        dd($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
-        $customPaper = array(0,0,612,792);
+        $customPaper = array(0,0,792.00,1224.00);
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
             if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
@@ -8068,8 +8068,28 @@ public function dataDetailReportFormatPY(Request $request)
                     return (int) $a->employeeNo - (int) $b->employeeNo;
                 });
             }
+
+            $total = [];
+            $branch = null;
             
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
+            foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                foreach ($dept->data as $key => $value) {
+                    foreach ($value->field as $v) {
+                        if ($v->tableName === 'Company') {
+                            $branch = $v->value;
+                            if (!isset($total[$branch])) {
+                                $total[$branch] = [];
+                            }
+                        }
+                        if (!is_string($v->value)) {
+                            $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
+                        }
+                    }
+                }
+            }
+            // dd($total);
+
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }
     }
