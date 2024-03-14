@@ -1238,6 +1238,7 @@ Route::get('office_location/api', 'DataController@dataOfficeLocationAPI');
 Route::get('office_location/func/api', 'DataController@dataOfficeLocationFunctionAPI');
 Route::get('output_file/api', 'DataController@dataOutputFileAPI');
 Route::get('sasa', 'DataController@dataBusinessUnitAPI');
+Route::get('leave_hour/api', 'DataController@dataLeaveHourAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

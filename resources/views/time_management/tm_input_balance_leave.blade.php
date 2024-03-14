@@ -113,7 +113,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Leave Code</th>
+                        <th>Leave Name</th>
                         <th>Balance This Year</th>
                         <th>Balance Previous Year</th>
                         <th>Expired Previous Year</th>
@@ -296,7 +296,7 @@
                             return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {data: 'leaveCode', name: 'leaveCode'},
+                    {data: 'leaveName', name: 'leaveName'},
                     {data: 'leaveBalance', name: 'leaveBalance'},
                     {data: 'leaveBalanceBefore', name: 'leaveBalanceBefore'},
                     {

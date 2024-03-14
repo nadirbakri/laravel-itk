@@ -130,9 +130,9 @@
                             <label for="leave_hour form-check-label">{{ __('tm_leave_transaction_by_employee_no.label_leave_hour') }}</label>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <div class="form-check form-check-inline">
+                    <div class="col-6">
+                        <div class="form-group" id="radio-button-leave-hour">
+                            {{-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="full_day"
                                     name="radiobtn" value="F0" checked>
                                 <label class="form-check-label"
@@ -143,7 +143,7 @@
                                     name="radiobtn" value="H0">
                                 <label class="form-check-label"
                                     for="half_day">{{ __('tm_leave_transaction_by_employee_no.label_half_day') }}</label>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -318,6 +318,33 @@
         //     $searchfield.prop('disabled', true);
         // });
 
+        $.get("{{ url('leave_hour/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                var radioButton = $('<input>')
+                .attr('type', 'radio')
+                .addClass('form-check-input')
+                .attr('id', v.variable)
+                .attr('name', 'radiobtn')
+                .val(v.code);
+
+                var label = $('<label>')
+                    .addClass('form-check-label')
+                    .attr('for', v.variable)
+                    .text(v.value);
+
+                var formCheckDiv = $('<div>')
+                    .addClass('form-check form-check-inline')
+                    .append(radioButton)
+                    .append(label);
+
+                $('#radio-button-leave-hour').append(formCheckDiv);
+
+                if (v.code === 'F0') {
+                    radioButton.prop('checked', true);
+                }
+            });
+        })
+
         var balance = $('#employee_no, #leave_code');
 
         balance.on("select2:select", function (e) {
@@ -344,13 +371,34 @@
                         var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
                         var difference_day = diff + 1;
 
-                        if ($('#full_day').is(':checked')) {
+                        if ($('#LeaveTime_F').is(':checked')) {
                             var total_balance = val_balance - (difference_day * 1);
                         }
                         else {
                             var total_balance = val_balance - (difference_day * 0.5);
                         }
                         $('#balance').val(total_balance);
+
+                        var calculate = $('#leave_date_from, #leave_date_to, #LeaveTime_F, #LeaveTime_H0, #LeaveTime_H1');
+
+                        calculate.on('change', function () {
+                            var leave_date_from = $('#leave_date_from').val();
+                            var format_leave_date_from = moment(leave_date_from, 'YYYY-MM-DD');
+                            var leave_date_to = $('#leave_date_to').val();
+                            var format_leave_date_to = moment(leave_date_to, 'YYYY-MM-DD');
+
+                            var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
+                            var difference_day = diff + 1;
+
+                            if ($('#LeaveTime_F').is(':checked')) {
+                                var total_balance = val_balance - (difference_day * 1);
+                            }
+                            else {
+                                var total_balance = val_balance - (difference_day * 0.5);
+                            }
+
+                            $('#balance').val(total_balance);
+                        })
                     }
                     else {
                         val_balance = 0,
@@ -369,27 +417,6 @@
             $('#employee_name').val('');
             $('#balance').val('');
         });
-
-        var calculate = $('#leave_date_from, #leave_date_to, #full_day, #half_day');
-
-        calculate.on('change', function () {
-            var leave_date_from = $('#leave_date_from').val();
-            var format_leave_date_from = moment(leave_date_from, 'YYYY-MM-DD');
-            var leave_date_to = $('#leave_date_to').val();
-            var format_leave_date_to = moment(leave_date_to, 'YYYY-MM-DD');
-
-            var diff = moment.duration(format_leave_date_to.diff(format_leave_date_from)).asDays();
-            var difference_day = diff + 1;
-
-            if ($('#full_day').is(':checked')) {
-                var total_balance = val_balance - (difference_day * 1);
-            }
-            else {
-                var total_balance = val_balance - (difference_day * 0.5);
-            }
-
-            $('#balance').val(total_balance);
-        })
 
         function loadDataEmployeeNo() {
             function formatSelect(data) {

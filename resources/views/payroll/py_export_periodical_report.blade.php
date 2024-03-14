@@ -231,20 +231,38 @@
                 </tbody>
             </table>
         @endfor
+        <br>
         @if($grand_total && $level1[0] !== "ALL")
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
-                <tr>
-                    <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $branch }})</td>
-                    @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                        <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
-                    @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                        <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
-                    @endforeach
-                </tr>
+                <thead>
+                    <tr>
+                        <th style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Total</th>
+                        @if(!empty($dataTable->data[0]->field))
+                            @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                @if(!is_string($dataRow->value))
+                                    <?php
+                                        $total[$branch][$dataRow->field] = 0;
+                                    ?>
+                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
+                                @endif
+                            @endforeach
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $branch }})</td>
+                        @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
+                            <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
+                        @endforeach
+                    </tr>
+                    <tr>
+                        <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
+                        @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
+                            <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
+                        @endforeach
+                    </tr>
+                </tbody>
             </table>
         @endif
     @endif

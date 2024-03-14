@@ -537,6 +537,7 @@ class TimeManagementController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'employeeNo' => $request->employeeNo,
+                        'languageCode' => strtoupper(App::getLocale()),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
                     ]
@@ -1039,7 +1040,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
-            $response = $client->post(env('API_URL') . '/leavetransaction/getleavetransaction',
+            $response = $client->post(env('API_URL') . '/mobile/leavetransaction/getleavetransaction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1897,7 +1898,7 @@ class TimeManagementController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/leavetransaction',
+            $response = $client->post(env('API_URL') . '/mobile/leavetransaction',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

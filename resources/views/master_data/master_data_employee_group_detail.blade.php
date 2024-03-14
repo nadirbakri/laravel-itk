@@ -354,12 +354,12 @@
     </div>
 </body>
 <script>
-    $(document).ready(function () {
-        $('table.display').DataTable();
+    // $(document).ready(function () {
+    //     $('table.display').DataTable();
 
         // $('#exampletwo').DataTable().destroy();
         // load_data_approval_table();
-    });
+    // });
     
     // $('#btn-add').click(e=>{
     //     e.prefentDefault()
@@ -561,7 +561,7 @@
                              }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
-                {data: 'fullname', name: 'fullname'},
+                {data: 'fullName', name: 'fullName'},
             ],
             select: {
                 style:    'multi',
@@ -591,10 +591,11 @@
 
     $('#btn-delete').click(()=>{
         var dataApp = table3.rows('.selected').data();
+        console.log(dataApp)
         table4.row.add({
             'no' : '<button type="button"  onclick="klikk(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>',
             'employeeNo' : dataApp[0].employeeNo,
-            'fullname' : dataApp[0].fullName
+            'fullName' : dataApp[0].fullName
         });
         var tr = $('#examplethree tbody tr:eq(1)');
         tr.find('td:eq(1)').html( 'Updated' );
