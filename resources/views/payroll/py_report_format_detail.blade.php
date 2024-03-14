@@ -80,6 +80,13 @@
             color: red;
         }
 
+        .row .box {
+            /* width: 300px; */
+            border: 1px solid #CED4DA;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
     </style>
 </head>
 
@@ -95,7 +102,7 @@
             <form id="report_format_form" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="report_code">{{ __('payroll_report_format.label_report_code') }}</label>
                             <span class="required">*</span>
@@ -104,16 +111,14 @@
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="description">{{ __('payroll_report_format.label_description') }}</label>
                             <input type="text" class="form-control" id="description" name="description"
                                 placeholder="{{ __('payroll_report_format.label_description') }}">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="font_size">{{ __('payroll_report_format.label_font_size') }}</label>
                             <input type="number" min="0" class="form-control" id="font_size" name="font_size"
@@ -135,6 +140,26 @@
                                         <th>{{ __('payroll_report_format.label_alignment') }}</th>
                                         <th>{{ __('payroll_report_format.label_data_format') }}</th>
                                         <th>{{ __('payroll_report_format.label_display') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="div-table">
+                            <h4>Table Formula</h4>
+                            <br>
+                            <table id="report_format_formula_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{{ __('payroll_report_format.label_column_no') }}</th>
+                                        <th>{{ __('payroll_report_format.label_column_header') }}</th>
+                                        <th>{{ __('payroll_report_format.label_alignment') }}</th>
+                                        <th>{{ __('payroll_report_format.label_data_format') }}</th>
+                                        <th>{{ __('payroll_report_format.label_formula') }}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -217,7 +242,7 @@
                     <form id="report_format_detail_form" method="post">
                         @csrf
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="column_no">{{ __('payroll_report_format.label_column_no') }}</label>
                                     <span class="required">*</span>
@@ -226,9 +251,7 @@
                                 </div>
                                 <input type="hidden" class="form-control" id="record_function_det" name="record_function_det">
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label
                                         for="table_name_detail">{{ __('payroll_report_format.label_table_name') }}</label>
@@ -245,7 +268,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label
                                         for="field_name_detail">{{ __('payroll_report_format.label_field_name') }}</label>
@@ -255,7 +278,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="column_header">{{ __('payroll_report_format.label_column_header') }}</label>
                                     <span class="required">*</span>
@@ -265,7 +288,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label
                                         for="alignment">{{ __('payroll_report_format.label_alignment') }}</label>
@@ -277,9 +300,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label
                                         for="data_format">{{ __('payroll_report_format.label_data_format') }}</label>
@@ -293,7 +314,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="display">&nbsp;</label>
                                     <div class="form-check">
@@ -301,6 +322,130 @@
                                             name="display" value="true">
                                         <label class="form-check-label"
                                             for="display">{{ __('payroll_report_format.label_display') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="add_formula">&nbsp;</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="add_formula"
+                                            name="add_formula" value="true">
+                                        <label class="form-check-label"
+                                            for="add_formula">{{ __('payroll_report_format.label_add_formula') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="div_add_formula" style="display: none;">
+                            <div class="col-12">
+                                <div class="form-group box">
+                                    <div class="row pt-2 pb-4" style="margin: 0;">
+                                        <div class="col-12">
+                                            <h5>{{ __('payroll_report_format.label_add_formula') }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin: 0;">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label
+                                                    for="table_chooser">{{ __('payroll_report_format.label_table_chooser') }}</label>
+                                                <span class="required">*</span>
+                                                <select class="form-control select2" id="table_chooser" name="table_chooser">
+                                                    <option value="" selected>{{ __('payroll_report_format.label_select_table_chooser') }}</option>
+                                                    <option value="PeMaster">PeMaster</option>
+                                                    <option value="TmFixedComponent">TmFixedComponent</option>
+                                                    <option value="PrSalaryMaster">PrSalaryMaster</option>
+                                                    <option value="PrSalaryActual">PrSalaryActual</option>
+                                                    <option value="PrYearly">PrYearly</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label
+                                                    for="field_chooser">{{ __('payroll_report_format.label_field_chooser') }}</label>
+                                                <span class="required">*</span>
+                                                <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label
+                                                    for="operator">&nbsp;</label>
+                                                <div class="form-radio">
+                                                    <input class="form-radio-input" type="radio" id="none_operator"
+                                                        name="operator" value="none">
+                                                    <label class="form-radio-label"
+                                                        for="none_operator">None</label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label
+                                                    for="operator">&nbsp;</label>
+                                                <div class="form-radio">
+                                                    <input class="form-radio-input" type="radio" id="plus_operator"
+                                                        name="operator" value="+">
+                                                    <label class="form-radio-label"
+                                                        for="plus_operator">+</label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label
+                                                    for="operator">&nbsp;</label>
+                                                <div class="form-radio">
+                                                    <input class="form-radio-input" type="radio" id="minus_operator"
+                                                        name="operator" value="-">
+                                                    <label class="form-radio-label"
+                                                        for="minus_operator">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label
+                                                    for="operator">&nbsp;</label>
+                                                <div class="form-radio">
+                                                    <input class="form-radio-input" type="radio" id="times_operator"
+                                                        name="operator" value="*">
+                                                    <label class="form-radio-label"
+                                                        for="times_operator">*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label
+                                                    for="operator">&nbsp;</label>
+                                                <div class="form-radio">
+                                                    <input class="form-radio-input" type="radio" id="divide_operator"
+                                                        name="operator" value="/">
+                                                    <label class="form-radio-label"
+                                                        for="divide_operator">/</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin: 0;">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="btn-add-to-formula">&nbsp;</label>
+                                                <button type="button" class="btn btn-process" name="btn-add-to-formula" id="btn-add-to-formula">
+                                                    {{ __('payroll_report_format.btn_add_to_formula') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-1"></div>
+                                        <div class="col-7">
+                                            <div class="form-group">
+                                                <label for="preview_formula">{{ __('payroll_report_format.label_preview_formula') }}</label>
+                                                <textarea class="form-control" id="preview_formula" name="preview_formula" rows="5"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +462,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal_add_report_format_condition" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ __('payroll_report_format.list') }}</h5>
@@ -476,11 +621,14 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
         var arrData = @json($data);
+        var arrDataFormula = @json($dataFormula);
         var tableName = null;
         var fieldName = null;
         var table1 = null;
         var table2 = null;
+        var table3 = null;
         var arrayReportFormatDetail = [];
+        var arrayReportFormatFormula = [];
         var arrayReportFormatCondition = [];
 
 
@@ -490,8 +638,10 @@
             $('#description').val("");
             $('#font_size').val("");
             $('#report_format_detail_table').DataTable().destroy();
+            $('#report_format_formula_table').DataTable().destroy();
             $('#report_format_condition_table').DataTable().destroy();
             load_table_report_format_detail();
+            load_table_report_format_formula();
             load_table_report_format_condition();
         }
         else if (func == 'edit') {
@@ -512,12 +662,32 @@
                         "alignment": ((typeof arrData[0].detail[i].alignment !== 'undefined') ? arrData[0].detail[i].alignment : ''),
                         "dataFormat": ((typeof arrData[0].detail[i].dataFormat !== 'undefined') ? arrData[0].detail[i].dataFormat : ''),
                         "display": ((typeof arrData[0].detail[i].isDisplayed !== 'undefined') ? arrData[0].detail[i].isDisplayed : ''),
+                        "fieldFormula": ((typeof arrData[0].detail[i].fieldFormula !== 'undefined') ? arrData[0].detail[i].fieldFormula : ''),
                     });
                     // console.log(arrayReportFormatDetail);
                 }
             }
             $('#report_format_detail_table').DataTable().destroy();
             load_table_report_format_detail();
+
+            load_table_report_format_formula();
+            if (arrDataFormula[0].detail !== 'undefined' || arrDataFormula[0].detail !== null) {
+                for (var i = 0; i < arrDataFormula[0].detail.length; i++) {
+                    arrayReportFormatFormula.push({
+                        "columnNo": ((typeof arrDataFormula[0].detail[i].columnNo !== 'undefined') ? arrDataFormula[0].detail[i].columnNo : ''),
+                        "tableName": ((typeof arrDataFormula[0].detail[i].tableName !== 'undefined') ? arrDataFormula[0].detail[i].tableName : ''),
+                        "fieldName": ((typeof arrDataFormula[0].detail[i].fieldName !== 'undefined') ? arrDataFormula[0].detail[i].fieldName : ''),
+                        "columnHeader": ((typeof arrDataFormula[0].detail[i].columnHeader !== 'undefined') ? arrDataFormula[0].detail[i].columnHeader : ''),
+                        "alignment": ((typeof arrDataFormula[0].detail[i].alignment !== 'undefined') ? arrDataFormula[0].detail[i].alignment : ''),
+                        "dataFormat": ((typeof arrDataFormula[0].detail[i].dataFormat !== 'undefined') ? arrDataFormula[0].detail[i].dataFormat : ''),
+                        "display": ((typeof arrDataFormula[0].detail[i].isDisplayed !== 'undefined') ? arrDataFormula[0].detail[i].isDisplayed : ''),
+                        "fieldFormula": ((typeof arrDataFormula[0].detail[i].fieldFormula !== 'undefined') ? arrDataFormula[0].detail[i].fieldFormula : ''),
+                    });
+                    // console.log(arrayReportFormatDetail);
+                }
+            }
+            $('#report_format_formula_table').DataTable().destroy();
+            load_table_report_format_formula();
 
             load_table_report_format_condition();
             if (arrData[0].condition !== 'undefined' || arrData[0].condition !== null) {
@@ -568,23 +738,25 @@
                         name: 'columnNo',
                         render: function (data, type, row, meta) {
                             return '<input type="hidden" class="form-control" name="column_no[]" value="' +
-                            meta.row +'">' + (meta.row + 1);
+                            data +'">' + (data + 1);
                         }
                     },
                     {
                         data: 'tableName',
                         name: 'tableName',
+                        defaultContent: '-',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="table_name_detail[]" value="' +
-                                data + '">' + data;
+                                data + '">' + ((data === null || data === '') ? '-' : data);
                         }
                     },
                     {
                         data: 'fieldName',
                         name: 'fieldName',
+                        defaultContent: '-',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="field_name_detail[]" value="' +
-                                data + '">' + data;
+                                data + '">' + ((data === null || data === '') ? '-' : data);
                         }
                     },
                     {
@@ -616,7 +788,7 @@
                         name: 'display',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="display[]" value="' +
-                                data + '">' + data;
+                                data + '">' + '<textarea class="form-control" name="field_formula[]" style="display:none;">' + row.fieldFormula + '</textarea>' + data;
                         }
                     },
                 ],
@@ -640,9 +812,31 @@
             e.stopPropagation();
         });
 
+        $('#report_format_formula_table tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
         function getIndexByColumnNo(columnNoValue) {
             for (var i = 0; i < arrayReportFormatDetail.length; i++) {
                 if (arrayReportFormatDetail[i].columnNo == columnNoValue) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        function getIndexByColumnNoFormula(columnNoValue) {
+            for (var i = 0; i < arrayReportFormatFormula.length; i++) {
+                if (arrayReportFormatFormula[i].columnNo == columnNoValue) {
                     return i;
                 }
             }
@@ -660,6 +854,15 @@
             $('#alignment').val(data.alignment);
             $('#data_format').val(data.dataFormat);
             $('#display').prop('checked', data.display);
+            $('#preview_formula').val(data.fieldFormula);
+
+            if(data.fieldFormula){
+                $('#add_formula').prop('checked', true);
+                $('#div_add_formula').show();
+            }else{
+                $('#add_formula').prop('checked', false);
+                $('#div_add_formula').hide();
+            }
 
             tableName = $('#table_name_detail').val();
             if(tableName == 'GmLevel'){
@@ -693,6 +896,169 @@
         $('#report_format_detail_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
+
+        $('#report_format_formula_table tbody').on('click', 'tr td:not(:first-child)', function () {
+            var data = table3.row(this).data();
+            var count = table3.rows().count();
+            $('#modal_add_report_format_detail').modal('show');
+            $('#record_function_det').val("Edit");
+            $('#column_no').val((data.columnNo + 1));
+            $('#table_name_detail').val(data.tableName);
+            $('#column_header').val(data.columnHeader);
+            $('#alignment').val(data.alignment);
+            $('#data_format').val(data.dataFormat);
+            $('#display').prop('checked', data.display);
+            $('#preview_formula').val(data.fieldFormula);
+
+            if(data.fieldFormula){
+                $('#add_formula').prop('checked', true);
+                $('#div_add_formula').show();
+            }else{
+                $('#add_formula').prop('checked', false);
+                $('#div_add_formula').hide();
+            }
+
+            tableName = $('#table_name_detail').val();
+            if(tableName == 'GmLevel'){
+                loadDataLevelType();
+            }else{
+                loadDataFieldName();
+            }
+
+            $('#table_name_detail').on('change', function () {
+                tableName = $('#table_name_detail').val();
+                if(tableName == 'GmLevel'){
+                    loadDataLevelType();
+                }else{
+                    loadDataFieldName();
+                }
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/field/api') }}",
+                data: {
+                    'tableName' : tableName
+                }
+            }).then(function (data2) {
+                var index = data2.indexOf(data.fieldName)
+                var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
+                $("#field_name_detail").append($newOption).trigger('change');
+            });
+        });
+
+        $('#report_format_formula_table').on('click', 'tr td:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#add_formula').change(function(){
+            // Memeriksa apakah checkbox saat ini dicentang (checked) atau tidak (unchecked)
+            if($(this).is(':checked')) {
+                $('#div_add_formula').show();
+            } else {
+                $('#div_add_formula').hide();
+            }
+        });
+
+        $('#table_chooser').on('change', function () {
+            tableChooser = $('#table_chooser').val();
+            $('#field_chooser').val(null).trigger('change');
+            loadDataFieldChooser(tableChooser);
+        });
+
+        $('#field_chooser').on('select2:select', function (e) {
+            fieldChooser = $('#field_chooser').val();
+        });
+        
+        $('#field_chooser').on('select2:unselecting', function (e) {
+            fieldChooser = null;
+        });
+
+        $('#btn-add-to-formula').on('click', function () {
+            var operator = $('input[name="operator"]:checked').val();
+            if(operator == 'none'){
+                operator = '';
+            }
+
+            if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                var formula = '"' + tableChooser + '"' + '.' + '"' + fieldChooser + '"';
+                $('#preview_formula').val($('#preview_formula').val() + ' ' + formula + ' ' + operator);
+            } else {
+                $('#preview_formula').val($('#preview_formula').val() + ' ' + operator);
+            }
+        });
+
+        function load_table_report_format_formula() {
+            arrayReportFormatFormula.sort(function(a, b) {
+                return a.columnNo - b.columnNo;
+            });
+
+            table3 = $('#report_format_formula_table').DataTable({
+                processing: true,
+                // orderCellsTop: true,
+                data: arrayReportFormatFormula,
+                "paging": false,
+                "sDom": 'lrtip',
+                'sPaginationType': 'full_numbers',
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {   
+                        data: 'columnNo',
+                        name: 'columnNo',
+                        render: function (data, type, row, meta) {
+                            return '<input type="hidden" class="form-control" name="column_no_formula[]" value="' +
+                            data +'">' + '<input type="hidden" class="form-control" name="table_name_formula[]" value="' +
+                                row.tableName + '">' + '<input type="hidden" class="form-control" name="field_name_formula[]" value="' +
+                                row.fieldName + '">' + (data + 1);
+                        }
+                    },
+                    {
+                        data: 'columnHeader',
+                        name: 'columnHeader',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="column_header_formula[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'alignment',
+                        name: 'alignment',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="alignment_formula[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'dataFormat',
+                        name: 'dataFormat',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="data_format_formula[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {
+                        data: 'fieldFormula',
+                        name: 'fieldFormula',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="display_formula[]" value="' +
+                                row.display + '">' + '<textarea class="form-control" name="field_formula_formula[]" style="display:none;">' + data + '</textarea>' + data;
+                        }
+                    },
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                }
+            });
+        }
 
         function load_table_report_format_condition() {
             arrayReportFormatCondition.sort(function(a, b) {
@@ -835,7 +1201,13 @@
             $('#column_header').val("");
             $('#alignment').val("");
             $('#data_format').val("");
-            (($("#display").val() !== null) ? $("#display").val() : false);
+            $('#display').prop('checked', false);
+            $('#add_formula').prop('checked', false);
+            $("#div_add_formula").hide();
+            $('#preview_formula').val("");
+            $('#table_chooser').val("");
+            $('#field_chooser').val("");
+            $('input[name="operator"]').prop('checked', false);
 
             $('#table_name_detail').on('change', function () {
                 tableName = $('#table_name_detail').val();
@@ -936,6 +1308,67 @@
             });
         }
 
+        function loadDataFieldChooser(tableChooser = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#field_chooser').select2({
+                width: '100%',
+                placeholder: 'Choose Field Chooser',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/field/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            tableName: tableChooser
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item,
+                                    id: item,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataLevelType() {
             function formatSelect(data) {
                 if (data.loading) {
@@ -999,27 +1432,56 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
 
+            var previewFormulaValue = $("#preview_formula").val();
+
             if($("#record_function_det").val() == "New"){
-                arrayReportFormatDetail.push({
-                    "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
-                    "tableName": $("#table_name_detail").val(),
-                    "fieldName": $("#field_name_detail").val(),
-                    "columnHeader": $("#column_header").val(),
-                    "alignment": $("#alignment").val(),
-                    "dataFormat": $("#data_format").val(),
-                    "display": ($("#display").is(":checked") ? $("#display").val() : false)
-                });
+                if (previewFormulaValue !== null && previewFormulaValue !== '') {
+                    arrayReportFormatFormula.push({
+                        "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                        "tableName": $("#table_name_detail").val(),
+                        "fieldName": $("#field_name_detail").val(),
+                        "columnHeader": $("#column_header").val(),
+                        "alignment": $("#alignment").val(),
+                        "dataFormat": $("#data_format").val(),
+                        "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                        "fieldFormula": $("#preview_formula").val()
+                    });
+                }else{
+                    arrayReportFormatDetail.push({
+                        "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                        "tableName": $("#table_name_detail").val(),
+                        "fieldName": $("#field_name_detail").val(),
+                        "columnHeader": $("#column_header").val(),
+                        "alignment": $("#alignment").val(),
+                        "dataFormat": $("#data_format").val(),
+                        "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                        "fieldFormula": $("#preview_formula").val()
+                    });
+                }
             }else{
                 var indexToEdit = getIndexByColumnNo(parseInt($("#column_no").val()) - 1);
+                var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no").val()) - 1);
 
                 if (indexToEdit !== -1) {
-                    arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
-                    arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
-                    arrayReportFormatDetail[indexToEdit].fieldName = $("#field_name_detail").val();
-                    arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
-                    arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
-                    arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
-                    arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                    if (previewFormulaValue !== null && previewFormulaValue !== '') {
+                        arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
+                        arrayReportFormatFormula[indexToEditFormula].tableName = $("#table_name_detail").val();
+                        arrayReportFormatFormula[indexToEditFormula].fieldName = $("#field_name_detail").val();
+                        arrayReportFormatFormula[indexToEditFormula].columnHeader = $("#column_header").val();
+                        arrayReportFormatFormula[indexToEditFormula].alignment = $("#alignment").val();
+                        arrayReportFormatFormula[indexToEditFormula].dataFormat = $("#data_format").val();
+                        arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                        arrayReportFormatFormula[indexToEditFormula].fieldFormula = $("#preview_formula").val();
+                    }else{
+                        arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
+                        arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
+                        arrayReportFormatDetail[indexToEdit].fieldName = $("#field_name_detail").val();
+                        arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
+                        arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
+                        arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
+                        arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                        arrayReportFormatDetail[indexToEdit].fieldFormula = $("#preview_formula").val();
+                    }
                 } else {
                     alert("Object with columnNo value " + $("#column_no").val() + " not found.");
                 }
@@ -1033,6 +1495,9 @@
             
             $('#report_format_detail_table').DataTable().destroy();
             load_table_report_format_detail();
+
+            $('#report_format_formula_table').DataTable().destroy();
+            load_table_report_format_formula();
         });
 
         $("#report_format_detail_form").on("submit", function(){
@@ -1103,7 +1568,8 @@
 
         $('#modal_add_report_format_detail').on('show.bs.modal', function () {
             var count = table1.rows().count();
-            $('#column_no').val(count+1);
+            var count2 = table3.rows().count();
+            $('#column_no').val(count+count2+1);
         });
 
         $('#modal_add_report_format_condition').on('show.bs.modal', function () {
@@ -1113,6 +1579,7 @@
 
         $("#btn-remove-report-format-detail").on('click', function() {
             var data = table1.rows('.selected').data().toArray();
+            var data2 = table3.rows('.selected').data().toArray();
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
                     var index = arrayReportFormatDetail.findIndex(x => x.columnNo == data[i].columnNo);
@@ -1120,6 +1587,13 @@
                 }
                 $('#report_format_detail_table').DataTable().destroy();
                 load_table_report_format_detail();
+            }else if(data2.length > 0){
+                for (var i = 0; i < data2.length; i++) {
+                    var index = arrayReportFormatFormula.findIndex(x => x.columnNo == data2[i].columnNo);
+                    arrayReportFormatFormula.splice(index, 1);
+                }
+                $('#report_format_formula_table').DataTable().destroy();
+                load_table_report_format_formula();
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -1189,8 +1663,9 @@
                         }
                     });
 
-                    var data = table1.$('input').serialize();
-                    data += '&' + table2.$('input').serialize();
+                    var data = table1.$('input, textarea').serialize();
+                    data += '&' + table2.$('input, textarea').serialize();
+                    data += '&' + table3.$('input, textarea').serialize();
                     data += '&report_code=' + $('#report_code').val();
                     data += '&record_function=' + $('#record_function').val();
                     data += '&description=' + $('#description').val();

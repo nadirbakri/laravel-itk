@@ -2672,9 +2672,33 @@ public function dataDetailReportFormatPY(Request $request)
     //     return (int) $a->columnNo - (int) $b->columnNo;
     // });
 
-    // dd($arrResult->dataListSet);
+    $data = array_map(function($item) {
+        $itemClone = clone $item;
+        $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
+            return isset($detailItem->fieldFormula) && ($detailItem->fieldFormula === '' || is_null($detailItem->fieldFormula));
+        });
+        return $itemClone;
+    }, $arrResult->dataListSet);
 
-    return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    $dataFormula = array_map(function($item) {
+        $itemClone = clone $item;
+        $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
+            return isset($detailItem->fieldFormula) && ($detailItem->fieldFormula !== '' && !is_null($detailItem->fieldFormula));
+        });
+        return $itemClone;
+    }, $arrResult->dataListSet);
+
+    $data = array_map(function ($item) {
+        $item->detail = array_values($item->detail);
+        return $item;
+    }, $data);
+
+    $dataFormula = array_map(function ($item) {
+        $item->detail = array_values($item->detail);
+        return $item;
+    }, $dataFormula);
+
+    return view('payroll.py_report_format_detail', ['data' => $data, 'dataFormula' => $dataFormula, 'func' => $request->func]);
 }
 
     public function dataDetailJournalTemplatePY(Request $request)
@@ -2945,18 +2969,21 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $data_detail = [];
+
             if (isset($request->column_no)) {
                 foreach ($request->column_no as $key => $value) {
                     $data_detail[] = [
                         'companyCode' => Session::get('companyCode'),
                         "reportCode" => $request->report_code,
                         "columnNo" => (int) $value,
-                        "tableName" => $request->table_name_detail[$key],
-                        "fieldName" => $request->field_name_detail[$key],
+                        "tableName" => (isset($request->table_name_detail[$key]) && ($request->table_name_detail[$key] !== '' && $request->table_name_detail[$key] !== 'null' && !is_null($request->table_name_detail[$key]))) ? $request->table_name_detail[$key] : '',
+                        "fieldName" => (isset($request->field_name_detail[$key]) && ($request->field_name_detail[$key] !== '' && $request->field_name_detail[$key] !== 'null' && !is_null($request->field_name_detail[$key]))) ? $request->field_name_detail[$key] : '',
                         "columnHeader" => $request->column_header[$key],
                         "alignment" => (int) $request->alignment[$key],
                         "dataFormat" => $request->data_format[$key],
                         "isDisplayed" => isset($request->display[$key]) ? (bool) $request->display[$key] : false,
+                        "fieldFormula" => (isset($request->field_formula[$key]) && ($request->field_formula[$key] !== '' && $request->field_formula[$key] !== 'null' && !is_null($request->field_formula[$key]))) ? $request->field_formula[$key] : '',
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
@@ -2965,8 +2992,27 @@ public function dataDetailReportFormatPY(Request $request)
                     ];
                 }
             }
-            else {
-                $data_detail = [];
+
+            if (isset($request->column_no_formula)) {
+                foreach ($request->column_no_formula as $key => $value) {
+                    $data_detail[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "reportCode" => $request->report_code,
+                        "columnNo" => (int) $value,
+                        "tableName" => (isset($request->table_name_formula[$key]) && ($request->table_name_formula[$key] !== '' && $request->table_name_formula[$key] !== 'null' && !is_null($request->table_name_formula[$key]))) ? $request->table_name_formula[$key] : '',
+                        "fieldName" => (isset($request->field_name_formula[$key]) && ($request->field_name_formula[$key] !== '' && $request->field_name_formula[$key] !== 'null' && !is_null($request->field_name_formula[$key]))) ? $request->field_name_formula[$key] : '',
+                        "columnHeader" => $request->column_header_formula[$key],
+                        "alignment" => (int) $request->alignment_formula[$key],
+                        "dataFormat" => $request->data_format_formula[$key],
+                        "isDisplayed" => isset($request->display_formula[$key]) ? (bool) $request->display_formula[$key] : false,
+                        "fieldFormula" => (isset($request->field_formula_formula[$key]) && ($request->field_formula_formula[$key] !== '' && $request->field_formula_formula[$key] !== 'null' && !is_null($request->field_formula_formula[$key]))) ? $request->field_formula_formula[$key] : '',
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID')
+                    ];
+                }
             }
             
             if (isset($request->seq_no)) {
