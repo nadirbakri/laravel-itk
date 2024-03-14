@@ -994,7 +994,7 @@
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="termination_date_employment"
                                             name="termination_date_employment"
-                                            placeholder="{{ __('personel_personal_data.label_termination_date') }}">
+                                            placeholder="{{ __('personel_personal_data.label_termination_date') }}" readonly>
                                         <div class="input-group-prepend" id="termination_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -1008,7 +1008,7 @@
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="effective_terminated_employment"
                                             name="effective_terminated_employment"
-                                            placeholder="{{ __('personel_personal_data.label_effective_terminated') }}">
+                                            placeholder="{{ __('personel_personal_data.label_effective_terminated') }}" readonly>
                                         <div class="input-group-prepend" id="effective_terminated_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -1021,9 +1021,9 @@
                                 <div class="form-group">
                                     <label
                                         for="termination_code_employment">{{ __('personel_personal_data.label_termination_code') }}</label>
-                                    <select class="form-control" id="termination_code_employment"
-                                        name="termination_code_employment">
-                                    </select>
+                                    <input type="text" class="form-control" id="termination_code_employment"
+                                        name="termination_code_employment"
+                                        placeholder="{{ __('personel_personal_data.label_termination_code') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -1046,7 +1046,7 @@
                                         for="termination_remarks_employment">{{ __('personel_personal_data.label_termination_remarks') }}</label>
                                     <textarea class="form-control" id="termination_remarks_employment"
                                         name="termination_remarks_employment" rows="3"
-                                        placeholder="{{ __('personel_personal_data.label_termination_remarks') }}"></textarea>
+                                        placeholder="{{ __('personel_personal_data.label_termination_remarks') }}" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2640,35 +2640,35 @@
             }
         });
 
-        let pickerTerminationDate = $('#termination_date_employment').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: null,
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#termination_date_employment_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
+        // let pickerTerminationDate = $('#termination_date_employment').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: null,
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings("#termination_date_employment_calendar").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
 
-        let pickerEffectiveTerminated = $('#effective_terminated_employment').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: null,
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#effective_terminated_employment_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
+        // let pickerEffectiveTerminated = $('#effective_terminated_employment').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: null,
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings("#effective_terminated_employment_calendar").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
 
         let pickerExpatriatStartDate = $('#start_date_employment').flatpickr({
             altInput: true,
@@ -2772,7 +2772,7 @@
         loadDataEmploymentStatus();
         loadDataEmploymentType();
         loadDataOfficeLocation();
-        loadDataTerminationCode();
+        // loadDataTerminationCode();
         loadDataPosition();
         loadDataRanking();
         loadDataGrade();
@@ -2887,7 +2887,7 @@
             //Tab Employment
             $('#employment_status_employment').val(null).trigger('change');
             $('#employment_type_employment').val(null).trigger('change');
-            $('#termination_code_employment').val(null).trigger('change');
+            $('#termination_code_employment').val(null);
             $('#office_location_employment').val(null).trigger('change');
             $('#special_reason_resign_employment').prop('checked', false);
             $('#termination_remarks_employment').val("");
@@ -3007,6 +3007,7 @@
             $('#employee_no_info').prop('readonly', true);
             $('#fullname_info').val(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#title_info').val(((typeof arrData2[0].title !== 'undefined') ? arrData2[0].title : ''));
+            $("#termination_code_employment").val(((typeof arrData2[0].terminationCode !== 'undefined') ? arrData2[0].terminationCode : ''));
             
             $.ajax({
                 type: 'GET',
@@ -3086,11 +3087,11 @@
                     title: data.data_employment_type.value,
                     text: data.data_employment_type.comGenCode
                 });
-                var option_termination_code = $('<option/>', {
-                    id: data.data_termination_code.comGenCode,
-                    title: data.data_termination_code.value,
-                    text: data.data_termination_code.comGenCode
-                });
+                // var option_termination_code = $('<option/>', {
+                //     id: data.data_termination_code.comGenCode,
+                //     title: data.data_termination_code.value,
+                //     text: data.data_termination_code.comGenCode
+                // });
                 var option_absenteeism_type = $('<option/>', {
                     id: data.data_absenteeism_type.comGenCode,
                     title: data.data_absenteeism_type.value,
@@ -3192,16 +3193,16 @@
                         data: data.data_employment_type
                     }
                 });
-                $("#termination_code_employment").append(option_termination_code).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#termination_code_employment").trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data.data_termination_code.comGenCode,
-                        text: data.data_termination_code.comGenCode,
-                        data: data.data_termination_code
-                    }
-                });
+                // $("#termination_code_employment").append(option_termination_code).attr('data-alias', 'yourvalue').trigger(
+                //     'change');
+                // $("#termination_code_employment").trigger({
+                //     type: 'select2:select',
+                //     params: {
+                //         id: data.data_termination_code.comGenCode,
+                //         text: data.data_termination_code.comGenCode,
+                //         data: data.data_termination_code
+                //     }
+                // });
                 $("#absenteeism_type_absenteeism").append(option_absenteeism_type).attr('data-alias', 'yourvalue').trigger(
                     'change');
                 $("#absenteeism_type_absenteeism").trigger({
@@ -3804,8 +3805,10 @@
             pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined') ? arrData2[0].probationEndDate : ''));
             pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined') ? arrData2[0].contractStartDate : ''));
             pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined') ? arrData2[0].contractEndDate : ''));
-            pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
-            pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
+            // pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
+            // pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
+            $('#termination_date_employment').val(((typeof arrData2[0].terminationDate !== 'undefined') ? moment(arrData2[0].terminationDate).format('YYYY-MM-DD') : ''));
+            $('#effective_terminated_employment').val(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? moment(arrData2[0].effectiveTerminationDate).format('YYYY-MM-DD') : ''));
             if (arrData2[0].specialResign == true) {
                 $('#special_reason_resign_employment').prop('checked', true);
             }

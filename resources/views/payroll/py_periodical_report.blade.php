@@ -518,7 +518,7 @@
                         '<div class="col-4">' +
                         '<div class="form-group">' +
                         '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]" multiple="multiple"></select>' +
+                        i + '[]"></select>' +
                         '</div></div>'
                     );
 

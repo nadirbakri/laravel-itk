@@ -194,6 +194,8 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 }
             }
 
+            // dd($arrResult->dataListSet);
+
             return view('payroll.py_export_periodical_report_excel', [
                 'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
             ]); 
