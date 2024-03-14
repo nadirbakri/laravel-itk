@@ -8989,6 +8989,7 @@ class PersonelController extends Controller
                     'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $request->employee_no,
                     'transactionType' => $request->mutation_type,
+                    'terminationCode' => $request->termination_reason_new,
                     'terminationDate' => $request->termination_date_new,
                     'terminationRemarks' => $request->termination_reason_new,
                     'effectiveTerminationDate' => $request->effective_termination_date_new,
