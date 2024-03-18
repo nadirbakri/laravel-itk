@@ -1844,6 +1844,8 @@ class PayrollController extends Controller
             $data = $arrResult->dataListSet;
         }
 
+        // dd($data);
+
         return view('payroll.py_salary_master_detail', ['data' => $data]);
     }
 
@@ -8100,7 +8102,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $customPaper = array(0,0,792.00,1224.00);
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
             if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
