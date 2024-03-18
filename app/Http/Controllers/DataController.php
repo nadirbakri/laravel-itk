@@ -10079,12 +10079,13 @@ class DataController extends Controller
 				'headers' => [ 'Content-Type' => 'application/json',
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
-			$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+			$response = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
-					"variable" => "Status_Trans_",
+					'companyCode' => Session::get('companyCode'),
+					"variable" => "Status_",
 					"languageCode" => strtoupper(App::getLocale())
+					,
 					]
 					)]
 				);
@@ -10256,6 +10257,8 @@ class DataController extends Controller
 
 	public function dataReimbursementOvertimeAPI (Request $request)
 	{
+		$search = $request->search;
+
 		$reimbursement_type[] = (object) [
     		'comGenCode' => 'ALL',
     		'value' => 'ALL'

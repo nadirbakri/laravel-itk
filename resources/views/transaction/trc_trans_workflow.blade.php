@@ -175,9 +175,15 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
+                            <label for="workflow_status form-check-label">{{ __('trans_workflow.label_workflow_status') }}</label>
+                        </div>
+                        <select class="form-control select2" id="workflow_status" name="workflow_status"></select>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
                             <label for="employee_no">{{ __('trans_workflow.employee') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder="employee-no">
+                        <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder={{ __('trans_workflow.employee') }}>
                     </div>
                 </div>
                 <!-- BUTTON -->
@@ -377,6 +383,131 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal_list_detail_leave">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-little">Detail Workflow</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="payroll_calculation_detail_modal_form" method="post">
+                        @csrf
+                        <input type="hidden" class="form-control" id="reqdate_leave" name="reqdate_leave">
+                        <input type="hidden" class="form-control" id="directsuperior_leave" name="directsuperior_leave">
+                        
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Ticket Number</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="tiketno_leave" name="tiketno_leave" type="hidden" class="form-control"><span id="tiketno_leave_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Status</h6>
+                            </div>
+                            <div class="col">
+                                <input id="status_leave" name="status_leave" type="hidden" class="form-control"><span id="status_leave_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Employee No</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="employee_no_leave" name="employee_no_leave" type="hidden" class="form-control"><span id="employee_no_leave_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Employee Name</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="employee_name_leave" name="employee_name_leave" type="hidden" class="form-control"><span id="employee_name_leave_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Start Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="start_date_leave" name="start_date_leave" type="hidden" class="form-control"><span id="start_date_leave_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>End Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="end_date_leave" name="end_date_leave" type="hidden" class="form-control"><span id="end_date_leave_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Workflow Type</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="workflow_type_leave" name="workflow_type_leave" type="hidden" class="form-control"><span id="workflow_type_leave_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Leave Type</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="leave_type_leave" name="leave_type_leave" type="hidden" class="form-control"><span id="leave_type_leave_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Leave Time</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="leave_time_leave" name="leave_time_leave" type="hidden" class="form-control"><span id="leave_time_leave_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Leave Remarks</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="remarks_leave" name="remarks_leave" type="hidden" class="form-control"><span id="remarks_leave_val"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>Status</h5>
+                            </div>
+                            <div class="col-5">
+                                    <select name="workflow_status_leave" id="workflow_status_leave" class="custom-select">
+                                        <option value="APPROVED">APPROVE</option>
+                                        <option value="REJECTED">REJECT</option>
+                                        <option value="CANCELED">CANCEL</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row approve">
+                            <div class="col-3">
+                                <h5>Approval Remarks</h5>
+                            </div>
+                            <div class="col-5">
+                                <input id="approvalremarks_leave" name="approvalremarks_leave" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-primary btn-block" id="btn-update-leave" type="button">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
         
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -479,31 +610,57 @@
 
 <script>
     const klikdetail = (element) => {
-        $('#modal_list_detail').modal('show')
+        let data;
         let type = $("#workflow_type").val();
         if(type == "ER"){
-            let data = table.row($(element).parent()).data().permitEntity;
-        }else{
-            let data = table.row($(element).parent()).data().leaveEntity;
-        }
+            $('#modal_list_detail').modal('show')
+            data = table.row($(element).parents('tr')).data().permitEntity;
 
-        $('#reqdate').val(data.createdBy)
-        $('#reqdate_val').html(data.createdBy)
-        $('#recdate').val(data.receiptDate)
-        $('#recdate_val').html(data.receiptDate)
-        $('#tiketno').val(data.ticketNo)
-        $('#tiketno_val').html(data.ticketNo)
-        $('#status').val(data.status)
-        $('#status_val').html(data.status)
-        $('#b_unit').val(data.businessUnit)
-        $('#b_unit_val').html(data.businessUnit)
-        $('#approvalremarks').val(data.approvalRemarks)
-        $('#directsuperior').val(data.directSuperiorID)
+            $('#reqdate').val(data.createdBy)
+            $('#reqdate_val').html(data.createdBy)
+            $('#recdate').val(data.receiptDate)
+            $('#recdate_val').html(data.receiptDate)
+            $('#tiketno').val(data.ticketNo)
+            $('#tiketno_val').html(data.ticketNo)
+            $('#status').val(data.status)
+            $('#status_val').html(data.status)
+            $('#b_unit').val(data.businessUnit)
+            $('#b_unit_val').html(data.businessUnit)
+            $('#approvalremarks').val(data.approvalRemarks)
+            $('#directsuperior').val(data.directSuperiorID)
+        }else{
+            $('#modal_list_detail_leave').modal('show')
+            data = table.row($(element).parents('tr')).data().leaveEntity;
+            console.log(data)
+
+            $('#directsuperior_leave').val(data.directSuperiorID)
+            $('#reqdate_leave').val(data.leaveDate)
+            $('#tiketno_leave').val(data.ticketNo)
+            $('#tiketno_leave_val').html(data.ticketNo)
+            $('#status_leave').val(data.status)
+            $('#status_leave_val').html(data.status)
+            $('#employee_no_leave').html(data.employeeNo)
+            $('#employee_no_leave_val').html(data.employeeNo)
+            $('#employee_name_leave').html(data.fullnameRequester)
+            $('#employee_name_leave_val').html(data.fullnameRequester)
+            $('#start_date_leave').html(data.leaveDateFrom)
+            $('#start_date_leave_val').html(new Date(data.leaveDateFrom).toISOString().split('T')[0])
+            $('#end_date_leave').html(data.leaveDateTo)
+            $('#end_date_leave_val').html(new Date(data.leaveDateTo).toISOString().split('T')[0])
+            $('#workflow_type_leave').html('Leave')
+            $('#workflow_type_leave_val').html('LEAVE')
+            $('#leave_type_leave').html(data.leaveCode)
+            $('#leave_type_leave_val').html(data.leaveName)
+            $('#leave_time_leave').html(data.leaveTime)
+            $('#leave_time_leave_val').html(data.dayDuration)
+            $('#remarks_leave').html(data.leaveRemarks)
+            $('#remarks_leave_val').html(data.leaveRemarks)
+        }
 
         $('.close').click();
     }
 
-    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type) {
+    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status) {
         
         if(workflow_type == "ER"){
             table = $('#workflow_table').DataTable({
@@ -517,7 +674,8 @@
                         'endDate': claim_date_to,
                         'employeeNo' : employee_no,
                         'businessUnit' : business_unit,
-                        'workflowType' : workflow_type
+                        'workflowType' : workflow_type,
+                        'status' : status
 
                     }
                 },
@@ -567,7 +725,8 @@
                         'endDate': claim_date_to,
                         'employeeNo' : employee_no,
                         'businessUnit' : business_unit,
-                        'workflowType' : workflow_type
+                        'workflowType' : workflow_type,
+                        'status' : status
 
                     }
                 },
@@ -583,7 +742,7 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail_leave"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
                     {data: 'leaveEntity.createdDate', name: 'createdDate', 
@@ -629,9 +788,10 @@
         var employee_no = $("#employee_no").val();
         var business_unit = $("#business_unit").val();
         var workflow_type = $("#workflow_type").val();
+        var status = $("#workflow_status").val();
         
         $('#workflow_table').DataTable().destroy();
-        load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type);
+        load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status);
     })
 
 
@@ -686,25 +846,42 @@
     }
 
     $('#btn-update').click(()=>{
-        let reimbursement_status = $('#reimbursement_status').val();
+        let workflow_status = $('#workflow_status').val();
         let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
-        $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+        // $('.close').click();
+        $('#btn-update').prop("disabled", true);
+        $('#btn-update').html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        console.log(workflow_status);
+        update_data(workflow_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
+    $('#btn-update-leave').click(()=>{
+        let workflow_status = $('#workflow_status_leave').val();
+        let ticketNo = $('#tiketno_leave').val();
+        let direct_superior = $("#directsuperior_leave").val();
+        let approvalremarks = $("#approvalremarks_leave").val();
+        $('#btn-update').prop("disabled", true);
+        $('#btn-update').html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+
+        update_data(workflow_status, ticketNo, direct_superior, approvalremarks)
+    })
+
+    function update_data(workflow_status, ticketNo, direct_superior, approvalremarks){
         $.ajax({
-            url: "{{ url('trans/update/table') }}",
+            url: "{{ url('trans/update_leave/table') }}",
             type: "get",
             data: {
-                'status': reimbursement_status,
-                'paidAmount': totalpaid,
+                'status': workflow_status,
                 'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior,
+                'directSuperiorCode' : direct_superior,
                 'approvalRemarks': approvalremarks
             },
             success: function (response) {
@@ -714,13 +891,15 @@
                         // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
                         'Update'
                     );
+
+                    $('#modal_list_detail_leave').modal('hide');
                     
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
                         .message);
                     setTimeout(function () {
                         window.location =
-                            "{{ url('transaction/transaction_reimbursement') }}";
+                            "{{ url('transaction/transaction_workflow') }}";
                     }, 3000);
                 } else{
                     $("#btn-update").prop("disabled", false);
@@ -729,13 +908,9 @@
                         'Update'
                     );
                     
-                    $('#notification_update_data_fail').modal('show');
-                    $('#message-notification-update-data-fail').html(response
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response
                         .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_reimbursement') }}";
-                    }, 3000);
                 }
             },
             error: function (response) {
@@ -756,35 +931,35 @@
     loadDataBusinessUnit();
     loadDataWorkflowType();
     loadDataFirstLastAllBusinessUnit();
+    loadDataStatus();
+    loadDataFirstLastAllStatus();
     
         $.get("{{ url('level/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                        "</option>");
-                });
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
             });
-    
-            $('#select').focus(function (event) {
-                    var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                    $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').click(function (event) {
+        });
+
+        $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
                 $searchfield.prop('disabled', true);
-            });
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
     
-            $('#select').change(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-            });
-    
-            $('select').on('select2:close', function (e) {
-                $('.header-select').remove();
-            });
-    
-    
-          
         function loadDataBusinessUnit(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -846,6 +1021,7 @@
                 templateResult: formatSelect
             });
         }
+
         function loadDataFirstLastAllBusinessUnit () {
             $('#business_unit').addClass('spinner-border');
 
@@ -860,64 +1036,145 @@
                 $('#business_unit').removeClass('loading');
             });
         }
-            function loadDataWorkflowType(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+        function loadDataWorkflowType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#workflow_type').select2({
-                    width: '100%',
-                    placeholder: 'Choose Workflow Type',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#workflow_type').select2({
+                width: '100%',
+                placeholder: 'Choose Workflow Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
                     },
-                    ajax: {
-                        url: "{{ url('/workflow/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.value,
-                                        id: item.comGenCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/workflow/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
                     },
-                    templateResult: formatSelect
-                });
-            }  
-    </script>
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }  
+
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#workflow_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+
+                        filteredData.unshift({ value: "ALL" });
+
+                        return {
+                            results: $.map(filteredData, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#workflow_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#workflow_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#workflow_status option:contains("ALL")').not(':first').remove();
+                $('#workflow_status').val('ALL');
+                $('#workflow_status').removeClass('spinner-border');
+            });
+        }
+</script>
 </html>

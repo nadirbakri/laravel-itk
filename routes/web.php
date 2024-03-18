@@ -776,6 +776,7 @@ Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
 Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
+Route::get('trans/update_leave/table', 'TransactionController@tableUpdateTransLeave');
 Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
 Route::get('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');

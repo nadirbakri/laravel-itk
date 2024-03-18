@@ -7,6 +7,7 @@ return [
     'label_claim_date_start' => 'Waktu - Dari',
     'label_claim_date_end' => 'Waktu - Sampai',
     'label_bu' => 'Unit Bisnis',
+    'label_workflow_status' => 'Status Alur Kerja',
     'employee' => 'ID Karyawan',
     'btn_search' => 'Cari',
     'btn_list' => 'Daftar',
