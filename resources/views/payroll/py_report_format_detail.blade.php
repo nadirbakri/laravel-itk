@@ -1470,7 +1470,7 @@
                         arrayReportFormatFormula[indexToEditFormula].columnHeader = $("#column_header").val();
                         arrayReportFormatFormula[indexToEditFormula].alignment = $("#alignment").val();
                         arrayReportFormatFormula[indexToEditFormula].dataFormat = $("#data_format").val();
-                        arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                        arrayReportFormatFormula[indexToEditFormula].display = ($("#display").is(":checked") ? $("#display").val() : false);
                         arrayReportFormatFormula[indexToEditFormula].fieldFormula = $("#preview_formula").val();
                     }else{
                         arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
