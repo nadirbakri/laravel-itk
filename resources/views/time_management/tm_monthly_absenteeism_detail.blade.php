@@ -156,15 +156,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="hour_out">{{ __('tm_monthly_absenteeism_detail.label_hour_out') }}</label>
                             <input type="text" class="form-control input-hour" id="hour_out" name="hour_out">
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-1">
                         <div class="form-group">
-                            <label for="hour_to">{{ __('tm_monthly_absenteeism_detail.label_hour_to') }} &nbsp;&nbsp;</label>
+                            <label>&nbsp;</label><br>
+                            <label for="hour_to">{{ __('tm_monthly_absenteeism_detail.label_hour_to') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>&nbsp;</label><br>
                             <input type="text" class="form-control input-hour" id="hour_to" name="hour_to">
                         </div>
                     </div>
