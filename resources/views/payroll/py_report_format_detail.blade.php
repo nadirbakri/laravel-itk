@@ -250,6 +250,7 @@
                                         placeholder="{{ __('payroll_report_format.label_column_no') }}">
                                 </div>
                                 <input type="hidden" class="form-control" id="record_function_det" name="record_function_det">
+                                <input type="hidden" class="form-control" id="column_no_edit" name="column_no_edit">
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
@@ -849,6 +850,7 @@
             $('#modal_add_report_format_detail').modal('show');
             $('#record_function_det').val("Edit");
             $('#column_no').val((data.columnNo + 1));
+            $('#column_no_edit').val((data.columnNo + 1));
             $('#table_name_detail').val(data.tableName);
             $('#column_header').val(data.columnHeader);
             $('#alignment').val(data.alignment);
@@ -903,6 +905,7 @@
             $('#modal_add_report_format_detail').modal('show');
             $('#record_function_det').val("Edit");
             $('#column_no').val((data.columnNo + 1));
+            $('#column_no_edit').val((data.columnNo + 1));
             $('#table_name_detail').val(data.tableName);
             $('#column_header').val(data.columnHeader);
             $('#alignment').val(data.alignment);
@@ -1196,6 +1199,7 @@
         $('#btn-add-report-format-detail').on('click', function () {
             $('#record_function_det').val("New");
             $('#column_no').val("");
+            $('#column_no_edit').val("");
             $('#table_name_detail').val("");
             $('#field_name_detail').val("");
             $('#column_header').val("");
@@ -1459,19 +1463,34 @@
                     });
                 }
             }else{
-                var indexToEdit = getIndexByColumnNo(parseInt($("#column_no").val()) - 1);
-                var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no").val()) - 1);
+                var indexToEdit = getIndexByColumnNo(parseInt($("#column_no_edit").val()) - 1);
+                var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no_edit").val()) - 1);
 
                 if (indexToEdit !== -1) {
                     if (previewFormulaValue !== null && previewFormulaValue !== '') {
-                        arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
-                        arrayReportFormatFormula[indexToEditFormula].tableName = $("#table_name_detail").val();
-                        arrayReportFormatFormula[indexToEditFormula].fieldName = $("#field_name_detail").val();
-                        arrayReportFormatFormula[indexToEditFormula].columnHeader = $("#column_header").val();
-                        arrayReportFormatFormula[indexToEditFormula].alignment = $("#alignment").val();
-                        arrayReportFormatFormula[indexToEditFormula].dataFormat = $("#data_format").val();
-                        arrayReportFormatFormula[indexToEditFormula].display = ($("#display").is(":checked") ? $("#display").val() : false);
-                        arrayReportFormatFormula[indexToEditFormula].fieldFormula = $("#preview_formula").val();
+                        if (arrayReportFormatFormula.hasOwnProperty(indexToEditFormula) && arrayReportFormatFormula[indexToEditFormula].hasOwnProperty('columnNo')) {
+                            arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
+                            arrayReportFormatFormula[indexToEditFormula].tableName = $("#table_name_detail").val();
+                            arrayReportFormatFormula[indexToEditFormula].fieldName = $("#field_name_detail").val();
+                            arrayReportFormatFormula[indexToEditFormula].columnHeader = $("#column_header").val();
+                            arrayReportFormatFormula[indexToEditFormula].alignment = $("#alignment").val();
+                            arrayReportFormatFormula[indexToEditFormula].dataFormat = $("#data_format").val();
+                            arrayReportFormatFormula[indexToEditFormula].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                            arrayReportFormatFormula[indexToEditFormula].fieldFormula = $("#preview_formula").val();
+                        }else{
+                            arrayReportFormatFormula.push({
+                                "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                                "tableName": $("#table_name_detail").val(),
+                                "fieldName": $("#field_name_detail").val(),
+                                "columnHeader": $("#column_header").val(),
+                                "alignment": $("#alignment").val(),
+                                "dataFormat": $("#data_format").val(),
+                                "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                                "fieldFormula": $("#preview_formula").val()
+                            });
+
+                            arrayReportFormatDetail.splice(indexToEditFormula, 1);
+                        }
                     }else{
                         arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
                         arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
@@ -1483,7 +1502,7 @@
                         arrayReportFormatDetail[indexToEdit].fieldFormula = $("#preview_formula").val();
                     }
                 } else {
-                    alert("Object with columnNo value " + $("#column_no").val() + " not found.");
+                    alert("Object with columnNo value " + $("#column_no_edit").val() + " not found.");
                 }
             }
 
