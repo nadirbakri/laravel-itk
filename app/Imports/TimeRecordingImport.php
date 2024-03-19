@@ -60,6 +60,12 @@ class TimeRecordingImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $rows = $rows->map(function ($row) {
+                return collect($row)->map(function ($value) {
+                    return trim($value);
+                })->all();
+            });
+
             Validator::make($rows->toArray(), [
                 '*.1' => 'date_format:Y-m-d',
                 '*.2' => 'date_format:H:i',
