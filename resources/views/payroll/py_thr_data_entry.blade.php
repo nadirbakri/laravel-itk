@@ -350,7 +350,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.religionCode + '<div>' +
+                        '<div class="col-6">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -375,7 +375,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/religion_code/api') }}",
+                    url: "{{ url('/religion/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -389,8 +389,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.religionCode,
-                                    id: item.religionCode,
+                                    text: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })
