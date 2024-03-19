@@ -422,20 +422,20 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
             //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
             //         'businessUnit' => $request->businessUnit,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'type' => "TOT",
-            //         'exportMenu' => false,
+            //         'employeeNo'=> $request->employeeNo,
+            //         'status' => $request->status,
+            //         'type' => $request->type,
             //         'companyCode' => Session::get('companyCode'), 
             //         'languageCode' => App::getLocale(), 
             //         'sessionID' => 0, 
             //         'sessionUserID' => Session::get('userID'),
             //     ]
-            //     ));
+            // ));
             $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
                 ['body' => json_encode(
                     [
@@ -444,8 +444,7 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
                         'status' => $request->status,
-                        'type' => "TOT",
-                        'exportMenu' => false,
+                        'type' => $request->type,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 
@@ -1295,14 +1294,18 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->put(env('API_URL') . '/mobile/TmOvertime/UpdateOvertimeApproval',
+            $response = $client->put(env('API_URL') . '/mobile/tmovertime/updateovtapprovalbyadmin',
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
                         'companyCode' => Session::get('companyCode'),
+                        'listRefLeaveID' => null,
                         'ticketNo' => $request->ticketNo,
-                        'employeeNo'=> $request->employeeNo,
+                        'directSuperiorCode'=> $request->directSuperior,
                         'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'approvalRemarks' => $request->approvalRemarks,
                         'languageCode' => App::getLocale()
                     ]
                 )]

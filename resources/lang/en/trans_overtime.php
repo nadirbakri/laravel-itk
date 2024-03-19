@@ -45,7 +45,25 @@ return [
     'label_slip' => 'Slip',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+
+    'label_request_date' => 'Request Date',
+    'label_overtime_date' => 'Overtime Date',
+    'label_ticket_no' => 'Ticket No',
+    'label_employee_name' => 'Employee Name',
+    'label_business_unit' => 'Business Unit',
+    'label_start_date' => 'Start Date',
+    'label_actual_overtime' => 'Actual Overtime',
+    'label_end_date' => 'End Date',
+    'label_next_day' => 'Next Day',
+    'label_task_name' => 'Task Name',
+    'label_location' => 'Location',
+    'label_description' => 'Description',
+    'label_customer' => 'Customer',
+    'label_last_approval_date' => 'Last Approval Date',
+    'label_approval_remarks' => 'Approval Remarks',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel'
 ]
 
 ?>

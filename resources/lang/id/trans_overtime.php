@@ -45,7 +45,25 @@ return [
     'label_slip' => 'Slip',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
-    'alert_success' => 'Success !'
+    'alert_success' => 'Success !',
+
+    'label_request_date' => 'Tanggal Permintaan',
+    'label_overtime_date' => 'Tanggal Lembur',
+    'label_ticket_no' => 'No Tiket',
+    'label_employee_name' => 'Nama Karyawan',
+    'label_business_unit' => 'Unit Bisnis',
+    'label_start_date' => 'Tanggal Mulai',
+    'label_actual_overtime' => 'Durasi Lembur',
+    'label_end_date' => 'Tanggal Selesai',
+    'label_next_day' => 'Hari Berikutnya',
+    'label_task_name' => 'Nama Tugas',
+    'label_location' => 'Lokasi',
+    'label_description' => 'Deskripsi',
+    'label_customer' => 'Customer',
+    'label_last_approval_date' => 'Tanggal Terakhir Persetujuan',
+    'label_approval_remarks' => 'Catatan Persetujuan',
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal'
 ]
 
 ?>
