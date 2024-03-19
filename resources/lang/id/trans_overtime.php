@@ -12,6 +12,7 @@ return [
     'label_status' => 'Status',
     'label_reimbursement_type' => 'Tipe Pengajuan',
     'label_bu' => 'Unit Bisnis',
+    'label_overtime_status' => 'Status Lembur',
     'btn_upload' => 'Unggah',
     'btn_search' => 'Cari',
     'btn_list' => 'Daftar',

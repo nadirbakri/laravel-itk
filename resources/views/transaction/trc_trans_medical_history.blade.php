@@ -172,9 +172,15 @@
             <div class="row">
                 <div class="col-5">
                     <div class="form-group">
+                        <label for="medical_status form-check-label">{{ __('trans_medical.label_medical_status') }}</label>
+                    </div>
+                    <select class="form-control select2" id="medical_status" name="medical_status"></select>
+                </div>
+                <div class="col-5">
+                    <div class="form-group">
                             <label for="direct_superior form-check-label">{{ __('trans_medical.employeeno') }}</label>
                     </div>
-                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
+                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder={{ __('trans_medical.employeeno') }}>
                 </div>
             </div>
 
@@ -650,6 +656,7 @@
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
+        let status = $("#medical_status").val();
         // alert(totalpaid)
         $('.close').click();
         update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
@@ -882,209 +889,289 @@
     loadDataFirstLastAllReimbursement();
     loadDataBusinessUnit();
     loadDataFirstLastAllBusinessUnit();
+    loadDataStatus();
+    loadDataFirstLastAllStatus();
     // loadDataFirstLastAllReimbursmentType();
     
-        $.get("{{ url('reimbursement_type/medical/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
-                        "</option>");
-                });
+    $.get("{{ url('reimbursement_type/medical/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+                    "</option>");
             });
+        });
+
+    $.get("{{ url('level/api') }}", function (data) {      
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
+            });
+        });
     
-        $.get("{{ url('level/api') }}", function (data) {      
-                $.each(data, function (k, v) {
-                    $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                        "</option>");
-                });
-            });
-    
-            $('#select').focus(function (event) {
-                    var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                    $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').click(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').change(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-            });
-    
-            $('select').on('select2:close', function (e) {
-                $('.header-select').remove();
-            });
+    $('#select').focus(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+    });
+
+    $('#select').click(function (event) {
+        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        $searchfield.prop('disabled', true);
+    });
+
+    $('#select').change(function (event) {
+        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        $searchfield.prop('disabled', true);
+    });
+
+    $('select').on('select2:close', function (e) {
+        $('.header-select').remove();
+    });
     
             
-            function loadDataExportReimbrusement(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+    function loadDataExportReimbrusement(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+        
+        $('#reimbursement_type').select2({
+            width: '100%',
+            placeholder: 'Choose Reimbursement Type',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#reimbursement_type').select2({
-                    width: '100%',
-                    placeholder: 'Choose Reimbursement Type',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
-                    },
-                    ajax: {
-                        url: "{{ url('/reimbursement_type/medical/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
+            },
+            ajax: {
+                url: "{{ url('/reimbursement_type/medical/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
                             return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.value,
-                                        id: item.comGenCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
+                                text: item.value,
+                                id: item.comGenCode,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    function loadDataFirstLastAllReimbursement () {
+        $('#reimbursement_type').addClass('spinner-border');
+
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/reimbursement_type/medical/all/api') }}",
+        }).then(function (data) {
+            if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
+                $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
             }
+            $('#reimbursement_type').val(data.comGenCode);
+            $('#reimbursement_type').removeClass('loading');
+        });
+    }
     
-            function loadDataFirstLastAllReimbursement () {
-                $('#reimbursement_type').addClass('spinner-border');
     
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/reimbursement_type/medical/all/api') }}",
-                }).then(function (data) {
-                    if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
-                        $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
-                    }
-                    $('#reimbursement_type').val(data.comGenCode);
-                    $('#reimbursement_type').removeClass('loading');
-                });
+    // buat ALL
+    // function loadDataFirstLastAllReimbursement() {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: "{{ url('/reimbursement_type/all/api') }}",
+    //     }).then(function (data) {
+    //         if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length)
+    //         $('#reimbursement_type').val(data.value);
+    //     });
+    // }
+    
+    
+    function loadDataBusinessUnit(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
             }
-    
-    
-            // buat ALL
-            // function loadDataFirstLastAllReimbursement() {
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "{{ url('/reimbursement_type/all/api') }}",
-            //     }).then(function (data) {
-            //         if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length)
-            //         $('#reimbursement_type').val(data.value);
-            //     });
-            // }
-    
-    
-            function loadDataBusinessUnit(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.levelName + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.levelName + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+        
+        $('#business_unit').select2({
+            width: '100%',
+            placeholder: 'Choose Business Unit',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#business_unit').select2({
-                    width: '100%',
-                    placeholder: 'Choose Business Unit',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
-                    },
-                    ajax: {
-                        url: "{{ url('/level/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
+            },
+            ajax: {
+                url: "{{ url('/level/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term, 
+                        levelType: '1' 
+
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
                             return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 
-                                levelType: '1' 
-    
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.levelName,
-                                        id: item.levelCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
+                                text: item.levelName,
+                                id: item.levelCode,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    function loadDataFirstLastAllBusinessUnit () {
+        $('#business_unit').addClass('spinner-border');
+
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/level/func/api') }}",
+        }).then(function (data) {
+            if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
+                $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
             }
-    
-            function loadDataFirstLastAllBusinessUnit () {
-                $('#business_unit').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/level/func/api') }}",
-                }).then(function (data) {
-                    if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                        $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
-                    }
-                    $('#business_unit').val(data.levelCode);
-                    $('#business_unit').removeClass('loading');
-                });
-            }
-    
+            $('#business_unit').val(data.levelCode);
+            $('#business_unit').removeClass('loading');
+        });
+    }
            
-    
+    function loadDataStatus(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+                
+        $('#medical_status').select2({
+            width: '100%',
+            placeholder: 'Choose Status',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/status_trans/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term,
+                    };
+                },
+                processResults: function (data) {
+                    var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+
+                    filteredData.unshift({ value: "ALL" });
+
+                    return {
+                        results: $.map(filteredData, function (item) {
+                            return {
+                                text: item.value,
+                                id: item.value,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    function loadDataFirstLastAllStatus() {
+        $('#medical_status').addClass('spinner-border');
+
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/status_trans/api') }}",
+        }).then(function (data) {
+            $('#medical_status').prepend($('<option>').val('ALL').text('ALL'));
+            $('#medical_status option:contains("ALL")').not(':first').remove();
+            $('#medical_status').val('ALL');
+            $('#medical_status').removeClass('spinner-border');
+        });
+    }
          
     </script>
 </html>

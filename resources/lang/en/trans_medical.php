@@ -6,6 +6,7 @@ return [
     'label_claim_date_end' => 'Claim Date - End',
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_business_unit' => 'Business Unit',
+    'label_medical_status' => 'Medical Status',
     'employeeno' => 'Employee No',
     'btn_search' => 'Search',
     'btn_upload' => 'Upload',
