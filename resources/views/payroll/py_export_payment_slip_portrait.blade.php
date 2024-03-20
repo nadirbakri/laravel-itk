@@ -91,10 +91,12 @@
 						<?php
 							$totalIncome += (float) $value2->columnValue;
 						?>
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
+						@endif
 					@endforeach
 					<tr>
 						<td colspan="2">&nbsp;</td>
@@ -115,10 +117,12 @@
 						<?php
 							$totalDeduction += (float) $value2->columnValue;
 						?>
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
+						@endif
 					@endforeach
 					<tr>
 						<td colspan="2">&nbsp;</td>
@@ -134,10 +138,12 @@
 						<td colspan="2" style="text-align: left; padding-bottom: 1%;">INSURANCE COMPANY PART</td>
 					</tr>
 					@foreach($value->c as $key2 => $value2)
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 						<tr>
 							<td width="60%" style="margin-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}},-</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
+						@endif
 					@endforeach
 				</table>
 			</td>

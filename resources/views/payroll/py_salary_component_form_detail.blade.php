@@ -100,7 +100,7 @@
 </head>
 
 <body>
-    <div class="div-payroll">
+<div class="div-payroll">
         <form id="salary_component_data_form" method="post">
         @csrf
             <div class="row" style="margin-left: 0; margin-right: 0;">
@@ -204,82 +204,6 @@
                                         </div>
                                     </div>
                                 </div>
-        <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
-                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('payroll_salary_component_data.list_detail') }}</span>
-            </a>
-        </div>
-        <div class="div-form">
-            <form id="salary_component_data_form" method="post">
-                @csrf
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="field_name">{{ __('payroll_salary_component_data.label_field_name') }}</label>
-                            <span class="required">*</span>
-                            <input type="text" class="form-control" id="field_name" name="field_name"
-                                placeholder="{{ __('payroll_salary_component_data.label_field_name') }}" readonly>
-                        </div>
-                        <input type="text" class="form-control" id="record_function" name="record_function" hidden>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="description">{{ __('payroll_salary_component_data.label_description') }}</label>
-                            <input type="text" class="form-control" id="description" name="description"
-                                placeholder="{{ __('payroll_salary_component_data.label_description') }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="field_width">{{ __('payroll_salary_component_data.label_field_width') }}</label>
-                            <input type="number" class="form-control" id="field_width" name="field_width"
-                                placeholder="{{ __('payroll_salary_component_data.label_field_width') }}">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="decimal_point">{{ __('payroll_salary_component_data.label_decimal_point') }}</label>
-                            <small id="decimal_point_rules" class="text-muted">{{ __('payroll_salary_component_data.label_decimal_point_rules') }}</small>
-                            <input type="number" class="form-control" id="decimal_point" name="decimal_point"
-                                placeholder="{{ __('payroll_salary_component_data.label_decimal_point') }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="include_prorate">&nbsp;</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="include_prorate"
-                                    name="include_prorate" value="true">
-                                <label
-                                    for="include_prorate">{{ __('payroll_salary_component_data.label_include_prorate') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="group_takehomepay">{{ __('payroll_salary_component_data.label_group_takehomepay') }}</label>
-                            <select class="form-control select2" id="group_takehomepay" name="group_takehomepay">
-                                <option value="" disabled selected>{{ __('payroll_salary_component_data.label_select_group_takehomepay') }}</option>
-                                <option id="group_0" name="group_0" value=0 selected="selected">0</option>
-                                <option id="group_1" name="group_1" value=1>1</option>
-                                <option id="group_2" name="group_2" value=2>2</option>
-                                <option id="group_3" name="group_3" value=3>3</option>
-                                <option id="group_4" name="group_4" value=4>4</option>
-                                <option id="group_5" name="group_5" value=5>5</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group box">
-                            <div class="form-check">
-                                <label for="display_in">{{ __('payroll_salary_component_data.label_display_in') }}</label>
                             </div>
                             <div class="col-1 p-0">
                                 <hr class="vertical" />

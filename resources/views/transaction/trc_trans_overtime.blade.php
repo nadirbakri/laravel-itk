@@ -183,7 +183,7 @@
                         <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('trans_overtime.label_reimbursement_type') }}</label>
                         </div>
-                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
+                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type"></select>
                     </div>
                 </div>
                 <!-- BUTTON -->
@@ -941,7 +941,7 @@
     
         $.get("{{ url('reimbursement_type/overtime/api') }}", function (data) {
             $.each(data, function (k, v) {
-                $('#reimbursement_type').append("<option value=" + v.variable + ">" + v.value +
+                $('#reimbursement_type').append("<option value=" + v.comGenCode + ">" + v.value +
                     "</option>");
             });
         });
@@ -1189,14 +1189,6 @@
                 $('#overtime_status').removeClass('spinner-border');
             });
         }
-
-        $("#btn-preview").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#export_overtime_form").submit();
-        });
         
         function loadDataFirstLastAllOvertime() {
             $('#reimbursement_type').addClass('spinner-border');
@@ -1212,6 +1204,7 @@
                 $('#reimbursement_type').removeClass('loading');
             });
         }
+
         $("#btn-preview").click(function () {
             $(this).prop("disabled", true);
             $(this).html(

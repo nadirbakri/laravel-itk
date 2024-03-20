@@ -51,7 +51,7 @@ class WorkflowLeaveExport implements FromView, ShouldAutoSize
             // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
             //     $param['businessUnit'] = $this->businessUnit;
             // }
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/tmleave/getleavedetaillist',
                 ['body' => json_encode($param)]

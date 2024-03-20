@@ -402,20 +402,20 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
             //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
             //         'businessUnit' => $request->businessUnit,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'type' => "TOT",
-            //         'exportMenu' => false,
+            //         'employeeNo'=> $request->employeeNo,
+            //         'status' => $request->status,
+            //         'type' => $request->type,
             //         'companyCode' => Session::get('companyCode'), 
             //         'languageCode' => App::getLocale(), 
             //         'sessionID' => 0, 
             //         'sessionUserID' => Session::get('userID'),
             //     ]
-            //     ));
+            // ));
             $response = $client->post(env('API_URL') . '/tmovertime/getovertimedetaillist',
                 ['body' => json_encode(
                     [
@@ -424,7 +424,7 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
                         'status' => $request->status,
-                        'type' => "TOT",
+                        'type' => $request->type,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => App::getLocale(), 
                         'sessionID' => 0, 

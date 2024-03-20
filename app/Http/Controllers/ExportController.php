@@ -120,7 +120,6 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-
         if ($request->workflow_type === "ER") {
             return Excel::download(new WorkflowPermitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'Employee List Permit Report.xlsx');
         } else {
