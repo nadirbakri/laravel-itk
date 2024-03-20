@@ -759,7 +759,7 @@
                     {data: 'leaveEntity.status', name: 'leaveEntity.status'},
                     {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
                     {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
-                    {data: 'leaveEntity.createdBy', name: 'leaveEntity.createdBy'},
+                    {data: 'leaveEntity.changedBy', name: 'leaveEntity.changedBy'},
                     {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
                     {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
                 ]
