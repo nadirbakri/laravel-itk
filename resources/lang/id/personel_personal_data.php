@@ -178,5 +178,10 @@ return [
     'birth_date_info_required' => 'Tanggal Lahir Harus Diisi',
     'birth_place_info_required' => 'Jenis Kelamin Harus Diisi',
     'marital_status_info_required' => 'Status Pernikahan Harus Diisi',
+    'position_code_employment_required' => 'Kode Posisi Harus Diisi',
+    'ranking_code_employment_required' => 'Kode Peringkat Harus Diisi',
+    'grade_code_employment_required' => 'Kode Nilai Harus Diisi',
+    'cost_center_code_employment_required' => 'Kode Cost Center Harus Diisi',
+    'level_required' => 'Level Ini Harus Diisi',
 
 ];

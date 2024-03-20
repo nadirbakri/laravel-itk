@@ -155,7 +155,7 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd(json_encode($param));
+        // dd($arrResult->dataListSet);
         // exit;
 
         if($arrResult->dataListSet == null){

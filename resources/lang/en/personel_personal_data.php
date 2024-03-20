@@ -178,5 +178,10 @@ return [
     'birth_date_info_required' => 'Birth Date is Required',
     'gender_info_required' => 'Gender is Required',
     'marital_status_info_required' => 'Marital Status is Required',
+    'position_code_employment_required' => 'Position Code is Required',
+    'ranking_code_employment_required' => 'Ranking Code is Required',
+    'grade_code_employment_required' => 'Grade Code is Required',
+    'cost_center_code_employment_required' => 'Cost Center Code is Required',
+    'level_required' => 'This Level is Required',
 
 ];

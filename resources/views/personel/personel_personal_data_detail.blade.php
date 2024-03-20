@@ -1125,6 +1125,7 @@
                                 <div class="form-group">
                                     <label
                                         for="position_code_employment">{{ __('personel_personal_data.label_position') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="position_code_employment"
                                         name="position_code_employment">
                                     </select>
@@ -1134,6 +1135,7 @@
                                 <div class="form-group">
                                     <label
                                         for="ranking_code_employment">{{ __('personel_personal_data.label_ranking') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="ranking_code_employment"
                                         name="ranking_code_employment">
                                     </select>
@@ -1145,6 +1147,7 @@
                                 <div class="form-group">
                                     <label
                                         for="grade_code_employment">{{ __('personel_personal_data.label_grade') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="grade_code_employment"
                                         name="grade_code_employment">
                                     </select>
@@ -1164,6 +1167,7 @@
                                 <div class="form-group">
                                     <label
                                         for="cost_center_code_employment">{{ __('personel_personal_data.label_cost_center') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="cost_center_code_employment"
                                         name="cost_center_code_employment">
                                     </select>
@@ -2805,7 +2809,6 @@
             $('#phone_number_profile').text('Phone Number');
             $('#photo_employee').val('');
 
-            // console.log(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
             //Tab Info
             $.ajax({
                 url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
@@ -2973,7 +2976,7 @@
                             '<div class="col-6">' +
                             '<div class="form-group">' +
                             '<label for="level' + i + '">' + response.data_level[i - 1]
-                            .levelDescription + '</label>' +
+                            .levelDescription + '</label> <span class="required">*</span>' +
                             '<select class="form-control select2" id="level' + i + '" name="level' +
                             i + '"></select>' +
                             '</div></div>'
@@ -3799,16 +3802,16 @@
 
             //Tab Employment
             // console.log(arrData2[0].originjoinDate);
-            pickerOriginJoinDate.setDate(((typeof arrData2[0].originJoinDate !== 'undefined') ? arrData2[0].originJoinDate : ''));
+            pickerOriginJoinDate.setDate(((typeof arrData2[0].originJoinDate !== 'undefined' && arrData2[0].originJoinDate !== null) ? arrData2[0].originJoinDate : ''));
             // $('#origin_join_date_employment').prop('disabled', true);
-            pickerJoinDate.setDate(((typeof arrData2[0].joinDate !== 'undefined') ? arrData2[0].joinDate : ''));
-            pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined') ? arrData2[0].probationEndDate : ''));
-            pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined') ? arrData2[0].contractStartDate : ''));
-            pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined') ? arrData2[0].contractEndDate : ''));
+            pickerJoinDate.setDate(((typeof arrData2[0].joinDate !== 'undefined' && arrData2[0].joinDate !== null) ? arrData2[0].joinDate : ''));
+            pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined' && arrData2[0].probationEndDate !== null) ? arrData2[0].probationEndDate : ''));
+            pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined' && arrData2[0].contractStartDate !== null) ? arrData2[0].contractStartDate : ''));
+            pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined' && arrData2[0].contractEndDate !== null) ? arrData2[0].contractEndDate : ''));
             // pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
             // pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
-            $('#termination_date_employment').val(((typeof arrData2[0].terminationDate !== 'undefined') ? moment(arrData2[0].terminationDate).format('YYYY-MM-DD') : ''));
-            $('#effective_terminated_employment').val(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? moment(arrData2[0].effectiveTerminationDate).format('YYYY-MM-DD') : ''));
+            $('#termination_date_employment').val(((typeof arrData2[0].terminationDate !== 'undefined' && arrData2[0].terminationDate !== null) ? moment(arrData2[0].terminationDate).format('YYYY-MM-DD') : ''));
+            $('#effective_terminated_employment').val(((typeof arrData2[0].effectiveTerminationDate !== 'undefined' && arrData2[0].effectiveTerminationDate !== null) ? moment(arrData2[0].effectiveTerminationDate).format('YYYY-MM-DD') : ''));
             if (arrData2[0].specialResign == true) {
                 $('#special_reason_resign_employment').prop('checked', true);
             }
@@ -3823,8 +3826,8 @@
                 $('#expatriat_employment').prop('checked', false);
             }
             $('#license_no_employment').val(((typeof arrData2[0].expatLicenseNo !== 'undefined') ? arrData2[0].expatLicenseNo : ''));
-            pickerExpatriatStartDate.setDate(((typeof arrData2[0].expatLicenseStartDate !== 'undefined') ? arrData2[0].expatLicenseStartDate : ''));
-            pickerExpatriatEndDate.setDate(((typeof arrData2[0].expatLicenseEndDate !== 'undefined') ? arrData2[0].expatLicenseEndDate : ''));
+            pickerExpatriatStartDate.setDate(((typeof arrData2[0].expatLicenseStartDate !== 'undefined' && arrData2[0].expatLicenseStartDate !== null) ? arrData2[0].expatLicenseStartDate : ''));
+            pickerExpatriatEndDate.setDate(((typeof arrData2[0].expatLicenseEndDate !== 'undefined' && arrData2[0].expatLicenseEndDate !== null) ? arrData2[0].expatLicenseEndDate : ''));
             if (arrData2[0].flagIsCommissioner == true) {
                 $('#commisioner_employment').prop('checked', true);
             }
@@ -4183,7 +4186,7 @@
 
             //Tab Family & Dependent
             load_table_family_dependent_data();
-            if (typeof arrData[0].peMasterFamily !== 'undefined' || arrData[0].peMasterFamily !== null) {
+            if (typeof arrData2[0].peMasterFamily !== 'undefined' || arrData2[0].peMasterFamily !== null) {
                 for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
 
                 if (arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
@@ -4210,12 +4213,12 @@
                 }
             }
 
-            if (typeof arrData[0].level !== 'undefined' || arrData[0].level !== null) {
+            if (typeof arrData[0].level !== 'undefined' && arrData[0].level !== null) {
                 $.each(arrData[0].level, function (k, v) {
                     $('#div-level').append(
                         '<div class="col-6">' +
                         '<div class="form-group">' +
-                        '<label for="level' + k + '">' + k + '</label>' +
+                        '<label for="level' + k + '">' + k + '</label> <span class="required">*</span>' +
                         '<input type="text" class="form-control" id="level' + k + '" name="level' +
                         k + '[]" value="' + v + '" disabled>' +
                         '</div></div>'
@@ -7324,6 +7327,21 @@
             load_table_fringe_benefit();
         });
 
+        $("#btn-remove-employment-data").on('click', function() {
+            var data = table1.rows('.selected').data().toArray();
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayFringeBenefit.findIndex(x => x.seqNoFringeBenefit == data[i].seqNoFringeBenefit);
+                    arrayFringeBenefit.splice(index, 1);
+                }
+                $('#fringe_benefit_data_table').DataTable().destroy();
+                load_table_fringe_benefit();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
         $("#btn-save-family-dependent-data").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
@@ -7368,6 +7386,21 @@
             
             $('#family_dependent_data_table').DataTable().destroy();
             load_table_family_dependent_data();
+        });
+
+        $("#btn-remove-family-dependent-data").on('click', function() {
+            var data = table2.rows('.selected').data().toArray();
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayFamilyDependent.findIndex(x => x.seqNoFamilyDependent == data[i].seqNoFamilyDependent);
+                    arrayFamilyDependent.splice(index, 1);
+                }
+                $('#family_dependent_data_table').DataTable().destroy();
+                load_table_family_dependent_data();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
         });
 
         $("#btn-save-profile").click(function () {
@@ -7490,7 +7523,49 @@
                     },
                     marital_status_info: {
                         required: true,
-                    }
+                    },
+                    position_code_employment: {
+                        required: true,
+                    },
+                    ranking_code_employment: {
+                        required: true,
+                    },
+                    grade_code_employment: {
+                        required: true,
+                    },
+                    cost_center_code_employment: {
+                        required: true,
+                    },
+                    level1: {
+                        required: true,
+                    },
+                    level2: {
+                        required: true,
+                    },
+                    level3: {
+                        required: true,
+                    },
+                    level4: {
+                        required: true,
+                    },
+                    level5: {
+                        required: true,
+                    },
+                    level6: {
+                        required: true,
+                    },
+                    level7: {
+                        required: true,
+                    },
+                    level8: {
+                        required: true,
+                    },
+                    level9: {
+                        required: true,
+                    },
+                    level10: {
+                        required: true,
+                    },
                 },
                 messages: {
                     employee_no_info: {
@@ -7537,7 +7612,49 @@
                     },
                     marital_status_info: {
                         required: "{{ __('personel_personal_data.marital_status_info_required') }}",
-                    }
+                    },
+                    position_code_employment: {
+                        required: "{{ __('personel_personal_data.position_code_employment_required') }}",
+                    },
+                    ranking_code_employment: {
+                        required: "{{ __('personel_personal_data.ranking_code_employment_required') }}",
+                    },
+                    grade_code_employment: {
+                        required: "{{ __('personel_personal_data.grade_code_employment_required') }}",
+                    },
+                    cost_center_code_employment: {
+                        required: "{{ __('personel_personal_data.cost_center_code_employment_required') }}",
+                    },
+                    level1: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level2: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level3: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level4: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level5: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level6: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level7: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level8: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level9: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
+                    level10: {
+                        required: "{{ __('personel_personal_data.level_required') }}",
+                    },
                 },
                 highlight: function (element) {
                     $(element).addClass('is-invalid');
