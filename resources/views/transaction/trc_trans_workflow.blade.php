@@ -453,6 +453,12 @@
                             <div class="col-3">
                                 <input id="workflow_type_leave" name="workflow_type_leave" type="hidden" class="form-control"><span id="workflow_type_leave_val"></span>
                             </div>
+                            <div class="col-3">
+                                <h6>Leave Time</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="leave_time_leave" name="leave_time_leave" type="hidden" class="form-control"><span id="leave_time_leave_val"></span>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -461,12 +467,6 @@
                             </div>
                             <div class="col-3">
                                 <input id="leave_type_leave" name="leave_type_leave" type="hidden" class="form-control"><span id="leave_type_leave_val"></span>
-                            </div>
-                            <div class="col-3">
-                                <h6>Leave Time</h6>
-                            </div>
-                            <div class="col-3">
-                                <input id="leave_time_leave" name="leave_time_leave" type="hidden" class="form-control"><span id="leave_time_leave_val"></span>
                             </div>
                         </div>
 
@@ -631,7 +631,6 @@
         }else{
             $('#modal_list_detail_leave').modal('show')
             data = table.row($(element).parents('tr')).data().leaveEntity;
-            console.log(data)
 
             $('#directsuperior_leave').val(data.directSuperiorID)
             $('#reqdate_leave').val(data.leaveDate)

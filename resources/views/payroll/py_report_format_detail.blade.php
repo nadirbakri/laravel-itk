@@ -1466,7 +1466,7 @@
                 var indexToEdit = getIndexByColumnNo(parseInt($("#column_no_edit").val()) - 1);
                 var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no_edit").val()) - 1);
 
-                if (indexToEdit !== -1) {
+                if (indexToEdit !== -1 || indexToEditFormula !== -1) {
                     if (previewFormulaValue !== null && previewFormulaValue !== '') {
                         if (arrayReportFormatFormula.hasOwnProperty(indexToEditFormula) && arrayReportFormatFormula[indexToEditFormula].hasOwnProperty('columnNo')) {
                             arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
