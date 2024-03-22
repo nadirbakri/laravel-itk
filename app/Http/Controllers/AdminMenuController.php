@@ -141,7 +141,7 @@ class AdminMenuController extends Controller
                 $param['pdfFile'] = base64_encode(file_get_contents($pathFile . $fileName));
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             if ($request->t_news2 == "new"){
                 $response = $client->post(env('API_URL') . '/mobile/News/insertNews',

@@ -360,14 +360,6 @@
                         </div>
                         <div class="row approve">
                             <div class="col-3">
-                                <h5>Total Paid</h5>
-                            </div>
-                            <div class="col-5">
-                                <input id="totalpaid" name="totalpaid"  type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row approve">
-                            <div class="col-3">
                                 <h5>Approval Remarks</h5>
                             </div>
                             <div class="col-5">
@@ -846,18 +838,15 @@
 
     $('#btn-update').click(()=>{
         let workflow_status = $('#workflow_status').val();
-        let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
-        // alert(totalpaid)
         // $('.close').click();
         $('#btn-update').prop("disabled", true);
         $('#btn-update').html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
-        console.log(workflow_status);
-        update_data(workflow_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+        update_data(workflow_status,ticketNo,direct_superior,approvalremarks)
     })
 
     $('#btn-update-leave').click(()=>{
