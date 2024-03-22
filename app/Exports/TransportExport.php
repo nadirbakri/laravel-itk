@@ -40,7 +40,7 @@ class TransportExport implements FromView, ShouldAutoSize
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status' => $this->status,
                 'sessionUserID' => Session::get('userID'),
                 'type' =>  $this->reimbursementType,

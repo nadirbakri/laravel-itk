@@ -35,7 +35,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
                 'startDate' => $this->permitDateFrom,
                 'endDate' => $this->permitDateTo,
                 'businessUnit' =>$this->businessUnit,
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status' => $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
@@ -69,7 +69,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('export.export_workflow_list', [

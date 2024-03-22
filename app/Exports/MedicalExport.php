@@ -37,7 +37,7 @@ class MedicalExport implements FromView, ShouldAutoSize
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'medicalType1'=> $this->reimbursementType,
                 'businessUnit'=> $this->businessUnit,
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status'=> $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 

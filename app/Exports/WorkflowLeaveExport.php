@@ -37,7 +37,7 @@ class WorkflowLeaveExport implements FromView, ShouldAutoSize
                 'startDate' => $this->permitDateFrom,
                 'endDate' => $this->permitDateTo,
                 'businessUnit' =>$this->businessUnit,
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status' => $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 

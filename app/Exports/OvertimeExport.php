@@ -40,7 +40,7 @@ class OvertimeExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status'=> $this->overtime_status
             ];
 

@@ -35,7 +35,7 @@ class BusinessTripExport implements FromView, ShouldAutoSize
                 'startDate' => $this->claimdateFrom,
                 'endDate' => $this->claimdateTo,
                 'type' => 'REQUEST',
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status' => $this->status,
                 'businessUnit' =>$this->businessUnit,
                 'companyCode' => Session::get('companyCode'), 
