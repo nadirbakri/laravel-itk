@@ -41,7 +41,7 @@
 				<td>{{ $value->leaveEntity->employeeNo }}</td>
 				<td>{{ $value->leaveEntity->fullnameRequester}}</td>
 				<td>{{ $value->leaveEntity->leaveName }}</td>
-				<td>{{ $value->leaveEntity->leaveTime }}</td>
+				<td>{{ $value->leaveEntity->dayDuration }}</td>
 				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->leaveDateFrom)) }}</td>
 				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->leaveDateTo)) }}</td>
 				<td>{{ $value->leaveEntity->leaveDuration }}</td>
