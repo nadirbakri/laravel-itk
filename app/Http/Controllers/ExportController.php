@@ -123,9 +123,9 @@ class ExportController extends Controller
 
 
         if ($request->workflow_type === "ER") {
-            return Excel::download(new WorkflowPermitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel), 'Employee List Permit Report.xlsx');
+            return Excel::download(new WorkflowPermitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'Employee List Permit Report.xlsx');
         } else {
-            return Excel::download(new WorkflowLeaveExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel), 'Employee List Leave Report.xlsx');
+            return Excel::download(new WorkflowLeaveExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'Employee List Leave Report.xlsx');
         }
     }
     
@@ -140,7 +140,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MedicalExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->reimbursement_type, $dataLevel), 'Employee List Reimbursement Medical Report.xlsx');
+        return Excel::download(new MedicalExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->reimbursement_type, $dataLevel, $request->medical_status), 'Employee List Reimbursement Medical Report.xlsx');
     
     }
    
@@ -153,7 +153,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new ReimbursementExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit,  $dataLevel), 'Employee List Reimbursement Report.xlsx');
+        return Excel::download(new ReimbursementExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit,  $dataLevel, $request->reimbursement_status), 'Employee List Reimbursement Report.xlsx');
     
     }
    
@@ -166,7 +166,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new TransportExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel), 'Employee List Transport Report.xlsx');
+        return Excel::download(new TransportExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->transport_status), 'Employee List Transport Report.xlsx');
     
     }
     
@@ -179,7 +179,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new OvertimeExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel), 'Employee List Overtime Report.xlsx');
+        return Excel::download(new OvertimeExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->overtime_status), 'Employee List Overtime Report.xlsx');
     
     }
     
@@ -193,11 +193,11 @@ class ExportController extends Controller
         }
 
         if ($request->travel_type == "TTA"){
-            return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel), 'Employee List Business Advance Trip Report.xlsx');
+            return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Advance Trip Report.xlsx');
         } elseif ($request->travel_type == "TTB"){
-            return Excel::download(new BusinessTripSeattleExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel), 'Employee List Business Seattle Trip Report.xlsx');
+            return Excel::download(new BusinessTripSeattleExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Seattle Trip Report.xlsx');
         }else{
-            return Excel::download(new BusinessTripAllExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel), 'Employee List Business Seattle Trip Report.xlsx');
+            return Excel::download(new BusinessTripAllExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Seattle Trip Report.xlsx');
         }
     
     }

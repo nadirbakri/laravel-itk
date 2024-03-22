@@ -9616,7 +9616,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				// 'companyCode' => Session::get('companyCode'),
-						"variable" => "ReimbursementTransport_",
+						"variable" => "List_ReimbursementTransport_",
 						"languageCode" => strtoupper(App::getLocale())
 	    			]
 	    		)]
@@ -9754,7 +9754,7 @@ class DataController extends Controller
 			['body' => json_encode(
 				[
 					// 'companyCode' => Session::get('companyCode'),
-					"variable" => "ReimbursementTransport_",
+					"variable" => "List_ReimbursementTransport_",
 					"languageCode" => strtoupper(App::getLocale())
 					]
 					)]
@@ -10081,14 +10081,12 @@ class DataController extends Controller
 			]);
 			$response = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
 			['body' => json_encode(
-				[
-					'companyCode' => Session::get('companyCode'),
-					"variable" => "Status_",
-					"languageCode" => strtoupper(App::getLocale())
-					,
+					[
+						'companyCode' => Session::get('companyCode'),
+						"variable" => "Status_",
+						"languageCode" => strtoupper(App::getLocale())
 					]
-					)]
-				);
+				)]);
 			} catch (RequestException $e) {
 				$response = $e->getResponse();
 				if($response->getStatusCode() == 401){
@@ -10653,7 +10651,7 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				// 'companyCode' => Session::get('companyCode'),
-						'variable' => "ReimbursementTransport_",
+						"variable" => "List_ReimbursementTransport_",
 						'languageCode' => strtoupper(App::getLocale())
 	    			]
 	    		)]

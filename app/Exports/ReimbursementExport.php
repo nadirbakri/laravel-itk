@@ -14,13 +14,14 @@ use App;
 
 class ReimbursementExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimDateFrom, $claimDateTo, $reimbursementType, $businessUnit, $dataLevel)
+    public function __construct($claimDateFrom, $claimDateTo, $reimbursementType, $businessUnit, $dataLevel, $status)
     {
         $this->claimDateFrom = $claimDateFrom;
         $this->claimDateTo = $claimDateTo;
         $this->reimbursementType = $reimbursementType;
         $this->businessUnit = $businessUnit;
         $this->dataLevel = $dataLevel;
+        $this->status = ($status == 'ALL') ? null : $status;
     }
     public function view(): View
     {
@@ -39,6 +40,7 @@ class ReimbursementExport implements FromView, ShouldAutoSize
                             'reimbursementType' => $this->reimbursementType,
                             'businessUnit'=> $this->businessUnit,
                             'exportMenu' => true,
+                            'status' => $this->status,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => App::getLocale(), 
                             'sessionID' => 0, 

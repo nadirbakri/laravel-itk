@@ -8,6 +8,7 @@ return [
     'label_claim_end' => 'Date - End',
     'label_travel_type' => 'Travel Type',
     'label_business_unit' => 'Business Unit',
+    'label_bst_status' => 'Business Trip Status',
     'label_to' => 'To',
     'btn_export' => 'Export',
     'label_slip' => 'Slip',

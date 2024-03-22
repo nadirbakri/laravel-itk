@@ -171,6 +171,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="transport_status">{{ __('export_transport.label_transport_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="transport_status" name="transport_status"></select>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- BUTTON -->
                 <div class="row">
@@ -283,6 +295,8 @@ loadDataExportTransport();
 loadDataBusinessUnit();
 loadDataAllTransport();
 loadDataFirstLastAllBusinessUnit();
+loadDataStatus();
+loadDataFirstLastAllStatus();
 
     $.get("{{ url('reimbursement_type/transport/api') }}", function (data) {
             $.each(data, function (k, v) {
@@ -465,6 +479,81 @@ loadDataFirstLastAllBusinessUnit();
                 $('#business_unit').removeClass('loading');
             });
         }
+
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#transport_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#transport_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#transport_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#transport_status option:contains("ALL")').not(':first').remove();
+                $('#transport_status').val('ALL');
+                $('#transport_status').removeClass('spinner-border');
+            });
+        }
+
         $("#btn-preview").click(function () {
             $(this).prop("disabled", true);
             $(this).html(

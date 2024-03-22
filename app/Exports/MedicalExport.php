@@ -14,13 +14,14 @@ use App;
 
 class MedicalExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimDateFrom, $claimDateTo, $businessUnit, $reimbursementType, $dataLevel)
+    public function __construct($claimDateFrom, $claimDateTo, $businessUnit, $reimbursementType, $dataLevel, $status)
     {
         $this->claimDateFrom = $claimDateFrom;
         $this->claimDateTo = $claimDateTo;
         $this->businessUnit = $businessUnit;
         $this->reimbursementType = $reimbursementType;
         $this->dataLevel = $dataLevel;
+        $this->status = ($status == 'ALL') ? null : $status;
     }
     public function view(): View
     {
@@ -36,7 +37,8 @@ class MedicalExport implements FromView, ShouldAutoSize
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'medicalType1'=> $this->reimbursementType,
                 'businessUnit'=> $this->businessUnit,
-                'exportMenu'=> true,
+                'exportMenu' => true,
+                'status'=> $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
@@ -46,7 +48,7 @@ class MedicalExport implements FromView, ShouldAutoSize
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementdetaillistall',
+            $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementdetaillistall',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

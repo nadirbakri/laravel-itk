@@ -13,13 +13,14 @@ use App;
 
 class BusinessTripExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel)
+    public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel,$status)
     {
         $this->claimdateFrom = $claimdateFrom;
         $this->claimdateTo = $claimdateTo;
         // $this->travelAdvances = $travelAdvances;
         $this->businessUnit = $businessunit;
         $this->dataLevel = $dataLevel;
+        $this->status = ($status == 'ALL') ? null : $status;
     }
     public function view(): View
     {
@@ -35,6 +36,7 @@ class BusinessTripExport implements FromView, ShouldAutoSize
                 'endDate' => $this->claimdateTo,
                 'type' => 'REQUEST',
                 'exportMenu' => true,
+                'status' => $this->status,
                 'businessUnit' =>$this->businessUnit,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
