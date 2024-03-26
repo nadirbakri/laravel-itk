@@ -82,6 +82,7 @@ return [
     'label_probation_end_date' => 'Tanggal Akhir Masa Percobaan',
     'label_contract_start_date' => 'Tanggal Mulai Kontrak',
     'label_contract_end_date' => 'Tanggal Akhir Kontrak',
+    'label_effective_permanent_date' => 'Effective Permanent Date',
     'label_termination_date' => 'Tanggal Terminasi',
     'label_effective_terminated' => 'Efektif Dihentikan',
     'label_termination_code' => 'Kode Terminasi',

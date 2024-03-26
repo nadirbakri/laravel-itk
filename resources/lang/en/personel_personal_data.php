@@ -82,6 +82,7 @@ return [
     'label_probation_end_date' => 'Probation End Date',
     'label_contract_start_date' => 'Contract Start Date',
     'label_contract_end_date' => 'Contract End Date',
+    'label_effective_permanent_date' => 'Effective Permanent Date',
     'label_termination_date' => 'Termination Date',
     'label_effective_termindated' => 'Effective Terminated',
     'label_termination_code' => 'Termination Code',

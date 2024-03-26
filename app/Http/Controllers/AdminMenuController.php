@@ -289,6 +289,8 @@ class AdminMenuController extends Controller
                 'pinned' => isset($request->pinned_announcement) ? (bool) $request->pinned_announcement : false
             ];
 
+            // dd(json_encode($param));
+
             if ($request->status == "new"){
                 $response = $client->post(env('API_URL') . '/mobile/Announcement/insertAnnouncement',
                     ['body' => json_encode($param)]

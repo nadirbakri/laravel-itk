@@ -5734,6 +5734,7 @@ class PersonelController extends Controller
                 "terminationCode" => $request->termination_code_employment,
                 "terminationRemarks" => $request->termination_remarks_employment,
                 "effectiveTerminationDate" => $request->effective_terminated_employment,
+                "effectivePermanentDate" => $request->effective_permanent_date_employment,
                 "officeCode" => $request->office_location_employment,
                 "pensionDate" => null,
                 "serviceYear" => 0,

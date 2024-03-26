@@ -990,6 +990,20 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
+                                        for="effective_permanent_date_employment">{{ __('personel_personal_data.label_effective_permanent_date') }}</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="effective_permanent_date_employment"
+                                            name="effective_permanent_date_employment"
+                                            placeholder="{{ __('personel_personal_data.label_effective_permanent_date') }}">
+                                        <div class="input-group-prepend" id="effective_permanent_date_employment">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
                                         for="termination_date_employment">{{ __('personel_personal_data.label_termination_date') }}</label>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="termination_date_employment"
@@ -1001,6 +1015,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
@@ -1015,8 +1031,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
@@ -1026,6 +1040,8 @@
                                         placeholder="{{ __('personel_personal_data.label_termination_code') }}" readonly>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="special_reason_resign_employment">&nbsp;</label>
@@ -2644,6 +2660,21 @@
             }
         });
 
+        let pickerEffectivePermanentDate = $('#effective_permanent_date_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: null,
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#effective_permanent_date_employment_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         // let pickerTerminationDate = $('#termination_date_employment').flatpickr({
         //     altInput: true,
         //     allowInput: true,
@@ -3808,6 +3839,7 @@
             pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined' && arrData2[0].probationEndDate !== null) ? arrData2[0].probationEndDate : ''));
             pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined' && arrData2[0].contractStartDate !== null) ? arrData2[0].contractStartDate : ''));
             pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined' && arrData2[0].contractEndDate !== null) ? arrData2[0].contractEndDate : ''));
+            pickerEffectivePermanentDate.setDate(((typeof arrData2[0].effectivePermanentDate !== 'undefined' && arrData2[0].effectivePermanentDate !== null) ? arrData2[0].effectivePermanentDate : ''));
             // pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
             // pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
             $('#termination_date_employment').val(((typeof arrData2[0].terminationDate !== 'undefined' && arrData2[0].terminationDate !== null) ? moment(arrData2[0].terminationDate).format('YYYY-MM-DD') : ''));
