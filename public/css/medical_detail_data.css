@@ -1,294 +1,305 @@
 @font-face {
-	font-family: Montserrat;
-	src: url(../fonts/Montserrat-Bold.ttf);
+    font-family: Montserrat;
+    src: url(../fonts/Montserrat-Bold.ttf);
 }
 @font-face {
-	font-family: Montserrat-Medium;
-	src: url(../fonts/Montserrat-SemiBold.ttf);
+    font-family: Montserrat-Medium;
+    src: url(../fonts/Montserrat-SemiBold.ttf);
 }
 @font-face {
-	font-family: Inter;
-	src: url(../fonts/Inter-Bold.ttf);
+    font-family: Inter;
+    src: url(../fonts/Inter-Bold.ttf);
 }
 @font-face {
-	font-family: Inter-Medium;
-	src: url(../fonts/Inter-SemiBold.ttf);
+    font-family: Inter-Medium;
+    src: url(../fonts/Inter-SemiBold.ttf);
 }
 @font-face {
-	font-family: Inter-Regular;
-	src: url(../fonts/Inter-Regular.ttf);
+    font-family: Inter-Regular;
+    src: url(../fonts/Inter-Regular.ttf);
 }
 @font-face {
-	font-family: Montserrat-Regular;
-	src: url(../fonts/Montserrat-Regular.ttf);
+    font-family: Montserrat-Regular;
+    src: url(../fonts/Montserrat-Regular.ttf);
 }
 ::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
 }
 ::-webkit-scrollbar {
-	width: 5px;
-	background-color: #F5F5F5;
+    width: 12px;
+    height: 12px;
+    background-color: #f5f5f5;
 }
 ::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
-	background-color: #555;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    background-color: #555;
 }
 .card {
-	border-radius: 0.3rem;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-	margin-left: 2%;
-	margin-right: 2%;
-	margin-top: 2%;
-	margin-bottom: 2%;
+    border-radius: 0.3rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .modal-content {
-	border-radius: 1rem;
+    border-radius: 1rem;
 }
 .card a {
-	text-decoration: none;
+    text-decoration: none;
 }
 .card-header {
-	background-color: unset;
-	border-bottom: unset;
+    background-color: unset;
+    border-bottom: unset;
 }
 .div-profile {
-	display: block;
-	background-color: #0F5289;
-	max-width: 100%;
-	margin-top: 4%;
+    display: block;
+    background-color: #0f5289;
+    max-width: 100%;
+    margin-top: 4%;
 }
 .div-row-profile {
-	justify-content: center;
-	align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 .subdiv-profile-image img {
-	max-width: 50%;
-	display: block;
-	margin: 0 auto;
+    max-width: 50%;
+    display: block;
+    margin: 0 auto;
 }
 .subdiv-profile-image label {
-	padding: 0.1vw;
-	display: block;
-	margin: 0 auto;
-	margin-top: 2%;
-	font-size: 1vw;
+    padding: 0.1vw;
+    display: block;
+    margin: 0 auto;
+    margin-top: 2%;
+    font-size: 1vw;
 }
 .subdiv-profile {
-	margin: 2%;
+    margin: 2%;
 }
 .subdiv-profile p {
-	font-family: Inter;
-	font-weight: 700;
-	font-size: 3vh;
-	color: #FFFFFF;
-	margin-bottom: 1%;
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 3vh;
+    color: #ffffff;
+    margin-bottom: 1%;
 }
 .subdiv-profile p.small {
-	font-family: Inter-Medium;
-	font-weight: 700;
-	font-size: 1.8vh;
-	color: #FFFFFF;
+    font-family: Inter-Medium;
+    font-weight: 700;
+    font-size: 1.8vh;
+    color: #ffffff;
 }
 .div-title {
-	margin: 1.5%;
-	margin-top: 2%;
-	margin-bottom: 2%;
+    margin: 1.5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .div-title img {
-	max-width: 100%;
-	height: 4.5vh;
+    max-width: 100%;
+    height: 4.5vh;
 }
 .div-dropdown-title {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 .dropdown-title-text {
-	font-family: Montserrat;
-	color: #707070;
-	font-size: 3.2vh;
-	font-weight: 700;
-	margin-left: 1.5%;
-	flex-basis: 95%;
+    font-family: Montserrat;
+    color: #707070;
+    font-size: 3.2vh;
+    font-weight: 700;
+    margin-left: 1.5%;
+    flex-basis: 95%;
 }
 a.collapsed .div-dropdown-title .dropdown-triangle {
-	height: 3.5vh;
-	transform: rotate(180deg);
-	transition: transform .3s ease-in-out;
+    height: 3.5vh;
+    transform: rotate(180deg);
+    transition: transform 0.3s ease-in-out;
 }
 a .div-dropdown-title .dropdown-triangle {
-	height: 3.5vh;
-	transform: rotate(0);
-	transition: transform .3s ease-in-out;
+    height: 3.5vh;
+    transform: rotate(0);
+    transition: transform 0.3s ease-in-out;
 }
 .div-title-text {
-	font-family: Montserrat;
-	color: #707070;
-	font-size: 3.2vh;
-	font-weight: 700;
+    font-family: Montserrat;
+    color: #707070;
+    font-size: 3.2vh;
+    font-weight: 700;
 }
 .title-text {
-	font-family: Montserrat;
-	color: #106DA7;
-	font-weight: 700;
-	font-size: 1.5vw;
-	margin-left: 0.5%;
+    font-family: Montserrat;
+    color: #106da7;
+    font-weight: 700;
+    font-size: 1.5vw;
+    margin-left: 0.5%;
 }
 .div-title a {
-	text-decoration: none;
-	display: flex;
-	align-items:center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 .div-table {
-	margin: 3%;
-	font-size: 1.3vw;
+    margin: 3%;
+    font-size: 1.3vw;
 }
 .nav-link {
-	font-family: Montserrat-Medium;
-	color: #0F5289;
+    font-family: Montserrat-Medium;
+    color: #0f5289;
 }
 .nav-tabs {
-	border-bottom: 1px solid #0F5289;
+    border-bottom: 1px solid #0f5289;
 }
 .nav-tabs .nav-link.active {
-	font-family: Montserrat;
-	color: #0F5289;
-	border-color: #0F5289 #0F5289 #fff;
+    font-family: Montserrat;
+    color: #0f5289;
+    border-color: #0f5289 #0f5289 #fff;
 }
 .nav-tabs .nav-link:hover {
-	border-color: #5F8EB5 #5F8EB5 #0F5289;
+    border-color: #5f8eb5 #5f8eb5 #0f5289;
 }
 .nav-tabs .nav-link.active:hover {
-	border-color: #5F8EB5 #5F8EB5 #fff;
+    border-color: #5f8eb5 #5f8eb5 #fff;
 }
 .nav-item:first-child {
-	margin-left: 2%;
+    margin-left: 2%;
 }
 .row {
-	margin: 2%; 
+    margin: 2%;
 }
-.form-group label, .form-check label {
-	font-family: Montserrat;
-	font-size: 1.2vw;
+.form-group label,
+.form-check label {
+    font-family: Montserrat;
+    font-size: 1.2vw;
 }
 hr.horizontal {
-	border: 0;
-	clear :both;
-	display: block;
-	width: 98%;                
-	background-color: #707070;
-	height: 0.3vh;
+    border: 0;
+    clear: both;
+    display: block;
+    width: 98%;
+    background-color: #707070;
+    height: 0.3vh;
 }
 hr.vertical {
-	border: 0;
-	clear :both;
-	display: block;
-	width: 0.1vw;                
-	background-color: #707070;
-	height: 98%;
+    border: 0;
+    clear: both;
+    display: block;
+    width: 0.1vw;
+    background-color: #707070;
+    height: 98%;
 }
 table {
-	font-size: 1.3vw;
+    font-size: 1.3vw;
 }
 .div-navbar {
-	overflow: hidden;
-	background-color: #FFFFFF;
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
 .div-navbar a {
-	float: left;
-	color: #084D86;
-	text-align: center;
-	padding: 0.5% 1.3%;
-	text-decoration: none;
-	font-size: 1.3vw;
+    float: left;
+    color: #084d86;
+    text-align: center;
+    padding: 0.5% 1.3%;
+    text-decoration: none;
+    font-size: 1.3vw;
 }
 .div-navbar a:hover {
-	background-color: #89B7D3;
-	color: #FFFFFF;
+    background-color: #89b7d3;
+    color: #ffffff;
 }
 .sticky-navbar {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	height: 6%;
-	z-index: 2;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 6%;
+    z-index: 2;
 }
 td.details-control {
-	background: url('https://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
-	cursor: pointer;
+    background: url("https://www.datatables.net/examples/resources/details_open.png")
+        no-repeat center center;
+    cursor: pointer;
 }
 tr.shown td.details-control {
-	background: url('https://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    background: url("https://www.datatables.net/examples/resources/details_close.png")
+        no-repeat center center;
 }
-.list-functionbar-md{
-	width: 9% !important;
+.list-functionbar-md {
+    width: 9% !important;
 }
-.list-functionbar-lg{
-	padding: 0.5% 1% !important;
-	width: 10% !important;
+.list-functionbar-lg {
+    padding: 0.5% 1% !important;
+    width: 10% !important;
 }
-.div-navbar a{
-	display: flex;
-	align-items: center;
-	border: 0;
-	width: 7%;
-	height: 100%;
+.div-navbar a {
+    display: flex;
+    align-items: center;
+    border: 0;
+    width: 7%;
+    height: 100%;
 }
 .div-navbar img {
-	max-width: 1.7%;
-	position: absolute;
+    max-width: 1.7%;
+    position: absolute;
 }
 .div-navbar span {
-	position: absolute;
-	margin-left: 2%;
+    position: absolute;
+    margin-left: 2%;
 }
 .functionbar-hover {
-	position: absolute;
-	opacity: 0;
+    position: absolute;
+    opacity: 0;
 }
 .div-navbar a:hover .functionbar-hover {
-	opacity: 1;
+    opacity: 1;
 }
 .select2-container .select2-selection--single {
-	height: 6.3vh;
+    height: 6.3vh;
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
-	padding-top: 0.7%;
-	padding-bottom: 1%;
-	padding-left: 3%;
+    padding-top: 0.7%;
+    padding-bottom: 1%;
+    padding-left: 3%;
 }
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-	top: 1vh;
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
+    top: 1vh;
 }
-.select2-container--default .select2-selection--single .select2-selection__placeholder {
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__placeholder {
     color: #495057;
 }
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow
+    b {
     border-color: #495057 transparent transparent transparent;
 }
 .select2-results__option .row {
-	margin: 0.5%;
+    margin: 0.5%;
 }
 td.details-control {
-	background: url(../pictures/details_open.png) no-repeat center center;
-	cursor: pointer;
-	background-size: 25% 36%;
+    background: url(../pictures/details_open.png) no-repeat center center;
+    cursor: pointer;
+    background-size: 25% 36%;
 }
 tr.shown td.details-control {
-	background: url(../pictures/details_close.png) no-repeat center center;
-	cursor: pointer;
-	background-size: 25% 36%;
+    background: url(../pictures/details_close.png) no-repeat center center;
+    cursor: pointer;
+    background-size: 25% 36%;
 }
-.btn-process{
-	font-family: Inter-Regular;
-	font-size: 1.2vw;
-	background-color: #004883;
-	border-radius: 6px;
-	text-align: center;
-	display: inline-block;
-	color: #ffffff;
-	width: 100%
+.btn-process {
+    font-family: Inter-Regular;
+    font-size: 1.2vw;
+    background-color: #004883;
+    border-radius: 6px;
+    text-align: center;
+    display: inline-block;
+    color: #ffffff;
+    width: 100%;
 }

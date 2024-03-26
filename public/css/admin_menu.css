@@ -1,133 +1,135 @@
 @font-face {
-	font-family: Montserrat;
-	src: url(../fonts/Montserrat-Bold.ttf);
+    font-family: Montserrat;
+    src: url(../fonts/Montserrat-Bold.ttf);
 }
 @font-face {
-	font-family: Montserrat-Medium;
-	src: url(../fonts/Montserrat-SemiBold.ttf);
+    font-family: Montserrat-Medium;
+    src: url(../fonts/Montserrat-SemiBold.ttf);
 }
 @font-face {
-	font-family: Inter;
-	src: url(../fonts/Inter-SemiBold.ttf);
+    font-family: Inter;
+    src: url(../fonts/Inter-SemiBold.ttf);
 }
 @font-face {
-	font-family: Montserrat-Regular;
-	src: url(../fonts/Montserrat-Regular.ttf);
+    font-family: Montserrat-Regular;
+    src: url(../fonts/Montserrat-Regular.ttf);
 }
 ::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
 }
 ::-webkit-scrollbar {
-	width: 5px;
-	background-color: #F5F5F5;
+    width: 12px;
+    height: 12px;
+    background-color: #f5f5f5;
 }
 ::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
-	background-color: #555;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    background-color: #555;
 }
 .card {
-	border-radius: 0.3rem;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-	margin-left: 2%;
-	margin-right: 10%;
-	margin-top: 2%;
-	margin-bottom: 2%;
+    border-radius: 0.3rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    margin-left: 2%;
+    margin-right: 10%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .card a {
-	text-decoration: none;
+    text-decoration: none;
 }
 .card .col a {
-	text-decoration: none;
-	display: flex;
+    text-decoration: none;
+    display: flex;
     align-items: center;
 }
 .card-header {
-	background-color: unset;
-	border-bottom: unset;
+    background-color: unset;
+    border-bottom: unset;
 }
 .div-title {
-	margin: 1.5%;
+    margin: 1.5%;
 }
 .div-title img {
-	max-width: 4%;
+    max-width: 4%;
 }
 .title-text {
-  font-family: Montserrat;
-  color: #106DA7;
-  font-weight: 700;
+    font-family: Montserrat;
+    color: #106da7;
+    font-weight: 700;
 }
 .div-dropdown-title {
-	display: flex;
+    display: flex;
     align-items: center;
 }
 .div-dropdown-title .dropdown-logo {
-	max-width: 6%;
-	margin-left: 1.5%;
-	height: 8vh;
+    max-width: 6%;
+    margin-left: 1.5%;
+    height: 8vh;
 }
 .dropdown-title-text {
-  font-family: Montserrat;
-  color: #707070;
-  font-size: 3.2vh;
-  font-weight: 700;
-  margin-left: 1.5%;
-  flex-basis: 90%;
+    font-family: Montserrat;
+    color: #707070;
+    font-size: 3.2vh;
+    font-weight: 700;
+    margin-left: 1.5%;
+    flex-basis: 90%;
 }
 a.collapsed .div-dropdown-title .dropdown-triangle {
-	height: 3.5vh;
-	transform: rotate(180deg);
-	transition: transform .3s ease-in-out;
+    height: 3.5vh;
+    transform: rotate(180deg);
+    transition: transform 0.3s ease-in-out;
 }
 a .div-dropdown-title .dropdown-triangle {
-	height: 3.5vh;
-	transform: rotate(0);
-	transition: transform .3s ease-in-out;
+    height: 3.5vh;
+    transform: rotate(0);
+    transition: transform 0.3s ease-in-out;
 }
 .div-head-data {
-	margin: 1% 9%;
-	width: 80%;
-	border-bottom: 1.5px solid #707070; 
-	line-height: 0.1em;
+    margin: 1% 9%;
+    width: 80%;
+    border-bottom: 1.5px solid #707070;
+    line-height: 0.1em;
 }
 .head-title-text {
-	font-family: Montserrat;
-	color: #707070;
-	font-weight: 700;
-	font-size: 2.9vh;
-	background:#fff;
-	padding-right: 2%;
+    font-family: Montserrat;
+    color: #707070;
+    font-weight: 700;
+    font-size: 2.9vh;
+    background: #fff;
+    padding-right: 2%;
 }
-.div-child-data, .div-child-data-maintenance {
-	width: 85%;
-	margin-left: 8%;
-	display: flex;
+.div-child-data,
+.div-child-data-maintenance {
+    width: 85%;
+    margin-left: 8%;
+    display: flex;
     align-items: center;
 }
 .div-child-data img {
-	max-width: 8%;
-	margin-right: 5%;
-	float: left;
+    max-width: 8%;
+    margin-right: 5%;
+    float: left;
 }
 .div-child-data-maintenance img {
-	max-width: 12%;
-	margin-right: 5%;
-	float: left;
+    max-width: 12%;
+    margin-right: 5%;
+    float: left;
 }
 .col {
-	margin-top: 2%;
-	margin-bottom: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .child-title-text {
-	font-family: Montserrat;
-	color: #707070;
-	font-weight: 700;
-	font-size: 2.5vh;
-	display: block;
-	overflow: hidden;
+    font-family: Montserrat;
+    color: #707070;
+    font-weight: 700;
+    font-size: 2.5vh;
+    display: block;
+    overflow: hidden;
 }
 .modal-content {
-	border-radius: 1rem;
+    border-radius: 1rem;
 }

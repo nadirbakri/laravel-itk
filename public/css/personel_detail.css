@@ -1,125 +1,126 @@
 @font-face {
-	font-family: Montserrat;
-	src: url(../fonts/Montserrat-Bold.ttf);
+    font-family: Montserrat;
+    src: url(../fonts/Montserrat-Bold.ttf);
 }
 @font-face {
-	font-family: Montserrat-Medium;
-	src: url(../fonts/Montserrat-SemiBold.ttf);
+    font-family: Montserrat-Medium;
+    src: url(../fonts/Montserrat-SemiBold.ttf);
 }
 @font-face {
-	font-family: Inter;
-	src: url(../fonts/Inter-SemiBold.ttf);
+    font-family: Inter;
+    src: url(../fonts/Inter-SemiBold.ttf);
 }
 @font-face {
-	font-family: Montserrat-Regular;
-	src: url(../fonts/Montserrat-Regular.ttf);
+    font-family: Montserrat-Regular;
+    src: url(../fonts/Montserrat-Regular.ttf);
 }
 ::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
 }
 ::-webkit-scrollbar {
-	width: 5px;
-	background-color: #F5F5F5;
+    width: 12px;
+    height: 12px;
+    background-color: #f5f5f5;
 }
 ::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
-	background-color: #555;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    background-color: #555;
 }
 .div-title {
-	margin: 1.5%;
-	margin-bottom: 3%;
-	margin-top: 8%;
+    margin: 1.5%;
+    margin-bottom: 3%;
+    margin-top: 8%;
 }
 .div-title img {
-	max-width: 100%;
-	height: 4.5vh;
+    max-width: 100%;
+    height: 4.5vh;
 }
 .title-text {
-	font-family: Montserrat;
-	color: #106DA7;
-	font-weight: 700;
-	font-size: 1.5vw;
-	margin-left: 0.5%;
+    font-family: Montserrat;
+    color: #106da7;
+    font-weight: 700;
+    font-size: 1.5vw;
+    margin-left: 0.5%;
 }
 .modal-content {
-	border-radius: 1rem;
+    border-radius: 1rem;
 }
 .div-title a {
-	text-decoration: none;
-	display: flex;
-	align-items:center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 .div-table {
-	margin: 2%;
-	font-size: 1.3vw;
+    margin: 2%;
+    font-size: 1.3vw;
 }
 .table tr {
-	cursor: pointer;
+    cursor: pointer;
 }
 .div-navbar {
-	overflow: hidden;
-	background-color: #FFFFFF;
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
 .div-navbar a {
-	float: left;
-	color: #084D86;
-	text-align: center;
-	padding: 0.5% 1.3%;
-	text-decoration: none;
-	font-size: 1.3vw;
+    float: left;
+    color: #084d86;
+    text-align: center;
+    padding: 0.5% 1.3%;
+    text-decoration: none;
+    font-size: 1.3vw;
 }
 .div-navbar a.disabled {
-	color: #898f94;
-	cursor: default;
+    color: #898f94;
+    cursor: default;
 }
 .div-navbar a:hover {
-	background-color: #89B7D3;
-	color: #FFFFFF;
+    background-color: #89b7d3;
+    color: #ffffff;
 }
 .div-navbar a.disabled:hover {
-	background-color: unset;
-	color: #898f94;
+    background-color: unset;
+    color: #898f94;
 }
 .sticky-navbar {
-	position: fixed;
-	top: 0;
-	width: 97%;
-	height: 6%;
-	z-index: 2;
+    position: fixed;
+    top: 0;
+    width: 97%;
+    height: 6%;
+    z-index: 2;
 }
-.list-functionbar-md{
-	width: 9% !important;
+.list-functionbar-md {
+    width: 9% !important;
 }
-.list-functionbar-lg{
-	padding: 0.5% 1% !important;
-	width: 10% !important;
+.list-functionbar-lg {
+    padding: 0.5% 1% !important;
+    width: 10% !important;
 }
-.div-navbar a{
-	display: flex;
-	align-items: center;
-	border: 0;
-	width: 7%;
-	height: 100%;
+.div-navbar a {
+    display: flex;
+    align-items: center;
+    border: 0;
+    width: 7%;
+    height: 100%;
 }
 .div-navbar img {
-	max-width: 1.7%;
-	position: absolute;
+    max-width: 1.7%;
+    position: absolute;
 }
 .div-navbar span {
-	position: absolute;
-	margin-left: 2%;
+    position: absolute;
+    margin-left: 2%;
 }
 .functionbar-hover {
-	position: absolute;
-	opacity: 0;
+    position: absolute;
+    opacity: 0;
 }
 .div-navbar a:hover .functionbar-hover {
-	opacity: 1;
+    opacity: 1;
 }
 .div-navbar a.disabled:hover .functionbar-hover {
-	opacity: 0;
+    opacity: 0;
 }
