@@ -1489,7 +1489,7 @@
                                 "fieldFormula": $("#preview_formula").val()
                             });
 
-                            arrayReportFormatDetail.splice(indexToEditFormula, 1);
+                            arrayReportFormatDetail.splice(indexToEdit, 1);
                         }
                     }else{
                         arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
