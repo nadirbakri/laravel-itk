@@ -9953,7 +9953,6 @@ class PersonelController extends Controller
                     if($arrResult2->dataListSet == null){
                         $number = 1;
                     }else{
-                        // var_dump($arrResult2->dataListSet);
                         if(isset($arrResult2->dataListSet[0]->employeeNo)){
                             $number = max(array_column($arrResult2->dataListSet, 'employeeNo')) + 1;
                         }

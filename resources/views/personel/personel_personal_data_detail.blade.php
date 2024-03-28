@@ -2792,20 +2792,20 @@
 
             // console.log(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
             //Tab Info
-            $.ajax({
-                url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
-                type: "GET",
-                data: {
-                    'url': '/pemaster/getpemastergrid'
-                },
-                success: function (response) {
-                    $('#employee_no_info').val(response);
-                },
-                error: function (response) {
-                    $('#notification_error').modal('show');
-                    $('#message-notification-error').html(response);
-                }
-            });
+            // $.ajax({
+            //     url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
+            //     type: "GET",
+            //     data: {
+            //         'url': '/pemaster/getpemastergrid'
+            //     },
+            //     success: function (response) {
+            //         $('#employee_no_info').val(response);
+            //     },
+            //     error: function (response) {
+            //         $('#notification_error').modal('show');
+            //         $('#message-notification-error').html(response);
+            //     }
+            // });
             $('#fullname_info').val("");
             $('#title_info').val("");
             $('#birth_place_info').val(null).trigger('change');
@@ -7086,42 +7086,42 @@
                 $('#seq_no_employment_data').val(count);
             }
 
-            else {
-                $.ajax({
-                    url: "{{ url('personel_data_detail/number/check') }}",
-                    type: "GET",
-                    data: {
-                        'url': '/pemaster/getpemasterdetail',
-                        'pemasterType' : 'peMasterFringeBenefit',
-                        'employeeNo': arrData2[0].peMasterFringeBenefit.employeeNo
-                    },
-                    success: function (response) {
-                        var count = table1.rows().count();
-                        // console.log(response);
+            // else {
+            //     $.ajax({
+            //         url: "{{ url('personel_data_detail/number/check') }}",
+            //         type: "GET",
+            //         data: {
+            //             'url': '/pemaster/getpemasterdetail',
+            //             'pemasterType' : 'peMasterFringeBenefit',
+            //             'employeeNo': arrData2[0].peMasterFringeBenefit.employeeNo
+            //         },
+            //         success: function (response) {
+            //             var count = table1.rows().count();
+            //             // console.log(response);
 
-                        if (response > 0 && count !== response) {
-                            var total = parseInt(response) + parseInt(count);
-                            $('#seq_no_employment_data').val(total - 1);
-                        }
-                        else if (response > 0 && count == response) {
-                            // var total = parseInt(response) + parseInt(count);
-                            $('#seq_no_employment_data').val(response);
-                        }
-                        else {
-                            for (var i = 0; i <= count; i++){
-                                $('#seq_no_employment_data').val(i);
-                                // console.log(i);
-                            }
-                        }
-                        // console.log(count);
-                        // console.log(total);
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            }
+            //             if (response > 0 && count !== response) {
+            //                 var total = parseInt(response) + parseInt(count);
+            //                 $('#seq_no_employment_data').val(total - 1);
+            //             }
+            //             else if (response > 0 && count == response) {
+            //                 // var total = parseInt(response) + parseInt(count);
+            //                 $('#seq_no_employment_data').val(response);
+            //             }
+            //             else {
+            //                 for (var i = 0; i <= count; i++){
+            //                     $('#seq_no_employment_data').val(i);
+            //                     // console.log(i);
+            //                 }
+            //             }
+            //             // console.log(count);
+            //             // console.log(total);
+            //         },
+            //         error: function (response) {
+            //             $('#notification_error').modal('show');
+            //             $('#message-notification-error').html(response);
+            //         }
+            //     });
+            // }
         });
 
         $('#modal_add_family_dependent_data').on('show.bs.modal', function () {
@@ -7130,43 +7130,43 @@
                 $('#seq_no_family_dependent_data').val(count);
             }
 
-            else {
-                $.ajax({
-                    url: "{{ url('personel_data_detail/number/check') }}",
-                    type: "GET",
-                    data: {
-                        'url': '/pemaster/getpemasterdetail',
-                        'pemasterType' : 'peMasterFamily',
-                        'employeeNo': arrData2[0].employeeNo
-                    },
-                    success: function (response) {
-                        var count = table2.rows().count();
-                        // console.log(response);
-                        // console.log(count);
+            // else {
+            //     $.ajax({
+            //         url: "{{ url('personel_data_detail/number/check') }}",
+            //         type: "GET",
+            //         data: {
+            //             'url': '/pemaster/getpemasterdetail',
+            //             'pemasterType' : 'peMasterFamily',
+            //             'employeeNo': arrData2[0].employeeNo
+            //         },
+            //         success: function (response) {
+            //             var count = table2.rows().count();
+            //             // console.log(response);
+            //             // console.log(count);
 
-                        if (response > 0 && count !== response) {
-                            var total = parseInt(response) + parseInt(count);
-                            $('#seq_no_family_dependent_data').val(total - 1);
-                        }
-                        else if (response > 0 && count == response) {
-                            // var total = parseInt(response) + parseInt(count);
-                            $('#seq_no_family_dependent_data').val(response);
-                        }
-                        else {
-                            for (var i = 0; i <= count; i++){
-                                $('#seq_no_family_dependent_data').val(i);
-                                // console.log(i);
-                            }
-                        }
-                        // console.log(count);
-                        // console.log(total);
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            }
+            //             if (response > 0 && count !== response) {
+            //                 var total = parseInt(response) + parseInt(count);
+            //                 $('#seq_no_family_dependent_data').val(total - 1);
+            //             }
+            //             else if (response > 0 && count == response) {
+            //                 // var total = parseInt(response) + parseInt(count);
+            //                 $('#seq_no_family_dependent_data').val(response);
+            //             }
+            //             else {
+            //                 for (var i = 0; i <= count; i++){
+            //                     $('#seq_no_family_dependent_data').val(i);
+            //                     // console.log(i);
+            //                 }
+            //             }
+            //             // console.log(count);
+            //             // console.log(total);
+            //         },
+            //         error: function (response) {
+            //             $('#notification_error').modal('show');
+            //             $('#message-notification-error').html(response);
+            //         }
+            //     });
+            // }
         });
 
         $("#btn-save-employment-data").click(function () {
