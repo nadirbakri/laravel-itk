@@ -290,59 +290,84 @@
                     <div class="card-body">
                         <form id="payroll_calculation_detail_modal_form" method="post">
                         @csrf
-                        <div class="row">
-                            <div class="col-3">
-                                <h6>Request Date</h6>
-                            </div>
-                            <div class="col-3">
-                                <input type="hidden" class="form-control" id="reqdate" name="reqdate">
-                                <input type="hidden" class="form-control" id="directsuperior" name="directsuperior">
-                                <span id="reqdate_val"></span>
-                            </div>
-                            <div class="col-3">
-                                <h6>Receipt Date</h6>
-                            </div>
-                            <div class="col-3">
-                                <input id="recdate" name="recdate" type="hidden" class="form-control"><span id="recdate_val"></span>
-                            </div>
-                        </div>
+                        <input type="hidden" class="form-control" id="reqdate_permit" name="reqdate_permit">
+                        <input type="hidden" class="form-control" id="directsuperior_permit" name="directsuperior_permit">
 
                         <div class="row">
                             <div class="col-3">
                                 <h6>Ticket Number</h6>
                             </div>
                             <div class="col-3">
-                                <input id="tiketno" name="tiketno" type="hidden" class="form-control"><span id="tiketno_val"></span>
+                                <input id="tiketno_permit" name="tiketno_permit" type="hidden" class="form-control"><span id="tiketno_permit_val"></span>
                             </div>
                             <div class="col-3">
                                 <h6>Status</h6>
                             </div>
                             <div class="col">
-                                <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
+                                <input id="status_permit" name="status_permit" type="hidden" class="form-control"><span id="status_permit_val"></span>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-3">
-                                <h6>Business Unit</h6>
+                                <h6>Employee No</h6>
                             </div>
                             <div class="col-3">
-                                <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
+                                <input id="employee_no_permit" name="employee_no_permit" type="hidden" class="form-control"><span id="employee_no_permit_val"></span>
                             </div>
                             <div class="col-3">
-                                <h6>Total Claim </h6>
+                                <h6>Employee Name</h6>
                             </div>
                             <div class="col-3">
-                                <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
+                                <input id="employee_name_permit" name="employee_name_permit" type="hidden" class="form-control"><span id="employee_name_permit_val"></span>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-3">
-                                <h6>Dependent Name</h6>
+                                <h6>Start Date</h6>
                             </div>
                             <div class="col-3">
-                                <input type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
+                                <input id="start_date_permit" name="start_date_permit" type="hidden" class="form-control"><span id="start_date_permit_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>End Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="end_date_permit" name="end_date_permit" type="hidden" class="form-control"><span id="end_date_permit_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Workflow Type</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="workflow_type_permit" name="workflow_type_permit" type="hidden" class="form-control"><span id="workflow_type_permit_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Permit Time</h6>
+                            </div>
+                            <div class="col-3">
+                                <span id="permit_time_permit_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Permit Type</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="permit_type_permit" name="permit_type_permit" type="hidden" class="form-control"><span id="permit_type_permit_val"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                <h6>Permit Remarks</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="remarks_permit" name="remarks_permit" type="hidden" class="form-control"><span id="remarks_permit_val"></span>
                             </div>
                         </div>
                     
@@ -608,18 +633,27 @@
             $('#modal_list_detail').modal('show')
             data = table.row($(element).parents('tr')).data().permitEntity;
 
-            $('#reqdate').val(data.createdBy)
-            $('#reqdate_val').html(data.createdBy)
-            $('#recdate').val(data.receiptDate)
-            $('#recdate_val').html(data.receiptDate)
-            $('#tiketno').val(data.ticketNo)
-            $('#tiketno_val').html(data.ticketNo)
-            $('#status').val(data.status)
-            $('#status_val').html(data.status)
-            $('#b_unit').val(data.businessUnit)
-            $('#b_unit_val').html(data.businessUnit)
-            $('#approvalremarks').val(data.approvalRemarks)
-            $('#directsuperior').val(data.directSuperiorID)
+            $('#directsuperior_permit').val(data.directSuperiorID)
+            $('#reqdate_permit').val(data.permitDate)
+            $('#tiketno_permit').val(data.ticketNo)
+            $('#tiketno_permit_val').html(data.ticketNo)
+            $('#status_permit').val(data.status)
+            $('#status_permit_val').html(data.status)
+            $('#employee_no_permit').html(data.employeeNo)
+            $('#employee_no_permit_val').html(data.employeeNo)
+            $('#employee_name_permit').html(data.fullnameRequester)
+            $('#employee_name_permit_val').html(data.fullnameRequester)
+            $('#start_date_permit').html(data.permitDateFrom)
+            $('#start_date_permit_val').html(new Date(data.permitDateFrom).toISOString().split('T')[0])
+            $('#end_date_permit').html(data.permitDateTo)
+            $('#end_date_permit_val').html(new Date(data.permitDateTo).toISOString().split('T')[0])
+            $('#permit_time_permit_val').html(data.permitHourFrom.split("T")[1].substring(0, 5) + ' - ' + data.permitHourTo.split("T")[1].substring(0, 5))
+            $('#workflow_type_permit').html('Permit')
+            $('#workflow_type_permit_val').html('PERMIT')
+            $('#permit_type_permit').html(data.permitCode)
+            $('#permit_type_permit_val').html(data.permitCode)
+            $('#remarks_permit').html(data.permitRemarks)
+            $('#remarks_permit_val').html(data.permitRemarks)
         }else{
             $('#modal_list_detail_leave').modal('show')
             data = table.row($(element).parents('tr')).data().leaveEntity;
@@ -838,8 +872,8 @@
 
     $('#btn-update').click(()=>{
         let workflow_status = $('#workflow_status').val();
-        let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#directsuperior").val();
+        let ticketNo = $('#tiketno_permit').val();
+        let direct_superior = $("#directsuperior_permit").val();
         let approvalremarks = $("#approvalremarks").val();
         // $('.close').click();
         $('#btn-update').prop("disabled", true);

@@ -16,7 +16,7 @@ return [
     'ename' => 'Nama Karyawan',
     'status' => 'Status',
     'remarks' => 'Catatan',
-    'lduration' => ' Durasi Cuti',
+    'lduration' => ' Durasi',
     'aby' => 'Disetujui Oleh',
     'tno' => 'Nomor Tiket',
     'appremarks' => 'Catatan Disetujui',

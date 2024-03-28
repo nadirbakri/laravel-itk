@@ -16,7 +16,7 @@ return [
     'ename' => 'Employee Name',
     'status' => 'Status',
     'remarks' => 'Remarks',
-    'lduration' => 'Leave Duration',
+    'lduration' => 'Duration',
     'aby' => 'Approved By',
     'tno' => 'Ticket No',
     'appremarks' => 'Approval Remarks',
