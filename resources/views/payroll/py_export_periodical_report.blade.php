@@ -156,7 +156,7 @@
                 <tr>
                     <td><h1 style="font-weight: normal;">Branch</h1></td>
                     <td><h1 style="font-weight: normal;">:</h1></td>
-                    <td><h1 style="font-weight: normal;">{{ $branch }}</h1></td>
+                    <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
                 </tr>
                 <tr>
                     <td><h1 style="font-weight: normal;">Cost Center</h1></td>
