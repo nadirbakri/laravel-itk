@@ -85,7 +85,7 @@ class ExportController extends Controller
     }
 
     public function pageExportWorkflow(){
-        return view('export.exp_export_Workflow');
+        return view('export.exp_export_workflow');
     }
     
     public function pageExportTransport(){
