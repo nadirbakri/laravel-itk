@@ -255,6 +255,15 @@
                     </button>
                 </div>
             </div>
+            <p class="bawah-judul-text" style="text-align:center; font-size: 2.5vh">Download App</p>
+            <div class="row">
+                <!-- <div class="col-2 form-group">&nbsp;</div> -->
+                <div class="col-12 form-group">
+                    <a href="{{ url('/download') }}" class="btn btn-outline-secondary" name="btn_download" id="btn_download" style="width: 100%;">
+                        Download Page
+                    </a>
+                </div>
+            </div>
             <p class="bawah-judul-text" style="text-align:center; font-size: 2.5vh">{{ __('login.login_with') }}</p>
             <div class="row">
                 <!-- <div class="col-2 form-group">&nbsp;</div> -->

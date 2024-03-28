@@ -23,6 +23,11 @@ class LoginController extends Controller
     	}
     }
 
+    public function pageDownload()
+    {
+		return view('login.download');
+	}
+
     public function prosesLogin(Request $request)
     {
 		$arrResult = null;

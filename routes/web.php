@@ -37,6 +37,7 @@ Route::get('/cache-route', function() {
     return '<h1>Cache facade value cleared</h1>';
 });
 
+Route::get('download', 'LoginController@pageDownload')->name('download');
 
 /* Route Untuk Halaman Login */
 Route::get('login', 'LoginController@pageLogin')->name('login');
