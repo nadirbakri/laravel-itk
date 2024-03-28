@@ -122,12 +122,7 @@
             $formattedDate = date('Y / F', $dateTime);
 
             $total = [];
-            $level = null;
-            foreach($data[0]->departementGroup[0]->data[0]->field as $key => $field) {
-                if ($field->tableName === 'Company') {
-                    $level = $field->value;
-                }
-            };
+            $level = $data[0]->departementGroup[0]->data[0]->companyName
         ?>
         <table style='width: 100%'>
             <tr>
@@ -168,7 +163,7 @@
                 ?>
                 <tr>
                     <td>Branch :</td>
-                    <td>{{ $branch }}</td>
+                    <td>{{ $level }}</td>
                 </tr>
                 <tr>
                     <td>Cost Center :</td>
@@ -185,6 +180,10 @@
                                     <?php
                                         $total[$branch][$dataRow->field] = 0;
                                         $totalBranch[$branch] = 0;
+                                    ?>
+                                @else
+                                    <?php
+                                        $total[$branch][$dataRow->field] = '';
                                     ?>
                                 @endif
                                 <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
@@ -231,9 +230,16 @@
                     @endforeach
                     @if($grand_total)
                         <tr>
-                            <td colspan="5" style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Cost Center {{ $i+1 }} </td>
+                            <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Cost Center {{ $i+1 }} </td>
                             @foreach($total[$branch] as $key => $totalValue)
-                                <td style="text-align:right; border:1px solid #000;">{{ number_format($totalValue, 2, ',', '.') }}</td>
+                                <?php
+                                    if(!is_string($totalValue)) {
+                                        $totalCost = number_format($totalValue, 2, ',', '.');
+                                    } else {
+                                        $totalCost = '';
+                                    }
+                                ?>
+                                <td style="text-align:right; border:1px solid #000;">{{ $totalCost }}</td>
                             @endforeach
                         </tr>
                     @endif
@@ -260,7 +266,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $branch }})</td>
+                        <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $level }})</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
                             <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
                         @endforeach
