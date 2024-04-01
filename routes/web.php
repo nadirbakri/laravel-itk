@@ -562,6 +562,7 @@ Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
 Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCalculationProcess');
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
 Route::get('payroll/absenteeism_overtime_calculation_process', 'PayrollController@pageAbsenteeismOvertimeCalculationProcess');
+Route::get('payroll/monthly_proses', 'PayrollController@pageMonthlyProses');
 Route::get('payroll/absenteeism_calculation_process', 'PayrollController@pageAbsenteeismCalculationProcess');
 Route::get('payroll/transfer_data_to_bank/export_to_file', 'PayrollController@pageTransferDataToBankExportToFile');
 Route::get('payroll/transfer_data_to_bank/api', 'PayrollController@pageTransferDataToBankApi');

@@ -12,6 +12,7 @@ return [
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',
+    'monthly_process_judul' => 'Monthly Process',
 ]
 
 ?>

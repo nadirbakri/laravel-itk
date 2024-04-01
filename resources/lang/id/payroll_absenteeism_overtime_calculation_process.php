@@ -11,7 +11,8 @@ return [
     'label_employee_no_to' => 'No Karyawan Sampai',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
-    'alert_success' => 'Sukses !'
+    'alert_success' => 'Sukses !',
+    'monthly_process_judul' => 'Proses Bulanan'
 ]
 
 ?>

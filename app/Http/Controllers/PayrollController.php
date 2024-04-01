@@ -702,6 +702,65 @@ class PayrollController extends Controller
         return view ('payroll.py_dumtk', ['data' => $data]);
     }
 
+    public function pageMonthlyProses()
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response2 = $client->post(env('API_URL') . '/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResult2 = json_decode($response2->getBody()->getContents()); 
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        if($arrResult2->dataListSet == null){
+            $data2 = [];
+        }else{
+            $data2 = $arrResult2->dataListSet;
+        }
+
+        return view ('payroll.py_monthly_process', ['data' => $data, 'data2' => $data2]);
+    }
+
     public function pageSalaryHistoricalReport() 
     {
         return view ('payroll.py_salary_historical_report');
