@@ -376,7 +376,7 @@
                                 <h5>Status</h5>
                             </div>
                             <div class="col-5">
-                                    <select name="workflow_status" id="workflow_status" class="custom-select">
+                                    <select name="workflow_status_permit" id="workflow_status_permit" class="custom-select">
                                         <option value="APPROVED">APPROVE</option>
                                         <option value="REJECTED">REJECT</option>
                                         <option value="CANCELED">CANCEL</option>
@@ -871,7 +871,7 @@
     }
 
     $('#btn-update').click(()=>{
-        let workflow_status = $('#workflow_status').val();
+        let workflow_status = $('#workflow_status_permit').val();
         let ticketNo = $('#tiketno_permit').val();
         let direct_superior = $("#directsuperior_permit").val();
         let approvalremarks = $("#approvalremarks").val();
@@ -880,7 +880,7 @@
         $('#btn-update').html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
-        update_data(workflow_status,ticketNo,direct_superior,approvalremarks)
+        update_data_permit(workflow_status,ticketNo,direct_superior,approvalremarks)
     })
 
     $('#btn-update-leave').click(()=>{
@@ -888,17 +888,17 @@
         let ticketNo = $('#tiketno_leave').val();
         let direct_superior = $("#directsuperior_leave").val();
         let approvalremarks = $("#approvalremarks_leave").val();
-        $('#btn-update').prop("disabled", true);
-        $('#btn-update').html(
+        $('#btn-update-leave').prop("disabled", true);
+        $('#btn-update-leave').html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
 
-        update_data(workflow_status, ticketNo, direct_superior, approvalremarks)
+        update_data_leave(workflow_status, ticketNo, direct_superior, approvalremarks)
     })
 
-    function update_data(workflow_status, ticketNo, direct_superior, approvalremarks){
+    function update_data_permit(workflow_status, ticketNo, direct_superior, approvalremarks){
         $.ajax({
-            url: "{{ url('trans/update_leave/table') }}",
+            url: "{{ url('trans/update_permit/table') }}",
             type: "get",
             data: {
                 'status': workflow_status,
@@ -914,7 +914,7 @@
                         'Update'
                     );
 
-                    $('#modal_list_detail_leave').modal('hide');
+                    $('#modal_list_detail').modal('hide');
                     
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
@@ -938,6 +938,58 @@
             error: function (response) {
                 $("#btn-update").prop("disabled", false);
                 $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
+
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+    }
+
+    function update_data_leave(workflow_status, ticketNo, direct_superior, approvalremarks){
+        $.ajax({
+            url: "{{ url('trans/update_leave/table') }}",
+            type: "get",
+            data: {
+                'status': workflow_status,
+                'ticketNo' : ticketNo,
+                'directSuperiorCode' : direct_superior,
+                'approvalRemarks': approvalremarks
+            },
+            success: function (response) {
+                if (response.status == "true") {
+                    $("#btn-update-leave").prop("disabled", false);
+                    $("#btn-update-leave").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
+                        'Update'
+                    );
+
+                    $('#modal_list_detail_leave').modal('hide');
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+                    setTimeout(function () {
+                        window.location =
+                            "{{ url('transaction/transaction_workflow') }}";
+                    }, 3000);
+                } else{
+                    $("#btn-update-leave").prop("disabled", false);
+                    $("#btn-update-leave").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response
+                        .message);
+                }
+            },
+            error: function (response) {
+                $("#btn-update-leave").prop("disabled", false);
+                $("#btn-update-leave").html(
                     // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
                     'Update'
                 );

@@ -526,19 +526,6 @@ class TransactionController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
     
-                // var_dump(json_encode(
-                //     [
-                //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //         'employeeNo'=> $request->employeeNo,
-                //         'businessUnit' => $request->businessUnit,
-                //         'workflowType' => $request->workflowType,
-                //         'companyCode' => Session::get('companyCode'), 
-                //         'languageCode' => App::getLocale(), 
-                //         'sessionID' => 0, 
-                //         'sessionUserID' => Session::get('userID'),
-                //     ]
-                //     ));
                 $response = $client->post(env('API_URL') . '/mobile/TmLeave/getLeaveDetailList',
                     ['body' => json_encode(
                         [
@@ -567,7 +554,6 @@ class TransactionController extends Controller
             }
     
             $arrResult = json_decode($response->getBody()->getContents());
-            // var_dump($arrResult->dataListSet);
     
             if($arrResult->dataListSet == null){
                 return Datatables::of([])->make(true);
@@ -1048,6 +1034,46 @@ class TransactionController extends Controller
         // }else{
         //     return Datatables::of($arrResult->dataListSet)->make(true);
         // }
+    }
+
+    public function tableUpdateTransPermit(Request $request)
+    {
+        try {
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/mobile/TmPermit/UpdateByAdmin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'languageCode' => App::getLocale(), 
+                        'listRefLeaveID' => null,
+                        'sessionUserID' => Session::get('userID'),
+                        'directSuperiorCode'=> $request->directSuperiorCode,
+                        'approvalRemarks'=> $request->approvalRemarks,
+                        'logActionUserID'=> Session::get('userID'),
+                        'logActionUsername'=> Session::get('userName'),
+                        'status'=> $request->status,
+                        'ticketNo' => $request->ticketNo
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     public function tableUpdateTransLeave(Request $request)
