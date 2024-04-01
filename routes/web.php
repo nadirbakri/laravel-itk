@@ -566,6 +566,7 @@ Route::get('payroll/absenteeism_overtime_calculation_process', 'PayrollControlle
 Route::get('payroll/absenteeism_calculation_process', 'PayrollController@pageAbsenteeismCalculationProcess');
 Route::get('payroll/transfer_data_to_bank/export_to_file', 'PayrollController@pageTransferDataToBankExportToFile');
 Route::get('payroll/transfer_data_to_bank/api', 'PayrollController@pageTransferDataToBankApi');
+Route::get('payroll/monthly_proses', 'PayrollController@pageMonthlyProses');
 /* Payroll Report Menu */
 Route::get('payroll/dumtk', 'PayrollController@pageDUMTK');
 Route::get('payroll/monthly_jamsostek_report', 'PayrollController@pageMonthlyJamsostekReport');
