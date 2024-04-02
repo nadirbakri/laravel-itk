@@ -3121,7 +3121,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertReportFormat',
