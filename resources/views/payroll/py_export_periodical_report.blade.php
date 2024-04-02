@@ -305,8 +305,6 @@
                         <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
                         <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Cost Center</th>
                         <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Jumlah</th>
-                    </tr>
-                    <tr>
                         @if(!empty($dataTable->data[0]->field))
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
                                 @if(!is_string($dataRow->value))
