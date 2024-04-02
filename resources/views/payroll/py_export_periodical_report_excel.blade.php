@@ -311,10 +311,9 @@
             <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
-                        <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
-                        <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Cost Center</th>
-                        <th rowspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Jumlah</th>
-                        <th colspan="{{ count($dataTable->data[0]->field) }}" style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Pendapatan</th>
+                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
+                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Cost Center</th>
+                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Jumlah</th>
                     </tr>
                     <tr>
                         @if(!empty($dataTable->data[0]->field))
