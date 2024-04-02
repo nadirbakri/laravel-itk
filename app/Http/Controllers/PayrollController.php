@@ -3044,7 +3044,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "alignment" => (int) $request->alignment[$key],
                         "dataFormat" => $request->data_format[$key],
                         "isDisplayed" => ($request->display[$key] === "true") ? true : false,
-                        "fieldFormula" => (isset($request->field_formula[$key]) && ($request->field_formula[$key] !== '' && $request->field_formula[$key] !== 'null' && !is_null($request->field_formula[$key]))) ? $request->field_formula[$key] : '',
+                        // "fieldFormula" => (isset($request->field_formula[$key]) && ($request->field_formula[$key] !== '' && $request->field_formula[$key] !== 'null' && !is_null($request->field_formula[$key]))) ? $request->field_formula[$key] : '',
+                        "fieldFormula" => "",
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
@@ -3060,8 +3061,10 @@ public function dataDetailReportFormatPY(Request $request)
                         'companyCode' => Session::get('companyCode'),
                         "reportCode" => $request->report_code,
                         "columnNo" => (int) $value,
-                        "tableName" => (isset($request->table_name_formula[$key]) && ($request->table_name_formula[$key] !== '' && $request->table_name_formula[$key] !== 'null' && !is_null($request->table_name_formula[$key]))) ? $request->table_name_formula[$key] : '',
-                        "fieldName" => (isset($request->field_name_formula[$key]) && ($request->field_name_formula[$key] !== '' && $request->field_name_formula[$key] !== 'null' && !is_null($request->field_name_formula[$key]))) ? $request->field_name_formula[$key] : '',
+                        // "tableName" => (isset($request->table_name_formula[$key]) && ($request->table_name_formula[$key] !== '' && $request->table_name_formula[$key] !== 'null' && !is_null($request->table_name_formula[$key])) && !isset($request->field_formula_formula[$key]) && ($request->field_formula_formula[$key] === '' && $request->field_formula_formula[$key] === 'null' && is_null($request->field_formula_formula[$key]))) ? $request->table_name_formula[$key] : '',
+                        // "fieldName" => (isset($request->field_name_formula[$key]) && ($request->field_name_formula[$key] !== '' && $request->field_name_formula[$key] !== 'null' && !is_null($request->field_name_formula[$key])) && !isset($request->field_formula_formula[$key]) && ($request->field_formula_formula[$key] === '' && $request->field_formula_formula[$key] === 'null' && is_null($request->field_formula_formula[$key]))) ? $request->field_name_formula[$key] : '',
+                        "tableName" => "",
+                        "fieldName" => "",
                         "columnHeader" => $request->column_header_formula[$key],
                         "alignment" => (int) $request->alignment_formula[$key],
                         "dataFormat" => $request->data_format_formula[$key],
@@ -3118,7 +3121,7 @@ public function dataDetailReportFormatPY(Request $request)
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
 
-            // dd(json_encode($param));
+            dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertReportFormat',

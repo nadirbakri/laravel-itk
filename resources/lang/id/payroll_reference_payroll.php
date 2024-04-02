@@ -92,6 +92,7 @@ return [
     'label_tax_penalties_thr' => 'THR',
     'label_severance_payment_rate' => 'Tarif Pembayaran Pesangon',
     'label_and_on' => 'Dan Seterusnya',
+    'error_tm' => 'Reference Time Management belum diset',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'

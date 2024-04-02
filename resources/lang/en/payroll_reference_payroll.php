@@ -92,6 +92,7 @@ return [
     'label_tax_penalties_thr' => 'THR',
     'label_severance_payment_rate' => 'Severance Payment Rate',
     'label_and_on' => 'And on',
+    'error_tm' => 'Reference Time Management has not been set',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'

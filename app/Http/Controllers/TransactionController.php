@@ -1049,7 +1049,7 @@ class TransactionController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'languageCode' => App::getLocale(), 
-                        'listRefLeaveID' => null,
+                        'listRefPermitID' => null,
                         'sessionUserID' => Session::get('userID'),
                         'directSuperiorCode'=> $request->directSuperiorCode,
                         'approvalRemarks'=> $request->approvalRemarks,
