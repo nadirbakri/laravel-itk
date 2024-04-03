@@ -1657,7 +1657,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $religion = array_merge($religion, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$religion = array_merge($religion, $arrResult->dataListSet);
+		}
 
         return response()->json($religion[0]);
 	}
@@ -1752,21 +1754,23 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$religion = array_merge($religion, $arrResult->dataListSet);
-	    }else{
-			$religion = array_merge($religion, $arrResult->dataListSet);
-	    	$religion = array_filter(
-	    		$religion,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->value)){
-	    				return preg_match('/' . $search . '/i', $value->value);
-	    			}else if(preg_match('/' . $search . '/i', $value->comGenCode)){
-	    				return preg_match('/' . $search . '/i', $value->comGenCode);
-	    			}
-	    		}
-	    	);
-	    }
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$religion = array_merge($religion, $arrResult->dataListSet);
+			}else{
+				$religion = array_merge($religion, $arrResult->dataListSet);
+				$religion = array_filter(
+					$religion,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->value)){
+							return preg_match('/' . $search . '/i', $value->value);
+						}else if(preg_match('/' . $search . '/i', $value->comGenCode)){
+							return preg_match('/' . $search . '/i', $value->comGenCode);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($religion);
 	}
@@ -2768,22 +2772,24 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
-
-	    if($search == ''){
-	    	$position = array_merge($position, $arrResult->dataListSet);
-	    }else{
-			$position = array_merge($position, $arrResult->dataListSet);
-	    	$position = array_filter(
-	    		$position,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->positionName)){
-	    				return preg_match('/' . $search . '/i', $value->positionName);
-	    			}else if(preg_match('/' . $search . '/i', $value->positionCode)){
-	    				return preg_match('/' . $search . '/i', $value->positionCode);
-	    			}
-	    		}
-	    	);
-	    }
+		
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$position = array_merge($position, $arrResult->dataListSet);
+			}else{
+				$position = array_merge($position, $arrResult->dataListSet);
+				$position = array_filter(
+					$position,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->positionName)){
+							return preg_match('/' . $search . '/i', $value->positionName);
+						}else if(preg_match('/' . $search . '/i', $value->positionCode)){
+							return preg_match('/' . $search . '/i', $value->positionCode);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($position);
 	}
@@ -4147,8 +4153,10 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
-
-	    $position = array_merge($position, $arrResult->dataListSet);
+		
+		if($arrResult->dataListSet !== null){
+	    	$position = array_merge($position, $arrResult->dataListSet);
+		}
 
         return response()->json($position[0]);
 	}
@@ -4190,7 +4198,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $employment_status = array_merge($employment_status, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$employment_status = array_merge($employment_status, $arrResult->dataListSet);
+		}
 
         return response()->json($employment_status[0]);
 	}
@@ -4346,21 +4356,23 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$location = array_merge($location, $arrResult->dataListSet);
-	    }else{
-			$location = array_merge($location, $arrResult->dataListSet);
-	    	$location = array_filter(
-	    		$location,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->locationName)){
-	    				return preg_match('/' . $search . '/i', $value->locationName);
-	    			}else if(preg_match('/' . $search . '/i', $value->locationCode)){
-	    				return preg_match('/' . $search . '/i', $value->locationCode);
-	    			}
-	    		}
-	    	);
-	    }
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$location = array_merge($location, $arrResult->dataListSet);
+			}else{
+				$location = array_merge($location, $arrResult->dataListSet);
+				$location = array_filter(
+					$location,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->locationName)){
+							return preg_match('/' . $search . '/i', $value->locationName);
+						}else if(preg_match('/' . $search . '/i', $value->locationCode)){
+							return preg_match('/' . $search . '/i', $value->locationCode);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($location);
 	}
@@ -4401,7 +4413,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $location = array_merge($location, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$location = array_merge($location, $arrResult->dataListSet);
+		}
 
         return response()->json($location[0]);
 	}
@@ -4549,21 +4563,23 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$ranking = array_merge($ranking, $arrResult->dataListSet);
-	    }else{
-			$ranking = array_merge($ranking, $arrResult->dataListSet);
-	    	$ranking = array_filter(
-	    		$ranking,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->rankingName)){
-	    				return preg_match('/' . $search . '/i', $value->rankingName);
-	    			}else if(preg_match('/' . $search . '/i', $value->rankingCode)){
-	    				return preg_match('/' . $search . '/i', $value->rankingCode);
-	    			}
-	    		}
-	    	);
-	    }
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$ranking = array_merge($ranking, $arrResult->dataListSet);
+			}else{
+				$ranking = array_merge($ranking, $arrResult->dataListSet);
+				$ranking = array_filter(
+					$ranking,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->rankingName)){
+							return preg_match('/' . $search . '/i', $value->rankingName);
+						}else if(preg_match('/' . $search . '/i', $value->rankingCode)){
+							return preg_match('/' . $search . '/i', $value->rankingCode);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($ranking);
 	}
@@ -4603,7 +4619,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $ranking = array_merge($ranking, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$ranking = array_merge($ranking, $arrResult->dataListSet);
+		}
 
         return response()->json($ranking[0]);
 	}
@@ -5534,19 +5552,21 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$employee_status = array_merge($employee_status, $arrResult->dataListSet);
-	    }else{
-			$employee_status = array_merge($employee_status, $arrResult->dataListSet);
-	    	$employee_status = array_filter(
-	    		$employee_status,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->value)){
-	    				return preg_match('/' . $search . '/i', $value->value);
-	    			}
-	    		}
-	    	);
-	    }
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$employee_status = array_merge($employee_status, $arrResult->dataListSet);
+			}else{
+				$employee_status = array_merge($employee_status, $arrResult->dataListSet);
+				$employee_status = array_filter(
+					$employee_status,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->value)){
+							return preg_match('/' . $search . '/i', $value->value);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($employee_status);
 	}
@@ -5590,21 +5610,23 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$employment_status = array_merge($employment_status, $arrResult->dataListSet);
-	    }else{
-			$employment_status = array_merge($employment_status, $arrResult->dataListSet);
-	    	$employment_status = array_filter(
-	    		$employment_status,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->value)){
-	    				return preg_match('/' . $search . '/i', $value->value);
-	    			}else if(preg_match('/' . $search . '/i', $value->comGenCode)){
-	    				return preg_match('/' . $search . '/i', $value->comGenCode);
-	    			}
-	    		}
-	    	);
-	    }
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$employment_status = array_merge($employment_status, $arrResult->dataListSet);
+			}else{
+				$employment_status = array_merge($employment_status, $arrResult->dataListSet);
+				$employment_status = array_filter(
+					$employment_status,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->value)){
+							return preg_match('/' . $search . '/i', $value->value);
+						}else if(preg_match('/' . $search . '/i', $value->comGenCode)){
+							return preg_match('/' . $search . '/i', $value->comGenCode);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($employment_status);
 	}
@@ -9092,7 +9114,10 @@ class DataController extends Controller
 			}
 			
 			$arrResult = json_decode($response->getBody()->getContents());
-			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
 
 			if($search == ''){
 				$data = $arrResult->dataListSet;
@@ -9154,8 +9179,10 @@ class DataController extends Controller
 	    			}
 	    		}
 	    	);
-
-			$reimbursement_type = array_merge($reimbursement_type, $arrData);
+			
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrData);
+			}
 
 			if($search == ''){
 				$data = $reimbursement_type;
@@ -9311,7 +9338,9 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 
-			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
 
 			if($search == ''){
 				$data = $reimbursement_type;
@@ -9593,7 +9622,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		}
 
         return response()->json($reimbursement_type[0]);
 	}
@@ -9634,7 +9665,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		}
 
         return response()->json($reimbursement_type[0]);
 	}
@@ -9723,7 +9756,9 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 
-			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
 			
 			if($search == ''){
 				$data = $reimbursement_type;
@@ -9919,7 +9954,9 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 
-			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
 			
 			if($search == ''){
 				$data = $reimbursement_type;
@@ -10018,7 +10055,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $travel_type = array_merge($travel_type, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$travel_type = array_merge($travel_type, $arrResult->dataListSet);
+		}
 
         return response()->json($travel_type[0]);
 	}
@@ -10524,7 +10563,9 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 
-			$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
 			
 			if($search == ''){
 				$data = $reimbursement_type;
@@ -10578,7 +10619,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		}
 
         return response()->json($reimbursement_type[0]);
 	}
@@ -10628,7 +10671,9 @@ class DataController extends Controller
 			}
 		);
 
-	    $reimbursement_type = array_merge($reimbursement_type, $arrData);
+		if($arrResult->dataListSet !== null){
+	    	$reimbursement_type = array_merge($reimbursement_type, $arrData);
+		}
 
         return response()->json($reimbursement_type[0]);
 	}
@@ -10669,7 +10714,9 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    $reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		if($arrResult->dataListSet !== null){
+	    	$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+		}
 
         return response()->json($reimbursement_type[0]);
 	}
