@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Validator;
 use Session;
 use App;
@@ -200,5 +201,24 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
             ]); 
         }
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet;
+
+                $cells = $sheet->getDelegate()->getElementsByTagName('td');
+                foreach ($cells as $cell) {
+                    $dataFormat = $cell->getAttribute('data-format');
+
+                    // Set format sel jika atribut data-format ditemukan
+                    if (!empty($dataFormat)) {
+                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                    }
+                }
+            },
+        ];
     }
 }

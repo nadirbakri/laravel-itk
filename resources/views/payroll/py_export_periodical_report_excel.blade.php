@@ -87,12 +87,12 @@
                             <?php
                             $total[$dataTable2->field] += $dataTable2->value;
                             ?>
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 0, '.', ',') }}</td>
+                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
                         @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                             <?php
                             $total[$dataTable2->field] += $dataTable2->value;
                             ?>
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 2, '.', ',') }}</td>
+                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
                         
                         @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
@@ -211,13 +211,13 @@
                                     $total[$branch][$dataRow2->field] += $dataRow2->value;
                                     $totalBranch[$branch] += $total[$branch][$dataRow2->field];
                                 ?>
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataRow2->value, 0, '.', ',') }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
                                     $total[$branch][$dataRow2->field] += $dataRow2->value;
                                     $totalBranch[$branch] += $total[$branch][$dataRow2->field];
                                 ?>
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataRow2->value, 2, '.', ',') }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/YYYY")
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
                             @elseif($dataRow2->dataFormat == "dd MM YYYY")
@@ -234,12 +234,12 @@
                             @foreach($total[$branch] as $key => $totalValue)
                                 <?php
                                     if(!is_string($totalValue)) {
-                                        $totalCost = number_format($totalValue, 2, ',', '.');
+                                        $totalCost = $totalValue;
                                     } else {
                                         $totalCost = '';
                                     }
                                 ?>
-                                <td style="text-align:right; border:1px solid #000;">{{ $totalCost }}</td>
+                                <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $totalCost }}</td>
                             @endforeach
                         </tr>
                     @endif
@@ -268,13 +268,13 @@
                     <tr>
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $level }})</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                            <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
+                            <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $periodicalTotal }}</td>
                         @endforeach
                     </tr>
                     <tr>
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                            <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 2, ',', '.') }}</td>
+                            <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $periodicalTotal }}</td>
                         @endforeach
                     </tr>
                 </tbody>
@@ -318,7 +318,7 @@
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
                                 @if(!is_string($dataRow->value))
                                     <?php
-                                        $total[$dataTable->data[0]->companyName][$dataRow->field] = 0;
+                                        $total[$dataTable->data[0]->companyName][$key_data] = 0;
                                         $totalCompany[$dataTable->data[0]->companyName] = 0;
                                     ?>
                                 @endif
@@ -347,16 +347,16 @@
                             ?>
                             @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
                                 <?php
-                                    $total[$dataRow->companyName][$dataRow2->field] += $dataRow2->value;
-                                    $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$dataRow2->field];
+                                    $total[$dataRow->companyName][$key2] += $dataRow2->value;
+                                    $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                 ?>
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataRow2->value, 0, '.', ',') }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
-                                    $total[$dataRow->companyName][$dataRow2->field] += $dataRow2->value;
-                                    $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$dataRow2->field];
+                                    $total[$dataRow->companyName][$key2] += $dataRow2->value;
+                                    $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                 ?>
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataRow2->value, 2, '.', ',') }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/YYYY")
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
                             @elseif($dataRow2->dataFormat == "dd MM YYYY")
@@ -377,7 +377,7 @@
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">&nbsp;</td>
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">{{ $totalJumlah }}</td>
                         @foreach($total[$dataTable->data[0]->companyName] as $key => $totalValue)
-                            <td style="text-align:right; border:1px solid #000;">{{ number_format($totalValue, 2, ',', '.') }}</td>
+                            <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $totalValue }}</td>
                         @endforeach
                     </tr>
                 </table>
