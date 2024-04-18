@@ -40,29 +40,17 @@
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th>Masa Pajak</th>
-                <th>Tahun Pajak</th>
-                <th>Pembetulan</th>
-                <th>NPWP</th>
-                <th>Nama</th>
-                <th>Kode Pajak</th>
-                <th>Jumlah Bruto</th>
-                <th>Jumlah PPh</th>
-                <th>Kode Negara</th>
+                @foreach($data->column as $key => $value)
+                    <th>{{ $value }}</th>
+                @endforeach
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $key => $value)
+            @foreach ($data->value as $key => $value)
             <tr>
-                <td>{{ $value->periodMonth }}</td>
-                <td>{{ $value->periodYear }}</td>
-                <td>{{ $value->pembetulan }}</td>
-                <td>{{ $value->taxRegisteredNo }}</td>
-                <td>{{ $value->employeeName }}</td>
-                <td>{{ $value->kodePajak }}</td>
-                <td>{{ $value->jumlahBruto }}</td>
-                <td>{{ $value->jumlahPPH }}</td>
-                <td>{{ $value->nationalityCode }}</td>
+                @foreach ($value as $key2 => $value2)
+                    <td>{{ $value2 }}</td>
+                @endforeach
             </tr>
             @endforeach
         </tbody>

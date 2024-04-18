@@ -45,25 +45,29 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
                 'companyCode' => Session::get('companyCode'),
                 'periodMonth' => (int) date('n', strtotime($this->period)),
                 'periodYear' => (int) date('Y', strtotime($this->period)),
-                'pembetulan' => (int) $this->rectification,
-                'format' => $this->format,
-                'npwpGroup' => $this->npwpGroup,
-                'printDate' => $this->printDate,
+                'groupNPWPCode' => $this->npwpGroup,
+                'statusPeriod' => "1",
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
-                "sessionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userName'),
-                "logActionUserID" => Session::get('userID')
+                "sessionUserID" => Session::get('userID')
             ];
 
-            if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
-                $param['groupAuthorizeCodeFrom'] = (int) $this->groupAuthorizedCodeFrom;
-                $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
-            }
+            // if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
+            //     $param['groupAuthorizeCodeFrom'] = (int) $this->groupAuthorizedCodeFrom;
+            //     $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
+            // }
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/getExportCSVSPT', [
+            if($this->format == "periodical"){
+                $url = "/payroll/getEBupot";
+            }else if($this->format == "annual"){
+                $url = "";
+            }else if($this->format == "final"){
+                $url = "";
+            }
+
+            $response = $client->post(env('API_URL') . $url, [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
@@ -96,7 +100,7 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
         }else{
             if($this->format == "periodical"){
                 return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
-                    'data' => $arrResult->dataListSet
+                    'data' => $arrResult->dataListSet[0]->list_21[0]
                 ]);
             }else if($this->format == "annual"){
                 return view('payroll.py_export_csv_espt_report_form_annual_excel', [

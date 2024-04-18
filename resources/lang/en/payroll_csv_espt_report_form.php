@@ -5,7 +5,7 @@ return [
     'list' => 'CSV E-SPT Report Form',
     'label_format' => 'Format',
     'label_periodical' => 'Periodical',
-    'label_annual' => 'Annual',
+    'label_annual' => 'A1',
     'label_final' => 'Final',
     'label_period' => 'Period',
     'label_rectification' => 'Rectification',
