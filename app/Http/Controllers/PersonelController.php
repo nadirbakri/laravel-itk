@@ -2257,8 +2257,6 @@ class PersonelController extends Controller
                     $data2 = $arrResult2->dataListSet;
                 }
 
-                // dd($arrResult2->dataListSet);
-
                 return view('personel.personel_personal_data_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
 

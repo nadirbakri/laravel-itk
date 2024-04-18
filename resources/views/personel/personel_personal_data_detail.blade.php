@@ -4033,28 +4033,25 @@
             load_table_family_dependent_data();
             if (typeof arrData2[0].peMasterFamily !== 'undefined' || arrData2[0].peMasterFamily !== null) {
                 for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
-
-                if (arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
-                {
-                    var birthDate = moment(arrData2[0].peMasterFringeBenefit[i].birthDate).format('YYYY-MM-DD');
-                }
-                else {
                     var birthDate = '';
-                }
+                    if (arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
+                    {
+                        birthDate = moment(arrData2[0].peMasterFamily[i].birthDate).format('YYYY-MM-DD');
+                    }
 
-                arrayFamilyDependent.push({
-                    "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
-                    "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
-                    "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
-                    "birthDate": birthDate,
-                    "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined') ? arrData2[0].peMasterFamily[i].birthPlace : ''),
-                    "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
-                    "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
-                    "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
-                    "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
-                    "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
-                    "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : '')
-                });
+                    arrayFamilyDependent.push({
+                        "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
+                        "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
+                        "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
+                        "birthDate": birthDate,
+                        "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined') ? arrData2[0].peMasterFamily[i].birthPlace : ''),
+                        "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
+                        "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
+                        "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
+                        "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
+                        "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
+                        "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : '')
+                    });
                 }
             }
 
