@@ -6988,16 +6988,24 @@ public function dataDetailReportFormatPY(Request $request)
         $lastDayOfPreviousMonth = date("t-M-Y", strtotime( $data->period));
 
         // dd($arrResult->dataListSet);
+        if($data->companyCode == 'DAA'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
+        }else{
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
+        }
 
         if($arrResult->dataListSet == null){
             if($data->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', [
+                $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => [], 
                     'display_logo' => $data->display_logo,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
@@ -7007,13 +7015,14 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', [
+                $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => [], 
                     'display_logo' => $data->display_logo,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
@@ -7025,13 +7034,14 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($data->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', [
+                $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $data->display_logo,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
@@ -7041,13 +7051,14 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', [
+                $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $data->display_logo,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($data->mobile){
@@ -7212,15 +7223,26 @@ public function dataDetailReportFormatPY(Request $request)
         $firstDayOfPreviousMonth = date("01-M-Y", strtotime($request->period));
         $lastDayOfPreviousMonth = date("t-M-Y", strtotime($request->period));
 
+        $companyCode = empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode');
+
+        if($companyCode == 'DAA'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
+        }else{
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
+        }
+
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', [
+                $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => [], 
                     'display_logo' => $request->display_logo, 
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
@@ -7230,13 +7252,14 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', [
+                $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => [], 
                     'display_logo' => $request->display_logo, 
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
@@ -7248,13 +7271,14 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', [
+                $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $request->display_logo, 
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
@@ -7264,13 +7288,14 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', [
+                $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $request->display_logo, 
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
+                    'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
@@ -7361,10 +7386,20 @@ public function dataDetailReportFormatPY(Request $request)
 
         // var_dump($arrResult->dataListSet == null);
 
+        $companyCode = empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode');
+
+        if($companyCode == 'DAA'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
+        }else{
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
+        }
+
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
                 $pdf_url = PDF::loadFile(public_path().'/myfile.html')->save('/path-to/my_stored_file.pdf');
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView($viewNamePortrait, ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -7372,7 +7407,7 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView($viewNameLandscape, ['data' => [], 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -7382,7 +7417,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($request->format_type == "portrait"){
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_portrait', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView($viewNamePortrait, ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
@@ -7390,7 +7425,7 @@ public function dataDetailReportFormatPY(Request $request)
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
-                $pdf = PDF::loadView('payroll.py_export_payment_slip_landscape', ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView($viewNameLandscape, ['data' => $arrResult->dataListSet, 'display_logo' => $request->display_logo])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
