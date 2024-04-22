@@ -185,7 +185,7 @@ class TransactionController extends Controller
             //     ]
             //     ));
 
-            $response = $client->post(env('API_URL') . '/reimbursementmedical/getreimbursementhistoryall',
+            $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementhistoryall',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
