@@ -297,7 +297,6 @@
         <span class="text-muted">© Copyright PT Intikom Berlian Mustika {{ date('Y') }}</span>
     </div>
 </footer>
-@if($errors->any())
 <div class="modal fade" role="dialog" id="notification">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -313,7 +312,6 @@
         </div>
     </div>
 </div>
-@endif
 @endsection
 
 @section('js-content')

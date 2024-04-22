@@ -298,7 +298,7 @@ class LoginController extends Controller
 			if($successLogin){
 				return redirect()->route('main');
 			}else{
-				return redirect()->route('login')->withErrors(['msg' => 'Cannot Login Using Microsoft Account']);;
+				return redirect()->route('login')->withErrors(['msg' => 'Username or Password is wrong']);;
 			}
 
 			// $secret_key = env('JWT_SECRET_KEY');
@@ -334,7 +334,7 @@ class LoginController extends Controller
 				
 	    	// return response()->json(["status" => true, "message" => "/main"]);
 	    }else{
-			return redirect()->route('login')->withErrors(['msg' => 'Cannot Login Using Microsoft Account']);
+			return redirect()->route('login')->withErrors(['msg' => 'Username or Password is wrong']);
 	    	// return response()->json(["status" => false, "message" => "Cannot Login Using Microsoft Account"]);
 	    }
 	}
