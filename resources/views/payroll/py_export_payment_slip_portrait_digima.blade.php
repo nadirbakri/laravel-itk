@@ -39,18 +39,18 @@
 		<tr>
 			<td width="20%" colspan="2">PT. Digital Animasi Asia</td>
 			@if($display_logo == "1")
-			<td width="20%" rowspan="2">&nbsp;</td>
-			<td width="7%" rowspan="2" style="text-align:right;">
+			<td width="20%" rowspan="4">&nbsp;</td>
+			<td width="7%" rowspan="4" style="text-align:right;">
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<img class="ml-4" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.jpeg'))) }}" style="width: 205px; height: 25px" alt="Logo">
+						<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="margin-left: 100px; width: 85px; height: 65px" alt="Logo">
 						</td>
 					</tr>
 				</table>
 			</td>
 			@else
-			<td width="28%" rowspan="2" style="text-align:right;">&nbsp;</td>
+			<td width="28%" rowspan="4" style="text-align:right;">&nbsp;</td>
 			@endif
 		</tr>
 		<tr>
@@ -103,7 +103,7 @@
 					</tr>
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Total Income (A)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome, 0, ',', '.')}},-</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome, 0, ',', '.')}}</td>
 					</tr>
 				</table>
 			</td>
@@ -129,7 +129,7 @@
 					</tr>
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Total Deduction (B)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}},-</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
 					</tr>
 					<tr>
 						<td colspan="2">&nbsp;</td>
@@ -156,7 +156,7 @@
 				<table style="width:100%; border-collapse: collapse;">
 					<tr>
 						<td width="60%" style="padding: 0; margin: 0;">Take Home Pay (A - B)</td>
-						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}},-</td>
+						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}}</td>
 					</tr>
 				</table>
 			</td>

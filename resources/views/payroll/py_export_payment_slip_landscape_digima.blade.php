@@ -38,18 +38,18 @@
 		<tr>
 			<td width="20%" colspan="2">PT. Digital Animasi Asia</td>
 			@if($display_logo == "1")
-			<td width="20%" rowspan="2">&nbsp;</td>
-			<td width="7%" rowspan="2" style="text-align:right;">
+			<td width="20%" rowspan="4">&nbsp;</td>
+			<td width="7%" rowspan="4" style="text-align:right;">
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<img class="ml-4" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.jpeg'))) }}" style="width: 225px; height: 45px" alt="Logo">
+							<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="margin-left: 100px; width: 105px; height: 85px" alt="Logo">
 						</td>
 					</tr>
 				</table>
 			</td>
 			@else
-			<td width="27%" rowspan="2" style="text-align:right;">&nbsp;</td>
+			<td width="27%" rowspan="4" style="text-align:right;">&nbsp;</td>
 			@endif
 		</tr>
 		<tr>
