@@ -297,6 +297,7 @@
         <span class="text-muted">© Copyright PT Intikom Berlian Mustika {{ date('Y') }}</span>
     </div>
 </footer>
+@if($errors->any())
 <div class="modal fade" role="dialog" id="notification">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -312,6 +313,7 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
 
 @section('js-content')
@@ -325,8 +327,7 @@
 
 <script>
     var exist = '{{$errors->any()}}';
-    var message = '{{Session::get('
-    message ')}}';
+    var message = '{{Session::get('message')}}';
 
     if (exist) {
         $('#notification').modal('show');
@@ -341,6 +342,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var error = "{{ $errors->any() }}";
+        console.log(error);
+        var msgError = "{{ $errors->first() }}";
+		if (error) {
+			$('#notification').modal('show');
+		}
+
         $('#notification').on('hidden.bs.modal', function () {
             $('#notification').modal('hide');
         })

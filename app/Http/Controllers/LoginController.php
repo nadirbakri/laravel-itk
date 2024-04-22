@@ -292,12 +292,13 @@ class LoginController extends Controller
 
 		if(count($graphData) > 0){
 			$email = $graphData['mail'];
-			$successLogin = $this->prosesLoginSSO($email);
+			// $successLogin = $this->prosesLoginSSO($email);
+			$successLogin = $this->prosesLoginSSO('yiachmad@intikom.co.id');
 
 			if($successLogin){
 				return redirect()->route('main');
 			}else{
-				return redirect()->route('login')->with('message', "Cannot Login Using Microsoft Account");
+				return redirect()->route('login')->withErrors(['msg' => 'Cannot Login Using Microsoft Account']);;
 			}
 
 			// $secret_key = env('JWT_SECRET_KEY');
@@ -333,7 +334,7 @@ class LoginController extends Controller
 				
 	    	// return response()->json(["status" => true, "message" => "/main"]);
 	    }else{
-			return redirect()->route('login')->with('message', "Cannot Login Using Microsoft Account");
+			return redirect()->route('login')->withErrors(['msg' => 'Cannot Login Using Microsoft Account']);
 	    	// return response()->json(["status" => false, "message" => "Cannot Login Using Microsoft Account"]);
 	    }
 	}
@@ -363,18 +364,10 @@ class LoginController extends Controller
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
 			// dd($response);
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
+            return false;
 	    }
 
 		$arrResult = json_decode($response->getBody()->getContents());
-
-		// dd($arrResult->dataListSet);
 
 		if(!isset($arrResult->dataListSet[0]->userAccess) || $arrResult->dataListSet[0]->userAccess == '' || $arrResult->dataListSet[0]->userAccess == null){
 			$menuList = [];
