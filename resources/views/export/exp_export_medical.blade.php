@@ -544,8 +544,13 @@ loadDataFirstLastAllStatus();
                         };
                     },
                     processResults: function (data) {
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED", "PAID", "COMPLETED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+
                         return {
-                            results: $.map(data, function (item) {
+                            results: $.map(filteredData, function (item) {
                                 return {
                                     text: item.value,
                                     id: item.value,
