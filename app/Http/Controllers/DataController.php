@@ -10452,11 +10452,11 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
+			$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode'),
-						'officeCode' => $request->officeCode
+						'locationCode' => $request->locationCode
 					]
 					)]
 				);

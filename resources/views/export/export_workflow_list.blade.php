@@ -22,6 +22,7 @@
 				<th>No</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
+				<th>Permit Type</th>
                 <th>Permit Start Date</th>
                 <th>Permit End Date</th>
                 <th>Permit Start Hour</th>
@@ -37,6 +38,7 @@
                 <td>{{ $no++ }}</td>
 				<td>{{ $value->permitEntity->employeeNo }}</td>
 				<td>{{ $value->permitEntity->fullnameRequester }}</td>
+				<td>{{ $value->permitEntity->permitNameList[0] }}</td>
 				<td>{{ date('Y-m-d', strtotime($value->permitEntity->permitDateFrom)) }}</td>
 				<td>{{ date('Y-m-d', strtotime($value->permitEntity->permitDateTo)) }}</td>
 				<td>{{ date('H:i', strtotime($value->permitEntity->permitHourFrom)) }}</td>

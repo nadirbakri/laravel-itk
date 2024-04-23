@@ -3515,7 +3515,7 @@
                     type: 'GET',
                     url: "{{ url('/office_location/func/api') }}",
                     data: {
-                        'officeLocationCode': ((typeof arrData2[0].officeCode !== 'undefined') ? arrData2[0].officeCode : ''),
+                        'locationCode': ((typeof arrData2[0].locationCode !== 'undefined') ? arrData2[0].locationCode : ''),
                     }
                 }).then(function (data) {
                     var option = new Option(data[0].locationName, data[0].locationCode, true, true);

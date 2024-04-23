@@ -37,7 +37,7 @@ class MedicalExport implements FromView, ShouldAutoSize
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'medicalType1'=> $this->reimbursementType,
                 'businessUnit'=> $this->businessUnit,
-                'exportMenu' => true,
+                'exportMenu' => false,
                 'status'=> $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
@@ -46,7 +46,7 @@ class MedicalExport implements FromView, ShouldAutoSize
             ];
 
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementdetaillistall',
                 ['body' => json_encode($param)]
