@@ -547,12 +547,14 @@
             $('#transfer_code').val(data[0].data.description);
             loadDataOutputFile(data[0].data.bankCode);
 
-            if(data[0].data.bankCode.indexOf("GIC") !== -1){
-                loadDataSelectLevel('#level1', 1, "GIC");
-            }else if(data[0].data.bankCode.indexOf("IEI") !== -1){
-                loadDataSelectLevel('#level1', 1, "IEI");
-            }else{
-                loadDataSelectLevel('#level1', 1, "NMDI");
+            if(data[0].data.companyCode == "NMDI"){
+                if(data[0].data.bankCode.indexOf("GIC") !== -1){
+                    loadDataSelectLevel('#level1', 1, "GIC");
+                }else if(data[0].data.bankCode.indexOf("IEI") !== -1){
+                    loadDataSelectLevel('#level1', 1, "IEI");
+                }else{
+                    loadDataSelectLevel('#level1', 1, "NMDI");
+                }
             }
         });
 

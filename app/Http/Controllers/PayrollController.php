@@ -4515,11 +4515,11 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
+        // dd($request->source_bank);
         // exit;
 
         if($arrResult->dataListSet != null){
-            if($request->source_bank == 'BANK CENTRAL ASIA'){
+            if($request->source_bank == 'BCA'){
                 $fullPath = storage_path('app/');
                 array_map('unlink', glob( "$fullPath*.txt"));
                 $arrDataBCA = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
