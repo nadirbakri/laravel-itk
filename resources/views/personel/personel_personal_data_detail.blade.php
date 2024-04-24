@@ -7248,11 +7248,26 @@
         });
 
         $("#btn-save-profile").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#personal_data_form").submit();
+            // $("#personal_data_form").submit();
+
+            var form = $("#personal_data_form");
+            var valid = true;
+            form.find(".tab-pane").each(function() {
+                if (!$(this).find("input, select, textarea").valid()) {
+                    valid = false;
+                }
+            });
+            if (valid) {
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+
+                form.submit(); // Submit form jika semua bidang valid
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("Some Field Are Required, Please Check Again");
+            }
         });
 
         // if ($("#employee_profile_form").length > 0) {
@@ -7322,7 +7337,8 @@
 
         if ($("#personal_data_form").length > 0) {
             $("#personal_data_form").validate({  
-            rules: {
+                ignore: [],
+                rules: {
                     employee_no_info: {
                         required: true,
                     },
