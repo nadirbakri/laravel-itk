@@ -2235,6 +2235,8 @@ class PersonelController extends Controller
                 $arrResult = json_decode($response->getBody()->getContents());
                 $arrResult2 = json_decode($response2->getBody()->getContents());  
 
+                // dd($arrResult2->dataListSet);
+
                 if($arrResult->dataListSet == null){
                     $data = [];
                 }

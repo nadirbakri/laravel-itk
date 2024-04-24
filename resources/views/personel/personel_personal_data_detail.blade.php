@@ -4566,7 +4566,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.cityName,
+                                    text: item.cityCode,
                                     id: item.cityCode,
                                     data: item
                                 }
@@ -4628,7 +4628,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4689,7 +4689,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4750,7 +4750,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4810,7 +4810,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4871,7 +4871,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4931,7 +4931,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5415,7 +5415,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5475,7 +5475,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5607,7 +5607,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5967,7 +5967,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6027,7 +6027,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6148,7 +6148,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6208,7 +6208,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6268,7 +6268,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6701,7 +6701,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6761,7 +6761,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6821,7 +6821,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
