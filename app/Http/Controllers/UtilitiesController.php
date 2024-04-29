@@ -74,6 +74,11 @@ class UtilitiesController extends Controller
     	return view('utilities.utilities_menu_master');
     }
 
+    public function pageMenuMasterMobileUtilities()
+    {
+    	return view('utilities.utilities_menu_master_mobile');
+    }
+
     public function pageAuthorizationCodeGroupUtilities()
     {
     	return view('utilities.utilities_authorization_code_group');

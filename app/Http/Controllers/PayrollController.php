@@ -42,6 +42,7 @@ use Zip;
 use ZipArchive;
 use PhpParser\Node\NullableType;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class PayrollController extends Controller
 {
@@ -4353,7 +4354,37 @@ public function dataDetailReportFormatPY(Request $request)
                 Storage::put($arrResult->dataListSet[0]->namaFile, $arrResult->dataListSet[0]->transferBank);
                 return Storage::download($arrResult->dataListSet[0]->namaFile);
             }else if($request->output_file == 'MCM'){
-                return Excel::download(new CSVTransferBankMCMExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+                $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                foreach($array as $key => $value){
+                    $arrayTwo = explode(",", $value);
+                    if(count($arrayTwo) > 1){
+                        $array[$key] = $arrayTwo;
+                    }
+                }
+
+                $array = array_filter($array, function($value) {
+                    return !empty($value);
+                });
+
+                $csvHeader = $array[0];
+
+                $tempFile = fopen('php://temp', 'w+');
+
+                foreach ($array as $row) {
+                    $row = array_pad($row, count($csvHeader), '');
+
+                    fputcsv($tempFile, $row);
+                }
+
+                rewind($tempFile);
+                $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+                
+                fclose($tempFile);
+
+                return Response::make($csvContent, 200, [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->namaFile . '"',
+                ]);
             }else if($request->output_file == 'BOT'){
                 return Excel::download(new CSVTransferBankBOTExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->output_file == 'BTPN'){
