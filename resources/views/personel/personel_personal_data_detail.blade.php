@@ -4033,24 +4033,24 @@
             load_table_family_dependent_data();
             if (typeof arrData2[0].peMasterFamily !== 'undefined' || arrData2[0].peMasterFamily !== null) {
                 for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
-                    var birthDate = '';
-                    if (arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
+                    var birthDate = '-';
+                    if (typeof arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
                     {
                         birthDate = moment(arrData2[0].peMasterFamily[i].birthDate).format('YYYY-MM-DD');
                     }
 
                     arrayFamilyDependent.push({
-                        "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
-                        "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
-                        "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
+                        "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined' && arrData2[0].peMasterFamily[i].seqNo !== null) ? arrData2[0].peMasterFamily[i].seqNo : i),
+                        "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined' && arrData2[0].peMasterFamily[i].familyName !== null) ? arrData2[0].peMasterFamily[i].familyName : '-'),
+                        "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined' && arrData2[0].peMasterFamily[i].relationCode !== null) ? arrData2[0].peMasterFamily[i].relationCode : '-'),
                         "birthDate": birthDate,
-                        "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined') ? arrData2[0].peMasterFamily[i].birthPlace : ''),
-                        "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
-                        "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
-                        "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
-                        "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
-                        "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
-                        "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : '')
+                        "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined' && arrData2[0].peMasterFamily[i].birthPlace !== null) ? arrData2[0].peMasterFamily[i].birthPlace : '-'),
+                        "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined' && arrData2[0].peMasterFamily[i].gender !== null) ? arrData2[0].peMasterFamily[i].gender : '-'),
+                        "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined' && arrData2[0].peMasterFamily[i].bloodType !== null) ? arrData2[0].peMasterFamily[i].bloodType : '-'),
+                        "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined' && arrData2[0].peMasterFamily[i].familyCardNumber !== null) ? arrData2[0].peMasterFamily[i].familyCardNumber : '-'),
+                        "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined' && arrData2[0].peMasterFamily[i].occupation !== null) ? arrData2[0].peMasterFamily[i].occupation : '-'),
+                        "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined' && arrData2[0].peMasterFamily[i].flagMedical !== null) ? arrData2[0].peMasterFamily[i].flagMedical : false),
+                        "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined' && arrData2[0].peMasterFamily[i].flagPayroll !== null) ? arrData2[0].peMasterFamily[i].flagPayroll : false)
                     });
                 }
             }
@@ -7206,20 +7206,20 @@
                 $('#include_tax_family_dependent_data').val('false');
             }
 
-            // console.log($("#gender_family_dependent_data").val());
+            console.log();
             
             arrayFamilyDependent.push({
                 "seqNoFamilyDependent": $("#seq_no_family_dependent_data").val(),
-                "familyName": (($("#name_family_dependent_data").val()) ? $("#name_family_dependent_data").val() : '-'),
-                "relationCode": (($("#relation_family_dependent_data").val()) ? $("#relation_family_dependent_data").val() : '-') ,
-                "birthDate": (($("#birth_date_family_dependent_data").val()) ? $("#birth_date_family_dependent_data").val() : '-'),
-                "birthPlace": (($("#birth_place_family_dependent_data").val()) ? $("#birth_place_family_dependent_data").val() : '-'),
-                "gender": (($("#gender_family_dependent_data").val()) ? $("#gender_family_dependent_data").val() : '-'),
-                "bloodType": (($("#blood_type_family_dependent_data").val()) ? $("#blood_type_family_dependent_data").val() : '-'),
-                "familyCardNumber": $("#family_card_no_family_dependent_data").val(),
-                "occupation": (($("#occupation_family_dependent_data").val()) ? $("#occupation_family_dependent_data").val() : '-'),
-                "flagMedical": $("#include_medical_family_dependent_data").val(),
-                "flagPayroll": $("#include_tax_family_dependent_data").val()
+                "familyName": ((typeof $("#name_family_dependent_data").val() !== 'undefined' && $("#name_family_dependent_data").val() !== null && $("#name_family_dependent_data").val() !== '') ? $("#name_family_dependent_data").val() : '-'),
+                "relationCode": ((typeof $("#relation_family_dependent_data").val() !== 'undefined' && $("#relation_family_dependent_data").val() !== null && $("#relation_family_dependent_data").val() !== '') ? $("#relation_family_dependent_data").val() : '-') ,
+                "birthDate": ((typeof $("#birth_date_family_dependent_data").val() !== 'undefined' && $("#birth_date_family_dependent_data").val() !== null && $("#birth_date_family_dependent_data").val() !== '') ? $("#birth_date_family_dependent_data").val() : '-'),
+                "birthPlace": ((typeof $("#birth_place_family_dependent_data").val() !== 'undefined' && $("#birth_place_family_dependent_data").val() !== null && $("#birth_place_family_dependent_data").val() !== '') ? $("#birth_place_family_dependent_data").val() : '-'),
+                "gender": ((typeof $("#gender_family_dependent_data").val() !== 'undefined' && $("#gender_family_dependent_data").val() !== null && $("#gender_family_dependent_data").val() !== '') ? $("#gender_family_dependent_data").val() : '-'),
+                "bloodType": ((typeof $("#blood_type_family_dependent_data").val() !== 'undefined' && $("#blood_type_family_dependent_data").val() !== null && $("#blood_type_family_dependent_data").val() !== '') ? $("#blood_type_family_dependent_data").val() : '-'),
+                "familyCardNumber": ((typeof $("#family_card_no_family_dependent_data").val() !== 'undefined' && $("#family_card_no_family_dependent_data").val() !== null && $("#family_card_no_family_dependent_data").val() !== '') ? $("#family_card_no_family_dependent_data").val() : '-'),
+                "occupation": ((typeof $("#occupation_family_dependent_data").val() !== 'undefined' && $("#occupation_family_dependent_data").val() !== null && $("#occupation_family_dependent_data").val() !== '') ? $("#occupation_family_dependent_data").val() : '-'),
+                "flagMedical": ((typeof $("#include_medical_family_dependent_data").val() !== 'undefined' && $("#include_medical_family_dependent_data").val() !== null) ? $("#include_medical_family_dependent_data").val() : false),
+                "flagPayroll": ((typeof $("#include_tax_family_dependent_data").val() !== 'undefined' && $("#include_tax_family_dependent_data").val() !== null) ? $("#include_tax_family_dependent_data").val() : false)
             });
 
             $(this).prop("disabled", false);

@@ -845,6 +845,7 @@ Route::get('utilities', 'UtilitiesController@pageUtilitiesMain')->name('utilitie
 Route::get('utilities/organization_chart', 'UtilitiesController@pageOrganizationStructureUtilities');
 Route::get('utilities/user_security_maintenance', 'UtilitiesController@pageUserSecurityMaintenanceUtilities');
 Route::get('utilities/menu_master', 'UtilitiesController@pageMenuMasterUtilities');
+Route::get('utilities/menu_master_mobile', 'UtilitiesController@pageMenuMasterMobileUtilities');
 Route::get('utilities/group_authorization', 'UtilitiesController@pageAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access', 'UtilitiesController@pageUserAccessGroupUtilities');
 Route::get('utilities/change_employee_no', 'UtilitiesController@pageChangeEmployeeNumberUtilities');
