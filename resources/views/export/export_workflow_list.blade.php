@@ -28,7 +28,7 @@
                 <th>Permit Start Hour</th>
                 <th>Permit End Hour</th>
 				<th>Status</th>
-                <th>Customer Name</th>
+                <th>Description</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,7 +44,7 @@
 				<td>{{ date('H:i', strtotime($value->permitEntity->permitHourFrom)) }}</td>
 				<td>{{ date('H:i', strtotime($value->permitEntity->permitHourTo)) }}</td>
 				<td>{{ $value->permitEntity->status}}</td>
-				<td>{{ $value->permitEntity->customerName}}</td>
+				<td>{{ $value->permitEntity->permitRemarks}}</td>
 			</tr>
 			@endforeach
 		</tbody>
