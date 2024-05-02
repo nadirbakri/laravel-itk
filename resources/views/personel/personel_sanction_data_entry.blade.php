@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 	<link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
@@ -204,8 +204,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
-<script src="{{ asset('js/jquery.redirect.js') }}""></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{ asset('js/jquery.redirect.js') }}"></script>
+<script src="{{ asset('js/flatpickr.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
