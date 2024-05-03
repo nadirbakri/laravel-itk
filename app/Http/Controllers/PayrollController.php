@@ -6911,6 +6911,8 @@ public function dataDetailReportFormatPY(Request $request)
             $data = [];
         }
 
+        // dd($data);
+
         try{
             
             $client = new Client([
@@ -7008,12 +7010,12 @@ public function dataDetailReportFormatPY(Request $request)
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
-                }else{
+                // if($data->mobile){
+                //     return $pdf->stream('Payment Slip.pdf');
+                // }else{
                     // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
-                }
+                // }
             }else{
                 $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => [], 
@@ -7025,12 +7027,12 @@ public function dataDetailReportFormatPY(Request $request)
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
-                }else{
+                // if($data->mobile){
+                //     return $pdf->stream('Payment Slip.pdf');
+                // }else{
                     // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
-                }
+                // }
             }
         }else{
             if($data->format_type == "portrait"){
@@ -7044,12 +7046,12 @@ public function dataDetailReportFormatPY(Request $request)
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
-                }else{
+                // if($data->mobile){
+                //     return $pdf->stream('Payment Slip.pdf');
+                // }else{
                     // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
-                }
+                // }
             }else{
                 $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => $arrResult->dataListSet, 
@@ -7061,12 +7063,12 @@ public function dataDetailReportFormatPY(Request $request)
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
                     'transfer_date' => date('d-M-Y', strtotime($data->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
-                if($data->mobile){
-                    return $pdf->stream('Payment Slip.pdf');
-                }else{
+                // if($data->mobile){
+                //     return $pdf->stream('Payment Slip.pdf');
+                // }else{
                     // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
-                }
+                // }
             }
         }
     }
