@@ -986,7 +986,7 @@ class TimeManagementController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
         return view('time_management.tm_input_balance_leave_detail', ['data' => $arrResult->dataListSet]);
     }
@@ -1565,8 +1565,8 @@ class TimeManagementController extends Controller
                         "companyCode" => Session::get('companyCode'),
                         "employeeNo" => $request->employee_no,
                         "leaveCode" => $request->leave_code,
-                        "leaveBalance" => (int) $request->leave_balance,
-                        "leaveBalanceBefore" => (int) $request->leave_balance_before,
+                        "leaveBalance" => (float) $request->leave_balance,
+                        "leaveBalanceBefore" => (float) $request->leave_balance_before,
                         "leaveBalanceBeforeExpiredDate" => $request->expired_date,
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
