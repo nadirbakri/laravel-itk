@@ -7782,13 +7782,13 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printCSVESPTReportFormPayrollExcel(Request $request){
-        $namaFile = "CSVEsptMasa.csv";
+        $namaFile = "EsptMasa.xlsx";
         if($request->format == "periodical"){
-            $namaFile = "CSVEsptMasa" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".csv";
+            $namaFile = "EsptMasa" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
         }else if($request->format == "annual"){
-            $namaFile = "CSVEsptA1" . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".csv";
+            $namaFile = "EsptA1" . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
         }else if($request->format == "final"){
-            $namaFile = "CSVEsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".csv";
+            $namaFile = "EsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
         }
         return Excel::download(new CSVESPTReportFormExport(
             $request->format, 

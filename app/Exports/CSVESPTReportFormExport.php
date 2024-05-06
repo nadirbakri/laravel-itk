@@ -25,13 +25,6 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
         $this->groupAuthorizedCodeTo = $groupAuthorizedCodeTo;
     }
 
-    public function getCsvSettings(): array
-    {
-        return [
-            'delimiter' => ';'
-        ];
-    }
-
     public function view(): View
     {
         try {
@@ -62,7 +55,7 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
             if($this->format == "periodical"){
                 $url = "/payroll/getEBupot";
             }else if($this->format == "annual"){
-                $url = "";
+                $url = "/payroll/getEBupotA1";
             }else if($this->format == "final"){
                 $url = "";
             }
@@ -89,11 +82,11 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
                     'data' => []
                 ]);
             }else if($this->format == "annual"){
-                return view('payroll.py_export_csv_espt_report_form_annual_excel', [
+                return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
                     'data' => []
                 ]);
             }else if($this->format == "final"){
-                return view('payroll.py_export_csv_espt_report_form_final_excel', [
+                return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
                     'data' => []
                 ]);
             }
@@ -103,12 +96,12 @@ class CSVESPTReportFormExport implements FromView, ShouldAutoSize
                     'data' => $arrResult->dataListSet[0]->list_21[0]
                 ]);
             }else if($this->format == "annual"){
-                return view('payroll.py_export_csv_espt_report_form_annual_excel', [
-                    'data' => $arrResult->dataListSet
+                return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
+                    'data' => $arrResult->dataListSet[0]->list_A1[0]
                 ]);
             }else if($this->format == "final"){
-                return view('payroll.py_export_csv_espt_report_form_final_excel', [
-                    'data' => $arrResult->dataListSet
+                return view('payroll.py_export_csv_espt_report_form_periodical_excel', [
+                    'data' => $arrResult->dataListSet[0]->list_26[0]
                 ]);
             }
         }
