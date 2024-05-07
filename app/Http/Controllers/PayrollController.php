@@ -24,6 +24,8 @@ use App\Exports\CSVTransferBankMCMExport;
 use App\Exports\CSVTransferBankBOTExport;
 use App\Exports\CSVTransferBankBTPNExport;
 use App\Exports\CSVTransferBankINAExport;
+use App\Exports\EBupotPeriodicalTemplateExport;
+use App\Exports\EBupotA1TemplateExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -7785,21 +7787,41 @@ public function dataDetailReportFormatPY(Request $request)
         $namaFile = "EsptMasa.xlsx";
         if($request->format == "periodical"){
             $namaFile = "EsptMasa" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+            return Excel::download(new EBupotPeriodicalTemplateExport(
+                $request->format, 
+                $request->period,
+                $request->rectification,
+                $request->npwp_group,
+                $request->print_date,
+                $request->group_authorized_code_from,
+                $request->group_authorized_code_to), 
+                $namaFile
+            );
         }else if($request->format == "annual"){
             $namaFile = "EsptA1" . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+            return Excel::download(new EBupotA1TemplateExport(
+                $request->format, 
+                $request->period,
+                $request->rectification,
+                $request->npwp_group,
+                $request->print_date,
+                $request->group_authorized_code_from,
+                $request->group_authorized_code_to), 
+                $namaFile
+            );
         }else if($request->format == "final"){
             $namaFile = "EsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
         }
-        return Excel::download(new CSVESPTReportFormExport(
-            $request->format, 
-            $request->period,
-            $request->rectification,
-            $request->npwp_group,
-            $request->print_date,
-            $request->group_authorized_code_from,
-            $request->group_authorized_code_to), 
-            $namaFile
-        );
+        // return Excel::download(new CSVESPTReportFormExport(
+        //     $request->format, 
+        //     $request->period,
+        //     $request->rectification,
+        //     $request->npwp_group,
+        //     $request->print_date,
+        //     $request->group_authorized_code_from,
+        //     $request->group_authorized_code_to), 
+        //     $namaFile
+        // );
     }
 
     public function printBonusTHRReportPayroll(Request $request){

@@ -134,6 +134,7 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithE
             ]);
         }
     }
+    
     public function registerEvents(): array
     {
         return [

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_csv_espt_report_form.judul') }}</title>
+	<title>Rekap</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -40,19 +40,39 @@
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                @foreach($data->column as $key => $value)
-                    <th>{{ $value }}</th>
-                @endforeach
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+            </tr>
+            <tr>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th colspan="5" style="background-color">Tahun Pajak</th>
+                <th>{{ $periodYear }}</th>
+                <th style="background-color: #808080">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data->value as $key => $value)
             <tr>
-                @foreach ($value as $key2 => $value2)
-                    <td>{{ $value2 }}</td>
-                @endforeach
+                <th style="background-color: #808080">&nbsp;</th>
+                <th colspan="5">Jumlah Bukti Potong A1</th>
+                <th>{{ $jumlaha1 }}</th>
+                <th style="background-color: #808080">&nbsp;</th>
             </tr>
-            @endforeach
+            <tr>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+                <th style="background-color: #808080">&nbsp;</th>
+            </tr>
         </tbody>
     </table>
 </body>
